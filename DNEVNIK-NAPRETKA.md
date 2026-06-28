@@ -1,6 +1,5 @@
 # Dnevnik napretka — Antasline SEO
 
-## 2026-06-28 [cpanel-live] — TEST veze sa produkcije, obrisati
 
 ## 2026-06-28 [chat] — Obsidian vault postavljen i objedinjen
 - Vault `C:\Projekti\antasline-vault\` postao jedina istina projekta.
