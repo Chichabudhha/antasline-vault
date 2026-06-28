@@ -1,6 +1,18 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-06-28 [chat] — Obsidian vault + git most postavljen → [[2026-06-28-obsidian-vault-git-most]]
+- Vault C:\Projekti\antasline-vault\ kao jedina istina; GitHub Chichabudhha/antasline-vault
+- DNEVNIK + PROGRESS preseljeni iz htdocs; cPanel vault kloniran; git most testiran OK
+- Sledeće: BLOK C1 redirect mapa (nov chat, Sonnet, zalepi PROGRESS.md u seed)
 
+## 2026-06-28 [chat] — Obsidian vault + git most postavljen
+- Vault: C:\Projekti\antasline-vault\ kao jedina istina projekta
+- DNEVNIK-NAPRETKA.md i PROGRESS.md preseljeni iz htdocs u vault
+- GitHub repo: Chichabudhha/antasline-vault (private)
+- Obsidian Git plugin aktivan, auto-sync 10min
+- cPanel: vault kloniran u ~/antasline-vault, CLAUDE.md kreiran
+- Git most zatvoren: lokal ↔ GitHub ↔ cPanel sinhronizovani
+- Sledeće: BLOK C1 — redirect mapa (nov chat, Sonnet model)
 ## 2026-06-28 [chat] — Obsidian vault postavljen i objedinjen
 - Vault `C:\Projekti\antasline-vault\` postao jedina istina projekta.
 - DNEVNIK-NAPRETKA.md i PROGRESS.md preseljeni iz htdocs u vault.
