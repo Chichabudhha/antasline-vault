@@ -1,0 +1,3 @@
+# Dnevnik je append-only ledger: na konfliktu (npr. lokal i cPanel
+# dopisali u isto vreme) zadrži OBA unosa automatski, bez ručnog merge-a.
+DNEVNIK-NAPRETKA.md merge=union

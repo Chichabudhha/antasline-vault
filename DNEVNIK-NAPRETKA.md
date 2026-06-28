@@ -1,0 +1,82 @@
+# Dnevnik napretka — Antasline SEO
+
+## 2026-06-28 [chat] — Obsidian vault postavljen i objedinjen
+- Vault `C:\Projekti\antasline-vault\` postao jedina istina projekta.
+- DNEVNIK-NAPRETKA.md i PROGRESS.md preseljeni iz htdocs u vault.
+- CLAUDE.md (htdocs) dopunjen vezom ka vault-u; Claude Code odsad loguje ovde.
+- Detaljan zapis: [[2026-06-28-postavljanje-vault]]
+- [ ] Aktivirati Dataview plugin #ceka-miroslav
+- [ ] Izabrati BLOK C stavku (C1/C2/C3) #ceka-miroslav
+
+## 2026-06-25 — Optimizacija /industrijski-podovi/ (Yoast meta)
+
+**Stranica:** http://localhost/antasline/industrijski-podovi/ (ID 4937, post_type=post)
+
+**Urađeno:**
+- ✅ Yoast title: `Industrijski PVC podovi u pločama — bez zastoja proizvodnje | Antas Line` (69 znakova, optimalno)
+- ✅ Yoast meta opis: `Industrijski PVC podovi Ecotile — montaža preko postojećeg betona bez zastoja proizvodnje i bez lepka. Otporni na viljuškare, hemikalije, R10. Brzo do upita.`
+- ✅ Stranica radi ispravno za posetioce (karakteri, footer, width — sve OK)
+
+**Nije urađeno:**
+- ❌ 6 sadržajnih blokova (planiran): WPBakery visual editor ima JavaScript bug pri parsiranju shortcode-a (`Cannot read properties of undefined`). Programski pristup (PHP) pravi probleme sa editor-om, a manual unos je komplikovan zbog strukture.
+
+**Zaključak:**
+- Yoast SEO optimizacija je **ZAVRŠENA i aktivna**
+- Blokovi se mogu dodati kasnije ručno kroz WPBakery editor (drag-and-drop), ili koristiti Text editor za ažuriranja
+- Stranica je **sprema za produkciju sa SEO meta-om**
+
+**Backup:** `backup-industrijski-20260625-1059.sql` (31.56 MB)
+
+---
+
+## 2026-06-25 — Pokušaj: Optimizacija /industrijski-podovi/ (6 sadržajnih blokova)
+
+**Stranica:** http://localhost/antasline/industrijski-podovi/ (ID 4937, post_type=post)
+
+**Izmene:**
+- `_yoast_wpseo_title`: (stari/dugačak) → `Industrijski PVC podovi u pločama — bez zastoja proizvodnje | Antas Line` (69 znakova)
+- `_yoast_wpseo_metadesc`: ažuriran sa fokusom na "bez zastoja", "bez lepka", "Ecotile", "R10"
+- Dodati 6 WPBakery blokova (`[vc_row]` strukture) PRE FAQ sekcije:
+  1. **Uporedna tabela** (PVC vs epoksid vs poliuretan vs mikrocement) — conquest za "epoksid" nameru
+  2. **Cena blok** ({{CENA_PVC_OD}}–{{CENA_PVC_DO}} €/m² sa placeholder-ima za Miroslava)
+  3. **Vrste industrijskih podova** — edukativni tekst o razlici između silo-pristupa
+  4. **Namena grid** (magacini, proizvodnja, autoservisi, HACCP, farmacija, hladnjače, ESD)
+  5. **Reference galerija** (sprema za slike: Hankook, HTEC, Amicus — trust signal)
+  6. **Tehnička svojstva tabela** (R10, Bfl-s1, hemijska otpornost, debljine, OHSAS 18001, 25 godina trajanja)
+
+**Verifikacija:**
+- WPBakery struktura: 14 [vc_row] ↔ 14 [/vc_row] (integritet ✓)
+- Svih 6 blokova prisutno u sadržaju ✓
+- Yoast meta postavljeni ✓
+- Bez broken shortcode-a ✓
+- HTTP 200 pri učitavanju ✓
+
+**Napomene:**
+- Placeholder cene `{{CENA_PVC_OD}}` i `{{CENA_PVC_DO}}` ostavljeni za Miroslava da popuni sa realnim ciframa
+- Reference galerija sprema za fotografije (nedostaju slike iz medijateke)
+- Blok "Namena grid" može biti osnova za kasnije pod-stranice (/industrija-podovi/magacini/, itd.)
+- Backup pre izmena: `backup-industrijski-20260625-1059.sql` (31.53 MB)
+
+---
+
+## 2026-06-23 — On-page popravka /pop-tenis/
+
+**Stranica:** http://localhost/antasline/pop-tenis/ (ID 15966, post_type=post)
+
+**Izmene:**
+- `_yoast_wpseo_title`: (prazno) → `Teren za pop tenis i pickleball – dimenzije i izrada`
+- `post_title` (= H2 entry-title): `Padel tenis` → `Teren za pop tenis i pickleball`
+- `_yoast_wpseo_metadesc`: zadržan (pominje pickleball i pop tenis)
+- Intro paragraf: dodata reč `piklbol` (fonetski oblik, 293 prikaza koji nisu hvatani)
+
+**Verifikacija:**
+- `<title>`: Teren za pop tenis i pickleball – dimenzije i izrada ✓
+- `<h2 class="entry-title">`: Teren za pop tenis i pickleball ✓
+- "Padel tenis" više nije title/H2 ✓
+- "piklbol" prisutan u rendered HTML ✓
+- Regression: industrijski-podovi i spoljnje-podne-obloge Yoast titles nepromenjeni ✓
+
+**Napomene:**
+- Porto tema renderuje entry-title kao `<h2>`, ne `<h1>` — `<h1>` je blog archive heading ("Aktuelnosti")
+- Padel reference u body-ju ostavljene netaknute (upućuju na zaseban padel teren)
+- Backup pre izmena: `backup-onpage-20260623.sql` (31.53 MB)

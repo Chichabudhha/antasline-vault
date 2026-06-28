@@ -1,0 +1,56 @@
+# SEO Progress — Antasline lokalni build
+
+## Urađeno
+
+| Datum | Stranica | Šta |
+|---|---|---|
+| 2026-06-27 | 301 redirect mapa | Završen auto-fill + verifikacija: 30 × 404 ispravljeni, 119 redova popunjeno (88% kompletno) |
+| 2026-06-25 | /industrijski-podovi/ | On-page: Yoast title (69 znakova), meta opis — optimizovano za search |
+| 2026-06-23 | /pop-tenis/ | On-page: Yoast title, H2 entry-title, dodat "piklbol" u uvod |
+
+## Sledeće
+
+1. **301 Redirect mapa — ručna verifikacija (20 redova PROVERI)**
+   - Potvrdi da sve PROVERI stranice stvarno postoje na buildu
+   - Posebno: /sportska-igralista/, /zamena-parketa-u-sportskim-salama/, /podloge-za-krovove-i-terase/, itd.
+
+2. **Strategijske odluke (5 redova NEMA NA BUILDU)**
+   - /iznajmljivanje-podova/ (79 klikova) — napraviti stranicu ili 301?
+   - /sportske-podloge/opremazasportsketerene/* (reflektori) — nova sekcija?
+   - /kategorija-proizvoda/podloge-za-stale-i-trave/ — koja je novi URL?
+   - /kategorija-proizvoda/sigurnosni-senzori-signalni-sistemi/ — obrisano?
+
+3. **WooCommerce AUTO-PREDLOG validacija (41 proizvoda + 8 kategorija)**
+   - Proveri /shop/ strukturu na buildu
+   - Validitraj /kategorija/* URL-ove
+
+4. **On-page SEO — ostale stranice**
+   - Pregledati ostale stranice sa praznim Yoast title-om
+   - Prioritet: /industrijski-podovi/ sekcija
+
+## Blokeri
+
+- Nema — redirect mapa je gotova. Ručna verifikacija je normalna, može se raditi parallelno sa ostalim zadacima.
+
+## Napomene
+
+**301 Redirect mapa — STATISTIKA:**
+- ✅ Inventar builda: 133 putanje (posts, pages, products, categories)
+- ✅ Auto-popunjeno 1:1: 2 redda
+- ✅ Auto-predlog po slug-u: 41 reda
+- ✅ 404 upozorenja ISPRAVLJENA: 30 redova
+- ✅ Verifikovano da postoji: 44 redda
+- 📋 PROVERI (ručna verifikacija): 20 redova
+- 📋 NEMA NA BUILDU (strateška odluka): 5 redova
+- 📋 AUTO-PREDLOG WooCommerce: 49 redova (proizvodi + kategorije)
+
+**Fajlovi generirani:**
+- `antasline-redirect-mapa-POPUNJENA.csv` — finalna mapa sa popunjenim i ispravljenim redovima
+- `redirect-fill.php` — skriptu za auto-fill
+- `fix-404-redirect.php` — skriptu za ispravku 404 ciljeva
+
+**Ključni problemi koji su ispravljeni:**
+- `/industrija-podovi/` → `/industrijski-podovi/` (8 redova)
+- `/lvt-podovi/*` → `/podovi-za-poslovni-prostor/*` (5 redova)
+- Sve `/spoljne-podne-obloge/*` varijacije maprirane na `/bergo-ultimate/` i `/vestacka-trava/`
+- Sve `/industrijski-podovi/*` sub-stranice sada kažu `/industrijski-podovi/` (ne `/industrija-podovi/`)

@@ -1,0 +1,10 @@
+# Obsidian config — ne verzionisati radne/cache fajlove
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
+
+# OS smeće
+.DS_Store
+Thumbs.db
+desktop.ini
