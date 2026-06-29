@@ -1,5 +1,9 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-06-29 [cpanel-live] — GTM tel: tag obrisan (UŽIVO)
+- GTM tag koji je okidao GA4 event "tel:+381692340072" obrisan iz GTM-TRDT8K9 i publishovan
+- Verifikovano: event više ne okida u GA4 DebugView ✓
+
 ## 2026-06-28 [cpanel-live] — Opt-out consent model aktiviran (UŽIVO)
 - Plugin antasline-consent prešao na opt-out: pri prvoj poseti kolačić se odmah postavlja na {ad:true, analytics:true}
 - Consent Mode v2 default (nema kolačića): sve kategorije sada 'granted' umesto 'denied'
