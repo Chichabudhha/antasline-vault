@@ -1,5 +1,12 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-06-28 [cpanel-live] — Opt-out consent model aktiviran (UŽIVO)
+- Plugin antasline-consent prešao na opt-out: pri prvoj poseti kolačić se odmah postavlja na {ad:true, analytics:true}
+- Consent Mode v2 default (nema kolačića): sve kategorije sada 'granted' umesto 'denied'
+- Banner se i dalje prikazuje — posetilac može da klikne "Odbij sve" ili podesi po kategorijama
+- Toggles u panelu podrazumevano checked=true kada nema kolačića
+- Verifikacija: curl potvrđuje 'granted' u else grani ✓
+
 ## 2026-06-28 [cpanel-live] — SEO title fix, GA4 istraga, SSH most, WooCommerce export (UŽIVO)
 - SEO: Obrisani duplikat/neispravni _yoast_wpseo_title na 6 postova (ID 2542 duplikat, 3327/3621 %%title%%, 3257/4813/6824 %%title%% %%page%% %%sep%%)
 - GA4 event "tel:+381692340072" — utvrđeno: izvor je GTM tag (ne server/plugin); #ceka-miroslav da obriše tag u GTM UI
