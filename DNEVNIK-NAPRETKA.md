@@ -1,5 +1,11 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-01 [chat] [ADS] — Snimak podataka + fazni plan
+- ECOTILE zagušen: prikazi −67%, CPC 26→74 RSD — uzrok je blokada naloga (balans/verifikacija)
+- Terase: 296 klik/ned, CTR 19%, konverzija slaba (2/ned) → prioritet je kreativa
+- Napravljen fazni plan 0–4 i banka RSA asseta za obe kampanje
+- Detalji i banka asseta: [[dnevnik/ADS-DNEVNIK]]
+
 ## 2026-06-29 [cpanel-live] — GTM tel: tag obrisan (UŽIVO)
 - GTM tag koji je okidao GA4 event "tel:+381692340072" obrisan iz GTM-TRDT8K9 i publishovan
 - Verifikovano: event više ne okida u GA4 DebugView ✓

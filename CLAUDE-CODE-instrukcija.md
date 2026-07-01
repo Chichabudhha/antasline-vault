@@ -35,3 +35,14 @@ PRAVILA:
 4. NE diraj `.obsidian\` folder.
 5. Wikilink `[[ime]]` i callout `> [!note]` su dozvoljeni.
 ```
+
+## ADS workflow (kada radiš na Google Ads)
+
+PRE: pročitaj `C:\Projekti\antasline-vault\dnevnik\ADS-DNEVNIK.md` (stanje + fazni plan).
+
+POSLE ADS rada:
+1. **ADS-DNEVNIK.md `## 🗒️ Log`** — dodaj unos na vrh (format: `### YYYY-MM-DD [izvor]`)
+   - Ažuriraj `## 🚦 Trenutno stanje` tabelu ako se promenilo
+   - Štikliraj završene checkboxe u faznom planu
+2. **DNEVNIK-NAPRETKA.md** — dodaj kratak red `## YYYY-MM-DD [...] [ADS] — opis` s linkom na ADS-DNEVNIK
+3. **PROGRESS.md `## ADS`** — prepiši sekciju da odražava novo stanje
