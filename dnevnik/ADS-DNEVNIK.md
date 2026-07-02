@@ -41,7 +41,7 @@ Nalog: `156-886-0314` (Gogin Nalog) · Strategija: **Maximize Clicks** (namerno,
 
 ### Faza 0 — Odblokiraj nalog `[preduslov]`
 - [ ] Dopuna balansa → [[B3 - Odblokiranje naloga]]
-- [ ] Završena verifikacija oglašivača
+- [x] Završena verifikacija oglašivača
 - [ ] Potvrda da su ECOTILE prikazi/CPC vraćeni na normalu (uporedi sa snimkom u Logu)
 
 ### Faza 1 — RSA kreativa (Terase odmah, ECOTILE pripremljeno)
