@@ -15,8 +15,8 @@ status: zavrseno
 - Postavljen skelet: INDEX dashboard (Dataview), blokovi A/B/C, pregled odluka, identifikatori, naučene lekcije.
 
 ## Otvorene akcije
-- [ ] Aktivirati Dataview plugin u Obsidian-u #ceka-miroslav
-- [ ] Ubaciti instrukcioni blok iz `CLAUDE-CODE-instrukcija.md` u `C:\xampp\htdocs\antasline\CLAUDE.md` #ceka-miroslav
+- [x] Aktivirati Dataview plugin u Obsidian-u #ceka-miroslav
+- [x] Ubaciti instrukcioni blok iz `CLAUDE-CODE-instrukcija.md` u `C:\xampp\htdocs\antasline\CLAUDE.md` #ceka-miroslav
 - [ ] Izabrati BLOK C stavku za sledeću sesiju (C1/C2/C3) #ceka-miroslav
 
 ## Beleške / odluke
