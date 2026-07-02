@@ -404,7 +404,107 @@ backup-a i bez odobrenja.
 
 Ovaj fajl nosi *pravila ponašanja i istorijski kontekst* — ne menja se često.
 Za **"gde smo stali danas"** uvek prvo pogledaj:
-1. `PROGRESS.md` u vault-u
-2. `DNEVNIK-NAPRETKA.md` (append-only ledger, poslednji unosi)
-3. Aktivni BLOK C pod-zadatak (C1 redirect mapa / C2 content parity / C3
-   on-page build)
+1. `[[2026-07-02-MASTER-PLAN-DO-LIVE]]` — 2-mesečni plan (Tehnička → SEO → Ads)
+2. `[[PROGRESS.md]]` u vault-u — snapshot trenutnog stanja
+3. `[[DNEVNIK-NAPRETKA.md]]` (append-only ledger, poslednji unosi)
+4. Aktivni BLOK C pod-zadatak: `[[BLOK-C-sledece]]` (C1 redirect / C2 content / C3 on-page)
+
+---
+
+## 13. KOMPLETAN HUB SVIH FAJLOVA (Wikilinks za navigaciju)
+
+### 📋 OSNOVNO — Pročitaj prvo
+- `[[00-INDEX.md]]` — Dashboard (Dataview tabele)
+- `[[CLAUDE.md]]` — Ovo (instrukcije + kontekst)
+- `[[PROGRESS.md]]` — Trenutno stanje
+- `[[2026-07-02-MASTER-PLAN-DO-LIVE.md]]` — 2-mesečni plan do live-a
+
+### 📖 HRONOLOGIJA — Šta je urađeno po datumima
+- `[[DNEVNIK-NAPRETKA.md]]` — Append-only ledger (svaka sesija)
+- `[[dnevnik/2026-07-02-analiza-segmentacije.md]]` — GA4 publike + Ads strategija
+- `[[dnevnik/2026-07-02-gsc-keywords-analiza.md]]` — 60 GSC queries + 4 kritična prioriteta
+- `[[dnevnik/2026-07-02-basket-page-faq-schema.md]]` — FAQ + schema za basketball
+- `[[dnevnik/2026-06-28-postavljanje-vault.md]]` — Vault setup + GitHub most
+- `[[dnevnik/2026-06-28-db-backup-woo.md]]` — WooCommerce backup
+- `[[dnevnik/2026-06-28-woo-transfer-attempt.md]]` — WooCommerce migracija (čeka SSH)
+- `[[dnevnik/ADS-DNEVNIK.md]]` — Living hub za Google Ads, RSA banka, Faze 0-4
+
+### 🧱 BLOK ORGANIZACIJA — Rad po prioritetima
+- `[[blokovi/BLOK-A-tracking.md]]` — ✅ ZATVOREN (GTM v10, Consent, key events)
+- `[[blokovi/BLOK-B-publike.md]]` — ✅ ZATVOREN (6 GA4 publika)
+- `[[blokovi/BLOK-C-sledece.md]]` — ⏳ AKTIVNO (C1 redirect / C2 content / C3 on-page)
+
+### 🎯 STRATEGIJA I ODLUKE
+- `[[odluke/_pregled-odluka.md]]` — Sve donete odluke + zašto
+- `[[reference/identifikatori.md]]` — Google Ads/GA4/GSC/GTM ID-evi
+- `[[reference/naucene-lekcije.md]]` — Tehnički gotchas (GTM, Windsor, SEO, telefon)
+
+### 📚 DOKUMENTACIJA
+- `[[briefs/_README.md]]` — (ako postoji brief za kampanje)
+- `[[seo/_README.md]]` — SEO strategija
+- `[[CLAUDE-CODE-instrukcija.md]]` — Instrukcije za Claude Code rad
+- `[[CLAUDE-CODE-instrukcija-CPANEL.md]]` — cPanel live rad instrukcije
+
+### 🔗 VAŽNI ESTERNI LINKOVI (U tekstu)
+- Live sajt: https://www.antasline.com
+- Lokalni build: http://localhost/antasline
+- Google Ads nalog: 156-886-0314 (vidi `[[reference/identifikatori.md]]`)
+- GA4: 292720335
+- GTM: GTM-TRDT8K9
+- GSC: sc-domain:antasline.com
+- GitHub vault: github.com/Chichabudhha/antasline-vault (privatan)
+
+---
+
+## 14. TRENUTNI STATUS NA JEDNOJ STRANICI (2026-07-02)
+
+### 🎯 Konačan cilj
+Redizajn sajta + live deployment (do 2026-09-02) za maksimalnu prodaju sa minimalnim budžetom.  
+Prioritet: **Tehnička → SEO → Ads**
+
+### ✅ Gotovo
+- BLOK A (Tracking) + BLOK B (Publike)
+- Lokalni WordPress build
+- Vault organizacija
+- 8 nedeljnih dnevnika sa planovima
+
+### ⏳ U toku
+- BLOK C (Redirect mapa, Content parity, On-page)
+- 4 nove landing stranice (iz GSC keywords)
+- FAQ + schema za basketball
+
+### 🔴 Kritični blokeri (Čeka Miroslava)
+1. SSH config (tvoj-lokal) — WooCommerce migracija
+2. Google Ads balans + verifikacija — ECOTILE prikazi -67%
+3. GA4 publike (Task #1) — Miroslav kreira u GA4 UI
+4. Konverzije info — Šta se dešava sa 53 kontakta?
+
+### 📊 Metriken (juni 2026)
+- 53 kontakta/mesec (`/hvala-za-poruku/`)
+- 94% organski, 6% plaćeni
+- Conversion rate: 0,88% (NISKO)
+- Ads spend: 40k RSD/mesec
+
+### 📅 Nedelja 1 (do 2026-07-16)
+- [ ] Tehnička audit (PageSpeed, Web Vitals)
+- [ ] SSH config → WooCommerce migracija start
+- [ ] C1 verifikacija (20 redova redirect mape)
+- [ ] 4 nove GSC stranice (start)
+- [ ] Task #1 — GA4 publike (Miroslav)
+
+---
+
+## 15. ZA CLAUDE-A SLEDEĆI PUT
+
+Kada otvorim CLAUDE.md sledeći put, znaću:
+
+1. ✅ **Ko sam** — marketing analitičar za AntasLine
+2. ✅ **Šta radim** — redizajn + live migracija (2 meseca) + SEO/Ads optimizacija
+3. ✅ **Šta je gotovo** — BLOK A (tracking), BLOK B (publike), lokalni build
+4. ✅ **Šta je u toku** — BLOK C (redirect, content, on-page)
+5. ✅ **Šta je blokirano** — SSH, balans, GA4 publike, konverzije info
+6. ✅ **Gde su fajlovi** — Sve su linked-ovane kroz wikilinks
+7. ✅ **Prioritet** — Tehnička → SEO → Ads
+8. ✅ **Timeline** — 2 meseca (do 2026-09-02)
+9. ✅ **Šta trebam od Miroslava** — 5 konkretnih odgovora
+10. ✅ **Šta radim sad** — [[2026-07-02-MASTER-PLAN-DO-LIVE.md]] (Faza 0-3)
