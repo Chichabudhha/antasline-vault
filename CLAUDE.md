@@ -269,7 +269,36 @@ optimizacija fontova — za LCP/CLS/INP.
 
 ---
 
-## 8. WORKFLOW I ALATI
+## 8. 🔴 KRITIČNO — LOKALNI BUILD JE STAGING, LIVE SE NE DIRA!
+
+**PRAVILO:** Svi rad se radi na **LOKALNOM BUILD-u** (`http://localhost/antasline/`) dok se sajt potpuno ne redizajnira. **Live sajt se NE dira** dok se lokalni build ne završi (2026-09-02).
+
+```
+LOKALNI BUILD (http://localhost/antasline)
+  = Redizajn + testiranje SVE
+  = WordPress fajlovi + baza + slike
+  = Tehnička, SEO, Ads — sve se testira ovde
+
+LIVE SAJT (antasline.com)
+  = PRODUCTION — ČEKANJE
+  = Tek posle 2026-09-02 migracija (1 dan!)
+  = NE diram bazu, fajlove, domenе, DNS, SSL
+
+VAULT (~/antasline-vault na hosting)
+  = Samo dnevnici/planovi sinhronizovani
+  = Dokumentacija, NE WordPress fajlovi
+```
+
+**Konsekvencu:**
+- ✅ Fokus: Kvalitetan lokalni redizajn (Tehnička → SEO → Ads)
+- ❌ Nema SSH pristupa za live bazu
+- ❌ Nema live promene dok nije sve gotovo
+- ❌ WooCommerce migracija je samo na lokalu (test)
+- ✅ Posle 2026-09-02: Prebacujemo SVE kao bulk operacija
+
+---
+
+## 9. WORKFLOW I ALATI
 
 ### 8.1 Tri-surface Git workflow
 - **Lokal** — Claude Code piše u vault, Obsidian Git auto-sync na ~10 min

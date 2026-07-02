@@ -17,6 +17,34 @@ status: aktivan
 
 ---
 
+## ⚠️ KRITIČNA PRAVILA ZA OVU NEDELJU
+
+**🔴 LOKALNI BUILD JE STAGING — LIVE SE NE DIRA!**
+
+```
+LOKAL (http://localhost/antasline)
+  = REDIZAJN + TESTIRANJE
+  = SVE PROMENE SE RADE OVDE
+  = WordPress fajlovi + baza + slike
+
+LIVE (antasline.com)
+  = PRODUCTION — NE DIRAM!
+  = Čeka dok se lokalni build ne završi
+  = Tek posle 2026-09-02 prebacujemo SVE
+
+VAULT (~/antasline-vault na hosting)
+  = SAMO dnevnici/planovi sinhronizovani
+  = Dokumentacija, ne WP fajlovi ili baza
+```
+
+**Konsekvencu:** 
+- ❌ Nema SSH pristupa za live bazu
+- ❌ Nema WooCommerce migracije sada
+- ❌ Nema rad na live sajtu dok se lokal ne završi
+- ✅ Fokus: Kvalitetan lokalni redizajn
+
+---
+
 ## 📊 TRENUTNO STANJE (2026-07-02)
 
 ### ✅ Završeno (BLOK A + B)
@@ -71,23 +99,25 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
 
 ### FAZA 0: ODMAH (Nedelja 1-2 | do 2026-07-16)
 
-#### 🔧 Tehnička (PRIORITET #1)
-- [ ] **Identifikuj trenutne performance probleme**
-  - Google PageSpeed: https://pagespeed.web.dev/
+#### 🔧 Tehnička (PRIORITET #1) — SVE NA LOKALU!
+- [ ] **Identifikuj trenutne performance probleme na LOKALU**
+  - PageSpeed Insights: http://localhost/antasline
   - Web Vitals: LCP, CLS, INP
-  - Lighthouse audit
-  - `[[Tehnička optimizacija - audit]]` (novi fajl)
+  - Lighthouse audit (lokalno)
+  - Kreiraj `[[Tehnička optimizacija - audit]]` (novi fajl)
   
-- [ ] **Lokalni build → live migracija — INFRASTRUKTURA**
-  - Šta trebate da migrira? (WordPress fajlovi, baza, uploads, SSL sertifikat?)
-  - Hosting? (cPanel je OK? ili novi hosting?)
-  - Domain + DNS?
-  - Napisati migration runbook
+- [ ] **Lokalni build optimizacija (NE LIVE!)**
+  - Porto tema — ukloniti nepotrebne CSS/JS
+  - WPBakery optimizacija — slike, shortcodes
+  - Plugin cleanup — deaktiviraj nepotrebne
+  - PHP memory limit (ako trebalo)
+  - Cache/compression setup (lokalno za test)
 
-- [ ] **WooCommerce migracija — KRITIČNO**
-  - SSH konfiguracija `tvoj-lokal` — **Miroslav mora da da IP/port/ključ**
-  - Prenesi products + uploads sa live → local
-  - Testiraj checkout sa Braintree/PayPal na local-u
+- [ ] **WooCommerce na LOKALU — TESTIRANJE**
+  - ✅ Products već postoje (iz backup-a)
+  - Testiraj checkout (lokalno)
+  - Testiraj slike/uploads
+  - Testiraj payment gateway (lokalno bez $)
 
 #### 📝 SEO (PRIORITET #2 — paralelno sa tehnikom)
 - [ ] **BLOK C1: Redirect mapa — ručna verifikacija**
@@ -142,17 +172,23 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
 
 ---
 
-### FAZA 2: MIGRACIJA + OPTIMIZACIJA ADS (Nedelja 5-6 | do 2026-08-13)
+### FAZA 2: FINALIZACIJA LOKALA + ADS SETUP (Nedelja 5-6 | do 2026-08-13)
 
-#### 🚀 Live migracija (nakon što je lokalni build spreman)
-- [ ] Pre-migracija backup live sajta
-- [ ] DNS switch (antasline.com → novi hosting ili keep cPanel)
-- [ ] 301 redirect mapa — aktivacija
-- [ ] Sertifikat SSL (renewal/prenos)
-- [ ] GA4 + GTM — verifikacija na live
-- [ ] Test svih formi, checkout-a, analytics
+#### ✅ Lokalni build — FINALNI CHECKOUT
+- [ ] **SVE na lokalu je testiran i gotov:**
+  - Performanse: LCP <2.5s, CLS <0.1, INP <200ms
+  - SEO: Sve stranice sa Yoast >80, svi linkovi internog, sitemap
+  - Forme: Sve kontakt forme rade, `/hvala-za-poruku/` okida
+  - WooCommerce: Svi proizvodi, checkout, payment gateway testiran
+  - Analytics: GA4 + GTM live na localhost (test konverzije)
+  - Mobile: Responsive, svi devices testiran
 
-#### 📢 Ads reorganizacija (posle balans + publike)
+- [ ] **Backup lokalnog build-a pre finalne migracije**
+  - `wp db export` — kompletan backup baze
+  - `tar` ZIP kompletan `wp-content/` folder
+  - Spremi na više lokacija
+
+#### 📢 Ads reorganizacija (na LOKALNOM buildu)
 - [ ] 5 kampanja strukturu (umesto 2):
   1. **Terase** → 3 ad grupe (Bergo, Kunstrava, Bazen)
   2. **ECOTILE** → 2 ad grupe (Industrijski, ESD)
@@ -166,14 +202,40 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
 
 ---
 
+### FAZA 2.5: MIGRACIJA NA LIVE (2026-09-01, ponedeljak — 1 DAN!)
+
+**⚠️ SAMO KADA JE LOKALNI BUILD 100% GOTOV I TESTIRAN!**
+
+- [ ] **Pre migracije:**
+  - Backup LIVE sajta (cPanel → MySQL export)
+  - Backup LIVE `wp-content/` (FTP)
+  - Spremi DNS settings (ako se menja)
+
+- [ ] **Migracija:**
+  - `wp db export` sa lokala → upload na live (cPanel)
+  - `wp-content/` copy sa lokala → live (FTP/cPanel)
+  - URL zamena (http://localhost/antasline → https://antasline.com)
+  - Test svi linkovi, forme, slike
+  - Verifikacija GA4 + GTM na live
+  - Aktivacija 301 redirect mape (iz C1)
+
+- [ ] **Post-migracija (prvo nedelje):**
+  - GSC resubmit sitemap
+  - Crawl error monitoring
+  - Analytics verifikacija
+  - Live Ads test (prvo nedelje, mali budžet)
+
+---
+
 ### FAZA 3: FINE-TUNING + MONITORING (Nedelja 7-8 | do 2026-09-02)
 
-#### 🔍 Post-live monitoring
+#### 🔍 Post-live monitoring (posle migracije)
 - [ ] Core Web Vitals — sigurno >75 (Google)
 - [ ] Crawl errors u GSC — ispravka
 - [ ] 404s iz redirect mape — provera
 - [ ] Analytics verifikacija (GA4 + GTM sinhronizacija)
-- [ ] Ads performance — prvo nedelje pre povećanja budžeta
+- [ ] Ads performance — prva nedelja pre povećanja budžeta
+- [ ] Korisnički feedback — forme, checkout, performance
 
 #### 📈 Quick wins za conversion rate
 - [ ] CTA buttons — veličina, boja, tekst (A/B test?)
@@ -190,14 +252,14 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
 
 ---
 
-## 🚨 KRITIČNI BLOKERI (Trebam Miroslava)
+## 🚨 KRITIČNI BLOKERI (Trebam Miroslava — ZA LOKAL!)
 
 | Bloker | Šta čeka | Ko | Deadline | Impact |
 |---|---|---|---|---|
-| SSH config (tvoj-lokal) | WooCommerce migracija | Miroslav | ASAP | HIGH — bez toga nema live migracije |
-| Balans + Verifikacija Google Ads | ECOTILE kampanja živi | Miroslav | ASAP | MEDIUM — može se čekati ali bolje brže |
-| GA4 publike (Task #1) | Ads segmentacija | Miroslav | do 2026-07-09 | LOW — može paralelno |
-| Konverzioni levak info | Znamo li šta je prodaja? | Miroslav | do 2026-07-16 | MEDIUM — trebam za CRM setup |
+| Balans + Verifikacija Google Ads | ECOTILE kampanja (test na lokalu) | Miroslav | ASAP | MEDIUM — trebam za Ads test |
+| GA4 publike (Task #1) | Ads segmentacija (lokal) | Miroslav | do 2026-07-09 | LOW — mogu paralelno sa SEO |
+| Konverzioni levak info | Znamo li šta je prodaja? | Miroslav | do 2026-07-16 | MEDIUM — za CRM/follow-up setup |
+| Cena za domene/hosting | Potvrda za live migraciju | Miroslav | do 2026-08-20 | MEDIUM — trebam datum/IP za migraciju |
 
 ---
 
