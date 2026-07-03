@@ -1,5 +1,12 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-03 [cpanel-live] — Optimizacija baze (UŽIVO)
+- Backup: `~/backups/antasline_db_2026-07-03_2031.sql`
+- Otklonjen kritični problem: `wp_litespeed_img_optm` imala 3.251.490 orphan redova (post_id=0, src prazan) — runaway LiteSpeed greška → tabela sa 315.91 MB smanjena na 0.05 MB
+- Obrisano 50 post revizija, 1 expired transient, 34 stara ActionScheduler completed akcija
+- OPTIMIZE TABLE na svim tabelama (recreate+analyze)
+- **Ukupna veličina baze: 354 MB → 38.67 MB (-89%)**
+
 ## 2026-07-02 [chat] [Windsor/GA4+Ads+GSC + FAQ/Schema] — Kompletan pulov podataka + preporuke
 - Povučeni podaci iz Windsor.ai: GA4 (30 stranica), Google Ads (56 dana), GSC (60 ključnih reči)
 - Analiza top stranica: Spoljne podloge (1062 users), Industrijski (481), Sport (742), Parking (247)
