@@ -30,5 +30,4 @@ status: u-toku
 
 ## Veze
 
-- [[BLOK-C-sledece]] — WooCommerce migracija
-- [[local_setup]] — lokalni setup koji se migrira
+- [[blokovi/BLOK-C-sledece]] — WooCommerce migracija

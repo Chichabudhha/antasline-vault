@@ -1,4 +1,4 @@
-# Instrukcija za CLAUDE.md (u htdocs)
+# Instrukcija za [[CLAUDE]] (u htdocs)
 
 > [!warning] DOPIŠI NA KRAJ — NE BRISATI
 > Blok ispod se **dodaje na kraj** postojećeg `C:\xampp\htdocs\antasline\CLAUDE.md`. Sav stari sadržaj MORA ostati. Prvo napravi backup (`copy CLAUDE.md CLAUDE.md.bak`), pa append (`>>`), nikad overwrite (`>`).
@@ -16,13 +16,13 @@ zasebni Obsidian vault: `C:\Projekti\antasline-vault\`
 (U htdocs ostaju samo `.bak` kopije kao mreža — ne koristi ih za rad.)
 
 KANONSKI FAJLOVI (u vault root-u):
-- `PROGRESS.md`         = trenutno stanje (prepisuje se svaki put)
-- `DNEVNIK-NAPRETKA.md` = hronološki ledger (samo se DODAJE na kraj)
+- [[PROGRESS]] = trenutno stanje (prepisuje se svaki put)
+- [[DNEVNIK-NAPRETKA]] = hronološki ledger (samo se DODAJE na kraj)
 
 PRAVILA:
 1. PRE rada pročitaj:
-   - `C:\Projekti\antasline-vault\PROGRESS.md` (gde smo)
-   - `C:\Projekti\antasline-vault\blokovi\BLOK-C-sledece.md` (prioritet)
+   - [[PROGRESS]] (gde smo)
+   - [[blokovi/BLOK-C-sledece]] (prioritet)
 2. POSLE rada:
    a) DODAJ (append, ne overwrite) red na kraj `DNEVNIK-NAPRETKA.md`:
       `## YYYY-MM-DD [claude-code] — kratak opis`
@@ -38,11 +38,11 @@ PRAVILA:
 
 ## ADS workflow (kada radiš na Google Ads)
 
-PRE: pročitaj `C:\Projekti\antasline-vault\dnevnik\ADS-DNEVNIK.md` (stanje + fazni plan).
+PRE: pročitaj [[dnevnik/ADS-DNEVNIK]] (stanje + fazni plan).
 
 POSLE ADS rada:
-1. **ADS-DNEVNIK.md `## 🗒️ Log`** — dodaj unos na vrh (format: `### YYYY-MM-DD [izvor]`)
+1. **[[dnevnik/ADS-DNEVNIK]] `## 🗒️ Log`** — dodaj unos na vrh (format: `### YYYY-MM-DD [izvor]`)
    - Ažuriraj `## 🚦 Trenutno stanje` tabelu ako se promenilo
    - Štikliraj završene checkboxe u faznom planu
-2. **DNEVNIK-NAPRETKA.md** — dodaj kratak red `## YYYY-MM-DD [...] [ADS] — opis` s linkom na ADS-DNEVNIK
-3. **PROGRESS.md `## ADS`** — prepiši sekciju da odražava novo stanje
+2. **[[DNEVNIK-NAPRETKA]]** — dodaj kratak red `## YYYY-MM-DD [...] [ADS] — opis` s linkom na ADS-DNEVNIK
+3. **[[PROGRESS]] `## ADS`** — prepiši sekciju da odražava novo stanje

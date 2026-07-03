@@ -19,7 +19,7 @@ sinhronizovano-sa: [[DNEVNIK-NAPRETKA]], [[PROGRESS]]
 >
 > **INTEGRIRANO sa masternom istorijom:** Svaki novi Log unos automatski ide i u [[DNEVNIK-NAPRETKA]] kao `[ADS]` red + u [[PROGRESS]] kao ažurirana sekcija. Odavde proveravaj status, planove i RSA banke; ali čitaj master ledger za ceo projekat.
 >
-> Povezano: [[DNEVNIK-NAPRETKA]] · [[B3 - Odblokiranje naloga]] · [[BLOK A - Tracking (GTM v10)]] · [[BLOK B - Publike]] · [[Epoksid conquest - post 2542]]
+> Povezano: [[DNEVNIK-NAPRETKA]] · [[B3 - Odblokiranje naloga]] · [[blokovi/BLOK-A-tracking]] · [[blokovi/BLOK-B-publike]]
 
 Nalog: `156-886-0314` (Gogin Nalog) · Strategija: **Maximize Clicks** (namerno, do praga) · Valuta: RSD
 
@@ -30,7 +30,7 @@ Nalog: `156-886-0314` (Gogin Nalog) · Strategija: **Maximize Clicks** (namerno,
 | Kampanja | Stanje | Napomena |
 |---|---|---|
 | Podloge za terase i bazene | ✅ radi | CTR 19%, ali slaba konverzija → fokus na kreativu i strukturu |
-| ECOTILE INDUSTRIJSKI PODOVI | ⛔ zagušena | prikazi −67%, CPC ≈3× → uzrok [[B3 - Odblokiranje naloga\|B3]], ne tržište |
+| ECOTILE INDUSTRIJSKI PODOVI | ⛔ zagušena | prikazi −67%, CPC ≈3× → uzrok [[B3 - Odblokiranje naloga|B3]], ne tržište |
 
 > [!warning] Blokada na nivou naloga
 > ECOTILE optimizacija **nema smisla dok se ne reši [[B3 - Odblokiranje naloga]]** (nizak balans + verifikacija oglašivača). Premalo prikaza → sistem ne može da uči kombinacije. Ne dizati bid/budžet da se "kompenzuje".
@@ -54,10 +54,10 @@ Nalog: `156-886-0314` (Gogin Nalog) · Strategija: **Maximize Clicks** (namerno,
 - [ ] ECOTILE → 2 ad grupe: `industrijski` · `esd/antistatik` (po odblokiranju)
 - [ ] Svaka ad grupa dobija svoj RSA (diže keyword relevance)
 - [ ] Match tip: ostaje phrase/exact; broad tek uz Smart Bidding
-- [ ] [[Negativne ključne reči]] potvrđene na obe kampanje
+- [ ] Negativne ključne reči potvrđene na obe kampanje (vidi [[CLAUDE]] sekcija 6)
 
 ### Faza 3 — Merenje i priprema za Smart Bidding
-- [ ] [[Enhanced Conversions - GTM]] (SHA-256 email+telefon iz forme)
+- [ ] Enhanced Conversions (SHA-256 email+telefon iz forme) — trebalo bi da se implementira kroz GTM
 - [ ] Primarna konverzija = isključivo uvoz `/hvala-za-poruku/`
 - [ ] `lead_form_start` + `epoxy_conquest_engagement` = samo posmatranje (ne uvoziti)
 - [ ] GA4 `tel` NE uvoziti kao Ads konverziju (već postoji GTM click-to-call)
@@ -67,7 +67,7 @@ Nalog: `156-886-0314` (Gogin Nalog) · Strategija: **Maximize Clicks** (namerno,
 ### Faza 4 — Geo, pozivi, publike
 - [ ] Geo bid: ECOTILE +20–30% (BG, NS, Niš, KG, Šabac); Terase gore na zone sa kućama/bazenima
 - [ ] Call asset `072`, radno vreme, mobilni bid +15–20%
-- [ ] [[BLOK B - Publike]] zakačene na Search u **Observation** modu (ne Targeting)
+- [ ] [[blokovi/BLOK-B-publike]] zakačene na Search u **Observation** modu (ne Targeting)
 
 ---
 
@@ -90,7 +90,7 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 - ESD opcija za elektroniku i čiste sobe. Klik-sistem, bez lepka i sušenja.
 - Alternativa epoksidu bez mirisa i čekanja — pod odmah upotrebljiv.
 
-> [!note] "Alternativa epoksidu" = pozicioniranje u tekstu, NE ciljanje. Epoksid ostaje negativna reč; conquest na epoksid je SEO posao → [[Epoksid conquest - post 2542]].
+> [!note] "Alternativa epoksidu" = pozicioniranje u tekstu, NE ciljanje. Epoksid ostaje negativna reč; conquest na epoksid je SEO posao (post 2542 na live sajtu).
 
 ---
 

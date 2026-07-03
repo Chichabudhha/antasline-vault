@@ -8,12 +8,12 @@ azurirano: 2026-06-28
 Jedina istina projekta na disku. Sve sesije (terminal + chat) i odluke se slivaju ovde.
 
 > [!info] Kako radi
-> Tri nivoa, sve povezano: **`PROGRESS.md`** = trenutno stanje, **`DNEVNIK-NAPRETKA.md`** = hronološki ledger (svaka sesija, svaki alat), **`dnevnik/`** = detaljni zapisi velikih sesija. Dashboard se sam puni iz `alat:` oznaka.
+> Tri nivoa, sve povezano: **[[PROGRESS]]** = trenutno stanje, **[[DNEVNIK-NAPRETKA]]** = hronološki ledger (svaka sesija, svaki alat), **`dnevnik/`** = detaljni zapisi velikih sesija. Dashboard se sam puni iz `alat:` oznaka.
 
 ---
 
 ## 📍 Trenutno stanje
-> Ugrađeno iz `PROGRESS.md` — ažurira ga Claude Code.
+> Ugrađeno iz [[PROGRESS]] — ažurira ga Claude Code.
 
 ![[PROGRESS]]
 
@@ -78,12 +78,12 @@ WHERE !completed AND !contains(file.name, "TEMPLATE") AND contains(text, "#claud
 ---
 
 ## 🧭 Brza navigacija
-- [[BLOK-A-tracking]] — tracking infrastruktura (zatvoreno)
-- [[BLOK-B-publike]] — GA4 publike + funnel (zatvoreno)
-- [[BLOK-C-sledece]] — sledeći korak (C1 redirect / C2 content / C3 on-page)
-- [[_pregled-odluka]] — sve donete odluke + zašto
-- [[identifikatori]] — GA4/GTM/Ads ID-evi
-- [[naucene-lekcije]] — tehnički gotchas
+- [[blokovi/BLOK-A-tracking]] — tracking infrastruktura (zatvoreno)
+- [[blokovi/BLOK-B-publike]] — GA4 publike + funnel (zatvoreno)
+- [[blokovi/BLOK-C-sledece]] — sledeći korak (C1 redirect / C2 content / C3 on-page)
+- [[odluke/_pregled-odluka]] — sve donete odluke + zašto
+- [[reference/identifikatori]] — GA4/GTM/Ads ID-evi
+- [[reference/naucene-lekcije]] — tehnički gotchas
 
 ## 📊 Stanje konverzija
 Prag za Maximize Conversions: **20–30 pravih** konverzija sa `/hvala-za-poruku/`.

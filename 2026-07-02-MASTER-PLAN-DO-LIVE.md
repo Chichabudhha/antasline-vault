@@ -104,7 +104,7 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
   - PageSpeed Insights: http://localhost/antasline
   - Web Vitals: LCP, CLS, INP
   - Lighthouse audit (lokalno)
-  - Kreiraj `[[Tehnička optimizacija - audit]]` (novi fajl)
+  - Napravi detaljnu analizu i spremi kao `PERFORMANCE-AUDIT.md` u dnevnik/
   
 - [ ] **Lokalni build optimizacija (NE LIVE!)**
   - Porto tema — ukloniti nepotrebne CSS/JS
@@ -126,7 +126,7 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
   - Pripremi za `.htaccess` ili WordPress redirect plugin
 
 - [ ] **GSC ključne reči — prioritet**
-  - Kreiraj 4 nove landing stranice (iz 2026-07-02-gsc-keywords-analiza):
+  - Kreiraj 4 nove landing stranice (iz [[dnevnik/2026-07-02-gsc-keywords-analiza]]):
     1. `/dimenzije-basketskog-terena/` (240 impr, 2,5% CTR)
     2. `/terasa-cena/` ili `/spoljne-podloge-cena/` (236 impr)
     3. `/basketball-tabla-dimenzije/` (150 impr)
@@ -160,7 +160,7 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
 - Slike sa alt tekst-om
 
 #### 🔍 On-page optimizacija (postojeće)
-- [ ] **Basketball strannica** — dodaj FAQ + unapređena schema (iz `2026-07-02-basket-page-faq-schema.md`)
+- [ ] **Basketball strannica** — dodaj FAQ + unapređena schema (iz [[dnevnik/2026-07-02-basket-page-faq-schema]])
 - [ ] **Top 10 stranica iz GA4** — refresh meta/title/H1-H2 struktura
 - [ ] **Top 10 GSC query stranice** — povećaj CTR sa rich snippets
 
@@ -196,7 +196,7 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
   4. **Parking** → 1 ad grupa
   5. **(Opciono) Bazen** → 1 kampanja
 
-- [ ] RSA asset dodavanje (uz exist. banka iz ADS-DNEVNIK.md)
+- [ ] RSA asset dodavanje (uz exist. banka iz [[dnevnik/ADS-DNEVNIK]])
 - [ ] Bid adjustment po segment-u (industrija +20%, parking +15%, ostalo baseline)
 - [ ] Conversion action verifikacija (samo `/hvala-za-poruku/`)
 
@@ -240,7 +240,7 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
 #### 📈 Quick wins za conversion rate
 - [ ] CTA buttons — veličina, boja, tekst (A/B test?)
 - [ ] Trust signals — sertifikati, broj zadovoljnih klijenata, reference
-- [ ] Telefon asset u Ads (072 prioritet — iz CLAUDE.md)
+- [ ] Telefon asset u Ads (072 prioritet — iz [[CLAUDE]])
 - [ ] Checkout friction — form fields, payment options
 - [ ] Email follow-up automation (nakon kontakta)
 
@@ -267,12 +267,12 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
 
 | Fajl | Sadržaj | Za koje faze |
 |---|---|---|
-| `[[2026-07-02-analiza-segmentacije]]` | 5 GA4 publika + Ads strategija | Faza 2 (Ads) |
-| `[[2026-07-02-gsc-keywords-analiza]]` | 60 GSC queries + 4 kritična prioriteta | Faza 1 (SEO) |
-| `[[2026-07-02-basket-page-faq-schema]]` | FAQ HTML + schema za basket stranicu | Faza 1 (On-page) |
-| `[[ADS-DNEVNIK]]` | RSA asset banka, fazni plan 0-4 | Faza 2 (Ads) |
-| `[[CLAUDE.md]]` | Sve instrukcije, identifikatori, lekcije | Sve faze |
-| `[[PROGRESS.md]]` | Tekuće stanje — UV-uvek prvo pogledati | Sve faze |
+| `[[dnevnik/2026-07-02-analiza-segmentacije]]` | 5 GA4 publika + Ads strategija | Faza 2 (Ads) |
+| `[[dnevnik/2026-07-02-gsc-keywords-analiza]]` | 60 GSC queries + 4 kritična prioriteta | Faza 1 (SEO) |
+| `[[dnevnik/2026-07-02-basket-page-faq-schema]]` | FAQ HTML + schema za basket stranicu | Faza 1 (On-page) |
+| `[[dnevnik/ADS-DNEVNIK]]` | RSA asset banka, fazni plan 0-4 | Faza 2 (Ads) |
+| `[[CLAUDE]]` | Sve instrukcije, identifikatori, lekcije | Sve faze |
+| `[[PROGRESS]]` | Tekuće stanje — UV-uvek prvo pogledati | Sve faze |
 
 ---
 

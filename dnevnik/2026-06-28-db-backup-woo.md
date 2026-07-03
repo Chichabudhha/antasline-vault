@@ -26,4 +26,4 @@ status: zavrseno
 
 ## Veze
 
-- [[BLOK-C-sledece]] — prioriteti
+- [[blokovi/BLOK-C-sledece]] — prioriteti

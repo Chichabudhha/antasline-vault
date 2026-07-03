@@ -16,12 +16,12 @@ status: zavrseno
 
 ## Otvorene akcije
 - [x] Aktivirati Dataview plugin u Obsidian-u #ceka-miroslav
-- [x] Ubaciti instrukcioni blok iz `CLAUDE-CODE-instrukcija.md` u `C:\xampp\htdocs\antasline\CLAUDE.md` #ceka-miroslav
+- [x] Ubaciti instrukcioni blok iz [[CLAUDE-CODE-instrukcija]] u `C:\xampp\htdocs\antasline\CLAUDE.md` #ceka-miroslav
 - [ ] Izabrati BLOK C stavku za sledeću sesiju (C1/C2/C3) #ceka-miroslav
 
 ## Beleške / odluke
 - Kičma objedinjavanja = `DNEVNIK-NAPRETKA` princip: svaka sesija ostavlja datiran unos sa `alat:` oznakom.
 
 ## Veze
-- Povezana odluka: [[_pregled-odluka]]
-- Sledeće: [[BLOK-C-sledece]]
+- Povezana odluka: [[odluke/_pregled-odluka]]
+- Sledeće: [[blokovi/BLOK-C-sledece]]

@@ -22,7 +22,7 @@ azurirano: 2026-06-28
 **Zašto:** trenutno 33 ukupno ali samo 2 iz plaćenog — premalo signala za smart bidding.
 
 ## Otvorene odluke (BLOK C)
-Vidi [[BLOK-C-sledece]] — dispozicija staging-only proizvoda, overwrite vs preserve postova.
+Vidi [[blokovi/BLOK-C-sledece]] — dispozicija staging-only proizvoda, overwrite vs preserve postova.
 
 ## Veze
-- [[BLOK-C-sledece]]
+- [[blokovi/BLOK-C-sledece]]

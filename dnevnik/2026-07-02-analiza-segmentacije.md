@@ -277,8 +277,8 @@ GA4 Publika:
 ---
 
 ## 🔗 Veze
-- [[ADS-DNEVNIK]] — Google Ads plan i RSA banka
-- [[PROGRESS.md]] — update-uj nakon kreiranja publika
-- [[BLOK-C-sledece]] — SEO redirect prioritet za parking stranice
+- [[dnevnik/ADS-DNEVNIK]] — Google Ads plan i RSA banka
+- [[PROGRESS]] — update-uj nakon kreiranja publika
+- [[blokovi/BLOK-C-sledece]] — SEO redirect prioritet za parking stranice
 
 **Sledeći unos:** posle kreiranja GA4 publika + Ads ad grupa 

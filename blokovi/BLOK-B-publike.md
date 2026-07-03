@@ -23,4 +23,4 @@ Sve 4 publike kreirane i vidljive u Ads Audience manageru (Source = "Google Anal
 - [ ] B3 administrativno: "Balance running low" + "Complete advertiser verification" #ceka-miroslav
 
 ## Veze
-- [[naucene-lekcije]] — `epoxy_conquest_engagement` count ≥1, 4.3K = procena pool-a
+- [[reference/naucene-lekcije]] — `epoxy_conquest_engagement` count ≥1, 4.3K = procena pool-a

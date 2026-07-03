@@ -309,9 +309,9 @@ Dodaj ovo **PRE FAQ sekcije** (ako postoji) ili kao **NOV FAQ blok** u WPBakery:
 ---
 
 ## 🔗 Veze
-- [[2026-07-02-gsc-keywords-analiza]] — GSC analysis (queries koje ovo rešava)
-- [[ADS-DNEVNIK]] — link za ad group "Basketball dimenzije"
-- PROGRESS.md — dodaj u "Urađeno" posle implementacije
+- [[dnevnik/2026-07-02-gsc-keywords-analiza]] — GSC analysis (queries koje ovo rešava)
+- [[dnevnik/ADS-DNEVNIK]] — link za ad group "Basketball dimenzije"
+- [[PROGRESS]] — dodaj u "Urađeno" posle implementacije
 
 ---
 

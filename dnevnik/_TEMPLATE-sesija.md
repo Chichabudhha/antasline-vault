@@ -22,5 +22,5 @@ status:
 - 
 
 ## Veze
-- Povezana odluka: [[ ]]
-- Brief: [[ ]]
+- Povezana odluka: [[odluke/_pregled-odluka]] (ako se odnosi na donesene odluke)
+- Brief: [[briefs/_README]] (ako postoji brief)

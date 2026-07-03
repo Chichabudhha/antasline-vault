@@ -312,15 +312,13 @@ sesija, `[cpanel-live]` = live produkcija.
 
 ### 8.2 Obsidian struktura
 - Vault: `C:\Projekti\antasline-vault\`
-- `PROGRESS.md` — snapshot trenutnog stanja (**izvor istine za "gde smo
+- [[PROGRESS]] — snapshot trenutnog stanja (**izvor istine za "gde smo
   stali"** — pre svakog zadatka proveriti ovaj fajl)
-- `DNEVNIK-NAPRETKA.md` — append-only ledger, `merge=union` u `.gitattributes`
+- [[DNEVNIK-NAPRETKA]] — append-only ledger, `merge=union` u `.gitattributes`
 - Dataview plugin je potreban za dashboard upite
-- Wikilinks: `[[B3 - Odblokiranje naloga]]`, `[[BLOK A - Tracking (GTM v10)]]`,
-  `[[BLOK B - Publike]]`, `[[Epoksid conquest - post 2542]]`,
-  `[[Enhanced Conversions - GTM]]`, `[[Negativne ključne reči]]`,
-  `[[DNEVNIK-NAPRETKA]]`
-- `ADS-DNEVNIK.md`: living hub sa YAML frontmatter, Faze 0–4 checkbox plan,
+- Wikilinks: `[[B3 - Odblokiranje naloga]]`, `[[blokovi/BLOK-A-tracking]]`,
+  `[[blokovi/BLOK-B-publike]]`, `[[DNEVNIK-NAPRETKA]]`
+- [[dnevnik/ADS-DNEVNIK]]: living hub sa YAML frontmatter, Faze 0–4 checkbox plan,
   RSA asset bank na srpskom za obe kampanje, hard rules/guardrails, append-only
   dated log
 
@@ -434,50 +432,50 @@ backup-a i bez odobrenja.
 Ovaj fajl nosi *pravila ponašanja i istorijski kontekst* — ne menja se često.
 Za **"gde smo stali danas"** uvek prvo pogledaj:
 1. `[[2026-07-02-MASTER-PLAN-DO-LIVE]]` — 2-mesečni plan (Tehnička → SEO → Ads)
-2. `[[PROGRESS.md]]` u vault-u — snapshot trenutnog stanja
-3. `[[DNEVNIK-NAPRETKA.md]]` (append-only ledger, poslednji unosi)
-4. Aktivni BLOK C pod-zadatak: `[[BLOK-C-sledece]]` (C1 redirect / C2 content / C3 on-page)
+2. `[[PROGRESS]]` u vault-u — snapshot trenutnog stanja
+3. `[[DNEVNIK-NAPRETKA]]` (append-only ledger, poslednji unosi)
+4. Aktivni BLOK C pod-zadatak: `[[blokovi/BLOK-C-sledece]]` (C1 redirect / C2 content / C3 on-page)
 
 ---
 
 ## 13. KOMPLETAN HUB SVIH FAJLOVA (Wikilinks za navigaciju)
 
 ### 📋 OSNOVNO — Pročitaj prvo
-- `[[00-INDEX.md]]` — Dashboard (Dataview tabele)
-- `[[CLAUDE.md]]` — Ovo (instrukcije + kontekst)
-- `[[PROGRESS.md]]` — Trenutno stanje
-- `[[2026-07-02-MASTER-PLAN-DO-LIVE.md]]` — 2-mesečni plan do live-a
+- `[[00-INDEX]]` — Dashboard (Dataview tabele)
+- `[[CLAUDE]]` — Ovo (instrukcije + kontekst)
+- `[[PROGRESS]]` — Trenutno stanje
+- `[[2026-07-02-MASTER-PLAN-DO-LIVE]]` — 2-mesečni plan do live-a
 
 ### 📖 HRONOLOGIJA — Šta je urađeno po datumima
-- `[[DNEVNIK-NAPRETKA.md]]` — Append-only ledger (svaka sesija)
-- `[[dnevnik/2026-07-02-analiza-segmentacije.md]]` — GA4 publike + Ads strategija
-- `[[dnevnik/2026-07-02-gsc-keywords-analiza.md]]` — 60 GSC queries + 4 kritična prioriteta
-- `[[dnevnik/2026-07-02-basket-page-faq-schema.md]]` — FAQ + schema za basketball
-- `[[dnevnik/2026-06-28-postavljanje-vault.md]]` — Vault setup + GitHub most
-- `[[dnevnik/2026-06-28-db-backup-woo.md]]` — WooCommerce backup
-- `[[dnevnik/2026-06-28-woo-transfer-attempt.md]]` — WooCommerce migracija (čeka SSH)
-- `[[dnevnik/ADS-DNEVNIK.md]]` — Living hub za Google Ads, RSA banka, Faze 0-4
+- `[[DNEVNIK-NAPRETKA]]` — Append-only ledger (svaka sesija)
+- `[[dnevnik/2026-07-02-analiza-segmentacije]]` — GA4 publike + Ads strategija
+- `[[dnevnik/2026-07-02-gsc-keywords-analiza]]` — 60 GSC queries + 4 kritična prioriteta
+- `[[dnevnik/2026-07-02-basket-page-faq-schema]]` — FAQ + schema za basketball
+- `[[dnevnik/2026-06-28-postavljanje-vault]]` — Vault setup + GitHub most
+- `[[dnevnik/2026-06-28-db-backup-woo]]` — WooCommerce backup
+- `[[dnevnik/2026-06-28-woo-transfer-attempt]]` — WooCommerce migracija (čeka SSH)
+- `[[dnevnik/ADS-DNEVNIK]]` — Living hub za Google Ads, RSA banka, Faze 0-4
 
 ### 🧱 BLOK ORGANIZACIJA — Rad po prioritetima
-- `[[blokovi/BLOK-A-tracking.md]]` — ✅ ZATVOREN (GTM v10, Consent, key events)
-- `[[blokovi/BLOK-B-publike.md]]` — ✅ ZATVOREN (6 GA4 publika)
-- `[[blokovi/BLOK-C-sledece.md]]` — ⏳ AKTIVNO (C1 redirect / C2 content / C3 on-page)
+- `[[blokovi/BLOK-A-tracking]]` — ✅ ZATVOREN (GTM v10, Consent, key events)
+- `[[blokovi/BLOK-B-publike]]` — ✅ ZATVOREN (6 GA4 publika)
+- `[[blokovi/BLOK-C-sledece]]` — ⏳ AKTIVNO (C1 redirect / C2 content / C3 on-page)
 
 ### 🎯 STRATEGIJA I ODLUKE
-- `[[odluke/_pregled-odluka.md]]` — Sve donete odluke + zašto
-- `[[reference/identifikatori.md]]` — Google Ads/GA4/GSC/GTM ID-evi
-- `[[reference/naucene-lekcije.md]]` — Tehnički gotchas (GTM, Windsor, SEO, telefon)
+- `[[odluke/_pregled-odluka]]` — Sve donete odluke + zašto
+- `[[reference/identifikatori]]` — Google Ads/GA4/GSC/GTM ID-evi
+- `[[reference/naucene-lekcije]]` — Tehnički gotchas (GTM, Windsor, SEO, telefon)
 
 ### 📚 DOKUMENTACIJA
-- `[[briefs/_README.md]]` — (ako postoji brief za kampanje)
-- `[[seo/_README.md]]` — SEO strategija
-- `[[CLAUDE-CODE-instrukcija.md]]` — Instrukcije za Claude Code rad
-- `[[CLAUDE-CODE-instrukcija-CPANEL.md]]` — cPanel live rad instrukcije
+- `[[briefs/_README]]` — (ako postoji brief za kampanje)
+- `[[seo/_README]]` — SEO strategija
+- `[[CLAUDE-CODE-instrukcija]]` — Instrukcije za Claude Code rad
+- `[[CLAUDE-CODE-instrukcija-CPANEL]]` — cPanel live rad instrukcije
 
 ### 🔗 VAŽNI ESTERNI LINKOVI (U tekstu)
 - Live sajt: https://www.antasline.com
 - Lokalni build: http://localhost/antasline
-- Google Ads nalog: 156-886-0314 (vidi `[[reference/identifikatori.md]]`)
+- Google Ads nalog: 156-886-0314 (vidi `[[reference/identifikatori]]`)
 - GA4: 292720335
 - GTM: GTM-TRDT8K9
 - GSC: sc-domain:antasline.com
@@ -536,4 +534,4 @@ Kada otvorim CLAUDE.md sledeći put, znaću:
 7. ✅ **Prioritet** — Tehnička → SEO → Ads
 8. ✅ **Timeline** — 2 meseca (do 2026-09-02)
 9. ✅ **Šta trebam od Miroslava** — 5 konkretnih odgovora
-10. ✅ **Šta radim sad** — [[2026-07-02-MASTER-PLAN-DO-LIVE.md]] (Faza 0-3)
+10. ✅ **Šta radim sad** — [[2026-07-02-MASTER-PLAN-DO-LIVE]] (Faza 0-3)

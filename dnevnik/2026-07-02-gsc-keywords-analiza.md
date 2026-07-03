@@ -159,9 +159,9 @@ azurirano: 2026-07-02
 ---
 
 ## 🔗 Veze
-- [[ADS-DNEVNIK]] — ključne reči za Ad groups (match types: exact, phrase)
-- [[2026-07-02-analiza-segmentacije]] — GA4 publike (linkuj novi postovi u segment)
-- [[PROGRESS.md]] — update "Sledeće: C1 redirect + novi postovi"
+- [[dnevnik/ADS-DNEVNIK]] — ključne reči za Ad groups (match types: exact, phrase)
+- [[dnevnik/2026-07-02-analiza-segmentacije]] — GA4 publike (linkuj novi postovi u segment)
+- [[PROGRESS]] — update "Sledeće: C1 redirect + novi postovi"
 
 **Sledeći unos:** Posle kreiranja prvog seta novih stranica (4 najveće prioritete)
 

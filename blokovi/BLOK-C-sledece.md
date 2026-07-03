@@ -30,4 +30,4 @@ Crawl otkrio: 32 proizvoda na live vs 10 na stagingu (27 nedostaje, 5 samo na st
 - [ ] Izabrati C1 / C2 / C3 za sledeću sesiju #ceka-miroslav
 
 ## Veze
-- [[_pregled-odluka]] — flat `/proizvod/` struktura
+- [[odluke/_pregled-odluka]] — flat `/proizvod/` struktura

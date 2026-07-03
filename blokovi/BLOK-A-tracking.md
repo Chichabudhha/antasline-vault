@@ -21,5 +21,5 @@ GTM Version 10 objavljen. Kontejner `GTM-TRDT8K9`.
 - [ ] Verifikacija posle Consent Mode + gašenja MI: očekivati blag pad apsolutnih konverzija = tačnije merenje, NE pad performansi. Ne reagovati budžetom. #ceka-miroslav
 
 ## Veze
-- [[naucene-lekcije]] — GTM import gotchas, consent handler
-- [[identifikatori]]
+- [[reference/naucene-lekcije]] — GTM import gotchas, consent handler
+- [[reference/identifikatori]]
