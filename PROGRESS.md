@@ -10,23 +10,21 @@
 
 ## Sledeće
 
-1. **301 Redirect mapa — ručna verifikacija (20 redova PROVERI)**
+1. **Ručno brisanje nepotrebnih slika na proizvodima (localhost)**
+   - Task #1 kreiram — videti dodatne/duplikate attachment-e
+   - 42 proizvoda, 41 sa relevantnim slikama — očistiti ostatak
+
+2. **301 Redirect mapa — ručna verifikacija (20 redova PROVERI)**
    - Potvrdi da sve PROVERI stranice stvarno postoje na buildu
    - Posebno: /sportska-igralista/, /zamena-parketa-u-sportskim-salama/, /podloge-za-krovove-i-terase/, itd.
 
-2. **Strategijske odluke (5 redova NEMA NA BUILDU)**
-   - /iznajmljivanje-podova/ (79 klikova) — napraviti stranicu ili 301?
-   - /sportske-podloge/opremazasportsketerene/* (reflektori) — nova sekcija?
-   - /kategorija-proizvoda/podloge-za-stale-i-trave/ — koja je novi URL?
-   - /kategorija-proizvoda/sigurnosni-senzori-signalni-sistemi/ — obrisano?
+3. **URL struktura proizvoda**
+   - Trebalo bi: `/proizvod/bergo-unique-bela/`
+   - Sada je: `/bergo-unique-bela/`
+   - Popravljanje permalink strukture
 
-3. **WooCommerce AUTO-PREDLOG validacija (41 proizvoda + 8 kategorija)**
-   - Proveri /shop/ strukturu na buildu
-   - Validitraj /kategorija/* URL-ove
-
-4. **On-page SEO — ostale stranice**
-   - Pregledati ostale stranice sa praznim Yoast title-om
-   - Prioritet: /industrijski-podovi/ sekcija
+4. **Status proizvoda**
+   - Većina su `draft` — trebalo bi `publish`
 
 ## Blokeri
 

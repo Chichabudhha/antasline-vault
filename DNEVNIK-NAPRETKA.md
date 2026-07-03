@@ -1,5 +1,16 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-03 [claude-code] [BLOK C - WooCommerce import] — Prebacivanje proizvoda sa live na localhost
+- ✅ Vratim bekap pre nego što su obrisani proizvodi (backup-pre-parity-20260628-1135.sql) — homepage i stranice ostaju
+- ✅ Obrisao samo 43 stara proizvoda + kategorije (bez dotacanja stranica/postova)
+- ✅ Učitana live baza (127 MB) u temp
+- ✅ Prebačeni proizvodi + attachment-i sa live baze (sa konverzijom prefixsa wp_ → wpGs_)
+- ✅ Preuzeli XML export sa live (`antasline.WordPress.2026-07-03.xml`)
+- ✅ WP-CLI import: `wp import import.xml --authors=create` — 42 proizvoda importovana sa svim meta podacima
+- **Rezultat:** 42 proizvoda, 41 sa slikama (97.6%), 434 relevantne attachment-a, 24 stranice + 34 posta netaknuti
+- **Otvoreno:** Ručno brisanje dodatnih/nepotrebnih slika na proizvodima #ceka-miroslav
+- Finalni bekap: `backup-FINAL-41sa-slikom-20260703.sql`
+
 ## 2026-07-03 [cpanel-live] — Optimizacija baze (UŽIVO)
 - Backup: `~/backups/antasline_db_2026-07-03_2031.sql`
 - Otklonjen kritični problem: `wp_litespeed_img_optm` imala 3.251.490 orphan redova (post_id=0, src prazan) — runaway LiteSpeed greška → tabela sa 315.91 MB smanjena na 0.05 MB
