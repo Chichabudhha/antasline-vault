@@ -72,6 +72,7 @@ Adresira DIY upit (484 impr) — ne odbija ga, nego edukuje i pozicionira gotovu
 - Kompletna konstrukcija (ram + tabla + koš): `{{CENA_KONSTRUKCIJA_OD}}`–`{{CENA_KONSTRUKCIJA_DO}}` RSD
 - CTA: "Pošalji nam lokaciju i tip terena (indoor/outdoor) za tačnu ponudu" → forma / telefon **072**
 
+
 ### Interni linkovi (obavezno)
 - → kategorija proizvoda **Košarkaške konstrukcije** (predlog URL na redizajnu: `/kategorija/kosarkaske-konstrukcije/` — **treba potvrditi finalni slug**, zavisi od BLOK C1 odluke o `/sportske-podloge/kosarkaske-konstrukcije/` redirect cilju, videti [[blokovi/BLOK-C-sledece]])
 - → [[dnevnik/2026-07-02-basket-page-faq-schema|članak "Kako napraviti teren za basket"]] (dimenzije terena — sibling stranica, uzajamni link)
@@ -183,3 +184,12 @@ Adresira DIY upit (484 impr) — ne odbija ga, nego edukuje i pozicionira gotovu
 - [[dnevnik/2026-07-02-basket-page-faq-schema]] — sibling stranica (dimenzije terena, #4 u planu)
 - [[blokovi/BLOK-C-sledece]] — C3 hub + C1 zavisnost (slug konstrukcija)
 - [[analiza/2026-07-04-gsc-kw-analiza-16m]] — izvor upita
+
+
+## Miroslav ideje i sugestije
+- povezati linkovima činjenice - izvori informacija
+- dodati Stephen Curry-ja kako je otkrio da je koš viši od standarnog i kako su sudije premerile i namestile koš na pravu dimenziju.
+## Neki od korisnih linkova:
+- https://www.basketball.org/origins-of-the-hoop/
+- https://www.hoophall.com/explore/about/history
+- https://www.nationalgeographic.com/history/article/basketball-only-major-sport-invented-united-states-how-it-was-created
