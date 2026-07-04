@@ -63,22 +63,22 @@
 | Kampanja | Stanje | Napomena |
 |---|---|---|
 | Podloge za terase i bazene | ✅ radi | CTR 19%, slaba konverzija → kreativa čeka |
-| ECOTILE INDUSTRIJSKI PODOVI | ⛔ zagušena | Faza 0 blokira — dopuni balans + verifikacija |
+| ECOTILE INDUSTRIJSKI PODOVI | ✅ odblokirana | Nalog odblokiran 2026-07-04 → proveriti da su prikazi/CPC vraćeni na normalu |
 
-**Aktivna faza:** 0 (odblokiranje) → 1 (RSA Terase — može odmah)  
+**Aktivna faza:** 1 (RSA Terase — može odmah) + 2 (struktura ad grupa); Faza 0 (odblokiranje) ✅ zatvorena 2026-07-04  
 **Pravih konverzija (jun):** 53 ukupno, 2–3 plaćene / prag Smart Bidding: 20–30
 
 ## ADS — Sledeće
 
-1. **Faza 0 — preduslov** `#ceka-miroslav`
-   - Dopuna balansa i završetak verifikacije oglašivača
-   - ECOTILE nema smisla dirati dok se ovo ne reši
+1. **Faza 0 — preduslov** ✅ ZAVRŠENO 2026-07-04
+   - Dopuna balansa + verifikacija oglašivača gotovi → nalog odblokiran
+   - Preostaje: potvrditi da su ECOTILE prikazi/CPC vraćeni na normalu
 2. **Faza 1 — RSA Terase** (ne čeka odblokiranje)
    - 15 headlines + 4 descriptions → Ad Strength ≥ Good
 3. **Faza 2 — Struktura ad grupe** (Terase → 3 grupe: terase | bazeni | bergo/modularne)
 
 ## ADS — Blokeri
 
-- Verifikacija oglašivača + nizak balans → ECOTILE je beznačajan dok se ovo ne reši
+- Nema — nalog odblokiran 2026-07-04 (balans + verifikacija). Preostaje samo potvrda da su ECOTILE prikazi/CPC vraćeni na normalu.
 
 **Detalji, plan i RSA banka:** [[dnevnik/ADS-DNEVNIK]]

@@ -1,5 +1,15 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-04 [claude-code] [VAULT - konzistentnost] — Ispravke nedoslednosti + brisanje B3
+- ✅ Obrisan `B3 - Odblokiranje naloga.md` (zadatak gotov: balans + verifikacija) + prazan `2026-07-02.md`
+- ✅ Sve B3 reference uklonjene/ažurirane; ADS Faza 0 zatvorena u [[dnevnik/ADS-DNEVNIK]], PROGRESS, MASTER-PLAN, CLAUDE, BLOK-B
+- ✅ ECOTILE status: ⛔ zagušena → ✅ odblokirana (istorijski logovi ostaju netaknuti)
+- ✅ Konektor `googleads` → `google_ads` u [[reference/identifikatori]]
+- ✅ Konverzije usklađene: `33` → `53` (jun) u [[00-INDEX]] + [[odluke/_pregled-odluka]]
+- ✅ Datum migracije: `2026-09-01 (utorak, pogrešno)` → `ponedeljak 2026-08-31`; weekly cadence prepravljen
+- ✅ WooCommerce lokal import (04.07) označen gotovim u blokerima (SSH ostaje samo za live)
+- **Otvoreno:** potvrditi u Ads da su ECOTILE prikazi/CPC vraćeni na normalu #claude-code
+
 ## 2026-07-04 [claude-code] [BLOK C1 - Redirect mapa VERIFIKACIJA] — ✅ SKORO GOTOVO! 106/118 redova finalizovano
 - ✅ Proverio 18 stranica sa "PROVERI da postoji" — sve postoje na localhost
 - ✅ WooCommerce kategorije — sve 10 postoje sa `/kategorija/...` URL struktura

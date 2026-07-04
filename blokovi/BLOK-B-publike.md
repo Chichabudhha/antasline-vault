@@ -20,7 +20,7 @@ Sve 4 publike kreirane i vidljive u Ads Audience manageru (Source = "Google Anal
 
 ## Otvorene akcije
 - [ ] Fino podešavanje (nije hitno): Bergo pod `/spoljnje-podne-obloge/` vuče terasni saobraćaj (~324 korisnika/14d). Ako Sport & Court slabo konvertuje, izbaciti bergo iz te publike. #claude-code
-- [ ] B3 administrativno: "Balance running low" + "Complete advertiser verification" #ceka-miroslav
+- [x] Odblokiranje naloga (dopuna balansa + verifikacija oglašivača) — ✅ urađeno 2026-07-04
 
 ## Veze
 - [[reference/naucene-lekcije]] — `epoxy_conquest_engagement` count ≥1, 4.3K = procena pool-a

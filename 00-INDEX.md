@@ -87,4 +87,4 @@ WHERE !completed AND !contains(file.name, "TEMPLATE") AND contains(text, "#claud
 
 ## 📊 Stanje konverzija
 Prag za Maximize Conversions: **20–30 pravih** konverzija sa `/hvala-za-poruku/`.
-Trenutno (poslednji upis): **33 ukupno, samo 2 iz plaćenog** → ostati na Maximize Clicks.
+Trenutno (jun 2026, ceo mesec): **53 ukupno, samo 2–3 iz plaćenog** → ostati na Maximize Clicks.

@@ -61,8 +61,8 @@ VAULT (~/antasline-vault na hosting)
 - 🟡 **C3: On-page build** — WPBakery JS bug, landing stranice
 
 ### 🔴 BLOKIRANO
-- ❌ WooCommerce migracija — čeka SSH konfiguracija (tvoj-lokal host)
-- ❌ Balans Google Ads — ECOTILE kolaps (-67% impressions)
+- ✅ ~~WooCommerce migracija na lokal~~ — urađeno 2026-07-04 (37 proizvoda + 10 kategorija + 115 slika, bez SSH-a, preko live export/import). Live prebacivanje ostaje za migraciju.
+- ✅ ~~Balans + verifikacija Google Ads~~ — odblokirano 2026-07-04; ECOTILE više nije throttlovan
 - ❌ GA4 publike (Task #1) — čeka Miroslava da kreira u GA4 UI
 - ❌ RankMath prelazak — cilj ali nije prioritet
 
@@ -132,11 +132,10 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
     3. `/basketball-tabla-dimenzije/` (150 impr)
     4. `/podloge-za-parkiraliste-cena/` (ili merge sa parking)
 
-#### 📊 Ads (PRIORITET #3 — čeka tehniku + balans)
-- [ ] **Balans Google Ads — MIROSLAV MORA DA REŠI BLOKADU**
-  - Dopuni nalog
-  - Završi verifikaciju oglašivača
-  - ECOTILE će se vratiti na normalnost
+#### 📊 Ads (PRIORITET #3)
+- [x] **Balans Google Ads + verifikacija oglašivača — REŠENO 2026-07-04**
+  - Nalog dopunjen, verifikacija završena → nalog odblokiran
+  - Preostaje: potvrditi da su ECOTILE prikazi/CPC vraćeni na normalu
 
 - [ ] **Task #1: GA4 publike — Miroslav kreira u GA4 UI**
   - 4 nove publike (Industrija+ESD, Sport, Parking, Bazen)
@@ -202,7 +201,7 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
 
 ---
 
-### FAZA 2.5: MIGRACIJA NA LIVE (2026-09-01, ponedeljak — 1 DAN!)
+### FAZA 2.5: MIGRACIJA NA LIVE (ponedeljak 2026-08-31 — 1 DAN!)
 
 **⚠️ SAMO KADA JE LOKALNI BUILD 100% GOTOV I TESTIRAN!**
 
@@ -256,7 +255,7 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
 
 | Bloker | Šta čeka | Ko | Deadline | Impact |
 |---|---|---|---|---|
-| Balans + Verifikacija Google Ads | ECOTILE kampanja (test na lokalu) | Miroslav | ASAP | MEDIUM — trebam za Ads test |
+| ~~Balans + Verifikacija Google Ads~~ | ✅ REŠENO 2026-07-04 — nalog odblokiran | — | — | — |
 | GA4 publike (Task #1) | Ads segmentacija (lokal) | Miroslav | do 2026-07-09 | LOW — mogu paralelno sa SEO |
 | Konverzioni levak info | Znamo li šta je prodaja? | Miroslav | do 2026-07-16 | MEDIUM — za CRM/follow-up setup |
 | Cena za domene/hosting | Potvrda za live migraciju | Miroslav | do 2026-08-20 | MEDIUM — trebam datum/IP za migraciju |
@@ -279,14 +278,15 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
 ## ⏱️ WEEKLY CADENCE (Nedelje 1-8)
 
 ```
-Nedelja 1 (2-8 jul): Tehnička audit + SSH config + C1 verifikacija
+Nedelja 1 (2-8 jul): Tehnička audit + C1 verifikacija
 Nedelja 2 (9-15 jul): Tehnička setup + 4 nove GSC stranice (start)
 Nedelja 3 (16-22 jul): GSC stranice (finish) + Ads struktura (start)
 Nedelja 4 (23-29 jul): On-page SEO (svih top 10 iz GA4) + Ads RSA
-Nedelja 5 (30-5 avg): LIVE MIGRACIJA (ponedeljak 30. jul)
-Nedelja 6 (6-12 avg): Live monitoring + Ads reorganizacija
-Nedelja 7 (13-19 avg): Fine-tuning conversion + CRM setup
-Nedelja 8 (20-2 sep): Final testing + Ads optimization setup
+Nedelja 5 (30 jul-5 avg): Finalizacija lokala + WooCommerce checkout test
+Nedelja 6 (6-12 avg): Backup + Ads reorganizacija (5 kampanja)
+Nedelja 7 (13-19 avg): Final testing lokala + priprema migracije
+Nedelja 8 (20-26 avg): Buffer + zamrzavanje builda
+→ LIVE MIGRACIJA: ponedeljak 2026-08-31 (1 dan) → post-live monitoring do 2026-09-02
 ```
 
 ---
@@ -301,7 +301,7 @@ Nedelja 8 (20-2 sep): Final testing + Ads optimization setup
 - ✅ Core Web Vitals >75
 - ✅ GA4 + GTM spreman za post-launch monitoring
 - ✅ CRM ili email tracking za kontakte
-- ✅ Balans problem SOLVED
+- ✅ Balans problem SOLVED (✅ urađeno 2026-07-04)
 
 **BONUS (ako ima vremena):**
 - RankMath prelazak (sa Yoast)
@@ -313,7 +313,7 @@ Nedelja 8 (20-2 sep): Final testing + Ads optimization setup
 
 ## 💬 PITANJA ZA MIROSLAVA
 
-1. **SSH config:** Koja je IP/port/ključ za `tvoj-lokal` host?
+1. **SSH config (za live migraciju):** Koja je IP/port/ključ za produkcioni host? (WooCommerce import na lokal je već urađen bez SSH-a — ovo treba samo za finalno prebacivanje.)
 2. **Konverzije:** Od 53 kontakta (jun) — koliko je postalo kupac? Kolika je prosečna vrednost?
 3. **Hosting:** Ostajete na cPanel ili prelazite na novi hosting?
 4. **Proizvodi:** Koji proizvodi su top 5 po prihodu?

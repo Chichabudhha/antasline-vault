@@ -19,7 +19,7 @@ sinhronizovano-sa: [[DNEVNIK-NAPRETKA]], [[PROGRESS]]
 >
 > **INTEGRIRANO sa masternom istorijom:** Svaki novi Log unos automatski ide i u [[DNEVNIK-NAPRETKA]] kao `[ADS]` red + u [[PROGRESS]] kao ažurirana sekcija. Odavde proveravaj status, planove i RSA banke; ali čitaj master ledger za ceo projekat.
 >
-> Povezano: [[DNEVNIK-NAPRETKA]] · [[B3 - Odblokiranje naloga]] · [[blokovi/BLOK-A-tracking]] · [[blokovi/BLOK-B-publike]]
+> Povezano: [[DNEVNIK-NAPRETKA]] · [[blokovi/BLOK-A-tracking]] · [[blokovi/BLOK-B-publike]]
 
 Nalog: `156-886-0314` (Gogin Nalog) · Strategija: **Maximize Clicks** (namerno, do praga) · Valuta: RSD
 
@@ -30,17 +30,17 @@ Nalog: `156-886-0314` (Gogin Nalog) · Strategija: **Maximize Clicks** (namerno,
 | Kampanja | Stanje | Napomena |
 |---|---|---|
 | Podloge za terase i bazene | ✅ radi | CTR 19%, ali slaba konverzija → fokus na kreativu i strukturu |
-| ECOTILE INDUSTRIJSKI PODOVI | ⛔ zagušena | prikazi −67%, CPC ≈3× → uzrok [[B3 - Odblokiranje naloga|B3]], ne tržište |
+| ECOTILE INDUSTRIJSKI PODOVI | ✅ odblokirana | Nalog odblokiran 2026-07-04 (balans + verifikacija) → proveriti da su prikazi/CPC vraćeni na normalu |
 
-> [!warning] Blokada na nivou naloga
-> ECOTILE optimizacija **nema smisla dok se ne reši [[B3 - Odblokiranje naloga]]** (nizak balans + verifikacija oglašivača). Premalo prikaza → sistem ne može da uči kombinacije. Ne dizati bid/budžet da se "kompenzuje".
+> [!note] Nalog odblokiran (2026-07-04)
+> Dopuna balansa i verifikacija oglašivača su završene — throttling na nivou naloga više nije uzrok pada prikaza. Sledeći korak: potvrditi u Ads da su ECOTILE prikazi/CPC vraćeni na normalu (uporedi sa snimkom 2026-07-01 u Logu), pa tek onda dizati kreativu/strukturu.
 
 ---
 
 ## 🎯 Fazni plan
 
-### Faza 0 — Odblokiraj nalog `[preduslov]`
-- [ ] Dopuna balansa → [[B3 - Odblokiranje naloga]]
+### Faza 0 — Odblokiraj nalog `[✅ zavrseno 2026-07-04]`
+- [x] Dopuna balansa
 - [x] Završena verifikacija oglašivača
 - [ ] Potvrda da su ECOTILE prikazi/CPC vraćeni na normalu (uporedi sa snimkom u Logu)
 
@@ -108,6 +108,11 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
 
+### 2026-07-04 [claude-code]
+- **Faza 0 zatvorena:** nalog odblokiran — dopuna balansa + verifikacija oglašivača završeni. Beleška `B3 - Odblokiranje naloga` obrisana (zadatak gotov), sve reference u vaultu ažurirane.
+- ECOTILE više nije throttlovan na nivou naloga → status u tabeli: ⛔ zagušena → ✅ odblokirana.
+- **Sledeći korak:** potvrditi u Ads da su ECOTILE prikazi/CPC vraćeni na normalu (uporedi sa snimkom 23–29.06), pa krenuti Faza 1 (RSA Terase) + Faza 2 (struktura ad grupa).
+
 ### 2026-07-01 [chat]
 **Snimak podataka (7d: 23–29.06 vs 16–22.06):**
 
@@ -122,7 +127,7 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 | GA4 generate_lead | 27 | 24 | +12,5% |
 | Hvala proxy | 22 | 20 | +10,0% |
 
-- ECOTILE zagušen: prikazi 802 → 261 (−67,5%), CPC 26 → 74 RSD. Uzrok = [[B3 - Odblokiranje naloga]].
+- ECOTILE zagušen: prikazi 802 → 261 (−67,5%), CPC 26 → 74 RSD. Uzrok = blokada naloga (balans + verifikacija; odblokirano 2026-07-04).
 - Terase: volumen klika dobar (296/ned), konverzija slaba (2) → prioritet kreativa + struktura.
 - Pad korisnika −36% je efekat prelaska na GTM-only + Consent Mode (~27.06), ne pad saobraćaja.
 - **Pravih konverzija u junu (1–29):** 53 (hvala-za-poruku). Plaćene i dalje daleko ispod praga 20–30.

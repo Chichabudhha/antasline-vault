@@ -33,6 +33,6 @@ azurirano: 2026-06-28
 
 ## Konektori (Windsor.ai)
 - GA4: account 292720335, connector `googleanalytics4`
-- Ads: connector `googleads`
+- Ads: account 156-886-0314, connector `google_ads`
 - GSC: connector `searchconsole`
 - Windsor.ai je READ-ONLY — potvrđuje evente, ne menja GTM/GA4.

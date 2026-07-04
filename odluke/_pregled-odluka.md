@@ -19,7 +19,7 @@ azurirano: 2026-06-28
 
 ## Bidding — ostati na Maximize Clicks
 **Odluka:** ne prelaziti na Maximize Conversions pre 20–30 pravih formi sa `/hvala-za-poruku/`.
-**Zašto:** trenutno 33 ukupno ali samo 2 iz plaćenog — premalo signala za smart bidding.
+**Zašto:** jun 2026 = 53 ukupno ali samo 2–3 iz plaćenog — premalo signala za smart bidding.
 
 ## Otvorene odluke (BLOK C)
 Vidi [[blokovi/BLOK-C-sledece]] — dispozicija staging-only proizvoda, overwrite vs preserve postova.

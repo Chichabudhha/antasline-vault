@@ -316,7 +316,7 @@ sesija, `[cpanel-live]` = live produkcija.
   stali"** — pre svakog zadatka proveriti ovaj fajl)
 - [[DNEVNIK-NAPRETKA]] — append-only ledger, `merge=union` u `.gitattributes`
 - Dataview plugin je potreban za dashboard upite
-- Wikilinks: `[[B3 - Odblokiranje naloga]]`, `[[blokovi/BLOK-A-tracking]]`,
+- Wikilinks: `[[blokovi/BLOK-A-tracking]]`,
   `[[blokovi/BLOK-B-publike]]`, `[[DNEVNIK-NAPRETKA]]`
 - [[dnevnik/ADS-DNEVNIK]]: living hub sa YAML frontmatter, Faze 0–4 checkbox plan,
   RSA asset bank na srpskom za obe kampanje, hard rules/guardrails, append-only
@@ -501,8 +501,8 @@ Prioritet: **Tehnička → SEO → Ads**
 - FAQ + schema za basketball
 
 ### 🔴 Kritični blokeri (Čeka Miroslava)
-1. SSH config (tvoj-lokal) — WooCommerce migracija
-2. Google Ads balans + verifikacija — ECOTILE prikazi -67%
+1. ✅ ~~SSH config — WooCommerce migracija~~ — import na lokal urađen 2026-07-04 (bez SSH, export/import). SSH ostaje samo za live prebacivanje.
+2. ✅ ~~Google Ads balans + verifikacija~~ — odblokirano 2026-07-04; ECOTILE više nije throttlovan.
 3. GA4 publike (Task #1) — Miroslav kreira u GA4 UI
 4. Konverzije info — Šta se dešava sa 53 kontakta?
 
@@ -514,7 +514,7 @@ Prioritet: **Tehnička → SEO → Ads**
 
 ### 📅 Nedelja 1 (do 2026-07-16)
 - [ ] Tehnička audit (PageSpeed, Web Vitals)
-- [ ] SSH config → WooCommerce migracija start
+- [x] WooCommerce import na lokal (gotovo 2026-07-04)
 - [ ] C1 verifikacija (20 redova redirect mape)
 - [ ] 4 nove GSC stranice (start)
 - [ ] Task #1 — GA4 publike (Miroslav)
@@ -529,7 +529,7 @@ Kada otvorim CLAUDE.md sledeći put, znaću:
 2. ✅ **Šta radim** — redizajn + live migracija (2 meseca) + SEO/Ads optimizacija
 3. ✅ **Šta je gotovo** — BLOK A (tracking), BLOK B (publike), lokalni build
 4. ✅ **Šta je u toku** — BLOK C (redirect, content, on-page)
-5. ✅ **Šta je blokirano** — SSH, balans, GA4 publike, konverzije info
+5. ✅ **Šta je blokirano** — GA4 publike (Task #1) + konverzije info (SSH i balans/verifikacija rešeni 2026-07-04)
 6. ✅ **Gde su fajlovi** — Sve su linked-ovane kroz wikilinks
 7. ✅ **Prioritet** — Tehnička → SEO → Ads
 8. ✅ **Timeline** — 2 meseca (do 2026-09-02)
