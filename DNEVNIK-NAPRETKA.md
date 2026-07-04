@@ -1,5 +1,16 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-04 [claude-code] [BLOK C1 - Redirect mapa VERIFIKACIJA] — ✅ SKORO GOTOVO! 106/118 redova finalizovano
+- ✅ Proverio 18 stranica sa "PROVERI da postoji" — sve postoje na localhost
+- ✅ WooCommerce kategorije — sve 10 postoje sa `/kategorija/...` URL struktura
+- ✅ WooCommerce proizvodi — svi 37 postoje sa `/shop/kategorija/proizvod/` struktura
+- ✅ Refresh-ovao WordPress permalinks — URL struktura sada ISPRAVNA
+- ✅ Ažurirao CSV: 18+41 = 59 redova sa AUTO-PREDLOG → "postoji"
+- ✅ Popunio 4 "ZA POPUNITI" redova — kategorija URL-evi
+- ⏭️ Preostalo: 5 "NEMA NA BUILDU" redova (skipped za kasnije) + 2 "Dodati kontent" (minor)
+- **CSV Status:** 106 redova "gotovo" od 118 (89.8% kompletan)
+- **Sledeće:** Kreiraj 301 redirect-e u WordPress
+
 ## 2026-07-04 [claude-code] [BLOK C2 - WooCommerce import] — ✅ ZAVRŠENO! Proizvodi sa live → staging
 - ✅ **Live export** preuzet: `woo-export-2026-07-04.zip` (products.csv + variations.csv)
 - ✅ **37 proizvoda** importovano na localhost

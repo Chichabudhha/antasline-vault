@@ -4,6 +4,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-04 | Redirect mapa C1 verifikacija | ✅ Proverio 18 stranica, 10 kategorija, 37 proizvoda + ažurirao CSV (106/118 redova) |
 | 2026-07-04 | WooCommerce — Svi proizvodi | ✅ 37 proizvoda + 10 kategorija + 115 slika importovano na localhost |
 | 2026-06-27 | 301 redirect mapa | Završen auto-fill + verifikacija: 30 × 404 ispravljeni, 119 redova popunjeno (88% kompletno) |
 | 2026-06-25 | /industrijski-podovi/ | On-page: Yoast title (69 znakova), meta opis — optimizovano za search |
