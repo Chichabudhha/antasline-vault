@@ -56,6 +56,9 @@ azurirano: 2026-07-04
 
 **Čitanje:** dno dec 2025 (1.440) → oporavak do marta (3.071) → ponovo klizi. Jun YoY: klikovi −19%, impresije +22%, CTR 7,0→4,7. Sezonalitet: proleće (mar–maj) je špic.
 
+> [!note] Puna banka ključnih reči
+> Kompletna lista svih prijavljenih upita za 16 meseci (2.893 upita, sortirano po klikovima, uklj. 2.085 sa 0 klikova = content prilike): **`seo/gsc-svi-upiti-16m-2026-07-04.csv`** (semicolon, UTF-8 BOM). Prijavljeni upiti pokrivaju ~33% ukupnih klikova — ostatak Google anonimizuje (nedostupno svim alatima). Tabele ispod = destilat.
+
 ### 1.2 Top upiti 90d (klikovi)
 
 | Upit | Kl. | Impr. | CTR | Poz. |
