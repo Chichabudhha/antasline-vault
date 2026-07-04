@@ -27,3 +27,7 @@ Periodični puni snapshot svih marketing podataka preko Windsor.ai. Svaki snapsh
 ## Snapshot-ovi
 
 - [[analiza/2026-07-04-snapshot-full]] — **BASELINE** (prvi puni; jun 2026 = mesec-nula za konverzije)
+
+## Dubinske analize
+
+- [[analiza/2026-07-04-gsc-kw-analiza-16m]] — svih 2.893 GSC upita klasterizovano (tema × intent) + akcioni plan 10 stavki

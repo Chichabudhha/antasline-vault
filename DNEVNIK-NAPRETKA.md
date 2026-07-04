@@ -1,5 +1,11 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-04 [claude-code] [ANALIZA - GSC keywords 16m] — Svih 2.893 upita klasterizovano → [[analiza/2026-07-04-gsc-kw-analiza-16m]]
+- ✅ Puna GSC banka (16m) → CSV + klasterizacija (24 klastera × intent) PowerShell skriptom
+- 🔴 Top nalazi: odbojka wpos 2,3 / CTR 0,6% (7.8k impr!); tenis 23,7k impr / CTR 1,7% (šljaka 9k impr); industrijski cena-gap; epoksid conquest poz. 26 za "epoksi podovi"; komercijalni vertikali (kancelarije poz. 1,9!) bez stranica; reference-tereni (Dunk Shop/Spanoulis ~3k impr)
+- 📊 Intent: cena CTR 9,9% vs info 3,3% — cena stranice rade gde postoje (20–30% CTR)
+- **Akcioni plan:** 10 stavki u §5 analize (odbojka → tenis hub → cena sekcije → piklbol → vertikali…)
+
 ## 2026-07-04 [claude-code] [ANALIZA - puni snapshot] — Dnevnik stanja: Ads+GA4+GSC+GMB (baseline) → [[analiza/2026-07-04-snapshot-full]]
 - ✅ Novi folder `analiza/` — sistem periodičnih snapshot-ova (README + template + prvi puni snapshot)
 - ✅ Povučeno ~25 pull-ova kroz Windsor.ai: GSC (16mo trend, upiti, stranice, uređaji, movers), GA4 (trend, kanali, eventi, publike), Ads (trend, kampanje, KW, search terms, imp. share), GMB (trend, keywords, recenzije, profil)
