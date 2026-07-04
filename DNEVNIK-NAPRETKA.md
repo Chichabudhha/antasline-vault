@@ -1,5 +1,10 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-04 [claude-code] [GEO/AI plan] — Kako da AI preporučuje Antasline → [[seo/geo-ai-plan]]
+- ✅ GEO strategija: AI crawleri (robots.txt/llms.txt), citabilan sadržaj (C3 plan = GEO gorivo), entitet schema, pominjanja treće strane (PR o Spanoulis/Dunk Shop terenima, case studije Hankook/HTEC/Quectel), GMB recenzije
+- ✅ Merenje ugrađeno u [[analiza/_TEMPLATE-snapshot]] §4.5: GA4 AI Assistant kanal (baseline 9 korisnika/90d) + 5 fiksnih ChatGPT test promptova
+- Otvoreno: robots.txt provera na live #ceka-miroslav · llms.txt priprema #claude-code
+
 ## 2026-07-04 [claude-code] [C3 - #5 draft] — Sadržaj za `/dimenzije-kosarkaske-table/` napisan → [[dnevnik/2026-07-04-dimenzije-kosarkaske-table]]
 - ✅ Pun draft: naslov/meta, body (dimenzije, materijali, DIY sekcija, cena), FAQ HTML + FAQPage JSON-LD
 - Cilja ~2.400 impr "tabla" upita (poz. već 1–3,5 — problem je pokrivenost/CTR, ne rang)

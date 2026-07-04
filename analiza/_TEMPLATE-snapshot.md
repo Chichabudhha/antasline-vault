@@ -40,6 +40,18 @@ status: u-toku
 ### 4.1 Trend (impresije Search/Maps, pozivi, web klikovi, rute)
 ### 4.2 Keywords + recenzije + profil audit
 
+## 4.5 AI VIDLJIVOST (GEO — [[seo/geo-ai-plan]])
+- GA4 "AI Assistant" kanal: __ korisnika/90d (baseline jul 2026: 9)
+- 5 fiksnih test promptova iz [[seo/geo-ai-plan]] §5 → da li ChatGPT pominje Antasline? Koji URL citira?
+
+| # | Prompt (skraćeno) | Pominje? | Citiran URL |
+|---|---|---|---|
+| 1 | industrijski PVC podovi Srbija | | |
+| 2 | podloga basket dvorište + cena | | |
+| 3 | alternativa epoksidu za halu | | |
+| 4 | podloge za terasu bez lepljenja BG | | |
+| 5 | ko postavlja sportske terene | | |
+
 ## 5. CROSS-SOURCE ANALIZA
 (šta se promenilo vs prethodni snapshot; da li prošle preporuke rade)
 
