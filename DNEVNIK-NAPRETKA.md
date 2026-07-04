@@ -1,5 +1,13 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-04 [claude-code] [C3 - Content plan] — 20 novih stranica u 4 tijera → [[seo/plan-novih-stranica]]
+- ✅ Master plan izveden iz 16m keyword analiza (GSC + Ads); obuhvata i ranije 4 GSC stranice
+- Tier 1 purchase-intent: terasa cena (4.221 impr), industrijski cena, garaže landing, basket set
+- Tier 2: tenis hub (šljaka 9k impr), odbojka refresh (poz. 2,3 / CTR 0,6% — 30 min posla), piklbol/padel
+- Tier 3: komercijalni vertikali (kancelarije poz. 1,9!, restorani, zdravstvo, tržni centri)
+- Tier 4: reference tereni (Dunk Shop/Spanoulis ~3k impr), Bergo brend, teretane
+- Povezano sa [[blokovi/BLOK-C-sledece]] C3 + [[PROGRESS]] Sledeće #2
+
 ## 2026-07-04 [claude-code] [ANALIZA - Ads search terms 16m + GSC poređenje] → [[analiza/2026-07-04-ads-st-analiza-16m]]
 - ✅ Svih 1.899 Ads search termina (16m, 107,8k RSD, 5 konv) kroz iste klastere kao GSC + CSV banka
 - 🔴 **Curenje kvantifikovano: 16.607 RSD = 15,4%** (315 termina krši negativnu listu = 10,5k; 289 van ponude = 6,1k — deking 2,3k!)

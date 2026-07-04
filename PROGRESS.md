@@ -19,12 +19,10 @@
    - Vreme: 2-3h
    - Blokirač za go-live
 
-2. **C3 — 4 nove GSC landing stranice + FAQ**  — ⭐⭐ PRIORITET
-   - /dimenzije-basketskog-terena/ (240 impr)
-   - /terasa-cena/ (236 impr)
-   - /basketball-tabla-dimenzije/ (150 impr)
-   - /podloge-za-parkiraliste-cena/ (~100 impr)
-   - Vreme: 2-3h
+2. **C3 — Content plan: 20 stranica u 4 tijera** — ⭐⭐ PRIORITET → [[seo/plan-novih-stranica]]
+   - Obuhvata ranije 4 GSC stranice + 16 novih iz pune 16m keyword analize
+   - Prvi talas: odbojka refresh (30 min!) → /gumeni-podovi-za-terase-cena/ (4.221 impr) → industrijski cena → garaže landing
+   - Vreme: ~40 min–1h po stranici
 
 3. **WooCommerce testiranje — Checkout**
    - Testirati da li je checkout funkcionalan

@@ -22,9 +22,11 @@ Crawl otkrio: 32 proizvoda na live vs 10 na stagingu (27 nedostaje, 5 samo na st
 - [ ] Odluka: overwrite vs preserve ručno rebuilt Porto verzija postova #ceka-miroslav
 
 ## C3: On-page build
+**📝 Master content plan: [[seo/plan-novih-stranica]]** — 20 stranica u 4 tijera (iz 16m keyword analize), obuhvata i ranije 4 GSC stranice. Redosled: odbojka refresh → terasa cena → industrijski cena → garaže landing.
 - [ ] 6 WPBakery blokova za `/industrijski-podovi/` (ID 4937) — JS bug, blokirano #claude-code
 - [ ] Čišćenje "Smartas" iz naslova homepage-a #claude-code
 - [ ] Landing za `/sportske-podloge/kosarkaske-konstrukcije/` (103 korisnika/14d, jak organski, bez prave stranice) #claude-code
+- [ ] Title/meta prepis 4 stranice (pop-tenis, odbojka, spoljne-obloge, conquest) — snapshot §6.1 #claude-code
 
 ## Odluka
 - [ ] Izabrati C1 / C2 / C3 za sledeću sesiju #ceka-miroslav
