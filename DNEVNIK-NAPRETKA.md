@@ -1,5 +1,13 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-04 [claude-code] [ANALIZA - Ads search terms 16m + GSC poređenje] → [[analiza/2026-07-04-ads-st-analiza-16m]]
+- ✅ Svih 1.899 Ads search termina (16m, 107,8k RSD, 5 konv) kroz iste klastere kao GSC + CSV banka
+- 🔴 **Curenje kvantifikovano: 16.607 RSD = 15,4%** (315 termina krši negativnu listu = 10,5k; 289 van ponude = 6,1k — deking 2,3k!)
+- 🔴 Garaže = ogledni problem: 16,8k RSD + organik poz. 8–10 + 14k GSC impr = 0 konverzija → landing, ne kanal
+- 🔴 "pvc podovi" broad = 5,5k RSD bez konverzije; "industrijski podovi cena po m2" 4,1k (landing nema cenu)
+- ✅ Struktura kanala zdrava: basket/parking organik #1 → 0 RSD u Ads; industrijski paid opravdan (jedini konvertuje, 3)
+- **Ključ:** cena-termini = 19% Ads potrošnje jer organik nema cena stranice → cena sekcije rešavaju oba kanala
+
 ## 2026-07-04 [claude-code] [ANALIZA - GSC keywords 16m] — Svih 2.893 upita klasterizovano → [[analiza/2026-07-04-gsc-kw-analiza-16m]]
 - ✅ Puna GSC banka (16m) → CSV + klasterizacija (24 klastera × intent) PowerShell skriptom
 - 🔴 Top nalazi: odbojka wpos 2,3 / CTR 0,6% (7.8k impr!); tenis 23,7k impr / CTR 1,7% (šljaka 9k impr); industrijski cena-gap; epoksid conquest poz. 26 za "epoksi podovi"; komercijalni vertikali (kancelarije poz. 1,9!) bez stranica; reference-tereni (Dunk Shop/Spanoulis ~3k impr)
