@@ -1,5 +1,15 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-04 [claude-code] [BLOK C - WooCommerce import v2] — Export proizvoda sa live (ČEKA)
+- ⏳ **BLOKIRAN NA:** Export iz live hostinga — trebati robustan CSV/SQL sa svim meta podacima
+- 🔴 Problem iteracije 1 (2026-07-03):
+  - CSV header na srpskom → Python script nije mogao mapirati kolone
+  - Nedostajale slike (attachment-i nisu bili linkovan sa proizvoda kroz _thumbnail_id)
+  - Čudni znakovi u opisu (`[Image #3]`, `\n` kao literal tekst umesto newline-a)
+- ✅ Prompt dat za live hosting: Trebati export proizvoda sa attachment meta, UTF-8, clean opisi, srpski charset
+- Slike dostupne u `/uploads/` ali sa drugačijim nazivima (varijacije 150x150, 300x225, itd.)
+- Sledeci pokušaj: Trebati direktan SQL/CSV sa svesvim meta podacima iz live baze
+
 ## 2026-07-03 [claude-code] [BLOK C - WooCommerce import] — Prebacivanje proizvoda sa live na localhost
 - ✅ Vratim bekap pre nego što su obrisani proizvodi (backup-pre-parity-20260628-1135.sql) — homepage i stranice ostaju
 - ✅ Obrisao samo 43 stara proizvoda + kategorije (bez dotacanja stranica/postova)
