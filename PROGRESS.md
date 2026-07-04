@@ -4,27 +4,29 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-04 | WooCommerce — Svi proizvodi | ✅ 37 proizvoda + 10 kategorija + 115 slika importovano na localhost |
 | 2026-06-27 | 301 redirect mapa | Završen auto-fill + verifikacija: 30 × 404 ispravljeni, 119 redova popunjeno (88% kompletno) |
 | 2026-06-25 | /industrijski-podovi/ | On-page: Yoast title (69 znakova), meta opis — optimizovano za search |
 | 2026-06-23 | /pop-tenis/ | On-page: Yoast title, H2 entry-title, dodat "piklbol" u uvod |
 
 ## Sledeće
 
-1. **Ručno brisanje nepotrebnih slika na proizvodima (localhost)**
-   - Task #1 kreiram — videti dodatne/duplikate attachment-e
-   - 42 proizvoda, 41 sa relevantnim slikama — očistiti ostatak
-
-2. **301 Redirect mapa — ručna verifikacija (20 redova PROVERI)**
+1. **C1 — 301 Redirect mapa — Ručna verifikacija (20 redova PROVERI)** — ⭐⭐⭐ PRIORITET
    - Potvrdi da sve PROVERI stranice stvarno postoje na buildu
    - Posebno: /sportska-igralista/, /zamena-parketa-u-sportskim-salama/, /podloge-za-krovove-i-terase/, itd.
+   - Vreme: 2-3h
+   - Blokirač za go-live
 
-3. **URL struktura proizvoda**
-   - Trebalo bi: `/proizvod/bergo-unique-bela/`
-   - Sada je: `/bergo-unique-bela/`
-   - Popravljanje permalink strukture
+2. **C3 — 4 nove GSC landing stranice + FAQ**  — ⭐⭐ PRIORITET
+   - /dimenzije-basketskog-terena/ (240 impr)
+   - /terasa-cena/ (236 impr)
+   - /basketball-tabla-dimenzije/ (150 impr)
+   - /podloge-za-parkiraliste-cena/ (~100 impr)
+   - Vreme: 2-3h
 
-4. **Status proizvoda**
-   - Većina su `draft` — trebalo bi `publish`
+3. **WooCommerce testiranje — Checkout**
+   - Testirati da li je checkout funkcionalan
+   - Testirati slike na product page
 
 ## Blokeri
 

@@ -1,14 +1,17 @@
 # Dnevnik napretka — Antasline SEO
 
-## 2026-07-04 [claude-code] [BLOK C - WooCommerce import v2] — Export proizvoda sa live (ČEKA)
-- ⏳ **BLOKIRAN NA:** Export iz live hostinga — trebati robustan CSV/SQL sa svim meta podacima
-- 🔴 Problem iteracije 1 (2026-07-03):
-  - CSV header na srpskom → Python script nije mogao mapirati kolone
-  - Nedostajale slike (attachment-i nisu bili linkovan sa proizvoda kroz _thumbnail_id)
-  - Čudni znakovi u opisu (`[Image #3]`, `\n` kao literal tekst umesto newline-a)
-- ✅ Prompt dat za live hosting: Trebati export proizvoda sa attachment meta, UTF-8, clean opisi, srpski charset
-- Slike dostupne u `/uploads/` ali sa drugačijim nazivima (varijacije 150x150, 300x225, itd.)
-- Sledeci pokušaj: Trebati direktan SQL/CSV sa svesvim meta podacima iz live baze
+## 2026-07-04 [claude-code] [BLOK C2 - WooCommerce import] — ✅ ZAVRŠENO! Proizvodi sa live → staging
+- ✅ **Live export** preuzet: `woo-export-2026-07-04.zip` (products.csv + variations.csv)
+- ✅ **37 proizvoda** importovano na localhost
+- ✅ **10 kategorija** automatski kreirane i vezane:
+  - Industrijska zaštita (24), Zaštita i Bumperi (19), Podno označavanje (6), Košarkaške konstr. (5), itd.
+- ✅ **115 slika** preuzete sa live sajta kroz `media_sideload_image()`
+- ✅ **Svi opisi + specifikacije** (srpski znakovi ispravno, bez čudnih karaktera)
+- ✅ **24 stranice + 34 posta ostaju netaknuti**
+- **Problem rešen:** UTF-8 BOM (`﻿id`) u CSV header — `ltrim($header[0], "\xEF\xBB\xBF")`
+- **Problem rešen:** Separator za kategorije bio `|` umesto `,`
+- **Finalni bekap:** `backup-FINAL-37products-10categories-20260704.sql`
+- **Script:** `import-final-woo.php` — robustan, čuva UTF-8, kreira kategorije ako ne postoje, preuzima slike
 
 ## 2026-07-03 [claude-code] [BLOK C - WooCommerce import] — Prebacivanje proizvoda sa live na localhost
 - ✅ Vratim bekap pre nego što su obrisani proizvodi (backup-pre-parity-20260628-1135.sql) — homepage i stranice ostaju
