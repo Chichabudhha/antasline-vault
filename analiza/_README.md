@@ -31,3 +31,4 @@ Periodični puni snapshot svih marketing podataka preko Windsor.ai. Svaki snapsh
 ## Dubinske analize
 
 - [[analiza/2026-07-04-gsc-kw-analiza-16m]] — svih 2.893 GSC upita klasterizovano (tema × intent) + akcioni plan 10 stavki
+- [[analiza/2026-07-04-ads-st-analiza-16m]] — svih 1.899 Ads search termina (isti klasteri) + poređenje GSC↔Ads; curenje 16.607 RSD (15,4%)
