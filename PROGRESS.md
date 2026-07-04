@@ -4,6 +4,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-04 | ANALIZA — puni snapshot | ✅ Baseline dnevnik stanja Ads+GA4+GSC+GMB → [[analiza/2026-07-04-snapshot-full]] (16mo istorija, strategija §6) |
 | 2026-07-04 | Redirect mapa C1 verifikacija | ✅ Proverio 18 stranica, 10 kategorija, 37 proizvoda + ažurirao CSV (106/118 redova) |
 | 2026-07-04 | WooCommerce — Svi proizvodi | ✅ 37 proizvoda + 10 kategorija + 115 slika importovano na localhost |
 | 2026-06-27 | 301 redirect mapa | Završen auto-fill + verifikacija: 30 × 404 ispravljeni, 119 redova popunjeno (88% kompletno) |
@@ -29,9 +30,15 @@
    - Testirati da li je checkout funkcionalan
    - Testirati slike na product page
 
+4. **SEO quick-win: title/meta prepis 4 stranice** (iz [[analiza/2026-07-04-snapshot-full]] §6.1) — ⭐ NOVO
+   - /pop-tenis/ (5.503 impr, CTR 0,6%), /podloga-za-odbojkaske-terene/ (2.668, 1,3%), /spoljnje-podne-obloge/ (11.019, 3,5%), conquest članak (4.401, 0,6%)
+   - Očekivano: +500–700 klikova/90d bez nove stranice · Vreme: 1-2h (na lokalnom buildu)
+
 ## Blokeri
 
-- Nema — redirect mapa je gotova. Ručna verifikacija je normalna, može se raditi parallelno sa ostalim zadacima.
+- 🔴 **GA4 key events audit** — `conversions` metrika slomljena od juna (5.859/mes umesto ~100); naći i skinuti pogrešan key event u GA4 Admin #ceka-miroslav
+- 🔴 **Negativne KW liste** — proveriti da li je "AntasLine — univerzalne negativne" zakačena na obe aktivne kampanje (epoksid/sika/rinol prolaze!) #ceka-miroslav
+- Redirect mapa gotova — ručna verifikacija ide paralelno.
 
 ## Napomene
 
@@ -66,7 +73,8 @@
 | ECOTILE INDUSTRIJSKI PODOVI | ✅ odblokirana | Nalog odblokiran 2026-07-04 → proveriti da su prikazi/CPC vraćeni na normalu |
 
 **Aktivna faza:** 1 (RSA Terase — može odmah) + 2 (struktura ad grupa); Faza 0 (odblokiranje) ✅ zatvorena 2026-07-04  
-**Pravih konverzija (jun):** 53 ukupno, 2–3 plaćene / prag Smart Bidding: 20–30
+**Pravih konverzija (jun):** 55 (hvala-proxy) / Ads uvezeno 6 / prag Smart Bidding: 20–30 plaćenih  
+**Snapshot podataka (16mo, sva 4 izvora):** [[analiza/2026-07-04-snapshot-full]] — jun = najveći Ads mesec (30,7k RSD); ECOTILE phrase "industrijski podovi" = 1.073 RSD/konv. ⭐; Terase imp. share 24% (QS problem); ~16% budžeta curi kroz neaktivne negativne
 
 ## ADS — Sledeće
 

@@ -1,5 +1,13 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-04 [claude-code] [ANALIZA - puni snapshot] — Dnevnik stanja: Ads+GA4+GSC+GMB (baseline) → [[analiza/2026-07-04-snapshot-full]]
+- ✅ Novi folder `analiza/` — sistem periodičnih snapshot-ova (README + template + prvi puni snapshot)
+- ✅ Povučeno ~25 pull-ova kroz Windsor.ai: GSC (16mo trend, upiti, stranice, uređaji, movers), GA4 (trend, kanali, eventi, publike), Ads (trend, kampanje, KW, search terms, imp. share), GMB (trend, keywords, recenzije, profil)
+- 🔴 **Nalazi:** GA4 `conversions` slomljen od juna (5.859!) → key event audit #ceka-miroslav; hvala-proxy postoji tek od juna (55 = baseline); negativne KW ne važe na kampanjama (epoksid/sika/rinol prolaze, ~16% otpada) #ceka-miroslav; GSC CTR erozija (jun YoY: klikovi −19%, impresije +22%)
+- 🟢 **Nalazi:** ECOTILE phrase "industrijski podovi" = 1.073 RSD/konv.; jun = najveći Ads mesec (30,7k); Product snippets CTR 10,5%; prelaz na nove kampanje uspeo
+- **Strategija:** §6 snapshot-a — 5 SEO + 6 Ads + 4 GMB + 3 tracking akcija, prioritizovano
+- **Akcija nedelje:** proveri negativnu listu na obe kampanje + skini 2 pogrešna KW (15 min, zaustavlja ~16% rasipanja)
+
 ## 2026-07-04 [claude-code] [VAULT - konzistentnost] — Ispravke nedoslednosti + brisanje B3
 - ✅ Obrisan `B3 - Odblokiranje naloga.md` (zadatak gotov: balans + verifikacija) + prazan `2026-07-02.md`
 - ✅ Sve B3 reference uklonjene/ažurirane; ADS Faza 0 zatvorena u [[dnevnik/ADS-DNEVNIK]], PROGRESS, MASTER-PLAN, CLAUDE, BLOK-B

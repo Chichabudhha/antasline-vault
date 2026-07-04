@@ -108,6 +108,17 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
 
+### 2026-07-04 [claude-code] — PUNI SNAPSHOT (16mo) → [[analiza/2026-07-04-snapshot-full]]
+- **Jun = najveći spend mesec u 16 meseci (30,7k RSD)**; prelaz na nove kampanje početkom juna uspeo (stare pauzirane; "Ecotile - Antas line" pre pauze potrošila 10,1k/90d sa 0 konv — od toga "antistatik pod" broad 5,0k).
+- **ECOTILE phrase "industrijski podovi" = 1.073 RSD/konv. (3 konv.)** ⭐ — skalirati. Obrazac: phrase konvertuje, broad rasipa.
+- **Terase imp. share 24%, rank-lost 63%** → Quality Score problem → Faza 1–2 je pravi lek, ne budžet.
+- 🔴 **Negativne NE važe:** epoksid/sika/rinol/poliuretan/marmoleum/topli-podovi prolaze kroz search terms (~2k RSD/90d vidljivo). Proveri listu na obe kampanje #ceka-miroslav
+- 🔴 Pogrešni KW u Terasama: "bastenski namestaj" (164 RSD), "oprema za bazene" (144) — ukloniti. Novi kandidati za negativne: deking, drvene, plocice, teraco, letvice, pevex.
+- "pvc podovi za bazene" broad = najveći KW Terasa (1.040 impr, 2,9k RSD, 0 konv) → svoja ad grupa + landing /podovi-za-bazene/ u Fazi 2.
+- Uvoz konverzija radi tek od juna (6 konv; jul 1) — istorijske nule su nemerenje, ne nula lidova. Mobile = 87% potrošnje.
+
+**Sledeći korak:** negativna lista fix (15 min) → Faza 1 RSA Terase → Faza 2 ad grupe (terase/bazeni/bergo).
+
 ### 2026-07-04 [claude-code]
 - **Faza 0 zatvorena:** nalog odblokiran — dopuna balansa + verifikacija oglašivača završeni. Beleška `B3 - Odblokiranje naloga` obrisana (zadatak gotov), sve reference u vaultu ažurirane.
 - ECOTILE više nije throttlovan na nivou naloga → status u tabeli: ⛔ zagušena → ✅ odblokirana.

@@ -78,6 +78,8 @@ WHERE !completed AND !contains(file.name, "TEMPLATE") AND contains(text, "#claud
 ---
 
 ## 🧭 Brza navigacija
+- [[analiza/2026-07-04-snapshot-full]] — 📊 BASELINE snapshot svih podataka (Ads/GA4/GSC/GMB) + strategija
+- [[analiza/_README]] — sistem periodičnih snapshot-ova
 - [[blokovi/BLOK-A-tracking]] — tracking infrastruktura (zatvoreno)
 - [[blokovi/BLOK-B-publike]] — GA4 publike + funnel (zatvoreno)
 - [[blokovi/BLOK-C-sledece]] — sledeći korak (C1 redirect / C2 content / C3 on-page)
