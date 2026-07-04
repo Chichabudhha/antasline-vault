@@ -49,14 +49,14 @@ url_predlog: /dimenzije-kosarkaske-table/
 Kratko definiše šta stranica pokriva: standardne dimenzije, materijal, visina montaže, DIY vs gotova konstrukcija, i vodi ka ponudi.
 
 ### H2: Standardne dimenzije table za košarku
-- **Širina × visina:** 1,80 m × 1,05 m (isti standard za FIBA i NBA)
+- **Širina × visina:** 1,80 m × 1,05 m (isti standard za FIBA i NBA) - pronaći linkove sa zvaničnog sajta fiba za dimenzije
 - **Visina obruča (koša):** 3,05 m od poda
 - **Donja ivica table:** 2,90 m od poda
 - **Rastojanje table od end-line linije:** 1,20 m
 - Školski/rekreativni tereni ponekad koriste manju tablu (1,20 m × 0,90 m) — napomenuti kao varijantu
 
 ### H2: Od čega se pravi tabla za košarku
-- **Kaljeno (sigurnosno) staklo** — profesionalni standard, najbolji odboj lopte, otporno na vremenske uslove (outdoor)
+- **Kaljeno (sigurnosno) staklo** — profesionalni standard, najbolji odboj lopte, otporno na vremenske uslove (outdoor) - Pronaći linkove za izvor podataka
 - **Akril/pleksiglas** — lakše, jeftinije, rekreativni tereni i školska dvorišta
 - **Čelični ram** — nosač table, dimenzionisan da izdrži udarce i vetar (outdoor konstrukcije)
 
