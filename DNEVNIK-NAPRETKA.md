@@ -1,5 +1,22 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [claude-code] [BREND - logo SVG izvoz] — Vektorski logo izvezen iz PDF-a za WoodMart header
+- ✅ PyMuPDF izvoz iz `Logo/ANTAS LINE FINAL LOGO.pdf` — **pravi vektor (SVG), ne raster**; tight crop na bounding box crteža (+6pt margina)
+- ✅ Boje normalizovane na zvaničnu paletu iz [[reference/brend-knjiga]] (`#0E2950`/`#0B3E75`/`#5287B7`/`#F04D22`/`#F89C1C`) — MuPDF konverzija odstupala 1–2 jedinice
+- ✅ Fajlovi u `Logo/`: `antas-line-logo-vertikalni.svg` + `.png` (668×777, transparent) · `antas-line-logo-horizontalni.svg` + `.png` (1360×435, transparent) — PNG jer WP media po default-u ne prima SVG
+- ✅ Kopirano i u `wp-content/themes/woodmart-child/images/` za header builder
+- Vizuelno verifikovano (render PNG-a) · SVG ima `role="img"` + aria-label
+- Otvoreno: bela varijanta za navy footer — napraviti kad header/footer dizajn to zatraži
+
+## 2026-07-05 [claude-code] [WOODMART - instalacija] — Tema instalirana i aktivirana na lokalu ✅
+- ✅ WoodMart **8.5.4** (tema + child `woodmart-child` sa brand CSS varijablama iz [[reference/brend-knjiga]]) + **woodmart-core 1.1.8** aktivirani; WPBakery ažuriran 8.7.2 → **8.7.3** (bundlovan, stara verzija sačuvana u `C:\Projekti\woodmart-tema\bak\`)
+- ⏭️ Revolution Slider iz bundle-a NAMERNO preskočen (CWV balast, ne koristi se)
+- 🔧 **Home (143, Porto carousel sadržaj) izaziva PHP crash pod WoodMart-om** → nova prazna Početna (ID 16550) postavljena kao front page, stara 143 u draft (home se ionako gradi ispočetka)
+- ✅ Smoke test 200: home, proizvod, post, kontakt, sportske-podloge, industrijski-podovi
+- ✅ Live export stigao u vault: 30 postova XML + 50 pages XML (referenca) + parity CSV (80 redova); ⚠️ lokal ima 32 posta vs 30 live — utvrditi koja 2
+- Snapshot pre svega: `backup-pre-woodmart-rebuild-20260705-1125.sql`
+- **Sledeće:** header/footer u WoodMart builderu (brand book look) → theme options (Inter self-hosted + boje) → import 30 postova → rebuild pages po prioritetu
+
 ## 2026-07-05 [cpanel-live] [MIGRACIJA - live export za WoodMart rebuild] — Read-only export završen → [[migracija/2026-07-05-live-export-prompt]]
 - ✅ `migracija/live-export-2026-07-05/live-posts-2026-07-05.xml` — 30 objavljenih postova (WXR)
 - ✅ `migracija/live-export-2026-07-05/live-pages-2026-07-05.xml` — 50 objavljenih pages (WXR, samo referenca za rebuild)

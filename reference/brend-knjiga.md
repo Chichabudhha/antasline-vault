@@ -48,6 +48,15 @@ Vizitke, memorandum (opcija A i B), fascikla, brending (vozilo, roll-up, majica,
 3. E-potpis: **"enviroment"** umesto "environment"
 4. FB mockup: **"Informisite se"** umesto "Informišite se"
 
+## Izvezeni logo asseti (2026-07-05, iz vektorskog PDF-a)
+
+| Fajl | Format | Napomena |
+|---|---|---|
+| `Logo/antas-line-logo-vertikalni.svg` / `.png` | SVG vektor / PNG 668×777 transparent | boje = zvanična paleta iz ove tabele |
+| `Logo/antas-line-logo-horizontalni.svg` / `.png` | SVG vektor / PNG 1360×435 transparent | za header (brand book web look&feel) |
+
+Kopije za temu: `wp-content/themes/woodmart-child/images/`. Za web koristiti **SVG** gde god može (header builder preko theme URI); PNG je fallback za WP media library. Bela varijanta za navy pozadinu još nije napravljena.
+
 ## Povezano
 
 - [[reference/identifikatori]] · [[reference/naucene-lekcije]] (072 telefon prioritet)
