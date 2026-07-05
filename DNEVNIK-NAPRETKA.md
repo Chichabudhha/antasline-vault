@@ -5,7 +5,9 @@
 - 🔍 Metod: bisekcija po vc_row redovima u zasebnim PHP procesima (exit 255 = segfault) → red 2 → suženo na porto_social_icons
 - ✅ Fix 1: no-op registracija svih 9 porto_* shortcode-ova u child temi (čisti raw junk iz izlaza legacy stranica)
 - ✅ Fix 2: `porto_social_icons` fizički uklonjen iz 571 (no-op ne pomaže — atributi se parsiraju pre handlera); sadržaj ostao netaknut (3515→3097 B), verifikovano da se stranica renderuje sa tekstom
-- ⚠️ Sken: backtick parametri postoje i u 61 kontakt, 5255, 5512, 15480, 15490, 15580, 16142 — trenutno svi 200, ali su kandidati za isti crash → prioritet za rebuild, ne dirati stare bez potrebe
+- ✅ **Sanacija svih 7 preostalih stranica** (61 kontakt, 5255, 5512, 15480, 15490, 15580, 16142): porto_* tagovi uklonjeni (unutrašnji sadržaj sačuvan), backtick atributi skinuti sa ostalih shortcode-ova (layout očuvan) — **nula backtick parametara u objavljenom sadržaju**
+- ✅ Originali sačuvani (`backtick-pages-original.json` u scratchpad + jutarnji full snapshot); svih 7 verifikovano 200 + kontakt vizuelno (forma i podaci netaknuti)
+- ✅ **Sve stranice bez sidebara**: `_woodmart_main_layout=full-width` na svih 25 pages (publish+draft); verifikovano na kontakt/o-nama/parking — bez sidebar markup-a. Blog postovi zadržavaju sidebar (odluka po potrebi)
 
 ## 2026-07-05 [claude-code] [DIZAJN - Figma sync] — Home usklađen sa Figma početkom dizajna
 - ✅ Pročitan Figma fajl "Antas line" (Desktop-2 frejm, 1440×4663) kroz Figma konektor — struktura, tokeni, screenshot
