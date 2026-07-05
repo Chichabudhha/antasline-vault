@@ -158,6 +158,7 @@ ili preko <a href="/kontakt/">kontakt forme</a>.</p>
 - ✅ FAQ blok (4 pitanja) + FAQPage JSON-LD ubačeni pre kontakt pasusa na kraju — JSON validiran (python `json.loads`)
 - ✅ Backup pre izmene: `~/backup-pre-odbojka-refresh-20260705-1020.sql`
 - ✅ Verifikovano na live (curl): title, snippet, sekcija peska, FAQ, FAQPage sve prisutni u renderovanom HTML-u
+- 🔧 **Ispravka (isti dan):** originalni insert je imao tvrde prelome linija (`\n`) unutar `<p>` tagova → wpautop ih pretvarao u `<br>` na sredini rečenice; spojeno u kontinuirani tekst (7 pasusa), potvrđeno curl-om da nema više `<br>` u sadržaju
 - ⏭️ **Preskočeno namerno:** #1 Yoast title i #2 Yoast meta description — nisu menjani na zahtev
 
 ## Otvoreno
