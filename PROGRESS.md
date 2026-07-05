@@ -4,6 +4,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-05 | ALATI — UI/UX skill + Magic MCP | ✅ ui-ux-pro-max v2.6.2 (7 skill-ova) globalno u `~/.claude/skills/` + security audit čist; Magic MCP (21st.dev) u user scope ✔ Connected — za dizajn rad od sledeće sesije |
 | 2026-07-05 | DIZAJN — Mondo look na WoodMart | ✅ Design system (antas-design.css), self-hosted Inter+Bebas, header sa crvenim CTA, home 6 sekcija izgrađen i verifikovan → [[migracija/woodmart-sabloni]] |
 | 2026-07-05 | BREND — logo SVG/PNG izvoz | ✅ Vektorski SVG (vertikalni + horizontalni) iz PDF-a, boje = zvanična paleta, transparent PNG fallback; u `Logo/` + `woodmart-child/images/` |
 | 2026-07-05 | WOODMART — instalacija na lokal | ✅ Tema 8.5.4 + child + core aktivirani, WPBakery → 8.7.3, home crash rešen (nova Početna 16550), smoke test 6/6 · 200 |
