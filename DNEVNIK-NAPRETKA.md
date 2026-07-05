@@ -7,6 +7,7 @@
 - 🔧 Bugovi: WPBakery `.vc_row:before` clearfix (display:table) skuplja overlay na 0×0 → eksplicitni display/width/height; CSS keš → `filemtime` verzionisanje enqueue-a; kartice različitih proporcija → `aspect-ratio: 4/3` + object-fit
 - ⏳ Iz Figme još neimplementirano: testimonials kartice (imaju placeholder copy — čekaju prave recenzije sa GMB), "Najprodavanije podloge u 2025." foto sekcija — po odluci
 - Sve verifikovano vizuelno (Chrome) — hero overlay, 5 kartica sa slikama, 6 USP kartica renderuju
+- 🔧 Meni "Početna" (2 menija) pokazivao na staru draft stranicu 143 (404) → prevezano na novu Početnu 16550; potvrđeno da link vodi na `/`
 
 ## 2026-07-05 [claude-code] [DIZAJN - Mondo look implementiran] — Design system + header + home na WoodMart buildu ✅
 - ✅ **Analiza Monda** (Chrome + computed styles): Bebas Neue + Proxima Nova, clip-path dijagonale, paralelogram CTA, dijamant strelice → plan odobren (Inter + Bebas Neue, boje strogo brand book)
