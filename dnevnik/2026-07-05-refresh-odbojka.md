@@ -30,7 +30,7 @@ Live stanje (provereno 2026-07-05):
 
 ---
 
-## 1. Yoast SEO title (59 znakova) — ZAMENITI
+## 1. Yoast SEO title (59 znakova) — Preporuka
 
 ```
 Dimenzije odbojkaškog terena i podloga — cena | Antas Line
