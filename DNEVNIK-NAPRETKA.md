@@ -1,5 +1,12 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [claude-code] [FIX - /o-nama/ crash] — PHP segfault dijagnostikovan i rešen
+- 🔍 Uzrok: `[porto_social_icons icon_size="{``xl``:``30``...}"]` — Porto backtick-JSON parametri izazivaju katastrofalno PCRE backtracking u `shortcode_parse_atts` → PHP proces pada bez traga u logu (isti uzrok kao crash stare home 143)
+- 🔍 Metod: bisekcija po vc_row redovima u zasebnim PHP procesima (exit 255 = segfault) → red 2 → suženo na porto_social_icons
+- ✅ Fix 1: no-op registracija svih 9 porto_* shortcode-ova u child temi (čisti raw junk iz izlaza legacy stranica)
+- ✅ Fix 2: `porto_social_icons` fizički uklonjen iz 571 (no-op ne pomaže — atributi se parsiraju pre handlera); sadržaj ostao netaknut (3515→3097 B), verifikovano da se stranica renderuje sa tekstom
+- ⚠️ Sken: backtick parametri postoje i u 61 kontakt, 5255, 5512, 15480, 15490, 15580, 16142 — trenutno svi 200, ali su kandidati za isti crash → prioritet za rebuild, ne dirati stare bez potrebe
+
 ## 2026-07-05 [claude-code] [DIZAJN - Figma sync] — Home usklađen sa Figma početkom dizajna
 - ✅ Pročitan Figma fajl "Antas line" (Desktop-2 frejm, 1440×4663) kroz Figma konektor — struktura, tokeni, screenshot
 - ✅ **Odluke (Miroslav):** naslovi ostaju **Bebas uppercase** (Figma koristi Inter Bold sentence case → Figma se dovodi u sklad kasnije); header CTA ostaje **telefon 072** (ne "Zatražite ponudu" — podaci: ~50 tel klikova/mes, 46 mobil)
