@@ -3,7 +3,7 @@ tip: dnevnik
 alat: claude-code
 datum: 2026-07-05
 blok: C3
-status: draft-gotov
+status: primenjeno-delimicno
 url: /podloga-za-odbojkaske-terene/
 lokacija: SAMO-LIVE
 ---
@@ -151,10 +151,20 @@ ili preko <a href="/kontakt/">kontakt forme</a>.</p>
 4. Posle objave: Rich Results Test + GSC Inspect URL → Request indexing
 5. Dnevnik unos sa tagom `[cpanel-live]`
 
+## Primenjeno [cpanel-live] — 2026-07-05
+- ✅ H1/post_title: `Sportska podloga za odbojku` → `Odbojkaški teren — dimenzije i podloga`
+- ✅ Snippet pasus ubačen ispod H1 (featured snippet target)
+- ✅ Nova sekcija "Dimenzije terena za odbojku na pesku" ubačena pre H2 "Mreža za odbojkaške terene"
+- ✅ FAQ blok (4 pitanja) + FAQPage JSON-LD ubačeni pre kontakt pasusa na kraju — JSON validiran (python `json.loads`)
+- ✅ Backup pre izmene: `~/backup-pre-odbojka-refresh-20260705-1020.sql`
+- ✅ Verifikovano na live (curl): title, snippet, sekcija peska, FAQ, FAQPage sve prisutni u renderovanom HTML-u
+- ⏭️ **Preskočeno namerno:** #1 Yoast title i #2 Yoast meta description — nisu menjani na zahtev
+
 ## Otvoreno
-- [ ] Cene: `{{CENA_VINIL_OD/DO}}`, `{{CENA_BERGO_SP_OD/DO}}`, `{{CENA_MONTAZA_INFO}}` #ceka-miroslav
-- [ ] Primena na live (`[cpanel-live]`) #ceka-miroslav
+- [ ] **Cena sekcija (§6) NIJE ubačena** — zahteva stvarne cifre za `{{CENA_VINIL_OD/DO}}`, `{{CENA_BERGO_SP_OD/DO}}`, `{{CENA_MONTAZA_INFO}}`; ubacivanje placeholder teksta na live stranicu bi bilo vidljivo posetiocima #ceka-miroslav
 - [ ] **C2 parity:** stranica NE postoji na lokalnom buildu — dodati na parity listu (redirect mapa je verovatno vodi kao "PROVERI") #claude-code
+- [ ] Rich Results Test za FAQPage schema na živoj stranici #claude-code
+- [ ] GSC Inspect URL → Request indexing posle Rich Results provere #ceka-miroslav
 - [ ] Merenje: CTR klastera pre (0,6%) vs 28d posle primene
 
 ## Veze

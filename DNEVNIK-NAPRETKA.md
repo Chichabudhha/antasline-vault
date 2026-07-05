@@ -1,5 +1,13 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [cpanel-live] [C3 - #9 odbojka refresh] — Primenjeno na live (delimično) → [[dnevnik/2026-07-05-refresh-odbojka]]
+- ✅ Post 4318 (`/podloga-za-odbojkaske-terene/`) izmenjen na live: H1, snippet pasus, sekcija "peska", FAQ (4 pitanja) + FAQPage JSON-LD
+- ✅ Backup pre izmene: `~/backup-pre-odbojka-refresh-20260705-1020.sql`
+- ✅ Verifikovano curl-om: sve sekcije prisutne, JSON-LD validan
+- ⏭️ Namerno preskočeno: Yoast title (#1) i meta description (#2) — po eksplicitnom zahtevu
+- ⏳ Cena sekcija (#6) NIJE ubačena — čeka stvarne cifre od Miroslava (placeholder na live bi bio vidljiv posetiocima)
+- **Sledeće:** Rich Results Test, GSC Request indexing, C2 parity (stranica ne postoji na lokalnom buildu)
+
 ## 2026-07-05 [claude-code] [C3 - #9 odbojka refresh] — Kompletan refresh paket → [[dnevnik/2026-07-05-refresh-odbojka]]
 - 🔍 Dijagnoza CTR 0,6% @ poz. 2,3: live title bez reči "dimenzije" (a to je ~80% od 7.817 impr klastera), **meta description ne postoji**, nema FAQ/cene/peska
 - ✅ Copy-paste paket: novi title+meta, snippet pasus (18×9), nova sekcija odbojka na pesku (16×8, ~330 impr), cena sekcija (placeholderi), FAQ HTML + FAQPage JSON-LD, postupak primene korak-po-korak
