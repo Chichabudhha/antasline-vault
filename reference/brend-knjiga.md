@@ -23,7 +23,7 @@
 ## Tipografija
 
 - **Inter font family** (regular, medium/semibold, bold, extrabold) — jedina fontovska familija u brand book-u
-- Relevantno za redizajn: Porto tema treba da koristi Inter (self-hosted zbog Core Web Vitals — bez Google Fonts CDN-a ako može)
+- **Web odluka (2026-07-05, Miroslav):** Inter za tekst/UI + **Bebas Neue** za velike uppercase naslove (h1/h2) — Mondo-inspirisan premium utisak. Oba self-hosted woff2 (latin+latin-ext) u `woodmart-child/fonts/`, bez Google CDN-a. Bebas ima samo weight 400 — ne koristiti bold na njemu.
 
 ## Web look & feel (str. 7)
 

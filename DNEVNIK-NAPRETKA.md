@@ -1,5 +1,15 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [claude-code] [DIZAJN - Mondo look implementiran] — Design system + header + home na WoodMart buildu ✅
+- ✅ **Analiza Monda** (Chrome + computed styles): Bebas Neue + Proxima Nova, clip-path dijagonale, paralelogram CTA, dijamant strelice → plan odobren (Inter + Bebas Neue, boje strogo brand book)
+- ✅ **Fontovi self-hosted**: Inter 400/600/700 + Bebas Neue woff2 (latin+latin-ext, šđčćž ✓) u `woodmart-child/fonts/` — nula CDN zahteva (uklonjen i preconnect hint)
+- ✅ **Design system**: `woodmart-child/css/antas-design.css` — tokeni, `:root:root` preklapanje WoodMart varijabli, utility klase (al-section/diag/plates/btn/label/card/stat/grid) — katalog u [[migracija/woodmart-sabloni]]
+- ✅ **Header kodom** (filter `woodmart_default_header_structure`): navy top bar (adresa+mail+074) · beli glavni red: logo SVG + uppercase meni + crveni paralelogram CTA "POZOVITE NAS 069 234 00 72" · sticky · mobilni: burger/logo/tel dugme
+- ✅ **Home (16550) izgrađen**: hero "PODOVI KOJI IZDRŽE SVE" (navy + listajuće ploče = potpis iz logoa) → 4 segment kartice (Industrijski/Sportski/Terase/Parking, slike iz medijateke) → USP 25/0/1 → reference (Hankook·HTEC·Amicus·Quectel·Dunk Shop·Spanoulis) → blog masonry 3 kol → završni CTA; `_woodmart_main_layout=full-width`, `_woodmart_title_off=on`
+- 🔧 Bugovi rešeni usput: wpautop razbijao grid (`<br>` između kartica → HTML u jednoj liniji); sidebar preko hero-a (full-width meta); `woodmart_blog` param je `blog_columns`, ne `columns`
+- ✅ Verifikovano vizuelno (Chrome, svih 6 sekcija) + fontovi lokalno + smoke 200
+- **Sledeće:** rebuild silo stranica po šablonu iz [[migracija/woodmart-sabloni]] (live copy + sufiks 5 pravilo) · footer · mobilna provera · Figma link #ceka-miroslav
+
 ## 2026-07-05 [claude-code] [BREND - logo SVG izvoz] — Vektorski logo izvezen iz PDF-a za WoodMart header
 - ✅ PyMuPDF izvoz iz `Logo/ANTAS LINE FINAL LOGO.pdf` — **pravi vektor (SVG), ne raster**; tight crop na bounding box crteža (+6pt margina)
 - ✅ Boje normalizovane na zvaničnu paletu iz [[reference/brend-knjiga]] (`#0E2950`/`#0B3E75`/`#5287B7`/`#F04D22`/`#F89C1C`) — MuPDF konverzija odstupala 1–2 jedinice
