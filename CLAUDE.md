@@ -465,6 +465,7 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 - `[[odluke/_pregled-odluka]]` — Sve donete odluke + zašto
 - `[[reference/identifikatori]]` — Google Ads/GA4/GSC/GTM ID-evi
 - `[[reference/naucene-lekcije]]` — Tehnički gotchas (GTM, Windsor, SEO, telefon)
+- `[[reference/brend-knjiga]]` — Brand book: paleta boja, Inter tipografija, logo varijante, web look&feel (izvor: `Logo/*.pdf`)
 
 ### 📚 DOKUMENTACIJA
 - `[[briefs/_README]]` — (ako postoji brief za kampanje)

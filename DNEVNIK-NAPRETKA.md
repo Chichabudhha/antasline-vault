@@ -1,5 +1,12 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [claude-code] [BREND] — Logo + brand book dodati u vault → [[reference/brend-knjiga]]
+- ✅ Pregledani `Logo/ANTAS LINE FINAL LOGO.pdf` (vertikalna + horizontalna varijanta) i `Logo/Brand book.pdf` (13 str.)
+- ✅ Specifikacije izvučene u [[reference/brend-knjiga]]: paleta (655 C / 279 C / 172 C / 137 C), tipografija **Inter**, web look&feel (crveni CTA "pozovite nas" 069 234 00 72), kontakt podaci
+- ✅ HEX boje izmerene pipetom iz renderovanog vektorskog PDF-a (pdfium): teget `#0E2950`, plava `#0B3E75`, svetloplava `#5287B7`, crvena `#F04D22`, narandžasta `#F89C1C` — **ove koristiti u temi**, ne Pantone aproksimacije
+- ⚠️ 4 greške u PDF-u za dizajnera pre štampe: "KNJGA" typo na svim stranama, dupliran Pantone 655 C za dve različite plave, "enviroment", "Informisite se"
+- Relevantno za redizajn: Porto tema → Inter font (self-hosted, Core Web Vitals) + brand boje u temi
+
 ## 2026-07-04 [claude-code] [GEO/AI plan] — Kako da AI preporučuje Antasline → [[seo/geo-ai-plan]]
 - ✅ GEO strategija: AI crawleri (robots.txt/llms.txt), citabilan sadržaj (C3 plan = GEO gorivo), entitet schema, pominjanja treće strane (PR o Spanoulis/Dunk Shop terenima, case studije Hankook/HTEC/Quectel), GMB recenzije
 - ✅ Merenje ugrađeno u [[analiza/_TEMPLATE-snapshot]] §4.5: GA4 AI Assistant kanal (baseline 9 korisnika/90d) + 5 fiksnih ChatGPT test promptova

@@ -4,6 +4,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-05 | BREND — logo + brand book | ✅ PDF-ovi u `Logo/` pregledani, specifikacije u [[reference/brend-knjiga]] (paleta, Inter font, web look&feel); 4 greške u PDF-u za dizajnera |
 | 2026-07-04 | ANALIZA — puni snapshot | ✅ Baseline dnevnik stanja Ads+GA4+GSC+GMB → [[analiza/2026-07-04-snapshot-full]] (16mo istorija, strategija §6) |
 | 2026-07-04 | Redirect mapa C1 verifikacija | ✅ Proverio 18 stranica, 10 kategorija, 37 proizvoda + ažurirao CSV (106/118 redova) |
 | 2026-07-04 | WooCommerce — Svi proizvodi | ✅ 37 proizvoda + 10 kategorija + 115 slika importovano na localhost |
