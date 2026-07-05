@@ -1,5 +1,13 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [claude-code] [DIZAJN - Figma sync] — Home usklađen sa Figma početkom dizajna
+- ✅ Pročitan Figma fajl "Antas line" (Desktop-2 frejm, 1440×4663) kroz Figma konektor — struktura, tokeni, screenshot
+- ✅ **Odluke (Miroslav):** naslovi ostaju **Bebas uppercase** (Figma koristi Inter Bold sentence case → Figma se dovodi u sklad kasnije); header CTA ostaje **telefon 072** (ne "Zatražite ponudu" — podaci: ~50 tel klikova/mes, 46 mobil)
+- ✅ Usklađeno sa Figmom na buildu: **foto hero** (Spanoulis teren + navy gradijent overlay, `al-hero-photo`), **5 kategorija** (+ Poslovni prostori, Expona Commercial slika), **6 USP kartica** ("Zašto izabrati Antasline?": brza montaža, izdržljivost 25g, protivklizna, fleksibilna, održavanje, izgled — umesto 3 brojke), naslovi sekcija iz Figme ("Temelj vrhunskog poda")
+- 🔧 Bugovi: WPBakery `.vc_row:before` clearfix (display:table) skuplja overlay na 0×0 → eksplicitni display/width/height; CSS keš → `filemtime` verzionisanje enqueue-a; kartice različitih proporcija → `aspect-ratio: 4/3` + object-fit
+- ⏳ Iz Figme još neimplementirano: testimonials kartice (imaju placeholder copy — čekaju prave recenzije sa GMB), "Najprodavanije podloge u 2025." foto sekcija — po odluci
+- Sve verifikovano vizuelno (Chrome) — hero overlay, 5 kartica sa slikama, 6 USP kartica renderuju
+
 ## 2026-07-05 [claude-code] [DIZAJN - Mondo look implementiran] — Design system + header + home na WoodMart buildu ✅
 - ✅ **Analiza Monda** (Chrome + computed styles): Bebas Neue + Proxima Nova, clip-path dijagonale, paralelogram CTA, dijamant strelice → plan odobren (Inter + Bebas Neue, boje strogo brand book)
 - ✅ **Fontovi self-hosted**: Inter 400/600/700 + Bebas Neue woff2 (latin+latin-ext, šđčćž ✓) u `woodmart-child/fonts/` — nula CDN zahteva (uklonjen i preconnect hint)
