@@ -1,5 +1,14 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [claude-code] [C3 - TIER 1 draftovi] — Svih 5 preostalih Tier 1 stranica draftovano
+- ✅ #1 [[dnevnik/2026-07-05-draft-gumeni-podovi-za-terase-cena]] — cena tabela 4 tipa, conquest sekcija za "epoksidni podovi za terase" (1.499 impr)
+- ✅ #2 [[dnevnik/2026-07-05-draft-industrijski-podovi-cena]] — odluka: posebna stranica (4937 blokiran WPBakery bugom); postaje i Ads landing → gasi 4,1k RSD curenja
+- ✅ #3 [[dnevnik/2026-07-05-draft-podovi-za-garaze]] — konsolidovana landing za 14k impr klaster + 16,8k RSD Ads rupe
+- ✅ #4 [[dnevnik/2026-07-05-draft-dimenzije-kosarkaskog-terena]] — snippet-format tabele FIBA/NBA/školski; ⚠️ anti-kanibalizacija vs basket članak (skratiti tamo dimenzije)
+- ✅ #6 [[dnevnik/2026-07-05-draft-podloge-za-parkiraliste-cena]] — cena+nosivost+saće-vs-šljunak (hvata i ~700 impr šljunak upita); #5 tabla draftovan juče
+- Svi draftovi: Yoast title/meta + H2 struktura + FAQ HTML + FAQPage JSON-LD + CTA 072/forma + interni linkovi; cene = `{{PLACEHOLDER}}` #ceka-miroslav
+- **Sledeće:** cifre od Miroslava → implementacija na lokalnom buildu (WPBakery) → Rich Results Test
+
 ## 2026-07-05 [claude-code] [BREND] — Logo + brand book dodati u vault → [[reference/brend-knjiga]]
 - ✅ Pregledani `Logo/ANTAS LINE FINAL LOGO.pdf` (vertikalna + horizontalna varijanta) i `Logo/Brand book.pdf` (13 str.)
 - ✅ Specifikacije izvučene u [[reference/brend-knjiga]]: paleta (655 C / 279 C / 172 C / 137 C), tipografija **Inter**, web look&feel (crveni CTA "pozovite nas" 069 234 00 72), kontakt podaci
