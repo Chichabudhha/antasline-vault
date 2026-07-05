@@ -1,5 +1,17 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [cpanel-live] [MIGRACIJA - live export za WoodMart rebuild] — Read-only export završen → [[migracija/2026-07-05-live-export-prompt]]
+- ✅ `migracija/live-export-2026-07-05/live-posts-2026-07-05.xml` — 30 objavljenih postova (WXR)
+- ✅ `migracija/live-export-2026-07-05/live-pages-2026-07-05.xml` — 50 objavljenih pages (WXR, samo referenca za rebuild)
+- ✅ `migracija/live-export-2026-07-05/live-inventar-2026-07-05.csv` — 80 redova (30 posts + 50 pages): ID, slug, permalink, title, Yoast title/meta, word count
+- **Kontrolni brojevi (live vs. lokal staging):**
+  - Postovi: **30** live vs. 32 na lokalu (razlika −2, proveriti koja 2 posta nedostaju/su viška)
+  - Pages: **50** live (lokal broj nije evidentiran u ovoj sesiji za poređenje)
+  - Proizvodi: **37** live = **37** lokal ✓ (poklapa se sa C2 importom)
+  - Kategorije: **10** live = **10** lokal ✓ (poklapa se)
+- ✅ Striktno read-only prema WP-u — nikakva izmena baze/fajlova/podešavanja, samo export + zapis u vault
+- **Sledeće:** `git pull` na lokalu → import postova (`wp import` ili WP admin), CSV inventar kao checklist za page rebuild parity
+
 ## 2026-07-05 [claude-code] [ODLUKA - WoodMart clean rebuild] — GO za novi sajt na lokalu
 - ✅ **Odluka (Miroslav):** ne konvertuje se Porto sadržaj — novi sajt na postojećem lokalnom installu: proizvodi ostaju (37+slike), postovi se prenose sa live, pages se grade NOVE u WoodMart+WPBakery prema live/staging sadržaju + C3 draftovi direktno ugrađeni
 - ✅ Snapshot pre svega: `C:\xampp\htdocs\antasline\backup-pre-woodmart-rebuild-20260705-1125.sql` (44,1 MB, verifikovan header+footer)
