@@ -1,5 +1,11 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [claude-code] [C3 - #9 odbojka refresh] — Kompletan refresh paket → [[dnevnik/2026-07-05-refresh-odbojka]]
+- 🔍 Dijagnoza CTR 0,6% @ poz. 2,3: live title bez reči "dimenzije" (a to je ~80% od 7.817 impr klastera), **meta description ne postoji**, nema FAQ/cene/peska
+- ✅ Copy-paste paket: novi title+meta, snippet pasus (18×9), nova sekcija odbojka na pesku (16×8, ~330 impr), cena sekcija (placeholderi), FAQ HTML + FAQPage JSON-LD, postupak primene korak-po-korak
+- ⚠️ **Stranica postoji SAMO na live** → primena ide `[cpanel-live]` kroz WP admin (~15 min) #ceka-miroslav; lokalni build je nema → **C2 parity gap zabeležen**
+- Merenje: CTR klastera pre (0,6%) vs 28d posle primene
+
 ## 2026-07-05 [claude-code] [C3 - TIER 1 draftovi] — Svih 5 preostalih Tier 1 stranica draftovano
 - ✅ #1 [[dnevnik/2026-07-05-draft-gumeni-podovi-za-terase-cena]] — cena tabela 4 tipa, conquest sekcija za "epoksidni podovi za terase" (1.499 impr)
 - ✅ #2 [[dnevnik/2026-07-05-draft-industrijski-podovi-cena]] — odluka: posebna stranica (4937 blokiran WPBakery bugom); postaje i Ads landing → gasi 4,1k RSD curenja

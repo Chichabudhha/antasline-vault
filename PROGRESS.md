@@ -4,6 +4,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-05 | C3 #9 — odbojka refresh paket | ✅ Title/meta/FAQ/cena/pesak spakovano → [[dnevnik/2026-07-05-refresh-odbojka]]; ⚠️ stranica samo na live → `[cpanel-live]` primena čeka Miroslava + C2 parity gap |
 | 2026-07-05 | C3 TIER 1 — 5 draftova | ✅ Draftovani #1 terase-cena, #2 industrijski-cena, #3 garaže, #4 dimenzije-terena, #6 parking-cena (svi: title/meta, H2, FAQ+schema, cena placeholderi) → [[seo/plan-novih-stranica]] checkbox lista |
 | 2026-07-05 | BREND — logo + brand book | ✅ PDF-ovi u `Logo/` pregledani, specifikacije u [[reference/brend-knjiga]] (paleta, Inter font, web look&feel); 4 greške u PDF-u za dizajnera |
 | 2026-07-04 | ANALIZA — puni snapshot | ✅ Baseline dnevnik stanja Ads+GA4+GSC+GMB → [[analiza/2026-07-04-snapshot-full]] (16mo istorija, strategija §6) |

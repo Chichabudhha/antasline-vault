@@ -73,7 +73,7 @@ azurirano: 2026-07-04
 
 Svaka završena stranica: red u [[DNEVNIK-NAPRETKA]] + update [[PROGRESS]] + štiklirati ovde.
 
-- [ ] #9 odbojka refresh #claude-code
+- [ ] #9 odbojka refresh — **paket ✍️ [[dnevnik/2026-07-05-refresh-odbojka]]** — ⚠️ stranica SAMO na live → primena `[cpanel-live]` #ceka-miroslav (cene + nalepiti); C2 parity gap zabeležen
 - [ ] #1 terasa cena — **draft ✍️ [[dnevnik/2026-07-05-draft-gumeni-podovi-za-terase-cena]]**, čeka cene + implementaciju
 - [ ] #2 industrijski cena — **draft ✍️ [[dnevnik/2026-07-05-draft-industrijski-podovi-cena]]** (odluka: posebna stranica, ne sekcija), čeka cene + implementaciju
 - [ ] #3 garaže landing — **draft ✍️ [[dnevnik/2026-07-05-draft-podovi-za-garaze]]**, čeka cene/slike + implementaciju
