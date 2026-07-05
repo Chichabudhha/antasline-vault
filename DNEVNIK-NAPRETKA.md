@@ -1,5 +1,11 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [claude-code] [TEHNIČKA - WoodMart audit] — Porto → WoodMart procena → [[dnevnik/2026-07-05-audit-porto-woodmart]]
+- ✅ Read-only audit 53 objavljena page/post: 53% čist HTML, 9% vanilla vc_*, **30% (16 stranica) sa porto_* elementima** — 8 različitih elemenata, dominira porto_block (10)
+- ✅ Procena: ~3–5 radnih dana (16 stranica zamena + header/footer + test); Woo proizvodi/Yoast meta/redirect mapa netaknuti
+- 💡 Bonus: čišćenje porto_* na 4937 verovatno rešava i WPBakery JS bug koji blokira 6 blokova
+- **Zaključak: prelazak jeftin, rok nije ugrožen — GO/NO-GO #ceka-miroslav** (pre aktivacije: db export + js_composer verzija + licenca)
+
 ## 2026-07-05 [cpanel-live] [C3 - #9 odbojka refresh] — Primenjeno na live (delimično) → [[dnevnik/2026-07-05-refresh-odbojka]]
 - ✅ Post 4318 (`/podloga-za-odbojkaske-terene/`) izmenjen na live: H1, snippet pasus, sekcija "peska", FAQ (4 pitanja) + FAQPage JSON-LD
 - ✅ Backup pre izmene: `~/backup-pre-odbojka-refresh-20260705-1020.sql`
