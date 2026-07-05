@@ -1,5 +1,12 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [claude-code] [ODLUKA - WoodMart clean rebuild] — GO za novi sajt na lokalu
+- ✅ **Odluka (Miroslav):** ne konvertuje se Porto sadržaj — novi sajt na postojećem lokalnom installu: proizvodi ostaju (37+slike), postovi se prenose sa live, pages se grade NOVE u WoodMart+WPBakery prema live/staging sadržaju + C3 draftovi direktno ugrađeni
+- ✅ Snapshot pre svega: `C:\xampp\htdocs\antasline\backup-pre-woodmart-rebuild-20260705-1125.sql` (44,1 MB, verifikovan header+footer)
+- ✅ Prompt za cPanel live export (posts XML + pages XML referenca + parity CSV inventar) → [[migracija/2026-07-05-live-export-prompt]]
+- ✅ WoodMart licenca postoji; tema fajlovi idu u `C:\Projekti\woodmart-tema\` (van vault-a, da ne ulazi u git)
+- **Sledeće:** Miroslav pokreće cPanel prompt + dostavlja woodmart.zip → instalacija teme, header/footer (brand book), rebuild po prioritetu
+
 ## 2026-07-05 [claude-code] [TEHNIČKA - WoodMart audit] — Porto → WoodMart procena → [[dnevnik/2026-07-05-audit-porto-woodmart]]
 - ✅ Read-only audit 53 objavljena page/post: 53% čist HTML, 9% vanilla vc_*, **30% (16 stranica) sa porto_* elementima** — 8 različitih elemenata, dominira porto_block (10)
 - ✅ Procena: ~3–5 radnih dana (16 stranica zamena + header/footer + test); Woo proizvodi/Yoast meta/redirect mapa netaknuti
