@@ -4,11 +4,9 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
-<<<<<<< HEAD
+| 2026-07-05 | DIZAJN — /industrijski-podovi/ rebuild | ✅ Nova silo landing (ID 16567) po WoodMart šablonu: hero, 6 USP, tabela debljina, 4 pod-kartice, reference, FAQ + FAQPage/Product JSON-LD; stara 4937 → draft (`-stara`), nova preuzela čist slug; Yoast meta prenet. Vizuelno + 200 verifikovano |
 | 2026-07-05 | ALATI — UI/UX skill + Magic MCP | ✅ ui-ux-pro-max v2.6.2 (7 skill-ova) globalno u `~/.claude/skills/` + security audit čist; Magic MCP (21st.dev) u user scope ✔ Connected — za dizajn rad od sledeće sesije |
-=======
 | 2026-07-05 | TEHNIČKA [cpanel-live] — LiteSpeed WebP fix | ✅ Uzrok nađen: 200 slika trajno zaglavljeno u "REQUESTED" (cela dnevna kvota), 1.561 čekalo u redu; resetovano preko `Img_Optm::reset_row()`, pipeline ponovo šalje slike. ⏳ Proveriti za par dana da li se ponavlja (moguć dublji QUIC.cloud problem) |
->>>>>>> origin/main
 | 2026-07-05 | DIZAJN — Mondo look na WoodMart | ✅ Design system (antas-design.css), self-hosted Inter+Bebas, header sa crvenim CTA, home 6 sekcija izgrađen i verifikovan → [[migracija/woodmart-sabloni]] |
 | 2026-07-05 | BREND — logo SVG/PNG izvoz | ✅ Vektorski SVG (vertikalni + horizontalni) iz PDF-a, boje = zvanična paleta, transparent PNG fallback; u `Logo/` + `woodmart-child/images/` |
 | 2026-07-05 | WOODMART — instalacija na lokal | ✅ Tema 8.5.4 + child + core aktivirani, WPBakery → 8.7.3, home crash rešen (nova Početna 16550), smoke test 6/6 · 200 |

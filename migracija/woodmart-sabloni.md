@@ -18,7 +18,10 @@ namena: WPBakery šabloni + design system klase za WoodMart rebuild stranica
 4. **WPBakery clearfix**: `.vc_row:before` nameće `display:table` — custom `::before` overlay na vc_row MORA imati eksplicitno `display:block; width:100%; height:100%`
 5. **CSS keš**: enqueue koristi `filemtime` verzionisanje — ne vraćati fiksnu verziju
 6. **Figma odluke (2026-07-05)**: naslovi Bebas uppercase (ne Inter Bold iz Figme) · header CTA telefon 072 (ne "Zatražite ponudu") · 5 kategorija · 6 USP kartica
-7. **Porto backtick parametri = segfault rizik**: shortcode-ovi sa `{``kljuc``:``vrednost``}` parametrima ruše PHP (PCRE backtracking u parse_atts, ne pomaže no-op registracija). Rušio /o-nama/ i staru home. ✅ **Sanirano 2026-07-05 na svih 7 preostalih stranica** (porto_* tagovi skinuti, backtick atributi uklonjeni, sadržaj/layout očuvani; originali u scratchpad `backtick-pages-original.json`). Pri rebuildu i dalje NE kopirati stare porto_* shortcode-ove iz live exporta
+7. **Grid kartice sa h3/p unutra = samo `div` omotači**: `<a class="al-card">`/`<span class="al-card__body">` oko blok elemenata wpautop uvija u `<p>` i lomi markup — link ide u `<h3><a>`, kartica ostaje `div` (viđeno na industrijski grid--4)
+8. **`vc_raw_html` enkoding**: `base64_encode(rawurlencode($html))` — obrnut redosled (`rawurlencode(base64_encode())`) daje prazan output
+9. **`wp_insert_post`/`wp_update_post` iz CLI skida `[vc_raw_html]`** (kses/save filteri bez ulogovanog korisnika) — JSON-LD blokove ubacivati direktnim `$wpdb->update` na `post_content` + `clean_post_cache($id)`
+10. **Porto backtick parametri = segfault rizik**: shortcode-ovi sa `{``kljuc``:``vrednost``}` parametrima ruše PHP (PCRE backtracking u parse_atts, ne pomaže no-op registracija). Rušio /o-nama/ i staru home. ✅ **Sanirano 2026-07-05 na svih 7 preostalih stranica** (porto_* tagovi skinuti, backtick atributi uklonjeni, sadržaj/layout očuvani; originali u scratchpad `backtick-pages-original.json`). Pri rebuildu i dalje NE kopirati stare porto_* shortcode-ove iz live exporta
 
 ## Utility klase (antas-design.css)
 
@@ -69,7 +72,7 @@ Slike segmenata: ecotile-floor-1.jpg · Spanoulis-Belgrade-7-1.jpg · podovi-za-
 ## Redosled rebuilda (prati [[seo/plan-novih-stranica]] + redirect mapu)
 
 1. ✅ Home
-2. /industrijski-podovi/ (postoji → novi slug `industrijski-podovi5`? — NE: stara stranica se šalje u draft pa novi uzima slug? **Odluka po stranici: ako staru čuvamo kao referencu → sufiks 5 na novoj; kad se stara obriše, slug se preuzima**)
+2. ✅ /industrijski-podovi/ (2026-07-05, ID 16567) — stara 4937 → draft + slug `industrijski-podovi-stara`, nova preuzela čist slug (home kartica već linkuje tamo). FAQ + FAQPage/Product JSON-LD u vc_raw_html. Cena-FAQ izostavljen (čeka `/industrijski-podovi-cena/`)
 3. Nove C3 stranice (ne postoje → čist slug): /industrijski-podovi-cena/, /podovi-za-garaze/, /gumeni-podovi-za-terase-cena/, /dimenzije-kosarkaskog-terena/, /dimenzije-kosarkaske-table/, /podloge-za-parkiraliste-cena/
 4. Silo: sportske-podloge, spoljne-podne-obloge, podloge-za-parking, kontakt, o-nama
 5. Ostale iz live inventara (50 pages)

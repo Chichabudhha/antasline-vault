@@ -1,5 +1,16 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [claude-code] [DIZAJN - /industrijski-podovi/ rebuild] — Silo landing na WoodMart šablonu ✅
+- ✅ **Nova stranica ID 16567** po silo šablonu iz [[migracija/woodmart-sabloni]]: hero (navy+plates, H1 "Industrijski PVC podovi u pločama") → 6 USP kartica sa ikonicama (paper) → tabela debljina 500/5·500/7·500/10 + 4 kartice pod-asortimana (mist, diag-top) → reference Hankook/Amicus/Ecotile + HTEC·Quectel → FAQ 4 pitanja + FAQPage/Product JSON-LD (vc_raw_html) → CTA (navy+plates, diag-top--rev)
+- ✅ **Slug odluka**: stara Porto stranica 4937 → **draft** + slug `industrijski-podovi-stara`; nova preuzima čist slug `/industrijski-podovi/` (home kartica već linkuje tamo). Porto_builder 15447 netaknut.
+- ✅ **Yoast meta prenet sa 4937** (optimizovan 2026-06-25): title "Industrijski PVC podovi u pločama — bez zastoja proizvodnje | Antas Line" + metadesc; `_woodmart_main_layout=full-width`, `_woodmart_title_off=on`
+- ✅ **Interni linkovi (silo juice)**: 3× Ecotile debljine + antistatik/ergonomski/trake/odbojnici (CPT `industrija-podovi`, svi 200) + conquest članak `/epoksidni-podovi-ili-ecotile-podovi/` + 2× kontakt
+- ✅ **Content parity sa live** (ID 255): intro, "razlozi za Ecotile", teksture/boje, ESD varijante, Product schema (AggregateOffer 2.000–5.500 RSD) — sve preneto; cena-FAQ namerno izostavljen (rezervisan za buduću `/industrijski-podovi-cena/`, [[dnevnik/2026-07-05-draft-industrijski-podovi-cena]])
+- 🔧 **Novi gotchas** (dodato u woodmart-sabloni pravila): (1) grid kartice sa h3/p unutra moraju biti `div` — `<a>`/`<span>` omotače wpautop uvija u `<p>` i lomi markup; (2) `vc_raw_html` enkoding je `base64_encode(rawurlencode($html))` — obrnut redosled daje prazan output; (3) `wp_insert/update_post` iz CLI (bez korisnika) **skida `[vc_raw_html]` blok** (kses/save filteri) → JSON-LD ubačen direktnim `$wpdb->update` + `clean_post_cache`
+- ✅ Verifikacija: HTTP 200 · 1×H1 · svi al-* markeri · FAQ JSON-LD validan (parse test) · bez neizrendovanih shortcode-ova · vizuelno u Chrome (hero, USP, tabela, grid--4, reference, FAQ) · stara `/industrijski-podovi-stara/` = 404 (draft)
+- Backup pre izmena: `backup-posts-postmeta-pre-industrijski.sql` (29,8 MB, scratchpad)
+- Korišćen novi **ui-ux-pro-max** skil (landing pattern: social proof pre CTA → reference sekcija ubačena pre FAQ/CTA)
+
 ## 2026-07-05 [claude-code] [ALATI - UI/UX skill + Magic MCP] — Design alati instalirani za Claude Code
 - ✅ **ui-ux-pro-max skill** (github.com/nextlevelbuilder/ui-ux-pro-max-skill v2.6.2) instaliran **globalno** u `C:\Users\Miroslav\.claude\skills\` — 7 skill-ova: `ui-ux-pro-max` (orkestrator: 67 UI stilova, 161 paleta, 57 font parova, 99 UX pravila, 25 chart tipova u CSV bazama + Python search) + pod-skill-ovi `banner-design`, `brand`, `design`, `design-system`, `slides`, `ui-styling`
 - 🔧 `npm install -g ui-ux-pro-max-cli` blokiran od permission sistema (untrusted install skripte) → instalirano ručno: git clone + replikacija `uipro init --ai claude --global` logike iz `cli/src/utils/template.ts`; verifikovano (`search.py "glassmorphism" --design` radi)
