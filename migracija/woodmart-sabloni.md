@@ -36,6 +36,9 @@ namena: WPBakery šabloni + design system klase za WoodMart rebuild stranica
 | `al-stat` + `al-stat__num/__cap` | USP brojka (Bebas crvena) + caption |
 | `al-ref-row` | red logotipa/imena referenci |
 | `al-hero` + `al-hero__sub/__cta` | hero blok |
+| `al-hero-photo` (+ modifikator sa slikom) | foto hero sa navy gradijent overlay-em |
+| `al-icon` | SVG ikonica 46px — fajlovi u `woodmart-child/images/icons/` (6 kom: montaza, izdrzljivost, protivklizna, fleksibilna, odrzavanje, izgled). **Nove ikonice crtati u istom stilu**: viewBox 24, stroke #F04D22, width 1.7, round caps |
+| `al-logo-row` | traka logotipa (grayscale, hover color) |
 
 ## Šablon: SILO LANDING stranica (industrijski, sportski, terase, parking)
 

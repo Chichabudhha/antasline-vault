@@ -1,5 +1,12 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-05 [claude-code] [DIZAJN - 4 ispravke po Miroslavljevim primedbama]
+- ✅ **Dugmad**: umesto reza samo sleva (delovalo isečeno) → simetrični paralelogram (obe kose ivice, padding 38px > rez 12px); isto i mobilno tel dugme
+- ✅ **Ikonice sistem**: 6 custom SVG linijskih ikonica u brand stilu (crvena, 1.7 stroke) → `woodmart-child/images/icons/` (montaza, izdrzljivost, protivklizna, fleksibilna, odrzavanje, izgled) + `.al-icon` klasa — **osnova za ceo sajt**, USP kartice ih već koriste; za silo stranice dodati nove u istom stilu
+- ✅ **Veruju nam**: 3 projekt foto kartice (Hankook fabrika guma / Amicus farmacija / Spanoulis Court — prave slike iz medijateke) + HTEC·Quectel·Dunk Shop tekst + logo traka proizvođača (Bergo/Ecotile/Artisport, grayscale→color hover, `.al-logo-row`)
+- ✅ **Blog slike**: uniformno 3:2 (`aspect-ratio` + object-fit na `.wd-blog-holder`) — važi za sve blog loop-ove na sajtu
+- Sve verifikovano vizuelno (Chrome): 6/6 ikonica, reference kartice, logo traka, blog kartice iste visine
+
 ## 2026-07-05 [claude-code] [FIX - /o-nama/ crash] — PHP segfault dijagnostikovan i rešen
 - 🔍 Uzrok: `[porto_social_icons icon_size="{``xl``:``30``...}"]` — Porto backtick-JSON parametri izazivaju katastrofalno PCRE backtracking u `shortcode_parse_atts` → PHP proces pada bez traga u logu (isti uzrok kao crash stare home 143)
 - 🔍 Metod: bisekcija po vc_row redovima u zasebnim PHP procesima (exit 255 = segfault) → red 2 → suženo na porto_social_icons
