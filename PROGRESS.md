@@ -4,6 +4,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-05 | TEHNIČKA [cpanel-live] — LiteSpeed WebP fix | ✅ Uzrok nađen: 200 slika trajno zaglavljeno u "REQUESTED" (cela dnevna kvota), 1.561 čekalo u redu; resetovano preko `Img_Optm::reset_row()`, pipeline ponovo šalje slike. ⏳ Proveriti za par dana da li se ponavlja (moguć dublji QUIC.cloud problem) |
 | 2026-07-05 | DIZAJN — Mondo look na WoodMart | ✅ Design system (antas-design.css), self-hosted Inter+Bebas, header sa crvenim CTA, home 6 sekcija izgrađen i verifikovan → [[migracija/woodmart-sabloni]] |
 | 2026-07-05 | BREND — logo SVG/PNG izvoz | ✅ Vektorski SVG (vertikalni + horizontalni) iz PDF-a, boje = zvanična paleta, transparent PNG fallback; u `Logo/` + `woodmart-child/images/` |
 | 2026-07-05 | WOODMART — instalacija na lokal | ✅ Tema 8.5.4 + child + core aktivirani, WPBakery → 8.7.3, home crash rešen (nova Početna 16550), smoke test 6/6 · 200 |
@@ -40,6 +41,7 @@
 
 ## Blokeri
 
+- 🟡 **LiteSpeed image optimization — proveriti ponavlja li se** — ako se za par dana "Too many requested images" ponovo pojavi, QUIC.cloud notify webhook verovatno ima trajniji problem → potrebna njihova podrška #claude-code
 - 🔴 **GA4 key events audit** — `conversions` metrika slomljena od juna (5.859/mes umesto ~100); naći i skinuti pogrešan key event u GA4 Admin #ceka-miroslav
 - 🔴 **Negativne KW liste** — proveriti da li je "AntasLine — univerzalne negativne" zakačena na obe aktivne kampanje (epoksid/sika/rinol prolaze!) #ceka-miroslav
 - Redirect mapa gotova — ručna verifikacija ide paralelno.
