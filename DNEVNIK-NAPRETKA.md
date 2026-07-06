@@ -1,5 +1,13 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-06 [claude-code] [DIZAJN - /sportske-podloge/ rebuild] — Silo hub na WoodMart šablonu ✅
+- ✅ **Stranica ID 5438** (postojeći slug `/sportske-podloge/`, nije nova) rebuildovana po istom šablonu kao industrijski-podovi: hero (navy+plates) → intro + 6 USP kartica (paper: neklizajući, multisport, sertifikovano, montaža, održavanje, boje) → grid 11 sport disciplina sa foto karticama (mist, diag-top) → Bergo Ultimate specifikacija (paper) → FAQ 4 pitanja + FAQPage JSON-LD (mist) → CTA (navy, diag-top--rev)
+- ✅ **Content parity izvor bio je dupli**: live sadržaj je u SiteOrigin `panels_data` (serijalizovan PHP niz, ne WPBakery — `content:encoded` prazan!), post_id 1849; napisan mali PHP ekstraktor (`unserialize` + `strip_tags`) da se izvuče tekst. Lokalni WPBakery sadržaj (pre-rebuild) imao je dodatnu hub-grid strukturu (12 sport kartica) koje live verzija nije imala — zadržano jer služi internom linkovanju ka postojećim sport stranicama
+- ✅ **Yoast title/metadesc preneti sa live** (lokalno nisu postojali): "Sportske podloge za kosarku, basket, 3x3, odbojku, futsal" / metadesc o košarci, odbojci, rukometu, futsalu, tenisu
+- 🔧 **Nova lekcija** (dodato u woodmart-sabloni): `/bergo-ultimate/` (ID 15480) ima `post_parent = 5438` → kanonski URL je `/sportske-podloge/bergo-ultimate/`, direktan `/bergo-ultimate/` vraća 301. Proveriti `post_parent` pre linkovanja na child stranice iz hub grid-a.
+- ✅ Verifikacija: HTTP 200 · 1×H1 · FAQPage JSON-LD parsiran i validan (4 pitanja) · svih 11 slika kartica vraća 200 · svih 9 unikatnih link targeta (uklj. ispravljen bergo-ultimate) vraća 200 · WPBakery CSS keš meta očišćen posle izmene
+- Backup pre izmena: post_content sačuvan u scratchpad (`sportske-podloge-BACKUP-content.txt`)
+
 ## 2026-07-05 [claude-code] [DIZAJN - /industrijski-podovi/ rebuild] — Silo landing na WoodMart šablonu ✅
 - ✅ **Nova stranica ID 16567** po silo šablonu iz [[migracija/woodmart-sabloni]]: hero (navy+plates, H1 "Industrijski PVC podovi u pločama") → 6 USP kartica sa ikonicama (paper) → tabela debljina 500/5·500/7·500/10 + 4 kartice pod-asortimana (mist, diag-top) → reference Hankook/Amicus/Ecotile + HTEC·Quectel → FAQ 4 pitanja + FAQPage/Product JSON-LD (vc_raw_html) → CTA (navy+plates, diag-top--rev)
 - ✅ **Slug odluka**: stara Porto stranica 4937 → **draft** + slug `industrijski-podovi-stara`; nova preuzima čist slug `/industrijski-podovi/` (home kartica već linkuje tamo). Porto_builder 15447 netaknut.

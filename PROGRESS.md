@@ -4,6 +4,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-06 | DIZAJN — /sportske-podloge/ WoodMart rebuild | ✅ Silo hub (ID 5438): hero, 6 USP kartica, grid 11 sport disciplina (linkovi ka postojećim stranicama), Bergo Ultimate specifikacija, FAQ + FAQPage JSON-LD, CTA. Content parity iz live SiteOrigin panels_data + lokalnog sadržaja. Nova lekcija: bergo-ultimate je child stranica → `/sportske-podloge/bergo-ultimate/`, ne `/bergo-ultimate/`. 200 + JSON-LD + svi linkovi/slike verifikovani → [[migracija/woodmart-sabloni]] |
 | 2026-07-05 | DIZAJN — /industrijski-podovi/ rebuild | ✅ Nova silo landing (ID 16567) po WoodMart šablonu: hero, 6 USP, tabela debljina, 4 pod-kartice, reference, FAQ + FAQPage/Product JSON-LD; stara 4937 → draft (`-stara`), nova preuzela čist slug; Yoast meta prenet. Vizuelno + 200 verifikovano |
 | 2026-07-05 | ALATI — UI/UX skill + Magic MCP | ✅ ui-ux-pro-max v2.6.2 (7 skill-ova) globalno u `~/.claude/skills/` + security audit čist; Magic MCP (21st.dev) u user scope ✔ Connected — za dizajn rad od sledeće sesije |
 | 2026-07-05 | TEHNIČKA [cpanel-live] — LiteSpeed WebP fix | ✅ Uzrok nađen: 200 slika trajno zaglavljeno u "REQUESTED" (cela dnevna kvota), 1.561 čekalo u redu; resetovano preko `Img_Optm::reset_row()`, pipeline ponovo šalje slike. ⏳ Proveriti za par dana da li se ponavlja (moguć dublji QUIC.cloud problem) |
@@ -44,7 +45,7 @@
 ## Blokeri
 
 - 🟡 **LiteSpeed image optimization — proveriti ponavlja li se** — ako se za par dana "Too many requested images" ponovo pojavi, QUIC.cloud notify webhook verovatno ima trajniji problem → potrebna njihova podrška #claude-code
-- 🔴 **GA4 key events audit** — `conversions` metrika slomljena od juna (5.859/mes umesto ~100); naći i skinuti pogrešan key event u GA4 Admin #ceka-miroslav
+- ✅ **GA4 key events audit** — lažni key eventi skinuti krajem juna 2026; `conversions` metrika treba da se vrati na normalu od jula. Proveriti jula podatke kad budu dostupni da se potvrdi popravka.
 - 🔴 **Negativne KW liste** — proveriti da li je "AntasLine — univerzalne negativne" zakačena na obe aktivne kampanje (epoksid/sika/rinol prolaze!) #ceka-miroslav
 - Redirect mapa gotova — ručna verifikacija ide paralelno.
 

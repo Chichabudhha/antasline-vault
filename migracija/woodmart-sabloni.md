@@ -74,8 +74,15 @@ Slike segmenata: ecotile-floor-1.jpg · Spanoulis-Belgrade-7-1.jpg · podovi-za-
 1. ✅ Home
 2. ✅ /industrijski-podovi/ (2026-07-05, ID 16567) — stara 4937 → draft + slug `industrijski-podovi-stara`, nova preuzela čist slug (home kartica već linkuje tamo). FAQ + FAQPage/Product JSON-LD u vc_raw_html. Cena-FAQ izostavljen (čeka `/industrijski-podovi-cena/`)
 3. Nove C3 stranice (ne postoje → čist slug): /industrijski-podovi-cena/, /podovi-za-garaze/, /gumeni-podovi-za-terase-cena/, /dimenzije-kosarkaskog-terena/, /dimenzije-kosarkaske-table/, /podloge-za-parkiraliste-cena/
-4. Silo: sportske-podloge, spoljne-podne-obloge, podloge-za-parking, kontakt, o-nama
+4. Silo (u toku): ✅ /sportske-podloge/ (2026-07-06, ID 5438) → spoljne-podne-obloge, podloge-za-parking, kontakt, o-nama
 5. Ostale iz live inventara (50 pages)
+
+### /sportske-podloge/ (2026-07-06, ID 5438)
+- Content parity izvučen iz live SiteOrigin `panels_data` (post_id 1849, serialized PHP — ne WPBakery na live!) + postojeći lokalni WPBakery sadržaj (12 sport kartica, USP boxovi, specifikacija, 4 FAQ)
+- Sekcije: hero (navy) → intro+6 USP kartica (paper) → grid 11 sport disciplina (mist, linkovi ka postojećim lokalnim stranicama) → specifikacija Bergo Ultimate (paper) → FAQ + FAQPage JSON-LD (mist) → CTA (navy)
+- ⚠️ Nova lekcija: `/bergo-ultimate/` (ID 15480) je **child stranica** `/sportske-podloge/` (post_parent), pravi URL je `/sportske-podloge/bergo-ultimate/` — direktan `/bergo-ultimate/` daje 301. Proveriti post_parent pre linkovanja na child stranice iz hub-a.
+- Yoast title/metadesc preneti sa live (nisu postojali lokalno)
+- 200 verifikovano, JSON-LD validiran (4 pitanja), sve slike (11 kartica) i svi link target-i (200/200) provereni
 
 ## Otvoreno
 - [ ] Mobilni viewport vizuelna provera (media queries napisani, nije snimljeno) #claude-code
