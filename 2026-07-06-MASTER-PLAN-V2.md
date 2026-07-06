@@ -98,7 +98,7 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 
 | # | Zadatak | Vlasnik | Efekat |
 |---|---|---|---|
-| 4.1 | ✅ 2026-07-06 — lista potvrđena na obe kampanje, +13 novih negativnih (epoksi+padeži, betonski, "industrijski beton", [podne obloge], teraco, letvice, pevex, "uradi sam", pločice-phrase), KW "bastenski namestaj"/"oprema za bazene" pauzirani; `laminat` svesno izostavljen (watch) | M (15 min) | −16% curenja odmah |
+| 4.1 | ✅ ZATVORENO 2026-07-06 — lista potvrđena na obe kampanje, +13 novih negativnih (epoksi+padeži, betonski, "industrijski beton", [podne obloge], teraco, letvice, pevex, "uradi sam", pločice-phrase), KW "bastenski namestaj"/"oprema za bazene" pauzirani; `laminat` svesno izostavljen (watch) | M (15 min) | −16% curenja odmah |
 | 4.2 | Potvrda: ECOTILE prikazi/CPC vraćeni na normalu posle odblokiranja | CC (Windsor) | zatvara Fazu 0 |
 | 4.3 | Faza 1: RSA Terase (15 headlines + 4 desc iz banke) → Ad Strength ≥ Good | M+CC | QS ↑ |
 | 4.4 | Faza 2: ad grupe — Terase → terase/bazeni/bergo · ECOTILE → industrijski/esd; svaka grupa svoj RSA; "pvc podovi za bazene" → svoja grupa + landing /podovi-za-bazene/ | M+CC | IS 24%→40%+ isti budžet |
@@ -113,7 +113,7 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 | # | Zadatak | Vlasnik | Napomena |
 |---|---|---|---|
 | 5.1 | Potvrditi GA4 key events popravku na julskim podacima (`conversions` treba nazad na ~60–160) | CC (Windsor) | sredina jula |
-| 5.2 | GMB: UTM fix (`utm_medium=gmb` → merljivo) + kategorije + mesečni post | M | §6.3 snapshot-a, ~2h |
+| 5.2 | ✅ URAĐENO 2026-07-06 — GMB: UTM fix (`utm_source=google&utm_medium=gmb&utm_campaign=local`), kategorije proširene (+Gradnja sportskih terena, +Pružalac usluga), prvi post kreiran (Bergo/Naxos kampanja); review link spreman za korisnike | M | Efekat: GMB saobraćaj merljiv u GA4, prvi post live, review kampanja čeka poslove |
 | 5.3 | GMB recenzije 6 → 20+ (email posle svakog posla) | M | trust + local pack + GEO |
 | 5.4 | Nedeljni mini-izveštaj (7d vs 7d po formatu [[CLAUDE]] §10) + mesečni puni snapshot ([[analiza/_TEMPLATE-snapshot]]) | CC | sledeći puni: početak avgusta |
 | 5.5 | Mesečni AI test (5 fiksnih promptova iz [[seo/geo-ai-plan]]) + praćenje "AI Assistant" kanala (baseline 9/90d) | CC | — |
@@ -164,7 +164,7 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 | M1 | 🔴 Cene za Tier1 draftove (#1, #2, #3, #6) | W2 najvredniji deo | 2026-07-10 | objaviti sa "cena na upit" + forma, cene se dodaju naknadno |
 | M2 | ✅ ~~Negativna lista potvrda u Ads UI~~ — urađeno 2026-07-06 | ~~16% budžeta curi svaki dan~~ | — | — |
 | M3 | Odbojka refresh primena `[cpanel-live]` | 7.817 impr. quick-win | 2026-07-13 | ostaje u paketu, primeni se sa migracijom |
-| M4 | GMB: recenzije kampanja + UTM fix | W5 quick-win | 2026-07-31 | ne blokira ništa drugo |
+| M4 | ✅ URAĐENO 2026-07-06 (3/4) — GMB: recenzije kampanja (spreman, čeka poslove), UTM fix (gotovo), kategorije (gotovo), post (gotovo) | W5 quick-win | 2026-07-31 | review link čeka — ne blocker |
 | M5 | Konverzije info: šta biva sa 55 kontakata/mes | Fazu 4 / CRM odluku | 2026-07-31 | plan radi i bez toga, ali vrednost/konv ostaje nepoznata |
 | M6 | SSH/hosting pristup + potvrda hostinga | migraciju (N8) | 2026-08-20 | 🔴 nema fallback — bez ovoga nema migracije |
 | M7 | Figma link + testimonials copy | W1 poliranje | 2026-08-10 | sekcije ostaju izostavljene, nisu gate |

@@ -1,5 +1,17 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-06 [claude-code] [W4 + W5 UNOS] — GA4 publike + GMB ažuriranje ✅
+- ✅ **GA4 publike — 2 nove kreirane od Miroslava**
+  - `Parking & spoljne podloge` — `page_path contains /podloge-za-parkiraliste/ OR /spoljnje-podne-obloge/` (očekivano ~120 korisnika/14d)
+  - `Košarkaški tereni` — `page_path contains kako-napraviti-teren-za-basket OR kosarkaske-konstrukcije` (~265/14d)
+  - Status: "Too small to serve" prvih dan-dva dok saobraćaj poraste; sinhronizovanje sa Google Ads aktivno
+- ✅ **GMB ažuriranje (M4 / plan 5.2, rok 2026-07-31)**
+  - UTM fix: Website URI zamenjeno na `https://antasline.com?utm_source=google&utm_medium=gmb&utm_campaign=local` (GA4 će meriti kao GMB kanal umesto Unassigned)
+  - Kategorije proširene: +`Gradnja sportskih terena` + `Pružalac usluga za podove` (bilo samo "Продавница подова")
+  - Prvi Google Post za 6 godina (jula 2026 kampanja — Bergo Ultimate/Naxos Evolution)
+  - Review link: čeka na prve poslove (M4 fallback, nije blocker)
+- Efekat: GMB impresije −73% (trend) + saobraćaj sa GMB sada merljiv u GA4; reviews mogu početi prirodno sa poslovima
+
 ## 2026-07-06 [claude-code] [AUDIT + SKILL INFRASTRUKTURA] — Rupe u projektu + 4 Claude Code skila ✅
 - ✅ **Audit celog projekta** — dve glavne rupe potvrđene podacima:
   1. **Social/email ne postoji u planu**: Organic Social 70 korisnika/90d (0,5%) ali 81% engagement; nijedan social/email/video zadatak u Master planu V2; ~55 kontakata/mes bez follow-up-a (M5)

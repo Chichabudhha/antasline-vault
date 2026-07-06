@@ -6,6 +6,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-06 | W5 TRACKING — GA4 publike + GMB | ✅ GA4: "Parking & spoljne podloge" + "Košarkaški tereni" kreirane (Miroslav u GA4 UI); sinhronizovanje sa Ads aktivno (Too small to serve status; čeka rast saobraćaja). GMB: UTM fix (GA4 sada meri GMB kanal umesto Unassigned) + kategorije proširene (sportski + industrijalni) + prvi post 6 godina + review link spreman (čeka poslove). Efekat: GMB saobraćaj merljiv, CTR na Google Post da se prati sledećih nedelja |
 | 2026-07-06 | ADS — negativne KW + čišćenje (M2 / plan 4.1) | ✅ Miroslav primenio u Ads UI po pripremljenom spisku: 13 novih negativnih (epoksi + padeži epoksidni/-ih/-og, betonski, "industrijski beton", [podne obloge], teraco, letvice, pevex, "uradi sam", "keramičke/podne pločice" kao phrase), pauzirani KW "bastenski namestaj" + "oprema za bazene" (Terase), lista potvrđena na obe kampanje → zatvara ~16% curenja budžeta. `laminat` svesno izostavljen (watch). Detalji: [[dnevnik/ADS-DNEVNIK]] |
 | 2026-07-06 | PLAN — MASTER PLAN V2 | ✅ Novi jedini izvor istine za plan: [[2026-07-06-MASTER-PLAN-V2]] — 5 workstream-ova (W1 rebuild, W2 SEO content, W3 tehnička+migracija, W4 Ads, W5 tracking), nedeljni raspored N1–N8 unazad od go-live 2026-08-31, gate kriterijumi za migraciju, 8 zavisnosti od Miroslava sa fallback-ovima, KPI tabla (jun = mesec-nula), registar rizika. Stari plan od 2026-07-02 označen superseded. |
 | 2026-07-06 | C3 TIER1 #4/#5 — dimenzije terena + table za košarku | ✅ `/dimenzije-kosarkaskog-terena/` (FIBA/NBA tabela + 3x3) i `/dimenzije-kosarkaske-table/` (staklo/akril, uradi sam vs konstrukcija) napravljene. Slug konflikt sa starim image attachment-om rešen (preimenovan attachment slug). Anti-kanibalizacija: skraćena dimenzije-sekcija u postojećem basket članku (2298) + linkovi ka novim stranicama. Verifikovano 200/1×H1/JSON-LD → [[DNEVNIK-NAPRETKA]] |
@@ -53,8 +54,10 @@
 
 - 🟡 **LiteSpeed image optimization — proveriti ponavlja li se** — ako se za par dana "Too many requested images" ponovo pojavi, QUIC.cloud notify webhook verovatno ima trajniji problem → potrebna njihova podrška #claude-code
 - ✅ **GA4 key events audit** — lažni key eventi skinuti krajem juna 2026; `conversions` metrika treba da se vrati na normalu od jula. Proveriti jula podatke kad budu dostupni da se potvrdi popravka.
-- ✅ ~~Negativne KW liste~~ — rešeno 2026-07-06: lista potvrđena na obe kampanje + 13 novih negativnih + pauzirani pogrešni KW (vidi [[dnevnik/ADS-DNEVNIK]])
-- Redirect mapa gotova — ručna verifikacija ide paralelno.
+- ✅ ~~Negativne KW liste~~ — rešeno 2026-07-06
+- ✅ ~~GA4 publike~~ — rešeno 2026-07-06 (Parking & Košarkaški)
+- ✅ ~~GMB ažuriranje~~ — rešeno 2026-07-06 (UTM + kategorije + post; review link čeka na poslove)
+- C1 Redirect mapa — ručna verifikacija (20 PROVERI redova) ide paralelno
 
 ## Napomene
 
