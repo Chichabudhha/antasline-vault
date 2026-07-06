@@ -1,5 +1,24 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-06 [claude-code] [AUDIT + SKILL INFRASTRUKTURA] — Rupe u projektu + 4 Claude Code skila ✅
+- ✅ **Audit celog projekta** — dve glavne rupe potvrđene podacima:
+  1. **Social/email ne postoji u planu**: Organic Social 70 korisnika/90d (0,5%) ali 81% engagement; nijedan social/email/video zadatak u Master planu V2; ~55 kontakata/mes bez follow-up-a (M5)
+  2. **Proizvodi thin (provera lokalne baze, 37 proizvoda)**: 0/37 cena · 0/37 Yoast title/metadesc · 0/37 galerija (a 115 slika importovano) · 0/37 Woo atributa · 14/37 opis <1.000 znakova · 0 PDF tehničkih listova; kanibalizacija rizik proizvod↔stranica (Bergo Unique)
+  - Manje rupe: CRO odsutan (0,88% konverzija, 76–87% mobile, nema sticky CTA), `/hvala-za-poruku/` prazna (0 reči), `lead_form_start` nije implementiran (Form Abandoners publika se ne puni), blog bez post-live plana, nema saglasnosti za email na formi
+- ✅ **4 projektna skila** u `.claude/skills/` (aktivni od sledeće sesije):
+  - `antasline-sesija` — master protokol sesije (otvaranje → W1–W5 tok → verifikacija → zatvaranje)
+  - `obogati-proizvod` — 8-tačka šablon obogaćivanja Woo proizvoda + money-first redosled (Ecotile → konstrukcije → batch)
+  - `w6-social` — novi W6 workstream (Faza 0 pre live-a: popis profila/M5/GMB/saglasnost; pun ritam od 2026-09-01; UTM standard za social)
+  - `nedeljni-izvestaj` — 7d vs 7d kroz Windsor po formatu [[CLAUDE]] §10 sa svim naučenim zamkama
+- ⏳ Čeka odluku Miroslava: (1) product šablon kao novi W1 zadatak → start sa Ecotile linijom, (2) W6 upis u Master plan, (3) popis social profila + M5 odgovor #ceka-miroslav
+
+## 2026-07-06 [claude-code] [ADS - NEGATIVNE KW] — M2 / plan 4.1 zatvoreni ✅
+- ✅ Analiziran izvoz iz Ads UI (`Files/Negative keyword details report.csv`, 44 negativne) vs [[CLAUDE]] §6 referentna lista — falilo 7: `epoksi`, `epoksidni`, `epoksidnih`, `epoksidnog`, `betonski`, `"industrijski beton"`, `[podne obloge]`. Ključni nalaz: **oblik "epoksi" uopšte nije bio pokriven** (broad negativne nisu morfološke — `epoksidna` ne blokira `epoksidni`)
+- ✅ Miroslav u Ads UI dodao 13 negativnih (gornjih 7 + `teraco`, `letvice`, `pevex`, `"uradi sam"`, `"keramičke pločice"`, `"podne pločice"` — phrase umesto broad `plocice` da ne blokira "pvc pločice" upite iz ponude), pauzirao KW `bastenski namestaj` + `oprema za bazene` u Terasama, potvrdio da je lista "AntasLine — univerzalne negativne" primenjena na obe kampanje
+- `laminat` svesno izostavljen ([[CLAUDE]] §6 pravilo) — watch lista
+- Efekat: zatvara ~16% curenja budžeta (M2 iz [[2026-07-06-MASTER-PLAN-V2]]); sledeće u W4: Faza 1 RSA Terase
+- Detalji: [[dnevnik/ADS-DNEVNIK]] log 2026-07-06
+
 ## 2026-07-06 [claude-code] [PLAN - MASTER PLAN V2] — Novi plan projekta do live-a ✅
 - ✅ Pročitani svi .md fajlovi u vault-u (40) → napravljen **[[2026-07-06-MASTER-PLAN-V2]]** kao jedini izvor istine za plan (stari [[2026-07-02-MASTER-PLAN-DO-LIVE]] označen `superseded` — pisan pre Porto→WoodMart prelaska, live exporta i C3 draftova)
 - Struktura V2: **baseline 2026-07-06** (šta je gotovo + metrike-nula iz [[analiza/2026-07-04-snapshot-full]]) → **5 workstream-ova** (W1 dizajn/rebuild · W2 SEO content C3+GEO · W3 SEO tehnička+migracija C1/C2+CWV · W4 Ads faze 1–4 · W5 tracking/merenje) → **nedeljni raspored N1–N8** unazad od migracije **2026-08-31** → **gate kriterijumi** za go/no-go → **8 zavisnosti od Miroslava** sa fallback-ovima i rokovima → **KPI tabla** (jun = mesec-nula) → **registar rizika**

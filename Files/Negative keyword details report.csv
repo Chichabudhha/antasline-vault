@@ -1,0 +1,47 @@
+Negative keyword details report
+All time
+keyword_text,match_type
+izliveni,BROAD
+ibotac,BROAD
+tečni,BROAD
+podovi cena,EXACT
+ferobetona,BROAD
+deking,BROAD
+megapod,BROAD
+polovan,BROAD
+kupujemprodajem,BROAD
+tecni,BROAD
+epoxy,BROAD
+decking,BROAD
+wpc,BROAD
+tarkett,BROAD
+bimeco,BROAD
+rinol,BROAD
+epoksidna,BROAD
+izlivanje,BROAD
+premaz,BROAD
+epoksid,BROAD
+smola,BROAD
+smole,BROAD
+teron,BROAD
+flooring,BROAD
+ikea,BROAD
+sika,BROAD
+polovni,BROAD
+podovi,EXACT
+epoxidni,BROAD
+metalni,BROAD
+stakla,BROAD
+marmoleum,BROAD
+epoxi,BROAD
+jysk,BROAD
+polovno,BROAD
+polovne,BROAD
+епоксидни,BROAD
+topli pod,PHRASE
+mega pod,PHRASE
+ferobeton,BROAD
+galerija podova,PHRASE
+epoksidne,BROAD
+poliuretan,BROAD
+poliuretanski,BROAD

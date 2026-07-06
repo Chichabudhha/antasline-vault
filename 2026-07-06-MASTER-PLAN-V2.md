@@ -98,7 +98,7 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 
 | # | Zadatak | Vlasnik | Efekat |
 |---|---|---|---|
-| 4.1 | 🔴 Potvrditi da je negativna lista zakačena na obe kampanje + dodati nove negativne (deking, plocice, teraco, letvice, pevex, wpc, laminat, ikea, "uradi sam"…) + skinuti KW "bastenski namestaj"/"oprema za bazene" | M (15 min) | −16% curenja odmah |
+| 4.1 | ✅ 2026-07-06 — lista potvrđena na obe kampanje, +13 novih negativnih (epoksi+padeži, betonski, "industrijski beton", [podne obloge], teraco, letvice, pevex, "uradi sam", pločice-phrase), KW "bastenski namestaj"/"oprema za bazene" pauzirani; `laminat` svesno izostavljen (watch) | M (15 min) | −16% curenja odmah |
 | 4.2 | Potvrda: ECOTILE prikazi/CPC vraćeni na normalu posle odblokiranja | CC (Windsor) | zatvara Fazu 0 |
 | 4.3 | Faza 1: RSA Terase (15 headlines + 4 desc iz banke) → Ad Strength ≥ Good | M+CC | QS ↑ |
 | 4.4 | Faza 2: ad grupe — Terase → terase/bazeni/bergo · ECOTILE → industrijski/esd; svaka grupa svoj RSA; "pvc podovi za bazene" → svoja grupa + landing /podovi-za-bazene/ | M+CC | IS 24%→40%+ isti budžet |
@@ -162,7 +162,7 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 | # | Odluka/input | Blokira | Rok | Fallback ako kasni |
 |---|---|---|---|---|
 | M1 | 🔴 Cene za Tier1 draftove (#1, #2, #3, #6) | W2 najvredniji deo | 2026-07-10 | objaviti sa "cena na upit" + forma, cene se dodaju naknadno |
-| M2 | 🔴 Negativna lista potvrda u Ads UI (15 min) | 16% budžeta curi svaki dan | odmah | CC pripremi tačan spisak koraka za UI |
+| M2 | ✅ ~~Negativna lista potvrda u Ads UI~~ — urađeno 2026-07-06 | ~~16% budžeta curi svaki dan~~ | — | — |
 | M3 | Odbojka refresh primena `[cpanel-live]` | 7.817 impr. quick-win | 2026-07-13 | ostaje u paketu, primeni se sa migracijom |
 | M4 | GMB: recenzije kampanja + UTM fix | W5 quick-win | 2026-07-31 | ne blokira ništa drugo |
 | M5 | Konverzije info: šta biva sa 55 kontakata/mes | Fazu 4 / CRM odluku | 2026-07-31 | plan radi i bez toga, ali vrednost/konv ostaje nepoznata |

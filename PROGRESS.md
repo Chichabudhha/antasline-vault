@@ -6,6 +6,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-06 | ADS — negativne KW + čišćenje (M2 / plan 4.1) | ✅ Miroslav primenio u Ads UI po pripremljenom spisku: 13 novih negativnih (epoksi + padeži epoksidni/-ih/-og, betonski, "industrijski beton", [podne obloge], teraco, letvice, pevex, "uradi sam", "keramičke/podne pločice" kao phrase), pauzirani KW "bastenski namestaj" + "oprema za bazene" (Terase), lista potvrđena na obe kampanje → zatvara ~16% curenja budžeta. `laminat` svesno izostavljen (watch). Detalji: [[dnevnik/ADS-DNEVNIK]] |
 | 2026-07-06 | PLAN — MASTER PLAN V2 | ✅ Novi jedini izvor istine za plan: [[2026-07-06-MASTER-PLAN-V2]] — 5 workstream-ova (W1 rebuild, W2 SEO content, W3 tehnička+migracija, W4 Ads, W5 tracking), nedeljni raspored N1–N8 unazad od go-live 2026-08-31, gate kriterijumi za migraciju, 8 zavisnosti od Miroslava sa fallback-ovima, KPI tabla (jun = mesec-nula), registar rizika. Stari plan od 2026-07-02 označen superseded. |
 | 2026-07-06 | C3 TIER1 #4/#5 — dimenzije terena + table za košarku | ✅ `/dimenzije-kosarkaskog-terena/` (FIBA/NBA tabela + 3x3) i `/dimenzije-kosarkaske-table/` (staklo/akril, uradi sam vs konstrukcija) napravljene. Slug konflikt sa starim image attachment-om rešen (preimenovan attachment slug). Anti-kanibalizacija: skraćena dimenzije-sekcija u postojećem basket članku (2298) + linkovi ka novim stranicama. Verifikovano 200/1×H1/JSON-LD → [[DNEVNIK-NAPRETKA]] |
 | 2026-07-06 | DIZAJN — 4 nove sport stranice (futsal/hokej/stoni tenis/3x3) | ✅ `/sportske-podloge/` grid je imao 4 kartice sa pogrešnim/placeholder linkovima (Futsal → `/industrijski-podovi/`, 3x3+stoni tenis+hokej → isti bergo-ultimate fallback) jer te 4 dedicated stranice nikad nisu postojale. Napravljene sve 4 po al- WoodMart šablonu (hero+USP+specifikacija+foto-reference+FAQ/schema+CTA), sadržaj oslonjen na stvarne Naxos Evolution/Bergo Ultimate proizvod-činjenice. Grid linkovi ispravljeni. Nova gotcha: `_woodmart_title_off=on` postmeta mora ručno posle `wp_insert_post()` da se izbegne 2×H1. Verifikovano 4/4: 200, 1×H1, FAQPage JSON-LD, slike/linkovi rade → [[DNEVNIK-NAPRETKA]] |
@@ -52,7 +53,7 @@
 
 - 🟡 **LiteSpeed image optimization — proveriti ponavlja li se** — ako se za par dana "Too many requested images" ponovo pojavi, QUIC.cloud notify webhook verovatno ima trajniji problem → potrebna njihova podrška #claude-code
 - ✅ **GA4 key events audit** — lažni key eventi skinuti krajem juna 2026; `conversions` metrika treba da se vrati na normalu od jula. Proveriti jula podatke kad budu dostupni da se potvrdi popravka.
-- 🔴 **Negativne KW liste** — proveriti da li je "AntasLine — univerzalne negativne" zakačena na obe aktivne kampanje (epoksid/sika/rinol prolaze!) #ceka-miroslav
+- ✅ ~~Negativne KW liste~~ — rešeno 2026-07-06: lista potvrđena na obe kampanje + 13 novih negativnih + pauzirani pogrešni KW (vidi [[dnevnik/ADS-DNEVNIK]])
 - Redirect mapa gotova — ručna verifikacija ide paralelno.
 
 ## Napomene

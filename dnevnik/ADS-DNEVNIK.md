@@ -54,7 +54,7 @@ Nalog: `156-886-0314` (Gogin Nalog) · Strategija: **Maximize Clicks** (namerno,
 - [ ] ECOTILE → 2 ad grupe: `industrijski` · `esd/antistatik` (po odblokiranju)
 - [ ] Svaka ad grupa dobija svoj RSA (diže keyword relevance)
 - [ ] Match tip: ostaje phrase/exact; broad tek uz Smart Bidding
-- [ ] Negativne ključne reči potvrđene na obe kampanje (vidi [[CLAUDE]] sekcija 6)
+- [x] Negativne ključne reči potvrđene na obe kampanje ✅ 2026-07-06 (vidi log + [[CLAUDE]] sekcija 6)
 
 ### Faza 3 — Merenje i priprema za Smart Bidding
 - [ ] Enhanced Conversions (SHA-256 email+telefon iz forme) — trebalo bi da se implementira kroz GTM
@@ -107,6 +107,16 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 ## 🗒️ Log
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
+
+### 2026-07-06 [claude-code] — NEGATIVNE KW FIX ✅ (M2 / plan 4.1 zatvoreni)
+- Izvoz iz Ads UI (`Files/Negative keyword details report.csv`, 44 negativne u listi) uporedjen sa [[CLAUDE]] §6 → **falilo 7**: `epoksi`, `epoksidni`, `epoksidnih`, `epoksidnog`, `betonski`, `"industrijski beton"`, `[podne obloge]`. Kritično: baš oblik **"epoksi" nije bio pokriven** — broad negativne nisu morfološke, `epoksidna` ne blokira `epoksidni`.
+- Miroslav dodao u listu **13 negativnih**: gornjih 7 + `teraco`, `letvice`, `pevex`, `"uradi sam"`, `"keramičke pločice"`, `"podne pločice"` (phrase umesto broad `plocice` — da ne blokira "pvc pločice" upite iz ponude). Već postojale od ranije: deking, decking, wpc, ikea, marmoleum.
+- Pauzirani pogrešni KW u Terasama: `bastenski namestaj` (164 RSD), `oprema za bazene` (144 RSD) — pauza, ne brisanje (čuva istoriju).
+- Lista "AntasLine — univerzalne negativne" **potvrđena primenjena na obe aktivne kampanje**.
+- `laminat` svesno NIJE dodat ([[CLAUDE]] §6: upiti se mogu konvertovati ka PVC) — watch: dodati tek ako troši bez konverzija.
+- Efekat: zatvara ~16% curenja budžeta identifikovanog u snapshot-u 2026-07-04.
+
+**Sledeći korak:** Faza 1 — RSA Terase (15 headlines + 4 descriptions iz banke) → Faza 2 ad grupe (terase/bazeni/bergo).
 
 ### 2026-07-04 [claude-code] — PUNI SNAPSHOT (16mo) → [[analiza/2026-07-04-snapshot-full]]
 - **Jun = najveći spend mesec u 16 meseci (30,7k RSD)**; prelaz na nove kampanje početkom juna uspeo (stare pauzirane; "Ecotile - Antas line" pre pauze potrošila 10,1k/90d sa 0 konv — od toga "antistatik pod" broad 5,0k).

@@ -196,7 +196,24 @@ poliuretanski
 [podovi]
 [podne obloge]
 [podovi cena]
+marmoleum
+deking
+decking
+wpc
+ikea
+teraco
+letvice
+pevex
+"uradi sam"
+"keramičke pločice"
+"podne pločice"
 ```
+
+> Stanje potvrđeno u Ads UI 2026-07-06 (M2 zatvoren): lista primenjena na obe
+> kampanje, dodato 13 negativnih koje su falile, pauzirani KW `bastenski
+> namestaj` i `oprema za bazene` u kampanji Terase. `plocice` namerno kao
+> phrase varijante (ne broad) — broad bi blokirao "pvc pločice" upite iz
+> ponude. Detalji: [[dnevnik/ADS-DNEVNIK]].
 
 Opciono (razmotri ako se odluči da se ne plaća za antistatik pojmove —
 organski smo već pozicija 3–4, CTR do 19%): `antistatik`
