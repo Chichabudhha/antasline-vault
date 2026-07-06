@@ -1,5 +1,51 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-06 [claude-code] [PLAN - MASTER PLAN V2] — Novi plan projekta do live-a ✅
+- ✅ Pročitani svi .md fajlovi u vault-u (40) → napravljen **[[2026-07-06-MASTER-PLAN-V2]]** kao jedini izvor istine za plan (stari [[2026-07-02-MASTER-PLAN-DO-LIVE]] označen `superseded` — pisan pre Porto→WoodMart prelaska, live exporta i C3 draftova)
+- Struktura V2: **baseline 2026-07-06** (šta je gotovo + metrike-nula iz [[analiza/2026-07-04-snapshot-full]]) → **5 workstream-ova** (W1 dizajn/rebuild · W2 SEO content C3+GEO · W3 SEO tehnička+migracija C1/C2+CWV · W4 Ads faze 1–4 · W5 tracking/merenje) → **nedeljni raspored N1–N8** unazad od migracije **2026-08-31** → **gate kriterijumi** za go/no-go → **8 zavisnosti od Miroslava** sa fallback-ovima i rokovima → **KPI tabla** (jun = mesec-nula) → **registar rizika**
+- Odluke Miroslava: novi fajl V2 (ne update starog in-place) · go-live ostaje 2026-08-31
+- Ažurirane reference: [[PROGRESS]] (banner + red u tabeli), [[blokovi/BLOK-C-sledece]] (C1/C2/C3 → workstream mapiranje), [[CLAUDE]] §12/§13, stari plan (superseded napomena + frontmatter)
+- 🔴 Najhitnije iz plana: M1 cene za Tier1 draftove (rok 10.07, fallback "cena na upit") + M2 negativna lista u Ads UI (15 min, zaustavlja ~16% curenja)
+
+## 2026-07-06 [claude-code] [C3 TIER1 #4/#5] — Dimenzije terena + table za košarku ✅
+- ✅ Napravljene **2 TIER1 SEO stranice** iz [[seo/plan-novih-stranica]] (~20k impr, poz. 1–2 ali nizak CTR — cilj je featured snippet, ne rang):
+  - `/dimenzije-kosarkaskog-terena/` (ID 16586) — FIBA vs NBA tabela (teren, koš, tri poena, reket, centralni krug), školski/rekreativni/3x3 varijante, link ka `/kosarka-3x3-tereni/`
+  - `/dimenzije-kosarkaske-table/` (ID 16585) — dimenzije table, visina montaže, staklo vs akril, uradi-sam vs gotova konstrukcija (cena "na upit", bez izmišljenih brojeva jer nemamo prave cifre), link ka `/kategorija/kosarkaske-konstrukcije/`
+- 🐛 **Slug konflikt otkriven**: `/dimenzije-kosarkaskog-terena/` slug je od 2022. bio zauzet starim image **attachment**-om (`post_type=attachment`, prazan `post_content`) korišćenim inline u basket članku — `get_page_by_path()` ga je vraćao i pored `post_type='page'` filtera (WP kvirk, attachment slug i dalje blokira page slug). Rešeno preimenovanjem attachment `post_name` u `dimenzije-kosarkaskog-terena-slika` (guid/URL same slike ostaje netaknut, samo interni slug se menja) — bezbedno jer se slika u sadržaju referencira direktno preko uploads putanje, ne preko attachment permalink-a
+- ✅ **Anti-kanibalizacija**: postojeći članak "Kako napraviti teren za basket ili košarkaški teren" (ID 2298) je imao punu "Dimenzije terena za košarku" → "Obruč koša" sekciju (1894 bajta, dupliran sadržaj sa novom stranicom) — skraćeno na 2 rečenice + linkovi ka obe nove stranice; sekcija "Košarkaške konstrukcije" ispod ostala netaknuta
+- ✅ Verifikacija (2/2 nove + 1 izmenjena): sve 200, 1×H1, FAQPage JSON-LD, cross-linkovi (`/kosarka-3x3-tereni/`, `/kategorija/kosarkaske-konstrukcije/`) rade, Yoast title/metadesc + `_woodmart_title_off` setovani
+- Skripte: `build-basket-dimension-pages.php`, `trim-basket-article.php` (scratchpad)
+
+## 2026-07-06 [claude-code] [DIZAJN - 4 nove sport stranice] — Popunjena rupa u /sportske-podloge/ gridu ✅
+- 🐛 **Bug otkriven u jučerašnjem gridu (5438)**: 4 od 11 kartica u "Izaberite sport" gridu na `/sportske-podloge/` nisu vodile ka pravom sadržaju — Futsal kartica je linkovala na `/industrijski-podovi/` (potpuno nepovezano), a 3x3/Stoni tenis/Hokej kartice su sve tri vodile na isti `/sportske-podloge/bergo-ultimate/` fallback. Provera baze potvrdila da za sva 4 sporta nikad nije postojala prava dedicated stranica — stari nav meniji (`futsal-tereni`, `hokejaski-tereni`) su i ranije upućivali na generičke proizvod-stranice (Naxos Evolution / Bergo Ultimate)
+- ✅ Napravljene **4 nove landing stranice** po istom al- WoodMart šablonu (hero navy+plates → USP paper → specifikacija mist → foto-reference paper → FAQ+FAQPage JSON-LD mist → CTA navy):
+  - `/podloge-za-futsal-terene/` (ID 16581) — indoor (Naxos Evolution) + outdoor (Bergo Ultimate) opcije, FIFA/FIBA dimenzije 38–42×18–22m
+  - `/podloge-za-hokejaske-terene/` (ID 16582) — Naxos Evolution, dvoranski hokej/floorball
+  - `/podovi-za-stoni-tenis-sale/` (ID 16583) — Naxos Evolution, ugao na mat površinu (bitno za praćenje loptice)
+  - `/kosarka-3x3-tereni/` (ID 16584) — Bergo Ultimate, FIBA 15×11m, foto-reference sa stvarnih terena (Jakovo, Zlatibor, Novi Sad) + link ka Dunk Shop case study (`/teren-za-basket-3x3/`)
+  - Sadržaj oslonjen na stvarne proizvod-činjenice iz postojećih Naxos Evolution (ID 15490) i Bergo Ultimate (ID 15480) stranica, ne izmišljen
+- ✅ Sva 4 linka u `/sportske-podloge/` gridu (5438) ispravljena da vode ka novim stranicama umesto na placeholder ciljeve
+- 🔧 **Nova gotcha**: nove `page` stranice pravljene direktno preko `wp_insert_post()` dobijaju WoodMart-ov automatski page-title `<h1 class="entry-title">` PORED našeg `<h1 class="al-display--xl">` iz sadržaja → 2×H1. Rešenje: `_woodmart_title_off = 'on'` postmeta (isti trik već postoji na 16567 industrijski-podovi, ali nije bio dokumentovan) — mora se dodati ručno posle insert-a, nije default
+- ✅ Verifikacija (4/4): HTTP 200, tačno 1×H1 (posle `_woodmart_title_off` fix-a), FAQPage JSON-LD validan, sve slike (postojeći uploads) i interni linkovi vraćaju 200, Yoast title/metadesc setovan
+- Backup pre izmena: `antasline_local_2026-07-06_pre-4-sport-pages.sql` u `C:\xampp\htdocs\antasline-backups\`
+- Skript: `build-sport-pages.php` + `fix-sport-grid-links.php` (scratchpad, nisu u vault-u)
+
+## 2026-07-06 [claude-code] [DIZAJN - 10 WooCommerce kategorija] — WoodMart Layout Builder landing sekcije ✅
+- ✅ **Novi mehanizam otkriven i prvi put isproban u projektu**: WoodMart "Layout Builder" (`post_type=woodmart_layout`, `wd_layout_type=shop_archive`, `wd_layout_conditions` sa `condition_type=product_term`) potpuno zamenjuje WooCommerce archive template za odabranu kategoriju — omogućava hero/USP/FAQ+schema tretman + `[woodmart_shop_archive_products]` grid, isto vizuelno poput `/industrijski-podovi/` i `/sportske-podloge/` stranica
+- ✅ Svih **10 kategorija** (245–254, Ergomat/DuraStripe/Bergo/Ecotile katalog, prethodno bez ikakvog opisa/SEO meta) dobilo puni ili skraćeni landing tretman: 6 punih (hero+USP+grid+FAQ+CTA: 245, 246, 248, 251, 252, 254), 4 skraćene (hero+intro+grid+FAQ+CTA bez USP grid-a, za 1–2 SKU kategorije: 247, 249, 250, 253)
+- ✅ **Diferencijacija duplikata**: 245 "Zaštita i Bumperi" (proizvod-katalog ugao) ↔ 246 "Industrijska zaštita" (rešenje-za-problem ugao, isti proizvodi) i 251 "Košarkaške konstrukcije" (teren/instalacija) ↔ 252 "Oprema za sportske terene" (šira sportska oprema, 100% identični proizvodi) — obostrani cross-linkovi da se izbegne dupli sadržaj za Google
+- ✅ **254 "Industrijski podovi" vs postojeća `/industrijski-podovi/` (16567) kanibalizacija rešena**: 16567 ostaje edukativna/poredbena stranica, nova kategorija je transakciona/katalog stranica + dodat 1 interni link sa 16567 ka novoj kategoriji
+- ✅ Yoast SEO title/metadesc setovan za svih 10 (`WPSEO_Taxonomy_Meta::set_values()`)
+- 🔧 **3 nova gotcha-e otkrivene i rešene** (bitno za buduće layout builder izmene):
+  1. `wd_layout_conditions` MORA imati `condition_comparison => 'include'` po uslovu — bez toga se layout tiho nikad ne aktivira, bez greške
+  2. `WPSEO_Taxonomy_Meta::set_value()` pozvan pojedinačno (title, pa desc) **briše** prethodno postavljeno polje jer nema "retain old value" fallback za title/desc — mora `set_values()` sa oba ključa u JEDNOM pozivu
+  3. Yoast keš-uje title/desc u `wpGs_yoast_indexable` tabeli (Indexables sistem) — ne osvežava se automatski kad se termmeta menja mimo admin UI-ja; mora se obrisati stale red (`$wpdb->delete` po `object_id`+`object_type`+`object_sub_type`) da se izgradi iznova sa svežim vrednostima
+  4. Direktan `wp_update_post()` posle `$wpdb->update` patch-a JSON-LD-a **ponovo** provlači ceo `post_content` kroz kses (briše `vc_raw_html` opet) — status na `publish` mora ići u ISTOM raw `$wpdb->update` pozivu kao i content patch, nikad kroz `wp_update_post()`; pošto to zaobilazi `save_post` hook, `wd_layouts_conditions` keš se mora ručno regenerisati (`new \XTS\Modules\Layouts\Conditions_Cache())->regenerate()`) posle batch-a
+- ✅ Verifikacija (10/10): HTTP 200, tačno 1×H1, FAQPage JSON-LD validan bez dupliranja Yoast `CollectionPage`/`BreadcrumbList` grafa, `<title>`/meta = Yoast vrednosti, product grid renderuje prave proizvode (3/12/12/1/6/2/1/5/5/1), cross-linkovi 200, `SELECT COUNT(*) WHERE post_type='woodmart_layout' AND post_status='publish'` = 10
+- ⏳ Mobilni viewport vizuelni check nije urađen (browser resize alat nije pouzdano menjao render viewport u ovoj sesiji) — isti otvoreni item kao i za ostale WoodMart stranice
+- Backup pre izmena: `antasline_local_2026-07-06_pre-category-landings.sql` (46,6 MB) u `C:\xampp\htdocs\antasline-backups\` (van webroot-a)
+- Skript: `build-category-landings.php` (scratchpad, nije u vault-u — sadrži sav copy za 10 kategorija, ponovo pokretljiv sa `pilot`/`batch`/`all` argumentom)
+
 ## 2026-07-06 [claude-code] [DIZAJN - /sportske-podloge/ rebuild] — Silo hub na WoodMart šablonu ✅
 - ✅ **Stranica ID 5438** (postojeći slug `/sportske-podloge/`, nije nova) rebuildovana po istom šablonu kao industrijski-podovi: hero (navy+plates) → intro + 6 USP kartica (paper: neklizajući, multisport, sertifikovano, montaža, održavanje, boje) → grid 11 sport disciplina sa foto karticama (mist, diag-top) → Bergo Ultimate specifikacija (paper) → FAQ 4 pitanja + FAQPage JSON-LD (mist) → CTA (navy, diag-top--rev)
 - ✅ **Content parity izvor bio je dupli**: live sadržaj je u SiteOrigin `panels_data` (serijalizovan PHP niz, ne WPBakery — `content:encoded` prazan!), post_id 1849; napisan mali PHP ekstraktor (`unserialize` + `strip_tags`) da se izvuče tekst. Lokalni WPBakery sadržaj (pre-rebuild) imao je dodatnu hub-grid strukturu (12 sport kartica) koje live verzija nije imala — zadržano jer služi internom linkovanju ka postojećim sport stranicama

@@ -4,10 +4,14 @@ naziv: 2-mesečni plan redizajna do live-a
 datum-plan: 2026-07-02 do 2026-09-02
 prioritet: Tehnička → SEO → Ads
 timeline: 8 nedelja
-status: aktivan
+status: superseded
+zamenjen-sa: "[[2026-07-06-MASTER-PLAN-V2]]"
 ---
 
 # 🚀 MASTER PLAN — Antasline redizajn do live-a (2 meseca)
+
+> [!warning] ⛔ SUPERSEDED (2026-07-06)
+> Ovaj plan je zamenjen sa **[[2026-07-06-MASTER-PLAN-V2]]** — pisan je pre Porto→WoodMart prelaska (2026-07-05), live exporta i C3 draftova. Čuva se samo kao istorijski snapshot. Ne raditi po njemu.
 
 **Početak:** 2026-07-02  
 **Cilj:** Redizajn live na antasline.com  

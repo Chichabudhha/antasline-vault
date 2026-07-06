@@ -431,7 +431,7 @@ backup-a i bez odobrenja.
 
 Ovaj fajl nosi *pravila ponašanja i istorijski kontekst* — ne menja se često.
 Za **"gde smo stali danas"** uvek prvo pogledaj:
-1. `[[2026-07-02-MASTER-PLAN-DO-LIVE]]` — 2-mesečni plan (Tehnička → SEO → Ads)
+1. `[[2026-07-06-MASTER-PLAN-V2]]` — master plan do live-a (5 workstream-ova, N1–N8 raspored, gate kriterijumi; go-live 2026-08-31)
 2. `[[PROGRESS]]` u vault-u — snapshot trenutnog stanja
 3. `[[DNEVNIK-NAPRETKA]]` (append-only ledger, poslednji unosi)
 4. Aktivni BLOK C pod-zadatak: `[[blokovi/BLOK-C-sledece]]` (C1 redirect / C2 content / C3 on-page)
@@ -444,7 +444,8 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 - `[[00-INDEX]]` — Dashboard (Dataview tabele)
 - `[[CLAUDE]]` — Ovo (instrukcije + kontekst)
 - `[[PROGRESS]]` — Trenutno stanje
-- `[[2026-07-02-MASTER-PLAN-DO-LIVE]]` — 2-mesečni plan do live-a
+- `[[2026-07-06-MASTER-PLAN-V2]]` — Master plan do live-a (2026-08-31) — **aktivan**
+- `[[2026-07-02-MASTER-PLAN-DO-LIVE]]` — Stari plan (⛔ superseded, istorijski snapshot)
 
 ### 📖 HRONOLOGIJA — Šta je urađeno po datumima
 - `[[DNEVNIK-NAPRETKA]]` — Append-only ledger (svaka sesija)
@@ -535,4 +536,4 @@ Kada otvorim CLAUDE.md sledeći put, znaću:
 7. ✅ **Prioritet** — Tehnička → SEO → Ads
 8. ✅ **Timeline** — 2 meseca (do 2026-09-02)
 9. ✅ **Šta trebam od Miroslava** — 5 konkretnih odgovora
-10. ✅ **Šta radim sad** — [[2026-07-02-MASTER-PLAN-DO-LIVE]] (Faza 0-3)
+10. ✅ **Šta radim sad** — [[2026-07-06-MASTER-PLAN-V2]] (workstream-ovi W1–W5, nedelje N1–N8)

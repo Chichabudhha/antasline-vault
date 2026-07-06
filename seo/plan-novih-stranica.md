@@ -77,8 +77,8 @@ Svaka završena stranica: red u [[DNEVNIK-NAPRETKA]] + update [[PROGRESS]] + št
 - [ ] #1 terasa cena — **draft ✍️ [[dnevnik/2026-07-05-draft-gumeni-podovi-za-terase-cena]]**, čeka cene + implementaciju
 - [ ] #2 industrijski cena — **draft ✍️ [[dnevnik/2026-07-05-draft-industrijski-podovi-cena]]** (odluka: posebna stranica, ne sekcija), čeka cene + implementaciju
 - [ ] #3 garaže landing — **draft ✍️ [[dnevnik/2026-07-05-draft-podovi-za-garaze]]**, čeka cene/slike + implementaciju
-- [ ] #4 dimenzije terena — **draft ✍️ [[dnevnik/2026-07-05-draft-dimenzije-kosarkaskog-terena]]** (⚠️ anti-kanibalizacija: skratiti dimenzije u basket članku)
-- [ ] #5 tabla — **draft ✍️ [[dnevnik/2026-07-04-dimenzije-kosarkaske-table]]** (od ranije)
+- [x] #4 dimenzije terena — ✅ implementirano `/dimenzije-kosarkaskog-terena/` (ID 16586) 2026-07-06, anti-kanibalizacija urađena (basket članak 2298 skraćen) → [[DNEVNIK-NAPRETKA]]
+- [x] #5 tabla — ✅ implementirano `/dimenzije-kosarkaske-table/` (ID 16585) 2026-07-06, cena "na upit" (nema pravih brojeva) → [[DNEVNIK-NAPRETKA]]
 - [ ] #6 parking cena — **draft ✍️ [[dnevnik/2026-07-05-draft-podloge-za-parkiraliste-cena]]**, čeka cene/nosivost/reference
 - [ ] #7–8 tenis hub #claude-code
 - [ ] #10–20 po redosledu #claude-code

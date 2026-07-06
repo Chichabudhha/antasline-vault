@@ -7,6 +7,8 @@ azurirano: 2026-06-28
 
 # BLOK C — Sledeći korak (izabrati JEDNU stavku)
 
+> C1/C2/C3 su od 2026-07-06 mapirani na workstream-ove master plana: C1+C2 → W3/W1, C3 → W2. Redosled i nedeljni raspored: [[2026-07-06-MASTER-PLAN-V2]].
+
 ## C1: Redirect mapa
 `antasline-redirect-mapa-POPUNJENA.csv` (118 redova).
 - ~15 redova `bezredirekta` gde se stari/novi URL razlikuju (svaki postaje 404 bez 301).
