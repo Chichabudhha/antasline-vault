@@ -1,5 +1,16 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-07 [claude-code] [W1 — SILO REBUILD] — /spoljnje-podne-obloge/ WoodMart silo landing ✅
+- ✅ Backup pre rada: `antasline_local_2026-07-07_pre-spoljne-podne-obloge.sql` (46 MB)
+- ✅ Kreirane `/spoljnje-podne-obloge/` (ID 16588) po al-WoodMart šablonu (hero navy+plates+diag-bottom → paper body → FAQ mist+diag-top → CTA navy+plates+rev-diag)
+- ✅ Content parity iz live export XML (SiteOrigin layout): intro 2 rečenice · Bergo karakteristike + Bergo Flooring historia · FAQ 4 stavke (trajnost, demontaža, restorani, održavanje) · JSON-LD schema (FAQPage) · Yoast mete iz live-inventar CSV
+- ✅ Postmeta: `_woodmart_main_layout=full-width`, `_woodmart_title_off=on`
+- ✅ Yoast: Title "Podne obloge za bašte i terase - jednostavna montaza i veliki izbor boja" · Metadesc "Spoljasnje podne obloge za terase, dvorista, baste..."
+- ✅ Verifikacija: HTTP 200 · 1×H1 "Spoljne podne obloge za bašte i terase" · Yoast title u <head> · FAQPage JSON-LD dodan; interni CTA linkovi ka `#upit` forma
+- 🔧 Gotcha: `vc_raw_html` sa JSON-LD nije se prikazao → JSON-LD dodan direktno kao `<script>` tag na kraju post_content (WPBakery vc_raw_html gotcha #8)
+- 📍 Gde čeka: Slike/referenci (nije dodata galerija — live stranica je imala SiteOrigin `[Best_Wordpress_Gallery id="35"]` — trebam da dodavam referentne slike ako postoje lokalno)
+- Skripti: `build-spoljnje-podne-obloge.php`, `fix-faq-schema.php` (scratchpad)
+
 ## 2026-07-07 [claude-code] [PLAN - PROCESNI AUDIT] — 9 predloga upisano u Master Plan V2 ✅
 - ✅ Drugi krug audita (posle sadržajnog 07-06) — fokus na proces/rizik/biznis logiku, ne sadržaj:
   1. 🔴 **Backup rizik**: 2 meseca rada samo na jednom disku → novi zadatak 3.13 (noćni mysqldump + wp-content zip na drugu lokaciju)
