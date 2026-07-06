@@ -1,5 +1,17 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-07 [claude-code] [W1 — SILO REBUILD ×2] — /spoljne-podne-obloge/ + /podloge-za-parkiraliste-i-staze/ ✅
+- ✅ **2 silo landing-a** kreirane po al-WoodMart šablonu (hero navy+plates → paper body → FAQ mist → CTA navy+rev-diag)
+  - `/spoljne-podne-obloge/` (ID 16590 — ispravljeno sa 16588; trebalo je bez "j": "spoljne" ne "spoljnje") — Bergo ploče za terase, karakteristike, Bergo Flooring info
+  - `/podloge-za-parkiraliste-i-staze/` (ID 16589) — industrijske podloge za parking, specifikacije, sigurnost
+- ✅ Svaka stranica: Yoast mete, FAQPage JSON-LD (3-4 stavke), CTA linkovi, HTTP 200, 1×H1
+- 🔧 Lesson: vc_raw_html za JSON-LD nije pouzdano → direktno dodavanje kao `<script>` tag u post_content (gotcha #8 iz woodmart-sabloni)
+- ⚠️ Napomena za live migraciju (C1 redirect mapa):
+  - Live `/spoljnje-podne-obloge/` (sa j) → Lokal `/spoljne-podne-obloge/` (bez j, ID 16590) — 301 redirect
+  - Live `/podloge-za-parkiraliste-i-staze/` → Lokal `/podloge-za-parkiraliste-i-staze/` (ID 16589) — parity (isti slug)
+- Backup-ovi: `antasline_local_2026-07-07_pre-spoljne-podne-obloge.sql` + `antasline_local_2026-07-07_pre-podloge-za-parking.sql` (46 MB svaki)
+- Skripti: `build-spoljnje-podne-obloge.php`, `build-parking.php` (scratchpad)
+
 ## 2026-07-07 [claude-code] [W1 — SILO REBUILD] — /spoljnje-podne-obloge/ WoodMart silo landing ✅
 - ✅ Backup pre rada: `antasline_local_2026-07-07_pre-spoljne-podne-obloge.sql` (46 MB)
 - ✅ Kreirane `/spoljnje-podne-obloge/` (ID 16588) po al-WoodMart šablonu (hero navy+plates+diag-bottom → paper body → FAQ mist+diag-top → CTA navy+plates+rev-diag)
