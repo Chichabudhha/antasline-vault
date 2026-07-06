@@ -15,7 +15,8 @@ Nijedan social/email zadatak nije postojao u planu do W6.
 ## Faza 0 — Preduslovi (pre live-a, ukupno ~2h)
 
 - [ ] **Popis profila** #ceka-miroslav: koji nalozi postoje (FB, IG, LinkedIn,
-  YouTube), ko ima pristup, u kakvom su stanju. Bez ovoga ništa dalje.
+  YouTube), ko ima pristup, u kakvom su stanju. Upisuje se u
+  `[[reference/drustvene-mreze]]` (tabela spremna). Bez ovoga ništa dalje.
 - [ ] **M5 odgovor** #ceka-miroslav: šta biva sa ~55 kontakata/mes — gde stoje
   email-ovi (inbox? tabela?). Ovo je sirovina za Customer Match i newsletter.
 - [ ] **GMB paket** (već u planu kao 5.2/5.3): UTM fix, kategorije, recenzije

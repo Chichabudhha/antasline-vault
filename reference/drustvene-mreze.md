@@ -13,21 +13,21 @@ status: čeka-popunu
 
 ## Profili
 
-| Mreža | URL profila | Pristup ima | Stanje (aktivan/mrtav/nema) | Poslednja objava | Napomena |
-|---|---|---|---|---|---|
-| Facebook | | | | | |
-| Instagram | | | | | |
-| LinkedIn (firma) | | | | | |
-| YouTube | | | | | |
-| TikTok | | | | | |
-| X / Twitter | | | | | |
-| Google My Business | ✅ postoji — "Industrijski podovi AntasLine" | Miroslav | aktivan, zapušten (6 recenzija) | | UTM fix + recenzije = W5 zadatak 5.2/5.3 |
+| Mreža              | URL profila                                     | Pristup ima | Stanje (aktivan/mrtav/nema)     | Poslednja objava | Napomena                                 |
+| ------------------ | ----------------------------------------------- | ----------- | ------------------------------- | ---------------- | ---------------------------------------- |
+| Facebook           | https://www.facebook.com/sportskepodloge        |             |                                 |                  |                                          |
+| Instagram          | https://www.instagram.com/antas_line/           |             |                                 |                  |                                          |
+| LinkedIn (firma)   | https://www.linkedin.com/company/antas-line-doo |             |                                 |                  |                                          |
+| YouTube            | https://www.youtube.com/@antasline5676          |             |                                 |                  |                                          |
+| TikTok             | nema                                            |             |                                 |                  |                                          |
+| X / Twitter        | nema                                            |             |                                 |                  |                                          |
+| Google My Business | ✅ postoji — "Industrijski podovi AntasLine"     | Miroslav    | aktivan, zapušten (6 recenzija) |                  | UTM fix + recenzije = W5 zadatak 5.2/5.3 |
 
 ## Ostali online profili (direktorijumi, portali)
 
-| Gde | URL | Napomena |
-|---|---|---|
-| | | |
+| Gde       | URL                                                        | Napomena |
+| --------- | ---------------------------------------------------------- | -------- |
+| Pinterest | https://www.pinterest.com/antassport/industrijske-podloge/ |          |
 
 ## Kad se popuni (Claude Code radi)
 
