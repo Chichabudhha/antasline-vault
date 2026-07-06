@@ -2,7 +2,7 @@
 tip: referenca
 datum: 2026-07-06
 namena: Popis društvenih mreža i online profila AntasLine (W6 Faza 0)
-status: čeka-popunu
+status: popunjeno 2026-07-07
 ---
 
 # 🌐 Društvene mreže i online profili — AntasLine

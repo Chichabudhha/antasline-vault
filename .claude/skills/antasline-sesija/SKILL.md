@@ -17,6 +17,10 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
    planirano za tekuću nedelju
 3. Proveri zavisnosti (sekcija 4 plana): zadatak blokiran na #ceka-miroslav
    se ne bira; ako rok zavisnosti prolazi — podseti Miroslava i ponudi fallback
+3b. **Ako je danas ponedeljak:** pre izbora zadatka, brzi pregled cele
+   sekcije 4 (zavisnosti) naglas — rok/status/fallback po stavci, ne samo
+   ono što direktno blokira ovu sesiju. Cilj: da kašnjenje isplivava odmah,
+   ne u N8 gužvi.
 4. Predloži 1 glavni zadatak (+ eventualno 1 quick-win ≤15 min) i sačekaj
    potvrdu ako izbor nije očigledan iz Miroslavljeve poruke
 
@@ -36,6 +40,8 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
   ili placeholder · CTA 072 + forma · interni link ka `/industrijski-podovi/` ·
   prvi pasus = direktan odgovor (GEO) · anti-kanibalizacija provera
   (postojeći sadržaj na istu temu → skratiti + linkovati)
+- Cene: prvo proveri `[[reference/cenovnik]]` (M10) pre nego što tražiš od
+  Miroslava — ako je polje prazno tamo, tek onda je "na upit" placeholder
 - GEO zadaci: `[[seo/geo-ai-plan]]`
 
 ### W3 — Tehnička + migracija (C1/C2 + CWV)

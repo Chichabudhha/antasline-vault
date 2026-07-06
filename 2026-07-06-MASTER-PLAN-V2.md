@@ -61,6 +61,8 @@ azurirano: 2026-07-06
 | 1.5 | Meni: proširiti novim silo/C3 stranicama | CC | posle 1.1–1.2 |
 | 1.6 | Mobile viewport vizuelni QA (sve rebuild stranice) | CC | media queries napisani, nije snimljeno |
 | 1.7 | Figma sync (testimonials, "Najprodavanije 2025") | CC+M | čeka Figma link + GMB recenzije #ceka-miroslav |
+| 1.8 | Woo katalog režim: "Dodaj u korpu" → "Zatraži ponudu" (pre-popunjena forma → `/hvala-za-poruku/`, postojeći tracking hvata sve) — manje frikcije za B2B, manje Woo skripti (LCP). ✅ Odluka M9 doneta 2026-07-07 — spremno za implementaciju | CC | uklapa se sa `/obogati-proizvod` (cena "na upit" polje) |
+| 1.9 | Audit `tel:` linkova na celom buildu (SQL grep) — više brojeva u opticaju (063 stari live, 069/072 CTA standard, 074); ujednačiti na jedan primarni | CC | quick win, 30 min |
 
 ### W2 — SEO CONTENT (C3 + GEO)
 Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po stranici: Yoast >80, FAQ + FAQPage/Product schema, cena od–do gde ima smisla, CTA 072 + forma, interni link ka `/industrijski-podovi/`, prvi pasus = direktan odgovor (GEO pravilo).
@@ -91,7 +93,10 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 | 3.9 | `.htaccess` 301 fajl generisan iz finalne CSV mape | CC | aktivira se TEK na dan migracije |
 | 3.10 | Pre-migration checklist + full regression (forme, GTM, linkovi, slike) | CC | N7 |
 | 3.11 | **MIGRACIJA 2026-08-31** (1 dan): backup live → db+wp-content prebacivanje → URL zamena → 301 aktivacija → verifikacija | CC+M | SSH/hosting info #ceka-miroslav |
-| 3.12 | Post-live (do 2026-09-02+): GSC sitemap resubmit, crawl errors, 404 monitoring, GA4/GTM verify, CWV field data | CC+CP | — |
+| 3.12 | Post-live (do 2026-09-02+): GSC sitemap resubmit, crawl errors, GA4/GTM verify, CWV field data + UptimeRobot (besplatan) + dnevni 404 log pregled prvih 14 dana (umesto ad-hoc) | CC+CP | — |
+| 3.13 | 🔴 Automatski backup: noćni `mysqldump` + zip `wp-content` na drugi disk/cloud (Task Scheduler) — trenutno postoji samo ručni dump pre izmena, 2 meseca rada na jednom disku | CC | rizik egzistencijalnog tipa, ~30 min posla |
+| 3.14 | 🔴 Ubrzati M6: test SSH/hosting pristupa OVE nedelje (ne čekati N8) — popis panela, PHP verzija servera, disk prostor, mogućnost subdomena; proba migracije na `novi.antasline.com` (noindex) u N6 da se izmeri stvarno vreme + testira rollback | CC+M | jedina zavisnost bez fallbacka |
+| 3.15 | SERP snapshot: top 20 GSC upita → pozicije/konkurencija danas, pre migracije → `analiza/` | CC | bez ovoga ne znamo da li post-migracija pad je naš (301) ili konkurent skočio |
 
 ### W4 — ADS
 Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Clicks** do 20–30 plaćenih konverzija.
@@ -126,12 +131,12 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 ## 2. VREMENSKI PLAN — 8 nedelja unazad od 2026-08-31
 
 ```
-N1  07–13.07  W2: Tier1 (čim stignu cene) + 2.3 title/meta ×4 · W1: silo rebuild · W4: 4.1 negativne + 4.3 RSA · W3: 3.5 Lighthouse baseline
+N1  07–13.07  W2: Tier1 (čim stignu cene) + 2.3 title/meta ×4 · W1: silo rebuild + 1.9 tel audit · W4: 4.1 negativne ✅ + 4.3 RSA · W3: 3.5 Lighthouse baseline + 🔴3.13 backup automation + 🔴3.14 SSH test
 N2  14–20.07  W2: Tier2 (odbojka/tenis/šljaka/padel) · W4: 4.4 ad grupe · W1: blog import · W3: 3.4 Woo slugovi
 N3  21–27.07  W1: preostale pages (top GSC prioritet) · W2: 2.7 Product schema + 2.8 GEO paket · W3: 3.3 blog slug
 N4  28.07–03.08  W2: Tier3 vertikali · W3: 3.1–3.2 C1 finalna verifikacija + konstrukcije odluka · W5: 5.2–5.3 GMB paket
 N5  04–10.08  W3: 3.6 CWV optimizacija · W1: footer/meni/mobile QA · W3: 3.8 checkout test
-N6  11–17.08  W2: Tier4 · W4: 4.7 Enhanced Conversions priprema · W3: full regression start
+N6  11–17.08  W2: Tier4 · W4: 4.7 Enhanced Conversions priprema · W3: full regression start + 3.14 proba migracije na subdomen + 3.15 SERP snapshot
 N7  18–24.08  CONTENT FREEZE · W3: 3.9 .htaccess + 3.10 checklist + backupi · GSC priprema
 N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 →   PON 31.08  MIGRACIJA (1 dan) → post-live monitoring 01–02.09+ (3.12, 5.7, 4.10)
@@ -150,8 +155,10 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 - [ ] Forme rade + `/hvala-za-poruku/` okida `generate_lead` + GTM verifikovan na buildu
 - [ ] Woo checkout testiran
 - [ ] Svež backup live sajta (db + wp-content) + backup finalnog builda na 2 lokacije
+- [ ] Automatski noćni backup builda radi i testiran (3.13)
 - [ ] Rollback plan: live backup se vraća u <1h ako nešto pukne
-- [ ] SSH/hosting pristup potvrđen (M)
+- [ ] SSH/hosting pristup potvrđen (M) + proba migracije na subdomen izvedena (3.14)
+- [ ] SERP snapshot top 20 upita snimljen pre migracije (3.15)
 
 **Bilo koji gate crven → migracija se pomera za sledeći ponedeljak, ne gura se na silu.**
 
@@ -169,6 +176,8 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 | M6 | SSH/hosting pristup + potvrda hostinga | migraciju (N8) | 2026-08-20 | 🔴 nema fallback — bez ovoga nema migracije |
 | M7 | Figma link + testimonials copy | W1 poliranje | 2026-08-10 | sekcije ostaju izostavljene, nisu gate |
 | M8 | Odluka overwrite/preserve rebuild postova (C2) | blog import | 2026-07-15 | import samo postova koji ne postoje lokalno |
+| M9 | ✅ ODLUČENO 2026-07-07 — **katalog režim** ("Zatraži ponudu" umesto korpe/cene) | W1 zadatak 1.8, W3 zadatak 3.8 | — | — |
+| M10 | 🆕 Popuni `[[reference/cenovnik]]` (jedna tabela, sve cene odjednom) — sprečava ping-pong "koja je cena za X" po svakoj sesiji | W2 Tier1 (M1) + obogaćivanje proizvoda | 2026-07-10 | isto kao M1 — "na upit" placeholder |
 
 ---
 
@@ -201,15 +210,44 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 | Miroslavljeve odluke kasne | srednja | fallback po stavci (sekcija 4); samo M6 (SSH) nema fallback |
 | WPBakery/WoodMart tehnički bug usred rebuilda | niska | backup pre svake sesije + 10 gotcha pravila u [[migracija/woodmart-sabloni]] |
 | GSC sezonski pad maskira efekat rada | visoka | poređenje uvek YoY + pozicije, ne samo klikovi (špic je mar–maj) |
+| 🔴 Gubitak 2 meseca rada (disk otkaz, bez druge kopije) | niska ali egzistencijalna | 3.13 automatski backup na drugu lokaciju |
+| 🔴 SSH/hosting pristup ne radi kad dođe N8 | nepoznata (netestirano) | 3.14 test OVE nedelje + proba migracije na subdomen u N6 — pretvara pretpostavku u izmerenu činjenicu |
+| Post-migracija pad rangiranja se ne može objasniti (naš bug vs konkurent) | niska | 3.15 SERP snapshot pre migracije |
 
 ---
 
 ## 7. RITAM RADA
 
+- **Ponedeljak (prvih 15 min sesije):** pregled sekcije 4 (zavisnosti) — rok, status, fallback po stavci; ono što kasni se eskalira odmah, ne čeka N8 iznenađenje. Ugrađeno u skill `/antasline-sesija` otvaranje.
 - **Po sesiji:** jedan glavni zadatak iz jedne trake · backup pre destruktivnog · verifikacija (200, 1×H1, JSON-LD, linkovi) · unos u [[DNEVNIK-NAPRETKA]] + update [[PROGRESS]] + štiklirati ovde/u [[seo/plan-novih-stranica]]
 - **Nedeljno:** mini-izveštaj 7d vs 7d (format [[CLAUDE]] §10) + pregled tempa vs sekcija 2
 - **Mesečno:** puni snapshot ([[analiza/_TEMPLATE-snapshot]]) + AI test + KPI tabla update
 - **N8:** gate pregled (sekcija 3) → GO/NO-GO odluka sa Miroslavom
+
+---
+
+## 8. W6/W7 — POSLE LIVE-A (2026-09-02+)
+
+Detaljan social/email tok: skill `/w6-social`. Ovde samo ono što se planira
+UNAPRED da se ne dočeka nespremno.
+
+### W6 — Social / Email (fazni detalj u skill-u `/w6-social`)
+- Faza 0 (pre live-a, jeftino): popis profila ✅ 2026-07-07 → [[reference/drustvene-mreze]] · M5 (kontakti) · GMB paket ✅ · saglasnost checkbox na formi
+- **Ključni nalaz popisa:** FB+IG su aktivni (objave na ~7 dana) ali bez UTM/CTA — problem je merenje, ne prisustvo. Ožičavanje (UTM, link-in-bio) ide ODMAH, ne čeka septembar.
+- Puni ritam (IG/FB 2×/ned, LinkedIn 1×/ned, YouTube 1×/mes) od 2026-09-01
+
+### W7 — Sezonski kalendar (veže W2/W4/W6, sprečava da 2027 GSC špic zatekne nespremne)
+| Period | Fokus | Zašto |
+|---|---|---|
+| Sep–Nov 2026 | B2B sezona: industrijski/ESD sadržaj + Ads (sanacije hala van proizvodne sezone) | GSC špic za terase je mar–maj, van-sezone B2B ima manje konkurencije |
+| Dec 2026–Jan 2027 | Priprema terase kampanje: content, email lista, Meta Ads kreativa spremni PRE špica | Ako se čeka do marta, propušten je najjači mesec |
+| Feb 2027 | Sezonski newsletter "spremite terasu" (već u `/w6-social` Fazi 2) + budžet gore na Terase kampanju | GSC špic mar–maj |
+| Kroz celu godinu | Mesečni AI test (5.5) + puni snapshot + KPI tabla ažuriranje | rani signal da li GEO/schema rad deluje |
+
+### Post-live monitoring (prvih 14 dana, uz 3.12/5.7)
+- UptimeRobot (besplatan) — alert ako sajt padne
+- Dnevni pregled 404 loga (ne ad-hoc) — hvata zaostale redirect rupe brzo
+- GSC email alerti (crawl errors, security issues)
 
 ## Veze
 [[PROGRESS]] · [[DNEVNIK-NAPRETKA]] · [[blokovi/BLOK-C-sledece]] · [[seo/plan-novih-stranica]] · [[seo/geo-ai-plan]] · [[dnevnik/ADS-DNEVNIK]] · [[analiza/2026-07-04-snapshot-full]] · [[migracija/woodmart-sabloni]] · [[odluke/_pregled-odluka]]

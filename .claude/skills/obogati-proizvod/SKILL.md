@@ -24,8 +24,12 @@ nikad na live sajtu.
    `pa_boje` · `pa_primena` · `pa_garancija` · `pa_poreklo`
    Popuni SAMO iz stvarnih podataka (postojeći opisi, live stranice, tehnička
    dokumentacija proizvođača) — nikad ne izmišljaj specifikacije.
-2. **Cena**: od–do po m² SAMO ako je Miroslav dao cifre (M1). Inače bez `_price`,
-   a u opisu blok "Cena na upit" + CTA forma. Ne izmišljati cene.
+2. **Cena**: od–do po m² SAMO ako je Miroslav dao cifre — proveri
+   `[[reference/cenovnik]]` (M10) pre svega. Inače bez `_price`, a u opisu
+   blok "Cena na upit" + CTA forma. Ne izmišljati cene.
+   **M9 odluka (2026-07-07): katalog režim** — Woo "Dodaj u korpu" dugme se
+   menja na "Zatraži ponudu" (pre-popunjena forma → `/hvala-za-poruku/`,
+   vidi W1 zadatak 1.8). Ovaj šablon i ta odluka su usklađeni po defaultu.
 3. **Galerija**: 3–6 slika u `_product_image_gallery` (attachment ID-jevi,
    zarezom odvojeni). Slike biraj iz postojećih uploads (115 importovanih) —
    pretraži `wpGs_posts` `post_type=attachment` po imenu proizvoda/linije.

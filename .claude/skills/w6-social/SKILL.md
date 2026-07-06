@@ -14,9 +14,13 @@ Nijedan social/email zadatak nije postojao u planu do W6.
 
 ## Faza 0 — Preduslovi (pre live-a, ukupno ~2h)
 
-- [ ] **Popis profila** #ceka-miroslav: koji nalozi postoje (FB, IG, LinkedIn,
-  YouTube), ko ima pristup, u kakvom su stanju. Upisuje se u
-  `[[reference/drustvene-mreze]]` (tabela spremna). Bez ovoga ništa dalje.
+- [x] **Popis profila** ✅ 2026-07-07 → `[[reference/drustvene-mreze]]`.
+  KLJUČNI NALAZ: FB + IG su AKTIVNI (objave na 7 dana!) a Organic Social =
+  70 korisnika/90d → problem NIJE prisustvo nego merenje/linkovi (bez UTM,
+  bez CTA ka sajtu). LinkedIn + YouTube mrtvi. Faza 1 se preusmerava:
+  (a) UTM + link-in-bio + CTA na postojeći FB/IG ritam — odmah, jeftino;
+  (b) LinkedIn oživljavanje = najveći B2B potencijal (Quectel case study);
+  (c) YouTube: promeniti handle u @antasline, video montaže od septembra.
 - [ ] **M5 odgovor** #ceka-miroslav: šta biva sa ~55 kontakata/mes — gde stoje
   email-ovi (inbox? tabela?). Ovo je sirovina za Customer Match i newsletter.
 - [ ] **GMB paket** (već u planu kao 5.2/5.3): UTM fix, kategorije, recenzije

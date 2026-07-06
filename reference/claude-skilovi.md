@@ -11,12 +11,12 @@ namena: Pregled Claude Code skilova za AntasLine projekat
 > Pozivaju se sa `/<ime>` u Claude Code-u ili prirodnom rečenicom iz
 > kolone "Okidač". Ovaj fajl je podsetnik ŠTA koji skill radi.
 
-| Skill | Okidač (primeri) | Šta radi |
-|---|---|---|
-| `/antasline-sesija` | "nastavljamo", "gde smo stali", "sledeći zadatak" | Master protokol sesije |
-| `/obogati-proizvod` | "obogati proizvode", "sredi Ecotile proizvode" | Šablon obogaćivanja Woo proizvoda |
-| `/w6-social` | "social", "newsletter", "Instagram post", "W6" | Social/email/GMB workstream |
-| `/nedeljni-izvestaj` | "nedeljni izveštaj", "kako stojimo" | 7d vs 7d izveštaj kroz Windsor |
+| Skill                | Okidač (primeri)                                  | Šta radi                          |
+| -------------------- | ------------------------------------------------- | --------------------------------- |
+| `/antasline-sesija`  | "nastavljamo", "gde smo stali", "sledeći zadatak" | Master protokol sesije            |
+| `/obogati-proizvod`  | "obogati proizvode", "sredi Ecotile proizvode"    | Šablon obogaćivanja Woo proizvoda |
+| `/w6-social`         | "social", "newsletter", "Instagram post", "W6"    | Social/email/GMB workstream       |
+| `/nedeljni-izvestaj` | "nedeljni izveštaj", "kako stojimo"               | 7d vs 7d izveštaj kroz Windsor    |
 
 ---
 
@@ -24,7 +24,8 @@ namena: Pregled Claude Code skilova za AntasLine projekat
 
 **Otvaranje:** čita [[PROGRESS]] → poredi datum sa N1–N8 rasporedom iz
 [[2026-07-06-MASTER-PLAN-V2]] → preskače #ceka-miroslav blokirano →
-predlaže 1 glavni zadatak.
+**ponedeljkom: brzi pregled svih zavisnosti (sekcija 4)** da kašnjenje
+isplivava odmah, ne u N8 gužvi → predlaže 1 glavni zadatak.
 
 **Izvršavanje:** mini-protokol po workstream-u (W1 dizajn sa
 [[migracija/woodmart-sabloni]] · W2 content sa [[seo/plan-novih-stranica]] ·
@@ -82,6 +83,13 @@ napomene → **"Akcija nedelje: …"**. Pravila: <5% = stabilno · "Nema podatak
 za [izvor]" umesto izmišljanja · pad posle tracking čišćenja ≠ pad performansi.
 
 ---
+
+## Reference koje skilovi koriste (nisu skilovi, ali su ulaz)
+
+| Fajl | Šta | Ko popunjava |
+|---|---|---|
+| [[reference/cenovnik]] | Jedinstveni cenovnik (M10) — Claude vuče odavde za W2 stranice i proizvode, umesto da pita svaki put | Miroslav, jednom |
+| [[reference/drustvene-mreze]] | Popis social profila (W6 Faza 0) — popunjeno 2026-07-07 | Miroslav |
 
 ## Održavanje
 

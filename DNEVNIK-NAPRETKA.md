@@ -1,5 +1,19 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-07 [claude-code] [PLAN - PROCESNI AUDIT] — 9 predloga upisano u Master Plan V2 ✅
+- ✅ Drugi krug audita (posle sadržajnog 07-06) — fokus na proces/rizik/biznis logiku, ne sadržaj:
+  1. 🔴 **Backup rizik**: 2 meseca rada samo na jednom disku → novi zadatak 3.13 (noćni mysqldump + wp-content zip na drugu lokaciju)
+  2. 🔴 **M6 SSH bez fallbacka, rok tek u N8** → 3.14 ubrzano na OVU nedelju (test pristupa) + proba migracije na subdomen `novi.antasline.com` u N6 (izmeriti stvarno vreme, testirati rollback)
+  3. **Woo checkout vs katalog režim**: 0/37 proizvoda ima cenu → nova zavisnost M9 (odluka: "Zatraži ponudu" umesto korpe) + W1 zadatak 1.8
+  4. **Cenovnik kao fajl**: nova zavisnost M10 + kreiran `[[reference/cenovnik]]` (tabele po kategoriji proizvoda, prazno = na upit) — sprečava ponovno pitanje cena po svakoj sesiji
+  5. **Telefon haos**: 063/069/072/074 u opticaju na buildu → novi zadatak 1.9 (SQL audit `tel:` linkova, ujednačiti na jedan)
+  6. **SERP snapshot**: nema baseline pozicija konkurencije pre migracije → novi zadatak 3.15
+  7. Sezonski kalendar → nova sekcija **8. W6/W7 POSLE LIVE-A** u planu (B2B jesen, priprema terase kampanje zima, GSC špic mar–maj)
+  8. Post-live monitoring pojačan (3.12): UptimeRobot + dnevni 404 pregled umesto ad-hoc
+  9. Proces: **"ponedeljak 15 min"** pregled svih M-zavisnosti — ugrađeno u skill `/antasline-sesija` (korak 3b) i pomenuto u `[[reference/claude-skilovi]]`
+- ✅ Ažurirano: [[2026-07-06-MASTER-PLAN-V2]] (W1 1.8/1.9, W3 3.13/3.14/3.15, zavisnosti M9/M10, rizici, gate kriterijumi, N1/N6 raspored, nova sekcija 8), `[[reference/cenovnik]]` (nov fajl), `/antasline-sesija` skill, `[[reference/claude-skilovi]]`, CLAUDE.md §13 hub
+- 🔴 Najhitnije: M9 (checkout odluka) + M10 (cenovnik popuna) + 3.13/3.14 (backup + SSH test) — sve ove nedelje
+
 ## 2026-07-06 [claude-code] [W4 + W5 UNOS] — GA4 publike + GMB ažuriranje ✅
 - ✅ **GA4 publike — 2 nove kreirane od Miroslava**
   - `Parking & spoljne podloge` — `page_path contains /podloge-za-parkiraliste/ OR /spoljnje-podne-obloge/` (očekivano ~120 korisnika/14d)

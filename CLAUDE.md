@@ -486,6 +486,7 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 - `[[reference/brend-knjiga]]` — Brand book: paleta boja, Inter tipografija, logo varijante, web look&feel (izvor: `Logo/*.pdf`)
 - `[[reference/claude-skilovi]]` — Pregled Claude Code skilova (/antasline-sesija, /obogati-proizvod, /w6-social, /nedeljni-izvestaj)
 - `[[reference/drustvene-mreze]]` — Popis social profila (W6 Faza 0, Miroslav popunjava)
+- `[[reference/cenovnik]]` — Jedinstveni cenovnik (M10, Miroslav popunjava jednom, Claude vuče odatle)
 
 ### 📚 DOKUMENTACIJA
 - `[[briefs/_README]]` — (ako postoji brief za kampanje)
