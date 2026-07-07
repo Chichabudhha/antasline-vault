@@ -24,6 +24,30 @@ nikad na live sajtu.
    `pa_boje` · `pa_primena` · `pa_garancija` · `pa_poreklo`
    Popuni SAMO iz stvarnih podataka (postojeći opisi, live stranice, tehnička
    dokumentacija proizvođača) — nikad ne izmišljaj specifikacije.
+1b. **Standardi SA LINKOVIMA** (F7, 2026-07-07): svaki proizvod gde je primenjivo
+   dobija sekciju sa relevantnim standardom(ima), link ka zvaničnom izvoru i
+   jednu rečenicu ZAŠTO je standard bitan kupcu. Tipični standardi u branši:
+   DIN 51130 (klizavost R9–R13) · EN 13501-1 (požarna klasa Bfl-s1...) ·
+   IEC 61340-5-1 / BS EN 61340-5-1 / BS EN 61340-5-2 (ESD zaštita) ·
+   EN 14041 (podne obloge — CE) · EN 1270 (košarkaške konstrukcije) ·
+   EN 14877 (spoljašnji sportski podovi) · ISO 9001/14001 (proizvođač) ·
+   REACH (hemijska bezbednost).
+   Izvor podataka: WebSearch/WebFetch proizvođačkih datasheet-ova
+   (`ecotileflooring.com`, `bergoflooring.com`, `ergomat.com`) ili WebFetch
+   postojeće live antasline.com stranice ako već navodi standard za taj proizvod.
+   🔴 **TVRDO PRAVILO: standard/spec se navodi SAMO ako je potvrđen u
+   datasheet-u, na zvaničnom sajtu proizvođača, ili na postojećoj live
+   stranici. Bez potvrde → ne pominje se. Ništa se ne izmišlja.**
+1c. **Namena tagovi** (F6, `product_tag` taxonomy, prefiks `namena-`): svaki
+   proizvod — postojeći ili nov — dobija bar 1 `namena-*` tag preko
+   `wp_set_object_terms($id, [...], 'product_tag', true)` (append, ne
+   replace). Trenutna lista termina (2026-07-07): `namena-magacin-hala`,
+   `namena-radionica`, `namena-sport-dvorana`, `namena-sportski-teren-otvoreni`,
+   `namena-esd`, `namena-garaza`, `namena-terasa`, `namena-stala` — proširi
+   listu kad novi proizvod pokrije namenu koje nema (novi termin + ikonica
+   istog stila u `woodmart-sabloni` F7.2 setu). Ako proizvod već ima namensku
+   landing stranicu (F6 troslojni model), tag ga automatski uvlači u njen grid
+   bez izmene te stranice.
 2. **Cena**: od–do po m² SAMO ako je Miroslav dao cifre — proveri
    `[[reference/cenovnik]]` (M10) pre svega. Inače bez `_price`, a u opisu
    blok "Cena na upit" + CTA forma. Ne izmišljati cene.

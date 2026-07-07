@@ -55,13 +55,13 @@ azurirano: 2026-07-06
 | # | Zadatak | Vlasnik | Napomena |
 |---|---|---|---|
 | 1.1 | Silo rebuild: `/spoljnje-podne-obloge/` → `/podloge-za-parking/` → `/kontakt/` → `/o-nama/` | CC | ✅ 2026-07-07 — sve 4 gotove (spoljne bez j, parking-staze, kontakt forma, o-nama). C1 parity: live `/spoljnje-*` → lokal `/spoljne-*` |
-| 1.2 | Preostale pages iz live inventara (~50) — po prioritetu GSC klikova | CC | prioritet: kosarkaske-konstrukcije, vestacka-trava, bergo-xl |
+| 1.2 | ✅ F5 trijaža zatvorena 2026-07-07 → **[[migracija/w1-red-cekanja]]** (33 stranice, kategorija A) je izvor istine za redosled. Gotovo: antistatik (1131 kl., ID 16658) ✅, kosarkaske-konstrukcije (923 kl., ID 16657, F6 pilot) ✅. Sledeći: bergo-xl (978), industrijski-pod/Ecotile 500-7 (625), sportski-podovi-za-sale-i-balone (378) | CC | Svaka nova namenska landing prati F7 standard (ikonice/skica/video iz woodmart-sabloni) |
 | 1.3 | ✅ ODLUČENO 2026-07-07 (M8): **pun reimport svih 30 postova sa live** — izvršenje po [[migracija/promptovi/F3-posts-reimport]] | CC | restyle postova ide posle, iterativno |
 | 1.4 | Footer builder (WoodMart HTML block) + bela varijanta logoa | CC | otvoreno iz [[migracija/woodmart-sabloni]] |
 | 1.5 | Meni: proširiti novim silo/C3 stranicama | CC | posle 1.1–1.2 |
 | 1.6 | Mobile viewport vizuelni QA (sve rebuild stranice) | CC | media queries napisani, nije snimljeno |
 | 1.7 | Figma sync (testimonials, "Najprodavanije 2025") | CC+M | čeka Figma link + GMB recenzije #ceka-miroslav |
-| 1.8 | Woo katalog režim: "Dodaj u korpu" → "Zatraži ponudu" (pre-popunjena forma → `/hvala-za-poruku/`, postojeći tracking hvata sve) — manje frikcije za B2B, manje Woo skripti (LCP). ✅ Odluka M9 doneta 2026-07-07 — spremno za implementaciju | CC | uklapa se sa `/obogati-proizvod` (cena "na upit" polje) |
+| 1.8 | Woo katalog režim: "Dodaj u korpu" → "Zatraži ponudu" (pre-popunjena forma → `/hvala-za-poruku/`, postojeći tracking hvata sve) — manje frikcije za B2B, manje Woo skripti (LCP). ✅ Odluka M9 doneta 2026-07-07 — spremno za implementaciju | CC | uklapa se sa `/obogati-proizvod` (cena "na upit" polje); **F7 standard (2026-07-07)** sada važi za svako obogaćivanje: standardi-sa-linkovima + namena tagovi ugrađeni u skill |
 | 1.9 | Audit `tel:` linkova na celom buildu (SQL grep) — više brojeva u opticaju (063 stari live, 069/072 CTA standard, 074); ujednačiti na jedan primarni | CC | quick win, 30 min |
 
 ### W2 — SEO CONTENT (C3 + GEO)
@@ -85,7 +85,7 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 | # | Zadatak | Vlasnik | Napomena |
 |---|---|---|---|
 | 3.1 | 🔄 ZAMENJEN → **F1 parity inventar** (7 live sitemapa vs lokal → `parity-inventar.csv`) + **F4 minimalna redirect mapa** (~10–20 redova umesto 118) | CC | [[migracija/promptovi/F1-parity-inventar]] · blokira go-live |
-| 3.2 | C1: rešiti `/sportske-podloge/kosarkaske-konstrukcije/` (478 GSC kl.!) — PRAVA landing (ne 301 na shop kategoriju) — deo F5 trijaže | CC+M | [[migracija/promptovi/F5-trijaza-stranica]] |
+| 3.2 | ✅ ZATVORENO 2026-07-07 — `/sportske-podloge/kosarkaske-konstrukcije/` (923 GSC kl.) rešeno kao F6 pilot (ID 16657, namenska landing, identičan URL kao live → redirect nepotreban) | CC | [[migracija/promptovi/F6-namena-arhitektura]] |
 | 3.3 | 🔄 OBRNUTO: parity kaže `/aktuelnosti/` OSTAJE (lokalni `/blog/` se preimenuje) — deo F2 | CC | [[migracija/promptovi/F2-permalink-fix]] |
 | 3.4 | 🔄 ZAMENJEN → **F2 permalink fix**: Woo `product_base` → `/proizvod/` flat + `category_base` → `/kategorija-proizvoda/` (kao live) — briše ~47 redirect redova jednom izmenom | CC | [[migracija/promptovi/F2-permalink-fix]] |
 | 3.5 | Lighthouse/PageSpeed baseline audit lokala → `dnevnik/PERFORMANCE-AUDIT.md` | CC | pre optimizacije |

@@ -31,52 +31,52 @@ https://www.antasline.com/modularni-industrijski-podovi/;post;modularni-industri
 https://www.antasline.com/podovi-za-radionice/;post;podovi-za-radionice;15974;podovi-za-radionice;PARITY;225;;
 https://www.antasline.com/podloga-za-odbojkaske-terene/;post;podloga-za-odbojkaske-terene;4318;podloga-za-odbojkaske-terene;PARITY;139;;"RESYNC F5: sada PARITY (uvezeno/preimenovano u F2/F3)."
 https://www.antasline.com/;page;;16600;hvala-za-poruku;PARITY;1040;;
-https://www.antasline.com/moj-nalog/;page;moj-nalog;;;NEDOSTAJE-LOKAL;;;
-https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore/;page;vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore;;;NEDOSTAJE-LOKAL;;;
-https://www.antasline.com/industrijski-podovi/podovi-za-maloprodajne-objekte/;page;podovi-za-maloprodajne-objekte;;;NEDOSTAJE-LOKAL;6;;
-https://www.antasline.com/spoljnje-podne-obloge/bergo-elite/;page;bergo-elite;;;NEDOSTAJE-LOKAL;33;"M potvrdio 2026-07-07: I DALJE deo ponude, NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";
+https://www.antasline.com/moj-nalog/;page;moj-nalog;;;NEDOSTAJE-LOKAL;;;"F5 KATEGORIJA B (sistemska Woo, ne treba page)"
+https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore/;page;vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore;;;NEDOSTAJE-LOKAL;;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/industrijski-podovi/podovi-za-maloprodajne-objekte/;page;podovi-za-maloprodajne-objekte;;;NEDOSTAJE-LOKAL;6;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/spoljnje-podne-obloge/bergo-elite/;page;bergo-elite;;;NEDOSTAJE-LOKAL;33;"M potvrdio 2026-07-07: I DALJE deo ponude, NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
 https://www.antasline.com/vestacka-trava/;page;vestacka-trava;5455;vestacka-trava;PARITY;1538;;
 https://www.antasline.com/podovi-za-stale/;page;podovi-za-stale;5791;podovi-za-stale;PARITY;402;"PARITY IZVRŠEN 2026-07-07: lokal preimenovan sa gumeni-podovi-za-stale na podovi-za-stale.";"F4: lokal ima ""gumeni-podovi-za-stale"" (drugi slug) - proveriti da li je isti sadržaj ili treba oba"
-https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-objectflor/;page;vinil-podovi-objectflor;;;NEDOSTAJE-LOKAL;150;;
-https://www.antasline.com/spoljnje-podne-obloge/bergo-xl/;page;bergo-xl;;;NEDOSTAJE-LOKAL;978;"M potvrdio 2026-07-07: I DALJE deo ponude (978 klika!), NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";
-https://www.antasline.com/industrijski-podovi/ecotile-5005-podne-ploce/;page;ecotile-5005-podne-ploce;;;NEDOSTAJE-LOKAL;31;;
-https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/;page;vinil-podovi;;;NEDOSTAJE-LOKAL;7;;
-https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/;page;lvt-podovi-za-komercijalne-i-javne-prostore;;;NEDOSTAJE-LOKAL;144;;
-https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/expona-click/;page;expona-click;;;NEDOSTAJE-LOKAL;12;;
-https://www.antasline.com/industrijski-podovi/podovi-za-magacine-i-hale/;page;podovi-za-magacine-i-hale;;;NEDOSTAJE-LOKAL;;;
-https://www.antasline.com/industrijski-podovi/elektroprovodni-podovi/;page;elektroprovodni-podovi;;;NEDOSTAJE-LOKAL;;;
-https://www.antasline.com/sportski-podovi-za-sale-i-balone/;page;sportski-podovi-za-sale-i-balone;;;NEDOSTAJE-LOKAL;378;"F4: lokalni draft ""sportski-podovi-za-skole-i-sportske-sale"" (pogrešan post_type+slug) obrisan. F5 rebuild kao PAGE pod live slugom. Privremeni red u redirect-mapa-FINAL.csv čeka F5.";
-https://www.antasline.com/industrijski-podovi-montaza-preko-ostecenog-epoksida/;page;industrijski-podovi-montaza-preko-ostecenog-epoksida;;;NEDOSTAJE-LOKAL;72;;
-https://www.antasline.com/sportske-podloge/sportska-podloga-za-pickleball/;page;sportska-podloga-za-pickleball;;;NEDOSTAJE-LOKAL;41;;
-https://www.antasline.com/industrijski-podovi/bumperi-zastita-za-police-regale-i-zidove/;page;bumperi-zastita-za-police-regale-i-zidove;;;NEDOSTAJE-LOKAL;113;;
-https://www.antasline.com/iznajmljivanje-podova/;page;iznajmljivanje-podova;;;NEDOSTAJE-LOKAL;232;;
-https://www.antasline.com/katalog/;page;katalog;;;NEDOSTAJE-LOKAL;28;;
-https://www.antasline.com/ergonomske-podloge-2/;page;ergonomske-podloge-2;;;NEDOSTAJE-LOKAL;110;;
+https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-objectflor/;page;vinil-podovi-objectflor;;;NEDOSTAJE-LOKAL;150;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/spoljnje-podne-obloge/bergo-xl/;page;bergo-xl;;;NEDOSTAJE-LOKAL;978;"M potvrdio 2026-07-07: I DALJE deo ponude (978 klika!), NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/industrijski-podovi/ecotile-5005-podne-ploce/;page;ecotile-5005-podne-ploce;;;NEDOSTAJE-LOKAL;31;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/;page;vinil-podovi;;;NEDOSTAJE-LOKAL;7;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/;page;lvt-podovi-za-komercijalne-i-javne-prostore;;;NEDOSTAJE-LOKAL;144;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/expona-click/;page;expona-click;;;NEDOSTAJE-LOKAL;12;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/industrijski-podovi/podovi-za-magacine-i-hale/;page;podovi-za-magacine-i-hale;;;NEDOSTAJE-LOKAL;;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/industrijski-podovi/elektroprovodni-podovi/;page;elektroprovodni-podovi;;;NEDOSTAJE-LOKAL;;;"F5 KATEGORIJA E (konsolidacija/301) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/sportski-podovi-za-sale-i-balone/;page;sportski-podovi-za-sale-i-balone;;;NEDOSTAJE-LOKAL;378;"F4: lokalni draft ""sportski-podovi-za-skole-i-sportske-sale"" (pogrešan post_type+slug) obrisan. F5 rebuild kao PAGE pod live slugom. Privremeni red u redirect-mapa-FINAL.csv čeka F5.";"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/industrijski-podovi-montaza-preko-ostecenog-epoksida/;page;industrijski-podovi-montaza-preko-ostecenog-epoksida;;;NEDOSTAJE-LOKAL;72;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/sportske-podloge/sportska-podloga-za-pickleball/;page;sportska-podloga-za-pickleball;;;NEDOSTAJE-LOKAL;41;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/industrijski-podovi/bumperi-zastita-za-police-regale-i-zidove/;page;bumperi-zastita-za-police-regale-i-zidove;;;NEDOSTAJE-LOKAL;113;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/iznajmljivanje-podova/;page;iznajmljivanje-podova;;;NEDOSTAJE-LOKAL;232;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/katalog/;page;katalog;;;NEDOSTAJE-LOKAL;28;;"F5 KATEGORIJA B (sistemska Woo, ne treba page)"
+https://www.antasline.com/ergonomske-podloge-2/;page;ergonomske-podloge-2;;;NEDOSTAJE-LOKAL;110;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
 https://www.antasline.com/zastitne-podloge-za-travu-i-plocnike/;page;zastitne-podloge-za-travu-i-plocnike;15793;zastitne-podloge-za-travu-i-plocnike;PARITY;207;;
-https://www.antasline.com/sportske-podloge/kosarkaske-konstrukcije/;page;kosarkaske-konstrukcije;;;NEDOSTAJE-LOKAL;923;"F4/F5 PRIORITET #1 (923 klika). Privremeni red u redirect-mapa-FINAL.csv čeka F5 pravu landing stranicu (NE 301 na shop kategoriju).";"🔴 PRIORITET F5: 923 klika/12mes (veće od ranije dokumentovanih 478) - prava landing, NE 301 na shop kategoriju"
+https://www.antasline.com/sportske-podloge/kosarkaske-konstrukcije/;page;kosarkaske-konstrukcije;16657;kosarkaske-konstrukcije;PARITY;923;"F6 PILOT ✅ 2026-07-07: stranica izgrađena na identičnom URL-u, redirect nije potreban.";"Namenska landing (troslojni model, namena-sport-dvorana tag) + grid 5 proizvoda + FAQPage JSON-LD. 200 verifikovano."
 https://www.antasline.com/o-nama/;page;o-nama;571;o-nama;PARITY;26;;
-https://www.antasline.com/industrijski-podovi/podne-ploce-ecotile-50010/;page;podne-ploce-ecotile-50010;;;NEDOSTAJE-LOKAL;56;;
-https://www.antasline.com/sportske-podloge/padel-tereni/;page;padel-tereni;;;NEDOSTAJE-LOKAL;119;"F4: lokalni draft ""padel-tenis"" (pogrešan post_type) obrisan. F5 rebuild kao PAGE pod live slugom padel-tereni. Privremeni red u redirect-mapa-FINAL.csv čeka F5.";
-https://www.antasline.com/sportske-podloge/opremazasportsketerene/reflektori-za-sportske-terene/;page;reflektori-za-sportske-terene;;;NEDOSTAJE-LOKAL;71;;
+https://www.antasline.com/industrijski-podovi/podne-ploce-ecotile-50010/;page;podne-ploce-ecotile-50010;;;NEDOSTAJE-LOKAL;56;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/sportske-podloge/padel-tereni/;page;padel-tereni;;;NEDOSTAJE-LOKAL;119;"F4: lokalni draft ""padel-tenis"" (pogrešan post_type) obrisan. F5 rebuild kao PAGE pod live slugom padel-tereni. Privremeni red u redirect-mapa-FINAL.csv čeka F5.";"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/sportske-podloge/opremazasportsketerene/reflektori-za-sportske-terene/;page;reflektori-za-sportske-terene;;;NEDOSTAJE-LOKAL;71;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
 https://www.antasline.com/kontakt/;page;kontakt;61;kontakt;PARITY;49;;
-https://www.antasline.com/industrijski-podovi/trake-za-obelezavanje/;page;trake-za-obelezavanje;;;NEDOSTAJE-LOKAL;153;;
-https://www.antasline.com/podovi-za-radnje-i-maloprodajne-objekte/;page;podovi-za-radnje-i-maloprodajne-objekte;;;NEDOSTAJE-LOKAL;26;;
-https://www.antasline.com/industrijski-podovi-najcesca-pitanja/;page;industrijski-podovi-najcesca-pitanja;;;NEDOSTAJE-LOKAL;15;;
-https://www.antasline.com/industrijski-podovi/garaze-i-autoservisi/;page;garaze-i-autoservisi;;;NEDOSTAJE-LOKAL;229;;
-https://www.antasline.com/spoljnje-podne-obloge/podovi-za-bazene/;page;podovi-za-bazene;;;NEDOSTAJE-LOKAL;262;;
-https://www.antasline.com/spoljnje-podne-obloge/vestacka-trava-za-terase/;page;vestacka-trava-za-terase;;;NEDOSTAJE-LOKAL;104;;
-https://www.antasline.com/spoljnje-podne-obloge/bergo-easy/;page;bergo-easy;;;NEDOSTAJE-LOKAL;166;"M potvrdio 2026-07-07: I DALJE deo ponude, NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";
-https://www.antasline.com/privremene-podloge-isotrack/;page;privremene-podloge-isotrack;;;NEDOSTAJE-LOKAL;16;;
-https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/;page;kancelarije-i-poslovni-prostori;;;NEDOSTAJE-LOKAL;128;;
+https://www.antasline.com/industrijski-podovi/trake-za-obelezavanje/;page;trake-za-obelezavanje;;;NEDOSTAJE-LOKAL;153;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/podovi-za-radnje-i-maloprodajne-objekte/;page;podovi-za-radnje-i-maloprodajne-objekte;;;NEDOSTAJE-LOKAL;26;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/industrijski-podovi-najcesca-pitanja/;page;industrijski-podovi-najcesca-pitanja;;;NEDOSTAJE-LOKAL;15;;"F5 KATEGORIJA E (konsolidacija/301) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/industrijski-podovi/garaze-i-autoservisi/;page;garaze-i-autoservisi;;;NEDOSTAJE-LOKAL;229;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/spoljnje-podne-obloge/podovi-za-bazene/;page;podovi-za-bazene;;;NEDOSTAJE-LOKAL;262;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/spoljnje-podne-obloge/vestacka-trava-za-terase/;page;vestacka-trava-za-terase;;;NEDOSTAJE-LOKAL;104;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/spoljnje-podne-obloge/bergo-easy/;page;bergo-easy;;;NEDOSTAJE-LOKAL;166;"M potvrdio 2026-07-07: I DALJE deo ponude, NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/privremene-podloge-isotrack/;page;privremene-podloge-isotrack;;;NEDOSTAJE-LOKAL;16;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/;page;kancelarije-i-poslovni-prostori;;;NEDOSTAJE-LOKAL;128;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
 https://www.antasline.com/podloge-za-parkiraliste-i-staze/;page;podloge-za-parkiraliste-i-staze;16589;podloge-za-parkiraliste-i-staze;PARITY;2250;;
-https://www.antasline.com/sportske-podloge/opremazasportsketerene/;page;opremazasportsketerene;;;NEDOSTAJE-LOKAL;48;;
+https://www.antasline.com/sportske-podloge/opremazasportsketerene/;page;opremazasportsketerene;;;NEDOSTAJE-LOKAL;48;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
 https://www.antasline.com/spoljnje-podne-obloge/;page;spoljnje-podne-obloge;16590;spoljnje-podne-obloge;PARITY;1304;"PARITY IZVRŠEN 2026-07-07: lokal preimenovan na spoljnje-podne-obloge (vraćeno ""j""). Stara stranica 5255 -> draft.";"F4 GRANIČNI SLUČAJ: 1304 klika (visok saobraćaj, blizu top15) - lokal ima ""spoljne"" (bez j) - hibrid pravilo poziva na parity (vratiti j)"
-https://www.antasline.com/spoljnje-podne-obloge/bergo-unique/;page;bergo-unique;;;NEDOSTAJE-LOKAL;53;"M potvrdio 2026-07-07: I DALJE deo ponude, NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";
-https://www.antasline.com/galerija/;page;galerija;;;NEDOSTAJE-LOKAL;88;;
-https://www.antasline.com/politika-kolacica/;page;politika-kolacica;;;NEDOSTAJE-LOKAL;;;
-https://www.antasline.com/antistatik-i-elektroprovodljivi-podovi/;page;antistatik-i-elektroprovodljivi-podovi;;;NEDOSTAJE-LOKAL;1131;;"F5 PRIORITET: 1131 klika - ESD silo stranica, visok B2B značaj"
+https://www.antasline.com/spoljnje-podne-obloge/bergo-unique/;page;bergo-unique;;;NEDOSTAJE-LOKAL;53;"M potvrdio 2026-07-07: I DALJE deo ponude, NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md"
+https://www.antasline.com/galerija/;page;galerija;;;NEDOSTAJE-LOKAL;88;;"F5 KATEGORIJA D (galerija, deo A #18)"
+https://www.antasline.com/politika-kolacica/;page;politika-kolacica;16656;politika-kolacica;PARITY;;;"F5: kreirana odmah (kategorija D, legal), sadržaj 1:1 sa live. Poznato odstupanje: 7×h1 u sadržaju (stari live markup) - restyle sesija rešava, isto kao basket članak."
+https://www.antasline.com/antistatik-i-elektroprovodljivi-podovi/;page;antistatik-i-elektroprovodljivi-podovi;16658;antistatik-i-elektroprovodljivi-podovi;PARITY;1131;"W1 ✅ 2026-07-07: izgrađena na identičnom URL-u.";"Namenska landing (troslojni model, namena-esd tag, 2 proizvoda) + skica preseka slojeva + video lite-embed + FAQPage/VideoObject JSON-LD. 200 verifikovano."
 https://www.antasline.com/sportske-podloge/;page;sportske-podloge;5438;sportske-podloge;PARITY;3923;;
-https://www.antasline.com/industrijski-podovi/industrijski-pod/;page;industrijski-pod;;;NEDOSTAJE-LOKAL;625;;"F5: 625 klika - proveriti da li je duplikat/podstranica postojeće /industrijski-podovi/ ili zaseban sadržaj"
+https://www.antasline.com/industrijski-podovi/industrijski-pod/;page;industrijski-pod;;;NEDOSTAJE-LOKAL;625;;"F5 KATEGORIJA A (rebuild) → migracija/w1-red-cekanja.md | F5: 625 klika - proveriti da li je duplikat/podstranica postojeće /industrijski-podovi/ ili zaseban sadržaj"
 https://www.antasline.com/industrijski-podovi/;page;industrijski-podovi;16567;industrijski-podovi;PARITY;1193;;
 https://www.antasline.com/katalog/;shop-archive;katalog;;;ARHIVA-STRANICA;28;;"Woo shop archive, nije pravi proizvod"
 https://www.antasline.com/proizvod/microshot-125-pokretna-kosarkaska-konstrukcija/;product;microshot-125-pokretna-kosarkaska-konstrukcija;16548;microshot-125-pokretna-kosarkaska-konstrukcija;PARITY;;;
@@ -134,14 +134,14 @@ https://www.antasline.com/kategorija-proizvoda/industrijska-zastita/podno-obelez
 https://www.antasline.com/kategorija-proizvoda/sigurnosni-senzori-signalni-sistemi/;product_cat;sigurnosni-senzori-signalni-sistemi;;sigurnosni-senzori-i-signalni-sistemi;301-KANDIDAT;;"301 u redirect-mapa-FINAL.csv: zadržan lokalni slug (sa ""i""), M potvrdio.";"F4: lokalni term slug je ""sigurnosni-senzori-i-signalni-sistemi"" (sa ""i"") - slug varijanta, ne pravo NEDOSTAJE-LOKAL"
 https://www.antasline.com/kategorija-proizvoda/zastita-cevi-i-kablova/;product_cat;zastita-cevi-i-kablova;247;zastita-cevi-i-kablova;PARITY;13;;
 https://www.antasline.com/kategorija-proizvoda/zastita-i-bumperi/;product_cat;zastita-i-bumperi;245;zastita-i-bumperi;PARITY;1;;
-https://www.antasline.com/oznaka-proizvoda/bergo/;product_tag;bergo;;;NEDOSTAJE-LOKAL;1;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
-https://www.antasline.com/oznaka-proizvoda/ergomat/;product_tag;ergomat;;;NEDOSTAJE-LOKAL;1;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
-https://www.antasline.com/oznaka-proizvoda/industrijski-amortizer/;product_tag;industrijski-amortizer;;;NEDOSTAJE-LOKAL;1;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
-https://www.antasline.com/oznaka-proizvoda/industrijski-bumper/;product_tag;industrijski-bumper;;;NEDOSTAJE-LOKAL;0;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
-https://www.antasline.com/oznaka-proizvoda/konusni-stitnik/;product_tag;konusni-stitnik;;;NEDOSTAJE-LOKAL;0;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
-https://www.antasline.com/oznaka-proizvoda/samolepljiva-zastita/;product_tag;samolepljiva-zastita;;;NEDOSTAJE-LOKAL;0;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
-https://www.antasline.com/oznaka-proizvoda/zastita-kablova/;product_tag;zastita-kablova;;;NEDOSTAJE-LOKAL;2;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
-https://www.antasline.com/oznaka-proizvoda/zastitnik-cevi/;product_tag;zastitnik-cevi;;;NEDOSTAJE-LOKAL;0;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
+https://www.antasline.com/oznaka-proizvoda/bergo/;product_tag;bergo;;;NEDOSTAJE-LOKAL;1;;"F5 KATEGORIJA F (product_tag term, van W1 obima, F6/F7) | F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
+https://www.antasline.com/oznaka-proizvoda/ergomat/;product_tag;ergomat;;;NEDOSTAJE-LOKAL;1;;"F5 KATEGORIJA F (product_tag term, van W1 obima, F6/F7) | F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
+https://www.antasline.com/oznaka-proizvoda/industrijski-amortizer/;product_tag;industrijski-amortizer;;;NEDOSTAJE-LOKAL;1;;"F5 KATEGORIJA F (product_tag term, van W1 obima, F6/F7) | F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
+https://www.antasline.com/oznaka-proizvoda/industrijski-bumper/;product_tag;industrijski-bumper;;;NEDOSTAJE-LOKAL;0;;"F5 KATEGORIJA F (product_tag term, van W1 obima, F6/F7) | F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
+https://www.antasline.com/oznaka-proizvoda/konusni-stitnik/;product_tag;konusni-stitnik;;;NEDOSTAJE-LOKAL;0;;"F5 KATEGORIJA F (product_tag term, van W1 obima, F6/F7) | F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
+https://www.antasline.com/oznaka-proizvoda/samolepljiva-zastita/;product_tag;samolepljiva-zastita;;;NEDOSTAJE-LOKAL;0;;"F5 KATEGORIJA F (product_tag term, van W1 obima, F6/F7) | F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
+https://www.antasline.com/oznaka-proizvoda/zastita-kablova/;product_tag;zastita-kablova;;;NEDOSTAJE-LOKAL;2;;"F5 KATEGORIJA F (product_tag term, van W1 obima, F6/F7) | F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
+https://www.antasline.com/oznaka-proizvoda/zastitnik-cevi/;product_tag;zastitnik-cevi;;;NEDOSTAJE-LOKAL;0;;"F5 KATEGORIJA F (product_tag term, van W1 obima, F6/F7) | F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
 ;post;;4813;bergo-ultimate-i-ultimate-plus-nova-generacija-sportskih-podova;301-KANDIDAT;;;"F3 REŠENO: odgovara live URL-u /na-kojoj-podlozi-se-igraju-turniri-u-3x3/ (isti naslov/sadržaj, videti red iznad) - NIJE zapravo LOKAL-NOVO"
 ;post;;4318;sportska-podloga-za-odbojku;LOKAL-NOVO;;;"lokalni post bez live parnjaka"
 ;post;;3973;padel-tenis;LOKAL-NOVO;;"F4: OBRISAN (odluka M) - pogrešan post_type (post umesto page), F5 rebuild pod live slugom padel-tereni.";"lokalni post bez live parnjaka"
