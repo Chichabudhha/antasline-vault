@@ -6,7 +6,8 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
-| 2026-07-07 | W1 — 2 silo landing-a (ID 16590, 16589) | ✅ `/spoljne-podne-obloge/` (Bergo za terase — bez j, ispravljeno; bilo je sa j) + `/podloge-za-parkiraliste-i-staze/` (industrijske za parking/staze). Svaka: hero navy+plates → paper body → FAQ mist+schema → CTA navy+rev. Yoast mete, HTTP 200, FAQ JSON-LD. C1 redirect: live `/spoljnje-*` (sa j) → lokal `/spoljne-*` (bez j, ID 16590) |
+| 2026-07-07 | W3 — 3.13 backup automatizovan | ✅ `nocni-backup.ps1` (mysqldump + zip wp-content, rotacija 14) registrovan u Task Scheduler-u (Daily 03:00). Test: 90MB DB + 3,6GB wp-content → 3GB arhiv, 27 min. Piše lokalno dok M ne prijavi OneDrive (auto-prebacivanje spremno). ⏳ 3.14 u toku: popis cPanel (PHP 8.3 ⚠️ vs lokal 8.2.12, disk 42% zauzeto/6,9GB slobodno, subdomeni dostupni) — nastavlja se sutra. Detalji: [[DNEVNIK-NAPRETKA]] |
+| 2026-07-07 | W1 N1 1.1 zatvoren + W1 1.9 bonus + C1 spot | ✅ **N1 silo sekvenca gotova**: `/spoljne-podne-obloge/` (ID 16590, bez j), `/podloge-za-parkiraliste-i-staze/` (ID 16589), `/kontakt/` (ID 61, forma ispravljena), `/o-nama/` (ID 571). Sve: HTTP 200, 1×H1 al-display--xl, Yoast mete, FAQ schema. **Bonus W1 1.9**: `/podloge-za-parking/` (ID 15580, lokal draft) — Yoast title/metadesc ažurirani. **C1 spot**: 5 ključnih stranica verifikovane (spoljne-podne, parking-staze, sportska-igralista, zamena-parketa, podloge-za-krovove) — sve publish, 200. C1 CSV redirect ostatak trebao dalje (20+ redova). Backup-ovi: 5 × 90MB. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-06 | W5 TRACKING — GA4 publike + GMB | ✅ GA4: "Parking & spoljne podloge" + "Košarkaški tereni" kreirane (Miroslav u GA4 UI); sinhronizovanje sa Ads aktivno (Too small to serve status; čeka rast saobraćaja). GMB: UTM fix (GA4 sada meri GMB kanal umesto Unassigned) + kategorije proširene (sportski + industrijalni) + prvi post 6 godina + review link spreman (čeka poslove). Efekat: GMB saobraćaj merljiv, CTR na Google Post da se prati sledećih nedelja |
 | 2026-07-06 | ADS — negativne KW + čišćenje (M2 / plan 4.1) | ✅ Miroslav primenio u Ads UI po pripremljenom spisku: 13 novih negativnih (epoksi + padeži epoksidni/-ih/-og, betonski, "industrijski beton", [podne obloge], teraco, letvice, pevex, "uradi sam", "keramičke/podne pločice" kao phrase), pauzirani KW "bastenski namestaj" + "oprema za bazene" (Terase), lista potvrđena na obe kampanje → zatvara ~16% curenja budžeta. `laminat` svesno izostavljen (watch). Detalji: [[dnevnik/ADS-DNEVNIK]] |
 | 2026-07-06 | PLAN — MASTER PLAN V2 | ✅ Novi jedini izvor istine za plan: [[2026-07-06-MASTER-PLAN-V2]] — 5 workstream-ova (W1 rebuild, W2 SEO content, W3 tehnička+migracija, W4 Ads, W5 tracking), nedeljni raspored N1–N8 unazad od go-live 2026-08-31, gate kriterijumi za migraciju, 8 zavisnosti od Miroslava sa fallback-ovima, KPI tabla (jun = mesec-nula), registar rizika. Stari plan od 2026-07-02 označen superseded. |
@@ -32,16 +33,13 @@
 
 ## Sledeće
 
-1. **W1 — `/podloge-za-parking/` sledi sledeći silo** (po planu 1.1 sekvenci; trebalo bi `/kontakt/` i `/o-nama/` posle)
-   - Live: `/podloge-za-parkiraliste-i-staze/` (693 kl) — već kreiram
-   - Trebale bi i izdvojene stranice po kategoriji (parking samo, staze samo) ili kombinovane?
-
-2. **C1 — 301 Redirect mapa — Ručna verifikacija (20 redova PROVERI)** — ⭐⭐⭐ PRIORITET
-   - Trebalo dodati `/spoljnje-podne-obloge/` i `/podloge-za-parkiraliste-i-staze/` u CSV (nova stranica)
-   - Potvrdi da sve PROVERI stranice stvarno postoje na buildu
+1. **C1 — 301 Redirect mapa — Ručna verifikacija (20 redova PROVERI) — HITNO** — ⭐⭐⭐ PRIORITET
+   - Pronađi ili kreiraj `antasline-redirect-mapa-POPUNJENA.csv` (sa 20 PROVERI redova)
+   - Dodaj `/spoljne-podne-obloge/` (bez j) i `/podloge-za-parkiraliste-i-staze/` u CSV ako nisu
+   - Verifikuj da sve PROVERI stranice stvarno postoje na buildu
    - Posebno: /sportska-igralista/, /zamena-parketa-u-sportskim-salama/, /podloge-za-krovove-i-terase/, itd.
    - Vreme: 2-3h
-   - Blokirač za go-live
+   - ⏳ Blokirač za go-live — trebalo je gotovo u N1
 
 2. **C3 — Content plan: 20 stranica u 4 tijera** — ⭐⭐ PRIORITET → [[seo/plan-novih-stranica]]
    - Obuhvata ranije 4 GSC stranice + 16 novih iz pune 16m keyword analize
@@ -59,6 +57,7 @@
 ## Blokeri
 
 - 🟡 **LiteSpeed image optimization — proveriti ponavlja li se** — ako se za par dana "Too many requested images" ponovo pojavi, QUIC.cloud notify webhook verovatno ima trajniji problem → potrebna njihova podrška #claude-code
+- ✅ ~~Kontakt forma~~ — Gotovo 2026-07-07: CF7 forma sa GA4, placeholderis, autofill, email notifikacije
 - ✅ **GA4 key events audit** — lažni key eventi skinuti krajem juna 2026; `conversions` metrika treba da se vrati na normalu od jula. Proveriti jula podatke kad budu dostupni da se potvrdi popravka.
 - ✅ ~~Negativne KW liste~~ — rešeno 2026-07-06
 - ✅ ~~GA4 publike~~ — rešeno 2026-07-06 (Parking & Košarkaški)

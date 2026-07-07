@@ -1,5 +1,48 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-07 [claude-code] [W1 + C1 SPOT] — N1 silo sekvenca zatvoren + C1 ključne stranice verifikovane ✅
+- ✅ **N1 silo sekvenca 1.1 zatvoren**: sve 4 stranice iz plana su gotove/ažurirane
+  - `/spoljne-podne-obloge/` (ID 16590 — bez j, Bergo za terase) — kreirano 2026-07-07
+  - `/podloge-za-parkiraliste-i-staze/` (ID 16589 — parking + staze) — kreirano 2026-07-07
+  - `/kontakt/` (ID 61 — forma + mapa) — upgrade 2026-07-07, forma ispravljena
+  - `/o-nama/` (ID 571 — brend info) — upgrade 2026-07-07
+- ✅ **Brzi W1 bonus**: `/podloge-za-parking/` (ID 15580 — lokalni draft) — Yoast title/metadesc ažurirani (meta title "Podloge za Parking, Pešačke Staze i Prilaze - Antasline")
+- ✅ **C1 verifikacija — 5 ključnih stranica**:
+  - `/spoljne-podne-obloge/` (ID 5255) — 200, publish
+  - `/podloge-za-parkiraliste-i-staze/` (ID 16589) — 200, publish
+  - `/sportska-igralista/` (ID 15973) — 200, publish
+  - `/zamena-parketa-u-sportskim-salama/` (ID 15965) — 200, publish
+  - `/podloge-za-krovove-i-terase/` (ID 15971) — 200, publish
+- ⏳ **C1 ostatak**: CSV redirect mapa nije brzo dostupna (prethodno u scratchpad, nije u backups); trebalo bi pronađi ili kreiraj `antasline-redirect-mapa-POPUNJENA.csv` sa 20 PROVERI redova + verifikacija 15+ stranica
+- 🔧 **Lesson**: `/podloge-za-parking/` i `/podloge-za-parkiraliste-i-staze/` — dve različite stranice na lokalu (ID 15580 vs 16589), ali live samo ima `/podloge-za-parkiraliste-i-staze/`; parity odluka: ID 15580 može biti placeholder ili draft, ili se izbriše pre migracije
+- Backup-ovi: `antasline_local_2026-07-07_pre-parking-rebuild.sql` (90 MB); prethodni iz iste sesije: `antasline_local_2026-07-07_pre-kontakt-fix.sql`, `antasline_local_2026-07-07_pre-onama-kontakt-upgrade.sql`, `antasline_local_2026-07-07_pre-spoljne-podne-obloge.sql`, `antasline_local_2026-07-07_pre-podloge-za-parking.sql`
+
+## 2026-07-07 [claude-code] [W3 TEHNIČKA] — 3.13 backup automatizovan ✅ + 3.14 popis pokrenut ⏳
+- ✅ **3.13 zatvoreno**: `C:\xampp\htdocs\antasline-backups\scripts\nocni-backup.ps1` — mysqldump `antasline_local` + zip `wp-content` u jedan arhiv, rotacija zadržava poslednjih 14, log fajl. Registrovan u Windows Task Scheduler-u ("AntasLine Nocni Backup", Daily 03:00, RunLevel Limited). Ručni test: DB dump 90MB (2s) + zip 3,6GB wp-content → 3GB arhiv (27 min ukupno) — prihvatljivo za noćni posao.
+- Destinacija je pametna: skripta proverava da li je OneDrive folder (`C:\Users\Miroslav\OneDrive`) stvarno sinhronizovan (ne samo prazan placeholder) — trenutno NIJE ulogovan pa piše LOKALNO u `antasline-backups\auto\`; čim se M prijavi na OneDrive, sledeće pokretanje automatski prebacuje na cloud kopiju bez izmene skripte. #ceka-miroslav: prijava na OneDrive.
+- Retencija 14×~3GB = do 42GB na disku — trenutno 88,9GB slobodno na C:, dovoljno.
+- ⏳ **3.14 u toku**: M pročitao cPanel i javio brojeve — PHP 8.3 (⚠️ lokalni XAMPP build je na 8.2.12, treba proveriti kompatibilnost teme/pluginova pre migracije), disk 5,05/11,95GB (42%, 6,9GB slobodno), subdomeni dostupni (0 iskorišćeno, neograničeno). Dovoljno prostora za probu migracije na `novi.antasline.com`.
+- Sledeći korak (subdomen kreiranje + upload/import + merenje vremena) nastavlja se u sledećoj sesiji — otvoreno pitanje načina rada (M sam uz moje instrukcije / SSH kredencijali meni / cPanel File Manager bez SSH-a).
+
+## 2026-07-07 [claude-code] [KONTAKT FORMA + MAPA] — Ispravka i finalizacija ✅
+- ✅ **Kontakt forma**: CF7 ID 5339 (`Kontakt forma` — postojeća, funkcionalna)
+  - Polja: Ime, Email, Naslov, Poruka, Dugme "Pošalji"
+  - Email notifikacije (admin + auto-reply) — već konfiguriran
+- ✅ **Google Mapa**: Embed mapa sa lokacijom (Ulcinjska 13, Beograd, real Google Maps embed)
+  - Vidljiva ispod forme na `/kontakt/`
+- ✅ **Rezultat**: `/kontakt/` stranica je sada čista, forma je vidljiva i funkcionalna, mapa je vidljiva
+- 🔧 **Ispravka workflow**: Počeo sa CF7 ID 16593 (problem) → zamenjeno sa ID 5339 (funkcionira)
+- Backup-ovi: `antasline_local_2026-07-07_pre-forma-ga4.sql` + `antasline_local_2026-07-07_pre-kontakt-fix.sql` (46 MB svaki)
+
+## 2026-07-07 [claude-code] [W1 — UPGRADE ×2] — /o-nama/ + /kontakt/ WoodMart redesign ✅
+- ✅ **Obe stranice upgradan** sa al-WoodMart šablonom (hero navy+plates → paper body → mist info → CTA navy+rev-diag)
+  - `/o-nama/` (ID 571) — O AntasLine, kompanija, šta nudimo, kontakt CTA
+  - `/kontakt/` (ID 61) — Informacije, forma, FAQ, kontakt detalji (radno vreme, lokacija)
+- ✅ Svaka: Yoast mete + Yoast title u `<head>` + H1 sa `al-display--xl` + WoodMart layout (full-width, title-off)
+- ⚠️ Forma na `/kontakt/` — Contact Form 7 ID 3 nije pronađena; trebala bi ispravljanje ako trebala prava forma (za sada placeholder)
+- HTTP 200 obe stranice, dizajn konzistentan sa ostalim silo stranicama
+- Backup: `antasline_local_2026-07-07_pre-onama-kontakt-upgrade.sql` (46 MB)
+
 ## 2026-07-07 [claude-code] [W1 — SILO REBUILD ×2] — /spoljne-podne-obloge/ + /podloge-za-parkiraliste-i-staze/ ✅
 - ✅ **2 silo landing-a** kreirane po al-WoodMart šablonu (hero navy+plates → paper body → FAQ mist → CTA navy+rev-diag)
   - `/spoljne-podne-obloge/` (ID 16590 — ispravljeno sa 16588; trebalo je bez "j": "spoljne" ne "spoljnje") — Bergo ploče za terase, karakteristike, Bergo Flooring info

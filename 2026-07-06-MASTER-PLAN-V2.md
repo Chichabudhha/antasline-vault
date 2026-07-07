@@ -54,7 +54,7 @@ azurirano: 2026-07-06
 
 | # | Zadatak | Vlasnik | Napomena |
 |---|---|---|---|
-| 1.1 | Silo rebuild: `/spoljnje-podne-obloge/` → `/podloge-za-parking/` → `/kontakt/` → `/o-nama/` | CC | content parity iz live-pages XML + inventar CSV |
+| 1.1 | Silo rebuild: `/spoljnje-podne-obloge/` → `/podloge-za-parking/` → `/kontakt/` → `/o-nama/` | CC | ✅ 2026-07-07 — sve 4 gotove (spoljne bez j, parking-staze, kontakt forma, o-nama). C1 parity: live `/spoljnje-*` → lokal `/spoljne-*` |
 | 1.2 | Preostale pages iz live inventara (~50) — po prioritetu GSC klikova | CC | prioritet: kosarkaske-konstrukcije, vestacka-trava, bergo-xl |
 | 1.3 | Blog import (live-posts XML → WP import sa slikama) | CC | odluka overwrite/preserve za ručno rebuildovane #ceka-miroslav |
 | 1.4 | Footer builder (WoodMart HTML block) + bela varijanta logoa | CC | otvoreno iz [[migracija/woodmart-sabloni]] |
@@ -94,8 +94,8 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 | 3.10 | Pre-migration checklist + full regression (forme, GTM, linkovi, slike) | CC | N7 |
 | 3.11 | **MIGRACIJA 2026-08-31** (1 dan): backup live → db+wp-content prebacivanje → URL zamena → 301 aktivacija → verifikacija | CC+M | SSH/hosting info #ceka-miroslav |
 | 3.12 | Post-live (do 2026-09-02+): GSC sitemap resubmit, crawl errors, GA4/GTM verify, CWV field data + UptimeRobot (besplatan) + dnevni 404 log pregled prvih 14 dana (umesto ad-hoc) | CC+CP | — |
-| 3.13 | 🔴 Automatski backup: noćni `mysqldump` + zip `wp-content` na drugi disk/cloud (Task Scheduler) — trenutno postoji samo ručni dump pre izmena, 2 meseca rada na jednom disku | CC | rizik egzistencijalnog tipa, ~30 min posla |
-| 3.14 | 🔴 Ubrzati M6: test SSH/hosting pristupa OVE nedelje (ne čekati N8) — popis panela, PHP verzija servera, disk prostor, mogućnost subdomena; proba migracije na `novi.antasline.com` (noindex) u N6 da se izmeri stvarno vreme + testira rollback | CC+M | jedina zavisnost bez fallbacka |
+| 3.13 | ✅ ZATVORENO 2026-07-07 — `nocni-backup.ps1` (mysqldump + zip wp-content, rotacija 14) registrovan u Task Scheduler-u, radi svako veče u 03:00. Test uspešan: 90MB DB + 3,6GB wp-content → 3GB zip, 27 min. Trenutna destinacija: LOKALNO (`antasline-backups\auto\`) — OneDrive nije ulogovan, skripta automatski prebacuje na OneDrive čim se M prijavi (proverava svako pokretanje) | CC | ⏳ #ceka-miroslav: prijava na OneDrive za pravu cloud kopiju |
+| 3.14 | ⏳ U TOKU — popis panela (M čita cPanel): **PHP 8.3** (⚠️ lokal je 8.2.12 — proveriti kompatibilnost pre migracije), disk 5,05/11,95GB (42%, 6,9GB slobodno — dovoljno za subdomen probu), subdomeni dostupni (0 iskorišćeno). Sledeći korak (SSH/upload/import na `novi.antasline.com`) nastavlja se sutra — čeka odluku načina rada (M izvršava uz vođstvo / SSH pristup / cPanel File Manager) | CC+M | jedina zavisnost bez fallbacka |
 | 3.15 | SERP snapshot: top 20 GSC upita → pozicije/konkurencija danas, pre migracije → `analiza/` | CC | bez ovoga ne znamo da li post-migracija pad je naš (301) ili konkurent skočio |
 
 ### W4 — ADS
