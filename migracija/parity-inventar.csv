@@ -82,7 +82,7 @@ https://www.antasline.com/katalog/;shop-archive;katalog;;;ARHIVA-STRANICA;28;;"W
 https://www.antasline.com/proizvod/microshot-125-pokretna-kosarkaska-konstrukcija/;product;microshot-125-pokretna-kosarkaska-konstrukcija;16548;microshot-125-pokretna-kosarkaska-konstrukcija;PARITY;;;
 https://www.antasline.com/proizvod/kosarkaski-kos-na-kolicima-street-sport/;product;kosarkaski-kos-na-kolicima-street-sport;16532;kosarkaski-kos-na-kolicima-street-sport;PARITY;50;;
 https://www.antasline.com/proizvod/zglobni-obruc-za-kos/;product;zglobni-obruc-za-kos;16536;zglobni-obruc-za-kos;PARITY;33;;
-https://www.antasline.com/proizvod/lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija/;product;lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija;;;NEDOSTAJE-LOKAL;;;"F2 PROVERI: lokalno postoji lite-shot-325 (LOKAL-NOVO) - verovatno RAZLIČIT model (Sure Shot serija), ne preimenovati slepo"
+https://www.antasline.com/proizvod/lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija/;product;lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija;16544;lite-shot-325-profesionalna-pokretna-kosarkaska-konstrukcija;301-KANDIDAT;3;;"F2 REŠENO: ISTI proizvod kao lokalni lite-shot-325 (naslov/težina 700kg/domet 325cm identični na live stranici; '795' je stari nepovezan interni kod). NE preimenovan (nizak saobraćaj + lokalni slug tačniji). F4: 301 stari live URL → /proizvod/lite-shot-325-.../"
 https://www.antasline.com/proizvod/mini-shot-225-profesionalna-pokretna-kosarkaska-konstrukcija/;product;mini-shot-225-profesionalna-pokretna-kosarkaska-konstrukcija;16546;mini-shot-225-profesionalna-pokretna-kosarkaska-konstrukcija;PARITY;;;
 https://www.antasline.com/proizvod/ecotile-7-mm-esd-floor-tiles-industrijsko-esd-podno-resenje/;product;ecotile-7-mm-esd-floor-tiles-industrijsko-esd-podno-resenje;16542;ecotile-7-mm-esd-floor-tiles-industrijsko-esd-podno-resenje;PARITY;;;
 https://www.antasline.com/proizvod/ecotile-e500-10-ultra-heavy-duty-interlocking-podna-ploca/;product;ecotile-e500-10-ultra-heavy-duty-interlocking-podna-ploca;;;NEDOSTAJE-LOKAL;5;;
@@ -171,6 +171,6 @@ https://www.antasline.com/oznaka-proizvoda/zastitnik-cevi/;product_tag;zastitnik
 ;page;;5231;podloge-oko-bazena;LOKAL-NOVO;;;"lokalni page bez live parnjaka"
 ;page;;5119;vestacka-trava-za-fudbal;LOKAL-NOVO;;;"lokalni page bez live parnjaka"
 ;page;;21;blog;LOKAL-NOVO;;;"lokalni page bez live parnjaka"
-;product;;16544;lite-shot-325-profesionalna-pokretna-kosarkaska-konstrukcija;LOKAL-NOVO;;;"lokalni product bez live parnjaka"
+;product;;16544;lite-shot-325-profesionalna-pokretna-kosarkaska-konstrukcija;301-KANDIDAT;;;"F2 REŠENO: odgovara live lite-shot-795 URL-u (isti proizvod, videti red iznad) - NIJE zapravo LOKAL-NOVO"
 ;product;;16540;ecotile-e500-10-ultra-heavy-duty-podovi-za-kretanje-kamiona-i-viljuskara;LOKAL-NOVO;;;"lokalni product bez live parnjaka"
 ;product;;16520;durastripe-supreme-v-industrijska-traka-za-podno-obelezavanje-trajna-i-uklonjiva;LOKAL-NOVO;;;"lokalni product bez live parnjaka"
