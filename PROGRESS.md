@@ -6,6 +6,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-07 | STRATEGIJA — PARITY-PLAN (zamena redirect pristupa) | ✅ Odluka: build 1:1 prema live sajtu (URL+content parity). Stara redirect mapa (118 redova, `/shop/` targeti) arhivirana → `migracija/arhiva/`. Novi izvor istine: [[migracija/PARITY-PLAN]] + 7 samostalnih promptova [[migracija/promptovi/_README]] (F1 inventar → F2 permalinci → F3 reimport postova → F4 minimalna mapa → F5 trijaža → F6 namena arhitektura → F7 content standard). Odluke: slug hibrid po težini, pun reimport 30 postova (M8 ✅), troslojni model namena→proizvod, standardi-sa-linkovima za proizvode. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | W1 — Dizajn fix: desktop spacing/font + CTA dijagonala | ✅ `--al-gap` desktop max 140→72px, hero naslov desktop max 104→88px (mobile nepromenjen); `/o-nama/` kicker red dobio `al-section--compact`. **Sistemski bug**: dijagonalni CTA prelaz (`al-diag-top`/`--rev`) ostavljao beli trougao na svakoj stranici (WPBakery stretch-row marker div poništava `margin-top`) → fix na `position:relative+top`, jedna CSS izmena, sitewide. 13 stranica verifikovano 200. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | W3 — 3.13 backup automatizovan | ✅ `nocni-backup.ps1` (mysqldump + zip wp-content, rotacija 14) registrovan u Task Scheduler-u (Daily 03:00). Test: 90MB DB + 3,6GB wp-content → 3GB arhiv, 27 min. Piše lokalno dok M ne prijavi OneDrive (auto-prebacivanje spremno). ⏳ 3.14 u toku: popis cPanel (PHP 8.3 ⚠️ vs lokal 8.2.12, disk 42% zauzeto/6,9GB slobodno, subdomeni dostupni) — nastavlja se sutra. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | W1 N1 1.1 zatvoren + W1 1.9 bonus + C1 spot | ✅ **N1 silo sekvenca gotova**: `/spoljne-podne-obloge/` (ID 16590, bez j), `/podloge-za-parkiraliste-i-staze/` (ID 16589), `/kontakt/` (ID 61, forma ispravljena), `/o-nama/` (ID 571). Sve: HTTP 200, 1×H1 al-display--xl, Yoast mete, FAQ schema. **Bonus W1 1.9**: `/podloge-za-parking/` (ID 15580, lokal draft) — Yoast title/metadesc ažurirani. **C1 spot**: 5 ključnih stranica verifikovane (spoljne-podne, parking-staze, sportska-igralista, zamena-parketa, podloge-za-krovove) — sve publish, 200. C1 CSV redirect ostatak trebao dalje (20+ redova). Backup-ovi: 5 × 90MB. Detalji: [[DNEVNIK-NAPRETKA]] |
@@ -34,25 +35,24 @@
 
 ## Sledeće
 
-1. **C1 — 301 Redirect mapa — Ručna verifikacija (20 redova PROVERI) — HITNO** — ⭐⭐⭐ PRIORITET
-   - Pronađi ili kreiraj `antasline-redirect-mapa-POPUNJENA.csv` (sa 20 PROVERI redova)
-   - Dodaj `/spoljne-podne-obloge/` (bez j) i `/podloge-za-parkiraliste-i-staze/` u CSV ako nisu
-   - Verifikuj da sve PROVERI stranice stvarno postoje na buildu
-   - Posebno: /sportska-igralista/, /zamena-parketa-u-sportskim-salama/, /podloge-za-krovove-i-terase/, itd.
-   - Vreme: 2-3h
-   - ⏳ Blokirač za go-live — trebalo je gotovo u N1
+1. **PARITY faze F1→F7** — ⭐⭐⭐ PRIORITET → [[migracija/promptovi/_README]]
+   - Jedna faza = jedna sesija; pokretanje: "Izvrši migracija/promptovi/F1-parity-inventar.md"
+   - F1 inventar (bez rizika) → F2 permalinci ⚠️ → F3 reimport postova ⚠️ → F4 mapa 🔴 (Miroslav u sesiji) → F5 trijaža → F6 namena tagovi ⚠️ → F7 content standard
+   - F1 i F5 zamenjuju staru "C1 verifikaciju"; blokirač za go-live
 
 2. **C3 — Content plan: 20 stranica u 4 tijera** — ⭐⭐ PRIORITET → [[seo/plan-novih-stranica]]
    - Obuhvata ranije 4 GSC stranice + 16 novih iz pune 16m keyword analize
    - Prvi talas: odbojka refresh (30 min!) → /gumeni-podovi-za-terase-cena/ (4.221 impr) → industrijski cena → garaže landing
+   - Nove namenske stranice grade se po F6 troslojnom modelu (rešenje hub + auto grid)
    - Vreme: ~40 min–1h po stranici
 
 3. **WooCommerce testiranje — Checkout**
-   - Testirati da li je checkout funkcionalan
+   - Testirati da li je checkout funkcionalan (posle F2 permalink izmene!)
    - Testirati slike na product page
 
-4. **SEO quick-win: title/meta prepis 4 stranice** (iz [[analiza/2026-07-04-snapshot-full]] §6.1) — ⭐ NOVO
+4. **SEO quick-win: title/meta prepis 4 stranice** (iz [[analiza/2026-07-04-snapshot-full]] §6.1) — ⭐
    - /pop-tenis/ (5.503 impr, CTR 0,6%), /podloga-za-odbojkaske-terene/ (2.668, 1,3%), /spoljnje-podne-obloge/ (11.019, 3,5%), conquest članak (4.401, 0,6%)
+   - ⚠️ pop-tenis i odbojka su POSTOVI — raditi POSLE F3 reimporta (inače se izmena briše)
    - Očekivano: +500–700 klikova/90d bez nove stranice · Vreme: 1-2h (na lokalnom buildu)
 
 ## Blokeri
@@ -67,26 +67,11 @@
 
 ## Napomene
 
-**301 Redirect mapa — STATISTIKA:**
-- ✅ Inventar builda: 133 putanje (posts, pages, products, categories)
-- ✅ Auto-popunjeno 1:1: 2 redda
-- ✅ Auto-predlog po slug-u: 41 reda
-- ✅ 404 upozorenja ISPRAVLJENA: 30 redova
-- ✅ Verifikovano da postoji: 44 redda
-- 📋 PROVERI (ručna verifikacija): 20 redova
-- 📋 NEMA NA BUILDU (strateška odluka): 5 redova
-- 📋 AUTO-PREDLOG WooCommerce: 49 redova (proizvodi + kategorije)
-
-**Fajlovi generirani:**
-- `antasline-redirect-mapa-POPUNJENA.csv` — finalna mapa sa popunjenim i ispravljenim redovima
-- `redirect-fill.php` — skriptu za auto-fill
-- `fix-404-redirect.php` — skriptu za ispravku 404 ciljeva
-
-**Ključni problemi koji su ispravljeni:**
-- `/industrija-podovi/` → `/industrijski-podovi/` (8 redova)
-- `/lvt-podovi/*` → `/podovi-za-poslovni-prostor/*` (5 redova)
-- Sve `/spoljne-podne-obloge/*` varijacije maprirane na `/bergo-ultimate/` i `/vestacka-trava/`
-- Sve `/industrijski-podovi/*` sub-stranice sada kažu `/industrijski-podovi/` (ne `/industrija-podovi/`)
+**Redirect/parity (od 2026-07-07):** stara mapa i statistike su arhivirane
+(`migracija/arhiva/` + [[migracija/arhiva/_SUPERSEDED]]). Aktuelno stanje parity-ja
+živi u `migracija/parity-inventar.csv` (generiše F1). Izmereno 2026-07-07:
+postovi 25/30 match · pages 8/50 · proizvodi 34/37 · Woo permalinci lokalno pogrešni
+(`/shop/` umesto `/proizvod/` — F2 fix).
 
 ---
 

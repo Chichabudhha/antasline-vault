@@ -242,10 +242,10 @@ je aktivna napomena iz prethodnih sesija — nemoj je ignorisati samo zato što
 je RankMath pomenut kao krajnji cilj.
 
 ### 7.2 Struktura i konvencije (lokalni build)
-- WooCommerce URL-ovi: `/proizvod/` (flat) i `/kategorija/` — **ne** `/shop/`
-  niti `/kategorija-proizvoda/`
-- `/aktuelnosti/` → `/blog/` — slug rename je potreban (i CSV mapa redirekcija
-  ima grešku na ovom mestu, videti 7.4)
+- WooCommerce URL-ovi (parity sa live, od 2026-07-07): `/proizvod/` (flat) i
+  `/kategorija-proizvoda/` — **ne** `/shop/` niti `/kategorija/`
+- Blog arhiva: `/aktuelnosti/` OSTAJE (kao na live) — lokalni `/blog/` se
+  preimenuje (parity odluka 2026-07-07, obrnuto od ranijeg plana)
 - Porto tema: `post_type=post` prikazuje title kao `<h2 class="entry-title">`,
   ne `<h1>` — ne juriti "missing H1" na post entrijima, to je normalno
 
@@ -259,17 +259,17 @@ je RankMath pomenut kao krajnji cilj.
 - Post ID 4937 = `/industrijski-podovi/` (post_type=post); 6 WPBakery blokova
   čeka na ubacivanje (blokirano gore navedenim JS bug-om)
 
-### 7.4 Redirect mapa (BLOK C1 — u toku)
-- 117 redova, semicolon-delimited CSV, UTF-8-BOM
-- ~41 AUTO-PREDLOG red pokazuje na slugove koji još ne postoje (čekaju C2
-  migraciju proizvoda) — **ne implementirati još**
-- ~17 redova "bez redirekta" gde se stari/novi URL razlikuju → 404 koji
-  trebaju 301
-- **Kritična rupa:** `/sportske-podloge/kosarkaske-konstrukcije/` (visok
-  organski saobraćaj, 478 GSC klikova) — odluka o cilju redirekcije i/ili
-  landing stranici je na čekanju. Visok prioritet.
-- `/aktuelnosti/` → `/blog/` mapiranje u CSV-u treba ispraviti
-- 49 WooCommerce auto-predloga čeka validaciju protiv pravih staging slugova
+### 7.4 Parity strategija (od 2026-07-07 — zamenila staru redirect mapu)
+- **Build se pravi 1:1 prema live sajtu** (URL + content parity); redirect mapa
+  se svodi na ~10–20 namernih promena. Izvor istine: `[[migracija/PARITY-PLAN]]`,
+  izvršenje kroz promptove `[[migracija/promptovi/_README]]` (faze F1–F7).
+- Stara mapa (118 redova, `/shop/` targeti, AUTO-PREDLOG redovi) je arhivirana u
+  `migracija/arhiva/` — **ne koristiti je**.
+- Slug politika: hibrid po težini — top ~15 GSC URL-ova strogi parity; nisko-
+  saobraćajni smeju bolji slug uz 301; konsolidacije duplikata uvek OK.
+- **Kritična rupa i dalje:** `/sportske-podloge/kosarkaske-konstrukcije/`
+  (478 GSC klikova) → prava landing stranica (ne 301 na shop kategoriju), deo F5.
+- `.htaccess` 301 se generiše (F4) ali aktivira TEK na dan migracije.
 
 ### 7.5 Content parity (lokalni build vs. live)
 - Live sajt je autoritativan — ima znatno više proizvoda, blog postova i
@@ -451,7 +451,8 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 1. `[[2026-07-06-MASTER-PLAN-V2]]` — master plan do live-a (5 workstream-ova, N1–N8 raspored, gate kriterijumi; go-live 2026-08-31)
 2. `[[PROGRESS]]` u vault-u — snapshot trenutnog stanja
 3. `[[DNEVNIK-NAPRETKA]]` (append-only ledger, poslednji unosi)
-4. Aktivni BLOK C pod-zadatak: `[[blokovi/BLOK-C-sledece]]` (C1 redirect / C2 content / C3 on-page)
+4. Migracija/parity: `[[migracija/PARITY-PLAN]]` + status faza F1–F7 u `[[migracija/promptovi/_README]]`
+5. Aktivni BLOK C pod-zadatak: `[[blokovi/BLOK-C-sledece]]` (C3 on-page; C1/C2 zamenjeni parity fazama)
 
 ---
 

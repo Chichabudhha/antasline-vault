@@ -29,7 +29,7 @@ azurirano: 2026-07-06
 | Tema | WoodMart 8.5.4 + child + design system `antas-design.css`, self-hosted Inter+Bebas, header, logo SVG |
 | Rebuild | Home (16550) · `/industrijski-podovi/` (16567) · `/sportske-podloge/` (5438) · 4 sport stranice (futsal/hokej/stoni tenis/3x3) · 10 Woo kategorija (Layout Builder) · C3 #4/#5 dimenzije stranice |
 | Woo | 37 proizvoda + 10 kategorija + 115 slika importovano na lokal |
-| Migracija priprema | Redirect mapa 106/118 · live export (posts XML, pages XML, inventar CSV) · porto backtick sanacija (7 stranica) |
+| Migracija priprema | 🔄 od 2026-07-07: **parity strategija** [[migracija/PARITY-PLAN]] (stara redirect mapa arhivirana) · live export (posts XML, pages XML, inventar CSV) · porto backtick sanacija (7 stranica) |
 | Ads | Faza 0 zatvorena (nalog odblokiran 2026-07-04) |
 
 ### 📊 Metrike-nula (za merenje uspeha)
@@ -56,7 +56,7 @@ azurirano: 2026-07-06
 |---|---|---|---|
 | 1.1 | Silo rebuild: `/spoljnje-podne-obloge/` → `/podloge-za-parking/` → `/kontakt/` → `/o-nama/` | CC | ✅ 2026-07-07 — sve 4 gotove (spoljne bez j, parking-staze, kontakt forma, o-nama). C1 parity: live `/spoljnje-*` → lokal `/spoljne-*` |
 | 1.2 | Preostale pages iz live inventara (~50) — po prioritetu GSC klikova | CC | prioritet: kosarkaske-konstrukcije, vestacka-trava, bergo-xl |
-| 1.3 | Blog import (live-posts XML → WP import sa slikama) | CC | odluka overwrite/preserve za ručno rebuildovane #ceka-miroslav |
+| 1.3 | ✅ ODLUČENO 2026-07-07 (M8): **pun reimport svih 30 postova sa live** — izvršenje po [[migracija/promptovi/F3-posts-reimport]] | CC | restyle postova ide posle, iterativno |
 | 1.4 | Footer builder (WoodMart HTML block) + bela varijanta logoa | CC | otvoreno iz [[migracija/woodmart-sabloni]] |
 | 1.5 | Meni: proširiti novim silo/C3 stranicama | CC | posle 1.1–1.2 |
 | 1.6 | Mobile viewport vizuelni QA (sve rebuild stranice) | CC | media queries napisani, nije snimljeno |
@@ -80,12 +80,14 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 | 2.9 | Conquest članak 2542 refresh (poz. 26 za "epoksi podovi" → SEO+GEO) | CC | — |
 
 ### W3 — SEO TEHNIČKA + MIGRACIJA (C1/C2 + CWV)
+> 🔄 **2026-07-07: C1/C2 pristup zamenjen parity strategijom** — build se pravi 1:1 prema live sajtu, redirect mapa se svodi na minimum. Izvor istine: [[migracija/PARITY-PLAN]], izvršenje kroz promptove [[migracija/promptovi/_README]] (F1–F7). Stare mape arhivirane u `migracija/arhiva/`.
+
 | # | Zadatak | Vlasnik | Napomena |
 |---|---|---|---|
-| 3.1 | C1: 20 PROVERI redova redirect mape — ručna verifikacija | CC | blokira go-live |
-| 3.2 | C1: rešiti `/sportske-podloge/kosarkaske-konstrukcije/` (478 GSC kl.!) — kandidat target: kategorija 251 ili nova landing | CC+M | odluka target-a |
-| 3.3 | C1: `/aktuelnosti/` → `/blog/` ispravka u CSV + slug rename na buildu | CC | — |
-| 3.4 | C1: 49 Woo auto-predloga validirati protiv stvarnih lokalnih slugova | CC | proizvodi su sada na lokalu — može odmah |
+| 3.1 | 🔄 ZAMENJEN → **F1 parity inventar** (7 live sitemapa vs lokal → `parity-inventar.csv`) + **F4 minimalna redirect mapa** (~10–20 redova umesto 118) | CC | [[migracija/promptovi/F1-parity-inventar]] · blokira go-live |
+| 3.2 | C1: rešiti `/sportske-podloge/kosarkaske-konstrukcije/` (478 GSC kl.!) — PRAVA landing (ne 301 na shop kategoriju) — deo F5 trijaže | CC+M | [[migracija/promptovi/F5-trijaza-stranica]] |
+| 3.3 | 🔄 OBRNUTO: parity kaže `/aktuelnosti/` OSTAJE (lokalni `/blog/` se preimenuje) — deo F2 | CC | [[migracija/promptovi/F2-permalink-fix]] |
+| 3.4 | 🔄 ZAMENJEN → **F2 permalink fix**: Woo `product_base` → `/proizvod/` flat + `category_base` → `/kategorija-proizvoda/` (kao live) — briše ~47 redirect redova jednom izmenom | CC | [[migracija/promptovi/F2-permalink-fix]] |
 | 3.5 | Lighthouse/PageSpeed baseline audit lokala → `dnevnik/PERFORMANCE-AUDIT.md` | CC | pre optimizacije |
 | 3.6 | CWV optimizacija: LCP <2,5s mobile (slike, lazy load, skripte, fontovi ✓ već lokalni), CLS <0,1, INP <200ms | CC | najveća poluga konverzija (mobile = 3/4 svega) |
 | 3.7 | XML sitemap + robots.txt (+ AI crawleri: GPTBot, PerplexityBot, ClaudeBot…) + llms.txt | CC | robots na live = [cpanel-live] odluka #ceka-miroslav |
@@ -148,7 +150,7 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 
 ## 3. GATE KRITERIJUMI — go/no-go za migraciju (pregled u N8)
 
-- [ ] Redirect mapa 118/118 verifikovana, .htaccess generisan i testiran na lokalu
+- [ ] 🔄 (2026-07-07) `parity-inventar.csv` kompletan (svaki live URL ima status) + minimalna redirect mapa (F4) potvrđena + .htaccess generisan i testiran na lokalu
 - [ ] CWV lokal: LCP <2,5s mobile · CLS <0,1 · INP <200ms
 - [ ] Sve Tier1 + Tier2 stranice žive na buildu (Tier3/4 nisu blokeri)
 - [ ] Content parity checklist prošao: svaka live stranica ima parnjaka ili 301 (inventar CSV = checklista)
@@ -175,7 +177,7 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 | M5 | Konverzije info: šta biva sa 55 kontakata/mes | Fazu 4 / CRM odluku | 2026-07-31 | plan radi i bez toga, ali vrednost/konv ostaje nepoznata |
 | M6 | SSH/hosting pristup + potvrda hostinga | migraciju (N8) | 2026-08-20 | 🔴 nema fallback — bez ovoga nema migracije |
 | M7 | Figma link + testimonials copy | W1 poliranje | 2026-08-10 | sekcije ostaju izostavljene, nisu gate |
-| M8 | Odluka overwrite/preserve rebuild postova (C2) | blog import | 2026-07-15 | import samo postova koji ne postoje lokalno |
+| M8 | ✅ ODLUČENO 2026-07-07 — **pun reimport svih 30 postova sa live** (lokalni "stari stil" se briše, restyle posle) | ~~blog import~~ | — | — |
 | M9 | ✅ ODLUČENO 2026-07-07 — **katalog režim** ("Zatraži ponudu" umesto korpe/cene) | W1 zadatak 1.8, W3 zadatak 3.8 | — | — |
 | M10 | 🆕 Popuni `[[reference/cenovnik]]` (jedna tabela, sve cene odjednom) — sprečava ping-pong "koja je cena za X" po svakoj sesiji | W2 Tier1 (M1) + obogaćivanje proizvoda | 2026-07-10 | isto kao M1 — "na upit" placeholder |
 

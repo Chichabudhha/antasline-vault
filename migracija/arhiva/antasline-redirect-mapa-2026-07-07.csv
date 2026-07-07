@@ -1,0 +1,44 @@
+live_url;live_id;live_slug;lokal_id;lokal_slug;redirect_type;status;napomena
+https://www.antasline.com/home/;5007;home;;;AUTO-PREDLOG;HOME_FRONTEND;ne postoji kao page na live-u ili lokalu — predznanica ili custom
+https://www.antasline.com/podovi-za-magacine-i-hale/;3327;podovi-za-magacine-i-hale;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/ugradnje-industrijskog-poda/;4060;ugradnje-industrijskog-poda;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/katalog/;5008;katalog;;;PROVERI;NEDOSTAJE;katalog stranica — WooCommerce
+https://www.antasline.com/moj-nalog/;5009;moj-nalog;;;PROVERI;NEDOSTAJE;My Account stranica — WooCommerce
+https://www.antasline.com/sportski-podovi-za-sale-i-balone/;5270;sportski-podovi-za-sale-i-balone;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/antistatik-i-elektroprovodljivi-podovi/;3195;antistatik-i-elektroprovodljivi-podovi;;;PROVERI;NEDOSTAJE;ESD silo stranica
+https://www.antasline.com/podloga-za-odbojkaske-terene/;2668;podloga-za-odbojkaske-terene;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/expona-click/;6087;expona-click;;;PROVERI;NEDOSTAJE;proizvod — trebalo pri WooCommerce migraciji
+https://www.antasline.com/vinil-podovi/;3300;vinil-podovi;;;PROVERI;NEDOSTAJE;proizvod kategorija
+https://www.antasline.com/na-kojoj-podlozi-se-igraju-turniri-u-3x3/;6104;na-kojoj-podlozi-se-igraju-turniri-u-3x3;;;PROVERI;NEDOSTAJE;post/blog
+https://www.antasline.com/vestacka-trava-za-terase/;6075;vestacka-trava-za-terase;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/podovi-za-stale/;3385;podovi-za-stale;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/elektroprovodni-podovi/;3195;elektroprovodni-podovi;;;PROVERI;NEDOSTAJE;trebalo na lokalu (duplikat sa antistatik)
+https://www.antasline.com/vinil-podovi-objectflor/;6061;vinil-podovi-objectflor;;;PROVERI;NEDOSTAJE;proizvod
+https://www.antasline.com/trake-za-obelezavanje/;5982;trake-za-obelezavanje;;;PROVERI;NEDOSTAJE;proizvod
+https://www.antasline.com/padel-tereni/;5238;padel-tereni;;;PROVERI;NEDOSTAJE;PRIORITET — sport silo stranica
+https://www.antasline.com/bumperi-zastita-za-police-regale-i-zidove/;3389;bumperi-zastita-za-police-regale-i-zidove;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/opremazasportsketerene/;3393;opremazasportsketerene;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/kosarkaske-konstrukcije/;5227;kosarkaske-konstrukcije;;;PROVERI;NEDOSTAJE;PRIORITET — sport silo stranica
+https://www.antasline.com/podovi-za-parkiraliste-i-staze/;5263;podovi-za-parkiraliste-i-staze;16589;podloge-za-parkiraliste-i-staze;PARITY;GOTOVO;isti slug na live i lokalu — bez redirecta
+https://www.antasline.com/spoljnje-podne-obloge/;5262;spoljnje-podne-obloge;16590;spoljne-podne-obloge;301;GOTOVO;live sa j → lokal bez j — dodati u .htaccess
+https://www.antasline.com/hvala-za-poruku/;7248;hvala-za-poruku;16600;hvala-za-poruku;PARITY;GOTOVO;kontakt forma thank you page
+https://www.antasline.com/vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore/;3339;vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/kancelarije-i-poslovni-prostori/;3340;kancelarije-i-poslovni-prostori;;;PROVERI;NEDOSTAJE;vertikala silo
+https://www.antasline.com/industrijski-podovi-montaza-preko-ostecenog-epoksida/;5214;industrijski-podovi-montaza-preko-ostecenog-epoksida;;;PROVERI;NEDOSTAJE;conquest članak?
+https://www.antasline.com/ergonomske-podloge-2/;3304;ergonomske-podloge-2;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/iznajmljivanje-podova/;3405;iznajmljivanje-podova;;;PROVERI;NEDOSTAJE;usluga stranica
+https://www.antasline.com/galerija/;5010;galerija;;;PROVERI;NEDOSTAJE;Custom post type ili галереја
+https://www.antasline.com/garaze-i-autoservisi/;3378;garaze-i-autoservisi;;;PROVERI;NEDOSTAJE;PRIORITET — vertikala silo
+https://www.antasline.com/spoljnje-podne-obloge/;5262;spoljnje-podne-obloge;16590;spoljne-podne-obloge;301;GOTOVO;live sa j → lokal bez j
+https://www.antasline.com/podovi-za-maloprodajne-objekte/;3342;podovi-za-maloprodajne-objekte;;;PROVERI;NEDOSTAJE;vertikala
+https://www.antasline.com/ecotile-5005-podne-ploce/;6088;ecotile-5005-podne-ploce;;;PROVERI;NEDOSTAJE;proizvod WooCommerce
+https://www.antasline.com/industrijski-pod/;5013;industrijski-pod;;;PROVERI;NEDOSTAJE;redirect na /industrijski-podovi/?
+https://www.antasline.com/podne-ploce-ecotile-50010/;3380;podne-ploce-ecotile-50010;;;PROVERI;NEDOSTAJE;proizvod
+https://www.antasline.com/bergo-easy/;6099;bergo-easy;;;PROVERI;NEDOSTAJE;proizvod Bergo varijanta
+https://www.antasline.com/bergo-xl/;6100;bergo-xl;;;PROVERI;NEDOSTAJE;proizvod Bergo varijanta
+https://www.antasline.com/bergo-elite/;6101;bergo-elite;;;PROVERI;NEDOSTAJE;proizvod Bergo varijanta
+https://www.antasline.com/industrijski-podovi-najcesca-pitanja/;5215;industrijski-podovi-najcesca-pitanja;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/podovi-za-bazene/;3381;podovi-za-bazene;;;PROVERI;NEDOSTAJE;trebalo na lokalu
+https://www.antasline.com/politika-kolacica/;5011;politika-kolacica;;;PROVERI;NEDOSTAJE;legal stranica
+https://www.antasline.com/aktuelnosti/;4;aktuelnosti;;;PROVERI;NEDOSTAJE;blog arhiva — trebalo je /blog/ na lokalu
+https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/;3344;lvt-podovi-za-komercijalne-i-javne-prostore;;;PROVERI;NEDOSTAJE;trebalo na lokalu

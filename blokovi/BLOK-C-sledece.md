@@ -9,19 +9,16 @@ azurirano: 2026-06-28
 
 > C1/C2/C3 su od 2026-07-06 mapirani na workstream-ove master plana: C1+C2 → W3/W1, C3 → W2. Redosled i nedeljni raspored: [[2026-07-06-MASTER-PLAN-V2]].
 
-## C1: Redirect mapa
-`antasline-redirect-mapa-POPUNJENA.csv` (118 redova).
-- ~15 redova `bezredirekta` gde se stari/novi URL razlikuju (svaki postaje 404 bez 301).
-- Inconsistency `industrijski-podovi` vs `industrija-podovi` između notes i target URL-ova.
-- [ ] KRITIČNO: `/sportske-podloge/kosarkaske-konstrukcije/` (478 GSC klikova) nema redirect target #claude-code
+## C1 + C2: 🔄 ZAMENJENI PARITY STRATEGIJOM (2026-07-07)
 
-## C2: Content parity (live→staging)
-Crawl otkrio: 32 proizvoda na live vs 10 na stagingu (27 nedostaje, 5 samo na stagingu), ~19 blog postova, ~20 silo/landing stranica nedostaju.
-- Tier 1: WooCommerce CSV (proizvodi)
-- Tier 2: WXR export (blog)
-- Tier 3: ručni rebuild landing/silo u WPBakery
-- [ ] Odluka: dispozicija 5 staging-only proizvoda #ceka-miroslav
-- [ ] Odluka: overwrite vs preserve ručno rebuilt Porto verzija postova #ceka-miroslav
+Build se pravi **1:1 prema live sajtu** — izvor istine: [[migracija/PARITY-PLAN]],
+izvršenje kroz promptove [[migracija/promptovi/_README]] (faze F1–F7, jedna po sesiji).
+
+- Stara redirect mapa (118 redova) arhivirana: `migracija/arhiva/` — bespredmetna (`/shop/` targeti, AUTO-PREDLOG redovi)
+- Redirect mapa se svodi na ~10–20 namernih promena (F4)
+- Content parity = `parity-inventar.csv` (F1) + W1 red čekanja (F5)
+- Postovi: pun reimport sa live (F3) — M8 odluka doneta ✅
+- [ ] KRITIČNO i dalje: `/sportske-podloge/kosarkaske-konstrukcije/` (478 GSC klikova) → prava landing, deo F5 #claude-code
 
 ## C3: On-page build
 **📝 Master content plan: [[seo/plan-novih-stranica]]** — 20 stranica u 4 tijera (iz 16m keyword analize), obuhvata i ranije 4 GSC stranice. Redosled: odbojka refresh → terasa cena → industrijski cena → garaže landing.

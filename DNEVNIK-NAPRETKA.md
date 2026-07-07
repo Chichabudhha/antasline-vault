@@ -1,5 +1,15 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-07 [claude-code] [STRATEGIJA] — PARITY-PLAN: nova migracija strategija + 7 promptova ✅
+- ✅ **Odluka (Miroslav):** build se pravi **1:1 prema live sajtu** (URL + content parity) — SEO se čuva pa unapređuje. Stari redirect plan (Porto era, 118 redova) proglašen nevažećim.
+- 📊 **Izmereno stanje** (live sitemap vs lokalna baza): postovi 25/30 slug match (5 nedostaje) · pages 8/50 (42 nedostaje, ~12 su Woo sistem/proizvod-stranice/legal) · proizvodi 34/37 · **lokalni Woo permalinci pogrešni**: `/shop/%product_cat%` + `/kategorija/` vs live `/proizvod/` flat + `/kategorija-proizvoda/` — jedna izmena opcije briše ~47 redirect redova.
+- 🔴 **Nađene greške u starim mapama**: POPUNJENA.csv cilja `/shop/` URL-ove (kontradiktorno i sa live i sa CLAUDE.md odlukom o flat `/proizvod/`); mapa 2026-07-07 vodila `podovi-za-parkiraliste-i-staze`→`podloge-za-...` kao PARITY iako se slugovi razlikuju.
+- ✅ **Donete odluke**: (P1) slug politika = hibrid po težini — top ~15 GSC URL-ova strogi parity, nisko-saobraćajni smeju novi slug uz 301, konsolidacije uvek OK (obrazloženje: keyword u slugu ≈ zanemarljiv faktor, 301 nosi 2–8 ned. nestabilnosti + rizik izvršenja); (P2/M8 ✅) postovi = **pun reimport svih 30 sa live**, restyle posle; (P5) troslojna arhitektura namena→proizvod (`namena` tag + auto grid — namenske stranice postaju "rešenje hub", ne opis jednog proizvoda); (P6) content standard pre live-a (standardi sa linkovima ka izvorima, SVG ikonice, "antas-skica" stil, video kroz fasadni embed).
+- 📁 **Kreirano**: [[migracija/PARITY-PLAN]] (izvor istine) · [[migracija/promptovi/_README]] + 7 samostalnih promptova F1–F7 (svaki izvršava jedna buduća sesija, bilo koji model) · `migracija/arhiva/` sa 3 stare mape + [[migracija/arhiva/_SUPERSEDED]]
+- 📝 **Ažurirano**: MASTER-PLAN V2 (W3 3.1–3.4 prepisani, W1 1.3 + M8 rešeni, gate kriterijum), BLOK-C (C1/C2 → parity), PROGRESS (Sledeće = F1→F7, stare statistike arhivirane), CLAUDE.md §7.4
+- ⚠️ **Gotcha za buduće sesije**: title/meta quick-win za pop-tenis i odbojku raditi POSLE F3 (reimport bi pregazio izmene); live postovi imaju `<h1>` u sadržaju → 2×H1 posle importa (rešava restyle); lite-shot 325 (lokal) vs 795 (live) — verovatno različiti modeli, proveriti pre rename.
+- Ništa nije menjano u bazi ove sesije — samo dokumentacija + arhiviranje kopija CSV-ova.
+
 ## 2026-07-07 [claude-code] [ANALITIKA] — Nedeljni izveštaj (GA4+Ads+GSC+GMB) + bounce rate nalaz ✅
 - ✅ **Nedeljni izveštaj 7d vs 7d** (30.6–6.7 vs 23.6–29.6) povučen preko Windsor.ai, prošireno sa GMB podacima (novo — connector `google_my_business`, lokacija "Industrijski i sportski podovi Beograd - Antas Line", `locations/3289324505122199130`)
 - 📊 **Prava konverzija** (`/hvala-za-poruku/` page view) pala -45,5% (22→12) uz skoro stabilan saobraćaj (korisnici -2,3%) → pad konverzione stope 2,79%→1,56%, ne pad tražnje

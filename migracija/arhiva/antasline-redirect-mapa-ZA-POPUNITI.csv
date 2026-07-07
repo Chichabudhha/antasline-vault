@@ -1,0 +1,118 @@
+﻿Grupa;Stari URL (antasline.com);Novi URL (build);Tip;Status;Napomena
+IDENTICNO;/;/;bez redirekta;postoji;
+IDENTICNO;/aktuelnosti/;/blog/;bez redirekta;postoji kao /blog/ treba da ostavimo na aktuelnosti;promeniti na novom sajtu da bude /aktuelnosti/
+IDENTICNO;/epoksidni-podovi-ili-ecotile-podovi/;/epoksidni-podovi-ili-ecotile-podovi/;bez redirekta;postoji;KRITICNO: conquest clanak (post 2542) - mora ostati 1:1
+IDENTICNO;/vestacka-trava/;/vestacka-trava/;bez redirekta;postoji;
+IDENTICNO;/sportske-podloge/;/sportske-podloge/;bez redirekta;postoji;
+IDENTICNO;/industrijski-podovi/;/industrijski-podovi/;bez redirekta;postoji;
+IDENTICNO;/podloga-za-teniske-terene/;/podloga-za-teniske-terene/;bez redirekta;postoji;
+IDENTICNO;/pop-tenis/;/pop-tenis/;bez redirekta;postoji;
+IDENTICNO;/kontakt/;/kontakt/;bez redirekta;postoji;
+IDENTICNO;/galerija/;/galerija/;bez redirekta;postoji;nedostaju neke od sličica i umesto njih stoji porto placeholder. Uporedi i zameni placholder sa odgovarajućim slikama
+IDENTICNO;/modularni-industrijski-podovi/;/modularni-industrijski-podovi/;bez redirekta;postoji;
+IDENTICNO;/sportska-igralista/;/sportska-igralista/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/kako-napraviti-teren-za-basket-ili-kosarkaski-teren/;/kako-napraviti-teren-za-basket-ili-kosarkaski-teren/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/teren-za-basket-3x3/;/teren-za-basket-3x3/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/na-kojoj-podlozi-se-igraju-turniri-u-3x3/;/na-kojoj-podlozi-se-igraju-turniri-u-3x3/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/sportske-podloge/padel-tereni/;/sportske-podloge/padel-tereni/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/sportske-podloge/sportski-podovi-za-teniske-terene/;/sportske-podloge/sportski-podovi-za-teniske-terene/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/sportski-podovi-za-sale-i-balone/;/sportski-podovi-za-sale-i-balone/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/zamena-parketa-u-sportskim-salama/;/zamena-parketa-u-sportskim-salama/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/lvt-podovi-za-komercijalne-i-javne-prostore/;/lvt-podovi-za-komercijalne-i-javne-prostore/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/lvt-podovi-za-komercijalne-i-javne-prostore/expona-click/;/lvt-podovi-za-komercijalne-i-javne-prostore/expona-click/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/;/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-objectflor/;/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-objectflor/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/;/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/gumeni-podovi-javne-objekte-i-teretane/;/gumeni-podovi-javne-objekte-i-teretane/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/podloge-za-krovove-i-terase/;/podloge-za-krovove-i-terase/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/podne-ploce-podovi-za-kontejnere-i-montazne-objekte/;/podne-ploce-podovi-za-kontejnere-i-montazne-objekte/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/privremene-podloge-isotrack/;/privremene-podloge-isotrack/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi/;/montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/podovi-za-radionice/;/podovi-za-radionice/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/podovi-za-detailing-radionice-i-servise/;/podovi-za-detailing-radionice-i-servise/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/podovi-za-stale/;/podovi-za-stale/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/podovi-za-stamparije/;/podovi-za-stamparije/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/koji-pod-postaviti-u-garazu/;/koji-pod-postaviti-u-garazu/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/osteceni-industrijski-pod/;/osteceni-industrijski-pod/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/zasto-vam-je-potreban-esd-pod/;/zasto-vam-je-potreban-esd-pod/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/zastitne-podloge-za-travu-i-plocnike/;/zastitne-podloge-za-travu-i-plocnike/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/sta-postaviti-preko-starog-parketa-ili-plocica/;/sta-postaviti-preko-starog-parketa-ili-plocica/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/ftalati-stetnost-i-uticaj-na-ljudsko-zdravlje/;/ftalati-stetnost-i-uticaj-na-ljudsko-zdravlje/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/pvc-podne-ploce-ili-gumeni-podovi/;/pvc-podne-ploce-ili-gumeni-podovi/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/prednosti-r-tile-design-podova-u-supermarketima-u-odnosu-na-klasicne-plocice/;/prednosti-r-tile-design-podova-u-supermarketima-u-odnosu-na-klasicne-plocice/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/esd-podovi-prica-kupca/;/esd-podovi-prica-kupca/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/instalacija-i-ugradnja-esd-poda-istrazivacki-centar-quectel-beograd/;/instalacija-i-ugradnja-esd-poda-istrazivacki-centar-quectel-beograd/;bez redirekta;PROVERI da postoji na buildu;
+IDENTICNO;/ergonomske-podloge-2/;/ergonomske-podloge-2/;bez redirekta;PROVERI da postoji na buildu;'-2' slug - proveri da nije duplikat
+IDENTICNO;/o-nama/;/o-nama/;bez redirekta;postoji;Promenjen u /o-nama/
+301 PROMENJEN SLUG;/podloge-za-parkiraliste-i-staze/;/podloge-za-parking/;301;postoji;
+301 PROMENJEN SLUG;/antistatik-i-elektroprovodljivi-podovi/;/industrija-podovi/antistatik-podne-obloge/;301;Prepraviti url na novom sajtu u  /antistatik-i-elektroprovodljivi-podovi/;RIZIK: 250 klikova - novi build mora imati isti obim teksta + 'antistatik/ESD' u title/H1
+301 PROMENJEN SLUG;/podloga-za-odbojkaske-terene/;/sportska-podloga-za-odbojku/;301;postoji;Proveriti da li da se promeni url ili ostaviti stari. SEO preporuke-istraži ključne reči i pronađi best fit
+301 PROMENJEN SLUG;/podovi-za-radnje-i-maloprodajne-objekte/;/podovi-za-maloprodajne-objekte-i-hipermarkete/;301;postoji;
+301 PROMENJEN SLUG;/sportske-podloge/sportska-podloga-za-pickleball/;/teren-za-pickleball/;301;postoji;/teren-za-pickleball/ vec postoji na crawl-u
+301 PROMENJEN SLUG;/industrijski-podovi-najcesca-pitanja/;/izbor-industrijskog-poda-tri-najcesca-pitanja/;301;postoji;na crawl-u postoje i .../tri-najcesca-pitanja/ i -2 verzija - konsolidovati. Napraviti jedan DOBAR članak koji objedinjuje oba članka i oba preusmeriti na novi. Ovaj url nije dobar
+301 PROMENJEN SLUG;/industrijski-podovi/ecotile-5005-podne-ploce/;/industrija-podovi/ecotile-500-5/;301;postoji;obrazac ecotile 5005->500-5
+301 PROMENJEN SLUG;/industrijski-podovi/podne-ploce-ecotile-50010/;/industrija-podovi/ecotile-500-10/;301;postoji;obrazac ecotile 50010->500-10
+301 PROMENJEN SLUG;/industrijski-podovi/garaze-i-autoservisi/;/industrija-podovi/garaze-i-autoservisi/;301;"Nema; ovo bi trebalo napraviti";obrazac: industrijski-podovi/<x> -> industrija-podovi/<x>
+301 PROMENJEN SLUG;/industrijski-podovi/industrijski-pod/;/industrija-podovi/industrijski-pod/;301;"Nema; Besmislena stranica. Proveriti da li ima svrhe praviti istu stranicu ili preusmeriti saobraćaj na ecotile ili samo industrijski pod";obrazac
+301 PROMENJEN SLUG;/industrijski-podovi/podovi-za-maloprodajne-objekte/;/industrija-podovi/podovi-za-maloprodajne-objekte/;301;/podovi-za-maloprodajne-objekte-i-hipermarkete/ - je url. Bez redirekta;obrazac
+301 PROMENJEN SLUG;/industrijski-podovi/trake-za-obelezavanje/;/industrija-podovi/trake-za-obelezavanje/;301;postoji;obrazac
+301 PROMENJEN SLUG;/industrijski-podovi/bumperi-zastita-za-police-regale-i-zidove/;/industrija-podovi/bumperi-zastita-za-police-regale-i-zidove/;301;ispravna stranica za redirect je /industrija-podovi/odbojnici-za-zidove/;obrazac
+301 PROMENJEN SLUG;/spoljnje-podne-obloge/;/spoljne-podne-obloge/;301;ispravljeno na buildu - postoji;obrazac: izbaci 'j' (spoljnje->spoljne) - PROVERI da li i parent menja slug
+301 PROMENJEN SLUG;/spoljnje-podne-obloge/bergo-easy/;/spoljne-podne-obloge/bergo-flow/;301;postoji;RIZIK: i 'j' i preimenovanje easy->flow
+301 PROMENJEN SLUG;/spoljnje-podne-obloge/bergo-elite/;/spoljne-podne-obloge/bergo-elite/;301;postoji;obrazac 'j'
+301 PROMENJEN SLUG;/spoljnje-podne-obloge/bergo-unique/;/spoljne-podne-obloge/bergo-unique/;301;postoji;obrazac 'j'
+301 PROMENJEN SLUG;/spoljnje-podne-obloge/bergo-xl/;/spoljne-podne-obloge/bergo-xl/;301;postoji;obrazac 'j'
+301 PROMENJEN SLUG;/spoljnje-podne-obloge/podovi-za-bazene/;/spoljne-podne-obloge/podovi-za-bazene/;301;/podloge-oko-bazena/ je na buildu;obrazac 'j'
+301 PROMENJEN SLUG;/spoljnje-podne-obloge/vestacka-trava-za-terase/;/spoljne-podne-obloge/vestacka-trava-za-terase/;301;/vestacka-trava/ je adresa za redirekt. Treba razmisliti o sportkim podlogama sa veštačkom travom;obrazac 'j'
+PRAVA RUPA;/sportske-podloge/kosarkaske-konstrukcije/;;landing/odluka;ODLUKA;PRAVA LANDING (478 klikova, poz 8) - NE 301 na tanku shop kategoriju
+PRAVA RUPA;/iznajmljivanje-podova/;;landing/odluka;Napraviti Novu stranicu;79 klikova - napraviti ponovo ili 301 na najblizu stranu
+PRAVA RUPA;/sportske-podloge/opremazasportsketerene/reflektori-za-sportske-terene/;;landing/odluka;Napraviti Novu stranicu;51 klik - reflektori
+PRAVA RUPA;/sportske-podloge/opremazasportsketerene/;;301;/kategorija/oprema-za-sportske-terene/;oprema za sportske terene - proveri ima li na buildu
+WOOCOMMERCE kategorija;/kategorija-proizvoda/industrijska-zastita/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/kategorija-proizvoda/industrijska-zastita/podno-obelezavanje/;/kategorija/podno-obelezavanje/;301;Dodati postojeći kontent kategorije na build;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/kategorija-proizvoda/industrijski-podovi/;/kategorija/industrijski-podovi/;301;Dodati postojeći kontent kategorije na build;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/kategorija-proizvoda/oprema-za-sportske-terene/;/kategorija/oprema-za-sportske-terene/;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/kategorija-proizvoda/oprema-za-sportske-terene/kosarkaske-konstrukcije/;/kategorija/oprema-za-sportske-terene/kosarkaske-konstrukcije/;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/kategorija-proizvoda/podloge-za-baste/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/kategorija-proizvoda/podloge-za-stale-i-trave/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/kategorija-proizvoda/sigurnosni-senzori-signalni-sistemi/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/kategorija-proizvoda/zastita-cevi-i-kablova/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/kategorija-proizvoda/zastita-i-bumperi/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/category/industrijski-podovi/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/category/industrijski-podovi/garazni-podovi/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/category/industrijski-podovi/pod-za-prodavnice-i-radnje/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/category/sportski-tereni/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/category/sportski-tereni/kosarkaski-tereni/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE kategorija;/category/sportski-tereni/teniski-teren/;;301;ZA POPUNITI;novi /shop/ ili kategorija na buildu
+WOOCOMMERCE proizvod;/proizvod/ecotile-7-mm-esd-floor-tiles-industrijsko-esd-podno-resenje/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/ecotile-e500-10-ultra-heavy-duty-interlocking-podna-ploca/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/ecotile-e500-7-industrijska-interlocking-ploca-500x500-mm/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/microshot-125-pokretna-kosarkaska-konstrukcija/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/mini-shot-225-profesionalna-pokretna-kosarkaska-konstrukcija/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/kosarkaski-kos-na-kolicima-street-sport/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/zglobni-obruc-za-kos/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/cart-stopper-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/durastripe-mean-lean-roll-50-mm-x-30-m-ergomat/;;301;ZA POPUNITI;oprez: stari /durastripe/ je bio 404 - proveri sudbinu proizvoda
+WOOCOMMERCE proizvod;/proizvod/durastripe-supreme-v-roll-50-mm-x-30-m-ergomat/;;301;ZA POPUNITI;oprez: stari /durastripe/ je bio 404 - proveri sudbinu proizvoda
+WOOCOMMERCE proizvod;/proizvod/durastripe-xtreme-roll-50-mm-x-30-m-ergomat/;;301;ZA POPUNITI;oprez: stari /durastripe/ je bio 404 - proveri sudbinu proizvoda
+WOOCOMMERCE proizvod;/proizvod/bezicni-led-signalni-senzor-za-pesake-dvostrani/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/senzor-pokreta-sa-upozoravajucim-svetlom-za-industriju-iqsensor/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/ekstra-veliki-kvadratni-odbojnik-za-uglove-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/ergo-t-slot-snap-in-bumper-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/konusni-odbojnik-za-i-gredu-ccib120-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/konusni-odbojnik-za-spoljne-uglove-ccp120-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/konusni-povrsinski-odbojnik-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/konusni-stitnik-za-i-profil/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/kvadratni-odbojnik-za-i-gredu-scib120/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/kvadratni-odbojnik-za-uglove-scbp120-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/odbojnik-za-ivice-i-uglove-ecb120-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/okrugli-odbojnik-za-uglove-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/okrugli-povrsinski-odbojnik-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/polukruzni-odbojnik-za-i-grede-hcib120/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/polukruzni-zastitnik-za-cevi/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/pravougaoni-povrsinski-odbojnik-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/veliki-kvadratni-odbojnik-za-uglove-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/veliki-pravougaoni-povrsinski-odbojnik-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/veliki-zaobljeni-odbojnik-za-uglove-ergomat/;;301;ZA POPUNITI;
+WOOCOMMERCE proizvod;/proizvod/zaobljeni-ivicni-odbojnik-ergomat/;;301;ZA POPUNITI;
