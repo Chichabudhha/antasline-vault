@@ -33,16 +33,28 @@ samo namerne, dokumentovane promene URL-a.
 | P5 | **Troslojna arhitektura namena→proizvod** | Namenske stranice prestaju da opisuju jedan proizvod; postaju "rešenje hub" sa auto-gridom po `namena` tagu (F6). |
 | P6 | **Content standard pre live-a** | Proizvodi maksimalno obogaćeni (standardi sa linkovima), SVG ikonice, skice u jedinstvenom stilu, video kroz fasadni embed (F7). |
 
-## 2. Izmereno stanje (2026-07-07)
+## 2. Izmereno stanje — FINALNO (F1 izvršen 2026-07-07)
 
-| Tip | Live | Lokal | Slug match | Napomena |
-|---|---|---|---|---|
-| Postovi | 30 | 32 publish | 25/30 | 5 nedostaje lokalno; 7 lokalnih preimenovanih/novih |
-| Stranice | 50 | 30 publish | 8/50 | 42 "nedostaje", od toga ~12 Woo sistem/proizvod-stranice/legal |
-| Proizvodi | 37 (`/proizvod/` flat) | 37 (`/shop/%product_cat%/` ⚠️) | 34/37 | lokalna Woo baza pogrešna — F2 fix |
-| Woo kategorije | 9 (`/kategorija-proizvoda/`) | 10 (`/kategorija/`) | baza različita | F2 fix |
+`migracija/parity-inventar.csv` — 175 redova, svih 7 live sub-sitemapa (post/page/product/category/product_brand/product_cat/product_tag) upoređeno sa lokalnom bazom + GSC klikovi (12 meseci, Windsor.ai) spojeni po URL-u.
 
-Detaljne liste razlika: generiše ih F1 u `migracija/parity-inventar.csv`.
+| Tip | Live | PARITY | NEDOSTAJE-LOKAL | LOKAL-NOVO | Napomena |
+|---|---|---|---|---|---|
+| Postovi | 30 (+1 arhiva) | 25 | 5 | 7 | F3 |
+| Stranice | 48 | 8 | 40 | 22 | F5 |
+| Proizvodi | 37 (+1 katalog) | 34 | 3 | 3 | F2 |
+| Blog kategorije (`category`) | 7 | 7 | 0 | — | parity potpun |
+| Woo kategorije (`product_cat`) | 9 | 8 | 1 | — | 1 = slug varijanta (i/bez i), ne pravi gap |
+| Woo brendovi (`product_brand`) | 2 | 2 | 0 | — | parity potpun |
+| Woo tagovi (`product_tag`) | 8 | 0 | 8 | — | 🔴 nijedan ne postoji lokalno — F6/F7 razmotriti |
+
+**Ključni nalaz (menja prioritet u F5):** `/sportske-podloge/kosarkaske-konstrukcije/`
+ima **923 klika/12mes** — veće od ranije dokumentovanih 478 (stariji/kraći period).
+Ovo je sada najveći pojedinačni SEO rizik u celom planu.
+
+**Ostali visoko-prometni NEDOSTAJE-LOKAL** (GSC 12mes): `/spoljnje-podne-obloge/`
+(1304 — graniči sa top15, F4 granični slučaj), `/antistatik-i-elektroprovodljivi-podovi/`
+(1131), `/spoljnje-podne-obloge/bergo-xl/` (978), `/industrijski-podovi/industrijski-pod/`
+(625), `/podovi-za-stale/` (402), `/sportski-podovi-za-sale-i-balone/` (378).
 
 ## 3. Šta je odbačeno iz starog plana
 

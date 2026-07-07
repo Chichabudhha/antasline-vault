@@ -1,5 +1,14 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-07 [claude-code] [W3 PARITY F1] — Master parity inventar (175 redova) ✅
+- ✅ **F1 izvršen**: povučeno svih 7 live sub-sitemapa (curl, `Mozilla/5.0` UA — bez njega Yoast sitemap ponekad vraća prazno/blokira), izvučeno 175 URL-ova (30 post + 1 arhiva, 48 page, 37 product + 1 katalog, 7 category, 2 product_brand, 9 product_cat, 8 product_tag), upoređeno sa lokalnom bazom preko PHP skripte (`WP_Query`/`get_term_by`, ne pojedinačni SQL pozivi) → `migracija/parity-inventar.csv`.
+- 📊 **Rezultat**: PARITY 84 · NEDOSTAJE-LOKAL 57 · LOKAL-NOVO 32 · ARHIVA-STRANICA 2 (aktuelnosti, katalog — sistemske, ne prave stranice). Poklapa se sa prošlom sesijom procenjenim brojevima (25/30 postova, 8/50 stranica, 34/37 proizvoda) — potvrđeno tačnim.
+- 🔴 **Nov kritičan nalaz**: `/sportske-podloge/kosarkaske-konstrukcije/` = **923 klika/12mes** (GSC preko Windsor.ai, `searchconsole` konektor, `page`+`clicks` neflitrirano pa spojeno u skripti — in-filter gotcha izbegnut) — veće od ranije dokumentovanih 478 (verovatno stariji/kraći period). Postaje najveći pojedinačni SEO rizik u planu, prioritet #1 za F5.
+- 🔧 **Gotcha nađen**: `/kategorija-proizvoda/sigurnosni-senzori-signalni-sistemi/` (live) pao je u NEDOSTAJE-LOKAL jer lokalni term ima "i" (`sigurnosni-senzori-i-signalni-sistemi`) — nije pravi gap, slug varijanta. Anotirano u CSV `napomena` koloni za F4.
+- 🔧 **Gotcha**: nijedan od 8 live `product_tag` termina (bergo, ergomat, industrijski-amortizer...) ne postoji lokalno — ovo je DRUGA taxonomy od planiranog "namena" taga u F6, razmotriti rekreiranje u F7.
+- ✅ Verifikacija: spot-check 5 nasumičnih live URL-ova (kosarkaske-konstrukcije, bergo-xl, antistatik, kontakt, lite-shot-795) → svi 200.
+- Bez izmena baze ove sesije. CSV: `migracija/parity-inventar.csv` (175 redova, semicolon, UTF-8-BOM).
+
 ## 2026-07-07 [claude-code] [STRATEGIJA] — PARITY-PLAN: nova migracija strategija + 7 promptova ✅
 - ✅ **Odluka (Miroslav):** build se pravi **1:1 prema live sajtu** (URL + content parity) — SEO se čuva pa unapređuje. Stari redirect plan (Porto era, 118 redova) proglašen nevažećim.
 - 📊 **Izmereno stanje** (live sitemap vs lokalna baza): postovi 25/30 slug match (5 nedostaje) · pages 8/50 (42 nedostaje, ~12 su Woo sistem/proizvod-stranice/legal) · proizvodi 34/37 · **lokalni Woo permalinci pogrešni**: `/shop/%product_cat%` + `/kategorija/` vs live `/proizvod/` flat + `/kategorija-proizvoda/` — jedna izmena opcije briše ~47 redirect redova.

@@ -6,6 +6,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-07 | W3 PARITY F1 — master inventar (175 redova) | ✅ Svih 7 live sub-sitemapa vs lokalna baza + GSC 12mes klikovi (Windsor.ai) → `migracija/parity-inventar.csv`. PARITY 84 · NEDOSTAJE-LOKAL 57 · LOKAL-NOVO 32. 🔴 Nov nalaz: `kosarkaske-konstrukcije` = 923 klika (>478 ranije dokumentovanih) — prioritet #1 za F5. Spot-check 5/5 → 200. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | STRATEGIJA — PARITY-PLAN (zamena redirect pristupa) | ✅ Odluka: build 1:1 prema live sajtu (URL+content parity). Stara redirect mapa (118 redova, `/shop/` targeti) arhivirana → `migracija/arhiva/`. Novi izvor istine: [[migracija/PARITY-PLAN]] + 7 samostalnih promptova [[migracija/promptovi/_README]] (F1 inventar → F2 permalinci → F3 reimport postova → F4 minimalna mapa → F5 trijaža → F6 namena arhitektura → F7 content standard). Odluke: slug hibrid po težini, pun reimport 30 postova (M8 ✅), troslojni model namena→proizvod, standardi-sa-linkovima za proizvode. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | W1 — Dizajn fix: desktop spacing/font + CTA dijagonala | ✅ `--al-gap` desktop max 140→72px, hero naslov desktop max 104→88px (mobile nepromenjen); `/o-nama/` kicker red dobio `al-section--compact`. **Sistemski bug**: dijagonalni CTA prelaz (`al-diag-top`/`--rev`) ostavljao beli trougao na svakoj stranici (WPBakery stretch-row marker div poništava `margin-top`) → fix na `position:relative+top`, jedna CSS izmena, sitewide. 13 stranica verifikovano 200. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | W3 — 3.13 backup automatizovan | ✅ `nocni-backup.ps1` (mysqldump + zip wp-content, rotacija 14) registrovan u Task Scheduler-u (Daily 03:00). Test: 90MB DB + 3,6GB wp-content → 3GB arhiv, 27 min. Piše lokalno dok M ne prijavi OneDrive (auto-prebacivanje spremno). ⏳ 3.14 u toku: popis cPanel (PHP 8.3 ⚠️ vs lokal 8.2.12, disk 42% zauzeto/6,9GB slobodno, subdomeni dostupni) — nastavlja se sutra. Detalji: [[DNEVNIK-NAPRETKA]] |
@@ -35,10 +36,11 @@
 
 ## Sledeće
 
-1. **PARITY faze F1→F7** — ⭐⭐⭐ PRIORITET → [[migracija/promptovi/_README]]
-   - Jedna faza = jedna sesija; pokretanje: "Izvrši migracija/promptovi/F1-parity-inventar.md"
-   - F1 inventar (bez rizika) → F2 permalinci ⚠️ → F3 reimport postova ⚠️ → F4 mapa 🔴 (Miroslav u sesiji) → F5 trijaža → F6 namena tagovi ⚠️ → F7 content standard
-   - F1 i F5 zamenjuju staru "C1 verifikaciju"; blokirač za go-live
+1. **PARITY faze F2→F7** — ⭐⭐⭐ PRIORITET → [[migracija/promptovi/_README]]
+   - F1 ✅ ZATVOREN 2026-07-07 → `migracija/parity-inventar.csv` (175 redova)
+   - Sledeći: **F2 permalink fix** ⚠️ (Woo `/proizvod/` flat + `/kategorija-proizvoda/`, backup pre) → F3 reimport postova ⚠️ → F4 mapa 🔴 (Miroslav u sesiji) → F5 trijaža → F6 namena tagovi ⚠️ → F7 content standard
+   - 🔴 F5 prioritet #1 sada: `kosarkaske-konstrukcije` (923 GSC klika/12mes)
+   - Blokirač za go-live
 
 2. **C3 — Content plan: 20 stranica u 4 tijera** — ⭐⭐ PRIORITET → [[seo/plan-novih-stranica]]
    - Obuhvata ranije 4 GSC stranice + 16 novih iz pune 16m keyword analize
