@@ -22,14 +22,16 @@ namena: WPBakery šabloni + design system klase za WoodMart rebuild stranica
 8. **`vc_raw_html` enkoding**: `base64_encode(rawurlencode($html))` — obrnut redosled (`rawurlencode(base64_encode())`) daje prazan output
 9. **`wp_insert_post`/`wp_update_post` iz CLI skida `[vc_raw_html]`** (kses/save filteri bez ulogovanog korisnika) — JSON-LD blokove ubacivati direktnim `$wpdb->update` na `post_content` + `clean_post_cache($id)`
 10. **Porto backtick parametri = segfault rizik**: shortcode-ovi sa `{``kljuc``:``vrednost``}` parametrima ruše PHP (PCRE backtracking u parse_atts, ne pomaže no-op registracija). Rušio /o-nama/ i staru home. ✅ **Sanirano 2026-07-05 na svih 7 preostalih stranica** (porto_* tagovi skinuti, backtick atributi uklonjeni, sadržaj/layout očuvani; originali u scratchpad `backtick-pages-original.json`). Pri rebuildu i dalje NE kopirati stare porto_* shortcode-ove iz live exporta
+11. **`margin-top` na `.vc_row` se ne primenjuje (2026-07-07)**: `full_width="stretch_row"` ubacuje prazan `<div class="vc_row-full-width vc_clearfix">` (float:left, height:0) između svaka dva reda — to poništava negativni `margin-top` na sledećem redu (computed stil ispravan, render pozicija nula efekta, potvrđeno testom). Zato `al-diag-top`/`al-diag-top--rev` preklop (rez koji treba da otkrije boju prethodne sekcije) nikad nije radio kako treba — ostajao beli trougao na CTA prelazima, najvidljivije na mobile. **Fix**: obe klase sada koriste `position: relative; top: calc(-1 * var(--al-cut))` (+ kompenzujući `margin-bottom`) umesto `margin-top`. Ne vraćati na `margin-top` pristup za ove klase.
 
 ## Utility klase (antas-design.css)
 
 | Klasa | Efekat |
 |---|---|
 | `al-section` + `--navy/--blue/--mist/--paper` | sekcija sa vertikalnim ritmom i bojom |
-| `al-diag-top` / `al-diag-top--rev` | kosi rez na vrhu (uvlači se u prethodnu sekciju) |
+| `al-diag-top` / `al-diag-top--rev` | kosi rez na vrhu (uvlači se u prethodnu sekciju preko `position:relative;top:` — ne `margin-top`, vidi gotcha #11) |
 | `al-diag-bottom` / `--rev` | kosi rez na dnu |
+| `al-section--compact` | kratak uvodni red (kicker) ispred CTA — samo padding-top, bez punog `--al-gap` ritma |
 | `al-plates` | potpis: nagnute "listajuće ploče" iz logoa (desno, skew -7°) — samo na navy sekcijama |
 | `al-label` | narandžasti/crveni micro-label sa kosim crtama `/ TEKST /` |
 | `al-display--xl` / `--lg` | Bebas displej naslovi (h1/h2 su ionako Bebas) |

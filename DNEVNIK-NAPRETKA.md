@@ -1,5 +1,18 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-07 [claude-code] [W1 — DIZAJN FIX] — Desktop razmaci/font + sistemski bug dijagonalnih CTA sekcija ✅
+- ✅ **Desktop spacing/font** (Miroslav: "previše prazno, font u hederu prevelik"): u `antas-design.css` —
+  - `--al-gap` (vertikalni ritam sekcija): `clamp(56px, 9vw, 140px)` → `clamp(56px, 5vw, 72px)` (desktop max −49%, mobile min 56px nepromenjen)
+  - `.al-display--xl` (hero naslov): `clamp(44px, 7.5vw, 104px)` → `clamp(44px, 6.4vw, 88px)` (desktop max −15%, mobile min 44px nepromenjen)
+  - `/o-nama/` (ID 571) "Kontaktirajte nas" kicker red izgledao kao prazna kutija (pun `--al-gap` ritam za 2 reda teksta) → nova klasa `.al-section--compact` (samo padding-top, tesan uz sekciju iznad)
+- 🔴→✅ **Sistemski bug nađen i popravljen**: dijagonalni prelaz ka CTA sekciji (`al-diag-top`/`al-diag-top--rev`) je na svakoj stranici ostavljao beli trougao/traku umesto da boja prethodne sekcije ispuni rez — najvidljivije na mobile (manji `--al-cut`), ali i na desktopu (`/industrijski-podovi/`).
+  - **Uzrok**: `margin-top: calc(-1 * var(--al-cut))` je trebalo da "povuče" CTA red preko prethodne sekcije (preklop koji rez treba da otkrije). Na ovom sajtu WPBakery `full_width="stretch_row"` ubacuje prazan `<div class="vc_row-full-width vc_clearfix">` (float:left, height:0) između SVAKA dva reda — iz nejasnog razloga to poništava `margin-top` na sledećem redu (computed stil pokazuje ispravnu vrednost, ali render pozicija se ne pomera ni za piksel — potvrđeno testom sa `margin-top:-300px !important` inline).
+  - **Fix**: `.al-diag-top` i `.al-diag-top--rev` sada koriste `position: relative; top: calc(-1 * var(--al-cut))` (+ kompenzujući `margin-bottom` da ne ostane rupa u toku dokumenta) umesto `margin-top`. `top` radi ispravno na ovom sajtu (potvrđeno merenjem: preklop tačno −96px). Jedna CSS izmena, važi sitewide — nije trebalo dirati sadržaj nijedne stranice.
+  - Usput probao (pa vratio) privremene per-page `al-diag-bottom`/kombinovane klase na 13 stranica dok nisam našao pravi uzrok — sve te dodatne klase su uklonjene iz `post_content` (13 stranica), ostao je samo `al-section--compact` na 571 (namerno, nezavisna ispravka).
+  - Nova lekcija upisana u [[reference/naucene-lekcije]] i [[migracija/woodmart-sabloni]] (gotcha #11).
+- Backup-ovi: `antasline_local_2026-07-07_0839_pre-onama-kontakt-section.sql`, `antasline_local_2026-07-07_1011_pre-industrijski-cta-seam.sql`, `antasline_local_2026-07-07_1034_pre-sitewide-cta-seam.sql`
+- Verifikovano: HTTP 200 na svih 13 pogođenih stranica (Početna, industrijski-podovi, kontakt, o-nama, sportske-podloge, 4 sport stranice, 2 dimenzije stranice, parking-staze, spoljne-podne-obloge), dijagonale čiste na desktop i mobile (simulirano `--al-cut:28px`).
+
 ## 2026-07-07 [claude-code] [W1 + C1 BRZI COMBO] — N1 silo zatvoren + C1 verifikacija + /hvala-za-poruku/ kreirana ✅
 - ✅ **N1 silo sekvenca 1.1 zatvoren**: sve 4 stranice iz plana su gotove/ažurirane
   - `/spoljne-podne-obloge/` (ID 16590 — bez j, Bergo za terase) — kreirano 2026-07-07
