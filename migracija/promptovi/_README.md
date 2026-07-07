@@ -21,7 +21,7 @@ do kraja, uključujući protokol zatvaranja. **Jedna faza = jedna sesija.**
 ## Redosled i status
 
 - [x] **F1** — [[F1-parity-inventar]] — master inventar live vs lokal (bez izmena baze) ✅ 2026-07-07 — `migracija/parity-inventar.csv` (175 redova)
-- [ ] **F2** — [[F2-permalink-fix]] — Woo permalinci + blog slug + proizvod slugovi ⚠️ menja bazu
+- [x] **F2** — [[F2-permalink-fix]] — Woo permalinci + blog slug + proizvod slugovi ⚠️ menja bazu ✅ 2026-07-07 — backup 47MB, hard flush + Yoast indexable keš gotcha nađen
 - [ ] **F3** — [[F3-posts-reimport]] — pun reimport 30 postova ⚠️ briše + menja bazu
 - [ ] **F4** — [[F4-redirect-mapa]] — minimalna redirect mapa 🔴 čeka Miroslavljeve odluke o graničnim slugovima
 - [ ] **F5** — [[F5-trijaza-stranica]] — trijaža nedostajućih stranica → W1 red čekanja (bez izmena baze)
