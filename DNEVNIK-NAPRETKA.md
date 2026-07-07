@@ -1,5 +1,16 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-07 [claude-code] [ANALITIKA] — Nedeljni izveštaj (GA4+Ads+GSC+GMB) + bounce rate nalaz ✅
+- ✅ **Nedeljni izveštaj 7d vs 7d** (30.6–6.7 vs 23.6–29.6) povučen preko Windsor.ai, prošireno sa GMB podacima (novo — connector `google_my_business`, lokacija "Industrijski i sportski podovi Beograd - Antas Line", `locations/3289324505122199130`)
+- 📊 **Prava konverzija** (`/hvala-za-poruku/` page view) pala -45,5% (22→12) uz skoro stabilan saobraćaj (korisnici -2,3%) → pad konverzione stope 2,79%→1,56%, ne pad tražnje
+- 🔴 **Nalaz — `generate_lead` event dosledno veći od `/hvala-za-poruku/` pageviews** (18 vs 12 ove nedelje, 27 vs 22 prošle, ~20-50% sistematski offset oba perioda) → sumnja na duplo okidanje Page View trigera u GTM-u; treba proveriti GTM Preview. Nije nova pojava (postoji u oba perioda), ali nikad ranije flagovano.
+- 📊 **Bounce rate — veliki WoW pad**: 57,9% (23-29.6) → 34,9% (30.6-6.7), oštra korak-promena tačno oko 28-30.6. Poklapa se sa BLOK A GTM v10 čišćenjem (Consent Mode + MI gašenje) → verovatno tačnije merenje engagement-a (MI/GTM konflikt ranije lažno naduvavao bounce), ne stvarna promena ponašanja. Nema alarmantnih stranica po bounce-u na visokom saobraćaju (`/kontakt/` 6,7%, `/industrijski-podovi/` 18,6%, homepage 20,9%); jedino niskoprometne stranice (`/pop-tenis/`, parket-guide) imaju visok bounce ali premali uzorak (5-12 sesija) za pouzdan signal.
+- 📊 **Ads**: kumulativ plaćenih konverzija od 2026-06-01 = 10 (prag za Maximize Conversions je 20-30) → ostaje se na Maximize Clicks. ECOTILE CPC pao 73,9→51,8 RSD uz bolji CTR, throttling nije prisutan.
+- 📊 **GSC top prilika (28d, poz. 5-15)**: "epoksidni podovi cena po m2" (210 impr, 0% CTR) i "epoksi podovi"/"epoxy podovi" varijante — visok volumen, nula klikova unatoč dobroj poziciji; conquest članak (`/epoksidni-podovi-ili-ecotile-podovi/`) verovatno ne hvata price-intent frazu u title/meta. "industrijski podovi" (199 impr, poz 10,8, CTR 1,5%) — money-keyword na str. 2, vezano za blokirani WPBakery insert na post ID 4937 (6 blokova čeka, poznat JS bug).
+- 📊 **GMB**: impresije prepolovljene WoW (62→30), samo 6 recenzija ukupno (prosek 4,7), 0 novih ove nedelje — nema plaćenog troška, signal slab, prilika za brz win (traženje recenzija od skorašnjih lidova).
+- **Akcija nedelje predložena**: proveri GTM Preview na `/hvala-za-poruku/` (moguće duplo okidanje `generate_lead`) + pokreni traženje recenzija za GMB.
+- Izveštaj ostao u chat-u (nije eksportovan kao poseban fajl); nije menjano ništa u GTM-u/Ads-u ove sesije — samo analiza preko Windsor.ai (read-only).
+
 ## 2026-07-07 [claude-code] [W1 — DIZAJN FIX] — Desktop razmaci/font + sistemski bug dijagonalnih CTA sekcija ✅
 - ✅ **Desktop spacing/font** (Miroslav: "previše prazno, font u hederu prevelik"): u `antas-design.css` —
   - `--al-gap` (vertikalni ritam sekcija): `clamp(56px, 9vw, 140px)` → `clamp(56px, 5vw, 72px)` (desktop max −49%, mobile min 56px nepromenjen)
