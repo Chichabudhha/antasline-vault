@@ -1,6 +1,6 @@
 # Dnevnik napretka — Antasline SEO
 
-## 2026-07-07 [claude-code] [W1 + C1 SPOT] — N1 silo sekvenca zatvoren + C1 ključne stranice verifikovane ✅
+## 2026-07-07 [claude-code] [W1 + C1 BRZI COMBO] — N1 silo zatvoren + C1 verifikacija + /hvala-za-poruku/ kreirana ✅
 - ✅ **N1 silo sekvenca 1.1 zatvoren**: sve 4 stranice iz plana su gotove/ažurirane
   - `/spoljne-podne-obloge/` (ID 16590 — bez j, Bergo za terase) — kreirano 2026-07-07
   - `/podloge-za-parkiraliste-i-staze/` (ID 16589 — parking + staze) — kreirano 2026-07-07
@@ -13,7 +13,15 @@
   - `/sportska-igralista/` (ID 15973) — 200, publish
   - `/zamena-parketa-u-sportskim-salama/` (ID 15965) — 200, publish
   - `/podloge-za-krovove-i-terase/` (ID 15971) — 200, publish
-- ⏳ **C1 ostatak**: CSV redirect mapa nije brzo dostupna (prethodno u scratchpad, nije u backups); trebalo bi pronađi ili kreiraj `antasline-redirect-mapa-POPUNJENA.csv` sa 20 PROVERI redova + verifikacija 15+ stranica
+- ✅ **C1 verifikacija — UKUPNO (live vs lokal)**:
+  - **Live stranice**: 80 (pages + posts + products)
+  - **Lokalne stranice**: 98 (nova + rebuilds)
+  - **Verifikovane (match live+lokal)**: 25 stranica — spremne za parity
+  - **Nedostaje na lokalu (PROVERI)**: 38 stranica — trebalo importovati ili 301 redirect
+  - **CSV redirect mapa** — kreirama: `antasline-redirect-mapa-2026-07-07.csv` (38 PROVERI redova + 3 GOTOVO)
+- 🔴 **KRITIČNA PRONALAZKA**: `/hvala-za-poruku/` (thank you page za forme) **NEDOSTAJALA** — kreirama odmah (ID 16600). To je KEY page za `generate_lead` GA4 event tracking!
+- 📋 **Prioriteti za C1 ostatak (W1 1.2)**: padel-tereni, kosarkaske-konstrukcije, garaze-i-autoservisi (sport/vertikala silo) + antistatik (industrijski) + 20+ proizvoda + legal stranice
+- 🔧 **Lesson**: Live `/aktuelnosti/` → trebalo `/blog/` na lokalu (slug rename); `/spoljnje-podne-obloge/` (live sa j) → `/spoljne-podne-obloge/` (lokal bez j) — 301 redirect
 - 🔧 **Lesson**: `/podloge-za-parking/` i `/podloge-za-parkiraliste-i-staze/` — dve različite stranice na lokalu (ID 15580 vs 16589), ali live samo ima `/podloge-za-parkiraliste-i-staze/`; parity odluka: ID 15580 može biti placeholder ili draft, ili se izbriše pre migracije
 - Backup-ovi: `antasline_local_2026-07-07_pre-parking-rebuild.sql` (90 MB); prethodni iz iste sesije: `antasline_local_2026-07-07_pre-kontakt-fix.sql`, `antasline_local_2026-07-07_pre-onama-kontakt-upgrade.sql`, `antasline_local_2026-07-07_pre-spoljne-podne-obloge.sql`, `antasline_local_2026-07-07_pre-podloge-za-parking.sql`
 

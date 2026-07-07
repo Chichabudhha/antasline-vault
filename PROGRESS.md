@@ -62,7 +62,7 @@
 - ✅ ~~Negativne KW liste~~ — rešeno 2026-07-06
 - ✅ ~~GA4 publike~~ — rešeno 2026-07-06 (Parking & Košarkaški)
 - ✅ ~~GMB ažuriranje~~ — rešeno 2026-07-06 (UTM + kategorije + post; review link čeka na poslove)
-- C1 Redirect mapa — ručna verifikacija (20 PROVERI redova) ide paralelno
+- ✅ **C1 verifikacija spot** — 2026-07-07: Live 80 stranica vs lokal 98; pronađeno 38 nedostajućih (PROVERI redovi), 25 verifikovanih; CSV `antasline-redirect-mapa-2026-07-07.csv` kreirama. 🔴 Kritična stranica `/hvala-za-poruku/` dodana (ID 16600)
 
 ## Napomene
 
