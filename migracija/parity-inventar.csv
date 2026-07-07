@@ -3,15 +3,15 @@ https://www.antasline.com/aktuelnosti/;post-archive;aktuelnosti;;;ARHIVA-STRANIC
 https://www.antasline.com/podloga-za-teniske-terene/;post;podloga-za-teniske-terene;2699;podloga-za-teniske-terene;PARITY;654;;
 https://www.antasline.com/montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi/;post;montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi;3398;montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi;PARITY;69;;
 https://www.antasline.com/pvc-podne-ploce-ili-gumeni-podovi/;post;pvc-podne-ploce-ili-gumeni-podovi;2641;pvc-podne-ploce-ili-gumeni-podovi;PARITY;221;;
-https://www.antasline.com/izbor-industrijskog-poda-tri-najcesca-pitanja/;post;izbor-industrijskog-poda-tri-najcesca-pitanja;2622;izbor-industrijskog-poda-tri-najcesca-pitanja;PARITY;28;;
+https://www.antasline.com/izbor-industrijskog-poda-tri-najcesca-pitanja/;post;izbor-industrijskog-poda-tri-najcesca-pitanja;2622;izbor-industrijskog-poda-tri-najcesca-pitanja;PARITY;28;"M odluka 2026-07-07: ostavi kao zaseban članak za sada, konsolidacija sa -2 verzijom je W2 content posao, ne F4 redirect.";
 https://www.antasline.com/podovi-za-stamparije/;post;podovi-za-stamparije;3388;podovi-za-stamparije;PARITY;1;;
 https://www.antasline.com/instalacija-i-ugradnja-esd-poda-istrazivacki-centar-quectel-beograd/;post;instalacija-i-ugradnja-esd-poda-istrazivacki-centar-quectel-beograd;15968;instalacija-i-ugradnja-esd-poda-istrazivacki-centar-quectel-beograd;PARITY;15;;
 https://www.antasline.com/zamena-parketa-u-sportskim-salama/;post;zamena-parketa-u-sportskim-salama;15965;zamena-parketa-u-sportskim-salama;PARITY;34;;
-https://www.antasline.com/na-kojoj-podlozi-se-igraju-turniri-u-3x3/;post;na-kojoj-podlozi-se-igraju-turniri-u-3x3;;;NEDOSTAJE-LOKAL;34;;
+https://www.antasline.com/na-kojoj-podlozi-se-igraju-turniri-u-3x3/;post;na-kojoj-podlozi-se-igraju-turniri-u-3x3;4813;bergo-ultimate-i-ultimate-plus-nova-generacija-sportskih-podova;301-KANDIDAT;34;"301 u redirect-mapa-FINAL.csv -> /bergo-ultimate-i-ultimate-plus-nova-generacija-sportskih-podova/";"F3 OTKRIVENO: stari live slug, ali stvarni <title> je 'Bergo ultimate i ultimate plus - Nova generacija sportskih podova' - IDENTIČAN naslov kao lokalni LOKAL-NOVO post 4813. WP_Import ga je ispravno preskočio (post_exists title-match). F4: 301 sa ovog live URL-a na lokalni /bergo-ultimate-i-ultimate-plus-nova-generacija-sportskih-podova/"
 https://www.antasline.com/zasto-vam-je-potreban-esd-pod/;post;zasto-vam-je-potreban-esd-pod;3318;zasto-vam-je-potreban-esd-pod;PARITY;44;;
 https://www.antasline.com/teren-za-basket-3x3/;post;teren-za-basket-3x3;15969;teren-za-basket-3x3;PARITY;301;;
-https://www.antasline.com/izbor-industrijskog-poda-tri-najcesca-pitanja-2/;post;izbor-industrijskog-poda-tri-najcesca-pitanja-2;3274;izbor-industrijskog-poda-tri-najcesca-pitanja-2;PARITY;2;;
-https://www.antasline.com/ugradnje-industrijskog-poda/;post;ugradnje-industrijskog-poda;;;NEDOSTAJE-LOKAL;8;;
+https://www.antasline.com/izbor-industrijskog-poda-tri-najcesca-pitanja-2/;post;izbor-industrijskog-poda-tri-najcesca-pitanja-2;3274;izbor-industrijskog-poda-tri-najcesca-pitanja-2;PARITY;2;"M odluka 2026-07-07: ostavi kao zaseban članak za sada, konsolidacija sa osnovnom verzijom je W2 content posao, ne F4 redirect.";
+https://www.antasline.com/ugradnje-industrijskog-poda/;post;ugradnje-industrijskog-poda;3257;ugradnje-industrijskog-poda;PARITY;8;;"RESYNC F5: sada PARITY (uvezeno/preimenovano u F2/F3)."
 https://www.antasline.com/podovi-za-detailing-radionice-i-servise/;post;podovi-za-detailing-radionice-i-servise;15975;podovi-za-detailing-radionice-i-servise;PARITY;153;;
 https://www.antasline.com/koji-pod-postaviti-u-garazu/;post;koji-pod-postaviti-u-garazu;15964;koji-pod-postaviti-u-garazu;PARITY;241;;
 https://www.antasline.com/sportska-igralista/;post;sportska-igralista;15973;sportska-igralista;PARITY;27;;
@@ -22,30 +22,30 @@ https://www.antasline.com/kako-napraviti-teren-za-basket-ili-kosarkaski-teren/;p
 https://www.antasline.com/sta-postaviti-preko-starog-parketa-ili-plocica-2/;post;sta-postaviti-preko-starog-parketa-ili-plocica-2;15977;sta-postaviti-preko-starog-parketa-ili-plocica-2;PARITY;213;;
 https://www.antasline.com/pop-tenis/;post;pop-tenis;15966;pop-tenis;PARITY;202;;
 https://www.antasline.com/teren-za-pickleball/;post;teren-za-pickleball;15976;teren-za-pickleball;PARITY;60;;
-https://www.antasline.com/esd-podovi-prica-kupca/;post;esd-podovi-prica-kupca;;;NEDOSTAJE-LOKAL;;;
-https://www.antasline.com/prednosti-r-tile-design-podova-u-supermarketima-u-odnosu-na-klasicne-plocice/;post;prednosti-r-tile-design-podova-u-supermarketima-u-odnosu-na-klasicne-plocice;;;NEDOSTAJE-LOKAL;1;;
+https://www.antasline.com/esd-podovi-prica-kupca/;post;esd-podovi-prica-kupca;6874;esd-podovi-prica-kupca;PARITY;;;"RESYNC F5: sada PARITY (uvezeno/preimenovano u F2/F3)."
+https://www.antasline.com/prednosti-r-tile-design-podova-u-supermarketima-u-odnosu-na-klasicne-plocice/;post;prednosti-r-tile-design-podova-u-supermarketima-u-odnosu-na-klasicne-plocice;6824;prednosti-r-tile-design-podova-u-supermarketima-u-odnosu-na-klasicne-plocice;PARITY;1;;"RESYNC F5: sada PARITY (uvezeno/preimenovano u F2/F3)."
 https://www.antasline.com/sta-postaviti-preko-starog-parketa-ili-plocica/;post;sta-postaviti-preko-starog-parketa-ili-plocica;15967;sta-postaviti-preko-starog-parketa-ili-plocica;PARITY;214;;
 https://www.antasline.com/epoksidni-podovi-ili-ecotile-podovi/;post;epoksidni-podovi-ili-ecotile-podovi;2542;epoksidni-podovi-ili-ecotile-podovi;PARITY;201;;
 https://www.antasline.com/osteceni-industrijski-pod/;post;osteceni-industrijski-pod;15963;osteceni-industrijski-pod;PARITY;15;;
 https://www.antasline.com/modularni-industrijski-podovi/;post;modularni-industrijski-podovi;15972;modularni-industrijski-podovi;PARITY;40;;
 https://www.antasline.com/podovi-za-radionice/;post;podovi-za-radionice;15974;podovi-za-radionice;PARITY;225;;
-https://www.antasline.com/podloga-za-odbojkaske-terene/;post;podloga-za-odbojkaske-terene;;;NEDOSTAJE-LOKAL;139;;
+https://www.antasline.com/podloga-za-odbojkaske-terene/;post;podloga-za-odbojkaske-terene;4318;podloga-za-odbojkaske-terene;PARITY;139;;"RESYNC F5: sada PARITY (uvezeno/preimenovano u F2/F3)."
 https://www.antasline.com/;page;;16600;hvala-za-poruku;PARITY;1040;;
 https://www.antasline.com/moj-nalog/;page;moj-nalog;;;NEDOSTAJE-LOKAL;;;
 https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore/;page;vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore;;;NEDOSTAJE-LOKAL;;;
 https://www.antasline.com/industrijski-podovi/podovi-za-maloprodajne-objekte/;page;podovi-za-maloprodajne-objekte;;;NEDOSTAJE-LOKAL;6;;
-https://www.antasline.com/spoljnje-podne-obloge/bergo-elite/;page;bergo-elite;;;NEDOSTAJE-LOKAL;33;;
+https://www.antasline.com/spoljnje-podne-obloge/bergo-elite/;page;bergo-elite;;;NEDOSTAJE-LOKAL;33;"M potvrdio 2026-07-07: I DALJE deo ponude, NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";
 https://www.antasline.com/vestacka-trava/;page;vestacka-trava;5455;vestacka-trava;PARITY;1538;;
-https://www.antasline.com/podovi-za-stale/;page;podovi-za-stale;;;NEDOSTAJE-LOKAL;402;;"F4: lokal ima ""gumeni-podovi-za-stale"" (drugi slug) - proveriti da li je isti sadržaj ili treba oba"
+https://www.antasline.com/podovi-za-stale/;page;podovi-za-stale;5791;podovi-za-stale;PARITY;402;"PARITY IZVRŠEN 2026-07-07: lokal preimenovan sa gumeni-podovi-za-stale na podovi-za-stale.";"F4: lokal ima ""gumeni-podovi-za-stale"" (drugi slug) - proveriti da li je isti sadržaj ili treba oba"
 https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-objectflor/;page;vinil-podovi-objectflor;;;NEDOSTAJE-LOKAL;150;;
-https://www.antasline.com/spoljnje-podne-obloge/bergo-xl/;page;bergo-xl;;;NEDOSTAJE-LOKAL;978;;
+https://www.antasline.com/spoljnje-podne-obloge/bergo-xl/;page;bergo-xl;;;NEDOSTAJE-LOKAL;978;"M potvrdio 2026-07-07: I DALJE deo ponude (978 klika!), NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";
 https://www.antasline.com/industrijski-podovi/ecotile-5005-podne-ploce/;page;ecotile-5005-podne-ploce;;;NEDOSTAJE-LOKAL;31;;
 https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/;page;vinil-podovi;;;NEDOSTAJE-LOKAL;7;;
 https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/;page;lvt-podovi-za-komercijalne-i-javne-prostore;;;NEDOSTAJE-LOKAL;144;;
 https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/expona-click/;page;expona-click;;;NEDOSTAJE-LOKAL;12;;
 https://www.antasline.com/industrijski-podovi/podovi-za-magacine-i-hale/;page;podovi-za-magacine-i-hale;;;NEDOSTAJE-LOKAL;;;
 https://www.antasline.com/industrijski-podovi/elektroprovodni-podovi/;page;elektroprovodni-podovi;;;NEDOSTAJE-LOKAL;;;
-https://www.antasline.com/sportski-podovi-za-sale-i-balone/;page;sportski-podovi-za-sale-i-balone;;;NEDOSTAJE-LOKAL;378;;
+https://www.antasline.com/sportski-podovi-za-sale-i-balone/;page;sportski-podovi-za-sale-i-balone;;;NEDOSTAJE-LOKAL;378;"F4: lokalni draft ""sportski-podovi-za-skole-i-sportske-sale"" (pogrešan post_type+slug) obrisan. F5 rebuild kao PAGE pod live slugom. Privremeni red u redirect-mapa-FINAL.csv čeka F5.";
 https://www.antasline.com/industrijski-podovi-montaza-preko-ostecenog-epoksida/;page;industrijski-podovi-montaza-preko-ostecenog-epoksida;;;NEDOSTAJE-LOKAL;72;;
 https://www.antasline.com/sportske-podloge/sportska-podloga-za-pickleball/;page;sportska-podloga-za-pickleball;;;NEDOSTAJE-LOKAL;41;;
 https://www.antasline.com/industrijski-podovi/bumperi-zastita-za-police-regale-i-zidove/;page;bumperi-zastita-za-police-regale-i-zidove;;;NEDOSTAJE-LOKAL;113;;
@@ -53,10 +53,10 @@ https://www.antasline.com/iznajmljivanje-podova/;page;iznajmljivanje-podova;;;NE
 https://www.antasline.com/katalog/;page;katalog;;;NEDOSTAJE-LOKAL;28;;
 https://www.antasline.com/ergonomske-podloge-2/;page;ergonomske-podloge-2;;;NEDOSTAJE-LOKAL;110;;
 https://www.antasline.com/zastitne-podloge-za-travu-i-plocnike/;page;zastitne-podloge-za-travu-i-plocnike;15793;zastitne-podloge-za-travu-i-plocnike;PARITY;207;;
-https://www.antasline.com/sportske-podloge/kosarkaske-konstrukcije/;page;kosarkaske-konstrukcije;;;NEDOSTAJE-LOKAL;923;;"🔴 PRIORITET F5: 923 klika/12mes (veće od ranije dokumentovanih 478) - prava landing, NE 301 na shop kategoriju"
+https://www.antasline.com/sportske-podloge/kosarkaske-konstrukcije/;page;kosarkaske-konstrukcije;;;NEDOSTAJE-LOKAL;923;"F4/F5 PRIORITET #1 (923 klika). Privremeni red u redirect-mapa-FINAL.csv čeka F5 pravu landing stranicu (NE 301 na shop kategoriju).";"🔴 PRIORITET F5: 923 klika/12mes (veće od ranije dokumentovanih 478) - prava landing, NE 301 na shop kategoriju"
 https://www.antasline.com/o-nama/;page;o-nama;571;o-nama;PARITY;26;;
 https://www.antasline.com/industrijski-podovi/podne-ploce-ecotile-50010/;page;podne-ploce-ecotile-50010;;;NEDOSTAJE-LOKAL;56;;
-https://www.antasline.com/sportske-podloge/padel-tereni/;page;padel-tereni;;;NEDOSTAJE-LOKAL;119;;
+https://www.antasline.com/sportske-podloge/padel-tereni/;page;padel-tereni;;;NEDOSTAJE-LOKAL;119;"F4: lokalni draft ""padel-tenis"" (pogrešan post_type) obrisan. F5 rebuild kao PAGE pod live slugom padel-tereni. Privremeni red u redirect-mapa-FINAL.csv čeka F5.";
 https://www.antasline.com/sportske-podloge/opremazasportsketerene/reflektori-za-sportske-terene/;page;reflektori-za-sportske-terene;;;NEDOSTAJE-LOKAL;71;;
 https://www.antasline.com/kontakt/;page;kontakt;61;kontakt;PARITY;49;;
 https://www.antasline.com/industrijski-podovi/trake-za-obelezavanje/;page;trake-za-obelezavanje;;;NEDOSTAJE-LOKAL;153;;
@@ -65,13 +65,13 @@ https://www.antasline.com/industrijski-podovi-najcesca-pitanja/;page;industrijsk
 https://www.antasline.com/industrijski-podovi/garaze-i-autoservisi/;page;garaze-i-autoservisi;;;NEDOSTAJE-LOKAL;229;;
 https://www.antasline.com/spoljnje-podne-obloge/podovi-za-bazene/;page;podovi-za-bazene;;;NEDOSTAJE-LOKAL;262;;
 https://www.antasline.com/spoljnje-podne-obloge/vestacka-trava-za-terase/;page;vestacka-trava-za-terase;;;NEDOSTAJE-LOKAL;104;;
-https://www.antasline.com/spoljnje-podne-obloge/bergo-easy/;page;bergo-easy;;;NEDOSTAJE-LOKAL;166;;
+https://www.antasline.com/spoljnje-podne-obloge/bergo-easy/;page;bergo-easy;;;NEDOSTAJE-LOKAL;166;"M potvrdio 2026-07-07: I DALJE deo ponude, NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";
 https://www.antasline.com/privremene-podloge-isotrack/;page;privremene-podloge-isotrack;;;NEDOSTAJE-LOKAL;16;;
 https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/;page;kancelarije-i-poslovni-prostori;;;NEDOSTAJE-LOKAL;128;;
 https://www.antasline.com/podloge-za-parkiraliste-i-staze/;page;podloge-za-parkiraliste-i-staze;16589;podloge-za-parkiraliste-i-staze;PARITY;2250;;
 https://www.antasline.com/sportske-podloge/opremazasportsketerene/;page;opremazasportsketerene;;;NEDOSTAJE-LOKAL;48;;
-https://www.antasline.com/spoljnje-podne-obloge/;page;spoljnje-podne-obloge;;;NEDOSTAJE-LOKAL;1304;;"F4 GRANIČNI SLUČAJ: 1304 klika (visok saobraćaj, blizu top15) - lokal ima ""spoljne"" (bez j) - hibrid pravilo poziva na parity (vratiti j)"
-https://www.antasline.com/spoljnje-podne-obloge/bergo-unique/;page;bergo-unique;;;NEDOSTAJE-LOKAL;53;;
+https://www.antasline.com/spoljnje-podne-obloge/;page;spoljnje-podne-obloge;16590;spoljnje-podne-obloge;PARITY;1304;"PARITY IZVRŠEN 2026-07-07: lokal preimenovan na spoljnje-podne-obloge (vraćeno ""j""). Stara stranica 5255 -> draft.";"F4 GRANIČNI SLUČAJ: 1304 klika (visok saobraćaj, blizu top15) - lokal ima ""spoljne"" (bez j) - hibrid pravilo poziva na parity (vratiti j)"
+https://www.antasline.com/spoljnje-podne-obloge/bergo-unique/;page;bergo-unique;;;NEDOSTAJE-LOKAL;53;"M potvrdio 2026-07-07: I DALJE deo ponude, NE konsoliduje se u bergo-ultimate. Ide u F5 W1 red za rebuild kao zasebna landing.";
 https://www.antasline.com/galerija/;page;galerija;;;NEDOSTAJE-LOKAL;88;;
 https://www.antasline.com/politika-kolacica/;page;politika-kolacica;;;NEDOSTAJE-LOKAL;;;
 https://www.antasline.com/antistatik-i-elektroprovodljivi-podovi/;page;antistatik-i-elektroprovodljivi-podovi;;;NEDOSTAJE-LOKAL;1131;;"F5 PRIORITET: 1131 klika - ESD silo stranica, visok B2B značaj"
@@ -82,10 +82,10 @@ https://www.antasline.com/katalog/;shop-archive;katalog;;;ARHIVA-STRANICA;28;;"W
 https://www.antasline.com/proizvod/microshot-125-pokretna-kosarkaska-konstrukcija/;product;microshot-125-pokretna-kosarkaska-konstrukcija;16548;microshot-125-pokretna-kosarkaska-konstrukcija;PARITY;;;
 https://www.antasline.com/proizvod/kosarkaski-kos-na-kolicima-street-sport/;product;kosarkaski-kos-na-kolicima-street-sport;16532;kosarkaski-kos-na-kolicima-street-sport;PARITY;50;;
 https://www.antasline.com/proizvod/zglobni-obruc-za-kos/;product;zglobni-obruc-za-kos;16536;zglobni-obruc-za-kos;PARITY;33;;
-https://www.antasline.com/proizvod/lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija/;product;lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija;16544;lite-shot-325-profesionalna-pokretna-kosarkaska-konstrukcija;301-KANDIDAT;3;;"F2 REŠENO: ISTI proizvod kao lokalni lite-shot-325 (naslov/težina 700kg/domet 325cm identični na live stranici; '795' je stari nepovezan interni kod). NE preimenovan (nizak saobraćaj + lokalni slug tačniji). F4: 301 stari live URL → /proizvod/lite-shot-325-.../"
+https://www.antasline.com/proizvod/lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija/;product;lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija;16544;lite-shot-325-profesionalna-pokretna-kosarkaska-konstrukcija;301-KANDIDAT;3;"301 u redirect-mapa-FINAL.csv -> /proizvod/lite-shot-325-.../";"F2 REŠENO: ISTI proizvod kao lokalni lite-shot-325 (naslov/težina 700kg/domet 325cm identični na live stranici; '795' je stari nepovezan interni kod). NE preimenovan (nizak saobraćaj + lokalni slug tačniji). F4: 301 stari live URL → /proizvod/lite-shot-325-.../"
 https://www.antasline.com/proizvod/mini-shot-225-profesionalna-pokretna-kosarkaska-konstrukcija/;product;mini-shot-225-profesionalna-pokretna-kosarkaska-konstrukcija;16546;mini-shot-225-profesionalna-pokretna-kosarkaska-konstrukcija;PARITY;;;
 https://www.antasline.com/proizvod/ecotile-7-mm-esd-floor-tiles-industrijsko-esd-podno-resenje/;product;ecotile-7-mm-esd-floor-tiles-industrijsko-esd-podno-resenje;16542;ecotile-7-mm-esd-floor-tiles-industrijsko-esd-podno-resenje;PARITY;;;
-https://www.antasline.com/proizvod/ecotile-e500-10-ultra-heavy-duty-interlocking-podna-ploca/;product;ecotile-e500-10-ultra-heavy-duty-interlocking-podna-ploca;;;NEDOSTAJE-LOKAL;5;;
+https://www.antasline.com/proizvod/ecotile-e500-10-ultra-heavy-duty-interlocking-podna-ploca/;product;ecotile-e500-10-ultra-heavy-duty-interlocking-podna-ploca;16540;ecotile-e500-10-ultra-heavy-duty-interlocking-podna-ploca;PARITY;5;;"RESYNC F5: sada PARITY (uvezeno/preimenovano u F2/F3)."
 https://www.antasline.com/proizvod/ecotile-e500-7-industrijska-interlocking-ploca-500x500-mm/;product;ecotile-e500-7-industrijska-interlocking-ploca-500x500-mm;16538;ecotile-e500-7-industrijska-interlocking-ploca-500x500-mm;PARITY;35;;
 https://www.antasline.com/proizvod/bergo-unique/;product;bergo-unique;16534;bergo-unique;PARITY;2;;
 https://www.antasline.com/proizvod/polukruzni-zastitnik-za-cevi/;product;polukruzni-zastitnik-za-cevi;16478;polukruzni-zastitnik-za-cevi;PARITY;5;;
@@ -94,7 +94,7 @@ https://www.antasline.com/proizvod/senzor-pokreta-sa-upozoravajucim-svetlom-za-i
 https://www.antasline.com/proizvod/bezicni-led-signalni-senzor-za-pesake-dvostrani/;product;bezicni-led-signalni-senzor-za-pesake-dvostrani;16526;bezicni-led-signalni-senzor-za-pesake-dvostrani;PARITY;7;;
 https://www.antasline.com/proizvod/durastripe-cold-storage-roll-50-mm-x-30-m-ergomat/;product;durastripe-cold-storage-roll-50-mm-x-30-m-ergomat;16524;durastripe-cold-storage-roll-50-mm-x-30-m-ergomat;PARITY;;;
 https://www.antasline.com/proizvod/durastripe-mean-lean-roll-50-mm-x-30-m-ergomat/;product;durastripe-mean-lean-roll-50-mm-x-30-m-ergomat;16522;durastripe-mean-lean-roll-50-mm-x-30-m-ergomat;PARITY;0;;
-https://www.antasline.com/proizvod/durastripe-supreme-v-roll-50-mm-x-30-m-ergomat/;product;durastripe-supreme-v-roll-50-mm-x-30-m-ergomat;;;NEDOSTAJE-LOKAL;4;;
+https://www.antasline.com/proizvod/durastripe-supreme-v-roll-50-mm-x-30-m-ergomat/;product;durastripe-supreme-v-roll-50-mm-x-30-m-ergomat;16520;durastripe-supreme-v-roll-50-mm-x-30-m-ergomat;PARITY;4;;"RESYNC F5: sada PARITY (uvezeno/preimenovano u F2/F3)."
 https://www.antasline.com/proizvod/durastripe-xtreme-roll-50-mm-x-30-m-ergomat/;product;durastripe-xtreme-roll-50-mm-x-30-m-ergomat;16518;durastripe-xtreme-roll-50-mm-x-30-m-ergomat;PARITY;1;;
 https://www.antasline.com/proizvod/durastripe-edge-protector-4x48-cm-ergomat/;product;durastripe-edge-protector-4x48-cm-ergomat;16516;durastripe-edge-protector-4x48-cm-ergomat;PARITY;;;
 https://www.antasline.com/proizvod/durastripe-edge-protector-10x48-cm-ergomat/;product;durastripe-edge-protector-10x48-cm-ergomat;16514;durastripe-edge-protector-10x48-cm-ergomat;PARITY;0;;
@@ -131,7 +131,7 @@ https://www.antasline.com/kategorija-proizvoda/oprema-za-sportske-terene/;produc
 https://www.antasline.com/kategorija-proizvoda/podloge-za-baste/;product_cat;podloge-za-baste;253;podloge-za-baste;PARITY;0;;
 https://www.antasline.com/kategorija-proizvoda/podloge-za-stale-i-trave/;product_cat;podloge-za-stale-i-trave;250;podloge-za-stale-i-trave;PARITY;0;;
 https://www.antasline.com/kategorija-proizvoda/industrijska-zastita/podno-obelezavanje/;product_cat;podno-obelezavanje;248;podno-obelezavanje;PARITY;4;;
-https://www.antasline.com/kategorija-proizvoda/sigurnosni-senzori-signalni-sistemi/;product_cat;sigurnosni-senzori-signalni-sistemi;;;NEDOSTAJE-LOKAL;;;"F4: lokalni term slug je ""sigurnosni-senzori-i-signalni-sistemi"" (sa ""i"") - slug varijanta, ne pravo NEDOSTAJE-LOKAL"
+https://www.antasline.com/kategorija-proizvoda/sigurnosni-senzori-signalni-sistemi/;product_cat;sigurnosni-senzori-signalni-sistemi;;sigurnosni-senzori-i-signalni-sistemi;301-KANDIDAT;;"301 u redirect-mapa-FINAL.csv: zadržan lokalni slug (sa ""i""), M potvrdio.";"F4: lokalni term slug je ""sigurnosni-senzori-i-signalni-sistemi"" (sa ""i"") - slug varijanta, ne pravo NEDOSTAJE-LOKAL"
 https://www.antasline.com/kategorija-proizvoda/zastita-cevi-i-kablova/;product_cat;zastita-cevi-i-kablova;247;zastita-cevi-i-kablova;PARITY;13;;
 https://www.antasline.com/kategorija-proizvoda/zastita-i-bumperi/;product_cat;zastita-i-bumperi;245;zastita-i-bumperi;PARITY;1;;
 https://www.antasline.com/oznaka-proizvoda/bergo/;product_tag;bergo;;;NEDOSTAJE-LOKAL;1;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
@@ -142,13 +142,13 @@ https://www.antasline.com/oznaka-proizvoda/konusni-stitnik/;product_tag;konusni-
 https://www.antasline.com/oznaka-proizvoda/samolepljiva-zastita/;product_tag;samolepljiva-zastita;;;NEDOSTAJE-LOKAL;0;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
 https://www.antasline.com/oznaka-proizvoda/zastita-kablova/;product_tag;zastita-kablova;;;NEDOSTAJE-LOKAL;2;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
 https://www.antasline.com/oznaka-proizvoda/zastitnik-cevi/;product_tag;zastitnik-cevi;;;NEDOSTAJE-LOKAL;0;;"F6: nijedan od 8 live product_tag termina ne postoji lokalno - razmotriti rekreiranje pri obogaćivanju proizvoda (F7), odvojeno od ""namena"" taga"
-;post;;4813;bergo-ultimate-i-ultimate-plus-nova-generacija-sportskih-podova;LOKAL-NOVO;;;"lokalni post bez live parnjaka"
+;post;;4813;bergo-ultimate-i-ultimate-plus-nova-generacija-sportskih-podova;301-KANDIDAT;;;"F3 REŠENO: odgovara live URL-u /na-kojoj-podlozi-se-igraju-turniri-u-3x3/ (isti naslov/sadržaj, videti red iznad) - NIJE zapravo LOKAL-NOVO"
 ;post;;4318;sportska-podloga-za-odbojku;LOKAL-NOVO;;;"lokalni post bez live parnjaka"
-;post;;3973;padel-tenis;LOKAL-NOVO;;;"lokalni post bez live parnjaka"
-;post;;3621;sportski-podovi-za-skole-i-sportske-sale;LOKAL-NOVO;;;"lokalni post bez live parnjaka"
+;post;;3973;padel-tenis;LOKAL-NOVO;;"F4: OBRISAN (odluka M) - pogrešan post_type (post umesto page), F5 rebuild pod live slugom padel-tereni.";"lokalni post bez live parnjaka"
+;post;;3621;sportski-podovi-za-skole-i-sportske-sale;LOKAL-NOVO;;"F4: OBRISAN (odluka M) - pogrešan post_type+slug, F5 rebuild pod live slugom sportski-podovi-za-sale-i-balone.";"lokalni post bez live parnjaka"
 ;post;;3378;podovi-za-garaze;LOKAL-NOVO;;;"lokalni post bez live parnjaka"
-;post;;3327;kako-izabrati-pravi-industrijski-pod-koji-odgovara-vasim-poterbama;LOKAL-NOVO;;;"lokalni post bez live parnjaka"
-;post;;15962;izbor-industrijskog-poda-tri-najcesca-pitanja-2-2;LOKAL-NOVO;;;"lokalni post bez live parnjaka"
+;post;;3327;kako-izabrati-pravi-industrijski-pod-koji-odgovara-vasim-poterbama;LOKAL-NOVO;;"F4: OBRISAN (odluka M) - typo u slugu, nema live parnjaka, suvišan draft.";"lokalni post bez live parnjaka"
+;post;;15962;izbor-industrijskog-poda-tri-najcesca-pitanja-2-2;LOKAL-NOVO;;"F3: OBRISAN (duplikat treće verzije, konsolidacija). Red je istorijski, post više ne postoji.";"lokalni post bez live parnjaka"
 ;page;;16590;spoljne-podne-obloge-2;LOKAL-NOVO;;;"lokalni page bez live parnjaka"
 ;page;;16586;dimenzije-kosarkaskog-terena;LOKAL-NOVO;;;"lokalni page bez live parnjaka"
 ;page;;16585;dimenzije-kosarkaske-table;LOKAL-NOVO;;;"lokalni page bez live parnjaka"

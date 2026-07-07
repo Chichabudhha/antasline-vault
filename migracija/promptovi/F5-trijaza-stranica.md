@@ -17,11 +17,13 @@ sortiranu po GSC klikovima. Strategija: [[migracija/PARITY-PLAN]].
 
 | Kategorija | Šta se radi | Poznati kandidati (2026-07-07) |
 |---|---|---|
-| **A — REBUILD** (W1 1.2 lista) | puna WoodMart stranica po [[migracija/woodmart-sabloni]], content parity iz `migracija/live-export-2026-07-05/live-pages-2026-07-05.xml` + live inventar CSV (Yoast mete!) | `kosarkaske-konstrukcije` (478 kl. 🔴), `antistatik-i-elektroprovodljivi-podovi` (250 kl.), `padel-tereni`, `garaze-i-autoservisi`, `iznajmljivanje-podova` (79 kl.), `reflektori-za-sportske-terene` (51 kl.), `podovi-za-magacine-i-hale`, `kancelarije-i-poslovni-prostori`, `podovi-za-bazene`, `vinil-podovi-za-restorane-...`, `sportski-podovi-za-sale-i-balone`*, `podloga-za-odbojkaske-terene`*, … (*zavisno od F4 odluka) |
-| **B — SISTEM/WOO** | postoji kroz WP/Woo funkcionalnost, ne treba page | `home`, `katalog` (shop arhiva), `moj-nalog`, `aktuelnosti` (blog arhiva — F2) |
-| **C — PROIZVOD-STRANICE** | live page čiji je sadržaj lokalno Woo proizvod → 301 u F4 mapu ili konsolidacija | `bergo-easy`, `bergo-elite`, `bergo-unique`, `bergo-xl`, `ecotile-5005-podne-ploce`, `podne-ploce-ecotile-50010`, `expona-click`, `trake-za-obelezavanje`, `vinil-podovi-objectflor` |
+| **A — REBUILD** (W1 1.2 lista) | puna WoodMart stranica po [[migracija/woodmart-sabloni]], content parity iz `migracija/live-export-2026-07-05/live-pages-2026-07-05.xml` + live inventar CSV (Yoast mete!) | `kosarkaske-konstrukcije` (🔴 923 kl., F4 potvrdio PRIORITET #1 — NE 301 na shop kategoriju, prava landing), `spoljnje-podne-obloge/bergo-xl` (978 kl.), `antistatik-i-elektroprovodljivi-podovi` (1131 kl.), `spoljnje-podne-obloge/bergo-easy` (166 kl.), `spoljnje-podne-obloge/bergo-unique` (53 kl.), `spoljnje-podne-obloge/bergo-elite` (33 kl.) — **F4 ispravka: sve 4 Bergo stranice i dalje su u ponudi, grade se kao ZASEBNE landing stranice, NE konsoliduju u bergo-ultimate**, `padel-tereni` (119 kl., kao PAGE — F3 lokalni draft post obrisan zbog pogrešnog tipa), `sportski-podovi-za-sale-i-balone` (378 kl., kao PAGE), `garaze-i-autoservisi`, `iznajmljivanje-podova` (79 kl.), `reflektori-za-sportske-terene` (51 kl.), `podovi-za-magacine-i-hale`, `kancelarije-i-poslovni-prostori`, `podovi-za-bazene`, `vinil-podovi-za-restorane-...` |
+| **B — SISTEM/WOO** | postoji kroz WP/Woo funkcionalnost, ne treba page | `home`, `katalog` (shop arhiva), `moj-nalog`, `aktuelnosti` (blog arhiva — F2 rešeno) |
+| **C — PROIZVOD-STRANICE** | live page čiji je sadržaj lokalno Woo proizvod → 301 u F4 mapu | `ecotile-5005-podne-ploce`, `podne-ploce-ecotile-50010`, `expona-click`, `trake-za-obelezavanje`, `vinil-podovi-objectflor` (bergo-* stranice PREMEŠTENE u kategoriju A, videti F4 ispravku) |
 | **D — LEGAL/UTILITY** | kreirati odmah, tanak parity sadržaj | `politika-kolacica` (obavezno pre live-a!), `galerija` (⚠️ proveri šta je na live — u staroj mapi beleška: slike falile i na live, Porto placeholderi) |
 | **E — DUPLIKATI** | 301 na glavnu verziju (F4 mapa) | `elektroprovodni-podovi` (=antistatik), `ergonomske-podloge-2`, `industrijski-pod`, `opremazasportsketerene` |
+
+> ✅ F4 zatvoren 2026-07-07: [[migracija/redirect-mapa-FINAL]] postoji sa 7 redova (3 verifikovana, 3 čekaju da ova F5 sesija izgradi ciljne stranice — posle rebuilda vrati se i potvrdi curl 200 na tim redovima).
 
 ## Koraci
 

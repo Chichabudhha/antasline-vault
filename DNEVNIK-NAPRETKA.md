@@ -1,5 +1,44 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-07 [claude-code] [W3 PARITY F4] — Minimalna redirect mapa (7 redova) ✅
+- ✅ **Backup**: `antasline_local_2026-07-07_pre-f4-redirect-mapa.sql` (47MB) pre svih izmena.
+- ✅ **Odluke sa Miroslavom** (hibrid pravilo — top-15 GSC = parity, nisko-saobraćajno sme 301):
+  - `/spoljnje-podne-obloge/` (1304 kl., top-5 sajta) → **parity**, vraćeno "j"
+  - `/podovi-za-stale/` (402 kl., top-15) → **parity**, uklonjen prefiks "gumeni-"
+  - `sigurnosni-senzori-signalni-sistemi` (nizak saobraćaj) → lokalna varijanta sa "i" OSTAJE, 301 sa live
+  - **Bergo easy/elite/unique/xl (4 live stranice, 978+166+53+33 kl.) — VAŽNA ISPRAVKA plana**: pretpostavka iz starog plana ("konsoliduj u bergo-ultimate") je bila POGREŠNA. Miroslav potvrdio: Bergo Ultimate je poseban proizvod za sportske terene, NIJE isti kao easy/elite/unique/xl (terase-varijante). Sve 4 i dalje su deo ponude → idu u **F5 W1 red kao zasebne landing stranice**, NE konsoliduju se, NE idu u redirect mapu.
+  - 3 draft posta iz F3 (pogrešan `post_type`: post umesto page) → **obrisani**, F5 rebuild kao PAGE pod live slugom: `padel-tereni`, `sportski-podovi-za-sale-i-balone`; `kako-izabrati-pravi...poterbama` (typo, bez live parnjaka) → obrisan bez zamene
+  - 2 skoro-identična `izbor-industrijskog-poda-tri-najcesca-pitanja` članka (oba sada publish lokalno) → **odloženo na W2** (content-strategija, ne redirect-mapa posao)
+- 🔴 **Nova nalazak pri izvršenju**: `/spoljnje-podne-obloge/` je imala DVE lokalne stranice — stara (ID 5255, iz 2022, staro Porto obeležje) je i dalje bila `publish` i zauzimala čist slug, dok je NOVA W1 rebuild stranica (ID 16590, napravljena 2026-07-07) automatski dobila sufiks `-2` jer je slug bio zauzet. Ispravljeno u istoj operaciji: 5255 → draft, 16590 preimenovana na `spoljnje-podne-obloge` (bez sufiksa).
+- ✅ **Izvršeno**: 2 slug rename-a (`wp_update_post` + Yoast indexable cache invalidacija po F2 lekciji + `flush_rewrite_rules(true)`), 3 drafta obrisana.
+- ✅ **`migracija/redirect-mapa-FINAL.csv`** — 7 redova (umesto starih 118): 3 odmah verifikovana (200 na cilju: na-kojoj-podlozi→bergo-ultimate, lite-shot-795→325, sigurnosni-senzori), 3 privremena čekaju F5 rebuild (kosarkaske-konstrukcije 923 kl. PRIORITET #1, padel-tereni, sportski-podovi-za-sale-i-balone) — target TBD, NE ulaze u aktivni .htaccess dok stranice ne postoje.
+- ✅ **`migracija/htaccess-301-DRAFT.txt`** generisan sa 3 verifikovana pravila + komentar-blok za 3 buduća. **NE aktiviran** (ostaje draft do dana migracije).
+- ✅ `parity-inventar.csv` ažuriran: 84→86 PARITY, 57→52 NEDOSTAJE-LOKAL, 0→5 301-KANDIDAT (matematika se poklapa, ukupno i dalje 175 redova).
+- ✅ Verifikacija: sva 3 real-target redirekta → 200 na lokalu, oba slug rename-a → 200 + ispravan canonical, regression Početna/`/industrijski-podovi/`/`/sportske-podloge/` → 200.
+- ✅ Stare redirect mape obrisane iz `C:\xampp\htdocs\antasline\` i `antasline-backups\` (POPUNJENA.csv, ZA-POPUNITI.csv, 2026-07-07.csv) — Miroslav potvrdio, arhivske kopije ostaju u `migracija/arhiva/`.
+- 📝 [[migracija/promptovi/F5-trijaza-stranica]] ažuriran sa F4 ispravkama: kosarkaske-konstrukcije 923 kl. (ne 478), bergo-easy/elite/unique/xl premešteni iz kategorije C (konsolidacija) u kategoriju A (zasebni rebuild), padel-tereni/sportski-podovi-za-sale-i-balone napomena da su PAGE tip.
+
+## 2026-07-07 [claude-code] [W3 PARITY F3] — Pun reimport 30 postova sa live ✅
+- ✅ **Backup**: `antasline_local_2026-07-07_pre-posts-reimport.sql` (46MB) pre svega.
+- ✅ **Cleanup 7 LOKAL-NOVO postova** po hibrid pravilu: `bergo-ultimate...` (4813) ZADRŽAN, 4 prebačena u draft (`kako-izabrati-pravi...poterbama` 3327, `padel-tenis` 3973, `podovi-za-garaze` 3378, `sportski-podovi-za-skole...` 3621 — čekaju F4 odluku), 2 obrisana (`izbor-...-2-2` 15962 duplikat, `sportska-podloga-za-odbojku` 4318 — live verzija je zamenjuje).
+- 🔴 **Sopstvena greška + oporavak**: prvi pokušaj cleanup-a je slučajno obrisao i `bergo-ultimate` (4813) jer "zadrži" znači i dalje `publish`, pa ga je bulk-delete upit pokupio. Otkriveno odmah (verifikacija posle svakog koraka) → pun DB restore iz backup-a → cleanup ponovljen sa eksplicitnim izuzetkom ID-a. Lekcija: kad je odluka "zadrži kao publish", eksplicitno isključi ID iz svake sledeće bulk operacije, ne oslanjaj se na to da ga "nisi dirao".
+- ✅ **WXR import** (`live-posts-2026-07-05.xml`, `fetch_attachments=true`) — 4 uzastopna pokušaja dok nije prošao čisto, svaki sledeći pokušaj idempotentan (post_exists() sprečava duplikate):
+  1. `Class "WXR_Parser" not found` → nedostajao `define('WP_LOAD_IMPORTERS', true)` pre `wp-load.php`
+  2. `Cannot redeclare wordpress_importer_init()` → definisanje `WP_LOAD_IMPORTERS` PRE `wp-load.php` uzrokuje da WP već učita plugin (jer je aktivan) — eksplicitan drugi `require` istog fajla posle je duplikat. Rešenje: definisati konstantu, samo `require wp-load.php`, NE ponovo `require`-ovati plugin fajl.
+  3. `Call to undefined function post_exists()` → nedostajao `require_once ABSPATH.'wp-admin/includes/post.php'` (+ media/image/file/taxonomy za attachment fetch)
+  4. `Call to undefined function comment_exists()` → nedostajao `require_once ABSPATH.'wp-admin/includes/comment.php'`
+  - Posle sva 4 fix-a: import prošao čisto (`result: OK`).
+- 🔴 **2 posta od 30 namerno NISU uvezena** (WP_Import `post_exists()` title-match zaštita, ne greška):
+  - `ugradnje-industrijskog-poda` — blokirao stari lokalni "pending" draft iz 2019 (`o-cemu-treba-voditi-racuna-prilikom-ugradnje-industrijskog-poda`, ID 3257) sa identičnim naslovom → obrisan stari draft, ponovljen import (idempotentno), post uspešno uvezen (zadržao ISTI ID 3257).
+  - `na-kojoj-podlozi-se-igraju-turniri-u-3x3` — live URL slug je zastareo/nasleđen ali stvarni `<title>` je "Bergo ultimate i ultimate plus - Nova generacija sportskih podova" = identičan naslovu lokalnog LOKAL-NOVO posta 4813 → ISPRAVNO preskočen (isti sadržaj već postoji lokalno pod drugim slugom). `parity-inventar.csv` ažuriran: oba reda (live URL i lokalni 4813) sada `301-KANDIDAT` sa unakrsnom napomenom za F4.
+  - **Finalna matematika**: 30 live − 1 (na-kojoj-podlozi, duplikat) + 1 (zadržan bergo-ultimate) = **30 publish postova** (ne 31 kako je prompt pretpostavio — ispravno, izbegnut je pravi duplikat sadržaja).
+- 🔧 **ID-evi sačuvani**: WP_Import je zadržao originalne post ID-eve gde slot nije bio zauzet → conquest `epoksidni-podovi-ili-ecotile-podovi` = **i dalje 2542**, basket `kako-napraviti-teren-za-basket-ili-kosarkaski-teren` = **i dalje 2298**. Nema potrebe za ID izmenama u CLAUDE.md.
+- ✅ **Slike — domen fix**: 26 postova je zadržalo `https://www.antasline.com/wp-content/uploads/...` u `post_content` (fajlovi su već lokalno prisutni od ranijeg rsync-a, ali WP_Import ih je tretirao kao "already exists" po nazivu i nije remapovao URL u telu teksta) → globalni `str_replace` na `http://localhost/antasline/wp-content/uploads/` kroz `wp_update_post` po postu. 20 referenci ostaje na stvarno nedostajuće fajlove (uglavnom stock/Pixabay slike koje nikad nisu rsync-ovane) — **zabeleženo, NE popravljeno** (restyle sesije), pošto prompt eksplicitno kaže da se poznata odstupanja ne rešavaju u ovoj fazi.
+- ✅ **Anti-kanibalizacija basket članka (ID 2298) ponovo primenjena**: sekcija "Dimenzije terena za košarku" → "Obruč koša" (puna FIBA specifikacija, dupliran sadržaj sa `/dimenzije-kosarkaskog-terena/` i `/dimenzije-kosarkaske-table/`) skraćena na 1 pasus + 2 relativna linka (12928→11446 bajtova); sekcija "Košarkaške konstrukcije" ispod ostala netaknuta (kako je i dokumentovano 2026-07-06).
+- ✅ Verifikacija: 30 publish postova, 5 nasumičnih → 200, `dimenzije-kosarkaskog-terena`/`dimenzije-kosarkaske-table` linkovi → 200, regression Početna/`/industrijski-podovi/` → 200.
+- 📁 `migracija/parity-inventar.csv` ažuriran (na-kojoj-podlozi + bergo-ultimate redovi → 301-KANDIDAT sa unakrsnim napomenama).
+- Skripte (scratchpad `f3/`): `step1-cleanup-v2.php`, `run-import-v5.php` (finalna radna verzija sa svim wp-admin include-ovima), `fix-image-urls.php`, `fix-basket-article.php`.
+
 ## 2026-07-07 [claude-code] [W3 PARITY F2] — Permalink fix: Woo /proizvod/ flat + /kategorija-proizvoda/ + aktuelnosti ✅
 - ✅ **Backup**: `antasline_local_2026-07-07_pre-permalink-fix.sql` (47MB) pre svih izmena.
 - ✅ **Woo permalinci**: `product_base` `/shop/%product_cat%` → `proizvod` (flat, kao live); `category_base` `kategorija` → `kategorija-proizvoda` (kao live). Menjano preko `update_option('woocommerce_permalinks', ...)`, ne sirov SQL.

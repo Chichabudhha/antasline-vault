@@ -22,8 +22,8 @@ do kraja, uključujući protokol zatvaranja. **Jedna faza = jedna sesija.**
 
 - [x] **F1** — [[F1-parity-inventar]] — master inventar live vs lokal (bez izmena baze) ✅ 2026-07-07 — `migracija/parity-inventar.csv` (175 redova)
 - [x] **F2** — [[F2-permalink-fix]] — Woo permalinci + blog slug + proizvod slugovi ⚠️ menja bazu ✅ 2026-07-07 — backup 47MB, hard flush + Yoast indexable keš gotcha nađen
-- [ ] **F3** — [[F3-posts-reimport]] — pun reimport 30 postova ⚠️ briše + menja bazu
-- [ ] **F4** — [[F4-redirect-mapa]] — minimalna redirect mapa 🔴 čeka Miroslavljeve odluke o graničnim slugovima
+- [x] **F3** — [[F3-posts-reimport]] — pun reimport 30 postova ⚠️ briše + menja bazu ✅ 2026-07-07 — 30 publish (2/30 namerno preskočena kao pravi duplikati), ID-evi 2542/2298 sačuvani
+- [x] **F4** — [[F4-redirect-mapa]] — minimalna redirect mapa 🔴 čeka Miroslavljeve odluke o graničnim slugovima ✅ 2026-07-07 — 7 redova, bergo-konsolidacija pretpostavka ispravljena (M: i dalje u ponudi, F5 rebuild)
 - [ ] **F5** — [[F5-trijaza-stranica]] — trijaža nedostajućih stranica → W1 red čekanja (bez izmena baze)
 - [ ] **F6** — [[F6-namena-arhitektura]] — `namena` tag + auto grid arhitektura ⚠️ menja bazu
 - [ ] **F7** — [[F7-content-standard]] — content standard: definicije (ikonice, skica stil, skill update); obogaćivanje proizvoda ide iterativno posle

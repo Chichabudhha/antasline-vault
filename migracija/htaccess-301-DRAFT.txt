@@ -1,0 +1,20 @@
+# ⛔ NE AKTIVIRATI DIREKTNO — ovo je DRAFT, ne deo živog .htaccess-a.
+# Aktivira se TEK na dan migracije (MASTER-PLAN V2 zadaci 3.9/3.11), posle
+# finalne provere cele mape. Generisano iz migracija/redirect-mapa-FINAL.csv (F4, 2026-07-07).
+#
+# Napomena: URL-ovi ispod su primeri za PRODUKCIJU (antasline.com root), ne za
+# lokalni /antasline/ subfolder — prilagoditi RewriteBase pri aktivaciji.
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# --- Verifikovani redirekti (testirano 200 na lokalu, 2026-07-07) ---
+Redirect 301 /na-kojoj-podlozi-se-igraju-turniri-u-3x3/ /bergo-ultimate-i-ultimate-plus-nova-generacija-sportskih-podova/
+Redirect 301 /proizvod/lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija/ /proizvod/lite-shot-325-profesionalna-pokretna-kosarkaska-konstrukcija/
+Redirect 301 /kategorija-proizvoda/sigurnosni-senzori-signalni-sistemi/ /kategorija-proizvoda/sigurnosni-senzori-i-signalni-sistemi/
+
+# --- ⏳ ČEKA F5 REBUILD — NE dodavati dok cilj ne postoji i ne vrati 200 ---
+# /sportske-podloge/kosarkaske-konstrukcije/  -> TBD (923 klika/12mes, PRIORITET #1)
+# /sportske-podloge/padel-tereni/             -> TBD (119 klika)
+# /sportski-podovi-za-sale-i-balone/          -> TBD (378 klika)
+</IfModule>

@@ -6,6 +6,8 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-07 | W3 PARITY F4 — minimalna redirect mapa (7 redova) | ✅ Sa Miroslavom: parity za spoljnje-podne-obloge (1304 kl.) i podovi-za-stale (402 kl.) izvršen; **ispravljena pogrešna pretpostavka** — Bergo easy/elite/unique/xl NISU duplikat bergo-ultimate, i dalje su u ponudi → F5 W1 rebuild kao zasebne stranice, ne redirect. 3 draft posta (pogrešan post_type) obrisana → F5 rebuild kao page. 2 izbor-poda članka odloženo na W2. Usput nađena i rešena stara (2022) duplirana stranica koja je blokirala čist spoljnje-podne-obloge slug. `redirect-mapa-FINAL.csv` (7 redova, 3 verifikovana 200, 3 čekaju F5) + `htaccess-301-DRAFT.txt` (NE aktiviran). Detalji: [[DNEVNIK-NAPRETKA]] |
+| 2026-07-07 | W3 PARITY F3 — pun reimport 30 postova sa live | ✅ Cleanup 7 LOKAL-NOVO postova (1 zadržan, 4 draft, 2 obrisana) → WXR import (4 pokušaja, redom otkriveni missing-function gotcha-i: WP_LOAD_IMPORTERS, dupli require, post_exists/comment_exists includes) → 30 publish postova (2 od 30 live namerno preskočena kao pravi duplikati postojećeg sadržaja, matematika se poklapa). ID-evi 2542/2298 sačuvani (bez izmena u CLAUDE.md). Slike: 26 postova popravljeno na lokalni domen, 20 referenci na stvarno nedostajuće fajlove zabeleženo za restyle. Anti-kanibalizacija basket članka ponovo primenjena. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | W3 PARITY F2 — permalink fix (Woo /proizvod/ + /kategorija-proizvoda/ + aktuelnosti) | ✅ Woo `product_base`→`proizvod` flat, `category_base`→`kategorija-proizvoda`, blog slug→`aktuelnosti`, 2 proizvod sluga vraćena na live, 8 pokvarenih internih linkova ispravljeno. lite-shot 325/795 razrešeno (isti proizvod, ne preimenovan, ide u F4 301 mapu). 🔴 2 nova gotcha-a: hard flush (`flush_rewrite_rules(true)`) obavezan posle permastruct izmena; Yoast indexable keš mora ručno da se obriše (`wpGs_yoast_indexable`) posle SVAKE product/product_cat/page permalink izmene. Backup 47MB. Verifikacija 200 svuda. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | W3 PARITY F1 — master inventar (175 redova) | ✅ Svih 7 live sub-sitemapa vs lokalna baza + GSC 12mes klikovi (Windsor.ai) → `migracija/parity-inventar.csv`. PARITY 84 · NEDOSTAJE-LOKAL 57 · LOKAL-NOVO 32. 🔴 Nov nalaz: `kosarkaske-konstrukcije` = 923 klika (>478 ranije dokumentovanih) — prioritet #1 za F5. Spot-check 5/5 → 200. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | STRATEGIJA — PARITY-PLAN (zamena redirect pristupa) | ✅ Odluka: build 1:1 prema live sajtu (URL+content parity). Stara redirect mapa (118 redova, `/shop/` targeti) arhivirana → `migracija/arhiva/`. Novi izvor istine: [[migracija/PARITY-PLAN]] + 7 samostalnih promptova [[migracija/promptovi/_README]] (F1 inventar → F2 permalinci → F3 reimport postova → F4 minimalna mapa → F5 trijaža → F6 namena arhitektura → F7 content standard). Odluke: slug hibrid po težini, pun reimport 30 postova (M8 ✅), troslojni model namena→proizvod, standardi-sa-linkovima za proizvode. Detalji: [[DNEVNIK-NAPRETKA]] |
@@ -37,11 +39,13 @@
 
 ## Sledeće
 
-1. **PARITY faze F3→F7** — ⭐⭐⭐ PRIORITET → [[migracija/promptovi/_README]]
+1. **PARITY faze F5→F7** — ⭐⭐⭐ PRIORITET → [[migracija/promptovi/_README]]
    - F1 ✅ ZATVOREN 2026-07-07 → `migracija/parity-inventar.csv` (175 redova)
    - F2 ✅ ZATVOREN 2026-07-07 → Woo permalinci + aktuelnosti + linkovi ispravljeni
-   - Sledeći: **F3 reimport postova** ⚠️ (backup pre) → F4 mapa 🔴 (Miroslav u sesiji) → F5 trijaža → F6 namena tagovi ⚠️ → F7 content standard
-   - 🔴 F5 prioritet #1 sada: `kosarkaske-konstrukcije` (923 GSC klika/12mes)
+   - F3 ✅ ZATVOREN 2026-07-07 → 30 postova uvezeno, anti-kanibalizacija basket članka ponovljena
+   - F4 ✅ ZATVOREN 2026-07-07 → `redirect-mapa-FINAL.csv` (7 redova) + `htaccess-301-DRAFT.txt`
+   - Sledeći: **F5 trijaža nedostajućih stranica** → W1 red čekanja po GSC klikovima. Poznati prioriteti: `kosarkaske-konstrukcije` (923 kl. 🔴 #1), bergo-easy/elite/unique/xl (4 zasebne landing, 978+166+53+33 kl.), `antistatik-i-elektroprovodljivi-podovi` (1131 kl.), `padel-tereni` i `sportski-podovi-za-sale-i-balone` (kao PAGE, ne post!)
+   - Zatim: F6 namena tagovi ⚠️ → F7 content standard
    - Blokirač za go-live
 
 2. **C3 — Content plan: 20 stranica u 4 tijera** — ⭐⭐ PRIORITET → [[seo/plan-novih-stranica]]
