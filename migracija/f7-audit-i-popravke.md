@@ -27,13 +27,15 @@ F2 Yoast indexable cache sesiju (2026-07-07) na isti način.
 
 | # | Stranica | ID | Dnevnik tvrdi | Napomena |
 |---|---|---|---|---|
-| [ ] | `/industrijski-podovi/` | 16567 | FAQ+FAQPage/**Product** JSON-LD, 2026-07-05 | Najveći gubitak — 7 standarda + Product schema, money stranica |
-| [ ] | `/spoljnje-podne-obloge/` | 16590 | "FAQ schema", 2026-07-07 (N1 silo) | 9× h3 FAQ tekst prisutan |
-| [ ] | `/dimenzije-kosarkaske-table/` | 16585 | — | FAQ tekst (5× h3) postoji, schema nikad dodata (sestrinska `dimenzije-kosarkaskog-terena` je ima) |
-| [ ] | Kategorija Zaštita i Bumperi | 16572 (term 245) | deo "6 punih" (hero+USP+FAQ+CTA) | Duplikat par sa 246, diferenciran 2026-07-06 |
-| [ ] | Kategorija Industrijska zaštita | 16573 (term 246) | isto | Duplikat par sa 245 |
-| [ ] | Kategorija Košarkaške konstrukcije | 16578 (term 251) | isto | Duplikat par sa 252 |
-| [ ] | Kategorija Oprema za sportske terene | 16579 (term 252) | isto | Duplikat par sa 251 |
+| [x] | `/industrijski-podovi/` | 16567 | FAQ+FAQPage/**Product** JSON-LD, 2026-07-05 | ✅ 2026-07-08 — 7 Q&A FAQPage + Product (AggregateOffer 2.000–5.500 RSD) vraćeno |
+| [x] | `/spoljnje-podne-obloge/` | 16590 | "FAQ schema", 2026-07-07 (N1 silo) | ✅ 2026-07-08 — stvarni slug `spoljnje-podne-obloge` (ne "spoljne"); imala golu JSON tekst (1321 znakova) van shortcode-a (verovatno nezavršen prethodni pokušaj) → obrisano, 5 Q&A FAQPage ispravno upakovano u `vc_raw_html` |
+| [x] | `/dimenzije-kosarkaske-table/` | 16585 | — | ✅ 2026-07-08 — 5 Q&A FAQPage dodato (prvi put) |
+| [x] | Kategorija Zaštita i Bumperi | 16572 (term 245) | deo "6 punih" (hero+USP+FAQ+CTA) | ✅ 2026-07-08 — 3 Q&A FAQPage, regresija na 246 potvrđena (nisu pomešani) |
+| [x] | Kategorija Industrijska zaštita | 16573 (term 246) | isto | ✅ 2026-07-08 — 3 Q&A FAQPage |
+| [x] | Kategorija Košarkaške konstrukcije | 16578 (term 251) | isto | ✅ 2026-07-08 — 3 Q&A FAQPage, regresija na 252 potvrđena |
+| [x] | Kategorija Oprema za sportske terene | 16579 (term 252) | isto | ✅ 2026-07-08 — 3 Q&A FAQPage |
+
+**P1 ZATVOREN 2026-07-08.** Postupak: `$wpdb->update` + `clean_post_cache()` (bez `wp_update_post`), FAQ tekst izvučen iz postojećeg `post_content` (h3/p ili `al-faq` div parovi), JSON-LD kroz `[vc_raw_html]base64(rawurlencode())[/vc_raw_html]` ubačen odmah posle FAQ sekcije. Verifikovano: 200/1×H1/schema bez dupliranja (Yoast graph i naš FAQ/Product su odvojeni `<script>` blokovi, ne sukobljavaju se) na svih 7 + regresija 2 nedirane stranice (`/kontakt/`, `/sportske-podloge/`).
 
 **Postupak popravke** (dokazan, koristi se od F6 pilota): pročitaj `post_content`, izvuci
 postojeći FAQ tekst (h3/p parovi) za svaku stranicu, sastavi FAQPage (+ Product za
@@ -54,15 +56,17 @@ pilota) — ništa se ne izmišlja.
 
 | # | Stranica | ID | Standardi bez linka |
 |---|---|---|---|
-| [ ] | `/industrijski-podovi/` | 16567 | EN 660-2, ISO 6721, DIN 51130, EN 14041, ISO 10140, ISO 9001, ISO 14001 (7!) |
-| [ ] | `/sportske-podloge/` | 5438 | FIBA, ITF, EN 14877 |
-| [ ] | `/sportske-podloge/kosarkaske-konstrukcije/` | 16657 | FIBA, EN1270 (moj F6 pilot — građen PRE F7, ironično) |
-| [ ] | `/podloge-za-futsal-terene/` | 16581 | FIBA, ITF |
-| [ ] | `/kosarka-3x3-tereni/` | 16584 | FIBA, ITF |
-| [ ] | `/dimenzije-kosarkaskog-terena/` | 16586 | FIBA |
-| [ ] | `/dimenzije-kosarkaske-table/` | 16585 | FIBA |
-| [ ] | `/spoljnje-podne-obloge/` | 16590 | ISO 9001 |
-| [ ] | `/pocetna/` (home) | 16550 | FIBA (1 pomen, niska prioritetnost) |
+| [x] | `/industrijski-podovi/` | 16567 | ✅ 2026-07-08 — EN 660-2, ISO 6721, DIN 51130, EN 14041, ISO 10140, ISO 9001, ISO 14001 (7!) svi linkovani |
+| [x] | `/sportske-podloge/` | 5438 | ✅ 2026-07-08 — FIBA, ITF, EN 14877 linkovani (jedna "Sertifikovano" kartica) |
+| [x] | `/sportske-podloge/kosarkaske-konstrukcije/` | 16657 | ✅ 2026-07-08 — FIBA, EN1270 linkovani (u uporednoj tabeli) |
+| [x] | `/podloge-za-futsal-terene/` | 16581 | ✅ 2026-07-08 — FIBA/ITF linkovani |
+| [x] | `/kosarka-3x3-tereni/` | 16584 | ✅ 2026-07-08 — FIBA, ITF linkovani |
+| [x] | `/dimenzije-kosarkaskog-terena/` | 16586 | ✅ 2026-07-08 — FIBA linkovan (postojeći "Izvor:" citat) |
+| [x] | `/dimenzije-kosarkaske-table/` | 16585 | ✅ 2026-07-08 — FIBA linkovan |
+| [x] | `/spoljnje-podne-obloge/` | 16590 | ✅ 2026-07-08 — ISO 9001 linkovan |
+| [x] | `/pocetna/` (home) | 16550 | ✅ 2026-07-08 — FIBA linkovan |
+
+**P2 ZATVOREN 2026-07-08.** Svi linkovi potvrđeni WebSearch-om (FIBA→about.fiba.basketball, ITF→itftennis.com, EN1270/EN14041→knowledge.bsigroup.com, EN14877→standards.globalspec.com, DIN51130→dinmedia.de, ISO9001/14001→iso.org explainer, ISO10140-3/ISO6721-1→iso.org standard page, EN660-2→landingpage.bsigroup.com), format `target="_blank" rel="noopener"` (isti kao antistatik pilot). Postupak: `str_replace` na unique anchor tekstu (proveren `substr_count()===1` pre upisa) preko `$wpdb->update`+`clean_post_cache()`. Jedan link po standardu po stranici (ne svako pominjanje) — izabran najčistiji/najprirodniji kontekst (tabela ili prva suštinska rečenica, ne hero/FAQ ponavljanja). Verifikovano: 200/1×H1/linkovi validni na svih 9 + P1 i P2 zajedno testirani na svih 13 stranica + regresija 2 nedirane stranice.
 
 Već potvrđeni izvori sa antistatik pilota (mogu se ponovo iskoristiti gde relevantno):
 IEC 61340-5-1 → `webstore.iec.ch/en/publication/74748`, BS EN IEC 61340-5-1 →
@@ -80,10 +84,12 @@ Najprirodniji fit u celom sajtu, a nula skica postoji van antistatik pilota:
 
 | # | Stranica | ID | Predlog skice |
 |---|---|---|---|
-| [ ] | `/dimenzije-kosarkaskog-terena/` | 16586 | Dimenzije terena (FIBA/NBA/školski) — top-down dijagram sa kotama |
-| [ ] | `/dimenzije-kosarkaske-table/` | 16585 | Dimenzije table (180×105) — dijagram sa kotama |
-| [ ] | `/industrijski-podovi/` | 16567 | Presek slojeva (podloga → Ecotile ploča → završna obrada), po uzoru na antistatik pilot |
-| [ ] | `/sportske-podloge/` | 5438 | Bergo klik-sistem — presek mehanizma uklapanja ploča |
+| [x] | `/dimenzije-kosarkaskog-terena/` | 16586 | ✅ 2026-07-08 — top-down dijagram (28×15m, centralni krug, reket, troseks linije, dashed slobodno bacanje) sa kotama |
+| [x] | `/dimenzije-kosarkaske-table/` | 16585 | ✅ 2026-07-08 — front-view dijagram table+koša (1,80×1,05m, obruč na 3,05m) sa kotama |
+| [x] | `/industrijski-podovi/` | 16567 | ✅ 2026-07-08 — presek slojeva (podloga → Ecotile 5–10mm → klik spoj), crveni akcent za viljuškarski saobraćaj |
+| [x] | `/sportske-podloge/` | 5438 | ✅ 2026-07-08 — Bergo klik-sistem, presek dve ploče na nožicama sa klik-prstenovima i provetravanjem |
+
+**P3 ZATVOREN 2026-07-08.** 4 nova SVG fajla u `woodmart-child/images/skice/` (dimenzije-terena-fiba.svg, dimenzije-table-kosarka.svg, industrijski-pod-presek-slojeva.svg, bergo-klik-sistem-presek.svg), stil po F7.4 (navy `#0E2950` struktura, crvena akcent samo, dimenzione linije sa tick oznakama, dashed za skrivene detalje). Ubačeno inline (minified, `str_replace(["\r","\n","\t"],'')`) preko `$wpdb->update`+`clean_post_cache()`. Dva sitna vizuelna bag-fixa nakon prve provere u Chrome-u: (1) tabla dijagram — "3,05 m" label sečen na ivici viewBox-a (380→410 širina), (2) Bergo dijagram — "Klik-prstenovi" labela prenatrpana uz "Bergo ploča" naslov (razdvojeno + dodata leader linija). Verifikovano vizuelno (Chrome screenshot) na sve 4 + 200/1×H1/bez neizrendovanih shortcode-ova.
 
 Procena: ~45 min–1h (4 skice, stil već definisan u F7.4).
 
@@ -106,9 +112,9 @@ bez akcije.
 
 ## Redosled preporučen
 
-1. P1 (schema regresija) — najveći SEO rizik, nula rizika izvršenja, uraditi prvo
-2. P2 (standardi-linkovi) — najveći F7-compliance gap po broju stranica
-3. P3 (skice) — najveći vizuelni/GEO dobitak za dimenzije stranice
+1. ✅ ZATVORENO 2026-07-08 — P1 (schema regresija) — najveći SEO rizik, nula rizika izvršenja, uraditi prvo
+2. ✅ ZATVORENO 2026-07-08 — P2 (standardi-linkovi) — najveći F7-compliance gap po broju stranica
+3. ✅ ZATVORENO 2026-07-08 — P3 (skice) — najveći vizuelni/GEO dobitak za dimenzije stranice
 4. P4 (video) — opciono, niži prioritet
 
 Svaka sledeća sesija bira JEDAN prioritet (po pravilu "jedan glavni zadatak po sesiji"),
