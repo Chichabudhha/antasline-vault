@@ -23,7 +23,7 @@ Sortirano po GSC klikovima (12 meseci). Pravila za svaku stranicu:
 | # | Live URL | Klikovi | Yoast title (live) | Napomena |
 |---|---|---|---|---|
 | 1 | ~~`/antistatik-i-elektroprovodljivi-podovi/`~~ | ~~1131~~ | "Antistatik pod i ESD podovi za server sale i kancelarije" | ✅ **GOTOVO 2026-07-07** (ID 16658) — namenska landing, namena-esd grid, video+skica |
-| 2 | `/spoljnje-podne-obloge/bergo-xl/` | 978 | "Podovi za terase i baste" | Bergo XL — **F4: i dalje deo ponude, zasebna stranica** |
+| 2 | ~~`/spoljnje-podne-obloge/bergo-xl/`~~ | ~~978~~ | "Podovi za terase i baste" | ✅ **GOTOVO 2026-07-08** (ID 16659) — nova WoodMart stranica, identičan URL kao live (`/spoljnje-podne-obloge/`, sa j — parent 16590). Stari CPT unos (`spoljne-podne-obloge`, ID 5039, bez j) draftovan kao `bergo-xl-stara` |
 | 3 | ~~`/sportske-podloge/kosarkaske-konstrukcije/`~~ | ~~923~~ | "Košarkaške konstrukcije, profesionalni koševi i table..." | ✅ **GOTOVO 2026-07-07** (ID 16657, F6 pilot) — namenska landing, redirect mapa red rešen (identičan URL) |
 | 4 | `/industrijski-podovi/industrijski-pod/` | 625 | "Podovi za magacine i radionice" (H1: Ecotile 500/7 podne ploče) | Deo Ecotile 500/5-7-10 informativnog klastera (v. #21, #26) |
 | 5 | `/sportski-podovi-za-sale-i-balone/` | 378 | "Podovi za sportske dvorane" | **PAGE, ne post** (F3 draft obrisan) — čeka ga redirect mapa |
@@ -97,7 +97,9 @@ Live ima 8 `product_tag` termina (`bergo`, `ergomat`, `industrijski-amortizer`, 
 | E — konsolidacija | 3 para/slučaja |
 | F — product_tag | 8 termina, van W1 obima |
 
-**Top prioritet za sledeću W1 sesiju:** #1 antistatik (1131), #2 bergo-xl (978), #4 industrijski-pod/Ecotile 500-7 (625), #5 sportski-podovi-za-sale-i-balone (378, PAGE tip). (#3 kosarkaske-konstrukcije ✅ gotovo 2026-07-07, F6 pilot.)
+**Top prioritet za sledeću W1 sesiju:** #4 industrijski-pod/Ecotile 500-7 (625), #5 sportski-podovi-za-sale-i-balone (378, PAGE tip), #6 podovi-za-bazene (262). (#1 antistatik, #2 bergo-xl, #3 kosarkaske-konstrukcije ✅ svi gotovi.)
+
+**🔍 Nalaz 2026-07-08 (bergo-xl sesija) — legacy `spoljne-podne-obloge` CPT porodica:** postoji ceo stari custom post type (bez j u slugu, Porto-era, publicly_queryable) sa 6 unosa: `bergo-unique` (4936, publish), `bergo-elite` (5028, publish), `bergo-xl` (5039, sad draft/`-stara`), `bergo-solid` (5051, publish), `bergo-flow` (5053, publish), `bergo-ultimate` (5061, draft), `bergo-easy` (5830, draft). Svi renderuju kroz generički WoodMart blog/CPT template (sidebar, "Posted by", kategorija badge) — **ne** kroz al- landing šablon, i nemaju Yoast metu. Sadrže realan, bogat sadržaj (specifikacije, boje sa hex kodovima, foto koraci ugradnje) koji vredi iskoristiti pri rebuild-u #9 (bergo-easy 166 kl.), #22 (bergo-unique 53 kl.), #25 (bergo-elite 33 kl.) — isti postupak kao bergo-xl (nova `page` pod parent 16590, stari CPT unos → draft `-stara`). `bergo-solid`/`bergo-flow` nisu u trenutnoj w1-red-cekanja listi — proveriti da li su deo ponude pre odluke o rebuild-u ili konsolidaciji.
 
 ## Veze
 [[migracija/PARITY-PLAN]] · [[migracija/parity-inventar.csv]] · [[migracija/redirect-mapa-FINAL]] · [[migracija/woodmart-sabloni]] · [[2026-07-06-MASTER-PLAN-V2]] W1 1.2
