@@ -230,6 +230,30 @@ pun pre/posle LCP test ostaje za W3 3.5 (Lighthouse baseline sesija na celom bui
 imati pravi alat i baseline za poređenje. Proxy provera (veličina fajlova + deferred loading)
 ne pokazuje regresiju.
 
+## F7.6 — Reusable PHP helper pattern za nove stranice (2026-07-08)
+
+Kad se gradi više stranica u istoj sesiji (npr. #13-#18), isplati se jedan `al-helpers.php` u scratchpad-u
+(ne perzistira između sesija — samo napraviti ponovo po ovom obrascu) sa:
+- `al_faq_jsonld($pairs)` — prima asocijativni niz pitanje→odgovor, vraća gotov `[vc_raw_html]...[/vc_raw_html]`
+  blok (base64(rawurlencode(JSON-LD script))) — zamenjuje ručno pisanje/enkodovanje po stranici
+- `al_update_content($id, $content)` — `$wpdb->update` + `clean_post_cache()` + brisanje
+  `wpgs_yoast_indexable` reda (obavezno posle svake programske izmene `post_content`/meta, gotcha #12)
+- `al_set_page($id, $title, $metadesc)` — postavlja `_woodmart_main_layout=full-width`,
+  `_woodmart_title_off=on`, Yoast title/metadesc u jednom pozivu
+
+Svaka nova stranica: `wp_insert_post()` sa praznim `post_content` (dobija ID), zatim `al_update_content()`
+sa punim sadržajem (izbegava gotcha #9 — CLI insert/update briše `[vc_raw_html]`).
+
+## F6 troslojni model — potvrđen van pilota (2026-07-08)
+
+Drugi primer posle kosarkaske-konstrukcije pilota: `/industrijski-podovi/bumperi-zastita-za-police-regale-i-zidove/`
+— 19 postojećih Ergomat bumper proizvoda već direktno u Woo kategoriji `Zaštita i Bumperi` (term_id 245, ne
+poseban `namena-*` tag), pa je `[woodmart_products taxonomies="245" ...]` radio bez ikakve pripreme taksonomije.
+Kad namenska landing tačno odgovara postojećoj Woo kategoriji (ne poduzorku preko namena-taga), koristiti
+`taxonomies="<product_cat term_id>"` direktno — ne izmišljati novi `namena-*` tag ako nije potreban.
+Cross-link u oba smera i dalje obavezan (kategorija je Layout Builder `woodmart_layout` CPT — v. dnevnik
+"10 WooCommerce kategorija", term_id 245-254, str_replace na postojeći pasus, ne novi red).
+
 ## Otvoreno
 - [ ] Mobilni viewport vizuelna provera (media queries napisani, nije snimljeno) #claude-code
 - [ ] Bela varijanta logoa za navy footer #claude-code
