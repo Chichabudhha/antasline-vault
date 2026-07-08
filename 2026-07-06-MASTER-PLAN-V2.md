@@ -55,7 +55,7 @@ azurirano: 2026-07-06
 | # | Zadatak | Vlasnik | Napomena |
 |---|---|---|---|
 | 1.1 | Silo rebuild: `/spoljnje-podne-obloge/` → `/podloge-za-parking/` → `/kontakt/` → `/o-nama/` | CC | ✅ 2026-07-07 — sve 4 gotove (spoljne bez j, parking-staze, kontakt forma, o-nama). C1 parity: live `/spoljnje-*` → lokal `/spoljne-*` |
-| 1.2 | ✅ F5 trijaža zatvorena 2026-07-07 → **[[migracija/w1-red-cekanja]]** (33 stranice, kategorija A) je izvor istine za redosled. Gotovo: antistatik (1131 kl.) ✅, kosarkaske-konstrukcije (923 kl., F6 pilot) ✅, bergo-xl (978 kl.) ✅, Ecotile 500/7 (625 kl., ID 16660) ✅. Sledeći: sportski-podovi-za-sale-i-balone (378), podovi-za-bazene (262) | CC | Svaka nova namenska landing prati F7 standard (ikonice/skica/video iz woodmart-sabloni) |
+| 1.2 | ✅ F5 trijaža zatvorena 2026-07-07 → **[[migracija/w1-red-cekanja]]** (33 stranice, kategorija A) je izvor istine za redosled. Gotovo: antistatik (1131 kl.) ✅, kosarkaske-konstrukcije (923 kl., F6 pilot) ✅, bergo-xl (978 kl.) ✅, Ecotile 500/7 (625 kl.) ✅, Naxos sale-i-balone (378 kl., ID 16661) ✅. Sledeći: podovi-za-bazene (262), iznajmljivanje-podova (232) | CC | Svaka nova namenska landing prati F7 standard (ikonice/skica/video iz woodmart-sabloni) |
 | 1.3 | ✅ ODLUČENO 2026-07-07 (M8): **pun reimport svih 30 postova sa live** — izvršenje po [[migracija/promptovi/F3-posts-reimport]] | CC | restyle postova ide posle, iterativno |
 | 1.4 | Footer builder (WoodMart HTML block) + bela varijanta logoa | CC | otvoreno iz [[migracija/woodmart-sabloni]] |
 | 1.5 | Meni: proširiti novim silo/C3 stranicama | CC | posle 1.1–1.2 |
