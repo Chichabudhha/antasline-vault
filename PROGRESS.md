@@ -6,6 +6,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-08 | W1 F7 P4 — video lite-embed (2 stranice) — **F7 AUDIT POTPUNO ZATVOREN** | ✅ Ecotile ugradnja (`/industrijski-podovi/`) + Bergo sportski teren (`/sportske-podloge/`), oba oEmbed-potvrđena zvanična kanala. F7.3 lite-embed fasada + VideoObject schema. Debug nalaz: `loading="lazy"` se ne okida u automatizovanom Chrome tabu (potvrđeno preexisting i na antistatik pilotu, nije bug) — funkcionalnost potvrđena direktnim klikom (iframe kreiran ispravno na obe). Backup pre izmena, regresija čista. **P1–P4 svi zatvoreni** — sledeći W1 fokus: `migracija/w1-red-cekanja.md`. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-08 | W1 F7 P3 — 4 nove antas-skice (SVG tehničke ilustracije) | ✅ Dimenzije terena (top-down FIBA 28×15m), dimenzije table (front-view 1,80×1,05m), industrijski pod (presek slojeva), Bergo (klik-sistem presek) — sve po F7.4 stilu, inline SVG preko `$wpdb->update`. 2 sitna vizuelna bug-fixa nakon Chrome provere (viewBox preuzak na tabla dijagramu, nagurane labele na Bergo dijagramu). Verifikovano HTTP+vizuelno (Chrome screenshot) na sve 4. Backup pre izmena. **F7 P3 zatvoren**, ostaje samo P4 (video, niži prioritet). Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-08 | W1 F7 P2 — standardi sa linkovima (9 stranica) + P1+P2 kombinovani test | ✅ 11 standarda linkovano (FIBA/ITF/EN1270/EN14877/DIN51130/EN14041/ISO10140/ISO9001/ISO14001/EN660-2/ISO6721), svi izvori potvrđeni WebSearch-om pre upisa, `str_replace` na unique anchor + `$wpdb->update`. Kombinovani test P1+P2 na svih 13 stranica: 200/1×H1/schema bez dupliranja/linkovi validni/regresija čista. Backup pre izmena. **F7 P2 zatvoren**, sledeći P3 (skice). Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-08 | W1 F7 P1 — popravka izgubljene FAQPage/Product schema (7 stranica) | ✅ `/industrijski-podovi/` (7 Q&A+Product AggregateOffer), `/spoljnje-podne-obloge/` (5 Q&A + čišćenje 1.321 znaka gole JSON teksta van shortcode-a), `/dimenzije-kosarkaske-table/` (5 Q&A, prvi put), 4 Woo kategorije 245/246/251/252 (po 3 Q&A). Upis isključivo `$wpdb->update`+`clean_post_cache()`. Verifikovano: 200/1×H1/JSON-LD bez dupliranja/regresija 245↔246,251↔252 nisu pomešani. Backup pre izmena. **F7 P1 zatvoren**, sledeći P2 (standardi-linkovi). Detalji: [[DNEVNIK-NAPRETKA]] |
@@ -46,7 +47,7 @@
 
 ## Sledeće
 
-1. **F7 audit popravke** — ✅ P1 + P2 + P3 zatvoreni 2026-07-08 → [[migracija/f7-audit-i-popravke]] — sledeći i poslednji P4 (video, 2 stranice, niži prioritet). Jedan prioritet po sesiji.
+1. ✅ **F7 audit popravke — U POTPUNOSTI ZATVOREN 2026-07-08** (P1 schema, P2 standardi-linkovi, P3 skice, P4 video) → [[migracija/f7-audit-i-popravke]]. Sledeći W1 fokus: **`migracija/w1-red-cekanja.md`** (bergo-xl 978 kl., Ecotile 500/7 info 625 kl., sportski-podovi-za-sale-i-balone 378 kl.).
 
 2. **W1 rebuild po w1-red-cekanja.md** — ⭐⭐⭐ PRIORITET
    - F1–F7 ✅ SVI ZATVORENI 2026-07-07 → [[migracija/promptovi/_README]] (parity faze gotove, content standard definisan)

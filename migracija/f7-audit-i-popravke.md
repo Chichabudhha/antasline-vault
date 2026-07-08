@@ -99,8 +99,10 @@ Procena: ~45 min–1h (4 skice, stil već definisan u F7.4).
 
 | # | Stranica | ID | Predlog |
 |---|---|---|---|
-| [ ] | `/sportske-podloge/` | 5438 | Bergo ugradnja — traži zvaničan video (WebSearch + oEmbed potvrda, isti postupak kao antistatik) |
-| [ ] | `/industrijski-podovi/` | 16567 | Ecotile generalna ugradnja (ne ESD-specifično — različit video od antistatik stranice) |
+| [x] | `/sportske-podloge/` | 5438 | ✅ 2026-07-08 — "Bergo Multisport court installation" (zvanični kanal Bergo Flooring AB, oEmbed potvrđen) |
+| [x] | `/industrijski-podovi/` | 16567 | ✅ 2026-07-08 — "How to Install Ecotile Garage Flooring" (zvanični kanal Ecotile Flooring Ltd, oEmbed potvrđen) |
+
+**P4 ZATVOREN 2026-07-08 — F7 AUDIT U POTPUNOSTI ZATVOREN.** Video izvori potvrđeni WebSearch+oEmbed (`author_name`/`author_url` provereni pre upotrebe): Ecotile `fncQrsTvHoE` (@EcotileflooringSolutions), Bergo `VdZWT2O5_-M` (@BergoflooringSweden, "Multisport court" — tematski najbolji fit za sportsku stranicu). Markup = F7.3 lite-embed fasada (thumbnail+play dugme, globalni `al-video-facade.js`, iframe se kreira tek na klik) + `VideoObject` JSON-LD (bez `uploadDate`, nije potvrđen) preko `vc_raw_html`, ubačeno odmah posle antas-skice na obe stranice preko `$wpdb->update`+`clean_post_cache()`. Verifikovano: 200/1×H1/`<iframe>` odsutan iz initial HTML-a (potvrđuje lazy fasadu)/VideoObject schema prisutna/klik na dugme kreira iframe sa tačnim video ID-jem (testirano na obe stranice) — isto ponašanje kao verifikovani antistatik pilot. Regresija na 2 nedirane stranice čista.
 
 Sport pod-stranice (futsal/hokej/stoni-tenis/3x3) NE trebaju svaka svoj video — dovoljan
 je jedan na `/sportske-podloge/` hub-u, cross-link odande.
@@ -115,7 +117,7 @@ bez akcije.
 1. ✅ ZATVORENO 2026-07-08 — P1 (schema regresija) — najveći SEO rizik, nula rizika izvršenja, uraditi prvo
 2. ✅ ZATVORENO 2026-07-08 — P2 (standardi-linkovi) — najveći F7-compliance gap po broju stranica
 3. ✅ ZATVORENO 2026-07-08 — P3 (skice) — najveći vizuelni/GEO dobitak za dimenzije stranice
-4. P4 (video) — opciono, niži prioritet
+4. ✅ ZATVORENO 2026-07-08 — P4 (video) — opciono, niži prioritet
 
 Svaka sledeća sesija bira JEDAN prioritet (po pravilu "jedan glavni zadatak po sesiji"),
 štiklira redove ovde, i upisuje unos u [[DNEVNIK-NAPRETKA]].
