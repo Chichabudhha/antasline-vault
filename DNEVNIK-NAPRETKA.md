@@ -1,5 +1,14 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-08 [claude-code] [W1 AUDIT] — F7 compliance audit svih postojećih stranica + plan ✅
+- ✅ **Audit, bez izmena baze**: svih 25 W1 rebuild stranica/Layout Builder kategorija (post_content + rendered HTML) provereno protiv F7 standarda (standardi-sa-linkovima, namena ikonice, video, antas-skica) i protiv ranijih dnevnik tvrdnji o JSON-LD schema.
+- 🔴 **Nalaz — izgubljena FAQPage/Product schema na 7 stranica**, FAQ tekst prisutan ali JSON-LD blok odsutan u renderu: `/industrijski-podovi/` (16567, dnevnik tvrdi FAQ+Product dodato 2026-07-05), `/spoljnje-podne-obloge/` (16590, dnevnik tvrdi 2026-07-07), `/dimenzije-kosarkaske-table/` (16585, nikad dodata), i tačno 4 Woo kategorije (16572/16573/16578/16579 = term 245/246/251/252) — baš oni parovi koje je dnevnik 2026-07-06 pomenuo kao naknadno "diferencirane" (245↔246, 251↔252). Obrazac ukazuje na gotcha #9 (CLI `wp_update_post` briše `vc_raw_html`) primenjen tokom te diferencijacije, umesto dokazanog `$wpdb->update` puta.
+- 🟡 **Nalaz — 9 stranica pominje standarde (FIBA/ITF/EN1270/EN14877/DIN 51130/ISO 9001-14001-6721-10140/EN 660-2/EN 14041) kao goli tekst, bez linka** — najveći F7.1 compliance gap po broju stranica. `/industrijski-podovi/` ima čak 7 nelinkovanih standarda.
+- 🟢 **Nalaz — antas-skica prilike**: `/dimenzije-kosarkaskog-terena/` i `/dimenzije-kosarkaske-table/` nemaju nijednu skicu iako su doslovno o dimenzijama (najprirodniji fit u sajtu); `/industrijski-podovi/` i `/sportske-podloge/` kandidati za presek-slojeva skicu.
+- 🔵 **Nalaz — video prilike** (niži prioritet): `/sportske-podloge/` (Bergo) i `/industrijski-podovi/` (Ecotile generalno) nemaju video, sport pod-stranice ne trebaju svaki svoj.
+- 📁 **Plan upisan** u novi `migracija/f7-audit-i-popravke.md` (4 prioritetna nivoa, checkbox lista po stranici, procena vremena, preporučen redosled P1→P4). Miroslav odabrao da se plan samo zapiše ove sesije, izvršenje ide u narednim sesijama (jedan prioritet po sesiji).
+- Skripte (scratchpad): `audit-f7.php`, `check-rendered-jsonld.sh`.
+
 ## 2026-07-07 [claude-code] [W1 + W1/W2 PARITY F7] — Antistatik stranica + F7 content standard (paralelno) ✅
 - ✅ **Backup**: `antasline_local_2026-07-07_pre-antistatik-f7.sql` (44,7 MB) pre svih izmena.
 - ✅ **W1 1.2 — `/antistatik-i-elektroprovodljivi-podovi/` (ID 16658)**, top prioritet po klikovima (1131/12mes), top-level stranica (parity sa live URL strukturom). Sadržaj: WebFetch live (specifikacija, standardi, prednosti, primena — real facts, ne izmišljeno) + troslojni F6 model (namena-esd grid, 2 proizvoda: Ecotile 7mm ESD + polukružni zaštitnik za cevi ESD verzija). Standardi navedeni SA LINKOVIMA na potvrđene zvanične izvore (IEC 61340-5-1, BS EN IEC 61340-5-1, IEC TR 61340-5-2 — pronađeni preko WebSearch, ne izmišljeni). FAQ (5 pitanja, grounded) + FAQPage JSON-LD.

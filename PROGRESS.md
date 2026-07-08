@@ -6,6 +6,7 @@
 
 | Datum | Stranica | Šta |
 |---|---|---|
+| 2026-07-08 | W1 AUDIT — F7 compliance + regresija provera (25 stranica) | ✅ Bez izmena baze. 🔴 7 stranica izgubilo FAQPage/Product JSON-LD (gotcha #9 obrazac — tačno 245/246/251/252 kategorije + industrijski-podovi + spoljnje-podne-obloge + dimenzije-table). 🟡 9 stranica ima standarde bez linka (industrijski-podovi 7×!). 🟢 2 prirodna antas-skica kandidata (dimenzije stranice) bez ijedne skice. Plan sa checkbox listom: `migracija/f7-audit-i-popravke.md`. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | W1 + F7 — antistatik stranica + content standard (paralelno) | ✅ `/antistatik-i-elektroprovodljivi-podovi/` (ID 16658, W1 top prioritet 1131 kl.) — namena-esd grid, standardi sa linkovima (IEC 61340-5-1 i dr., potvrđeni WebSearch-om), FAQ+VideoObject JSON-LD, 2 stara pokvarena cross-linka usput ispravljena. **F7 standard zatvoren**: skill `obogati-proizvod` dopunjen, 12 novih SVG ikonica, video lite-embed (globalni JS, ne po-stranici vc_raw_html — čist rešava CLI/kses gotcha), antas-skica stil + pilot skica preseka ESD poda. Lighthouse pre/posle odloženo na W3 3.5 (CLI nedostupan lokalno). Sve verifikovano (200/1×H1/JSON-LD/regression 7 stranica). Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | W1 PARITY F6 — namena arhitektura + pilot kosarkaske-konstrukcije | ✅ 8 `namena-*` product_tag termina na svih 37 proizvoda (tabela proizvod→namena potvrđena sa Miroslavom pre upisa) — realan katalog dominiraju Ergomat industrijska zaštita (28) i košarkaške konstrukcije (5), pa je lista tagova prilagođena stvarnoj ponudi umesto originalnih F6 pretpostavki. Grid mehanika potvrđena: `woodmart_products taxonomies="<term_id>"`. Pilot = `/sportske-podloge/kosarkaske-konstrukcije/` (ID 16657) — spojen sa W1 SEO prioritetom #1 (923 GSC klika), troslojni model (uporedna tabela + auto grid 5 proizvoda + FAQ/JSON-LD), redirect mapa red rešen (identičan URL, redirect nepotreban). 200/1×H1/JSON-LD/auto-mehanika/regression svi verifikovani. Novi odeljak u [[migracija/woodmart-sabloni]]. Detalji: [[DNEVNIK-NAPRETKA]] |
 | 2026-07-07 | W3 PARITY F5 — trijaža nedostajućih stranica | ✅ CSV resync (F2/F3 promene nisu bile upisane, 52→46 NEDOSTAJE-LOKAL). `politika-kolacica` kreirana odmah (ID 16656). 33 stranice kategorisane i sortirane po GSC klikovima u novom `migracija/w1-red-cekanja.md` — top 5: antistatik (1131), bergo-xl (978), kosarkaske-konstrukcije (923 🔴), Ecotile 500/7 info (625), sportski-podovi-za-sale-i-balone (378, PAGE tip). Nađen Ecotile info klaster (3 str.), LVT/Expona silo (6 str.), epoksid-conquest srodna stranica, 2 duplikat para za proveru. Detalji: [[DNEVNIK-NAPRETKA]] |
@@ -42,7 +43,9 @@
 
 ## Sledeće
 
-1. **W1 rebuild po w1-red-cekanja.md** — ⭐⭐⭐ PRIORITET
+1. **F7 audit popravke** — 🔴 najveći SEO rizik (izgubljena schema na 7 stranica) → [[migracija/f7-audit-i-popravke]] — P1 (schema regresija) prvo, pa P2 (standardi-linkovi), P3 (skice), P4 (video). Jedan prioritet po sesiji.
+
+2. **W1 rebuild po w1-red-cekanja.md** — ⭐⭐⭐ PRIORITET
    - F1–F7 ✅ SVI ZATVORENI 2026-07-07 → [[migracija/promptovi/_README]] (parity faze gotove, content standard definisan)
    - **`migracija/w1-red-cekanja.md`** je izvor istine za preostali W1 1.2 (31 stranica) — top: bergo-xl (978), Ecotile 500/7 info (625), sportski-podovi-za-sale-i-balone (378, PAGE tip!). (antistatik i kosarkaske-konstrukcije ✅ gotovo 2026-07-07.)
    - Svaka nova namenska landing stranica prati F6 troslojni obrazac + F7 content standard (ikonice/skica/video/standardi-sa-linkovima) → [[migracija/woodmart-sabloni]]
