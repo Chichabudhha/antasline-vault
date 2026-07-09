@@ -49,6 +49,11 @@ require_once ABSPATH.'wp-admin/includes/taxonomy.php';
 - `fetch_attachments=true` ne remapuje uvek URL-ove postojećih slika u `post_content` na lokalni domen kad je attachment prepoznat kao "already exists" (title match) — ako su fajlovi već rsync-ovani lokalno, ostaje `https://[live-domen]/wp-content/uploads/...` u tekstu iako je fajl fizički prisutan. Fix: `str_replace` live domena na lokalni kroz `wp_update_post` (isti obrazac kao F2 link fix).
 - Kad je odluka "zadrži post kao publish" tokom cleanup-a pred reimport: eksplicitno izuzeti taj ID iz SVAKE sledeće bulk-delete petlje (npr. `if ($p->ID === $keepId) continue;`) — "nisam ga menjao" ne znači da ga bulk-delete WHERE upit neće pokupiti.
 
+## WooCommerce atributi (polish Faza 1, 2026-07-09)
+- **SQL dump import prenosi `term_relationships` sa live object_id-jevima** — posle importa u bazu sa drugačijim ID prostorom, dodele pokazuju na pogrešne objekte (kod nas: 251 pa_ dodela na attachment-ima i orphan ID-jevima). `tt.count` kolona pri tom izgleda "puna" — uvek verifikuj `JOIN wpGs_posts ON ID=object_id` + `post_type` pre nego što zaključiš da su atributi/tagovi stvarno dodeljeni.
+- **Atribut se NE prikazuje na proizvodu bez `_product_attributes` postmeta** — sama term dodela (`wp_set_object_terms` na `pa_*` taksonomiju) nije dovoljna; serialized niz `['pa_x' => ['name','value'=>'','position','is_visible'=>1,'is_variation'=>0,'is_taxonomy'=>1]]` je ono što puni "Dodatne informacije" tab. Zato je audit "0/37 atributa" bio tačan iako su taksonomije imale termine.
+- **FAQPage JSON-LD na proizvodima**: proizvodi nisu WPBakery — nema vc_raw_html puta. Radi jednolinijski `<div><script type="application/ld+json">…</script></div>` u post_content preko `$wpdb->update` (wpautop ne dira jer nema newline-ova, div je block element). Product schema NE dodavati u content — globalni `functions.php` hook (W2 2.7) je već generiše za sve proizvode.
+
 ## Telefon insight
 - Broj 072 dominira klicima vs 074; 46/50 klikova sa mobilnog → istaći 072 u oglasima i call asset-ima.
 

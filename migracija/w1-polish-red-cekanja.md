@@ -27,8 +27,8 @@ linkovima · namena tagovi. Batch 3–5 iste linije po sesiji.
 
 | # | Batch (money-first redosled iz skilla) | ID-jevi | Status |
 |---|---|---|---|
-| 1 | **PREDUSLOV: pomirenje atribut seta** — 17 postojećih `pa_*` vs skill set; konačan set ~8 filter-korisnih (predlog: debljina, materijal, boja, montaza, sertifikacija, protivklizna-svojstva, vatrootpornost, antistatican), dupli `color` obrisati, upisati odluku u skill | — | ⬜ prva sesija |
-| 2 | Ecotile ploče | 16538, 16542, 16540 | ⬜ |
+| 1 | **PREDUSLOV: pomirenje atribut seta** — konačan set: 18 taksonomija (8 filter + 10 spec-only, 2 nove: dimenzije-ploce, nosivost), `color` obrisan, 251 import-smeće dodela očišćeno, odluka upisana u skill | — | ✅ 2026-07-09 |
+| 2 | Ecotile ploče | 16538, 16542, 16540 | ✅ 2026-07-09 (svih 8 tačaka + povratni linkovi 16660/16658; #ceka-M: PDF-ovi, debljina 7 vs 7,6 mm) |
 | 3 | Koševi / košarkaške konstrukcije | 16544, 16546, 16548, 16532, 16536 | ⬜ |
 | 4 | Mosolut + Bergo | 16530, 16534 | ⬜ (Bergo Unique: nema spec u tekstu → datasheet bergoflooring.com) |
 | 5 | DuraStripe trake | 16518–16524 | ⬜ (najlakši — već ima "Karakteristike:/Primena:" labele) |
