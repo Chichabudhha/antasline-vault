@@ -13,8 +13,20 @@ Redirect 301 /na-kojoj-podlozi-se-igraju-turniri-u-3x3/ /bergo-ultimate-i-ultima
 Redirect 301 /proizvod/lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija/ /proizvod/lite-shot-325-profesionalna-pokretna-kosarkaska-konstrukcija/
 Redirect 301 /kategorija-proizvoda/sigurnosni-senzori-signalni-sistemi/ /kategorija-proizvoda/sigurnosni-senzori-i-signalni-sistemi/
 
-# --- ⏳ ČEKA F5 REBUILD — NE dodavati dok cilj ne postoji i ne vrati 200 ---
-# /sportske-podloge/kosarkaske-konstrukcije/  -> TBD (923 klika/12mes, PRIORITET #1)
-# /sportske-podloge/padel-tereni/             -> TBD (119 klika)
-# /sportski-podovi-za-sale-i-balone/          -> TBD (378 klika)
+# --- Verifikovan redirekt (Kategorija E konsolidacija, testirano 200 na lokalu, 2026-07-08) ---
+Redirect 301 /industrijski-podovi/elektroprovodni-podovi/ /antistatik-i-elektroprovodljivi-podovi/
+
+# --- Parity provera 2026-07-09 (ciljevi testirani 200 na lokalu) ---
+# Brand arhive: live baza je ćirilična (бренд), lokalna Woo product_brand baza je latinična (brend).
+# ⚠️ Ćirilični path — Redirect direktiva radi na percent-dekodiranom UTF-8 putu; OBAVEZNO
+# testirati na subdomen probi (N6, zadatak 3.14) pre aktivacije; fallback je RewriteRule sa \x escape.
+Redirect 301 /бренд/ecotile/ /brend/ecotile/
+Redirect 301 /бренд/ergomat/ /brend/ergomat/
+# Woo nalog stranica: novi sajt je katalog režim (B2B, bez naloga/korpe)
+Redirect 301 /moj-nalog/ /kontakt/
+
+# --- ✅ REŠENO 2026-07-08 — F5 rebuild završen na IDENTIČNOM URL-u, redirect NIJE potreban ---
+# /sportske-podloge/kosarkaske-konstrukcije/  -> gradjena na istom slugu (ID 16657)
+# /sportske-podloge/padel-tereni/             -> gradjena na istom slugu (ID 16670)
+# /sportski-podovi-za-sale-i-balone/          -> gradjena na istom slugu (ID 16661)
 </IfModule>

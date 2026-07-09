@@ -37,10 +37,10 @@ azurirano: 2026-07-04
 
 | # | URL | Ciljni upiti (impr) | Trenutno | Napomena |
 |---|---|---|---|---|
-| 7 | `/sljaka-za-teniske-terene/` | sljaka+šljaka (**9.022**), sljaka cena (614), šta je šljaka | poz. 4–6 | TOFU hub → feeduje "izgradnja teniskog terena cena" (CTR 23%!) |
-| 8 | `/dimenzije-teniskog-terena/` | tenis dimenzije var. (~4.700) | poz. 2–7, CTR ~0% | + sekcija "najbrža podloga u tenisu" (562) + "US Open tereni" (296) |
+| 7 | ✅ ZATVORENO 2026-07-08 — refresh `/podloga-za-teniske-terene/` (ID 2699), NE nova stranica | sljaka+šljaka (**9.022**), sljaka cena (614), šta je šljaka | poz. 4–6, CTR bio 0,08% | Postojeća stranica VEĆ rangira poz.4-5 (GSC potvrđeno) — nova stranica bi kanibalizovala. Title/meta+FAQ+schema dodat, usput ispravljen mrtav CTA link (4×) i 2×H1 bug → [[DNEVNIK-NAPRETKA]] |
+| 8 | ✅ ZATVORENO 2026-07-08 — `/dimenzije-teniskog-terena/` (ID 16688) | tenis dimenzije var. (~4.700) | poz. 2–7, CTR ~0% | Nalaz: `/pop-tenis/` je pogrešno dominirao ovaj klaster (intent mismatch, padel≠tenis) — nova stranica + cross-link oba smera. Sekcije "najbrža podloga" i "US Open" uključene → [[DNEVNIK-NAPRETKA]] |
 | 9 | **refresh** `/podloga-za-odbojkaske-terene/` | odbojka klaster (**7.817**) | **poz. 2,3 / CTR 0,6%** | najjeftinija pobeda — title/meta+FAQ+cena, ~30 min |
-| 10 | `/piklbol/` (šta je + teren + oprema) | piklbol (383, poz. 11), oprema (325, poz. 17) | poz. 9–17 | rastući sport, konkurencija nula; povezati sa /pop-tenis/ |
+| 10 | 🔴 **PRESKOČENO 2026-07-08** — NE praviti `/piklbol/` | piklbol (383, poz. 11), oprema (325, poz. 17) | poz. 9–17 | GSC otkrio da `/teren-za-pickleball/` VEĆ postoji i dominira ceo klaster (piklbol 404 impr, oprema 269 impr) — nova stranica bi kanibalizovala. Ali ta stranica ima nerešen blokator (izmišljene recenzije u Product schema, v. PROGRESS Blokeri) — M odlučio 2026-07-08 da se ništa ne dira na njoj (ni title/meta) dok se recenzije pitanje ne reši. #ceka-miroslav |
 | 11 | **refresh** padel sadržaja (dimenzije sekcija + FAQ) | padel dimenzije var. (**~8.000**) | poz. 1,2–1,5 / CTR 1,6% | rank postoji — klikabilan title + FAQ schema |
 
 ## TIER 3 — Komercijalni vertikali: LVT/Ecotile silo (⭐⭐ za B2B lidove)
@@ -73,7 +73,7 @@ azurirano: 2026-07-04
 
 Svaka završena stranica: red u [[DNEVNIK-NAPRETKA]] + update [[PROGRESS]] + štiklirati ovde.
 
-- [ ] #9 odbojka refresh — **paket ✍️ [[dnevnik/2026-07-05-refresh-odbojka]]** — ⚠️ stranica SAMO na live → primena `[cpanel-live]` #ceka-miroslav (cene + nalepiti); C2 parity gap zabeležen
+- [x] #9 odbojka refresh — ✅ title/meta + FAQ schema fix 2026-07-08 (stranica sada postoji lokalno posle F3 reimporta, `[cpanel-live]` napomena zastarela). Title/meta prepisan (ciljao "dimenzije" klaster), i usput otkriven i ispravljen bug: FAQPage JSON-LD bio izložen kao vidljiv, iskvaren tekst na stranici (wpautop+wptexturize su ga mangle-ovali) umesto da radi kao schema — sada pravi `<script type="application/ld+json">`. Cena i dalje "na upit" (čeka M10 cenovnik) → [[DNEVNIK-NAPRETKA]]
 - [ ] #1 terasa cena — **draft ✍️ [[dnevnik/2026-07-05-draft-gumeni-podovi-za-terase-cena]]**, čeka cene + implementaciju
 - [ ] #2 industrijski cena — **draft ✍️ [[dnevnik/2026-07-05-draft-industrijski-podovi-cena]]** (odluka: posebna stranica, ne sekcija), čeka cene + implementaciju
 - [ ] #3 garaže landing — **draft ✍️ [[dnevnik/2026-07-05-draft-podovi-za-garaze]]**, čeka cene/slike + implementaciju
@@ -81,7 +81,9 @@ Svaka završena stranica: red u [[DNEVNIK-NAPRETKA]] + update [[PROGRESS]] + št
 - [x] #5 tabla — ✅ implementirano `/dimenzije-kosarkaske-table/` (ID 16585) 2026-07-06, cena "na upit" (nema pravih brojeva) → [[DNEVNIK-NAPRETKA]]
 - [ ] #6 parking cena — **draft ✍️ [[dnevnik/2026-07-05-draft-podloge-za-parkiraliste-cena]]**, čeka cene/nosivost/reference
 - [ ] #7–8 tenis hub #claude-code
-- [ ] #10–20 po redosledu #claude-code
+- [x] #11 padel refresh — ✅ 2026-07-08: title/meta prepisan (`/pop-tenis/`, cilja "dimenzije padel terena" klaster ~8.000 impr, poz. 1,2–1,5, CTR je bila 1,6%) + dodat FAQ blok (4 pitanja) + FAQPage JSON-LD (nije postojao ranije) → [[DNEVNIK-NAPRETKA]]
+- [ ] #10 piklbol — nova stranica `/piklbol/`, još nije rađeno #claude-code
+- [ ] #12–20 po redosledu #claude-code
 
 ## Veze
 - [[blokovi/BLOK-C-sledece]] — C3 hub

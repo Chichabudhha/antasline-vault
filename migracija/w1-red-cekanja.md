@@ -48,13 +48,13 @@ Sortirano po GSC klikovima (12 meseci). Pravila za svaku stranicu:
 | 24 | ~~`/sportske-podloge/sportska-podloga-za-pickleball/`~~ | ~~41~~ | "Gumirana podloga za pickleball" (Bergo Ultimate Flow) | ✅ **GOTOVO 2026-07-08** (ID 16680) — legacy CPT (5053) kao izvor. 🔴 Nalaz: `/teren-za-pickleball/` post već ima Product schema sa verovatno izmišljenim recenzijama — nije dirano ovu sesiju, čeka odluku (v. PROGRESS Blokeri) |
 | 25 | ~~`/spoljnje-podne-obloge/bergo-elite/`~~ | ~~33~~ | "BERGO Elite - podloga za terase kafića" | ✅ **GOTOVO 2026-07-08** (ID 16681) — legacy CPT (5028) kao izvor, 26 boja (7 std + 19 dizajn), jedini model sa mogućnošću brendiranja logotipom, stari CPT unos → draft |
 | 26 | ~~`/industrijski-podovi/ecotile-5005-podne-ploce/`~~ | ~~31~~ | "Ecotile 500/5 podne ploče - javni objekti" | ✅ **GOTOVO 2026-07-08** (ID 16682) — legacy CPT (5301) kao izvor, najlakša Ecotile verzija (5mm), NIJE za viljuškare (max paletar 300kg), nema Woo proizvod (čisto informativna). Usput ispravljen dupli broken-link na hub-u (500/5 + 500/10), stari CPT unosi (5301, 5298) → draft |
-| 27 | `/podovi-za-radnje-i-maloprodajne-objekte/` | 26 | "Podovi za maloprodajne objekte" (R-tile kolekcija) | ⚠️ Proveri preklapanje sa #31 pre gradnje oba |
-| 28 | `/privremene-podloge-isotrack/` | 16 | "Isotrack ploče - privremeni putevi" | Srodno sa #7 (iznajmljivanje) |
-| 29 | `/lvt-podovi-za-komercijalne-i-javne-prostore/expona-click/` | 12 | "Expona Click" | LVT silo podstranica |
-| 30 | `/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/` | 7 | "Expona Commercial" | LVT silo podstranica |
-| 31 | `/industrijski-podovi/podovi-za-maloprodajne-objekte/` | 6 | "Podovi za poslovne prostore" | ⚠️ Proveri preklapanje sa #27 pre gradnje oba |
-| 32 | `/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore/` | — | "Vinil podovi Objectflor Expona commercial" | LVT silo podstranica |
-| 33 | `/industrijski-podovi/podovi-za-magacine-i-hale/` | — | "Podovi za magacine i hale" | Ecotile za magacine/hale |
+| 27 | ~~`/podovi-za-radnje-i-maloprodajne-objekte/`~~ | ~~26~~ | "Podovi za maloprodajne objekte" (R-tile kolekcija) | ✅ **GOTOVO 2026-07-08** (ID 16142, reuse orphan post — bio admin-only `conditional_render` bug + pogrešan slug, nikad live/linkovan). R-Tile specifikacija+FAQ+testimonijal, cross-link ka #31 |
+| 28 | ~~`/privremene-podloge-isotrack/`~~ | ~~16~~ | "Isotrack ploče - privremeni putevi" | ✅ **GOTOVO 2026-07-08** (ID 16111, reuse orphan post — treći nalaz admin-only `conditional_render` bug ove sesije). Isotrack L+X specifikacija, video, cross-link ka #7 |
+| 29 | ~~`/lvt-podovi-za-komercijalne-i-javne-prostore/expona-click/`~~ | ~~12~~ | "Expona Click" | ✅ **GOTOVO 2026-07-08** (ID 16684) — 12 dezena, 4 real PDF dokumenta, cross-link ka #30 |
+| 30 | ~~`/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/`~~ | ~~7~~ | "Expona Commercial" | ✅ **GOTOVO 2026-07-08** (ID 16685) — puna kolekcija (12/80 dezena), IAC Gold sertifikat, cross-link ka #29/#32 |
+| 31 | ~~`/industrijski-podovi/podovi-za-maloprodajne-objekte/`~~ | ~~6~~ | "Podovi za poslovne prostore" | ✅ **GOTOVO 2026-07-08** (ID 16683, child 16567) — opšta Ecotile 500/5 preporuka, cross-link ka #27 i Ecotile 500/5 stranici |
+| 32 | ~~`/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore/`~~ | ~~—~~ | "Vinil podovi Objectflor Expona commercial" | ✅ **GOTOVO 2026-07-08** (ID 16686) — namenska stranica za ugostiteljstvo (4 izdvojena dezena), diferencirana od #30 da izbegne duplikat, cross-link ka #30 za punu kolekciju |
+| 33 | ~~`/industrijski-podovi/podovi-za-magacine-i-hale/`~~ | ~~—~~ | "Podovi za magacine i hale" | ✅ **GOTOVO 2026-07-08** (ID 16687) — troslojni model, uporedna tabela 500/5 vs 500/7 vs 500/10, cross-linkovi ka sve tri + trake-za-obeležavanje + ESD + garaže |
 
 ## 🅱️ Kategorija B — sistemske/Woo stranice (ne treba ručni sadržaj)
 
@@ -76,13 +76,26 @@ Nijedan čist kandidat ovog kruga — sve stranice koje su ranije pretpostavljen
 
 | Live URL | Cilja na | Napomena |
 |---|---|---|
-| `/industrijski-podovi/elektroprovodni-podovi/` | `/antistatik-i-elektroprovodljivi-podovi/` | Isto značenje (elektroprovodni = antistatik/ESD) — 301 kad #1 bude gotov |
-| `/industrijski-podovi-najcesca-pitanja/` | TBD — konsolidacija | **Treća** skoro-identična FAQ varijanta (uz postojeće `izbor-industrijskog-poda-tri-najcesca-pitanja` i `-2`, oba već PARITY) — odloženo na **W2** po M odluci iz F4 (content-strategija, ne redirect posao) |
-| `/podovi-za-radnje-i-maloprodajne-objekte/` ↔ `/industrijski-podovi/podovi-za-maloprodajne-objekte/` | TBD | Moguć duplikat par (v. A #27/#31) — odluka o konsolidaciji vs 2 zasebne stranice na buildu pre gradnje |
+| `/industrijski-podovi/elektroprovodni-podovi/` | `/antistatik-i-elektroprovodljivi-podovi/` | ✅ **REŠENO 2026-07-08** — #1 antistatik stranica gotova (ID 16658), redirect dodat u `redirect-mapa-FINAL.csv` + `htaccess-301-DRAFT.txt` (aktivira se tek na dan migracije) |
+| `/industrijski-podovi-najcesca-pitanja/` | TBD — konsolidacija | **Treća** skoro-identična FAQ varijanta (uz postojeće `izbor-industrijskog-poda-tri-najcesca-pitanja` i `-2`, oba već PARITY) — i dalje odloženo na **W2** po M odluci iz F4 (content-strategija, ne redirect posao); nema akcije ove sesije |
+| `/podovi-za-radnje-i-maloprodajne-objekte/` ↔ `/industrijski-podovi/podovi-za-maloprodajne-objekte/` | — | ✅ **REŠENO 2026-07-08** (v. A #27/#31) — NISU duplikat, obe izgrađene kao zasebne stranice sa cross-linkom |
 
-## 🅵 Kategorija F — product_tag termini (NE W1 posao, ide u F6/F7)
+## 🅵 Kategorija F — product_tag termini ✅ ZATVORENO 2026-07-08
 
-Live ima 8 `product_tag` termina (`bergo`, `ergomat`, `industrijski-amortizer`, `zastita-kablova`, `zastitnik-cevi`, `samolepljiva-zastita`, `konusni-stitnik`, `industrijski-bumper`) koji ne postoje lokalno kao termini. Ovo je **odvojena taksonomija od F6 "namena" taga** (bliža brend/tip-proizvoda oznaci) — razmotriti rekreiranje pri budućem obogaćivanju proizvoda (F7), ne blokira W1 rebuild.
+Svih 8 live `product_tag` termina rekreirano (term_id 272-279) i dodeljeno **tačno istim proizvodima kao na live-u** — potvrđeno direktnim scrape-om live `/oznaka-proizvoda/*/` arhiva pre upisa (metodologija ista kao F6 namena tabela: proveri stvarne podatke pre nego što se izmišlja mapiranje):
+
+| Termin | term_id | Proizvodi | GSC klikova/12mes |
+|---|---|---|---|
+| `bergo` | 272 | Bergo Unique (1) | 1 |
+| `ergomat` | 273 | 9 Ergomat odbojnika (iste kao ispod) | 1 |
+| `industrijski-amortizer` | 274 | isti 9 proizvoda | 1 |
+| `zastita-kablova` | 275 | isti 9 proizvoda | 2 |
+| `zastitnik-cevi` | 276 | isti 9 proizvoda | 0 |
+| `samolepljiva-zastita` | 277 | Konusni štitnik za I-profil (1) | 0 |
+| `konusni-stitnik` | 278 | isti 1 proizvod | 0 |
+| `industrijski-bumper` | 279 | isti 1 proizvod | 0 |
+
+**Nalaz**: live tagovanje je preklapajuće — 4 "različita" termina (ergomat/amortizer/kablova/cevi) su u stvarnosti dodeljena identičnom skupu od 9 Ergomat proizvoda, a druga 3 termina (samolepljiva/konusni/bumper) identičnom 1 proizvodu. Nije greška u ekstrakciji — potvrđeno direktnim `curl` na sve 8 live arhiva (ne WebFetch summarizer, koji je prvi put vratio identičan tekst za 4 URL-a pa je dvostruko proveren protiv sirovog HTML-a). GSC klikovi zanemarljivi (max 2/12mes) — čisto taksonomija-parity, ne SEO landing rad. Odvojena taksonomija od F6 "namena" taga (bliža brend/tip-proizvoda oznaci). Bez novih stranica/gridova — nijedna lokalna stranica trenutno ne filtrira po ovim tagovima.
 
 ---
 
@@ -90,14 +103,20 @@ Live ima 8 `product_tag` termina (`bergo`, `ergomat`, `industrijski-amortizer`, 
 
 | Kategorija | Broj stranica |
 |---|---|
-| A — rebuild | 33 |
+| A — rebuild | ✅ 33/33 zatvoreno 2026-07-08 |
 | B — sistemske | 0 (već rešeno/automatski) |
 | C — proizvod-stranice | 0 (sve premeštene u A) |
 | D — legal/utility | 1 gotovo, 1 delom u A |
-| E — konsolidacija | 3 para/slučaja |
-| F — product_tag | 8 termina, van W1 obima |
+| E — konsolidacija | 2/3 rešeno 2026-07-08 (1 odloženo na W2 po M odluci) |
+| F — product_tag | ✅ 8/8 zatvoreno 2026-07-08 |
 
-**Top prioritet za sledeću W1 sesiju:** #27/#31 — proveriti preklapanje (`podovi-za-radnje-i-maloprodajne-objekte` ↔ `industrijski-podovi/podovi-za-maloprodajne-objekte`) pre odluke da li graditi jednu ili obe. (#1-26 ✅ svi gotovi.)
+**✅ REŠENO 2026-07-08 (#27/#31 sesija):** NISU duplikat — različit proizvod/ugao (R-Tile brendirana interlocking kolekcija za veliki promet vs. opšta Ecotile 500/5 preporuka za poslovne prostore). Obe izgrađene kao zasebne stranice, cross-link u oba smera. Usput otkriven i rešen orphan post 16142 (ceo sadržaj bio nevidljiv posetiocima zbog `conditional_render="administrator"` na svakom vc_row-u — verovatno zaboravljen probni upis iz februara 2026).
+
+**🔍 Nalaz 2026-07-08 (isotrack #28 sesija):** treći primer istog "admin-only orphan post" obrasca (uz #27) — post 16111 kreiran 2026-02-10, pun Isotrack L/X sadržaj sakriven `conditional_render="administrator"`. Nalaz se **nije ponovio** u LVT silo sesiji (#29/#30/#32) — legacy CPT `podovi-posl-prostor` je normalan generički WoodMart blog template bez conditional_render bug-a, samo netačan slug/nedostatak Yoast mete (isti obrazac kao Bergo `spoljne-podne-obloge` CPT iz ranijih sesija).
+
+**✅ REŠENO 2026-07-08 (#29/#30/#32 sesija):** #30/#32 nisu duplikat — isti proizvod (Expona Commercial), različit ugao (puna kolekcija/dizajn vs. namenski izbor za ugostiteljstvo), cross-link u oba smera, isti obrazac kao #27/#31.
+
+**🎉 KATEGORIJA A ZATVORENA 2026-07-08 (#33 sesija):** svih 33 stranica u redu čekanja izgrađeno. #33 je bio poređenje-vodič (500/5 vs 500/7 vs 500/10), izgrađen kao troslojni model umesto duplikata #4. Usput otkriven i ispravljen TREĆI dupli broken-link par na `/industrijski-podovi/` hub-u (Ergonomski podovi + Odbojnici su linkovali na stare `industrija-podovi` legacy CPT unose — ista šema kao 500/5+500/10 bug iz #26 sesije). Preostaje samo Kategorija E (3 konsolidacije, W2 content-strategija odluka) i Kategorija F (product_tag termini, van W1 obima).
 
 **🔍 Nalaz 2026-07-08 (bergo-xl sesija) — legacy `spoljne-podne-obloge` CPT porodica:** postoji ceo stari custom post type (bez j u slugu, Porto-era, publicly_queryable) sa 6 unosa: `bergo-unique` (4936, sad draft/`-stara`), `bergo-elite` (5028, sad draft/`-stara`), `bergo-xl` (5039, sad draft/`-stara`), `bergo-solid` (5051, publish), `bergo-flow` (5053, publish), `bergo-ultimate` (5061, draft), `bergo-easy` (5830, draft). Svi renderuju kroz generički WoodMart blog/CPT template (sidebar, "Posted by", kategorija badge) — **ne** kroz al- landing šablon, i nemaju Yoast metu. Sadrže realan, bogat sadržaj (specifikacije, boje sa hex kodovima, foto koraci ugradnje) koji je iskorišćen pri rebuild-u #9 (bergo-easy), #22 (bergo-unique), #25 (bergo-elite) — isti postupak svaki put (nova `page` pod parent 16590, stari CPT unos → draft `-stara`).
 

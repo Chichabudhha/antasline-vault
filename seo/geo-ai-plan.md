@@ -24,7 +24,7 @@ azurirano: 2026-07-04
 
 ### 1. Tehnički pristup za AI crawlere ⭐⭐⭐ (5 min + odluka)
 - [ ] `robots.txt` na LIVE sajtu: proveriti/dozvoliti `GPTBot`, `OAI-SearchBot`, `PerplexityBot`, `ClaudeBot`, `Google-Extended` #ceka-miroslav
-- [ ] Dodati `llms.txt` u root (mapa ključnih stranica za LLM-ove) — pripremiti na lokalnom buildu za migraciju #claude-code
+- [x] ✅ ZATVORENO 2026-07-08 — `llms.txt` kreiran u root-u lokalnog builda (produkcioni domen, aktivira se na migraciji) → [[DNEVNIK-NAPRETKA]]
 - Sajt je server-rendered WordPress ✓ (AI crawleri ne izvršavaju JS — mi smo OK)
 
 ### 2. Citabilan sadržaj ⭐⭐⭐ (već u toku kroz C3)
@@ -34,8 +34,8 @@ AI citira stranice sa jasnim činjenicama, tabelama i brojevima. **[[seo/plan-no
 - [ ] Conquest članak 2542 refresh — kad neko pita AI "epoksid ili alternativa za halu", ovaj članak je citat-kandidat, ali poz. 26 za "epoksi podovi" = AI ga ne vidi. SEO refresh iz kw-analize #7 rešava i GEO. #claude-code
 
 ### 3. Entitet — nedvosmislen identitet ⭐⭐ (1–2h)
-- [ ] `Organization` + `LocalBusiness` JSON-LD sitewide sa `sameAs` (GMB, društvene mreže) #claude-code
-- [ ] "O nama" sa proverljivim činjenicama: godina osnivanja, brendovi (Ecotile, Bergo distributer), projekti, klijenti #claude-code
+- [x] ✅ ZATVORENO 2026-07-08 — `Organization` (Yoast, već postojao sa `sameAs`) proširen filterom na `LocalBusiness` + adresa/telefon (NAP) → [[DNEVNIK-NAPRETKA]]
+- [x] ✅ Već gotovo od 2026-07-07 — "O nama" ima proverljive činjenice (15+ godina, brendovi Ecotile/Bergo/Sit-in, imenovane reference HTEC/Bosch/Institut Vinča itd.)
 - [ ] NAP (ime/adresa/telefon 069 2340072) identičan: sajt = GMB = direktorijumi #ceka-miroslav
 
 ### 4. Pominjanja treće strane ⭐⭐⭐ (najjači signal, traje)

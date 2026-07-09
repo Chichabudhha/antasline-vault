@@ -57,12 +57,13 @@ azurirano: 2026-07-06
 | 1.1 | Silo rebuild: `/spoljnje-podne-obloge/` → `/podloge-za-parking/` → `/kontakt/` → `/o-nama/` | CC | ✅ 2026-07-07 — sve 4 gotove (spoljne bez j, parking-staze, kontakt forma, o-nama). C1 parity: live `/spoljnje-*` → lokal `/spoljne-*` |
 | 1.2 | ✅ F5 trijaža zatvorena 2026-07-07 → **[[migracija/w1-red-cekanja]]** (33 stranice, kategorija A) je izvor istine za redosled. Gotovo: #1-12 (12/33) ✅ svi zatvoreni 2026-07-07/08 uključujući trake-za-obelezavanje i ceo LVT silo start (parent+Flow). Sledeći: kancelarije-i-poslovni-prostori (128), padel-tereni (119) | CC | Svaka nova namenska landing prati F7 standard (ikonice/skica/video iz woodmart-sabloni) |
 | 1.3 | ✅ ODLUČENO 2026-07-07 (M8): **pun reimport svih 30 postova sa live** — izvršenje po [[migracija/promptovi/F3-posts-reimport]] | CC | restyle postova ide posle, iterativno |
-| 1.4 | Footer builder (WoodMart HTML block) + bela varijanta logoa | CC | otvoreno iz [[migracija/woodmart-sabloni]] |
-| 1.5 | Meni: proširiti novim silo/C3 stranicama | CC | posle 1.1–1.2 |
+| 1.4 | ✅ ZATVORENO 2026-07-08 — Footer builder (5 kolona: logo+adresa/Antas Line/Podovi/kontakt/social) + bela varijanta logoa | CC | detalji [[migracija/woodmart-sabloni]] |
+| 1.5 | ✅ ZATVORENO 2026-07-08 — Meni proširen na 5-kategorijsku strukturu (Sport/Terase i dom/Industrija/Poslovni prostori/Specijalni podovi, parity sa live) | CC | 43 stavke, 3 nivoa |
 | 1.6 | Mobile viewport vizuelni QA (sve rebuild stranice) | CC | media queries napisani, nije snimljeno |
 | 1.7 | Figma sync (testimonials, "Najprodavanije 2025") | CC+M | čeka Figma link + GMB recenzije #ceka-miroslav |
-| 1.8 | Woo katalog režim: "Dodaj u korpu" → "Zatraži ponudu" (pre-popunjena forma → `/hvala-za-poruku/`, postojeći tracking hvata sve) — manje frikcije za B2B, manje Woo skripti (LCP). ✅ Odluka M9 doneta 2026-07-07 — spremno za implementaciju | CC | uklapa se sa `/obogati-proizvod` (cena "na upit" polje); **F7 standard (2026-07-07)** sada važi za svako obogaćivanje: standardi-sa-linkovima + namena tagovi ugrađeni u skill |
-| 1.9 | Audit `tel:` linkova na celom buildu (SQL grep) — više brojeva u opticaju (063 stari live, 069/072 CTA standard, 074); ujednačiti na jedan primarni | CC | quick win, 30 min |
+| 1.8 | ✅ ZATVORENO 2026-07-08 (polish Faza 0) — WoodMart `catalog_mode` + "Zatražite ponudu" na svakom proizvodu → `/kontakt/?form-naslov=Ponuda: X` (prefill `default:get`) → submit redirektuje na `/hvala-za-poruku/` (BLOK A tracking hvata). Compare/wishlist/reviews ugašeni. Usput: CF7 forma 16593 popravljena (bila nefunkcionalna — prazan `_form`/`_mail` postmeta) i shop stranica kreirana (`/katalog/` bio 404) | CC | polish Faze 1/2 (proizvodi/postovi): [[migracija/w1-polish-red-cekanja]] |
+| 1.9 | ✅ ZATVORENO 2026-07-08 — audit `tel:` linkova: 063 se nigde ne pojavljuje lokalno, jedini nalaz je header top-bar koji je koristio 074 dok CTA/mobilna ikonica koriste 072 — ujednačeno na 072 sitewide (`functions.php`) | CC | quick win, 30 min |
+| 1.10 | ✅ ZATVORENO 2026-07-09 — **"Brzi upit" dinamička forma** (CF7 16737) na dnu svih usluga/postova, mejl javlja izvor kroz `[_post_title]`/`[_post_url]`; 16593 skraćena (jedno ime/firma polje); CTA scroll-to-#upit; tag_base parity fix usput → [[migracija/brzi-upit-forma]] | CC | ⚠️ mu-plugin mail logger obrisati pre migracije (u 3.10) |
 
 ### W2 — SEO CONTENT (C3 + GEO)
 Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po stranici: Yoast >80, FAQ + FAQPage/Product schema, cena od–do gde ima smisla, CTA 072 + forma, interni link ka `/industrijski-podovi/`, prvi pasus = direktan odgovor (GEO pravilo).
@@ -71,12 +72,12 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 |---|---|---|---|
 | 2.1 | Tier1 implementacija: #1 terase-cena, #2 industrijski-cena, #3 garaže, #6 parking-cena (draftovi gotovi ✍️) | CC | 🔴 **cene od M** |
 | 2.2 | Odbojka refresh (#9) — paket spakovan | CP | stranica samo na live → [cpanel-live] #ceka-miroslav |
-| 2.3 | Title/meta prepis 4 stranice: /pop-tenis/, /podloga-za-odbojkaske-terene/, /spoljnje-podne-obloge/, conquest 2542 | CC | ništa — +500–700 kl./90d, najbrži ROI |
+| 2.3 | ✅ ZATVORENO 2026-07-08 — Title/meta prepis 4 stranice: /pop-tenis/, /podloga-za-odbojkaske-terene/, /spoljnje-podne-obloge/, conquest 2542 (GSC query-level podaci pre pisanja, dedup Yoast postmeta, 074→072 fix u 2542) | CC | +500–700 kl./90d očekivano, prati se |
 | 2.4 | Tier2: šljaka hub (#7), tenis dimenzije (#8), piklbol (#10), padel refresh (#11) | CC | — |
 | 2.5 | Tier3: vertikali (kancelarije #12 → restorani #13 → industrija #14 → radnje #15 → zdravstvo #16 → štamparije #17) | CC | — |
 | 2.6 | Tier4: reference stranice (#18), /bergo/ brend (#19), teretane (#20) | CC | — |
-| 2.7 | Product schema na sve money stranice (Bergo, Ecotile, konstrukcije) | CC | Product snippet CTR 10,5% vs prosek 5,5% |
-| 2.8 | GEO paket ([[seo/geo-ai-plan]]): `llms.txt` + Organization/LocalBusiness JSON-LD sitewide + "O nama" činjenice | CC | — |
+| 2.7 | ✅ ZATVORENO 2026-07-08 — Product schema na sve WooCommerce proizvode (globalni `functions.php` fix, WC native izlaz se nije renderovao) | CC | Product snippet CTR 10,5% vs prosek 5,5%; bez aggregateRating (nema pravih recenzija) i bez izmišljene cene |
+| 2.8 | ✅ ZATVORENO 2026-07-08 (CC deo) — GEO paket: `llms.txt` kreiran + Organization proširen na LocalBusiness+NAP (filter, sitewide). "O nama" bio već gotov od ranije. Preostaje samo #ceka-miroslav deo (robots.txt na live, PR/GMB) | CC | — |
 | 2.9 | Conquest članak 2542 refresh (poz. 26 za "epoksi podovi" → SEO+GEO) | CC | — |
 
 ### W3 — SEO TEHNIČKA + MIGRACIJA (C1/C2 + CWV)
@@ -93,7 +94,7 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 | 3.7 | XML sitemap + robots.txt (+ AI crawleri: GPTBot, PerplexityBot, ClaudeBot…) + llms.txt | CC | robots na live = [cpanel-live] odluka #ceka-miroslav |
 | 3.8 | Woo checkout + product page test na lokalu | CC | — |
 | 3.9 | `.htaccess` 301 fajl generisan iz finalne CSV mape | CC | aktivira se TEK na dan migracije |
-| 3.10 | Pre-migration checklist + full regression (forme, GTM, linkovi, slike) | CC | N7 |
+| 3.10 | Pre-migration checklist + full regression (forme, GTM, linkovi, slike) + 🔴 obrisati `mu-plugins/al-local-mail-log.php` i `wp-content/mail-log.txt` (lokalni mail logger presreće SVE mejlove — na produkciji forme ne bi slale ništa) + verifikovati stvarno slanje mejla na produkciji | CC | N7 |
 | 3.11 | **MIGRACIJA 2026-08-31** (1 dan): backup live → db+wp-content prebacivanje → URL zamena → 301 aktivacija → verifikacija | CC+M | SSH/hosting info #ceka-miroslav |
 | 3.12 | Post-live (do 2026-09-02+): GSC sitemap resubmit, crawl errors, GA4/GTM verify, CWV field data + UptimeRobot (besplatan) + dnevni 404 log pregled prvih 14 dana (umesto ad-hoc) | CC+CP | — |
 | 3.13 | ✅ ZATVORENO 2026-07-07 — `nocni-backup.ps1` (mysqldump + zip wp-content, rotacija 14) registrovan u Task Scheduler-u, radi svako veče u 03:00. Test uspešan: 90MB DB + 3,6GB wp-content → 3GB zip, 27 min. Trenutna destinacija: LOKALNO (`antasline-backups\auto\`) — OneDrive nije ulogovan, skripta automatski prebacuje na OneDrive čim se M prijavi (proverava svako pokretanje) | CC | ⏳ #ceka-miroslav: prijava na OneDrive za pravu cloud kopiju |

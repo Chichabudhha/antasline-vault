@@ -254,9 +254,207 @@ Kad namenska landing tačno odgovara postojećoj Woo kategoriji (ne poduzorku pr
 Cross-link u oba smera i dalje obavezan (kategorija je Layout Builder `woodmart_layout` CPT — v. dnevnik
 "10 WooCommerce kategorija", term_id 245-254, str_replace na postojeći pasus, ne novi red).
 
+## F7.7 — Footer + glavni meni (W1 1.4/1.5, 2026-07-08)
+
+**Meni**: default lokalni `main-menu` (term_id 67) je imao samo 4 flat stavke (Početna/O nama/Aktuelnosti/Kontakt) —
+Figma odluka "5 kategorija" (gotcha #6) nikad nije izvedena. Live WebFetch je izvor istine za punu strukturu
+(Sport/Terase i dom/Industrija/Poslovni prostori/Specijalni podovi, ~34 podstavke, 1 pod-podstavka pod
+"Oprema za sportske terene" → "Košarkaške konstrukcije"). Rebuild preko `wp_update_nav_menu_item()`
+(NE direktan SQL insert — hendluje `_menu_item_*` meta i `menu-item-parent-id` hijerarhiju ispravno):
+
+```php
+wp_update_nav_menu_item( $menu_id, 0, array(
+    'menu-item-title'     => 'Naslov',
+    'menu-item-object-id' => $post_id,       // ili term_id za taxonomy tip
+    'menu-item-object'    => 'page',         // 'post' / 'product' / 'product_cat' itd.
+    'menu-item-type'      => 'post_type',    // 'taxonomy' za kategorije
+    'menu-item-parent-id' => $parent_item_id, // 0 = top level, inače povratna vrednost roditeljskog poziva
+    'menu-item-position'  => $order,
+    'menu-item-status'    => 'publish',
+) );
+```
+
+Pre upisa: potvrditi da SVI target slug-ovi postoje lokalno (`SELECT ID, post_name, post_parent FROM
+wp_posts WHERE post_name IN (...)`) — u ovoj sesiji svih ~34 URL-a je već postojalo (W1 1.2 red čekanja
+zatvoren ranije), nula 404.
+
+**Footer** — WoodMart footer je "kolona = zasebna sidebar" model, ne jedna sidebar sa auto-raspoređivanjem:
+
+- `sidebar-footer.php` zove `dynamic_sidebar('footer-' . $index)` PO KOLONI. Broj kolona dolazi iz
+  `woodmart_get_opt('footer-layout')` (default `13` = pet kolona) → `footer-1` ... `footer-5` sidebar-ovi
+  se registruju dinamički u `theme-setup.php`. Widgeti se raspoređuju preko
+  `sidebars_widgets['footer-N'] = array('widget-id')` — SVE u `footer-1` = sve u prvu kolonu, ostale prazne
+  (prva pogrešna pretpostavka ove sesije).
+- Postojeći NEAKTIVNI widgeti (`wp_inactive_widgets`) često nose prave stare podatke iz teme/migracije
+  pre WoodMart-a (`follow-us-widget-2` je već imao tačne social linkove, `custom_html-3` "Kontaktirajte nas"
+  tačan telefon) — proveriti `get_option('widget_<type>')` PRE pisanja novog sadržaja, reaktivacija je brža
+  i manje rizična od pisanja ispočetka.
+- Bela varijanta logoa: swap svih obojenih/teget `fill="#..."` na `#FFFFFF`, I OBRNUTO originalni
+  `fill="#ffffff"` (negative-space cutout unutar mark-a) na navy — replicira identičan optički efekat
+  (pozadina "proviruje" kroz cutout) na tamnoj pozadini kao original na svetloj.
+
+### 🔴 KRITIČAN gotcha — `xts-woodmart-options` je SVE-ILI-NIŠTA, ne merge
+
+WoodMart-ov `XTS\Admin\Modules\Options::load_options()` radi `self::$_options = get_option('xts-woodmart-options')`
+— **REPLACE, ne merge** — svaki put kad je ta DB opcija truthy (neprazna). `load_defaults()` (koji puni SVIH
+~883 registrovanih polja default vrednostima) se izvršava PRE toga (`init` prioritet 100 vs 110) i ostaje
+netaknut SAMO ako je opcija prazna/falsy. Direktan `update_option('xts-woodmart-options', ['moj_kljuc' => 'x'])`
+sa par ključeva BRIŠE sve ostale default-e (npr. `disable_footer`, `disable_copyrights`, `footer-layout`) —
+`footer.php` čita te ključeve BEZ default argumenta u `woodmart_get_opt()` pozivu, pa missing = `false` =
+**ceo `<footer>` element se tiho renderuje prazan** (ni copyrights bar). Nema PHP greške, nema warning-a —
+samo nestane sadržaj.
+
+**Pravilan postupak za izmenu bilo kog WoodMart theme option-a preko koda (ne UI):**
+1. Napraviti privremeni `wp-content/mu-plugins/zz-fix-TEMP.php` (MORA biti mu-plugin — `init` hook mora da se
+   zakači PRE `wp-load.php` završi bootstrap, obično CLI skripta sa `require wp-load.php` na vrhu je već
+   prekasno jer se `init` odradi TOKOM tog require-a)
+2. U mu-pluginu: `add_action('init', function(){ $defaults = \XTS\Admin\Modules\Options::get_options();
+   $full = array_merge($defaults, $moji_override_kljucevi); update_option('xts-woodmart-options', $full); }, 105);`
+   (prioritet 105 = između `load_defaults`@100 i `load_options`@110, hvata pun default niz pre nego što se
+   prepiše)
+3. Pokrenuti JEDAN normalan front-end request (curl na bilo koju stranicu) da se mu-plugin izvrši
+4. Obrisati mu-plugin fajl odmah
+
+**Drugi keš sloj — CSS se NE regeneriše automatski posle `update_option`:** WoodMart generisani CSS iz
+theme opcija (uključujući `.wd-footer{background-color:...}` iz `footer-bar-bg` polja) je keširan preko
+`XTS\Modules\Styles_Storage` (data_name `theme_settings_default`), status `xts-theme_settings_default-status`
+mora biti `'valid'` DA BI SE KORISTIO keš — invalidacija normalno ide preko `xts_after_theme_settings` action-a
+koji ima guard (`$_GET['settings-updated']`/`$_GET['page']`) i ne okida se van pravog admin-save HTTP zahteva.
+Fix: `(new \XTS\Modules\Styles_Storage('theme_settings_default'))->reset_data(); ->delete_css();` — sledeći
+front-end request automatski regeneriše CSS iz trenutnih opcija (`print_styles()` na `wp` hook proverava
+`is_css_exists()` i piše svež CSS ako je false).
+
+## F7.8 — Footer/meni polish krug (2026-07-08, nastavak F7.7)
+
+Pet vizuelnih ispravki posle prve footer/meni verzije — sve rešeno u istoj sesiji:
+
+- **Bela linija ispod poslednje sekcije**: `main.wd-content-layout` nosi sitewide `padding-bottom:40px`
+  (WoodMart default) — nevidljivo na belim/mist završecima, otkriveno kad stranica završava
+  `al-section--navy` CTA-om. Fix: `main.wd-content-layout:has(.al-section) { padding-bottom: 0; }`
+  (scoped preko `:has()` na stranice koje koriste naš sistem, ne dira default Woo/blog stranice).
+- **Ikonice u sadržaju treba da prate `al-icon` stil** (isti stroke/viewBox kao USP kartice), ne generičke
+  Porto/tuđe SVG-ove zaostale iz starih widget-a. Za inline icon+tekst (ne card layout) koristiti
+  `.al-icon--sm` (20px, `display:inline-block`) — bazni `.al-icon` je `display:block` 46px sa
+  `margin-bottom`, lomi inline layout ako se ne override-uje.
+- **Social ikonice — koristiti WoodMart-ov native `[social_buttons]` shortcode**
+  (`woodmart_shortcode_social()`, `inc/shortcodes/social.php`), NE custom pill-dugmad/SVG. Primer:
+  ```php
+  do_shortcode('[social_buttons type="follow" social_links_source="custom" style="default" form="circle" color="light" fb_link="..." isntagram_link="..." linkedin_link="..." pinterest_link="..."]');
+  ```
+  (pažnja: parametar je `isntagram_link`, tipfeler ugrađen u temu, ne popravljati). Renderuje prave
+  icon-font glyph-ove iz `woodmart-font` seta. **Mora se pre-renderovati preko `do_shortcode()` i snimiti
+  kao statičan HTML** ako ide u `custom_html` widget — taj widget tip namerno NE prolazi kroz
+  `do_shortcode()` (WP core sigurnosna odluka). Brend boje se override-uju preko istih CSS custom
+  properties koje shortcode koristi (`--wd-social-color/-bg/-brd-color[-hover]`), scope-ovano na
+  wrapper klasu (npr. `.wd-footer .wd-social-icons`).
+- **Sticky header cramping = simptom, ne uzrok** — ako se sticky header čini "preuzak", prvo proveriti da
+  li se glavni meni prelama u 2 reda (čak i u ne-sticky stanju) pre nego što se diže `sticky_height`.
+  Uzrok je često prezasićen `mainmenu` (previše top-level stavki/dugih reči na 1222px kontejneru) — rešiti
+  raspodelu stavki (v. sledeća stavka) PRE podešavanja visine. `--nav-gap` na `.wd-nav` (default 20px)
+  je prvi lako podesiv parametar da se dobije još prostora bez sečenja stavki.
+- **Sekundarni/utility meni (odvojen od glavnog kategorija-menija)**: header builder `Menu` element
+  (razlikuje se od `Mainmenu`) prima `menu_id` DIREKTNO (ne zavisi od theme `nav_menu_locations`), pa
+  se može ubaciti bilo koji WP meni (`wp_create_nav_menu()`) u bilo koju header-builder kolonu
+  (`'type' => 'menu', 'params' => ['menu_id' => ['value' => $term_id, 'type' => 'select'], ...]`).
+  Koristiti za "gornji red" utility linkove (Početna/O nama/Kontakt/Aktuelnosti) odvojeno od glavnog
+  kategorija-menija u `general-header` redu. 🔴 **Mobile parity**: ako je top-bar/kolona gde utility meni
+  živi markirana `hide_mobile: true`, taj meni je NEVIDLJIV na mobilnom — dodati isti sadržaj (linkovi) i u
+  `mobile-menu-widgets` sidebar (postojeća WoodMart oblast "Area after the mobile menu", obično prazna).
+- 🔴 **Header builder CSS keš je ODVOJEN od theme options keša** (v. F7.7 `xts-woodmart-options` gotcha) —
+  isti `XTS\Modules\Styles_Storage` mehanizam, ali drugi `data_name`: `default_header` (ne
+  `theme_settings_default`). Izmena `sticky_height`/bilo čega u `woodmart_default_header_structure`
+  filteru se ne pojavljuje dok se ne resetuje:
+  ```php
+  (new \XTS\Modules\Styles_Storage('default_header'))->reset_data();
+  (new \XTS\Modules\Styles_Storage('default_header'))->delete_css();
+  ```
+
+## F7.9 — CF7 + katalog režim gotcha-i (2026-07-08, polish Faza 0)
+
+- 🔴 **CF7 čita formu iz `_form` POSTMETA, ne iz `post_content`** (isto: mail iz `_mail`,
+  poruke iz `_messages`). Programski kreirana forma upisom samo u `post_content` se renderuje
+  PRAZNA (samo hidden polja) i mail nikad ne odlazi — bez greške, bez warning-a. Pravi način:
+  `WPCF7_ContactForm::get_instance($id)` → `get_properties()` → izmena → `set_properties()` →
+  `save()` (save sinhronizuje i post_content).
+- 🔴 **CF7 tag gramatika: `[tip ime OPCIJE... "VREDNOSTI"...]`** — sve opcije MORAJU pre
+  quoted vrednosti; opcija posle quoted vrednosti (`placeholder "X" autocomplete:tel`) obara
+  ceo tag (renderuje se kao goli tekst). Opcije koriste dvotačku (`autocomplete:tel`,
+  `default:get`), NIKAD HTML-atribut sintaksu (`autocomplete="tel"` — znak `="` takođe obara
+  tag). Ispravno: `[text* ime autocomplete:tel default:get placeholder "Tekst"]`.
+- **CF7 prefill iz URL-a**: opcija `default:get` na polju → vrednost iz GET parametra sa
+  ISTIM imenom kao polje (`?form-naslov=...`). Koristi se za "Zatražite ponudu" tok sa
+  proizvoda (`add_query_arg('form-naslov', rawurlencode('Ponuda: '.$product->get_name()), ...)`).
+- **`wpcf7_mail_sent` PHP hook NE može da echo-uje `<script>` ka posetiocu** — izvršava se u
+  AJAX/REST kontekstu, output se odbacuje (ili kvari JSON odgovor). Za post-submit ponašanje
+  (redirect, tracking) koristiti front-end `document.addEventListener('wpcf7mailsent', ...)`
+  kroz `wp_footer`.
+- **WoodMart `catalog_mode`** (theme option): skida add-to-cart sa loop-a i single-a +
+  redirektuje cart/checkout na home. NE skida compare/wishlist/reviews — to su odvojene
+  opcije (`compare`, `compare_on_grid`, `wishlist`, `product_loop_wishlist`,
+  `enable_reviews_tab` + WC `woocommerce_enable_reviews`). Prazan "Shipping & Delivery" tab
+  dolazi iz `additional_tab_title` default vrednosti — isprazniti title da nestane. Sve kroz
+  mu-plugin merge postupak (F7.7).
+- **"Zatražite ponudu" CTA na proizvodu**: `woocommerce_single_product_summary` prioritet 30
+  (= tačna pozicija uklonjenog add-to-cart dugmeta). `.al-btn--ghost` je bele boje — na beloj
+  proizvod stranici nevidljiv, treba navy override (`.al-product-quote .al-btn--ghost`).
+- 🔴 **Shop stranica ne nastaje sama**: `woocommerce_shop_page_id` može da pokazuje na
+  nepostojeći post (ovde 1614 iz starog importa) → shop URL 404 bez ikakve greške u adminu.
+  Fix: kreirati stranicu, `update_option('woocommerce_shop_page_id', $id)`,
+  `flush_rewrite_rules(true)`. Lokalno: `/katalog/` = ID 16736.
+- **Sticky toolbar custom linkovi**: `sticky_toolbar_fields` prima `link_1`..`link_5`
+  (svaki ima `link_N_url`/`link_N_text`/`link_N_icon` opcije) — pun srpski tekst i `tel:` URL
+  rade. Bez attachment ikonice span `.wd-tools-icon` ostaje prazan → ikonica preko CSS
+  `background-image` na `.wd-toolbar-link-N .wd-tools-icon` (child `images/icons/` SVG-ovi).
+
+## F7.10 — Brzi upit / dinamička forma gotcha-i (2026-07-09)
+
+Puna strategija i uputstvo: [[migracija/brzi-upit-forma]]. Ovde samo gotcha-i:
+
+- 🔴 **CF7 `[_post_title]`/`[_post_url]` mail tagovi rade SAMO kad je forma renderovana
+  `in_the_loop()`** — CF7 tada upisuje hidden `_wpcf7_container_post` = get_the_ID()
+  (`contact-form.php:719`); van loop-a (npr. `wp_footer`) container = 0 i tagovi se
+  resolve-uju u PRAZAN string (bez greške). Za sitewide ubacivanje forme: `the_content`
+  filter **prio 12** (posle wpautop@10/do_shortcode@11; sopstveni markup + ručni
+  `do_shortcode()` na CF7 shortcode — ne prolazi wpautop).
+- 🔴 **`wpcf7mailsent` se NE okida ako `wp_mail` ne uspe** (→ `wpcf7mailfailed`) — na XAMPP-u
+  bez SMTP-a redirect na hvala stranicu deluje "pokvareno" a problem je mail transport.
+  Lokalni fix: mu-plugin `pre_wp_mail` logger (`al-local-mail-log.php`) koji vraća `true` i
+  loguje u `wp-content/mail-log.txt` — bolji od `wpcf7_skip_mail` jer se mail template
+  KOMPAJLIRA pa se vidi resolve special tagova. ⚠️ OBRISATI pre produkcije.
+- **`form-row`/`form-col-6` klase u CF7 markupu do 2026-07-09 NISU imale CSS nigde** —
+  stilizovano u `antas-design.css` (`.wpcf7 .form-row` flex + `flex: 1 1 240px` kolone =
+  auto-stack na mobilnom bez media query-ja).
+- **`scrollIntoView({behavior:'smooth'})` se ne animira u automatizovanom Chrome tabu**
+  (rAF ne radi u nefokusiranom tabu) — ista familija kao `loading="lazy"` nalaz (F7 P4).
+  Instant varijanta dokazuje tačan target; smooth radi za pravog korisnika.
+- 🔴 **Woo permalink opcija + `flush_rewrite_rules(true)` u ISTOM PHP procesu ne radi** —
+  taksonomija se registruje na `init` sa STAROM vrednošću opcije, pa flush upiše stara
+  pravila (bez greške; simptom: novi URL-ovi 404, stari i dalje 200). Fix: flush u SVEŽEM
+  procesu/requestu posle izmene opcije. (Nađeno pri `tag_base` → `oznaka-proizvoda` fixu.)
+- 🔴 **CF7 mail_2 (auto-reply) čini email polje faktički OBAVEZNIM** — mail_2 recipient
+  `[form-email]` sa praznim poljem obara CEO submit u `mail_failed` (nema redirecta na
+  hvala stranicu, nema konverzije). CF7 nema uslovno slanje mail_2 → `[email* ...]`.
+- 🔴 **`woodmart_products` shortcode upisuje kolone kao INLINE stil** (`--wd-col-lg:3` na
+  grid elementu) — CSS override kolona mora `!important`:
+  `.wd-products.grid-columns-3 { --wd-col-lg: 4 !important; }`.
+- **`wd-more-desc` hover blok se izliva van kartice** — WoodMart base hover na hover
+  prikazuje sirovi `post_content` excerpt u absolute fade bloku koji se širi ISPOD kartice
+  preko sledećeg reda (naročito ružno dok su opisi blok teksta, pre polish Faze 1).
+  Ugašeno globalno: `.wd-product .wd-more-desc { display: none; }`.
+- **Full-bleed sekcija iz `the_content` konteksta**: viewport breakout
+  `width:100vw; margin-left:calc(50% - 50vw)` radi SAMO kad je content kolona centrirana
+  u viewportu — na layoutu sa sidebar-om (blog postovi) breakout je iskošen (levo iseče,
+  desno rupa). Fix: `body:has(.sidebar-container)` override vraća blok u kolonu.
+  Stranice (page) nemaju `.sidebar-container` u DOM-u uopšte, postovi imaju — pouzdan uslov.
+- 🔴 **base.css `:is(.entry-content, ...) > :where(:last-child) { margin-bottom: 0 }` gazi
+  al-diag negativni margin-bottom** kad je diag sekcija POSLEDNJE dete entry-content-a —
+  `:is()` nosi specifičnost najspecifičnijeg argumenta (ovde `.is-layout-constrained >
+  .wp-block-group__inner-container` = 0,2,0), pa dvoklas selektor gubi na kasnijem redu
+  učitavanja. Simptom: bela traka visine --al-cut između sekcije i futera. Fix: selektor
+  sa TRI klase (npr. `.al-section.al-diag-top.al-quick-quote`). Diag u shorthand sudaru:
+  `padding` shorthand kasnijeg pravila gazi `padding-top` iz `.al-diag-top` — cut se mora
+  uračunati u sopstveni padding-top.
+
 ## Otvoreno
-- [ ] Mobilni viewport vizuelna provera (media queries napisani, nije snimljeno) #claude-code
-- [ ] Bela varijanta logoa za navy footer #claude-code
-- [ ] Footer builder (WoodMart HTML block) — još default #claude-code
+- [ ] Mobilni viewport vizuelna provera (media queries napisani, nije snimljeno) — sad uključuje i B2B sticky toolbar (Katalog/Pozovite/Ponuda) #claude-code
 - [ ] Figma sync — čeka link od Miroslava #ceka-miroslav
-- [ ] Meni: proširiti sa novim silo stranicama kad se izgrade
