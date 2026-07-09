@@ -57,3 +57,21 @@ require_once ABSPATH.'wp-admin/includes/taxonomy.php';
 
 ## Claude Code ograničenje
 - Bash komande >~965 bajtova bacaju "Command too long for parsing" → koristiti Write/Edit alat ili `bash skripta.sh`.
+
+## XAMPP / lokalno okruženje (CWV baseline, 2026-07-09)
+- **XAMPP po default-u NEMA uključen OPcache** — WP render je zbog toga bio ~8–10s TTFB po stranici (prvi zahtevi posle Apache restarta vise i >60s). Fix u `C:\xampp\php\php.ini`: odkomentarisati `zend_extension=opcache` + `opcache.enable=1` (+ `opcache.jit=disable`). Efekat: TTFB ~2,4–3,4s. Svako lokalno merenje performansi bez opcache-a meri XAMPP artefakt, ne sajt.
+- **OPcache + XAMPP Apache = crash bez fixa**: worker threadovi imaju premali stack → PHP puca sa `0xC00000FD` (stack overflow) + `VirtualProtect() failed [87]` u error.log, a curl dobija connection reset (000) bez HTTP odgovora. Fix: `conf/extra/httpd-mpm.conf` → dodati `ThreadStackSize 8388608` u `<IfModule mpm_winnt_module>` blok, pa restart Apache-a.
+- XAMPP Apache NIJE Windows servis (`httpd -k restart` javlja "No installed service") — restart = `Stop-Process -Name httpd` pa start `httpd.exe` detached (ili XAMPP Control Panel).
+- Posle Apache restarta prva poseta traje 12s+ (hladan opcache) — pre bilo kakvog merenja zagrejati sve ciljne stranice curl-om.
+- Lighthouse 13 nema klasične image audite (`modern-image-formats` itd. premešteni u insights) — nalaze o slikama vaditi iz `network-requests` liste u JSON-u.
+- Dijagnostika "gde WP zahtev visi": privremeni mu-plugin koji na `-99999` prioritetu markira microtime po hook-ovima (muplugins_loaded → shutdown) + `pre_http_request`/`http_api_debug` za odlazne HTTP pozive → log fajl pokaže tačnu fazu. Obrisati posle upotrebe.
+
+## Porto-functionality deaktivacija (2026-07-09)
+- **No-op shortcode shim u child temi mora da pokrije SVE porto_* tagove iz baze** — shim registruje tag samo ako ne postoji (`!shortcode_exists`), pa dok je porto plugin bio aktivan, pravi shortcode je imao prednost; posle deaktivacije svaki tag VAN shim liste curi kao go tekst (potvrđeno: `[porto_product]`) + nosi PCRE segfault rizik (backtick-JSON parametri). Popis tagova: `SELECT post_content ... LIKE '%[porto_%'` pa regex preko svih publish redova.
+- **Legacy CPT-ove registruje CPT UI, ne porto** (industrija-podovi, podovi-posl-prostor, spoljne-podne-obloge, vestacka-trava, sportski-podovi2) — prežive deaktivaciju. `portfolio` i `porto_builder` su Portovi — gube javni URL ali sadržaj ostaje u bazi kao izvor.
+- **`[porto_image_gallery images="..."]` → native `[gallery ids="..." columns="4" size="medium" link="file"]`** je čista 1:1 zamena (isti attachment ID-evi); native default `size` je thumbnail 150×150 (premalo) — uvek eksplicitno `size="medium"`.
+- Blok "CTA pri dnu" (porto_builder 4945, referenciran na 6 starih stranica) je imao `conditional_render=administrator` bug — treći put da ovaj obrazac maskira sadržaj (v. #27/#28 orphan nalaze): pre panike "izgubili smo sekciju" proveriti da li je posetilac ikad i video sekciju.
+
+## Task Scheduler / backup (2026-07-09)
+- **"Registrovan u Task Scheduler + ručni test prošao" ≠ "backup radi"** — noćni backup nikad nije izvršen kao scheduled run: default `New-ScheduledTaskSettingsSet` nosi `DisallowStartIfOnBatteries=True` (laptop na bateriji u 03:00 → task odbijen, `LastTaskResult=0x800710E0`) i `StartWhenAvailable=False` (propušten termin se ćutke preskače). Za backup taskove uvek: `-AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable`, pa PROVERITI `Get-ScheduledTaskInfo LastTaskResult` posle prve noći (0 = uspeh), ne samo ručni test skripte.
+- Backup destinacija (M politika od 2026-07-09): eksterni HDD `G:` "Maxtor" kad god je prikačen → OneDrive → lokalni fallback. Skripta sama bira (Get-Volume check), ništa se ne menja kad se disk doda/skine.

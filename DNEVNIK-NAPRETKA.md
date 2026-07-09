@@ -1,5 +1,34 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-09 [claude-code] [W3 TEHNIČKA] — backup na eksterni HDD + RevSlider off + WebP potvrda ✅
+- **M dodao eksterni HDD (G: "Maxtor", 931GB)** — nova backup politika: backup ide na disk kad god je disk prikačen (ne čeka OneDrive). `nocni-backup.ps1` ažuriran: prioritet destinacije **G:\AntasLine-Backups → OneDrive → lokalno**.
+- 🔴 **Nalaz: noćni backup (3.13) NIKAD nije stvarno radio** — `auto\` folder prazan, task je jutros pao sa `0x800710E0` (odbijen zbog uslova). Uzroci: `DisallowStartIfOnBatteries=True` + `StartWhenAvailable=False` (propušten termin se ne nadoknađuje). Oba popravljena (`Set-ScheduledTask`). "Test uspešan" iz 2026-07-07 unosa je bio ručni test, ne scheduled run — task uslovi nikad nisu provereni. → lekcija.
+- **Propušteni backup izvršen odmah ručno** → `G:\AntasLine-Backups\antasline_backup_2026-07-09_1719.zip` — **2,95GB, zip validan (117.915 stavki: DB dump 92MB + ceo wp-content)**, trajanje 50 min.
+- **RevSlider deaktiviran (M)** — CWV preporuka #1: verifikovano 0 referenci (sr7.js/tptools nema), regresija 4 stranice 200. −540KB JS na svakoj stranici.
+- **ESD slika (M)**: kompresovana kao NOVA slika `esd-podovi-u-primeni-768x774.webp` (**112KB vs stari PNG 946KB**, 8×) i zamenjena na home — stari fajl `esd-pod-u-primeni` (jednina!) ostaje samo u postu 6874.
+- **Kontrolni Lighthouse home mobile (posle RevSlider+WebP): Perf 42→45, LCP 20,4→15,0s, težina 3,9→2,6MB, TTFB 3,2→1,3s, TBT 332→276ms.** CLS nepromenjen (0,158 — stretch-row, preporuka #3 ostaje). Sledeće poluge: stari 2020/2018 JPG na home, CLS fix, js_composer CSS (uz LSCache na live).
+- [[dnevnik/PERFORMANCE-AUDIT]] ažuriran (preporuke #1 ✅, #2 delimično, #4 ✅).
+
+## 2026-07-09 [claude-code] [W3 TEHNIČKA] — porto-functionality deaktiviran (M) → sanacija zavisnosti ✅
+- **Miroslav deaktivirao `porto-functionality` plugin** (legacy Porto tema — bio i preporuka #4 iz CWV audita). Zadatak: sve što je zavisilo od njega mora da radi bez Porto-a.
+- **Trijaža zavisnosti**: legacy CPT-ovi (industrija-podovi/podovi-posl-prostor/spoljne-podne-obloge/vestacka-trava/sportski-podovi2) prežive — registruje ih **CPT UI**, ne porto. `portfolio` (6 publish) i `porto_builder` (10 publish) gube javni URL — nisu live-parity, samo interni šabloni/izvori. Golog shortcode curenja skoro da nema jer **child tema već ima no-op shim** (9 tagova, ranije dodat zbog PCRE segfault buga).
+- 🔴 **Jedini stvarni gubitak: galerije** — `[porto_image_gallery]` (×27 na 18 publish objekata, uklj. 3 javne stranice: `/podovi-za-stale/` 402 GSC kl., `/podne-obloge-za-promocije-i-sajmove/`, **`/galerija-sportskih-terena/` — rebuild #18 se oslanjao na porto galerije!**) sada renderuje prazno kroz shim. **Fix: zamena native `[gallery ids=... columns="4" size="medium" link="file"]`** na svih 18 (`$wpdb->update` + `clean_post_cache`), galerije potvrđeno renderuju (46 stavki na galeriji terena, srcset/medium ✔).
+- **Ne-gubici (proveren strah)**: `[porto_block id="4945"]` ("CTA pri dnu", na svih 6 starih stranica) je imao `conditional_render=administrator` bug → posetioci ga NIKAD nisu videli, shim-prazno = status quo. `[porto_product id="15631"]` → ID ne postoji u bazi, bio mrtav i ranije (ali je CURIO kao go tekst jer nije bio u shim listi — sad jeste).
+- **Shim proširen** (child functions.php) sa svih 21 preostalih porto_* tagova nađenih u bazi (hb_/sb_/tb_/single_product_/product) — anti-segfault + anti-leak mreža.
+- ✅ Verifikacija: 5 pogođenih URL-ova bez leak-a + galerije rade + slike 200 · regresija home/industrijski-podovi/sportske-podloge/o-nama 200 · `shortcode_exists('porto_product')` DA.
+- Backup: `antasline_local_2026-07-09_pre-porto-off-fix.sql` (48MB). Skripte (scratchpad): `porto-check.php`, `porto-render-test.php`, `porto-gallery-fix.php`.
+- ⚠️ Napomena: **RevSlider je i dalje aktivan** (CWV preporuka #1, 540KB JS/stranici, 0 upotreba) — čeka istu odluku kao porto.
+
+## 2026-07-09 [claude-code] [W3 TEHNIČKA] — 3.5 Lighthouse/CWV baseline + XAMPP opcache fix ✅
+- **Zadatak W3 3.5 zatvoren**: Lighthouse 13.4.0 (npx, headless) baseline na 7 prolaza (6 stranica mobile + početna desktop) → **[[dnevnik/PERFORMANCE-AUDIT]]** (rezultati, krivci, redosled za 3.6).
+- 🔴 **Pre-uslov nalaz: sajt je bio praktično mrtav** — prvi zahtevi posle Apache restarta visili >60s, stabilno stanje ~8–10s TTFB po stranici. Dijagnostika mu-plugin hook-trace-om (tajming po hook-u): render raspoređen ravnomerno (plugins_loaded 1,6s, init→wp_loaded 2,9s…) = nema jednog krivca → sumnja na PHP izvršavanje samo.
+- 🔴 **Uzrok: OPcache uopšte nije bio uključen u XAMPP-u** (default!). Fix: `php.ini` `zend_extension=opcache` + `opcache.enable=1` + `jit=disable`. **TTFB pao ~8–10s → ~2,4–3,4s.**
+- 🔴 **Nov gotcha: opcache + XAMPP Apache = crash** (`0xC00000FD` stack overflow, `VirtualProtect failed [87]`, konekcija se resetuje bez odgovora) — worker thread stack premali. Fix: `httpd-mpm.conf` → `ThreadStackSize 8388608` u `mpm_winnt` bloku + Apache restart. → [[reference/naucene-lekcije]].
+- **Baseline (mobile)**: Perf 24–48 · LCP 8,6–20,4s (cilj <2,5s) · TTFB ~3,2s svuda · CLS problem samo na početnoj (0,155 — WPBakery stretch-row JS init) i Woo kategoriji (0,188). A11y 84–90, BP 100, SEO 92–100.
+- **Top poluge za 3.6** (po redu): (1) **RevSlider deaktivirati** — 540KB JS na svakoj stranici, 0 upotreba u publish sadržaju (SQL potvrda); (2) `esd-pod-u-primeni…png` **924KB PNG** na home → WebP (home LCP 20,4s!); (3) CLS stretch-row fix; (4) proveriti `porto-functionality` (legacy); (5) fontovi 6×Inter ≈390KB. `js_composer.min.css` 437KB unused — tek uz LiteSpeed UCSS na live, ne ručno.
+- Bez izmena baze (samo php.ini + httpd-mpm.conf — reverzibilno, dokumentovano). Dijagnostički mu-plugin `al-hang-trace.php` obrisan posle upotrebe. Apache sada pokrenut kao detached proces (XAMPP Control Panel će ga pokazivati kao spolja pokrenut do sledećeg restarta).
+- Skripte (scratchpad `lh/`): `run-lh.sh`, `extract.py`, `detail.py` + 7 JSON izveštaja.
+
 ## 2026-07-09 [claude-code] [W1 KONVERZIJE + W3 PARITY] — "Brzi upit" dinamička forma na svim uslugama + sveža live provera ✅
 - **"Brzi upit" (CF7 ID 16737)** — jedna kratka forma automatski na dnu SVIH stranica usluga i blog postova (jedan `the_content` prio 12 hook, nula editovanja stranica). Mejl adminu uvek javlja tačan izvor kroz CF7 ugrađene `[_post_title]`/`[_post_url]` special mail tagove (container-post mehanika, verifikovano iz CF7 source koda). Polja: Ime i prezime/firma* + Telefon* (email/poruka opcioni). Puna strategija/uputstvo: [[migracija/brzi-upit-forma]].
 - **Forma 16593 (/kontakt/) skraćena** (M zahtev): ime+prezime+kompanija spojeni u jedno polje `form-ime-firma` "Ime i prezime / firma"; `form-naslov default:get` prefill sa proizvoda netaknut (regresija ✔).
