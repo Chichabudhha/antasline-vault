@@ -71,6 +71,17 @@ nikad na live sajtu.
 3. **Galerija**: 3–6 slika u `_product_image_gallery` (attachment ID-jevi,
    zarezom odvojeni). Slike biraj iz postojećih uploads (115 importovanih) —
    pretraži `wpGs_posts` `post_type=attachment` po imenu proizvoda/linije.
+   **Glavna slika proizvoda prati standard `[[reference/standard-slika-proizvoda]]`**
+   (M odluka 2026-07-09): 1080×1080, čista bela pozadina, ~15% margine, AI
+   prompt šablon u tom fajlu. Ako standardizovana slika još ne postoji →
+   #ceka-miroslav, postojeća fotka ostaje privremeno.
+3b. **Varijabilni proizvodi (M odluka 2026-07-09)**: ploče sa više boja
+   (Ecotile E500/7, E500/10; Bergo ploče) su `variable` proizvodi sa
+   varijacijama po `pa_boja` — boje ISKLJUČIVO iz zvanične palete
+   proizvođača (ecotileflooring.com / bergoflooring.com, sa RAL kodom gde
+   postoji). `_product_attributes` unos za pa_boja dobija `is_variation=1`;
+   varijacije bez cene (katalog režim). Bergo boje zadržavaju originalna
+   brend imena (Stone Grey, Graphite Grey, Sand, Cedar Wood…).
 4. **Struktura opisa** (`post_content`):
    - intro pasus = direktan odgovor šta je proizvod i za koga (GEO pravilo)
    - HTML tabela specifikacija (iz atributa)
