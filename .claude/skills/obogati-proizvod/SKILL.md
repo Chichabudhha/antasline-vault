@@ -19,9 +19,23 @@ nikad na live sajtu.
 
 ## Standard "obogaćen proizvod" (svih 8 tačaka)
 
-1. **Globalni Woo atributi** (`pa_*` taksonomije — kreiraj jednom, koristi svuda):
-   `pa_debljina` · `pa_dimenzije-ploce` · `pa_materijal` · `pa_nosivost` ·
-   `pa_boje` · `pa_primena` · `pa_garancija` · `pa_poreklo`
+1. **Globalni Woo atributi** — konačan set POMIREN 2026-07-09 (odluka M,
+   polish Faza 1 batch #1). 18 `pa_*` taksonomija u dve grupe:
+   - **Filter-set (8)** — idu u shop layered-nav widgete (Faza 1 #8):
+     `pa_debljina` · `pa_materijal` · `pa_boja` · `pa_montaza` ·
+     `pa_protivklizna-svojstva` · `pa_vatrootpornost` · `pa_antistatican` ·
+     `pa_sertifikacija`
+   - **Spec-only (10)** — samo za tabelu specifikacija, NE u filtere:
+     `pa_dimenzije-ploce` · `pa_nosivost` · `pa_oblik` · `pa_sirina` ·
+     `pa_duzina-rolne` · `pa_otpornost-na-udar` · `pa_otpornost-na-hemikalije` ·
+     `pa_tvrdoca-shore-a` · `pa_zakosene-ivice` · `pa_elektricni-otpor`
+   - NE kreirati: `pa_primena` (pokriveno F6 `namena-*` tagovima) · `pa_boje`
+     (postoji `pa_boja`) · `pa_garancija`/`pa_poreklo` (tek uz datasheet
+     potvrdu, additive kasnije). Dupli `pa_color` obrisan 2026-07-09; 251
+     import-smeće term_relationships red (attachment/orphan object_id-jevi)
+     očišćen — postojeći termini su realan live vokabular, dodele kreću od 0.
+   - Dodela: termini + `wp_set_object_terms` + **obavezno `_product_attributes`
+     postmeta** (serialized niz — bez njega se atribut ne prikazuje na stranici).
    Popuni SAMO iz stvarnih podataka (postojeći opisi, live stranice, tehnička
    dokumentacija proizvođača) — nikad ne izmišljaj specifikacije.
 1b. **Standardi SA LINKOVIMA** (F7, 2026-07-07): svaki proizvod gde je primenjivo
