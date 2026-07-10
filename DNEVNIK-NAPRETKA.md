@@ -1,5 +1,15 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-10 [cpanel-live] [PROVERA — LiteSpeed image optimizacija] — Problem se ponovio, uzrok drugačiji od 2026-07-05 🔴
+- **Nalaz: ISTI SIMPTOM KAO 2026-07-05 (200 slika zaglavljeno u REQUESTED), ali NOVI/DUBLJI UZROK.** Read-only provera preko WP-CLI na live (`wp db query`, `wp cron event list`, `wp option get`) — bez izmena baze.
+- `wp_litespeed_img_optming`: **1.361 slika u RAW** (nikad poslato) + **200 u REQUESTED** (poslato, čeka notify) na **25 distinct post_id** (5900–5940 opseg, novi proizvodi/postovi u odnosu na 20 ID-jeva iz 07-05 fixa).
+- 🔴 **Pravi uzrok ovog puta: cron `litespeed_task_imgoptm_req` uopšte nije zakazan** (`wp cron event list` ga ne prikazuje — samo ccss/ucss/lqip/crawler/guest_sync litespeed hook-ovi postoje). DNEVNIK unos od 07-05 se oslanjao na pretpostavku da ovaj cron sam nastavlja slanje na 15 min — pretpostavka je pogrešna otkad je nestao iz rasporeda.
+- Potvrda da je slanje stalo: `last_request.img_optm-new_req` = **2026-07-05 20:36 UTC** (tačno trenutak prošlog fix-a) → **0 novih zahteva ka cloud-u u 5 dana**. `last_pulled` = 2026-06-13 (i pre prošlog fixa). Kvota NIJE problem sada (`remaining_daily_quota: 1000` danas) — čisto pitanje da ništa ne okida slanje/pull.
+- Dodatno: 114 slika u statusu `err_optm` (-7, trajni fail na cloud strani), 17 u `err`/`miss` (-3) na glavnoj `wp_litespeed_img_optm` tabeli — manji, odvojen nalaz, nije blokirajući.
+- Access log (`~/access-logs/antasline.com-ssl_log`) pokriva samo danas (rotacija) — 0 `notify_img` poziva danas, ali nedovoljan uzorak za zaključak o QUIC.cloud strani.
+- **Nije primenjena nikakva izmena na live** — samo dijagnostika. Predlog za sledeći korak (čeka M odluku): (a) ručni `Img_Optm::reset_row()` kao 07-05 + ručno okinuti/proveriti zašto se `litespeed_task_imgoptm_req` ne re-zakazuje (možda `img_optm-cron` opcija ili WP-Cron uslov), ili (b) eskalacija ka QUIC.cloud podršci ako se cron ponovo ne zakaže sam posle ručnog trigera — ovo je taj scenario koji je 07-05 unos predvideo ("ako se ponovi, QUIC.cloud ima dublji problem").
+- Izvor istine dalje: [[PROGRESS]] Blokeri sekcija ažurirana.
+
 ## 2026-07-10 [claude-code] [W1 POLISH F1] — Ergomat zvanične slike + PDF-ovi + spec dopune + Edge Protector cm rename (M zahtevi) ✅
 - **M odgovorio na 3 pitanja iz batch #6**: (1) slike sa ergomat.com ✅, (2) EP nazivi u cm ✅, (3) PDF-ovi sa ergomat.com ✅. Backup: `antasline_local_2026-07-10_pre-ergomat-slike-pdf.sql` (48,7MB).
 - 🔴 **Nova tehnika — ergomat.com scraping** (WebFetch 403, curl sa browser UA prolazi): kategorije preko `GET /en/Category/List?id=X` sa `X-Requested-With: XMLHttpRequest` headerom (bez njega vraća pun layout bez proizvoda); **proizvod-detalji preko JSON API-ja `GET /en/Product/GetDetails?id=X&langId=3`** (Vue komponenta, `product-id-prop` u HTML-u; langId iz `settings-prop`) — vraća `Photo` (→ `/Content/images/products/{Photo}.jpg`), `KnowledgeSpec` (PDF putanja), `AvailableOptions` (dimenzije!). → lekcija.
@@ -1144,3 +1154,17 @@
 - Porto tema renderuje entry-title kao `<h2>`, ne `<h1>` — `<h1>` je blog archive heading ("Aktuelnosti")
 - Padel reference u body-ju ostavljene netaknute (upućuju na zaseban padel teren)
 - Backup pre izmena: `backup-onpage-20260623.sql` (31.53 MB)
+
+## 2026-07-10 [cpanel-live] — LiteSpeed img-optm: reset + ručni cronjob urađeni, red i dalje blokiran uzvodno (UŽIVO)
+- **Šta je TAČNO promenjeno na produkciji:**
+  - Backup pre izmena: `~/backups/antasline_2026-07-10_pre-litespeed-recron.sql` (wp_litespeed_img_optming/img_optm/wp_options)
+  - `Img_Optm::reset_row()` pozvan za svih 25 zaglavljenih post_id (5898–5941) preko `wp eval-file` — obrisao njihove redove iz `wp_litespeed_img_optm`/`img_optming` i povezan postmeta (isto što radi admin "Reset Row" dugme)
+  - `Img_Optm::cls()->new_req()` ručno pokrenut odmah posle reset-a → **200 slika uspešno poslato i prihvaćeno od cloud-a** (potvrđuje da je send mehanizam sam po sebi ispravan)
+  - **Novi sistemski cronjob registrovan** (`crontab -e`, NE WP-Cron): `*/15 * * * * /usr/local/bin/wp eval-file /home/antasline/scripts/litespeed-img-optm-cron.php --path=/home/antasline/public_html >> /home/antasline/logs/litespeed-img-optm-cron.log 2>&1` — poziva `new_req()` + `async_handler(true)` svakih 15 min (isti interval kao originalni plugin cron)
+  - Skripta: `/home/antasline/scripts/litespeed-img-optm-cron.php`; log: `/home/antasline/logs/litespeed-img-optm-cron.log`
+- 🔍 **Pravi uzrok zašto WP-Cron nikad nije sam radio (kodom potvrđeno, `task.cls.php`):** cron hook `litespeed_task_imgoptm_req` se registruje SAMO ako je plugin opcija **"Auto Request Cron" (`img_optm-auto`) uključena** — kod nas je prazna/isključena (i default vrednost u pluginu je `false`). Nije bug, nego config koji ništa ne šalje bez ovoga ili ručnog trigera. Zato je sistemski crontab pravo rešenje (ne zavisi od te opcije).
+- ✅ **Provera posle 2 ciklusa (15:45, 16:00) — cronjob RADI na OS nivou** (log potvrđuje tačno 15-min interval).
+- 🔴 **ALI red se i dalje NE pomera** — RAW ostao na 1.157, REQUESTED zaglavljen na tačno 200 (isti 200 od pre 07-05!). Oba cron-poziva vratila `"Error: You have too many requested images"` — `new_req()` odbija da šalje dok se postojećih 200 REQUESTED ne oslobodi (pull).
+- 🔴 **Potvrđen dublji uzrok = tačno scenario koji je 07-05 unos predvideo:** `need_pull` opcija stoji na `9` (STATUS_PULLED), nikad ne prelazi na `6` (STATUS_NOTIFIED) → **QUIC.cloud notify webhook i dalje ne stiže** (0 `notify_img` poziva u access logu od registracije cron-a). Plugin nema fallback za "poll cloud direktno" — `pull()` metoda čita ISKLJUČIVO redove sa statusom NOTIFIED, koji se postavlja samo preko webhook-a. Bez njega, poslatih 200 slika ostaje zaglavljeno zauvek i blokira sve nove batch-eve.
+- **Zaključak:** lokalna automatizacija (reset + manual send + cronjob) je urađena i radi ispravno, ali ne može zaobići problem — webhook mora da radi da bi se red ikad pomerio. **Sledeći korak nije više lokalni fix, nego QUIC.cloud podrška** (potvrditi da li njihov notify_img callback stvarno stiže do servera; moguće je da firewall/CDN nešto blokira samo za njihove IP-ove, što se ne može testirati iznutra).
+- #ceka-miroslav: otvoriti tiket QUIC.cloud podršci (linked domain je aktivan/linked, `qc_activated: "linked"` potvrđeno u opcijama) — ili privremeno isključiti LiteSpeed image optimizaciju dok se ne reši, da cronjob ne troši resurse uzalud svakih 15 min bez efekta.
