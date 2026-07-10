@@ -475,11 +475,36 @@ Puna strategija i uputstvo: [[migracija/brzi-upit-forma]]. Ovde samo gotcha-i:
   se samo na pravi product save). Fix posle svakog programskog dodeljivanja pa_ termina:
   `wc_get_container()->get(LookupDataStore::class)->create_data_for_product($product)` po proizvodu
   + obrisati `_transient_wc_layered_nav_counts_*`. (Ovde: 113→413 redova.)
-- ⚠️ **Kategorije sa custom Shop Archive layoutom nemaju Filters dugme** — dugme dodaje
-  `woodmart_filter_buttons` na default `woocommerce_before_shop_loop`; Layout Builder layouti (10
-  kategorija) nemaju toolbar/filters element. Filteri rade samo na `/katalog/`. Za kategorije bi se
-  u layout dodao "Filters area"/products element — posebna odluka.
+- ✅ **REŠENO 2026-07-10 — Filteri na kategorijama**: WoodMart ima gotove layout shortcode-ove
+  `[woodmart_shop_archive_filters_area_btn]` (dugme, poziva `woodmart_filter_buttons`) i
+  `[woodmart_shop_archive_filters_area]` (oblast, poziva `woodmart_shop_filters_area`) — definisani u
+  `inc/modules/layouts/wpb/shortcodes/shop-archive/`. Ubačeni bez atributa neposredno PRE
+  `[woodmart_shop_archive_products]` u svih 10 layouta (16571–16580) — rade jer je `shop_filters=1`
+  već upaljen, widgeti u `filters-area` imaju `category:['all']`, a layered-nav sam krije termine
+  bez proizvoda u tekućoj kategoriji.
+
+## F7.12 — Faza 2 (postovi) + mobile QA lekcije (2026-07-10)
+
+- 🔴 **F3 reimport ostavlja DUPLE postmeta redove šire nego što se znalo** — na 2542 nađen 4×
+  `_thumbnail_id` (ranije već dedupe-ovan Yoast na 2542/4318). Pri svakom Faza 2 restyle-u:
+  `SELECT meta_key, COUNT(*) ... GROUP BY meta_key HAVING COUNT(*)>1` pa dedupe.
+- 🔴 **Goli FAQPage JSON-LD (bez `<script>` taga) je OBRAZAC, ne izolovan bug** — potvrđen na
+  odbojci (W2 #9) i na conquest 2542: JSON stoji kao vidljiv tekst na dnu posta, wpautop ga
+  mangle-uje, schema ne radi. Proveriti na svakom reimportovanom postu: `strpos(post_content,
+  '"@context"')` bez okolnog `<script`.
+- **Linkovi na `https://www.antasline.com/...` u reimportovanim postovima** → zameniti lokalnim
+  (parity; na migraciji URL replace vraća produkcioni domen).
+- **`.single-post .wd-sidebar-opener` sakriven** (antas-design.css) — WoodMart fixed burger za blog
+  sidebar lebdeo preko teksta na mobilnom; sidebar drži samo default widgete.
+- **Neprevedeni WoodMart stringovi** ("Continue reading", "Categories") → `gettext_woodmart` filter
+  u child functions.php (mapa string→prevod), ne .po fajl.
+- **Mobile QA metod**: Chrome `resize_window` NE menja viewport (window manager ignoriše) →
+  same-origin **iframe širine 390px** u praznom tabu; media queries u iframe-u reaguju na širinu
+  iframe-a. Automatski smoke po stranicama: `scrollWidth>390` (h-overflow), broj `<h1>`, slomljene
+  slike (`img.complete && naturalWidth===0`); `lazy.svg` unosi su WoodMart lazy placeholder, ne greška.
+- 2 posta su u kategoriji НЕКАТЕГОРИЗОВАНО (term 64) — vidljivo kao ćirilični bedž na home blog
+  karticama; dodeliti prave kategorije tokom Faza 2 batch-a.
 
 ## Otvoreno
-- [ ] Mobilni viewport vizuelna provera (media queries napisani, nije snimljeno) — sad uključuje i B2B sticky toolbar (Katalog/Pozovite/Ponuda) i filter oblast na /katalog/ #claude-code
+- [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)
 - [ ] Figma sync — čeka link od Miroslava #ceka-miroslav

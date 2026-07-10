@@ -74,12 +74,12 @@ azurirano: 2026-07-04
 Svaka završena stranica: red u [[DNEVNIK-NAPRETKA]] + update [[PROGRESS]] + štiklirati ovde.
 
 - [x] #9 odbojka refresh — ✅ title/meta + FAQ schema fix 2026-07-08 (stranica sada postoji lokalno posle F3 reimporta, `[cpanel-live]` napomena zastarela). Title/meta prepisan (ciljao "dimenzije" klaster), i usput otkriven i ispravljen bug: FAQPage JSON-LD bio izložen kao vidljiv, iskvaren tekst na stranici (wpautop+wptexturize su ga mangle-ovali) umesto da radi kao schema — sada pravi `<script type="application/ld+json">`. Cena i dalje "na upit" (čeka M10 cenovnik) → [[DNEVNIK-NAPRETKA]]
-- [ ] #1 terasa cena — **draft ✍️ [[dnevnik/2026-07-05-draft-gumeni-podovi-za-terase-cena]]**, čeka cene + implementaciju
-- [ ] #2 industrijski cena — **draft ✍️ [[dnevnik/2026-07-05-draft-industrijski-podovi-cena]]** (odluka: posebna stranica, ne sekcija), čeka cene + implementaciju
-- [ ] #3 garaže landing — **draft ✍️ [[dnevnik/2026-07-05-draft-podovi-za-garaze]]**, čeka cene/slike + implementaciju
+- [x] #1 terasa cena — ✅ 2026-07-10 `/gumeni-podovi-za-terase-cena/` (ID 16873), M1 fallback "na upit" — kad stignu cene, upisati u tabelu → [[DNEVNIK-NAPRETKA]]
+- [x] #2 industrijski cena — ✅ 2026-07-10 `/industrijski-podovi-cena/` (ID 16874), "na upit" + tabela po debljini sa linkovima na 500/5/7/10 info stranice; ⚠️ #ceka-M: preusmeriti Ads cena-termine (4,1k RSD curenje) na ovu landing → [[DNEVNIK-NAPRETKA]]
+- [x] #3 garaže landing — ✅ 2026-07-10 `/podovi-za-garaze/` (ID 16875), "na upit", Pre/Posle ecotile fotke, diferencirana od `/industrijski-podovi/garaze-i-autoservisi/` (cross-link); ⚠️ #ceka-M: Ads garaža-termini (16,8k RSD išlo u prazno) → ova landing → [[DNEVNIK-NAPRETKA]]
 - [x] #4 dimenzije terena — ✅ implementirano `/dimenzije-kosarkaskog-terena/` (ID 16586) 2026-07-06, anti-kanibalizacija urađena (basket članak 2298 skraćen) → [[DNEVNIK-NAPRETKA]]
 - [x] #5 tabla — ✅ implementirano `/dimenzije-kosarkaske-table/` (ID 16585) 2026-07-06, cena "na upit" (nema pravih brojeva) → [[DNEVNIK-NAPRETKA]]
-- [ ] #6 parking cena — **draft ✍️ [[dnevnik/2026-07-05-draft-podloge-za-parkiraliste-cena]]**, čeka cene/nosivost/reference
+- [x] #6 parking cena — ✅ 2026-07-10 `/podloge-za-parkiraliste-cena/` (ID 16876) — **sa PRAVIM cenama** (Runfloor 2.800–3.400, Geoflor 3.400, Geogravel 4.000, Geocross 4.200 din/m² sa PDV; nosivosti 600/400/100 t/m² — izvor: hub 16589 parity sadržaj, draft je pogrešno pretpostavljao 200 t/m²) → [[DNEVNIK-NAPRETKA]]
 - [ ] #7–8 tenis hub #claude-code
 - [x] #11 padel refresh — ✅ 2026-07-08: title/meta prepisan (`/pop-tenis/`, cilja "dimenzije padel terena" klaster ~8.000 impr, poz. 1,2–1,5, CTR je bila 1,6%) + dodat FAQ blok (4 pitanja) + FAQPage JSON-LD (nije postojao ranije) → [[DNEVNIK-NAPRETKA]]
 - [ ] #10 piklbol — nova stranica `/piklbol/`, još nije rađeno #claude-code

@@ -59,7 +59,7 @@ azurirano: 2026-07-06
 | 1.3 | ✅ ODLUČENO 2026-07-07 (M8): **pun reimport svih 30 postova sa live** — izvršenje po [[migracija/promptovi/F3-posts-reimport]] | CC | restyle postova ide posle, iterativno |
 | 1.4 | ✅ ZATVORENO 2026-07-08 — Footer builder (5 kolona: logo+adresa/Antas Line/Podovi/kontakt/social) + bela varijanta logoa | CC | detalji [[migracija/woodmart-sabloni]] |
 | 1.5 | ✅ ZATVORENO 2026-07-08 — Meni proširen na 5-kategorijsku strukturu (Sport/Terase i dom/Industrija/Poslovni prostori/Specijalni podovi, parity sa live) | CC | 43 stavke, 3 nivoa |
-| 1.6 | Mobile viewport vizuelni QA (sve rebuild stranice) | CC | media queries napisani, nije snimljeno |
+| 1.6 | ✅ ZATVORENO 2026-07-10 — 15 stranica mobile smoke (0 overflow, 1×H1, 0 slomljenih slika) + vizuelno (toolbar, filteri, spec tabele, futer akordeoni); gettext fix za 2 neprevedena stringa | CC | metod: iframe 390px harness (resize_window ne radi) |
 | 1.7 | Figma sync (testimonials, "Najprodavanije 2025") | CC+M | čeka Figma link + GMB recenzije #ceka-miroslav |
 | 1.8 | ✅ ZATVORENO 2026-07-08 (polish Faza 0) — WoodMart `catalog_mode` + "Zatražite ponudu" na svakom proizvodu → `/kontakt/?form-naslov=Ponuda: X` (prefill `default:get`) → submit redirektuje na `/hvala-za-poruku/` (BLOK A tracking hvata). Compare/wishlist/reviews ugašeni. Usput: CF7 forma 16593 popravljena (bila nefunkcionalna — prazan `_form`/`_mail` postmeta) i shop stranica kreirana (`/katalog/` bio 404). **Polish Faza 1 ✅ ZATVORENA 2026-07-10: 47/47 proizvoda obogaćeno + 8 shop filtera na /katalog/** | CC | polish Faza 2 (postovi restyle): [[migracija/w1-polish-red-cekanja]] |
 | 1.9 | ✅ ZATVORENO 2026-07-08 — audit `tel:` linkova: 063 se nigde ne pojavljuje lokalno, jedini nalaz je header top-bar koji je koristio 074 dok CTA/mobilna ikonica koriste 072 — ujednačeno na 072 sitewide (`functions.php`) | CC | quick win, 30 min |
@@ -70,7 +70,7 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 
 | # | Zadatak | Vlasnik | Zavisi od |
 |---|---|---|---|
-| 2.1 | Tier1 implementacija: #1 terase-cena, #2 industrijski-cena, #3 garaže, #6 parking-cena (draftovi gotovi ✍️) | CC | 🔴 **cene od M** |
+| 2.1 | ✅ ZATVORENO 2026-07-10 — sve 4 objavljene (16873/16874/16875/16876) sa M1 fallback-om "na upit"; parking sa pravim cenama sa hub-a (2.800–4.200 din/m² PDV). Kad stignu cene (M10) → samo upis u tabele | CC | ~~cene od M~~ → naknadni upis |
 | 2.2 | Odbojka refresh (#9) — paket spakovan | CP | stranica samo na live → [cpanel-live] #ceka-miroslav |
 | 2.3 | ✅ ZATVORENO 2026-07-08 — Title/meta prepis 4 stranice: /pop-tenis/, /podloga-za-odbojkaske-terene/, /spoljnje-podne-obloge/, conquest 2542 (GSC query-level podaci pre pisanja, dedup Yoast postmeta, 074→072 fix u 2542) | CC | +500–700 kl./90d očekivano, prati se |
 | 2.4 | Tier2: šljaka hub (#7), tenis dimenzije (#8), piklbol (#10), padel refresh (#11) | CC | — |
@@ -78,7 +78,7 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 | 2.6 | Tier4: reference stranice (#18), /bergo/ brend (#19), teretane (#20) | CC | — |
 | 2.7 | ✅ ZATVORENO 2026-07-08 — Product schema na sve WooCommerce proizvode (globalni `functions.php` fix, WC native izlaz se nije renderovao) | CC | Product snippet CTR 10,5% vs prosek 5,5%; bez aggregateRating (nema pravih recenzija) i bez izmišljene cene |
 | 2.8 | ✅ ZATVORENO 2026-07-08 (CC deo) — GEO paket: `llms.txt` kreiran + Organization proširen na LocalBusiness+NAP (filter, sitewide). "O nama" bio već gotov od ranije. Preostaje samo #ceka-miroslav deo (robots.txt na live, PR/GMB) | CC | — |
-| 2.9 | Conquest članak 2542 refresh (poz. 26 za "epoksi podovi" → SEO+GEO) | CC | — |
+| 2.9 | ✅ ZATVORENO 2026-07-10 (spojeno sa W1 Faza 2 #1 restyle) — GEO intro, goli FAQ JSON-LD popravljen u script tag, al-table, link na /industrijski-podovi-cena/, dupli _thumbnail_id dedupe | CC | title/meta već iz 2.3 |
 
 ### W3 — SEO TEHNIČKA + MIGRACIJA (C1/C2 + CWV)
 > 🔄 **2026-07-07: C1/C2 pristup zamenjen parity strategijom** — build se pravi 1:1 prema live sajtu, redirect mapa se svodi na minimum. Izvor istine: [[migracija/PARITY-PLAN]], izvršenje kroz promptove [[migracija/promptovi/_README]] (F1–F7). Stare mape arhivirane u `migracija/arhiva/`.
