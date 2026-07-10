@@ -26,7 +26,7 @@ Svaki proizvod pre live-a dobija:
     IEC 61340-5-1 / ANSI ESD S20.20 (ESD zaštita) · EN 14041 (podne obloge — CE) ·
     ISO 9001/14001 (proizvođač) · REACH (hemijska bezbednost)
 - **Izvor podataka**: WebSearch/WebFetch proizvođačkih datasheet-ova —
-  `ecotileflooring.com`, `bergoflooring.com`, `ergomat.com`, `geoplastglobal.com`, `hoopncourt.com`,
+  `ecotileflooring.com`, `bergoflooring.com`, `ergomat.com`, `geoplastglobal.com`, `hoopncourt.com`, `www.condor-group.eu`, `www.radicisport.it`, `objectflor.de`, `r-tileretailflooring.com`
   🔴 **TVRDO PRAVILO: standard/spec se navodi SAMO ako je potvrđen u datasheet-u ili
   na zvaničnom sajtu proizvođača. Bez potvrde → ne pominje se. Ništa se ne izmišlja.**
 - **Prioritet obogaćivanja**: 1) Ecotile E500 5/7/10 + ESD 7mm · 2) Bergo Ultimate/XL ·
