@@ -108,6 +108,13 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
 
+### 2026-07-10 [claude-code] — 🔴 ISPORUKA STALA od 2026-07-05 (nalaz nedeljnog izveštaja)
+- Windsor dnevni raspad (2026-06-26 → 07-09): obe kampanje normalno isporučivale do **2026-07-04** (poslednji dan: Terase 621 RSD/123 impr, ECOTILE 380 RSD/40 impr), a od **2026-07-05 potpuni mrak** — 05/06/09.07 nula redova, 07–08.07 po 1 prikaz i 0 RSD potrošnje.
+- Obe kampanje istovremeno = problem na nivou NALOGA, ne kampanja (isti potpis kao jun throttling: balans/billing/verifikacija). Windsor vraća podatke (nije konektor).
+- Posledica u GA4: pad korisnika/sesija/lidova ove nedelje delom je direktno ovo (5 dana bez plaćenog saobraćaja).
+- **#ceka-M: otvoriti Ads UI → Billing/Balans i proveriti zašto nalog ne servira od 05.07.** Ako je balans — dopuna; ako je nešto treće (policy/verifikacija ponovo), javiti pa dijagnostika.
+- Kumulativ plaćenih konverzija od 01.06: **10** (prag za Maximize Conversions: 20–30) — blackout direktno usporava put ka Smart Bidding-u.
+
 ### 2026-07-06 [claude-code] — NEGATIVNE KW FIX ✅ (M2 / plan 4.1 zatvoreni)
 - Izvoz iz Ads UI (`Files/Negative keyword details report.csv`, 44 negativne u listi) uporedjen sa [[CLAUDE]] §6 → **falilo 7**: `epoksi`, `epoksidni`, `epoksidnih`, `epoksidnog`, `betonski`, `"industrijski beton"`, `[podne obloge]`. Kritično: baš oblik **"epoksi" nije bio pokriven** — broad negativne nisu morfološke, `epoksidna` ne blokira `epoksidni`.
 - Miroslav dodao u listu **13 negativnih**: gornjih 7 + `teraco`, `letvice`, `pevex`, `"uradi sam"`, `"keramičke pločice"`, `"podne pločice"` (phrase umesto broad `plocice` — da ne blokira "pvc pločice" upite iz ponude). Već postojale od ranije: deking, decking, wpc, ikea, marmoleum.
