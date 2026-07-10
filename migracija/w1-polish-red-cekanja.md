@@ -33,9 +33,9 @@ linkovima · namena tagovi. Batch 3–5 iste linije po sesiji.
 | 4 | Mosolut + Bergo | 16530, 16534 | ✅ 2026-07-10 — Bergo Unique (pun rebuild + variable 4 boje) i Mosolut Heavy (zvanični TDS 123: 23 mm, ne 32 — #ceka-M potvrda modela). Bonus: +10 novih Bergo proizvoda (M zahtev, bergoflooring spec, 2 nove kategorije) |
 | 5 | DuraStripe trake | 16518–16524 | ✅ 2026-07-10 (4 rolne, pun standard; debljine Xtreme/Supreme V izostavljene — konflikt izvora, #ceka-M datasheet; PDF-ovi ne postoje u uploads) |
 | 6 | Ergomat odbojnici (21 kom, ne 19!) | 16476–16516 | ✅ 2026-07-10 — svih 21 u jednoj sesiji; AI-smeće u 3 opisa očišćeno. **Follow-up sesija (M zahtevi) ✅**: 21 zvanična slika sa ergomat.com u galerijama, 4 PDF-a ("Tehnička dokumentacija"), zvanični profili u cm, EP preimenovani u 25×122 / 10×122 cm. Ostaje #ceka-M: 16476≈16484 mogući duplikat, ECB120 verovatno diskontinuiran |
-| 7 | Senzori / signalni sistemi | 16526, 16528 | ⬜ |
-| 8 | **FILTERI na shopu** — layered-nav widgeti u `filters-area`/`sidebar-shop` (registrovani, sidebari prazni). TEK kad većina proizvoda ima atribute | — | ⬜ poslednja sesija Faze 1 |
-| 9 | Related products (WoodMart linked/auto po kategoriji) — drži B2B posetioce u katalogu | — | ⬜ opciono, uz #8 |
+| 7 | Senzori / signalni sistemi | 16526, 16528 | ✅ 2026-07-10 — pun standard; ergomat.com GetDetails #449 (AwareSigns dvostrani combo) i #1659 (AwarePass IQ PIR) + 2 spec PDF-a ("Tehnička dokumentacija"); nepotvrđene tvrdnje iz starih opisa izbačene (300 m RF za IQ, IQMat/Lidar uparivanje); potvrđeno: direkcioni PIR, 90 dB alarm, baterija ~2 g, magnet montaža. **FAZA 1 KOMPLETNA 47/47** |
+| 8 | **FILTERI na shopu** — layered-nav widgeti u `filters-area`/`sidebar-shop` (registrovani, sidebari prazni). TEK kad većina proizvoda ima atribute | — | ✅ 2026-07-10 — 8 WoodMart layered-nav widgeta (filter-set) u `filters-area`, off-canvas "Filters" na `/katalog/`; auto Sort by/Price widgeti ugašeni (`hide_sort_by`/`hide_price_filter`); WC attribute lookup regenerisan (113→413). ⚠️ Kategorije (Layout Builder) nemaju Filters dugme — layouti bez toolbar elementa, po potrebi dodati kasnije |
+| 9 | Related products (WoodMart linked/auto po kategoriji) — drži B2B posetioce u katalogu | — | ⬜ opciono, sledeća W1 polish sesija |
 
 ## 🅱️ FAZA 2 — postovi (30 reimportovanih, restyle)
 

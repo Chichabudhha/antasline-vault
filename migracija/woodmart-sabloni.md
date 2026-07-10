@@ -311,7 +311,10 @@ samo nestane sadržaj.
 2. U mu-pluginu: `add_action('init', function(){ $defaults = \XTS\Admin\Modules\Options::get_options();
    $full = array_merge($defaults, $moji_override_kljucevi); update_option('xts-woodmart-options', $full); }, 105);`
    (prioritet 105 = između `load_defaults`@100 i `load_options`@110, hvata pun default niz pre nego što se
-   prepiše)
+   prepiše). **⚠️ Dopuna 2026-07-10: koristiti TROSMERNU merge** — `array_merge($defaults,
+   get_option('xts-woodmart-options') ?: [], $overrides)` — jer na 105 `get_options()` vraća SAMO
+   default-e (DB kastomizacije se učitavaju tek na 110), pa dvosmerna merge gubi sve ranije izmene
+   (footer, boje...). Trosmerna verzija verifikovana (futer preživeo 2 uzastopne izmene opcija).
 3. Pokrenuti JEDAN normalan front-end request (curl na bilo koju stranicu) da se mu-plugin izvrši
 4. Obrisati mu-plugin fajl odmah
 
@@ -455,6 +458,28 @@ Puna strategija i uputstvo: [[migracija/brzi-upit-forma]]. Ovde samo gotcha-i:
   `padding` shorthand kasnijeg pravila gazi `padding-top` iz `.al-diag-top` — cut se mora
   uračunati u sopstveni padding-top.
 
+## F7.11 — Shop filteri (layered nav) gotcha-i (2026-07-10, polish Faza 1 #8)
+
+- **Mehanika**: opcija `shop_filters='1'` (mu-plugin merge, F7.7) prikazuje "Filters" dugme na shop
+  toolbaru; klik otvara `filters-area` sidebar (`dynamic_sidebar('filters-area')`) iznad grida.
+  Widget: `WOODMART WooCommerce Layered Nav` (id_base `woodmart-woocommerce-layered-nav`), instanca:
+  `title`, `attribute` (slug BEZ `pa_`), `category:['all']`, `query_type` (and/or), `display:'list'`,
+  `labels/tooltips/checkboxes`, `search_by_filters`. Widget se renderuje samo na `is_shop()`/product
+  taksonomijama i sakriva termine bez proizvoda u tekućem prikazu.
+- 🔴 **WoodMart AUTO ubacuje "Sort by" i Price filter widgete** u filters-area čim je `shop_filters`
+  uključen (`woodmart_before_filters_widgets` hook) — sa Price/Rating opcijama koje u katalog režimu
+  nemaju smisla. Gase se theme opcijama `hide_sort_by='1'` + `hide_price_filter='1'`. Posledica
+  gašenja: default WC sort dropdown se vraća u toolbar (lokalizovan, prihvatljivo).
+- 🔴 **WC `wc_product_attributes_lookup` tabela je STALE posle direktnih `wp_set_object_terms` upisa**
+  (`woocommerce_attribute_lookup_enabled=yes` — Filterer iz nje računa brojeve uz filtere; sinhronizuje
+  se samo na pravi product save). Fix posle svakog programskog dodeljivanja pa_ termina:
+  `wc_get_container()->get(LookupDataStore::class)->create_data_for_product($product)` po proizvodu
+  + obrisati `_transient_wc_layered_nav_counts_*`. (Ovde: 113→413 redova.)
+- ⚠️ **Kategorije sa custom Shop Archive layoutom nemaju Filters dugme** — dugme dodaje
+  `woodmart_filter_buttons` na default `woocommerce_before_shop_loop`; Layout Builder layouti (10
+  kategorija) nemaju toolbar/filters element. Filteri rade samo na `/katalog/`. Za kategorije bi se
+  u layout dodao "Filters area"/products element — posebna odluka.
+
 ## Otvoreno
-- [ ] Mobilni viewport vizuelna provera (media queries napisani, nije snimljeno) — sad uključuje i B2B sticky toolbar (Katalog/Pozovite/Ponuda) #claude-code
+- [ ] Mobilni viewport vizuelna provera (media queries napisani, nije snimljeno) — sad uključuje i B2B sticky toolbar (Katalog/Pozovite/Ponuda) i filter oblast na /katalog/ #claude-code
 - [ ] Figma sync — čeka link od Miroslava #ceka-miroslav
