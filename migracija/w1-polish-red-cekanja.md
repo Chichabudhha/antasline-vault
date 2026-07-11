@@ -46,7 +46,7 @@ tipografija, interni linkovi. Redosled po GSC saobraćaju:
 | # | Post | Napomena | Status |
 |---|---|---|---|
 | 1 | Conquest 2542 (epoksidni-podovi-ili-ecotile) | poklapa se sa W2 2.9 refresh (poz. 26 "epoksi podovi") — spojiti u jednu sesiju | ✅ 2026-07-10 — GEO intro, goli FAQ JSON→script tag, al-table, brend CTA box, live-domen linkovi→lokal, link na /industrijski-podovi-cena/, 4× _thumbnail_id dedupe, sidebar-opener sakriven na postovima. ⚠️ obrazac za ostale: goli JSON-LD + dupli postmeta + kategorija |
-| 2 | Basket 2298 (kako-napraviti-teren) | najveći organski post | ⬜ |
+| 2 | Basket 2298 (kako-napraviti-teren) | najveći organski post | ✅ 2026-07-11 — 8×H1→1, lažna Review schema UKLONJENA (fabricated, ne script-tag), 19 meta dedupe, GEO+CTA+FAQ/JSON-LD. Bonus: post_author=0 fix na svih 28 postova (byline 404) |
 | 3 | `/politika-kolacica/` (16656) | poznat 7×`<h1>` slučaj | ⬜ |
 | 4+ | Ostalih ~27 postova batch po GSC klikovima | izvući listu iz GSC pre prve sesije | ⬜ |
 

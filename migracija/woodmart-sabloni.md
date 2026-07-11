@@ -504,6 +504,17 @@ Puna strategija i uputstvo: [[migracija/brzi-upit-forma]]. Ovde samo gotcha-i:
   slike (`img.complete && naturalWidth===0`); `lazy.svg` unosi su WoodMart lazy placeholder, ne greška.
 - 2 posta su u kategoriji НЕКАТЕГОРИЗОВАНО (term 64) — vidljivo kao ćirilični bedž na home blog
   karticama; dodeliti prave kategorije tokom Faza 2 batch-a.
+- 🔴 **Goli JSON-LD može biti i LAŽNA Review schema** (2298: izmišljena recenzija "Sava Marković"
+  5/5 kao vidljiv tekst na vrhu posta) — takve se UKLANJAJU u potpunosti, ne pakuju u script tag
+  (fabricated review = Google spam policy + "ne izmišljati" pravilo). FAQPage/legit scheme → script tag.
+- 🔴 **`post_author=0` na 28/30 F3 reimportovanih postova** (rešeno globalno 2026-07-11) — simptom:
+  prazan byline sa 404 linkom na `/author/`. Fix: `post_author=1` + user 1 nicename `savamar` /
+  display "Miroslav Marković" (live parity) + yoast_indexable regen. Novi reimporti: proveriti odmah.
+- 🔴 **mysql CLI kvari dijakritike I SA `--default-character-set=utf8mb4`** kad su u inline `-e`
+  stringu iz Git Bash-a (ć upisan kao literalno `?`). String upisi sa ne-ASCII karakterima →
+  ISKLJUČIVO PHP/wp-load (`$wpdb->update`). Provera ispravnosti: `SELECT HEX(kolona)` (ć = `C487`).
+  Napomena: python print takvih vrednosti u Windows konzoli prikazuje `�` i kad su bajtovi ispravni —
+  proveravati bajtove, ne konzolni prikaz.
 
 ## Otvoreno
 - [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)
