@@ -1,5 +1,19 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-11 [claude-code] [W1 1.11 S1 + F2 #3] — taksonomija za nove proizvode + politika-kolacica očišćena ✅
+- **Dva zadatka u sesiji.** Backup: `antasline_local_2026-07-11_pre-s1-taksonomija.sql` (48,7MB).
+- **(1) S1 taksonomija — GATE za S2–S8 OTKLJUČAN** (plan [[migracija/w1-novi-proizvodi-court-builder]]):
+  - Nalaz pre upisa: `pa_nosivost` VEĆ postoji (id 19, iz batch #1 pomirenja) bez termina → trebala su samo **2 nova atributa**, ne 3.
+  - Novi atributi (spec-only, select, public=0): `pa_podno-grejanje` (id 20; termini "Da (do 27 °C)" 360, "Ne" 361) · `pa_visina-vlakna` (id 21; 20/24/40/50/60 mm = 362–366). Usput: `pa_nosivost` prvi termin "350 t/m²" (367), `pa_boja` +`roze` (368).
+  - **4 nove top-level product_cat**: `vestacka-trava` (369) · `parking-i-travne-resetke` (370) · `lvt-podovi` (371) · `rampe-i-zavrsni-profili` (372) — nula slug kolizija, sve arhive 200.
+  - Postupak: 2 PHP skripte u ODVOJENIM procesima (insert u `woocommerce_attribute_taxonomies` + transient delete, pa svež proces za termine — nove pa_ taksonomije se registruju tek na init sledećeg procesa) + hard flush. UTF-8 verifikovan preko HEX (š=C5A1, č=C48D, °=C2B0, ²=C2B2).
+  - Odluka o proširenom setu (18→20 taksonomija) upisana u skill `/obogati-proizvod`.
+- **(2) F2 #3 — politika-kolacica (16656)**: 🔴 nalaz gori od poznatog "7×H1" — **ceo AI chat odgovor bio javno objavljen**: uvod "U nastavku je primer politike kolačića...", 2 citat linka na eu.anta.com (jedan sa `?utm_source=chatgpt.com`!), i završna sekcija "Preporuka za www.antasline.com — Pošto si ranije pomenuo..." koja preporučuje CookieYes/Complianz/Cookiebot (a sajt ima svoj `antasline-consent` plugin). Sve uklonjeno (5096→4019 B). H1: prvi ostaje (title_off=on), ostalih 6 → h2. Yoast title+metadesc dodati (bili prazni), indexable purge. Bez dupliranih postmeta, bez golog JSON-LD (provereno).
+- ⚠️ **Nov pod-obrazac za F2 batch**: pored golog JSON-LD i duplih postmeta, proveravati i **AI-chat ostatke** (uvodne "primer/preporuka" rečenice, citat linkove sa utm_source=chatgpt, sekcije koje se obraćaju Miroslavu) — treći slučaj posle ergomat opisa i 2298.
+- ⚠️ Rokovi ka M (podsetnik iz otvaranja sesije): **M10 cenovnik prošao rok 10.07** (fallback "na upit" aktivan, ali S2–S8 proizvodi i court builder predračun ostaju bez cena) · **M3 odbojka `[cpanel-live]` rok 13.07**.
+- ✅ Verifikacija: politika-kolacica 200 · 1×H1 · Yoast title/desc u head · 0 chatgpt/anta referenci · regresija home/industrijski-podovi/2298 čista · 4 nove kategorije 200.
+- Skripte (scratchpad): `s1-atributi.php`, `s1-termini-kategorije.php`, `f2-politika-kolacica.php`.
+
 ## 2026-07-11 [claude-code] [PLAN — W1 1.11/1.12] — dopuna Master plana: novi proizvodi (7 dobavljača) + court builder 2D 📋
 - **Samo planiranje, nula izmena na buildu/bazi.** Miroslavljev zahtev: novi proizvodi (Condor trave u boji, Radici Sport trava, Geoplast parking, Objectflor Expona LVT, R-Tile, hoopncourt koševi, Ecotile rampe/oprema) + court builder po uzoru na bergocourtbuilder.com + popuna oprema-za-sportske-terene gap-a.
 - Istraženo: lokal (46 proizvoda, 12 kategorija, variable precedent 79 varijacija po pa_boja, CF7/mail infra, nema konfiguratora) + web (7 dobavljača — konkretne linije/boje; live oprema stranica ima tribine/stolice/tenisku opremu koje lokal nema; bergocourtbuilder = 5 koraka + email output). Ključne verifikacije: **Ultimate modul 376,7 mm / FLOW 376 mm** (ne 376,5); Expona podno grejanje **zvanično max 27 °C**; imagick NEMA (PNG export klijentski); dompdf zahtevi (GD/DOM/mbstring) prisutni; cenovnik prazan.

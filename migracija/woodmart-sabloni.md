@@ -507,6 +507,11 @@ Puna strategija i uputstvo: [[migracija/brzi-upit-forma]]. Ovde samo gotcha-i:
 - 🔴 **Goli JSON-LD može biti i LAŽNA Review schema** (2298: izmišljena recenzija "Sava Marković"
   5/5 kao vidljiv tekst na vrhu posta) — takve se UKLANJAJU u potpunosti, ne pakuju u script tag
   (fabricated review = Google spam policy + "ne izmišljati" pravilo). FAQPage/legit scheme → script tag.
+- 🔴 **AI-chat ostaci javno objavljeni u sadržaju** (treći slučaj 2026-07-11, politika-kolacica 16656:
+  uvod "U nastavku je primer...", citat linkovi sa `utm_source=chatgpt.com`, završna sekcija koja se
+  obraća Miroslavu i preporučuje tuđe alate) — na svakom F2 postu grep-ovati: `chatgpt`, "primer",
+  "preporuč", "pomenuo", citat linkove ka nepovezanim domenima. Ranije viđeno i u ergomat opisima
+  (`avantorsciences.com+6` otpad).
 - 🔴 **`post_author=0` na 28/30 F3 reimportovanih postova** (rešeno globalno 2026-07-11) — simptom:
   prazan byline sa 404 linkom na `/author/`. Fix: `post_author=1` + user 1 nicename `savamar` /
   display "Miroslav Marković" (live parity) + yoast_indexable regen. Novi reimporti: proveriti odmah.

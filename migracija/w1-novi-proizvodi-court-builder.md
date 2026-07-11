@@ -1,8 +1,8 @@
 # W1 1.11/1.12 — Novi proizvodi (7 dobavljača) + Court builder 2D + oprema
 
 > Plan upisan 2026-07-11 `[claude-code]`. Izvor istine za ovaj paket.
-> Status: ⏳ ČEKA RED — tekući rad ide po [[2026-07-06-MASTER-PLAN-V2]] (Faza 2 post restyle).
-> Redosled: **S1 je preduslov za sve** · S2–S8 se ubacuju naizmenično sa Faza 2 batchevima · CB1–CB3 posle S8 · **CB3 gotov ≥2 nedelje pre go-live 2026-08-31**.
+> Status: ⏳ U TOKU — **S1 taksonomija ✅ 2026-07-11** (2 atributa id 20/21, nosivost termin, roze, 4 kategorije term_id 369–372 — detalji u DNEVNIK-u; `pa_nosivost` je već postojao iz batch #1, trebala su samo 2 nova atributa).
+> Redosled: ~~S1 preduslov~~ ✅ · S2–S8 se ubacuju naizmenično sa Faza 2 batchevima · CB1–CB3 posle S8 · **CB3 gotov ≥2 nedelje pre go-live 2026-08-31**.
 
 ---
 
