@@ -554,6 +554,55 @@ cene se upisuju na 47+ postojećih proizvoda) treba proveriti** — grep rendere
 pojavljivanja `"@type":"Product"` (i unutar `@graph` i van njega), ne pretpostavljati da je
 jednom verifikovano stanje trajno tačno.
 
+## F7.14 — Nova custom stranica bez `_woodmart_main_layout=full-width` pada na sidebar layout (2026-07-11, CB1 court builder)
+
+🔴 Svaka ranije izgrađena custom stranica (o-nama, iznajmljivanje-podova, industrijski-podovi,
+itd.) ima eksplicitno `_woodmart_main_layout` postmeta = `full-width`, ali to nigde nije bilo
+zapisano kao OBAVEZAN korak pri kreiranju nove stranice preko `wp_insert_post()` — samo se
+podrazumevalo. Nova stranica `/planer-terena/` (CB1, ID 17004) je napravljena bez tog meta
+ključa → WoodMart je pao na temin default page layout (sidebar), pa se globalna "Brzi upit"
+CF7 forma (auto-appendovana `the_content` hook-om na svaku stranicu, W1 1.10) vizuelno
+stisnula u usku sidebar kolonu i sticky-pozicionirala preko hero sekcije (vidljivo tek u
+browseru — HTML/curl provera ovo ne hvata, jer je sadržaj u markupu ispravan, problem je
+isključivo CSS layout posledica nedostajućeg meta ključa).
+
+**Fix**: `update_post_meta( $id, '_woodmart_main_layout', 'full-width' )` odmah posle
+`wp_insert_post()` na SVAKOJ novoj custom stranici (ne samo proizvodima/postovima —
+`_woodmart_title_off` se već upisuje rutinski, ovaj ključ treba isti tretman).
+
+**⚠️ Ovo je gotcha koji se NE hvata standardnim HTTP/H1/JSON-LD verifikacionim standardom** —
+potrebna je vizuelna provera u browseru (screenshot) za svaku novu stranicu koja koristi
+custom shortcode/builder sadržaj, ne samo curl. Dodati u standard verifikacije za W1 1.11+.
+
+## F7.15 — `wp_insert_post()` bez ulogovanog korisnika pušta content kroz kses i BRIŠE `<script>` tagove (2026-07-11, CB2 court builder)
+
+🔴🔴 **Drugačiji (ozbiljniji) mehanizam od F7.12/ranijih "goli JSON-LD" nalaza** — svi raniji
+slučajevi su bili wpautop koji razbija `<script>` u vidljiv tekst. Ovde je uzrok drugi: stranica
+`/planer-terena/` je kreirana preko `wp_insert_post(['post_content' => $content, ...])` sa
+FAQPage JSON-LD `<script>` tagom uključenim direktno u `$content` PRE upisa. Pošto CLI/php.exe
+skripta nema ulogovanog korisnika (`get_current_user_id()`=0 → `current_user_can('unfiltered_html')`
+false), `wp_insert_post()` je pustio ceo sadržaj kroz `wp_filter_post_kses`, koji je **obrisao
+`<script>` i `</script>` tagove ali ostavio goli JSON tekst kao vidljiv sadržaj stranice** (kses ne
+dira plain-text između tagova, samo same HTML tagove).
+
+**Zašto se ovo NIJE desilo na 40+ proizvoda kreiranih ranije danas (S1–S8)**: svi ti skriptovi
+su dosledno koristili `al_update_content()` helper koji piše `post_content` preko
+**`$wpdb->update()` direktno** (raw SQL, bez `wp_insert_post`/kses uopšte) — `wp_insert_post()`
+je korišćen SAMO za inicijalno kreiranje posta sa praznim `post_content=''`, a pravi sadržaj
+(uklj. `<script>` blokove) je uvek pisan u DRUGOM, odvojenom koraku preko `$wpdb->update()`.
+`/planer-terena/` stranica je bila IZUZETAK — ceo sadržaj (uklj. schema) upisan u JEDNOM
+`wp_insert_post()` pozivu.
+
+**Pravilo ubuduće**: NIKAD ne upisivati `<script>` (ili bilo koji HTML tag koji kses može
+tretirati kao "opasan" — `<iframe>`, `<style>`, itd.) direktno kroz `post_content` parametar
+`wp_insert_post()`/`wp_update_post()` pozvan iz CLI konteksta. Uvek: (1) `wp_insert_post()` sa
+praznim/osnovnim sadržajem, (2) `$wpdb->update($wpdb->posts, ['post_content' => $puni_sadrzaj], ['ID' => $id])`
+za sadržaj koji sadrži schema/script blokove — tačno onako kako `al_update_content()` helper
+radi u svim proizvod-skriptovima.
+
+**Fix primenjen**: sadržaj rekonstruisan (bare JSON pronađen regex-om, provera `json_decode()`
+uspešnosti pre upisa), pa upisan nazad preko `$wpdb->update()` sa pravim `<script>` omotačem.
+
 ## Otvoreno
 - [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)
 - [ ] Figma sync — čeka link od Miroslava #ceka-miroslav
