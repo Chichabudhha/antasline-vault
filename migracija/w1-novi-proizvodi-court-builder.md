@@ -1,8 +1,8 @@
 # W1 1.11/1.12 — Novi proizvodi (7 dobavljača) + Court builder 2D + oprema
 
 > Plan upisan 2026-07-11 `[claude-code]`. Izvor istine za ovaj paket.
-> Status: ⏳ U TOKU — **S1 ✅ + S2 ✅, oba 2026-07-11**. S1: 2 atributa id 20/21, nosivost termin, roze, 4 kategorije term_id 369–372 (`pa_nosivost` je već postojao iz batch #1, trebala su samo 2 nova atributa). S2 (Condor Grass, 3 proizvoda 16877/16885/16893): 🔴 condorgrass-sport.com nedostupan, condor-group.eu ne potvrđuje tačne nazive modela/spec brojeve → opisi samo sa potvrđenim opštim činjenicama; 🔴 nema fotografija nijednog proizvoda. Oba #ceka-M — detalji DNEVNIK.
-> Redosled: ~~S1 preduslov~~ ✅ · S2 ✅ · sledeći S3 (Radici Sport trava) · S4–S8 se ubacuju naizmenično sa Faza 2 batchevima · CB1–CB3 posle S8 · **CB3 gotov ≥2 nedelje pre go-live 2026-08-31**.
+> Status: ⏳ U TOKU — **S1 ✅ + S2 ✅ + S3 ✅ + S4 ✅ + S5 ✅ + R-Tile/traka/stair nosing ✅, sve 2026-07-11**. S1: 2 atributa id 20/21, nosivost termin, roze, 4 kategorije term_id 369–372. S2 (Condor Grass, 3): condorgrass-sport.com nedostupan → opisi generički. S3 (Radici Sport, 7): 🟢 ULTRAMIX EVO N.I./Tournament 20 potvrđeni specovi; ostalih 5 generički. S4 (Geoplast, 7 — 5 planiranih + Geogravel/Geoflor van plana): 🟢 svih 5 planiranih ima potvrđene specifikacije (geoplastglobal.com); Geogravel/Geoflor iskorišćen već postojeći, odobreni sadržaj sa hub-a 16589 sa PRAVIM CENAMA. 🔴🔴 **Sistemski bug otkriven u S4**: postavljanje realne `_price` duplira Product JSON-LD (Yoast + globalni W2 2.7 hook) — fixirano u `functions.php` (proverava cenu pre fallback-a), ali svaki budući price-upis na postojeće proizvode treba proveriti. S5 (Objectflor Expona LVT, 6): 🟢 4/6 (Commercial/Flow/Simplay/Clic 19dB) sa pravim proizvođačkim PDF tehničkim listovima pročitanim direktno iz uploads-a (uklj. bitnu razliku Bfl-s1 vs Cfl-s1); Design/Living Clic samo WebSearch-potvrđeno, kraći spec. Backlink dodat na LVT hub 16667. **R-Tile/traka/SureGrip (4)**: 🔴 **plan-odstupanje nađeno i ispravljeno** — originalni plan je pretpostavio da R-Tile Design/Urban imaju "10 boja/dovetail/10g garanciju" (to su specifikacije GARAŽNE R-Tile linije sa r-tekmanufacturingltd.com); stvarna Design/Urban retail kolekcija (r-tileretailflooring.com) ima DEKOR uzorke (beton/teraco/kamen/drvo, 7+12), ne prave boje → oba urađena kao **simple** (isti obrazac kao Expona), dekori nabrojani u opisu, debljina/garancija koje proizvođač ne navodi javno NISU izmišljene. PermaStripe traka (ecotileflooring.com) variable 6 boja (crvena/žuta/bela/zelena/plava/crno-žuta hazard, postojeći pa_boja slugovi). SureGrip stepenišni profil (ecotileflooring.com) simple, GRP, potvrđene dimenzije/DDA — prvi proizvod u kategoriji 372 (do sada prazna). Svi bez fotografija — #ceka-M. Sva 4 (S1-S5+R-Tile) nemaju fotografije za 23 nova proizvoda — #ceka-M.
+> Redosled: ~~S1~~ ✅ · ~~S2 Condor~~ ✅ · ~~S3 Radici~~ ✅ · ~~S4 Geoplast~~ ✅ · ~~S5 Expona~~ ✅ · ~~R-Tile+traka+stair nosing~~ ✅ · **sledeći: Ecotile rampe (4, 26 var)** · zatim Hoop n Court (9) · generička oprema (8, pre CB2) — poslednja dva se ubacuju naizmenično sa Faza 2 batchevima · CB1–CB3 posle generičke opreme · **CB3 gotov ≥2 nedelje pre go-live 2026-08-31**. ⚠️ Napomena: sesijski brojevi S1–S8 u tabeli ispod su iz originalnog plana (pre podele Radici/Geoplast/Expona u zasebne sesije) — od S4 nadalje ne poklapaju se 1:1 sa dnevnik oznakama, prati "Status" liniju gore za tačan redosled.
 
 ---
 
@@ -56,26 +56,27 @@ Izvršenje: PHP skripta (`wp_insert_term` + INSERT u `wpGs_woocommerce_attribute
 - [x] Condor shock-pad podloga — simple — ✅ 16893, 2026-07-11
 
 **Radici Sport** (radicisport.it) → `vestacka-trava`:
-- [ ] ULTRAMIX EVO N.I. (mali fudbal, FIFA/FIGC) — simple
-- [ ] Tournament 20 (tenis/padel, ITF) — **variable** (zelena, tennisred, plava = 3)
-- [ ] Rugby linija — simple · [ ] Golf — simple · [ ] Hockey — simple
-- [ ] Multisport — **variable** (zelena, crvena, plava = 3) · [ ] Landscape — simple
+- [x] ULTRAMIX EVO N.I. (mali fudbal, FIFA/FIGC) — simple — ✅ 16894, 2026-07-11 (38mm/no-infill/6000+8000 dtex potvrđeno)
+- [x] Tournament 20 (tenis/padel, ITF) — **variable** (zelena, crvena, plava = 3) — ✅ 16895, 2026-07-11 (20-25mm/5500dtex/ITF potvrđeno, 7 zvaničnih nijansi grupisano u 3)
+- [x] Rugby linija — simple — ✅ 16899 (samo World Rugby sertifikacija potvrđena) · [x] Golf — simple — ✅ 16900 (generički) · [x] Hockey — simple — ✅ 16901 (generički)
+- [x] Multisport MX — **variable** (zelena, crvena, plava = 3) — ✅ 16902 (naziv potvrđen, spec ne) · [x] Landscape — simple — ✅ 16906 (generički)
 
 **Geoplast** (geoplastglobal.com) → `parking-i-travne-resetke` (sve simple, HDPE reciklirani):
-- [ ] Salvaverde Type A 50×50×4 cm (350 t/m², permeabilnost 95%) · [ ] Salvaverde Type B 58×58×4 cm
-- [ ] Runfloor · [ ] Geograss · [ ] Geocross
+- [x] Salvaverde Type A 50×50×4 cm (350 t/m², permeabilnost 95%) — ✅ 16907, 2026-07-11 · [x] Salvaverde Type B 58×58×4 cm — ✅ 16908
+- [x] Runfloor — ✅ 16909 (600 t/m²/90% propusnost, cena 2.800–3.400 din/m² — hub 16589 autoritativniji od inicijalnog WebFetch-a) · [x] Geograss — ✅ 16910 (280 t/m², na upit) · [x] Geocross — ✅ 16911 (100 t/m², cena 4.200 din/m²)
+- 🆕 **Van originalnog plana, dodato jer je hub 16589 već imao gotov sadržaj+cene**: [x] Geogravel — ✅ 16912 (400 t/m²/61% propusnost, cena 4.000 din/m²) · [x] Geoflor — ✅ 16913 (cena 3.400 din/m²)
 
-**Objectflor Expona** (objectflor.de) → `lvt-podovi` (svi simple — 50+ dekora NIJE variable, dekori u galeriji/opisu; **svi `pa_podno-grejanje`="Da (do 27 °C)"** u spec + FAQ):
-- [ ] Expona Design · [ ] Flow (→16668) · [ ] Simplay · [ ] Simplay Acoustic Clic · [ ] Living Clic · [ ] Commercial (→16685/16686)
+**Objectflor Expona** (objectflor.de) → `lvt-podovi` (svi simple — 50+ dekora NIJE variable, dekori u galeriji/opisu; **svi `pa_podno-grejanje`="Da (do 27 °C)"** u spec + FAQ gde potvrđeno):
+- [x] Expona Design — ✅ 16918, 2026-07-11 (samo WebSearch potvrda, bez lokalnog PDF-a/fotki — #ceka-M) · [x] Flow (→16668) — ✅ 16915 (pun PDF spec) · [x] Simplay 19dB — ✅ 16916 (pun PDF spec, loose-lay, Cfl-s1) · [x] Clic 19dB Wood — ✅ 16917 (pun PDF spec, 5G-i Välinge, umesto plana pisanog "Simplay Acoustic Clic" — realno ime kod objectflor-a je "Clic 19dB", odvojen proizvod od Simplay-a) · [x] Living Clic — ✅ 16919 (samo WebSearch potvrda, bez lokalnog PDF-a/fotki — #ceka-M) · [x] Commercial (→16685/16686) — ✅ 16914 (pun PDF spec)
 
-**R-Tile** (R-Tek Manufacturing) → `lvt-podovi` + 254:
-- [ ] R-Tile Design — **variable** 10 boja (mapirati na postojeće slugove), debljina 4/5 mm spec, dovetail, 10 g garancije
-- [ ] R-Tile Urban — **variable** 10 boja
+**R-Tile** (R-Tek Manufacturing, r-tileretailflooring.com) → `lvt-podovi` + 254:
+- [x] R-Tile Urban — **simple** (6,5mm, 100% reciklirani PVC, interlocking, 7 dekora beton/teraco potvrđeno) — ✅ 16920, 2026-07-11
+- [x] R-Tile Design — **simple** (mat PU + hidden interlock, 12 dekora kamen/drvo potvrđeno) — ✅ 16921, 2026-07-11 — 🔴 plan pogrešno pretpostavio "variable 10 boja/dovetail/10g garancije" (to su specifikacije garažne R-Tile linije, ne retail Design/Urban) — vidi napomenu u statusu gore
 
 **Ecotile oprema** (ecotileflooring.com) → `rampe-i-zavrsni-profili` (traka → 248):
 - [ ] E500 T-Joint rampa 500×90 mm — **variable** 8 boja (žuta, svetlo-siva, tamno-siva, grafit, crna, zelena, crvena, tamno-plava)
 - [ ] E500 T-Joint ugaona — **variable** (8) · [ ] X500 X-Joint rampa 497×90 mm — **variable** (grafit, crna, žuta, crvena, plava = 5) · [ ] X500 X-Joint ugaona — **variable** (5)
-- [ ] Line-marking traka — **variable** ~6 boja (kat. 248) · [ ] SureGrip stair nosing — simple
+- [x] Line-marking traka (PermaStripe) — **variable** 6 boja (kat. 248) — ✅ 16922, 2026-07-11 · [x] SureGrip stair nosing — **simple** — ✅ 16929, 2026-07-11 (prvi proizvod u 372)
 
 **Hoop n Court** (hoopncourt.com) → 251 (svi simple):
 - [ ] Hoopair D60 · [ ] Hoopair D54-F · [ ] Hoopair D72 · [ ] Goalrilla DC72E1 · [ ] Goalrilla CV72 · [ ] Goaliath GB60 · [ ] Goaliath Gotek 54 · [ ] Gotek 54 Wallmount · [ ] Thunder-500 (FIBA 3x3)
@@ -140,8 +141,8 @@ Posle izmene: Yoast purge 16676, 1×H1, linkovi, regresija 16677 (reflektori).
 | **S1** ⚠️ preduslov | 4 kategorije + `pa_podno-grejanje` + `pa_visina-vlakna` + nosivost/roze termini + verifikacija filtera | mala | [ ] |
 | S2 | Condor (3) + Radici deo (4) | 7 proizvoda, 14 var | [ ] |
 | S3 | Radici ostatak (3) + Geoplast (5) | 8 | [ ] |
-| S4 | Expona (6) — podno grejanje 27 °C spec+FAQ | 6 | [ ] |
-| S5 | R-Tile (2×10 var) + traka + stair nosing | 4, ~26 var | [ ] |
+| S4 | Expona (6) — podno grejanje 27 °C spec+FAQ | 6 | [x] ✅ 2026-07-11 (izvršeno pod dnevnik-oznakom "S5" jer je Geoplast odradjen kao S4 — vidi napomenu iznad) |
+| S5 | R-Tile (2× simple, ne variable — vidi napomenu) + traka + stair nosing | 4, 6 var (traka) | [x] ✅ 2026-07-11 |
 | S6 | Ecotile rampe (4, 26 var) + cross-linkovi | 4 | [ ] |
 | S7 | Hoop n Court (9) | 9 | [ ] |
 | **S8** ⚠️ pre CB2 | Generička oprema (8) + kartice 16676 + `_al_cb_equipment` flagovi | 8 | [ ] |

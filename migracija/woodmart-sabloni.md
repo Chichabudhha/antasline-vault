@@ -535,6 +535,25 @@ Puna strategija i uputstvo: [[migracija/brzi-upit-forma]]. Ovde samo gotcha-i:
   Napomena: python print takvih vrednosti u Windows konzoli prikazuje `�` i kad su bajtovi ispravni —
   proveravati bajtove, ne konzolni prikaz.
 
+## F7.13 — Product JSON-LD duplira se čim proizvod dobije pravu cenu (2026-07-11, S4 Geoplast)
+
+🔴🔴 **W2 2.7 pretpostavka ("Yoast nikad ne renderuje Product schema") je bila tačna SAMO dok
+nijedan od 47 proizvoda nije imao cenu** (katalog režim od početka projekta). Čim je prva prava
+cena postavljena (S4: Runfloor/Geocross/Geogravel/Geoflor, prvi price-upis u projektu), **Yoast
+WooCommerce integracija je sama počela da emituje sopstvenu Product schemu** (ugnježdenu u
+`@graph` sa BreadcrumbList-om) — pored globalnog `functions.php` fallback hook-a (W2 2.7,
+`wp_footer` @ prioritet 25) koji se izvršava bezuslovno na svakoj `is_product()` stranici.
+Rezultat: 2× `"@type":"Product"` na stranici.
+
+**Fix** (`woodmart-child/functions.php`, u W2 2.7 hook-u): dodata provera odmah posle
+`global $product` — ako `$product->get_price()` nije prazno, `return` (Yoast preuzima).
+Fallback ostaje aktivan ISKLJUČIVO za proizvode bez cene.
+
+**⚠️ Svaki budući price-upis na postojeći proizvod (npr. kad M10 cenovnik konačno stigne i
+cene se upisuju na 47+ postojećih proizvoda) treba proveriti** — grep rendered HTML za broj
+pojavljivanja `"@type":"Product"` (i unutar `@graph` i van njega), ne pretpostavljati da je
+jednom verifikovano stanje trajno tačno.
+
 ## Otvoreno
 - [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)
 - [ ] Figma sync — čeka link od Miroslava #ceka-miroslav
