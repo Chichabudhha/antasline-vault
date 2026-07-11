@@ -48,7 +48,8 @@ tipografija, interni linkovi. Redosled po GSC saobraćaju:
 | 1 | Conquest 2542 (epoksidni-podovi-ili-ecotile) | poklapa se sa W2 2.9 refresh (poz. 26 "epoksi podovi") — spojiti u jednu sesiju | ✅ 2026-07-10 — GEO intro, goli FAQ JSON→script tag, al-table, brend CTA box, live-domen linkovi→lokal, link na /industrijski-podovi-cena/, 4× _thumbnail_id dedupe, sidebar-opener sakriven na postovima. ⚠️ obrazac za ostale: goli JSON-LD + dupli postmeta + kategorija |
 | 2 | Basket 2298 (kako-napraviti-teren) | najveći organski post | ✅ 2026-07-11 — 8×H1→1, lažna Review schema UKLONJENA (fabricated, ne script-tag), 19 meta dedupe, GEO+CTA+FAQ/JSON-LD. Bonus: post_author=0 fix na svih 28 postova (byline 404) |
 | 3 | `/politika-kolacica/` (16656) | poznat 7×`<h1>` slučaj | ✅ 2026-07-11 — 7×H1→1; 🔴 nalaz gori: ceo AI chat odgovor bio javan (uvod "primer politike", eu.anta.com citati sa utm_source=chatgpt, "Preporuka — pošto si ranije pomenuo..." sekcija) → uklonjen; Yoast title/desc dodati. **Nov pod-obrazac za batch: proveravati AI-chat ostatke** |
-| 4+ | Ostalih ~27 postova batch po GSC klikovima | izvući listu iz GSC pre prve sesije | ⬜ |
+| 4 | Batch top-5: podloga-za-teniske-terene (2699, 299kl), teren-za-basket-3x3 (5170, 169kl), podovi-za-radionice (5637, 154kl), podne-ploce-za-kontejnere (5181, 128kl), sta-postaviti...-2 (6588, 202kl) | GSC lista izvučena (Windsor.ai searchconsole last_6m) | ✅ 2026-07-11 — 🔴🔴 **6588 imao prazan post_content** (ZionBuilder zn_page_builder_els, ne post_content — sadržaj doslovno obnovljen iz XML-a); 2699 3 slomljene slike (-1 sufiks gotcha); 5170 &nbsp; otpad + GEO intro; 5637 bare JSON-LD + **izmišljena aggregateRating uklonjena**; 5181 goli URL→anchor. Svi dedupe-ovani. **Nov pod-obrazac: proveriti CHAR_LENGTH(post_content)=0 na svakom postu pre bilo čega** |
+| 5+ | Ostalih ~20 postova batch po GSC klikovima (opseg ispod 128 klikova) | nastaviti istu Windsor.ai listu | ⬜ |
 
 ## Pravila (ista kao w1-red-cekanja)
 

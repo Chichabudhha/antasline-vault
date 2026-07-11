@@ -512,6 +512,20 @@ Puna strategija i uputstvo: [[migracija/brzi-upit-forma]]. Ovde samo gotcha-i:
   obraća Miroslavu i preporučuje tuđe alate) — na svakom F2 postu grep-ovati: `chatgpt`, "primer",
   "preporuč", "pomenuo", citat linkove ka nepovezanim domenima. Ranije viđeno i u ergomat opisima
   (`avantorsciences.com+6` otpad).
+- 🔴🔴 **`post_content` može biti POTPUNO PRAZAN uz punu ZionBuilder postmeta** (2026-07-11, post 6588,
+  202 GSC klika/6mes) — stranica na live-u građena ZionBuilder page builderom čuva sadržaj u
+  `zn_page_builder_els` serialized postmeta, standardni WXR export (`content:encoded`) ostaje prazan
+  CDATA. Simptom: HTTP 200, naslov se prikazuje (tema renderuje H1 iz post_title), ali telo stranice
+  je vidljivo prazno — lako se previdi jer stranica "radi". Provera na SVAKOM F2 postu PRE bilo čega:
+  `SELECT CHAR_LENGTH(post_content) FROM wp_posts WHERE ID=X` — ako je 0 i postoji `zn_page_builder_els`
+  meta, sadržaj treba doslovno izvući unserializacijom te postmeta vrednosti iz `live-posts-*.xml`
+  (obrazac skripte: `extract-zn-6588.php`, hoda kroz `TH_TextBox`/heading/`TH_ImageBox` čvorove) —
+  **ne izmišljati sadržaj**, prepisati doslovno pa tek onda dodati GEO intro/FAQ/CTA omotač.
+- **Live-domen→lokal zamena linkova može otkriti nove slomljene slike** — ako link/img src izgleda
+  ispravno dok cilja `antasline.com`, tek posle prebacivanja na `localhost` postaje vidljivo da fajl
+  ne postoji pod tim tačnim imenom (čest uzrok: import je dodao `-1` sufiks pri koliziji imena —
+  `wp-image-XXXX` CSS klasa u markupu otkriva pravi attachment ID pa se pravo ime nađe preko
+  `SELECT guid FROM wp_posts WHERE ID=XXXX`). Uvek re-proveriti slike POSLE live-link fixa, ne samo pre.
 - 🔴 **`post_author=0` na 28/30 F3 reimportovanih postova** (rešeno globalno 2026-07-11) — simptom:
   prazan byline sa 404 linkom na `/author/`. Fix: `post_author=1` + user 1 nicename `savamar` /
   display "Miroslav Marković" (live parity) + yoast_indexable regen. Novi reimporti: proveriti odmah.

@@ -1,8 +1,8 @@
 # W1 1.11/1.12 — Novi proizvodi (7 dobavljača) + Court builder 2D + oprema
 
 > Plan upisan 2026-07-11 `[claude-code]`. Izvor istine za ovaj paket.
-> Status: ⏳ U TOKU — **S1 taksonomija ✅ 2026-07-11** (2 atributa id 20/21, nosivost termin, roze, 4 kategorije term_id 369–372 — detalji u DNEVNIK-u; `pa_nosivost` je već postojao iz batch #1, trebala su samo 2 nova atributa).
-> Redosled: ~~S1 preduslov~~ ✅ · S2–S8 se ubacuju naizmenično sa Faza 2 batchevima · CB1–CB3 posle S8 · **CB3 gotov ≥2 nedelje pre go-live 2026-08-31**.
+> Status: ⏳ U TOKU — **S1 ✅ + S2 ✅, oba 2026-07-11**. S1: 2 atributa id 20/21, nosivost termin, roze, 4 kategorije term_id 369–372 (`pa_nosivost` je već postojao iz batch #1, trebala su samo 2 nova atributa). S2 (Condor Grass, 3 proizvoda 16877/16885/16893): 🔴 condorgrass-sport.com nedostupan, condor-group.eu ne potvrđuje tačne nazive modela/spec brojeve → opisi samo sa potvrđenim opštim činjenicama; 🔴 nema fotografija nijednog proizvoda. Oba #ceka-M — detalji DNEVNIK.
+> Redosled: ~~S1 preduslov~~ ✅ · S2 ✅ · sledeći S3 (Radici Sport trava) · S4–S8 se ubacuju naizmenično sa Faza 2 batchevima · CB1–CB3 posle S8 · **CB3 gotov ≥2 nedelje pre go-live 2026-08-31**.
 
 ---
 
@@ -51,9 +51,9 @@ Izvršenje: PHP skripta (`wp_insert_term` + INSERT u `wpGs_woocommerce_attribute
 ### Proizvodi po dobavljaču
 
 **Condor Grass** (condor-group.eu / condorgrass-sport.com) → `vestacka-trava`:
-- [ ] Condor Schools trava u boji — **variable** pa_boja (crvena, žuta, plava, bela, roze, zelena, braon = 7)
-- [ ] Condor Playgrass — **variable** (istih 7)
-- [ ] Condor shock-pad podloga — simple
+- [x] Condor Schools trava u boji — **variable** pa_boja (crvena, žuta, plava, bela, roze, zelena, braon = 7) — ✅ 16877, 2026-07-11
+- [x] Condor Playgrass — **variable** (istih 7) — ✅ 16885, 2026-07-11
+- [x] Condor shock-pad podloga — simple — ✅ 16893, 2026-07-11
 
 **Radici Sport** (radicisport.it) → `vestacka-trava`:
 - [ ] ULTRAMIX EVO N.I. (mali fudbal, FIFA/FIGC) — simple
