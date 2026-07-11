@@ -10,13 +10,13 @@
 
 ## Paleta boja
 
-| Boja | CMYK | PANTONE | **HEX (pipeta iz logoa)** ⭐ | HEX (Pantone ref.) | Upotreba |
-|---|---|---|---|---|---|
-| Tamni teget (primarna) | 100/85/35/40 | 655 C | **`#0E2950`** | `#002554` | logotip tekst, glavna ploča, fascikla |
-| Srednje plava | 100/80/20/20 | 655 C *(u PDF-u ponovljeno — verovatno greška, boja odgovara ~286/287 C)* | **`#0B3E75`** | ~`#1B4A9C` | druga ploča |
-| Svetloplava | 70/40/10/0 | 279 C | **`#5287B7`** | `#418FDE` | treća ploča |
-| Crvenonarandžasta | 0/85/100/0 | 172 C | **`#F04D22`** | `#FA4616` | akcenat, CTA (dugme "pozovite nas") |
-| Žutonarandžasta | 0/45/100/0 | 137 C | **`#F89C1C`** | `#FFA300` | akcenat |
+| Boja                   | CMYK         | PANTONE                                                                   | **HEX (pipeta iz logoa)** ⭐ | HEX (Pantone ref.) | Upotreba                              |
+| ---------------------- | ------------ | ------------------------------------------------------------------------- | --------------------------- | ------------------ | ------------------------------------- |
+| Tamni teget (primarna) | 100/85/35/40 | 655 C                                                                     | **`#0E2950`**               | `#002554`          | logotip tekst, glavna ploča, fascikla |
+| Srednje plava          | 100/80/20/20 | 655 C *(u PDF-u ponovljeno — verovatno greška, boja odgovara ~286/287 C)* | **`#0B3E75`**               | ~`#1B4A9C`         | druga ploča                           |
+| Svetloplava            | 70/40/10/0   | 279 C                                                                     | **`#5287B7`**               | `#418FDE`          | treća ploča                           |
+| Crvenonarandžasta      | 0/85/100/0   | 172 C                                                                     | **`#F04D22`**               | `#FA4616`          | akcenat, CTA (dugme "pozovite nas")   |
+| Žutonarandžasta        | 0/45/100/0   | 137 C                                                                     | **`#F89C1C`**               | `#FFA300`          | akcenat                               |
 
 **⭐ Za web/temu koristiti "pipeta" kolonu** — izmereno 2026-07-05 iz piksela renderovanog `ANTAS LINE FINAL LOGO.pdf` (pdfium, CMYK→sRGB kroz profil). To su boje koje logo stvarno ima kad se izveze za ekran, pa se tema i logo asset poklapaju. Pantone HEX kolona je samo referenca — svetlija/zasićenija jer Pantone spot boje izlaze iz CMYK gamuta. Potvrđeno: vektorski PDF sadrži tačno 5 CMYK vrednosti iz brand book-a (+ belu), bez RGB definicija.
 
