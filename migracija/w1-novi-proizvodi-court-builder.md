@@ -1,4 +1,4 @@
-# W1 1.10/1.11 — Novi proizvodi (7 dobavljača) + Court builder 2D + oprema
+# W1 1.11/1.12 — Novi proizvodi (7 dobavljača) + Court builder 2D + oprema
 
 > Plan upisan 2026-07-11 `[claude-code]`. Izvor istine za ovaj paket.
 > Status: ⏳ ČEKA RED — tekući rad ide po [[2026-07-06-MASTER-PLAN-V2]] (Faza 2 post restyle).
