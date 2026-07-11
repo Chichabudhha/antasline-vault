@@ -175,7 +175,7 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 |---|---|---|---|---|
 | M1 | 🔴 Cene za Tier1 draftove (#1, #2, #3, #6) | W2 najvredniji deo | 2026-07-10 | objaviti sa "cena na upit" + forma, cene se dodaju naknadno |
 | M2 | ✅ ~~Negativna lista potvrda u Ads UI~~ — urađeno 2026-07-06 | ~~16% budžeta curi svaki dan~~ | — | — |
-| M3 | Odbojka refresh primena `[cpanel-live]` | 7.817 impr. quick-win | 2026-07-13 | ostaje u paketu, primeni se sa migracijom |
+| M3 | ✅ ZATVORENO 2026-07-11 — primena gotova od 07-05, Rich Results/schema provera zatvorena `[cpanel-live]` 07-11; ostaje samo cena-sekcija (čeka M10) i GSC indexing zahtev | ~~7.817 impr. quick-win~~ | — | — |
 | M4 | ✅ URAĐENO 2026-07-06 (3/4) — GMB: recenzije kampanja (spreman, čeka poslove), UTM fix (gotovo), kategorije (gotovo), post (gotovo) | W5 quick-win | 2026-07-31 | review link čeka — ne blocker |
 | M5 | Konverzije info: šta biva sa 55 kontakata/mes | Fazu 4 / CRM odluku | 2026-07-31 | plan radi i bez toga, ali vrednost/konv ostaje nepoznata |
 | M6 | SSH/hosting pristup + potvrda hostinga | migraciju (N8) | 2026-08-20 | 🔴 nema fallback — bez ovoga nema migracije |

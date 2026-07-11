@@ -1,5 +1,13 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-11 [cpanel-live] [W2 #9 odbojka — zatvaranje] — Rich Results/schema provera na živoj stranici, M3 checklist zatvoren ✅
+- Sesija otvorena kao cpanel-live (rad direktno na produkciji, `~/antasline-vault`). Git pull na početku: fast-forward `7a8943d→600cc97` (10 auto-backup commit-a), lokalne necommitovane izmene (DNEVNIK, PROGRESS) sačuvane preko stash/pop, bez konflikta.
+- **Otvoren item iz [[dnevnik/2026-07-05-refresh-odbojka]] zatvoren**: curl dohvat žive stranice `/podloga-za-odbojkaske-terene/` (HTTP 200) + python `json.loads` provera oba JSON-LD bloka — Yoast graf (Article/WebPage/ImageObject/BreadcrumbList/WebSite/Person) i FAQPage, oba validna, bez dupliranja, bez golog JSON-a van `<script>`. FAQPage: sva 4 pitanja imaju obavezna polja (`name` + `acceptedAnswer.text`). 1×H1 potvrđen. Title/meta i dalje namerno nepromenjeni (M odluka od 07-05).
+- ⚠️ Nema pravog Google Rich Results Test alata dostupnog sa servera (headless browser) — provera je strukturalna (JSON parse + obavezna polja), ne live Google rendering test. Dovoljno za zatvaranje `#claude-code` stavke, ali GSC Inspect URL/Request indexing i dalje `#ceka-miroslav`.
+- **Lažni nalaz istražen i odbačen**: `069 234 0074` u tekstu stranice nije bug — potiče iz sitewide popup-a (Popup Maker ID 7361, godišnji odmor 06.07–15.07), koji namerno navodi DVA ograničena mobilna broja (074 i 072) tokom odmora. Popup je već ranije editovan (postoje backup fajlovi od 07-06). Nema izmene.
+- **M3 (Master Plan zavisnost) praktično zatvoren**: primena je bila gotova od 07-05, ostaje samo cena-sekcija (čeka M10 cenovnik, i dalje prazan) i GSC indexing zahtev (#ceka-miroslav).
+- Bez izmena baze/sadržaja na live — čisto read-only verifikacija.
+
 ## 2026-07-11 [claude-code] [W1 1.11 S1 + F2 #3] — taksonomija za nove proizvode + politika-kolacica očišćena ✅
 - **Dva zadatka u sesiji.** Backup: `antasline_local_2026-07-11_pre-s1-taksonomija.sql` (48,7MB).
 - **(1) S1 taksonomija — GATE za S2–S8 OTKLJUČAN** (plan [[migracija/w1-novi-proizvodi-court-builder]]):
@@ -42,6 +50,28 @@
 - ⚠️ #ceka-M: Ads — preusmeriti garaža/cena search termine na nove landinge (16,8k RSD išlo u prazno na garaže bez stranice, 4,1k na industrijski-cena); potvrda kad stignu cene za preostale 3 stranice (upisati u [[reference/cenovnik]] pa javiti).
 - Skripte (scratchpad): `filteri-kategorije.php`, `tier1-cena-stranice.php`, `parking-cena-update.php`, `restyle-2542.php`, `verify-tier1.php`.
 - Verifikovano: 4 nove + 6 regresija stranica 200/1×H1/LD validan/meta DA; svi linkovi+slike na novim stranicama 200 (osim xmlrpc 405, nebitno).
+## 2026-07-10 [cpanel-live] [LiteSpeed img-optm — UZROK POTVRĐEN] — hosting firewall (Imunify360) blokira legitiman QUIC.cloud OVH IP, 2 tiketa spremna 🔴
+- M je iz QUIC.cloud dashboard-a našao konkretniju grešku: *"Failed to notify WP to pick up optimized images. Unable to notify WordPress to pick up images from node 54.36.103.97. Check QUIC.cloud IPs are whitelisted at the firewall."*
+- **Provera IP-a `54.36.103.97`**: potvrđeno na zvaničnoj, uživo QUIC.cloud IP listi (`https://quic.cloud/ips?json`) — **jeste legitiman, trenutno važeći čvor** (OVH SAS, Gravelines FR). Nije lažiran/zastareo unos.
+- **Ali taj IP nema NIJEDAN trag u access logu** (`~/access-logs/antasline.com-ssl_log` + prethodna rotacija do sredine juna) — dok su drugi IP-ovi sa iste zvanične liste, ali iz Hetzner opsega (`65.108.104.232`, `95.216.116.209`), danas uspešno prošli (`notify_ccss`/`notify_ucss` → HTTP 200 u 12:37 CEST).
+- 🔴 **Zaključak menja pravac krivice iz jučerašnjeg/jutrošnjeg nalaza**: ovo NIJE (samo) QUIC.cloud pipeline problem — zahtev sa OVH IP-a nikad ne stiže ni do LiteSpeed/Apache log sloja, što je klasičan potpis mrežnog firewall bloka PRE web servera, ne WP/plugin odbijanja (koje bi ostavilo 401 trag kao kod mojih test poziva). Nalog ima **Imunify360 potvrđeno aktivan** (`.imunify_patch_id`, `.myimunify_id` u home dir-u) — poznato je da agresivno tretira cele OVH opsege zbog visokog udela bot/scanner saobraćaja odatle. Nema root/WHM pristup da se ovo direktno potvrdi/ispravi (`sudo`/`imunify360-agent` nedostupni sa cPanel korisničkim nalogom).
+- ✅ **Dva nacrta tiketa pripremljena**:
+  - `[[dnevnik/2026-07-10-hosting-tiket-firewall]]` — **primarni, verovatno pravi fix** — ka hosting provajderu (oblak.host), traži whitelist IP-a/OVH opsega u Imunify360.
+  - `[[dnevnik/2026-07-10-quic-cloud-tiket]]` — dopunjen sa ovim nalazom, sekundaran (za potvrdu sa QUIC.cloud strane i vidljivost).
+- **#ceka-miroslav: poslati OBA tiketa** (prvo hosting, to je verovatno pravo rešenje). Nema više šta CC može bez root/WHM pristupa.
+- **Dopuna iste sesije**: M prijavio treću QUIC.cloud grešku — "Failed to retrieve image .../Bumper_R30-100x100.jpg from node 185.53.57.89". Isti obrazac potvrđen: IP je na zvaničnoj listi, slika postoji i normalno se učitava (self-test HTTP 200), ali nula tragova u access logu. Razlika: ovaj IP je **Krystal Hosting (UK)** — treći, sasvim drugi provajder od OVH-a iz prethodnog primera → problem nije uzak opseg (npr. samo OVH) nego širi IP-reputacioni blok (tipično Imunify360 ponašanje). Hosting tiket dopunjen sa oba primera i molbom da se whitelistuje cela zvanična QUIC.cloud lista, ne samo pojedinačni IP-ovi.
+
+## 2026-07-10 [cpanel-live] [LiteSpeed img-optm — DUBLJA DIJAGNOZA] — QUIC.cloud dashboard poruka pobijena log dokazom, tiket pripremljen 🔴
+- M je prijavio tačnu poruku iz QUIC.cloud dashboard-a: *"QUIC.cloud service nodes cannot reach your WP REST endpoints. Please check your WordPress or firewall setup."*
+- **Read-only provera (uz odobrenje, wp db query SELECT)**: red i dalje zaglavljen identično jutru — `optm_status` RAW 1.157 / REQUESTED 200 (kvota puna), `need_pull=9` (STATUS_PULLED, nikad 6/NOTIFIED). 🔴 **Nov nalaz: `last_pulled` = 2026-06-13 07:32 UTC — skoro 4 nedelje bez ijednog uspešnog pull-a**, dok `last_requested` konstantno raste (danas 15:42 UTC) — problem je stariji i dublji nego što je jutrošnji unos pretpostavio ("od registracije cron-a danas").
+- **Testirana QUIC.cloud dashboard tvrdnja o nedostupnosti REST-a — POBIJENA konkretnim dokazom**:
+  - `wp-json/` root → 200, self POST na `notify_img` → 401 `rest_forbidden` (ruta POSTOJI i radi, samo odbija ne-cloud pozivaoca — očekivano).
+  - Access log (`~/access-logs/antasline.com-ssl_log`) danas 12:37 CEST: **pravi qcbot pozivi** (`qcbot/1.0; +http://quic.cloud/bot.html`) sa IP 95.216.116.209 i 65.108.104.232 na `POST /?rest_route=/litespeed/v1/notify_ccss` i `.../notify_ucss` → **oba HTTP 200**. REST API JE dostupan spolja, danas, upravo za ove rute.
+  - Ali: **nijedan `notify_img` poziv od qcbot-a ne postoji** ni u današnjem logu ni u prethodnoj rotaciji (do ~2026-06-12) — samo moji ručni test curl pozivi. Nijedan mu-plugin/htaccess/WAF koji bi selektivno blokirao samo tu rutu nije pronađen (grep čist).
+  - **Zaključak: problem NIJE firewall/REST dostupnost** (dashboard poruka je verovatno generička/zastarela) — **problem je na QUIC.cloud strani**, u njihovom image-processing pipeline-u za ovaj nalog (notify_ccss/notify_ucss rade normalno, notify_img se nikad ni ne pokušava pozvati).
+- **Nema izmena na live** — samo dijagnostika (posle eksplicitnog M odobrenja za DB read).
+- ✅ Pripremljen nacrt support tiketa za QUIC.cloud sa svim gornjim dokazima (log redovi, timestamp-ovi, `need_pull`/`last_pulled` vrednosti) → `[[dnevnik/2026-07-10-quic-cloud-tiket]]`. **#ceka-miroslav: kopirati sadržaj u QUIC.cloud dashboard/support obrazac i poslati.**
+- Lokalna automatizacija (reset + cron) je iscrpljena i radi ispravno — dalje se ne može ništa uraditi bez odgovora QUIC.cloud podrške.
 
 ## 2026-07-10 [cpanel-live] [PROVERA — LiteSpeed image optimizacija] — Problem se ponovio, uzrok drugačiji od 2026-07-05 🔴
 - **Nalaz: ISTI SIMPTOM KAO 2026-07-05 (200 slika zaglavljeno u REQUESTED), ali NOVI/DUBLJI UZROK.** Read-only provera preko WP-CLI na live (`wp db query`, `wp cron event list`, `wp option get`) — bez izmena baze.

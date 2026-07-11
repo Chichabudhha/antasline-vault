@@ -162,9 +162,9 @@ ili preko <a href="/kontakt/">kontakt forme</a>.</p>
 - ⏭️ **Preskočeno namerno:** #1 Yoast title i #2 Yoast meta description — nisu menjani na zahtev
 
 ## Otvoreno
-- [ ] **Cena sekcija (§6) NIJE ubačena** — zahteva stvarne cifre za `{{CENA_VINIL_OD/DO}}`, `{{CENA_BERGO_SP_OD/DO}}`, `{{CENA_MONTAZA_INFO}}`; ubacivanje placeholder teksta na live stranicu bi bilo vidljivo posetiocima #ceka-miroslav
+- [ ] **Cena sekcija (§6) NIJE ubačena** — zahteva stvarne cifre za `{{CENA_VINIL_OD/DO}}`, `{{CENA_BERGO_SP_OD/DO}}`, `{{CENA_MONTAZA_INFO}}`; ubacivanje placeholder teksta na live stranicu bi bilo vidljivo posetiocima #ceka-miroslav (M10 cenovnik i dalje prazan, provereno 2026-07-11)
 - [ ] **C2 parity:** stranica NE postoji na lokalnom buildu — dodati na parity listu (redirect mapa je verovatno vodi kao "PROVERI") #claude-code
-- [ ] Rich Results Test za FAQPage schema na živoj stranici #claude-code
+- [x] Rich Results/schema provera za FAQPage na živoj stranici — **zatvoreno 2026-07-11** [cpanel-live] (curl+python, ne pravi Rich Results Test alat — nema headless browser na serveru): 2 JSON-LD bloka, oba validna (Yoast graf: Article/WebPage/ImageObject/BreadcrumbList/WebSite/Person + FAQPage), FAQPage ima sva 4 pitanja sa obaveznim poljima (`name`+`acceptedAnswer.text`), 1×H1, bez golog JSON-a van `<script>`. Title/meta namerno nepromenjeni (kao i 07-05).
 - [ ] GSC Inspect URL → Request indexing posle Rich Results provere #ceka-miroslav
 - [ ] Merenje: CTR klastera pre (0,6%) vs 28d posle primene
 
