@@ -20,15 +20,23 @@ nikad na live sajtu.
 ## Standard "obogaćen proizvod" (svih 8 tačaka)
 
 1. **Globalni Woo atributi** — konačan set POMIREN 2026-07-09 (odluka M,
-   polish Faza 1 batch #1). 18 `pa_*` taksonomija u dve grupe:
+   polish Faza 1 batch #1), PROŠIREN 2026-07-11 (S1 novi proizvodi, plan
+   [[migracija/w1-novi-proizvodi-court-builder]]). 20 `pa_*` taksonomija u dve grupe:
    - **Filter-set (8)** — idu u shop layered-nav widgete (Faza 1 #8):
      `pa_debljina` · `pa_materijal` · `pa_boja` · `pa_montaza` ·
      `pa_protivklizna-svojstva` · `pa_vatrootpornost` · `pa_antistatican` ·
      `pa_sertifikacija`
-   - **Spec-only (10)** — samo za tabelu specifikacija, NE u filtere:
+   - **Spec-only (12)** — samo za tabelu specifikacija, NE u filtere:
      `pa_dimenzije-ploce` · `pa_nosivost` · `pa_oblik` · `pa_sirina` ·
      `pa_duzina-rolne` · `pa_otpornost-na-udar` · `pa_otpornost-na-hemikalije` ·
-     `pa_tvrdoca-shore-a` · `pa_zakosene-ivice` · `pa_elektricni-otpor`
+     `pa_tvrdoca-shore-a` · `pa_zakosene-ivice` · `pa_elektricni-otpor` ·
+     `pa_podno-grejanje` (termini: "Da (do 27 °C)" / "Ne" — Expona LVT linije) ·
+     `pa_visina-vlakna` (20/24/40/50/60 mm — trava linije)
+   - S1 2026-07-11 usput: `pa_boja` +termin `roze` (Condor) · `pa_nosivost`
+     prvi termin `350 t/m²` (Geoplast) · 4 nove top-level `product_cat`:
+     `vestacka-trava` (369) · `parking-i-travne-resetke` (370) · `lvt-podovi`
+     (371) · `rampe-i-zavrsni-profili` (372). Dark/light nijanse boja NISU
+     termini (spec u opisu); dtex/gustina → spec tabela, ne atribut.
    - NE kreirati: `pa_primena` (pokriveno F6 `namena-*` tagovima) · `pa_boje`
      (postoji `pa_boja`) · `pa_garancija`/`pa_poreklo` (tek uz datasheet
      potvrdu, additive kasnije). Dupli `pa_color` obrisan 2026-07-09; 251
