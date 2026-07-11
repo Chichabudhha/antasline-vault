@@ -10,6 +10,14 @@
 - Posle kreiranja: `LookupDataStore::create_data_for_product()` za sva 3 (WC attribute lookup regen), `wc_layered_nav_counts_*` transient obrisan, Yoast indexable purge.
 - ✅ Verifikacija: sva 3 proizvoda 200 · 1×H1 · 3 valid LD bloka · varijacije (7/proizvod) prisutne · kategorija `vestacka-trava` prikazuje sva 3 · cross-linkovi 200 · regresija (Ecotile, Bergo Unique, ostale 9 kategorija, /katalog/) čista.
 - Skripte (scratchpad): `s2-condor.php`.
+## 2026-07-11 [cpanel-live] [POLITIKA KOLAČIĆA — hitan fix] — AI-chat curenje uklonjeno sa live pravne stranice (UŽIVO) ✅
+- **Dirana produkcija.** Backup pre izmene: `~/backup-pre-politika-kolacica-fix-20260711-1504.sql` (puni `wp db export`).
+- Nastavak jutrošnjeg lokalnog nalaza (F2 #3, isti bug): live `/politika-kolacica/` (post ID 7295) je imao IDENTIČAN problem kao lokalna kopija pre čišćenja — **ceo AI chat odgovor javno objavljen**: uvodni pasus "U nastavku je primer politike kolačića usklađene sa GDPR-om..." + 2 citata ka `eu.anta.com` (jedan sa `?utm_source=chatgpt.com`) + završna sekcija "Preporuka za www.antasline.com — Pošto si ranije pomenuo..." koja preporučuje CookieYes/Complianz/Cookiebot (sajt ima svoj `antasline-consent` plugin). Plus 8×H1.
+- **Primenjeno (uz eksplicitno M odobrenje)**: `wp_update_post` — uklonjen uvodni i završni AI-chat blok; Yoast title ("Politika kolačića (Cookie Policy) | Antas Line") i metaopis dodati (bili prazni, nijedan `_yoast_wpseo_title`/`_metadesc` red nije postojao); `wp_yoast_indexable` red za post 7295 obrisan (keš purge).
+- 🔴 **Nov nalaz tokom verifikacije**: posle prvog prolaza H1 count = 2, ne 1 — **Kallyas tema automatski renderuje `post_title` kao svoj `<h1 class="page-title kl-blog-page-title">`**, nezavisno od sadržaja. Sadržajni `<h1>Politika kolačića (Cookie Policy)</h1>` je duplirao temin H1 → demotovan na `<h2>` (drugi prolaz, isti odobreni zadatak). Nova lekcija upisana → [[reference/naucene-lekcije]] (Kallyas 2×H1 gotcha, analogno WoodMart `_woodmart_title_off`).
+- ✅ Verifikacija (curl, nocache): HTTP 200 · **1×H1** (temin `page-title`) · 9×H2 · 0 pojava "chatgpt.com"/"Preporuka za"/"CookieYes"/"Complianz"/"Cookiebot"/"primer politike" · Yoast title/metadesc u `<head>`.
+- Skripte (scratchpad na cpanel-live serveru, ne u vault-u): `fix-politika-live.php`, `politika-content-new.txt`.
+- Napomena: [[migracija/parity-inventar]] red za politika-kolacica navodio "7×h1... restyle sesija rešava, isto kao basket članak" — taj deo sada rešen i na live-u (basket restyle je bio samo lokalni, 07-11 ranije sesije istog dana).
 
 ## 2026-07-11 [cpanel-live] [W2 #9 odbojka — zatvaranje] — Rich Results/schema provera na živoj stranici, M3 checklist zatvoren ✅
 - Sesija otvorena kao cpanel-live (rad direktno na produkciji, `~/antasline-vault`). Git pull na početku: fast-forward `7a8943d→600cc97` (10 auto-backup commit-a), lokalne necommitovane izmene (DNEVNIK, PROGRESS) sačuvane preko stash/pop, bez konflikta.
