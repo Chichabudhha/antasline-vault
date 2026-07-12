@@ -41,7 +41,7 @@ AI citira stranice sa jasnim činjenicama, tabelama i brojevima. **[[seo/plan-no
 ### 4. Pominjanja treće strane ⭐⭐⭐ (najjači signal, traje)
 AI za "najbolji X u Srbiji" agregira tuđe liste, portale, forume:
 - [ ] **PR o projektima**: Spanoulis court + Dunk Shop teren → sportski/lokalni portali (besplatna priča!) #ceka-miroslav
-- [ ] **Case studije sa imenima**: Hankook, HTEC, Amicus, Quectel (reference već postoje u vault-u) → objaviti kao stranice #claude-code
+- [x] **Case studije sa imenima** — delimično ✅ 2026-07-12: Quectel (već postojao, 5163) + HTEC (novo, post 17021) imaju dovoljno realnog materijala (fotke koje otkrivaju kontekst) za poštenu case-study stranicu, oba sad linkovana sa `/industrijski-podovi/` reference reda. Hankook i Amicus ostaju otvoreni — samo generička referentna fotka bez detalja, nedovoljno za naraciju bez izmišljanja → #ceka-miroslav (konkretni detalji projekta: kada, koliko m², koji problem su rešili)
 - [ ] Upisi u domaće direktorijume + građevinske portale #ceka-miroslav
 - [ ] GMB recenzije 6 → 20+ (već u [[analiza/2026-07-04-snapshot-full]] §6.3) #ceka-miroslav
 

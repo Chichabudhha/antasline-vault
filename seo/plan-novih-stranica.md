@@ -45,22 +45,24 @@ azurirano: 2026-07-04
 
 ## TIER 3 — Komercijalni vertikali: LVT/Ecotile silo (⭐⭐ za B2B lidove)
 
+> ⚠️ **2026-07-12 nalaz**: ovaj plan je pisan 2026-07-04, ali dosta W1 LVT-silo stranica napravljeno je 2026-07-08 (posle plana) — #12 i #13 VEĆ imaju stranice koje plan nije znao. Pre gradnje bilo koje preostale stavke (#15–17), proveri GSC + pretraži bazu da li već postoji stranica pre nego što se pravi nova (anti-kanibalizacija).
+
 | # | URL | Impr | Trenutno |
 |---|---|---|---|
-| 12 | `/podovi-za-kancelarije/` | 764 + poslovni prostori 422 | **poz. 1,9 bez prave stranice!** |
-| 13 | `/podovi-za-restorane-i-kafice/` | 440+ | poz. 7 |
-| 14 | `/podovi-za-hemijsku-i-prehrambenu-industriju/` | 489 | poz. 6,6 |
-| 15 | `/podovi-za-trzne-centre-i-radnje/` | 329+ | poz. 17 |
-| 16 | `/podovi-za-zdravstvo/` (ordinacije/apoteke/bolnice) | ~600 (+Ads "ordinacije") | poz. 22–29 |
-| 17 | **refresh** `/podovi-za-stamparije/` | 546 | poz. 19–49 (postoji, mrtva) |
+| 12 | ✅ ZATVORENO 2026-07-12 — refresh postojeće `/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/` (ID 16669), NE nova stranica | 764 + poslovni prostori 422 | GSC: poz. **2,1** (290 impr/6m) ali CTR samo 3,4% → title/meta osvežen za bolji CTR |
+| 13 | ✅ ZATVORENO 2026-07-12 — Yoast title fix na postojećoj `/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore/` (ID 16686), NE nova stranica | 440+ | 🔴 title bio potpuno pogrešan ("Vinil podovi Objectflor Expona commercial") → ispravljen na temu stranice |
+| 14 | ✅ ZATVORENO 2026-07-12 — nova stranica `/industrijski-podovi/podovi-za-hemijsku-i-prehrambenu-industriju/` (ID 17017) | 489 | Pravi gap potvrđen (hub rangira poz. 5, 38 impr, bez dedikovane stranice) — tabela hemijske otpornosti iz postojećeg PDF-a, 3 real reference fotke, FAQ+schema |
+| 15 | 🔴 DEPRIORITIZOVANO 2026-07-12 — GSC provera ("prodavnic"/"maloprodaj"/"trgovin") vratila **0 rezultata** u 6 meseci, nema merljive potražnje; `/podovi-za-maloprodajne-objekte/` (16683) već tematski pokriva radnje/prodavnice | 329+ (plan-procena, ne potvrđeno GSC-om) | Ostaje otvoreno, čeka GSC signal — ne graditi dok se ne pojavi potražnja |
+| 16 | ✅ ZATVORENO 2026-07-12 — nova stranica `/industrijski-podovi/podovi-za-zdravstvene-objekte/` (ID 17018) | ~600 (+Ads "ordinacije") | Pravi gap potvrđen (upiti rasprsени preko 6+ stranica, svuda 0 klikova, poz. 11–72) — tabela dezinfekcionih sredstava (vodonik peroksid, hlor, amonijak) iz istog PDF izvora kao #14, real foto zubarske ordinacije |
+| 17 | ✅ ZATVORENO 2026-07-12 — FAQ+FAQPage dodat na postojeću `/podovi-za-stamparije/` (title/meta+dedupe već urađeno jutros u W1 Faza 2 batch #8) | 546 | poz. 19–49 — 4 pitanja iz postojećeg teksta (hemijska otpornost/ESD/brzina/zamena ploče), ništa izmišljeno |
 
 ## TIER 4 — Brend imovina (⭐)
 
 | # | URL | Zašto |
 |---|---|---|
-| 18 | `/reference/dunk-shop-teren/` + `/reference/spanoulis-court/` | ~3k impr — ljudi guglaju NAŠE terene, mi poz. 6–9; trust signal |
-| 19 | `/bergo/` brend stranica (mi smo distributer) | bergo upiti 3,1k impr, "bergo" poz. 11, CTR do 26% gde smo top 3 |
-| 20 | `/podovi-za-teretane/` | klaster poz. 28,6 — jedini bez ikakve stranice |
+| 18 | 🔴 DEPRIORITIZOVANO 2026-07-12 — `/reference/dunk-shop-teren/` + `/reference/spanoulis-court/` | GSC: "dunk shop" već dobro rangira na `/teren-za-basket-3x3/` (202–537 impr/upit, poz. 5,5–9, realni klikovi); "spanoulis" upiti ~5–17 impr/upit (mnogo manje od plan-procene 3k), hvata ih početna strana. Nova stranica bi verovatno kanibalizovala uz malu dodatnu vrednost. |
+| 19 | ✅ ZATVORENO 2026-07-12 — nova stranica `/bergo/` (ID 17019, top-level) | Generički "bergo" upit rasprsен preko 15+ stranica sa realnim klikovima ali bez jedinstvenog huba — distributer-formulacija preuzeta sa `/o-nama/`, grid 6 modela + auto-grid + cross-link ka planer-terena |
+| 20 | ✅ ZATVORENO 2026-07-12 — nova stranica `/industrijski-podovi/podovi-za-teretane-i-fitnes-centre/` (ID 17020) | Stara live URL sad 404 (WebFetch potvrdio, ne parity slučaj) — product-fit pitanje (gumeni vs PVC) rešeno uz Miroslavljevu potvrdu, Ecotile PVC pozicioniran pošteno bez tvrdnje o gumi |
 
 ---
 
@@ -80,10 +82,25 @@ Svaka završena stranica: red u [[DNEVNIK-NAPRETKA]] + update [[PROGRESS]] + št
 - [x] #4 dimenzije terena — ✅ implementirano `/dimenzije-kosarkaskog-terena/` (ID 16586) 2026-07-06, anti-kanibalizacija urađena (basket članak 2298 skraćen) → [[DNEVNIK-NAPRETKA]]
 - [x] #5 tabla — ✅ implementirano `/dimenzije-kosarkaske-table/` (ID 16585) 2026-07-06, cena "na upit" (nema pravih brojeva) → [[DNEVNIK-NAPRETKA]]
 - [x] #6 parking cena — ✅ 2026-07-10 `/podloge-za-parkiraliste-cena/` (ID 16876) — **sa PRAVIM cenama** (Runfloor 2.800–3.400, Geoflor 3.400, Geogravel 4.000, Geocross 4.200 din/m² sa PDV; nosivosti 600/400/100 t/m² — izvor: hub 16589 parity sadržaj, draft je pogrešno pretpostavljao 200 t/m²) → [[DNEVNIK-NAPRETKA]]
-- [ ] #7–8 tenis hub #claude-code
+- [x] #7–8 tenis hub — ✅ oba zatvorena 2026-07-08 (videti Tier2 tabelu redovi #7/#8 gore — stale checkbox ispravljen 2026-07-12)
 - [x] #11 padel refresh — ✅ 2026-07-08: title/meta prepisan (`/pop-tenis/`, cilja "dimenzije padel terena" klaster ~8.000 impr, poz. 1,2–1,5, CTR je bila 1,6%) + dodat FAQ blok (4 pitanja) + FAQPage JSON-LD (nije postojao ranije) → [[DNEVNIK-NAPRETKA]]
-- [ ] #10 piklbol — nova stranica `/piklbol/`, još nije rađeno #claude-code
-- [ ] #12–20 po redosledu #claude-code
+- [ ] #10 piklbol — nova stranica `/piklbol/`, još nije rađeno, blokirano fake-review pitanjem #ceka-miroslav
+- [x] #12 kancelarije — ✅ 2026-07-12 title/meta refresh na postojećoj stranici (videti Tier3 tabelu)
+- [x] #13 restorani/kafići — ✅ 2026-07-12 Yoast title bug-fix na postojećoj stranici (videti Tier3 tabelu)
+- [x] #14 hemijska/prehrambena industrija — ✅ 2026-07-12 nova stranica ID 17017 (videti Tier3 tabelu)
+- [ ] #15 tržni centri/radnje — deprioritizovano 2026-07-12 (GSC 0 rezultata, videti Tier3 tabelu), ne graditi dok se ne pojavi potražnja
+- [x] #16 zdravstvo — ✅ 2026-07-12 nova stranica ID 17018 (videti Tier3 tabelu)
+- [x] #17 štamparije refresh — ✅ 2026-07-12 FAQ+schema dopuna (title već ranije istog dana)
+- [ ] #18 reference stranice — deprioritizovano 2026-07-12 (GSC pokazuje da postojeća pokrivenost dovoljna, videti Tier4 tabelu)
+- [x] #19 /bergo/ brend hub — ✅ 2026-07-12 nova stranica ID 17019 (videti Tier4 tabelu)
+- [x] #20 teretane — ✅ 2026-07-12 nova stranica ID 17020, product-fit pitanje rešeno uz Miroslavljevu potvrdu (videti Tier4 tabelu)
+
+## Status 2026-07-12: W2 content plan praktično iscrpljen
+
+Svih 20 stavki obrađeno (zatvoreno, refresh-ovano, ili svesno deprioritizovano/blokirano uz razlog).
+Otvoreno ostaje samo: **#10 piklbol** (blokirano fake-review Product schema pitanjem, #ceka-miroslav),
+**#15 tržni centri** (nema GSC potražnje, čeka signal), **#18 reference** (postojeća pokrivenost dovoljna).
+Sledeći W2 rad: pratiti GSC posle migracije za nove signale, ili se vratiti na #10/#15/#18 ako se prilika promeni.
 
 ## Veze
 - [[blokovi/BLOK-C-sledece]] — C3 hub

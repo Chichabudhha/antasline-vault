@@ -71,13 +71,58 @@ Ciljevi (gate): LCP <2,5s mobile · CLS <0,1 · INP <200ms (TBT kao proxy).
 |---|---|---|---|
 | 1 | ✅ 2026-07-09 — **RevSlider deaktiviran** (M) — 0 referenci na stranicama, regresija čista | −540KB JS svuda, TBT ↓ | — |
 | 2 | ✅ delimično 2026-07-09 — ESD slika zamenjena WebP-om (M): `esd-podovi-u-primeni-768x774.webp` **112KB vs 946KB PNG**. Ostaje: stari 2020/2018 JPG na home (SPANOULIS-COURT 318KB itd.) | home LCP ↓↓ | nizak |
-| 3 | CLS fix: stretch-row na početnoj (position/width bez JS init-a) + hero visina na kategorijama | CLS <0,1 | srednji (vizuelna regresija) |
+| 3 | ✅ **ZATVORENO 2026-07-12 — CLS fix, ali NE stretch-row nego font-swap** (audit-ova originalna pretpostavka o uzroku je bila pogrešna — videti sekciju 5) | **CLS 0,169→0,007 (home), 0,188→0,0003 (kategorija)** — gate <0,1 ✅ POGOĐEN | nizak (bio procenjen kao srednji, stvarni fix se pokazao bezopasan) |
 | 4 | ✅ 2026-07-09 — **porto-functionality deaktiviran** (M) + sanacija (galerije → native `[gallery]`, shim +21 tag) — v. [[DNEVNIK-NAPRETKA]] | PHP render ↓ | — |
-| 5 | Slike: eksplicitne `width/height`, `fetchpriority="high"` na LCP sliku, lazy ispod folda | LCP/CLS ↓ | nizak |
-| 6 | Fontovi: varijabilni Inter ili rezanje subsetova + `preload` glavnog | −200–300KB | nizak |
-| 7 | unused CSS (js_composer 437KB) — tek uz LiteSpeed UCSS/critical CSS na live | LCP ↓↓ | visok ako se radi ručno |
+| 5 | Slike: eksplicitne `width/height` (unsized-images audit: 3 logo slike u footer/logo-row bez width/height, trenutno CLS metricSavings=0 — nizak prioritet), `fetchpriority="high"` na LCP element — **NAPOMENA**: LCP element na home/industrijski nije slika nego hero H1 tekst blok (`div.al-hero-photo`), pa fetchpriority na sliku ovde ne primenjuje direktno | LCP/CLS ↓ | nizak |
+| 6 | ✅ delimično 2026-07-12 — font `preload` dodat za Bebas-400 + Inter-600 (oba subseta) — v. sekcija 5. Ostaje: dalje rezanje/varijabilni Inter (manji prioritet, CLS gate je već zatvoren bez ovoga) | −200–300KB (težina, ne CLS) | nizak |
+| 7 | unused CSS (js_composer 437KB) — tek uz LiteSpeed UCSS/critical CSS na live — **potvrđeno 2026-07-12 kao glavni preostali LCP krivac** (render-blocking-insight: ~5,55s procenjena FCP ušteda od render-blocking CSS/JS, TTFB samo ~860ms) | LCP ↓↓ | visok ako se radi ručno — **ne raditi lokalno, čeka live LiteSpeed** |
 
 **Ne raditi lokalno:** page cache plugin (maskirao bi pre/posle merenja PHP rendera).
+
+## 5. CLS FIX — 2026-07-12 (W3 3.6, sesija posle CB2-fix)
+
+**Audit-ova originalna pretpostavka (sekcija 2, stavka 5) da je CLS krivac WPBakery
+stretch-row JS repozicioniranje bila je pogrešna.** Lighthouse 13 `cls-culprits-insight`
+audit (koji direktno imenuje DOM element i uzrok, nedostupan u trenutku pisanja
+baseline-a 07-09) je pokazao da **96% CLS-a (0,164 od 0,169 na home) dolazi od
+web font swap-a** — `bebasneue-400-latin.woff2` (H1 display font) i
+`inter-600-latin.woff2` (label/bold tekst) učitavaju se KASNO (posle prvog
+crtanja sa fallback fontom `Arial Narrow`/`sans-serif`), a Bebas Neue ima
+drastično drugačije metrike glifova → kad se font zameni, hero H1 menja
+visinu → gura ceo ostatak stranice naniže → veliki "layout shift" na
+ogromnoj površini ispod (cela `div.vc_row.al-section--paper` sekcija,
+1853px visine na mobile viewport-u).
+
+**Fix**: `functions.php` — novi `wp_head` hook (prioritet 1, najranije moguće)
+koji ispisuje `<link rel="preload" as="font" crossorigin>` za 4 fajla
+(bebasneue-400-latin + latin-ext, inter-600-latin + latin-ext) PRE nego što
+browser dođe do CSS-a koji bi ih inače prvi put otkrio tek posle CSSOM
+parsiranja. Font-display ostaje `swap` (nedirano) — preload samo garantuje da
+font stigne PRE prvog crtanja umesto posle, čime se swap-uzrokovani reflow
+praktično eliminiše (lokalno, sa localhost latencijom, ali isti mehanizam
+pomaže i na produkciji: preload signal browseru da počne fetch odmah, umesto
+tek kad CSSOM dodeli font vidljivom tekstu).
+
+**Izmerено (Lighthouse 13.4, mobile simulate throttling, pre/posle):**
+
+| Stranica | CLS pre | CLS posle | Perf pre | Perf posle |
+|---|---|---|---|---|
+| Početna | 0,169 | **0,007** | 42 | 58 |
+| /kategorija-proizvoda/zastita-i-bumperi/ | 0,188 | **0,0003** | 24 | 60 |
+| /industrijski-podovi/ | 0,000 (već OK) | 0,0003 | 40 | 58 |
+
+**CLS gate (<0,1) POGOĐEN na sve testirane stranice.** Regresija: 0 JS grešaka,
+vizuelno identično (Bebas/Inter i dalje ispravno renderuju, samo brže i bez
+skoka), verifikovano kroz pravi Chrome screenshot + Lighthouse.
+
+**LCP i dalje crveno** (~15s simulated na home) — `lcp-breakdown-insight`
+pokazuje TTFB ~860ms je mali deo; glavni krivac je render-blocking CSS/JS pod
+throttling simulacijom (`render-blocking-insight`: `js_composer.min.css` 437KB
+samo procenjuje ~5,7s uštede). Ovo je TAČNO ono što je baseline audit (sekcija
+3, stavka 7) već identifikovao kao "visok rizik ako se radi ručno" i
+preporučio da se reši preko LiteSpeed Critical CSS/UCSS na produkciji, ne
+ručnom sečenjem lokalno — odluka ostaje ista, LCP surgery se ne radi lokalno
+u ovoj sesiji.
 
 ## 4. NAPOMENE O METODU
 

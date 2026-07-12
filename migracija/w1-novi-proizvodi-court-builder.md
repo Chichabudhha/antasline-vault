@@ -171,7 +171,7 @@ Posle izmene: Yoast purge 16676, 1×H1, linkovi, regresija 16677 (reflektori).
 
 ## #ceka-M
 
-- [ ] 🆕 2026-07-11 — **Batch obrada slika na standard 1:1, max 1000×1000, WebP** (M pravilo, važi za sve buduće i postojeće slike) — S7 Hoop n Court (34 slike, proizvodi 16952/16959/16966/16973/16978/16984/16986/16988) trenutno NISU u ovom formatu (sirov hoopncourt.com CDN format/dimenzije) i moraju se reprocesirati; verovatno i starije 2022-uvoz slike treba proveriti. Zaseban budući zadatak, ne blokira S8.
+- [x] ✅ 2026-07-12 — **Batch obrada slika na standard 1:1, max 1000×1000, WebP** (M pravilo) — S7 Hoop n Court (30 slika stvarno, ne 34 kako je prvobitno procenjeno — svih 8 proizvoda) reprocesirano: padding na kvadrat belom pozadinom (ne crop), max 1000×1000 bez veštačkog uvećanja manjih. Backup originala sačuvan. Svih 8 proizvod stranica verifikovano. Detalji: [[DNEVNIK-NAPRETKA]] 2026-07-12. Preostalo: stariji 2022-uvoz slike (S1–S6 proizvodi kad im fotke dođu) i dalje treba proveriti na isti standard kad se izvor obezbedi — nije hitno, čeka M fotke.
 - [ ] Cene za predračun → [[reference/cenovnik]] (fallback: specifikacija bez cena — NE blokira)
 - [ ] Brendovi/dobavljači za tribine/stolice/golove/mreže posle pregovora (fallback: ostaju generički — NE blokira)
 - [ ] Trim asortimana: šta od "sve iz ponude" se ne prodaje → draft
