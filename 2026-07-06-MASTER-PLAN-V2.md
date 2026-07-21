@@ -178,7 +178,7 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 | M3 | ✅ ZATVORENO 2026-07-11 — primena gotova od 07-05, Rich Results/schema provera zatvorena `[cpanel-live]` 07-11; ostaje samo cena-sekcija (čeka M10) i GSC indexing zahtev | ~~7.817 impr. quick-win~~ | — | — |
 | M4 | ✅ URAĐENO 2026-07-06 (3/4) — GMB: recenzije kampanja (spreman, čeka poslove), UTM fix (gotovo), kategorije (gotovo), post (gotovo) | W5 quick-win | 2026-07-31 | review link čeka — ne blocker |
 | M5 | Konverzije info: šta biva sa 55 kontakata/mes | Fazu 4 / CRM odluku | 2026-07-31 | plan radi i bez toga, ali vrednost/konv ostaje nepoznata |
-| M6 | SSH/hosting pristup + potvrda hostinga | migraciju (N8) | 2026-08-20 | 🔴 nema fallback — bez ovoga nema migracije |
+| M6 | 🟡 DELIMIČNO 2026-07-21 — cPanel/SSH pristup potvrđen i popis urađen `[cpanel-live]` (PHP 8.2.31, WP 7.0.2, disk 41%, 65 postojećih Redirection pravila, nema subdomena, backup raspored neproveren). Preostaje: subdomen za probu migracije, backup raspored (WHM UI), Redirection pravila odluka | migraciju (N8) | 2026-08-20 | 🔴 nema fallback — subdomen/backup deo i dalje otvoren |
 | M7 | Figma link + testimonials copy | W1 poliranje | 2026-08-10 | sekcije ostaju izostavljene, nisu gate |
 | M8 | ✅ ODLUČENO 2026-07-07 — **pun reimport svih 30 postova sa live** (lokalni "stari stil" se briše, restyle posle) | ~~blog import~~ | — | — |
 | M9 | ✅ ODLUČENO 2026-07-07 — **katalog režim** ("Zatraži ponudu" umesto korpe/cene) | W1 zadatak 1.8, W3 zadatak 3.8 | — | — |
