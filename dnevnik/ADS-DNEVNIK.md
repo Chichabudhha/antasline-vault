@@ -108,6 +108,12 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
 
+### 2026-07-21 [claude-code] — ✅ RAZREŠENO: blackout od 07-05 = namerna pauza (M godišnji odmor), NE throttling
+- Windsor potvrđuje: 0 RSD/0 prikaza kontinuirano 07-16 → 07-21 (17 dana), pre toga sporadični stray prikazi bez potrošnje 07-07/08/10/11/15.
+- **Miroslav potvrdio 2026-07-21: oglasi svesno isključeni zbog godišnjeg odmora** — nije nalog throttling (kao jun), nije billing/verifikacija problem. Ne treba dalja Ads UI provera po ovom nalazu.
+- ⚠️ Napomena za buduće izveštaje: kumulativ plaćenih konverzija (10 od 01.06) i dalje zamrznut dok se kampanje ne reaktiviraju — Smart Bidding prag (20-30) se ne pomera tokom pauze, ne računati kao "usporavanje" nego kao očekivanu posledicu.
+- **Sledeći korak:** čekati M da reaktivira kampanje kad se vrati; kad se to desi, potvrditi da su ECOTILE/Terase prikazi/CPC vraćeni na normalu (isti check kao posle junskog odblokiranja).
+
 ### 2026-07-10 [claude-code] — 🔴 ISPORUKA STALA od 2026-07-05 (nalaz nedeljnog izveštaja)
 - Windsor dnevni raspad (2026-06-26 → 07-09): obe kampanje normalno isporučivale do **2026-07-04** (poslednji dan: Terase 621 RSD/123 impr, ECOTILE 380 RSD/40 impr), a od **2026-07-05 potpuni mrak** — 05/06/09.07 nula redova, 07–08.07 po 1 prikaz i 0 RSD potrošnje.
 - Obe kampanje istovremeno = problem na nivou NALOGA, ne kampanja (isti potpis kao jun throttling: balans/billing/verifikacija). Windsor vraća podatke (nije konektor).
