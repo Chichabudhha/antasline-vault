@@ -152,7 +152,7 @@
 
 ## Blokeri
 
-- 🔴 **Nema konfigurisanog subdomena na cPanel nalogu** (nađeno 2026-07-21, popis 3.14) — gate stavka "proba migracije na subdomen" zahteva subdomen koji trenutno ne postoji. #ceka-miroslav: da li Claude Code kreira subdomen preko cPanel-a ili M to radi sam.
+- ✅ **Subdomen `staging.antasline.com` kreiran** — 2026-07-21 `[cpanel-live]`, docroot `/home/antasline/staging` (prazan, van public_html), SSL/DNS odmah rade (wildcard sertifikat). Sledeći korak (čeka M zeleno svetlo): kopiranje WP fajlova+baze iz lokalnog builda kao proba migracije. Detalji: [[DNEVNIK-NAPRETKA]]
 - 🔴 **65 postojećih Redirection-plugin pravila na live-u** (nađeno 2026-07-21, popis 3.14) — nisu bila uračunata u lokalni redirect/parity rad do sada. #ceka-odluku: proveriti pre migracije da li treba izvesti/spojiti sa migracionim `.htaccess`-om ili se preklapaju.
 - 🔴 **Nema potvrđenog automatizovanog backup rasporeda NA produkcionom serveru** (nađeno 2026-07-21, popis 3.14) — cron sadrži samo LiteSpeed posao; poslednji ručni backup u `~/backups/` je od 2026-07-10. #ceka-miroslav: proveriti cPanel Backup Wizard/JetBackup (WHM UI, van dosega fajlsistema).
 - 🔴 **Ads spend pao na 0 RSD/dan od 2026-07-05** (nađeno 2026-07-21, finalni Windsor izvoz) — 17 dana bez realne isporuke uprkos `ENABLED` statusu kampanja u Windsor-u. Verovatno namerna pauza zbog M godišnjeg odmora, ali nije potvrđeno (moglo bi biti tehnički problem kao raniji ECOTILE throttling). #ceka-miroslav: proveriti Ads UI po povratku. Detalji: [[analiza/2026-07-21-windsor-final-export]] §1.2

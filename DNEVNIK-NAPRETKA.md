@@ -1,5 +1,13 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-21 [cpanel-live] [W3 3.14] — Subdomen `staging.antasline.com` kreiran za probu migracije ✅
+- Nastavak popis-sesije (M: "kreiraj subdomen za probu migracije"). Kreiran preko `uapi SubDomain addsubdomain domain=staging rootdomain=antasline.com dir=staging` (status: 1 = uspeh) — dokumentovan cPanel put, nije rađeno kroz UI.
+- Docroot namerno **van** `public_html` (`/home/antasline/staging`, prazan folder) — čist prostor odvojen od live sajta, izbegava da migracioni test fajlovi slučajno budu vidljivi/crawl-ovani unutar postojeće `public_html` strukture.
+- DNS nije trebalo ručno podešavati — nalog već ima wildcard `*.antasline.com` A-zapis, `staging.antasline.com` je odmah javno resolve-ovao (`138.201.234.168`).
+- SSL odmah validan — pokriven postojećim Let's Encrypt wildcard sertifikatom (`CN=*.antasline.com`, važi do 2026-09-08), AutoSSL nije trebalo čekati.
+- Test: `curl -sI https://staging.antasline.com/` → HTTP/2 500 (očekivano, prazan docroot bez `index.php`). Live `public_html`/produkcija netaknuti.
+- Gate stavka 3.14 "proba migracije na subdomen" sada ima gde da se izvede — sledeći korak (kad M da zeleno svetlo) je kopiranje WP fajlova+baze iz lokalnog builda na ovaj subdomen kao generalna proba pre 2026-08-31.
+
 ## 2026-07-21 [cpanel-live] [W3 3.14] — Popis cPanel live okruženja (M6 SSH pristup potvrđen, UŽIVO ali read-only) ✅
 - Sedma sesija istog dana. M dao direktan pristup: "sad si na cpanelu live antasline... Proveri sve što možeš sam." Potvrđeno da ovaj Bash shell radi NA `wp1.oblak.host` (nalog `antasline`, cPanel struktura, `access-logs`→`/etc/apache2/logs/domlogs/antasline`) — u stvari ceo dosadašnji rad ove sesije (git pull ranije) je već bio na ovom istom serveru, isti `~/antasline-vault` clone kao "lokalni" rad. Sve u nastavku je **čisto read-only popis** (M6/3.14 zadatak) — ništa nije menjano na produkciji.
 - **PHP**: cPanel EA4 selector nudi 11 verzija (5.6–8.5). Stvarna verzija koju sajt koristi (docroot `/home/antasline/public_html`, potvrđeno preko `wp eval PHP_VERSION`) = **8.2.31** — 🟢 **korekcija stare napomene** (07-07 DNEVNIK je pretpostavio "PHP 8.3 ⚠️ vs lokal 8.2.12"): stvarno stanje je 8.2.31 vs lokalni 8.2.12, praktično identično, nizak migracioni rizik.
