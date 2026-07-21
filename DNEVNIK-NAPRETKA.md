@@ -10,7 +10,7 @@
 - **Čišćenje:** `antasline-wp-site-20260721.tar.gz` (3GB) i `antasline_staging_dump_20260721.sql` (48MB) premešteni iz docroot-a u `~/` (ne obrisani, mogu se ukloniti kasnije).
 - **Verifikacija:** `curl -I https://staging.antasline.com/` bez auth → 401 ✓. Sa `-u stagingtest:...` → 200 na homepage (`<title>Početna \| Antas Line</title>`) i `/industrijski-podovi/` (200) ✓. `/wp-admin/` → 302 (redirect na login, očekivano) ✓. `/proizvod/` → prava WP 404 stranica (očekivano, flat parent slug bez sopstvene arhive, ne greška) ✓.
 - Live `public_html` i `antasline_novabaza` netaknuti tokom cele sesije — sav rad isključivo u `/home/antasline/staging/` i `antasline_staging` bazi.
-- Sledeći korak: M treba da pregleda `https://staging.antasline.com/` (kredencijali kod njega) i uradi regresiju (linkovi, forme, slike) pre nego što se ovaj postupak proglasi za template finalne migracije 2026-08-31.
+- **Regresija potvrđena 2026-07-21:** tehnička provera (homepage bez zaostalih `localhost/antasline` linkova, slike/CSS/JS sa staging domena i stvarno postoje na disku, 5 ključnih stranica 200: `/`, `/industrijski-podovi/`, `/sportske-podloge/kosarkaske-konstrukcije/`, `/aktuelnosti/`, `/kategorija-proizvoda/industrijski-podovi/`) + M vizuelna potvrda ("u principu je sve kako treba"). **M6/3.14 potpuno zatvoreno — postupak validiran kao template za finalnu migraciju 2026-08-31.**
 
 ## 2026-07-21 [cpanel-live] [BEZBEDNOST] — Izložen fajl u public_html uklonjen; sadržaj se pokazao kao FTP, ne DB kredencijali 🟡
 - Ova sesija je zapravo NA cPanel serveru (`wp1.oblak.host`, nalog `antasline`) — ranija pretpostavka da je "samo lokalna vault sesija" je bila pogrešna, potvrđeno preko `hostname`.
