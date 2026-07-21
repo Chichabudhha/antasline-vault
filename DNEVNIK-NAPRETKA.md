@@ -1,5 +1,10 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-21 [cpanel-live] [W3 3.14 nastavak] — Redirection pravila izvezena (read-only) ✅
+- Izvezeno svih 65 pravila iz `wp_redirection_items` u `migracija/redirection-live-export-2026-07-21.tsv` (kolone: id, url, action_data, regex, status, match_type, group_id, last_count, last_access).
+- Bez izmena baze/plugina — čisto SELECT, `.htaccess` na live-u nedirnut.
+- Sledeći korak (lokalno): uporediti export sa `redirect-mapa-FINAL.csv` i `htaccess-301-DRAFT.txt` radi otkrivanja preklapanja/konflikata pre odluke da li se 65 pravila prenose u migracioni `.htaccess` ili ostaju u Redirection plugin-u (koji tada mora biti reaktiviran posle migracije).
+
 ## 2026-07-21 [cpanel-live] [W3 3.14] — Proba migracije na staging.antasline.com ZAVRŠENA ✅
 - Deseta sesija istog dana. M je dao pravu DB lozinku za `antasline_antasline`@`antasline_staging` (odvojenu od `ftp-staging-creds.txt` fajla iz prethodnog nalaza — taj je bio FTP kredencijal, potvrđeno pogrešnim username `staging` umesto `antasline_antasline`). Prvi pokušaj lozinke je pao ("Access denied") zbog shell-citiranja specijalnih znakova u komandi (`-p'...'`) u ovoj sesiji, ne zbog pogrešne lozinke — potvrđeno preko `MYSQL_PWD` env var koji je autentifikaciju odmah propustio.
 - **wp-config.php kreiran** (`wp config create` + `wp config set DB_PASSWORD` pošto je `--dbpass` sa shell-variablom prvi put upisao prazan string — provereno i ispravljeno pre nastavka). Fresh auth keys/salts generisani (`wp config shuffle-salts`).
