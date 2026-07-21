@@ -1,5 +1,11 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-21 [claude-code] [BEZBEDNOST] — Nalaz: fajl sa DB kredencijalima u live public_html 🔴
+- Miroslav je preko cPanel Claude Code sesije naišao na fajl `ftp-staging-creds.txt` u `/home/antasline/public_html/` — uprkos imenu, sadrži DB kredencijale (potvrđeno direktno od M), ne FTP. `public_html` je **live docroot**, tj. fajl je potencijalno javno dostupan preko `https://antasline.com/ftp-staging-creds.txt`.
+- Nije potvrđeno iz ove sesije (nemam terminal pristup cPanel-u odavde) da li je stvarno bio web-servi ran, niti da li je reč o lozinci za `antasline_staging` (proba migracije, očekivano bezopasno) ili `antasline_novabaza` (živa baza — ozbiljan incident ako da).
+- Pripremljen prompt za cPanel Claude Code sesiju: [[migracija/2026-07-21-prompt-secure-exposed-db-creds]] — prvo uklanja fajl iz public_html (bez obzira na ishod provere), zatim grana: (4a) ako je staging lozinka → nastavlja probu migracije od Koraka 2 iz [[migracija/2026-07-21-prompt-subdomen-import]]; (4b) ako je live lozinka → STOP, traži rotaciju preko cPanel MySQL UI kao hitan prioritet.
+- #ceka-miroslav: pokrenuti prompt na cPanel terminalu i javiti ishod (4a ili 4b).
+
 ## 2026-07-21 [cpanel-live] [W3 3.14] — Proba migracije na staging.antasline.com: raspakovano, blokirano na DB lozinci 🔴
 - Deveta sesija istog dana, izvršenje prompta iz [[migracija/2026-07-21-prompt-subdomen-import]] direktno na cPanel terminalu (potvrđeno `hostname` = `wp1.oblak.host`, nalog `antasline`).
 - **Korak 0 (docroot provera) — mismatch potvrđen:** FTP nalog `staging@` je fajlove otpremio u `/home/antasline/antasline.com/staging/` (FTP root tog naloga), ali stvarni WHM-konfigurisani document root za `staging.antasline.com` je `/home/antasline/staging/` (potvrđeno preko `uapi DomainInfo domains_data` i `/var/cpanel/userdata/antasline/staging.antasline.com` — obe vraćaju `documentroot: /home/antasline/staging`). Nije symlink, prava odvojena putanja. Fajlovi premešteni (`mv`) u pravi docroot pre nastavka.
