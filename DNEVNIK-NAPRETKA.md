@@ -1,5 +1,18 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-21 [claude-code] [W3 3.14 nastavak] — 65 Redirection pravila analizirana i razrešena ✅
+- Jedanaesta sesija istog dana. Miroslav pitao "gde smo stali sa cpanelom" → objašnjeno da je M6/3.14 potpuno zatvoreno (prethodna [cpanel-live] sesija), ali "65 Redirection pravila" je i dalje samo BROJ u Blokeri listi, redovi nikad nisu izvezeni. Miroslav: "hajde da vidimo".
+- Ova sesija radi LOKALNO (Windows, `DELL-MIROSLAV`) — probao SSH ka `wp1.oblak.host` sopstvenim ključem (`~/.ssh/id_rsa_antasline`), port 22 timeout (firewall/drugi port, nije dalje nagađano). Umesto toga pripremljen prompt (`migracija/2026-07-21-prompt-redirection-export.md`) za cPanel-live sesiju — izvršila ga je ista [cpanel-live] sesija (unos ispod, "Redirection pravila izvezena").
+- **Analiza** (Python, lokalno, read-only prema live preko `curl` GET): 65 sirovih pravila → **62 jedinstvena izvorna URL-a** (3 imaju duple redove: 2 bezopasna literal-duplikata + 1 pravi sukob). **25 od 62 su lanci** (redirect vodi na drugi redirect, do 4 hop-a — npr. `/podovi-za-terase/bergo-multisport/` → `/bergo-multisport/` → `/sportski-podovi/` → `/sportske-podloge/`).
+- Svi lanci lančano razrešeni na direktan finalni cilj (jedan hop). Svih **33 jedinstvenih finalnih ciljeva HTTP-verifikovano** protiv live sajta: 32×200, 1×404 (očekivano — `/industrijski-podovi/podovi-za-teretane-i-fitnes-centre/` postoji samo na lokalnom buildu, postaje 200 tek na dan migracije).
+- 🔴 **2 pravila su vodila na već-mrtav (404) cilj NA SAMOM LIVE SAJTU, već sada** — `/gumeni-podovi/` (0 hitova) i lanac `/naslovna/.../podovi-za-radnje-i-prodavnice/` (43 REALNA istorijska hita u prazno!). Oba ispravljena u flattened fajlu na tačne trenutne parity ciljeve.
+- 🟡 **1 pravi sukob nađen**: `/padel-tenis/` ima 2 aktivna pravila sa RAZLIČITIM ciljevima u bazi (id65→`/pop-tenis/`, 963 hitova/aktivno vs id70→`/sportske-podloge/padel-tereni/`, 0 hitova/mrtvo) — potvrđuje da na sajtu postoje DVE odvojene žive stranice o padelu koje se ne znaju jedna za drugu. #ceka-miroslav odluka (ostaviti kako realno radi vs. konsolidovati) — ima automatski fallback, ne blokira migraciju.
+- 🟢 Usput nalaz: 2 pravila se oslanjaju na WordPress-ov ugrađeni `redirect_canonical()` (ne na Redirection plugin) da bi uopšte radila — potvrđuje da post_parent hijerarhija na lokalnom buildu mora ostati usklađena sa live (već jeste, F2/F5 rad).
+- Rezultat: `migracija/redirect-mapa-HISTORIJSKI-65-FLAT.csv` (62 reda, spreman za ugradnju u migracioni `.htaccess` uz postojećih 7 iz `redirect-mapa-FINAL.csv` — dva sloja se ne preklapaju). Puna analiza: [[migracija/2026-07-21-analiza-65-redirection-pravila]].
+- Redirection plugin sam po sebi ne mora da se migrira/reaktivira na novom sajtu — sve pretvoreno u obične `Redirect 301` linije.
+- Bez izmena baze/live sajta — čisto čitanje (izvoz je uradila zasebna [cpanel-live] sesija po pripremljenom promptu, analiza je lokalna).
+- [[PROGRESS]] Blokeri sekcija ažurirana (🔴→✅ sa preostalom 🟡 sitnicom), [[2026-07-06-MASTER-PLAN-V2]] M6 red ažuriran na ✅ ZATVORENO.
+
 ## 2026-07-21 [cpanel-live] [W3 3.14 nastavak] — Redirection pravila izvezena (read-only) ✅
 - Izvezeno svih 65 pravila iz `wp_redirection_items` u `migracija/redirection-live-export-2026-07-21.tsv` (kolone: id, url, action_data, regex, status, match_type, group_id, last_count, last_access).
 - Bez izmena baze/plugina — čisto SELECT, `.htaccess` na live-u nedirnut.
