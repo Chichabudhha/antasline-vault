@@ -1,5 +1,11 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-21 [claude-code] [ODLUKA] — Pickleball fake recenzije: M odlučio da OSTANU kao test za Google ⚠️
+- Osma sesija istog dana. Otvorena sesija (`/antasline-sesija`) — pregled [[PROGRESS]]/plan/dnevnik pokazao da je 7 prethodnih sesija danas iscrpelo praktično sav neblokiran W1–W5 rad; svi preostali zadaci čekaju M input (3.14 subdomen go-ahead, 65 Redirection pravila, Ads spend=0, backup raspored, cenovnik). Ponuđene opcije Miroslavu, izabrao je otvoreno pitanje o pickleball fake recenzijama iz Blokeri liste.
+- Pitanje postavljeno: ukloniti fabrikovanu `aggregateRating`/recenzije iz Product schema na `/teren-za-pickleball/`, zameniti pravim podacima, ili ostaviti. **Miroslav: "ostavi ovu schemu kao test za google."** — svesna odluka da se izmišljeni podaci (4.9/5, 18 recenzija, 3 imenovane lažne osobe, cena 0.00) zadrže na live/build stranici namerno, kao eksperiment.
+- Flagovan rizik (jednom, jasno, bez blokiranja odluke): fabricated review markup krši Google-ove structured data smernice → tipičan ishod je manual action, ne samo gubitak rich snippet-a za tu stranicu. Preporuka: ne držati aktivno duže od par nedelja + pratiti GSC Manual Actions/Enhancements panel dok traje test.
+- Nema izmena koda/baze ove stavke — čisto dokumentovanje odluke. [[PROGRESS]] Blokeri sekcija ažurirana (🔴→🟡, status "SVESNO ZADRŽANO kao test").
+
 ## 2026-07-21 [cpanel-live] [W3 3.14] — Subdomen `staging.antasline.com` kreiran za probu migracije ✅
 - Nastavak popis-sesije (M: "kreiraj subdomen za probu migracije"). Kreiran preko `uapi SubDomain addsubdomain domain=staging rootdomain=antasline.com dir=staging` (status: 1 = uspeh) — dokumentovan cPanel put, nije rađeno kroz UI.
 - Docroot namerno **van** `public_html` (`/home/antasline/staging`, prazan folder) — čist prostor odvojen od live sajta, izbegava da migracioni test fajlovi slučajno budu vidljivi/crawl-ovani unutar postojeće `public_html` strukture.
