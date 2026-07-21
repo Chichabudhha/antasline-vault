@@ -58,13 +58,19 @@ Filesystem            Size  Used Avail Use%
 ```
 119 GB slobodno — više nego dovoljno za pun build (WP core + tema + uploads + baza, reda veličine par GB).
 
-## 5. Nova MySQL baza za staging — NIJE URAĐENO
+## 5. Nova MySQL baza za staging — ZATVORENO (kreirana ručno preko cPanel UI)
 
-`uapi Mysql list_databases` i planirano `create_database`/`create_user`/`set_privileges_on_database` su **blokirani od strane sandbox/permission sloja ove Claude Code sesije** (auto-mode klasifikator odbija MySQL uapi pozive u ovom okruženju, nezavisno od read-only/write namere).
+Automatsko kreiranje preko `uapi Mysql create_database` je prvobitno bilo blokirano sandbox/permission slojem ove sesije — nisam pokušavao zaobilazak (vidi napomenu ispod). Miroslav je bazu napravio ručno preko cPanel UI.
 
-Nisam pokušavao zaobilazak — potrebna je jedna od ove dve stvari da se ovo pitanje zatvori:
-- **Miroslav ručno kreira bazu preko cPanel UI** (MySQL® Databases): baza `antasline_staging`, novi korisnik, sva prava samo na tu bazu — lozinku ne stavljati u vault/git, sačuvati je lokalno kod sebe ili u `~/staging-db-credentials.txt` na serveru; ili
-- Miroslav eksplicitno odobri/doda dozvolu za `uapi Mysql` pozive u ovoj sesiji, pa se ovaj korak ponovi.
+Potvrđeno naknadnim (read-only) `uapi Mysql list_databases`:
+```
+database: antasline_staging
+disk_usage: 0
+users: antasline_antasline
+```
+Baza postoji, prazna je, korisnik `antasline_antasline` je već pridružen sa privilegijama na nju. Odvojena je od `antasline_novabaza` (koju koristi `majmun22_miroslav`) — nema preklapanja.
+
+**Lozinka za `antasline_antasline` nije zapisana ovde niti negde u vault-u/git-u** — Miroslav je ima kod sebe sa kreiranja preko UI. Kad se pravi `wp-config.php` na stagingu, lozinku treba uneti ručno (ili je privremeno staviti u fajl van vault-a na serveru, npr. `~/staging-db-credentials.txt`, pa obrisati posle upotrebe).
 
 ## 6. Max upload size (fallback File Manager)
 
@@ -83,4 +89,4 @@ post_max_size = 512M
 
 **Prioritet 3 (poslednja opcija) — ručni File Manager upload** zip fajlova, limit 512MB po fajlu — zahteva deljenje builda (core+tema, plugins, uploads, SQL) na više arhiva. Koristiti samo ako i SSH i FTP ne uspeju.
 
-**Otvoreno pre nastavka prenosa:** pitanje 5 (staging MySQL baza) čeka na Miroslava — bez baze, WordPress install na `/home/antasline/staging` ne može da se poveže ni sa čim čak i kad fajlovi stignu.
+**Status 2026-07-21 (dopuna):** pitanje 5 zatvoreno — `antasline_staging` baza kreirana ručno preko cPanel UI, korisnik `antasline_antasline` pridružen. Sledeći blokер je i dalje SSH pristup (Prioritet 1 gore) — Miroslav treba da proveri IP Blocker/cPHulk i ponovi SCP/SFTP pokušaj pre nego što se krene sa stvarnim prenosom fajlova.
