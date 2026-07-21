@@ -56,6 +56,31 @@ Ovo je sada najveći pojedinačni SEO rizik u celom planu.
 (1131), `/spoljnje-podne-obloge/bergo-xl/` (978), `/industrijski-podovi/industrijski-pod/`
 (625), `/podovi-za-stale/` (402), `/sportski-podovi-za-sale-i-balone/` (378).
 
+## 2.1 Reosveženo 2026-07-21 (F1 potvrda posle 2 nedelje W1/W2 rada)
+
+Sveži curl svih 7 live sub-sitemapa + PHP `get_page_by_path`/`get_term_by` provera (fix: hijerarhijski
+`page` post_type mora dobiti PUN path, ne samo leaf slug — bare slug se u WP core-u poredi samo protiv
+`post_parent=0`, promašuje sve ugnježdene W1 stranice) + Windsor GSC 12mes pull.
+
+| Nalaz | Detalj |
+|---|---|
+| **Live URL skup nepromenjen** | Diff live sitemap-ova danas vs 2026-07-07: 0 novih, 0 uklonjenih URL-ova. Live se zaista ne dira, kako pravilo nalaže. |
+| **PARITY skočio sa ~47/143 (2026-07-07) na 129/143** | Direktan pokazatelj koliko je W1 red čekanja + W2 content plan napredovao od F1 baseline-a. |
+| **6 preostalih non-PARITY redova — svih 6 već ima odluku** u `parity-inventar.csv`/`redirect-mapa-FINAL.csv` (na-kojoj-podlozi-.../3x3, lite-shot-795, sigurnosni-senzori slug, moj-nalog, elektroprovodni-podovi, брend ćirilica ×2) | Nijedan nov gap. |
+| **5 lažnih "path mismatch" nalaza** (blog `category` + `product_cat` ugnježdeno na live vs flat lokalno) | Provereno HTTP-om: WP core rewrite prihvata OBA oblika (ugnježden i flat) i servira identičan sadržaj (isti `<title>`) — nije potreban redirect, WP to rešava sam. Zabeleženo kao gotcha ispod. |
+| **Jedini stvarno otvoreni red**: `/industrijski-podovi-najcesca-pitanja/` (15 kl.) | Već poznat i namerno odložen (Kategorija E, W2 content odluka, ne F4 tehnički posao) — potvrđeno da i dalje čeka M, nije nov nalaz. |
+| **`htaccess-301-DRAFT.txt` proveren** | Svih 7 redirect ciljeva (uklj. brend ćirilica/latinica, sigurnosni-senzori, lite-shot-325, moj-nalog→kontakt) vraćaju 200 na lokalu. Draft je i dalje tačan, ništa ga ne treba menjati. |
+
+**Zaključak:** F1 + F4 + 3.9 (.htaccess draft) su svi i dalje tačni i kompletni — gate stavka
+"parity-inventar.csv kompletan + minimalna redirect mapa (F4) potvrđena + .htaccess generisan i
+testiran na lokalu" ([[2026-07-06-MASTER-PLAN-V2]] §3) može da se otkačka. Jedina preostala zavisnost
+u ovom lancu je M odluka o FAQ konsolidaciji (kozmetička, 15 klika/12mes, ne blokira migraciju).
+
+**Nova gotcha (dodato u [[reference/naucene-lekcije]]):** WordPress-ov rewrite za hijerarhijske
+taxonomy/post arhive (category, moguće i product_cat) prihvata proizvoljan/netačan roditeljski
+prefiks u putanji i svejedno servira ispravan term po zadnjem slug-u — DB-only path-string poređenje
+(bez stvarnog HTTP testa) daje lažne pozitivne "path mismatch" nalaze za ove slučajeve.
+
 ## 3. Šta je odbačeno iz starog plana
 
 - `POPUNJENA.csv` (118 redova) — pisana za Porto restrukturiranje; `/shop/` targeti,

@@ -9,8 +9,9 @@ Periodični puni snapshot svih marketing podataka preko Windsor.ai. Svaki snapsh
 
 ## Sistem
 
+- ⚠️ **Windsor.ai pretplata otkazana 2026-07-21** — [[analiza/2026-07-21-windsor-final-export]] je poslednji automatski pull. Ubuduće nema direktnog Claude Code pristupa GA4/Ads/GSC/GMB podacima — snapshot-ovi zahtevaju ručni izvoz/copy-paste iz native UI (Google Ads UI, GA4 UI, Search Console UI, GMB dashboard) pre nego što Claude Code može da ih analizira.
 - **Kadenca:** mesečno (početkom meseca za prethodni), ili vanredno pre velikih odluka
-- **Kako se pravi novi:** kopiraj [[analiza/_TEMPLATE-snapshot]] → Claude Code povuče podatke kroz Windsor.ai (konektori: `google_ads` 156-886-0314, `googleanalytics4` 292720335, `searchconsole` sc-domain:antasline.com, `google_my_business`)
+- **Kako se pravi novi:** kopiraj [[analiza/_TEMPLATE-snapshot]] → ~~Claude Code povuče podatke kroz Windsor.ai~~ Miroslav izvozi podatke ručno iz native UI-a (konektori koji su ranije korišćeni: `google_ads` 156-886-0314, `googleanalytics4` 292720335, `searchconsole` sc-domain:antasline.com, `google_my_business`) → Claude Code analizira dostavljene podatke
 - **Prozori:** 16mo trend (GSC tvrdi limit) · 90d breakdowns · 28d vs prethodnih 28d
 - **Posle pisanja:** red u [[DNEVNIK-NAPRETKA]] + link u [[00-INDEX]]
 
@@ -27,8 +28,10 @@ Periodični puni snapshot svih marketing podataka preko Windsor.ai. Svaki snapsh
 ## Snapshot-ovi
 
 - [[analiza/2026-07-04-snapshot-full]] — **BASELINE** (prvi puni; jun 2026 = mesec-nula za konverzije)
+- [[analiza/2026-07-21-windsor-final-export]] — **POSLEDNJI Windsor.ai izvoz** (pretplata otkazana) — pun 16mo/90d izvoz sva 4 konektora, čuvati kao arhivu jer se pull više ne može ponoviti
 
 ## Dubinske analize
 
 - [[analiza/2026-07-04-gsc-kw-analiza-16m]] — svih 2.893 GSC upita klasterizovano (tema × intent) + akcioni plan 10 stavki
 - [[analiza/2026-07-04-ads-st-analiza-16m]] — svih 1.899 Ads search termina (isti klasteri) + poređenje GSC↔Ads; curenje 16.607 RSD (15,4%)
+- [[analiza/2026-07-21-serp-snapshot-pre-migracija]] — W3 3.15 baseline: top 20 GSC upita + rizik-grupa pre migracije (2026-08-31), za post-live poređenje (3.12)

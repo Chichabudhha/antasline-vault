@@ -133,7 +133,7 @@ Live parity gap (live ima, lokal nema): tribine, stolice za tribine, teniska opr
 - [x] Golovi i zaštitne mreže → generički — ✅ 2026-07-11 (2 postojeće kartice, ranije bez linka, sada linkovane → 17000, 16999)
 - [x] Oprema za tenis i padel → mreže tenis/padel — ✅ 2026-07-11 (nova kartica → 17001)
 - [x] Mrežice i dodaci za koš → generički — ✅ 2026-07-11 (nova kartica → 17003); Hoop n Court accessories (S7) nema posebnih dodataka van LED-a, koji je već na svojoj proizvod stranici
-- [ ] (posle CB3) CTA baner "Isprojektujte svoj teren — Planer terena" → `/planer-terena/`
+- [x] CTA baner "Isprojektujte svoj teren — Planer terena" → `/planer-terena/` — ✅ 2026-07-21 (usput fix: 3 kasnije dodate kartice iz S8 sesije bile van `.al-grid` kontejnera, sad unutra)
 
 Posle izmene: Yoast purge 16676, 1×H1, linkovi, regresija 16677 (reflektori).
 
@@ -143,18 +143,17 @@ Posle izmene: Yoast purge 16676, 1×H1, linkovi, regresija 16677 (reflektori).
 
 | # | Sadržaj | Obim | Status |
 |---|---|---|---|
-| **S1** ⚠️ preduslov | 4 kategorije + `pa_podno-grejanje` + `pa_visina-vlakna` + nosivost/roze termini + verifikacija filtera | mala | [ ] |
-| S2 | Condor (3) + Radici deo (4) | 7 proizvoda, 14 var | [ ] |
-| S3 | Radici ostatak (3) + Geoplast (5) | 8 | [ ] |
+| **S1** ⚠️ preduslov | 4 kategorije + `pa_podno-grejanje` + `pa_visina-vlakna` + nosivost/roze termini + verifikacija filtera | mala | [x] ✅ 2026-07-11 |
+| S2 | Condor (3) + Radici deo (4) | 7 proizvoda, 14 var | [x] ✅ 2026-07-11 (Condor 3 kao S2, Radici pun 7 kao S3 — vidi napomenu iznad) |
+| S3 | Radici ostatak (3) + Geoplast (5) | 8 | [x] ✅ 2026-07-11 (Geoplast 7 izvršen kao S4 — vidi napomenu iznad) |
 | S4 | Expona (6) — podno grejanje 27 °C spec+FAQ | 6 | [x] ✅ 2026-07-11 (izvršeno pod dnevnik-oznakom "S5" jer je Geoplast odradjen kao S4 — vidi napomenu iznad) |
 | S5 | R-Tile (2× simple, ne variable — vidi napomenu) + traka + stair nosing | 4, 6 var (traka) | [x] ✅ 2026-07-11 |
 | S6 | Ecotile rampe (4, 18 var stvarno — ne 26, vidi napomenu) + cross-linkovi | 4 | [x] ✅ 2026-07-11 |
-| S7 | Hoop n Court (9) | 9 | [ ] |
-| S7 | Hoop n Court (8, po M-listi) | 8 | [x] ✅ 2026-07-11 |
+| S7 | Hoop n Court (9, plan) → izvršeno kao 8 po M-listi (izbačen Wallmount/Thunder-500, dodat LED) | 8 | [x] ✅ 2026-07-11 |
 | **S8** ⚠️ pre CB2 | Generička oprema (8) + kartice 16676 + `_al_cb_equipment` flagovi | 8 | [x] ✅ 2026-07-11 |
 | CB1 | CPT + REST skeleton + stranica + SVG grid + farbanje + obračun ploča | builder A | [x] ✅ 2026-07-11 |
 | CB2 | Sport šabloni + linije + rampe + oprema selektor + PNG export | builder B | [x] ✅ 2026-07-11 |
-| **CB3** ⚠️ gate | dompdf + mejlovi + admin metabox + verzije/token + cene + GA4 + bezbednost + puna regresija | builder C | [ ] |
+| **CB3** ⚠️ gate | dompdf + mejlovi + admin metabox + verzije/token + cene + GA4 + bezbednost + puna regresija | builder C | [x] ✅ 2026-07-11 |
 
 **Verifikacija buildera end-to-end (CB3, Chrome):** dizajn → farbanje → oprema → submit → CPT zaključan → mejl u mail logu sa PNG+PDF → PDF ispravan (ć/č) → `/hvala-za-poruku/` → admin token link → nova verzija → original netaknut.
 

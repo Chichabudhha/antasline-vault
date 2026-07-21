@@ -87,21 +87,21 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 
 | # | Zadatak | Vlasnik | Napomena |
 |---|---|---|---|
-| 3.1 | 🔄 ZAMENJEN → **F1 parity inventar** (7 live sitemapa vs lokal → `parity-inventar.csv`) + **F4 minimalna redirect mapa** (~10–20 redova umesto 118) | CC | [[migracija/promptovi/F1-parity-inventar]] · blokira go-live |
+| 3.1 | ✅ ZATVORENO 2026-07-21 — F1 reosvežen (2 nedelje posle baseline-a): live URL skup nepromenjen, PARITY skočio 47→129/143 zahvaljujući W1/W2 radu, svi preostali non-PARITY redovi već imaju odluku u redirect-mapa-FINAL.csv osim 1 poznatog M-odluka stavke (FAQ konsolidacija, 15 kl., ne blokira). 5 lažnih "path mismatch" nalaza razrešeno (WP rewrite prihvata i ugnježden i flat oblik). Detalji: [[migracija/PARITY-PLAN]] §2.1 | CC | [[migracija/promptovi/F1-parity-inventar]] |
 | 3.2 | ✅ ZATVORENO 2026-07-07 — `/sportske-podloge/kosarkaske-konstrukcije/` (923 GSC kl.) rešeno kao F6 pilot (ID 16657, namenska landing, identičan URL kao live → redirect nepotreban) | CC | [[migracija/promptovi/F6-namena-arhitektura]] |
 | 3.3 | 🔄 OBRNUTO: parity kaže `/aktuelnosti/` OSTAJE (lokalni `/blog/` se preimenuje) — deo F2 | CC | [[migracija/promptovi/F2-permalink-fix]] |
 | 3.4 | 🔄 ZAMENJEN → **F2 permalink fix**: Woo `product_base` → `/proizvod/` flat + `category_base` → `/kategorija-proizvoda/` (kao live) — briše ~47 redirect redova jednom izmenom | CC | [[migracija/promptovi/F2-permalink-fix]] |
 | 3.5 | ✅ ZATVORENO 2026-07-09 — Lighthouse 13.4 baseline (7 prolaza) → [[dnevnik/PERFORMANCE-AUDIT]]. Usput: XAMPP opcache uključen (TTFB 8–10s → 2,4–3,4s) + ThreadStackSize crash fix. Mobile Perf 24–48, LCP 8,6–20,4s | CC | redosled za 3.6 u auditu (top: RevSlider off, home PNG→WebP, CLS stretch-row) |
-| 3.6 | CWV optimizacija: LCP <2,5s mobile (slike, lazy load, skripte, fontovi ✓ već lokalni), CLS <0,1, INP <200ms | CC | ✅ **CLS gate pogođen 2026-07-12** (font-preload fix, pravi uzrok bio font-swap ne stretch-row kako je baseline pretpostavio — videti [[dnevnik/PERFORMANCE-AUDIT]] sek. 5). 🔴 LCP i dalje crveno, blokirano na render-blocking CSS (js_composer 437KB) — namerno odloženo na LiteSpeed Critical CSS/UCSS na produkciji (visok rizik ako se radi ručno lokalno), najveća poluga konverzija (mobile = 3/4 svega) |
-| 3.7 | XML sitemap + robots.txt (+ AI crawleri: GPTBot, PerplexityBot, ClaudeBot…) + llms.txt | CC | robots na live = [cpanel-live] odluka #ceka-miroslav |
-| 3.8 | Woo checkout + product page test na lokalu | CC | — |
-| 3.9 | `.htaccess` 301 fajl generisan iz finalne CSV mape | CC | aktivira se TEK na dan migracije |
+| 3.6 | CWV optimizacija: LCP <2,5s mobile (slike, lazy load, skripte, fontovi ✓ već lokalni), CLS <0,1, INP <200ms | CC | ✅ **CLS gate pogođen 2026-07-12** (font-preload fix, pravi uzrok bio font-swap ne stretch-row kako je baseline pretpostavio — videti [[dnevnik/PERFORMANCE-AUDIT]] sek. 5). ✅ **Nizak-rizik dorada zatvorena 2026-07-21**: unsized-images (4 slike, score 0,5→1,0) + latin-ext font subsetting (85KB→3,6KB/fajl, samo srpska latinica ćčđšž). 🔴 LCP i dalje crveno, blokirano na render-blocking CSS (js_composer 437KB) — namerno odloženo na LiteSpeed Critical CSS/UCSS na produkciji (visok rizik ako se radi ručno lokalno), najveća poluga konverzija (mobile = 3/4 svega). Nema više nizak-rizik lokalnih koraka — sledeći napredak čeka produkciju |
+| 3.7 | ✅ ZATVORENO 2026-07-21 (CC deo) — sitemap čišćenje (25 orphan legacy CPT posta publish→draft, 4 prazna sitemap-a nestala iz indexa) + fizički `robots.txt` (AI crawleri GPTBot/ClaudeBot/PerplexityBot/Google-Extended/CCBot + Sitemap linija, isti obrazac kao llms.txt) | CC | robots na live = [cpanel-live] aktivacija #ceka-miroslav (sadržaj već spreman) |
+| 3.8 | ✅ ZATVORENO 2026-07-21 — N/A u izvornom obliku: catalog_mode (M9) je uklonio cart/checkout/my-account stranice u potpunosti (ID-evi u opcijama ne postoje u bazi) — pravi tok je "Zatražite ponudu"→`/kontakt/?form-naslov=`→submit→`/hvala-za-poruku/`, testiran end-to-end (prefill potvrđen). F2 permalink regresija: 6 nasumičnih proizvoda + 4 kategorije pod `/proizvod/`/`/kategorija-proizvoda/` sve 200, Product schema 1× bez dupliranja | CC | — |
+| 3.9 | ✅ POTVRĐENO 2026-07-21 — `htaccess-301-DRAFT.txt` je već postojao (generisan 2026-07-07/09), reverifikovano 2026-07-21: svih 7 ciljnih URL-ova vraća 200 na lokalu, i dalje se poklapa sa redirect-mapa-FINAL.csv 1:1 | CC | aktivira se TEK na dan migracije |
 | 3.10 | Pre-migration checklist + full regression (forme, GTM, linkovi, slike) + 🔴 obrisati `mu-plugins/al-local-mail-log.php` i `wp-content/mail-log.txt` (lokalni mail logger presreće SVE mejlove — na produkciji forme ne bi slale ništa) + verifikovati stvarno slanje mejla na produkciji | CC | N7 |
 | 3.11 | **MIGRACIJA 2026-08-31** (1 dan): backup live → db+wp-content prebacivanje → URL zamena → 301 aktivacija → verifikacija | CC+M | SSH/hosting info #ceka-miroslav |
 | 3.12 | Post-live (do 2026-09-02+): GSC sitemap resubmit, crawl errors, GA4/GTM verify, CWV field data + UptimeRobot (besplatan) + dnevni 404 log pregled prvih 14 dana (umesto ad-hoc) | CC+CP | — |
 | 3.13 | ✅ ZATVORENO — ⚠️ reotvoreno i ponovo zatvoreno 2026-07-09: scheduled task NIKAD nije stvarno radio (odbijan — baterija uslov + bez catch-up-a; popravljeno `Set-ScheduledTask`). Nova politika (M): destinacija **eksterni HDD G: "Maxtor" kad je prikačen** → OneDrive → lokalno; propušteni backup izvršen na G: 2026-07-09. Proveriti `LastTaskResult=0` posle sledeće noći | CC | OneDrive više nije blokator (G: je druga lokacija) |
 | 3.14 | ⏳ U TOKU — popis panela (M čita cPanel): **PHP 8.3** (⚠️ lokal je 8.2.12 — proveriti kompatibilnost pre migracije), disk 5,05/11,95GB (42%, 6,9GB slobodno — dovoljno za subdomen probu), subdomeni dostupni (0 iskorišćeno). Sledeći korak (SSH/upload/import na `novi.antasline.com`) nastavlja se sutra — čeka odluku načina rada (M izvršava uz vođstvo / SSH pristup / cPanel File Manager) | CC+M | jedina zavisnost bez fallbacka |
-| 3.15 | SERP snapshot: top 20 GSC upita → pozicije/konkurencija danas, pre migracije → `analiza/` | CC | bez ovoga ne znamo da li post-migracija pad je naš (301) ili konkurent skočio |
+| 3.15 | ✅ ZATVORENO 2026-07-21 — top 20 GSC upita (klikovi, 28d) + rizik-grupa 6 upita (visoke impresije/slaba pozicija) snimljeni kao baseline; live SERP spot-check za kontekst konkurenata (napomena: browser nije RS-geolociran, GSC pozicija merodavna) → [[analiza/2026-07-21-serp-snapshot-pre-migracija]] | CC | bez ovoga ne znamo da li post-migracija pad je naš (301) ili konkurent skočio |
 
 ### W4 — ADS
 Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Clicks** do 20–30 plaćenih konverzija.
@@ -122,7 +122,7 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 ### W5 — TRACKING / MERENJE (GA4 + GSC + GMB)
 | # | Zadatak | Vlasnik | Napomena |
 |---|---|---|---|
-| 5.1 | Potvrditi GA4 key events popravku na julskim podacima (`conversions` treba nazad na ~60–160) | CC (Windsor) | sredina jula |
+| 5.1 | ✅ ZATVORENO 2026-07-21 — jul (1.–20.) čist: sumirano generate_lead+tel+mailto = 59/20 dana → projekcija ~92/mes, u okviru cilja. 🔴 Usput nalaz: Windsor `conversions` agregatno polje je bilo kontaminirano 06-17→06-22 (8 dodatnih evenata pogrešno markirano kao key event u GA4 adminu, do 1212/dan) — self-rešeno do 06-23, jul čist, nova lekcija u [[reference/naucene-lekcije]] | CC (Windsor) | sredina jula |
 | 5.2 | ✅ URAĐENO 2026-07-06 — GMB: UTM fix (`utm_source=google&utm_medium=gmb&utm_campaign=local`), kategorije proširene (+Gradnja sportskih terena, +Pružalac usluga), prvi post kreiran (Bergo/Naxos kampanja); review link spreman za korisnike | M | Efekat: GMB saobraćaj merljiv u GA4, prvi post live, review kampanja čeka poslove |
 | 5.3 | GMB recenzije 6 → 20+ (email posle svakog posla) | M | trust + local pack + GEO |
 | 5.4 | Nedeljni mini-izveštaj (7d vs 7d po formatu [[CLAUDE]] §10) + mesečni puni snapshot ([[analiza/_TEMPLATE-snapshot]]) | CC | sledeći puni: početak avgusta |
@@ -153,7 +153,7 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 
 ## 3. GATE KRITERIJUMI — go/no-go za migraciju (pregled u N8)
 
-- [ ] 🔄 (2026-07-07) `parity-inventar.csv` kompletan (svaki live URL ima status) + minimalna redirect mapa (F4) potvrđena + .htaccess generisan i testiran na lokalu
+- [x] ✅ (2026-07-21, reosveženo posle F1 baseline-a 2026-07-07) `parity-inventar.csv` kompletan (svaki live URL ima status) + minimalna redirect mapa (F4) potvrđena + .htaccess generisan i testiran na lokalu — v. [[migracija/PARITY-PLAN]] §2.1
 - [ ] CWV lokal: LCP <2,5s mobile · CLS <0,1 · INP <200ms
 - [ ] Sve Tier1 + Tier2 stranice žive na buildu (Tier3/4 nisu blokeri)
 - [ ] Content parity checklist prošao: svaka live stranica ima parnjaka ili 301 (inventar CSV = checklista)
