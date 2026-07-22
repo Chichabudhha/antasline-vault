@@ -38,7 +38,7 @@ koji prodaje epoksid.
 | Sitemap lokalnog builda | `http://localhost/antasline/sitemap_index.xml` |
 | Uživo sajt | antasline.com (tema Kallyas) |
 | DB (lokalno) | MariaDB 10.4, prefiks `wpGs_`, 106 tabela, uvezena iz `smartas_smartas_rs.sql` (46.6 MB), kolacija `utf8mb4_unicode_ci` |
-| Stack (lokalno) | PHP 8.2.12, XAMPP, Porto tema + WPBakery (`js_composer`) |
+| Stack (lokalno) | PHP 8.2.12, XAMPP, WoodMart 8.5.4 tema + child (design sistem `antas-design.css`, self-hosted Inter+Bebas) — napušten raniji Porto+WPBakery pristup |
 
 Claude Code radi u vault-u; Obsidian Git tamo auto-sinhronizuje na ~10 min.
 Kad se nešto radi direktno na produkciji (cPanel), taj rad se taguje
@@ -268,18 +268,28 @@ je RankMath pomenut kao krajnji cilj.
   `/kategorija-proizvoda/` — **ne** `/shop/` niti `/kategorija/`
 - Blog arhiva: `/aktuelnosti/` OSTAJE (kao na live) — lokalni `/blog/` se
   preimenuje (parity odluka 2026-07-07, obrnuto od ranijeg plana)
-- Porto tema: `post_type=post` prikazuje title kao `<h2 class="entry-title">`,
-  ne `<h1>` — ne juriti "missing H1" na post entrijima, to je normalno
+- WoodMart tema (od jula 2026, zamenila Porto): renderuje `post_title` kao
+  pravi `<h1>` na SVAKOM CPT/stranici/postu po default-u — obrnuto od stare
+  Porto konvencije (koja je koristila `<h2 class="entry-title">` za postove).
+  Svaka nova stranica MORA dobiti `_woodmart_title_off=on` postmeta ako
+  sadržaj već ima svoj H1, inače nastaje 2×H1 duplikat — standardni HTTP/H1
+  verifikacioni korak ovo hvata. Detalji: `[[migracija/woodmart-sabloni]]`
 
-### 7.3 WPBakery — poznati problemi
+### 7.3 WPBakery — poznati problemi (istorijski, tema je od jula 2026 WoodMart)
+
+> ⚠️ Build je prešao sa Porto+WPBakery na **WoodMart 8.5.4 + child** (vidi §2 i
+> `[[migracija/woodmart-sabloni]]` za trenutne gotcha-e). Ovaj pod-odeljak je
+> zadržan jer reimportovani postovi (F3, pun reimport sa live-a) mogu i dalje
+> nositi stari WPBakery shortcode markup unutar `post_content` — ako se na to
+> naiđe, važe pravila ispod. Post 4937 nalaz je potvrđeno **moot** (2026-07-22):
+> `/industrijski-podovi/` je nova WoodMart stranica (ID 16567, rebuild
+> 2026-07-05), 4937 je draft.
 - JS greška "Cannot read properties of undefined" dolazi od nepoznatih/starih
   shortcode atributa ili nezatvorenih shortcode-ova
 - Pre bilo kakvog programskog ubacivanja blokova: proveriti tačnu verziju
   `js_composer`, pisati markup koji odgovara toj verziji, regenerisati
   `_wpb_shortcodes_custom_css` i `_wpb_post_custom_css` post meta posle izmena
   sadržaja, **uvek prvo backup** (`wp db export`)
-- Post ID 4937 = `/industrijski-podovi/` (post_type=post); 6 WPBakery blokova
-  čeka na ubacivanje (blokirano gore navedenim JS bug-om)
 
 ### 7.4 Parity strategija (od 2026-07-07 — zamenila staru redirect mapu)
 - **Build se pravi 1:1 prema live sajtu** (URL + content parity); redirect mapa
@@ -302,15 +312,18 @@ je RankMath pomenut kao krajnji cilj.
 - Otvoreno: 5 staging-only proizvoda (durastripe varijante, mosolut-heavy)
   će biti izgubljeno u clean-slate wipe-u osim ako se prvo ne dodaju na live
 
-### 7.6 Core Web Vitals (cilj, nije još urađeno)
-Gašenje nepotrebnih modula/skripti u Porto temi i WPBakery-ju, lazy loading,
-optimizacija fontova — za LCP/CLS/INP.
+### 7.6 Core Web Vitals — status: CLS/TBT zatvoreni, LCP čeka produkciju
+CLS <0,1 pogođen 2026-07-12 (font-preload fix), TBT/INP proxy zatvoren
+2026-07-22 (dead JS dequeue). LCP <2,5s ostaje crveno — blokirano na
+render-blocking CSS (`js_composer` 437KB), namerno odloženo na LiteSpeed
+Critical CSS/UCSS na produkciji, nema više nizak-rizik lokalnih koraka.
+Detalji: `[[dnevnik/PERFORMANCE-AUDIT]]`.
 
 ---
 
 ## 8. 🔴 KRITIČNO — LOKALNI BUILD JE STAGING, LIVE SE NE DIRA!
 
-**PRAVILO:** Svi rad se radi na **LOKALNOM BUILD-u** (`http://localhost/antasline/`) dok se sajt potpuno ne redizajnira. **Live sajt se NE dira** dok se lokalni build ne završi (2026-09-02).
+**PRAVILO:** Svi rad se radi na **LOKALNOM BUILD-u** (`http://localhost/antasline/`) dok se sajt potpuno ne redizajnira. **Live sajt se NE dira** dok se lokalni build ne završi (migracija 2026-08-31, vidi [[2026-07-06-MASTER-PLAN-V2]] — zamenjuje raniji datum 2026-09-02 iz superseded plana).
 
 ```
 LOKALNI BUILD (http://localhost/antasline)
@@ -320,7 +333,7 @@ LOKALNI BUILD (http://localhost/antasline)
 
 LIVE SAJT (antasline.com)
   = PRODUCTION — ČEKANJE
-  = Tek posle 2026-09-02 migracija (1 dan!)
+  = Tek posle 2026-08-31 migracija (1 dan!)
   = NE diram bazu, fajlove, domenе, DNS, SSL
 
 VAULT (~/antasline-vault na hosting)
@@ -330,10 +343,10 @@ VAULT (~/antasline-vault na hosting)
 
 **Konsekvencu:**
 - ✅ Fokus: Kvalitetan lokalni redizajn (Tehnička → SEO → Ads)
-- ❌ Nema SSH pristupa za live bazu
-- ❌ Nema live promene dok nije sve gotovo
+- ⚠️ SSH/cPanel pristup za live je potvrđen od 2026-07-21 (M6) — koristi se ISKLJUČIVO za eksplicitne `[cpanel-live]` zadatke (npr. bezbednosni incidenti, staging proba migracije), ne za redovan redizajn rad
+- ❌ Nema live promene dok nije sve gotovo, osim eksplicitnih `[cpanel-live]` zadataka
 - ❌ WooCommerce migracija je samo na lokalu (test)
-- ✅ Posle 2026-09-02: Prebacujemo SVE kao bulk operacija
+- ✅ Posle 2026-08-31: Prebacujemo SVE kao bulk operacija
 
 ---
 
@@ -528,41 +541,39 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 
 ---
 
-## 14. TRENUTNI STATUS NA JEDNOJ STRANICI (2026-07-02)
+## 14. ⛔ ISTORIJSKI SNAPSHOT (2026-07-02) — SUPERSEDED, ne koristiti za "gde smo stali"
 
-### 🎯 Konačan cilj
-Redizajn sajta + live deployment (do 2026-09-02) za maksimalnu prodaju sa minimalnim budžetom.  
+> Ova sekcija je snimak stanja od 2026-07-02 (BLOK A/B tek zatvoreni, W1 rebuild
+> jedva počeo). Svi brojevi/blokeri ispod su odavno rešeni ili prevaziđeni —
+> zadržano samo kao istorijski trag. **Za trenutno stanje uvek koristi §12**
+> (redom: [[2026-07-06-MASTER-PLAN-V2]] → [[PROGRESS]] → [[DNEVNIK-NAPRETKA]]).
+
+### 🎯 Konačan cilj (kako je glasio 2026-07-02)
+Redizajn sajta + live deployment (do 2026-09-02 — **datum prevaziđen, važeći go-live je 2026-08-31 po [[2026-07-06-MASTER-PLAN-V2]]**) za maksimalnu prodaju sa minimalnim budžetom.
 Prioritet: **Tehnička → SEO → Ads**
 
-### ✅ Gotovo
+### ✅ Gotovo (na dan 2026-07-02)
 - BLOK A (Tracking) + BLOK B (Publike)
 - Lokalni WordPress build
 - Vault organizacija
 - 8 nedeljnih dnevnika sa planovima
 
-### ⏳ U toku
-- BLOK C (Redirect mapa, Content parity, On-page)
-- 4 nove landing stranice (iz GSC keywords)
-- FAQ + schema za basketball
+### ⏳ U toku (na dan 2026-07-02, sve odavno zatvoreno — vidi [[PROGRESS]])
+- BLOK C (Redirect mapa, Content parity, On-page) — ✅ iscrpljen, vidi [[blokovi/BLOK-C-sledece]]
+- 4 nove landing stranice (iz GSC keywords) — ✅ objavljene (W2 Tier1, 2026-07-10)
+- FAQ + schema za basketball — ✅ zatvoreno
 
-### 🔴 Kritični blokeri (Čeka Miroslava)
-1. ✅ ~~SSH config — WooCommerce migracija~~ — import na lokal urađen 2026-07-04 (bez SSH, export/import). SSH ostaje samo za live prebacivanje.
-2. ✅ ~~Google Ads balans + verifikacija~~ — odblokirano 2026-07-04; ECOTILE više nije throttlovan.
-3. GA4 publike (Task #1) — Miroslav kreira u GA4 UI
-4. Konverzije info — Šta se dešava sa 53 kontakta?
+### 🔴 Kritični blokeri na dan 2026-07-02 (svi rešeni)
+1. ✅ SSH config — WooCommerce migracija — import na lokal urađen 2026-07-04 (bez SSH, export/import); SSH za live prebacivanje potvrđen 2026-07-21 (M6)
+2. ✅ Google Ads balans + verifikacija — odblokirano 2026-07-04
+3. ✅ GA4 publike — 6 publika kreirano, BLOK B zatvoren
+4. ✅ Konverzije info — hvala-proxy praćen nedeljno od 2026-07-21 (W5 5.4)
 
-### 📊 Metriken (juni 2026)
-- 53 kontakta/mesec (`/hvala-za-poruku/`)
+### 📊 Metrike na dan 2026-07-02 (istorijske, videti [[PROGRESS]] za aktuelne)
+- 53 kontakta/mesec (`/hvala-za-poruku/`) — jul projekcija ~92/mes (5.1)
 - 94% organski, 6% plaćeni
-- Conversion rate: 0,88% (NISKO)
-- Ads spend: 40k RSD/mesec
-
-### 📅 Nedelja 1 (do 2026-07-16)
-- [ ] Tehnička audit (PageSpeed, Web Vitals)
-- [x] WooCommerce import na lokal (gotovo 2026-07-04)
-- [ ] C1 verifikacija (20 redova redirect mape)
-- [ ] 4 nove GSC stranice (start)
-- [ ] Task #1 — GA4 publike (Miroslav)
+- Conversion rate: 0,88%
+- Ads spend: 40k RSD/mesec (kampanje trenutno pauzirane, M na godišnjem)
 
 ---
 
@@ -571,12 +582,12 @@ Prioritet: **Tehnička → SEO → Ads**
 Kada otvorim CLAUDE.md sledeći put, znaću:
 
 1. ✅ **Ko sam** — marketing analitičar za AntasLine
-2. ✅ **Šta radim** — redizajn + live migracija (2 meseca) + SEO/Ads optimizacija
-3. ✅ **Šta je gotovo** — BLOK A (tracking), BLOK B (publike), lokalni build
-4. ✅ **Šta je u toku** — BLOK C (redirect, content, on-page)
-5. ✅ **Šta je blokirano** — GA4 publike (Task #1) + konverzije info (SSH i balans/verifikacija rešeni 2026-07-04)
+2. ✅ **Šta radim** — redizajn (WoodMart tema) + live migracija + SEO/Ads optimizacija
+3. ✅ **Šta je gotovo** — BLOK A (tracking), BLOK B (publike), ceo W1 (rebuild 1.1–1.12), W2 content plan (20 stranica)
+4. ✅ **Šta je u toku** — W3 (CWV/migracija priprema), W5 (nedeljni izveštaji), povremeni `[cpanel-live]` zadaci
+5. ✅ **Šta je blokirano** — sve #ceka-miroslav stavke iz sekcije 4 ovog master plana (npr. Ads reaktivacija posle godišnjeg, cenovnik M10, live GEO fix preko cPanel)
 6. ✅ **Gde su fajlovi** — Sve su linked-ovane kroz wikilinks
 7. ✅ **Prioritet** — Tehnička → SEO → Ads
-8. ✅ **Timeline** — 2 meseca (do 2026-09-02)
-9. ✅ **Šta trebam od Miroslava** — 5 konkretnih odgovora
-10. ✅ **Šta radim sad** — [[2026-07-06-MASTER-PLAN-V2]] (workstream-ovi W1–W5, nedelje N1–N8)
+8. ✅ **Timeline** — go-live **2026-08-31** (vidi [[2026-07-06-MASTER-PLAN-V2]])
+9. ✅ **Šta trebam od Miroslava** — vidi [[2026-07-06-MASTER-PLAN-V2]] §4 (zavisnosti)
+10. ✅ **Šta radim sad** — [[PROGRESS]] (dnevni snapshot) + [[2026-07-06-MASTER-PLAN-V2]] (workstream-ovi W1–W5, nedelje N1–N8)
