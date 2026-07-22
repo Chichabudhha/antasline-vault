@@ -177,6 +177,8 @@
 
 ## Blokeri
 
+- 🆕 **Podsetnik (ne blokira ništa, samo #ceka-sledeću-cPanel-sesiju): ponoviti bot-log presek ~2026-07-30** — proveriti da li je `robots.txt` blok (AhrefsBot/SemrushBot/DotBot, uveden 2026-07-23) stvarno smanjio broj hitova. Ne može cloud routine (nema SSH do `wp1.oblak.host`) — mora biti prava `[cpanel-live]` sesija. Uputstvo: [[analiza/BOT-CRAWLER-LOG]] "Kako ponoviti".
+
 - ✅ **AhrefsBot/SemrushBot/DotBot blokirani — ZATVORENO 2026-07-23** — M potvrdio da ne koristi nijedan, blokirano preko fizičkog `robots.txt`. Detalji: [[analiza/BOT-CRAWLER-LOG]], [[DNEVNIK-NAPRETKA]].
 
 - 🆕 **TASK za sledeću sesiju: staging.antasline.com nema GTM/consent kod** (nađeno 2026-07-23) — GTM Preview test (W5 5.6) pokazao "nema tagova" jer je staging klon lokalnog builda snimljen 2026-07-21, **pre** mu-plugin GTM/consent fix-a od 2026-07-22 — dakle staging nema NIKAKAV GTM kod, ne samo naša dva draft taga. Fix: izvući GTM+consent snippet sa live produkcije (isti metod kao lokalni fix) i ubaciti kao mu-plugin SAMO na staging (izolovan poddomen, live se ne dira). M eksplicitno odložio ovo za neku od sledećih sesija (2026-07-23), ne raditi sada bez novog zahteva.

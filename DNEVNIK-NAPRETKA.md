@@ -1,6 +1,12 @@
 # Dnevnik napretka — Antasline SEO
 
-## 2026-07-23 [cpanel-live] [W5 GEO] — robots.txt: AhrefsBot/SemrushBot/DotBot blokirani — **SESIJA ZATVORENA** ✅
+## 2026-07-23 [cpanel-live] [W5 GEO] — Zakazan Presek #2 bot-loga za ~2026-07-30 — **SESIJA ZATVORENA** ✅
+- Miroslav tražio proveru za nedelju dana da li je `robots.txt` blok (prethodni unos) stvarno smanjio broj AhrefsBot/SemrushBot/DotBot hitova.
+- Isprobana `/schedule` skill (cloud routine) — zaustavljeno pre kreiranja: cloud CCR sesija ima samo git checkout vault-a, **nema SSH pristup `wp1.oblak.host`**, pa ne bi mogla da čita `~/access-logs/antasline.com-ssl_log` uopšte (jedino što bi mogla je javan `curl` na `robots.txt`, ne stvarne hit-brojeve). Objašnjeno Miroslavu, ponuđene 3 opcije (vault podsetnik / ograničen cloud routine samo za robots.txt sadržaj / ručni podsetnik) — **izabrao vault podsetnik** (isti obrazac kao ostale #ceka-miroslav/#ceka-sledeću-sesiju stavke).
+- Upisano: [[analiza/BOT-CRAWLER-LOG]] nova sekcija "Zakazano: Presek #2" (ciljni datum ~2026-07-30, ne strogo, prva sledeća `[cpanel-live]` sesija) + [[PROGRESS]] Blokeri podsetnik. Nema izmena sajta ove pod-sesije.
+- **Sesija zatvorena.**
+
+## 2026-07-23 [cpanel-live] [W5 GEO] — robots.txt: AhrefsBot/SemrushBot/DotBot blokirani — SESIJA ZATVORENA ✅
 - Miroslav potvrdio (posle bot-log analize): ne koristi nijedan od ta tri SEO alata, traži da im se oteža konkurenciji koja ih koristi za backlink/rank tracking na sajtu.
 - **Nalaz pre izmene**: `/robots.txt` na live-u je bio VIRTUELAN (WP/Yoast generisan preko `robots_txt` filtera, potvrđeno da fizički fajl ne postoji u `public_html`) — isti obrazac kao ranije dokumentovan lokalni gotcha (`[[reference/naucene-lekcije]]` 2026-07-21: "WordPress ne generiše virtuelni robots.txt u poddirektorijumu"), ali ovde je live NA root domenu pa je virtuelni radio normalno. Rešenje: fizički `robots.txt` fajl direktno u docroot-u (isti obrazac kao `llms.txt`) — Apache ga servira direktno pre WP rewrite sloja (`RewriteCond %{REQUEST_FILENAME} !-f` u standardnom WP `.htaccess` bloku preskače postojeće fajlove).
 - Sadržaj: 3 nova specifična bloka (`User-agent: AhrefsBot/SemrushBot/DotBot` → `Disallow: /`) dodata PRE generičkog `User-agent: *` bloka; sav postojeći virtuelni sadržaj (WooCommerce upload disallow-i, `/wp-admin/` disallow + `admin-ajax.php` allow, `Sitemap:` linija) preneto 1:1 bez gubitka.

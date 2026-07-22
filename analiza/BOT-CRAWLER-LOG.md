@@ -81,6 +81,10 @@ na AI-asistent crawlere. Svaki novi presek se dodaje kao nova sekcija na dnu
 4. **GPTBot i PerplexityBot nisu viđeni u ovom prozoru** — ne znači da su blokirani (test pokazao 200 za ClaudeBot koji JESTE viđen), samo nisu prošli u ovih 14h. Pratiti u sledećem preseku.
 5. **`llms.txt`/`llms-full.txt` efekat: još nema podataka** (0 organskih hitova) — prerano za zaključak, prvi fajl je star manje od 24h. Sledeći presek (preporuka: za ~1 nedelju) treba da pokaže da li se ijedan AI bot uopšte javio po ove fajlove.
 
+## 🆕 Zakazano: Presek #2 — ciljni datum ~2026-07-30 (nedelju dana posle robots.txt bloka)
+
+Miroslav tražio proveru za nedelju dana da li je broj hitova AhrefsBot/SemrushBot/DotBot pao posle 2026-07-23 `robots.txt` bloka. **Ne može se automatizovati preko cloud routine-a** — access log (`~/access-logs/antasline.com-ssl_log`) postoji samo na `wp1.oblak.host`, cloud agent nema SSH pristup tom serveru. Umesto toga: ovo je #ceka-sledeću-cPanel-live-sesiju stavka — prva sledeća `[cpanel-live]` sesija (ne mora biti tačno 2026-07-30, može i kasnije) treba da ponovi presek po uputstvu ispod i uporedi sa baseline brojevima (AhrefsBot 79, DotBot 13, SemrushBot 2 u ~14h prozoru).
+
 ## Kako ponoviti (sledeći presek)
 ```bash
 cd ~/access-logs
