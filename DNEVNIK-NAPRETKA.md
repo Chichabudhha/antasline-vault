@@ -1,6 +1,16 @@
 # Dnevnik napretka — Antasline SEO
 
-## 2026-07-23 [cpanel-live] [W5 GEO] — Bot/crawler access-log analiza (baseline + tracking) — **SESIJA ZATVORENA** ✅
+## 2026-07-23 [cpanel-live] [W5 GEO] — robots.txt: AhrefsBot/SemrushBot/DotBot blokirani — **SESIJA ZATVORENA** ✅
+- Miroslav potvrdio (posle bot-log analize): ne koristi nijedan od ta tri SEO alata, traži da im se oteža konkurenciji koja ih koristi za backlink/rank tracking na sajtu.
+- **Nalaz pre izmene**: `/robots.txt` na live-u je bio VIRTUELAN (WP/Yoast generisan preko `robots_txt` filtera, potvrđeno da fizički fajl ne postoji u `public_html`) — isti obrazac kao ranije dokumentovan lokalni gotcha (`[[reference/naucene-lekcije]]` 2026-07-21: "WordPress ne generiše virtuelni robots.txt u poddirektorijumu"), ali ovde je live NA root domenu pa je virtuelni radio normalno. Rešenje: fizički `robots.txt` fajl direktno u docroot-u (isti obrazac kao `llms.txt`) — Apache ga servira direktno pre WP rewrite sloja (`RewriteCond %{REQUEST_FILENAME} !-f` u standardnom WP `.htaccess` bloku preskače postojeće fajlove).
+- Sadržaj: 3 nova specifična bloka (`User-agent: AhrefsBot/SemrushBot/DotBot` → `Disallow: /`) dodata PRE generičkog `User-agent: *` bloka; sav postojeći virtuelni sadržaj (WooCommerce upload disallow-i, `/wp-admin/` disallow + `admin-ajax.php` allow, `Sitemap:` linija) preneto 1:1 bez gubitka.
+- 🟡 **Bitna napomena za Miroslava**: `robots.txt` je DOBROVOLJNA direktiva, ne server-side blok — radi samo zato što Ahrefs/Semrush/Moz pošteno poštuju robots.txt (za razliku od Bytespider-a koji je već 403-blokiran na server nivou preko Imunify360, van naše kontrole). Ne očekivati trenutni efekat — ovi botovi tipično proveravaju robots.txt periodično (sati do par dana), ne pre svakog zahteva.
+- 🟡 **Tradeoff**: fizički fajl zamenjuje WP/Yoast virtuelni — ako Yoast ikad promeni svoja podešavanja (npr. novi WooCommerce disallow pravila preko UI-ja), neće se automatski propagirati u ovaj fajl dok se ručno ne ažurira. Isti tradeoff kao za `llms.txt`, prihvaćen isti obrazac.
+- Verifikovano: 200, sav sadržaj (uklj. Sitemap linija) prisutan, `wp litespeed-purge all` izvršen.
+- [[analiza/BOT-CRAWLER-LOG]] ažuriran (preporuka označena kao IZVRŠENA). [[PROGRESS]] Blokeri stavka zatvorena.
+- **Sesija zatvorena.**
+
+## 2026-07-23 [cpanel-live] [W5 GEO] — Bot/crawler access-log analiza (baseline + tracking) — SESIJA ZATVORENA ✅
 - Miroslav tražio (posle prethodnog zatvaranja iste sesije) analizu access logova: koji botovi crawluju sajt, koliko često, da li nešto treba blokirati/dozvoliti, i log da se prati efekat novog `llms.txt`/`llms-full.txt`.
 - Izvor: `~/access-logs/antasline.com-ssl_log` (live, ~14h prozor 22/Jul 10:54–23/Jul 00:35, log se rotira — stariji fajlovi arhivirani kao `old.antasline.com*`). 9.457 zahteva ukupno, 352 (3,7%) kategorisano kao poznat bot.
 - 🔴 **Gotcha**: prvi regex parser (Python, `\S+ \S+` razdvajanje method/path u combined log formatu) je tiho promašio linije sa VIŠE razmaka između metoda i putanje (`"GET    / HTTP/2"` — 4 razmaka, verovatno proxy/LiteSpeed artefakt) — ovo je nevidljivo potcenilo ChatGPT-User (8→0) i OAI-SearchBot (6→3) u prvom prolazu. Ispravljeno sa `\s+` umesto literalnog razmaka, 0 neparsiranih linija na ponovnom prolazu.
