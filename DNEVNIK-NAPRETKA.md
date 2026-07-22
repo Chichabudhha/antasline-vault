@@ -1,5 +1,11 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-22 [claude-code] [W5 5.6] — Sesija pauzirana, čeka Miroslava na cPanel-u ⏸️
+- Posle 2 rešene #ceka-miroslav stavke (piklbol recenzije, sifrazaantasline.txt — videti unos ispod), prešli na W5 5.6 (GTM staging Preview test). Trebaju Basic Auth kredencijali za `staging.antasline.com` (korisničko ime `stagingtest`, lozinka u `~/staging-htaccess-creds.txt` na serveru) — ova lokalna sesija ne može SSH direktno na `wp1.oblak.host` (poznat port 22 timeout/firewall obrazac).
+- Miroslav ide direktno na cPanel da preuzme/koristi kredencijale. Sesija ovde pauzirana na njegov zahtev.
+- **Sledeći korak kad se vrati:** ili prosledi Basic Auth lozinku ovde (nastavljamo GTM Preview test lokalno kroz browser), ili izvrši 5.6 direktno kroz cPanel-live sesiju.
+- Detalji: [[PROGRESS]]
+
 ## 2026-07-22 [claude-code] [ODLUKA] — 2 #ceka-miroslav stavke zatvorene bez izmene (piklbol recenzije, sifrazaantasline.txt) ✅
 - Nastavak iste sesije. Piklbol fake recenzije: Miroslav potvrdio da ostaju (bez promene, isti obrazac kao 2026-07-21 odluka).
 - `sifrazaantasline.txt` lozinka (`1aa4oUpQgzw0&aduZE`): Miroslav ne prepoznaje za šta je, eksplicitno odlučio da se ne testira protiv živih sistema niti dalje istražuje. Fajl ostaje obezbeđen (već premešten van docroot-a 2026-07-22), ali lozinka se ne rotira niti dalje diramo. PROGRESS Blokeri ažuriran za obe stavke.

@@ -171,6 +171,7 @@
 
 ## Blokeri
 
+- 🟡 **W5 5.6 GTM staging Preview test — sesija pauzirana 2026-07-22, Miroslav ide na cPanel.** Treba Basic Auth lozinka za `staging.antasline.com` (`~/staging-htaccess-creds.txt` na serveru, korisničko ime `stagingtest`) — lokalna sesija ne može SSH direktno na `wp1.oblak.host` (poznat port 22 timeout). Miroslav ili prosledi lozinku ovde, ili izvrši test direktno kroz cPanel-live sesiju. Detalji: [[DNEVNIK-NAPRETKA]]
 - ✅ **Consent default GRANTED — ODLUČENO 2026-07-22 (svesno zadržano)** — Miroslav potvrdio da GRANTED-by-default (sve 4 kategorije odobrene čim se banner prikaže, pre klika) ostaje NAMERNO ponašanje, i na live-u i na lokalu. Standardna Consent Mode v2 praksa bi bila DENIED-by-default, ali odluka je doneta svesno posle predočenog tradeoff-a (puni podaci od prvog posetioca vs. banner koji ne kontroliše stvarno stanje). Ne menjati bez nove eksplicitne odluke.
 - ✅ **Live GEO fix na `/spoljnje-podne-obloge/` — ZATVORENO 2026-07-22** — Miroslav potvrdio, izvršeno u istoj sesiji (post 1094, Zion Builder). Detalji: [[DNEVNIK-NAPRETKA]]
 - 🟡 **Live GEO fix na 2542 čeka Miroslava da pokrene cPanel Claude Code sesiju** (2026-07-22) — SSH port 22 ka `wp1.oblak.host` tajmovao iz ove sesije (poznat cPHulk/Imunify360 IP-blok obrazac, isti kao 2026-07-21). Pun izvršni prompt spreman: [[migracija/2026-07-22-prompt-live-2542-geo-fix]]. Ne blokira ništa drugo, nizak prioritet (samo ubrzava GEO indeksiranje ~5 nedelja ranije nego da se čeka migracija).
