@@ -29,9 +29,9 @@ azurirano: 2026-07-04
 
 ### 2. Citabilan sadržaj ⭐⭐⭐ (već u toku kroz C3)
 AI citira stranice sa jasnim činjenicama, tabelama i brojevima. **[[seo/plan-novih-stranica]] je istovremeno GEO plan** — "dimenzije terena", "šljaka", cena tabele = tačno pitanja koja ljudi kucaju u ChatGPT.
-- [ ] Svaka nova/refresh stranica: prvi pasus = direktan odgovor na pitanje u 1–2 rečenice (AI izvlači prvi jasan odgovor) #claude-code
+- [x] ✅ 2026-07-22 — audit 15 ključnih stranica: 12 W1-rebuild hub-ova već ispravno, 3 legacy posta (šljaka/padel/odbojka) popravljena sa "Kratak odgovor" uvodom. Pravilo ostaje aktivno za svaku BUDUĆU novu/refresh stranicu. #claude-code
 - [ ] FAQ blokovi + FAQPage schema (već pravilo u content planu) ✓
-- [ ] Conquest članak 2542 refresh — kad neko pita AI "epoksid ili alternativa za halu", ovaj članak je citat-kandidat, ali poz. 26 za "epoksi podovi" = AI ga ne vidi. SEO refresh iz kw-analize #7 rešava i GEO. #claude-code
+- [x] ✅ 2026-07-22 — dodata doslovna fraza "alternativa epoksidnom podu za proizvodnu halu" (uvod + novo FAQ pitanje, vidljivo + JSON-LD) na lokalu; live deo pripremljen kao poseban prompt ([[migracija/2026-07-22-prompt-live-2542-geo-fix]]), #ceka-miroslav da pokrene. GSC pozicija (~26) i dalje otvorena — ovo je samo tekstualno GEO poklapanje, ne rang fix.
 
 ### 3. Entitet — nedvosmislen identitet ⭐⭐ (1–2h)
 - [x] ✅ ZATVORENO 2026-07-08 — `Organization` (Yoast, već postojao sa `sameAs`) proširen filterom na `LocalBusiness` + adresa/telefon (NAP) → [[DNEVNIK-NAPRETKA]]
@@ -47,7 +47,7 @@ AI za "najbolji X u Srbiji" agregira tuđe liste, portale, forume:
 
 ### 5. Merenje ⭐⭐ (u snapshot rutini)
 - [ ] GA4: pratiti "AI Assistant" kanal mesečno — baseline **9 korisnika/90d**
-- [ ] Mesečni AI test (dodato u [[analiza/_TEMPLATE-snapshot]]): 5 fiksnih promptova u ChatGPT (bez naloga/incognito) + zabeležiti da li se Antasline pominje i koji URL citira
+- [x] ✅ PRVI PUT IZVRŠENO 2026-07-22 — Mesečni AI test: 5 fiksnih promptova u ChatGPT (pravi Incognito, bez naloga). Rezultat: **2/5 pominjanja** (prompt 1 "industrijski PVC podovi" bez URL citata, prompt 5 "ko postavlja sportske terene" SA citatom na antasline.com). 🔴 2 gap-a otkrivena: prompt 3 (epoksid alternativa) AI ne pominje modularni PVC/Ecotile kategoriju uopšte; prompt 4 (terase bez lepljenja) AI misli samo na WPC deking, ne Bergo klik-sisteme. Detalji + puni odgovori: [[analiza/2026-07-22-ai-test-baseline]]. Ponoviti sledeći mesec istim promptovima za trend.
 
 **Fiksni test promptovi:**
 1. "Ko prodaje industrijske PVC podove u Srbiji?"

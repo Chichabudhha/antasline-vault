@@ -1,9 +1,14 @@
 ---
 tip: blok
 blok: C
-status: ceka
-azurirano: 2026-06-28
+status: iscrpljen
+azurirano: 2026-07-22
 ---
+
+> ⚠️ **Ovaj fajl je zastareo od 2026-06-28.** C1/C2/C3 su praktično iscrpljeni kroz W1–W3
+> parity/build rad (juli 2026) — [[PROGRESS]] i [[2026-07-06-MASTER-PLAN-V2]] su izvor
+> istine za "gde smo stali", ne ovaj fajl. Zadržan samo istorijski, dve stavke ispod
+> potvrđeno rešene 2026-07-22.
 
 # BLOK C — Sledeći korak (izabrati JEDNU stavku)
 
@@ -18,17 +23,18 @@ izvršenje kroz promptove [[migracija/promptovi/_README]] (faze F1–F7, jedna p
 - Redirect mapa se svodi na ~10–20 namernih promena (F4)
 - Content parity = `parity-inventar.csv` (F1) + W1 red čekanja (F5)
 - Postovi: pun reimport sa live (F3) — M8 odluka doneta ✅
-- [ ] KRITIČNO i dalje: `/sportske-podloge/kosarkaske-konstrukcije/` (478 GSC klikova) → prava landing, deo F5 #claude-code
+- [x] ✅ ZATVORENO 2026-07-07 — `/sportske-podloge/kosarkaske-konstrukcije/` rešeno kao F6 pilot (ID 16657, namenska landing)
 
 ## C3: On-page build
 **📝 Master content plan: [[seo/plan-novih-stranica]]** — 20 stranica u 4 tijera (iz 16m keyword analize), obuhvata i ranije 4 GSC stranice. Redosled: odbojka refresh → terasa cena → industrijski cena → garaže landing.
-- [ ] 6 WPBakery blokova za `/industrijski-podovi/` (ID 4937) — JS bug, blokirano #claude-code
-- [ ] Čišćenje "Smartas" iz naslova homepage-a #claude-code
-- [ ] Landing za `/sportske-podloge/kosarkaske-konstrukcije/` (103 korisnika/14d, jak organski, bez prave stranice) #claude-code
-- [ ] Title/meta prepis 4 stranice (pop-tenis, odbojka, spoljne-obloge, conquest) — snapshot §6.1 #claude-code
+- [x] ✅ MOOT 2026-07-22 (provereno) — post 4937 je draft, `/industrijski-podovi/` je nova WoodMart stranica (ID 16567, rebuild 2026-07-05), 6 starih WPBakery blokova više nisu relevantni
+- [x] ✅ MOOT 2026-07-22 (provereno) — `blogname` je "Antas Line", nema "Smartas" traga
+- [x] ✅ ZATVORENO 2026-07-07 — isti F6 pilot kao gore (16657)
+- [x] ✅ ZATVORENO 2026-07-08 — W2 2.3
 
 ## Odluka
-- [ ] Izabrati C1 / C2 / C3 za sledeću sesiju #ceka-miroslav
+Ceo fajl iscrpljen — sledeći zadatak se bira iz [[2026-07-06-MASTER-PLAN-V2]] §4
+(zavisnosti) ili predloga na početku sesije, ne odavde.
 
 ## Veze
 - [[odluke/_pregled-odluka]] — flat `/proizvod/` struktura

@@ -1,17 +1,24 @@
 ---
 tip: blok
 blok: D
-status: predlog
+status: odlozeno-W7
 azurirano: 2026-07-22
 ---
 
-# BLOK D — AI chat za posetioce sajta (predlog, nije započeto)
+# BLOK D — AI chat za posetioce sajta (odlučeno, W7 posle live-a)
 
 > Nastalo iz sesije 2026-07-22 ("razmisli da se doda neki AI čet"). Miroslav potvrdio
 > (AskUserQuestion): **customer-facing chatbot** — odgovara na pitanja posetilaca o
 > proizvodima/ceni/specifikacijama i kvalifikuje lead-ove. Nije internа analitika (to bi
-> bio drugačiji alat, odbačena opcija ove sesije). **Implementacija nije počela** — ovo je
-> arhitektura + otvorena pitanja, čeka M odluku o obimu/budžetu/timing-u.
+> bio drugačiji alat, odbačena opcija ove sesije). **Implementacija nije počela.**
+>
+> **Sve 4 otvorene odluke potvrđene istog dana (druga sesija, AskUserQuestion):**
+> timing = posle live-a (W7) · budžet/API ključ vlasnik = nerešeno, odlaže se do
+> stvarnog početka implementacije · obim MVP = Q&A + lead-kvalifikacija (forma unutar
+> chata odmah, ne samo katalog) · `al_interest` kolačić = DA, bot ga koristi za kontekst
+> posetioca (isti mehanizam kao [[migracija/...|hvala-za-poruku]] personalizacija).
+> Ne bira se kao glavni zadatak dok W1–W5 traju — samo se planira unapred da W7 ne
+> zatekne nespremne (isto obrazloženje kao W7 sezonski kalendar u Master Planu §8).
 
 ## Zašto sad nije urgentno
 
@@ -68,11 +75,12 @@ izveštaju, [[dnevnik/ADS-DNEVNIK]] ritam): koja pitanja bot nije mogao dobro da
 dopuni bazu znanja (nova FAQ stavka, precizniji opis proizvoda) → ne menja se model, menja
 se SADRŽAJ koji model vidi. Ovo je kontinuiran, jeftin proces — ne treba ML ekspertizu.
 
-## Otvorena pitanja za Miroslava (pre nego što se počne graditi)
+## Odluke (potvrđeno 2026-07-22, AskUserQuestion)
 
-- [ ] Timing: pre live-a (2026-08-31) ili posle, kao W7?
-- [ ] Budžet: Claude API poziv po razgovoru je jeftin (Haiku klasa), ali treba API ključ
-  i neko ko prati mesečnu potrošnju — ko upravlja API ključem/nalogom?
-- [ ] Obim MVP-a: samo katalog Q&A, ili odmah i lead-kvalifikacija (forma unutar chata)?
-- [ ] Da li bot sme da vidi/koristi `al_interest` kolačić (ista personalizacija kao
-  [[hvala-za-poruku]] promena ove sesije) da odmah zna kontekst posetioca?
+- [x] **Timing**: posle live-a (2026-08-31), kao W7 — ne forsira se pre migracije.
+- [x] **Budžet**: API ključ/nalog vlasnik nerešen — odlaže se do stvarnog početka
+  implementacije, nije blokator za planiranje.
+- [x] **Obim MVP-a**: Q&A + lead-kvalifikacija odmah (forma unutar chata kad bot proceni
+  ozbiljan upit), ne samo pasivni katalog Q&A.
+- [x] **`al_interest` kolačić**: DA — bot sme da ga koristi za kontekst posetioca (isti
+  mehanizam kao hvala-za-poruku personalizacija, 2026-07-22 sesija).

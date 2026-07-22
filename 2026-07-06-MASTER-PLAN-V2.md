@@ -126,8 +126,8 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 | 5.2 | ✅ URAĐENO 2026-07-06 — GMB: UTM fix (`utm_source=google&utm_medium=gmb&utm_campaign=local`), kategorije proširene (+Gradnja sportskih terena, +Pružalac usluga), prvi post kreiran (Bergo/Naxos kampanja); review link spreman za korisnike | M | Efekat: GMB saobraćaj merljiv u GA4, prvi post live, review kampanja čeka poslove |
 | 5.3 | GMB recenzije 6 → 20+ (email posle svakog posla) | M | trust + local pack + GEO |
 | 5.4 | Nedeljni mini-izveštaj (7d vs 7d po formatu [[CLAUDE]] §10) + mesečni puni snapshot ([[analiza/_TEMPLATE-snapshot]]) | CC | sledeći puni: početak avgusta |
-| 5.5 | Mesečni AI test (5 fiksnih promptova iz [[seo/geo-ai-plan]]) + praćenje "AI Assistant" kanala (baseline 9/90d) | CC | — |
-| 5.6 | Planirani eventi po potrebi: `gallery_view`, `pdf_download` (GTM UI, ne JSON import!) | M+CC | tek kad sadržaj postoji |
+| 5.5 | ✅ PRVI PUT IZVRŠENO 2026-07-22 — Mesečni AI test (5 fiksnih promptova): 2/5 pominjanja (1 sa URL citatom na antasline.com), 2 sadržajna gap-a otkrivena (epoksid-conquest, Bergo terase) → [[analiza/2026-07-22-ai-test-baseline]]. Ponoviti sledeći mesec za trend | CC | — |
+| 5.6 | 🔄 2026-07-22 — `gallery_view`+`pdf_download` napravljeni u GTM UI (trigger+tag), DRAFT u Workspace-u, **NIJE Submit-ovano**. M odluka 2026-07-22: test se radi kad `staging.antasline.com` bude live (GTM Preview ne radi na localhost) — Submit čeka do tada | M+CC | #ceka-miroslav: staging live, pa GTM Preview test, pa Submit |
 | 5.7 | Post-live: GA4 real-time verifikacija, GTM preview na produkciji, key eventi okidaju, Ads import radi | CC+CP | dan migracije |
 | 5.8 | Konverzioni levak downstream: šta biva sa ~55 kontakata/mes (CRM/email follow-up?) | M | odgovor oblikuje Fazu 4 |
 
@@ -242,6 +242,10 @@ UNAPRED da se ne dočeka nespremno.
 - Faza 0 (pre live-a, jeftino): popis profila ✅ 2026-07-07 → [[reference/drustvene-mreze]] · M5 (kontakti) · GMB paket ✅ · saglasnost checkbox na formi
 - **Ključni nalaz popisa:** FB+IG su aktivni (objave na ~7 dana) ali bez UTM/CTA — problem je merenje, ne prisustvo. Ožičavanje (UTM, link-in-bio) ide ODMAH, ne čeka septembar.
 - Puni ritam (IG/FB 2×/ned, LinkedIn 1×/ned, YouTube 1×/mes) od 2026-09-01
+
+### BLOK D — AI chat za posetioce (odlučeno 2026-07-22, gradi se u W7)
+Customer-facing chatbot (Q&A + lead-kvalifikacija), RAG nad katalogom/FAQ, timing posle
+live-a. Detalji + tvrda pravila (nikad ne izmišljati cenu/epoksid conquest): [[blokovi/BLOK-D-ai-chat]].
 
 ### W7 — Sezonski kalendar (veže W2/W4/W6, sprečava da 2027 GSC špic zatekne nespremne)
 | Period | Fokus | Zašto |

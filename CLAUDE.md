@@ -92,22 +92,44 @@ na Maximize Conversions.
 > prevezivanja (BLOK A) nisu validni i ne smeju se računati u analizu
 > performansi.
 
-### 4.1 Planirani/napredniji eventi (CILJ — još nisu svi implementirani)
+### 4.1 Napredniji eventi — stanje potvrđeno direktno u GTM-u 2026-07-22
 
-Ovo su eventi koje treba dodati kroz GTM kad dođe na red (proveriti šta već
-postoji pre nego što se nešto duplira):
+**✅ Već implementirano i ožičeno u GTM-TRDT8K9 (potvrđeno direktno u UI, ne
+pretpostavka):**
+- `view_product_category` — GA4 Event tag, trigger "Window Loaded" (Page Path
+  regex na ecotile/esd-pod/antistatik/industrijski-podovi/sportsk/tenis/padel/
+  pickleball/odbojk/kosark/basket/3x3/bergo). Parametar `category_name` preko
+  `{{RT - category_name}}` promenljive. Koristi se u publici "High-Intent B2B
+  Bidders" (sek. 5) — više NIJE pretpostavka, potvrđeno da tag/trigger stvarno
+  postoji.
+- `epoxy_conquest_engagement` — GA4 Event tag, trigger Scroll Depth OR Timer
+  (Timer: interval 30000ms, **Limit 1**, Page Path contains
+  `/epoksidni-podovi-ili-ecotile-podovi`). Limit 1 potvrđuje "fires samo jednom"
+  pravilo — filteri i dalje `count ≥ 1`, nikad `> 1`.
+- `lead_form_start` — GA4 Event tag, trigger "Custom Event trigger" (Custom
+  HTML tag "Lead Form Start" na All Pages šalje custom event u dataLayer).
 
-- `view_product_category` — okida na posetama ključnih kategorija
-  (industrijski podovi, sportski tereni, Ecotile). Parametar: `category_name`.
-  *(Već korišćen kao uslov u publici "High-Intent B2B Bidders", videti sek. 5 —
-  proveriti da li tag/trigger stvarno postoji u GTM-u ili je samo pretpostavljen.)*
-- `epoxy_conquest_engagement` — okida kad korisnik provede >30s na conquest
-  članku ili skroluje >50%. **Fires samo jednom po korisniku**
-  (`window.__epoxyTracked` flag) → filteri uvek koriste `count ≥ 1`, nikad `> 1`.
-- `lead_form_start` — prvi klik/interakcija sa poljem u kontakt formi
-  (identifikacija odustajanja od forme)
-- `gallery_view` — klik na galeriju slika/reference na stranici proizvoda (B2B signal)
-- `pdf_download` — preuzimanje tehničkih specifikacija/ugradnih listova
+**🆕 Dodato 2026-07-22 (DRAFT u Workspace, NIJE Submit-ovano — čeka odobrenje):**
+- `pdf_download` — trigger "Klik na PDF" (Just Links, Click URL contains
+  `.pdf`) + GA4 Event tag sa parametrima `link_url={{Click URL}}` i
+  `link_text={{Click Text}}`. Pokriva sve postojeće PDF linkove (tehnički
+  listovi, sertifikati) na proizvod-stranicama, potvrđeno curl-om na Ecotile
+  E500/7 (5 PDF linkova).
+- `gallery_view` — trigger "Klik na galeriju proizvoda" (All Elements, Click
+  Classes contains `woocommerce-product-gallery` AND Page Path contains
+  `/proizvod/`) + GA4 Event tag, **Tag firing options = Once per page** (da
+  višestruki klik na thumbnail-e ne naduva brojku — isti obrazac kao epoxy
+  "fires jednom"). Bez custom parametara (GA4 automatski hvata page_location).
+  Potvrđeno na pravoj WooCommerce galeriji (`.woocommerce-product-gallery__image`
+  klasa, PhotoSwipe lightbox).
+
+🔴 **Gotcha otkriven ovu sesiju**: lokalni build (`localhost`) ima gtag snippet
+stubovan na `id=DUMMY` (googletagmanager.com/gtag/js?id=DUMMY) — GTM Preview/
+Tag Assistant NE MOŽE da verifikuje pravi GTM-TRDT8K9 kontejner protiv
+lokalnog builda (uvek "Google Tag not found"). Ako treba live-test triggera
+pre Submit-a, jedina opcija je GTM Preview protiv **live** antasline.com URL-a
+(read-only, ne menja sajt — samo dodaje `gtm_debug` query param).
+
 - **Enhanced Conversions** — GTM konfiguracija koja hešira (SHA-256) email/telefon
   iz kontakt forme i šalje ih Google Ads-u za precizniji cross-device match. Nije
   još implementirano — priprema je na čekanju.
