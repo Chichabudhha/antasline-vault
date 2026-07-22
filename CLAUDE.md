@@ -70,7 +70,13 @@ Google My Business stranica: "Industrijski podovi AntasLine"
 
 **BLOK A (tracking) je zatvoren.** GTM verzija 10 je objavljena:
 
-- Consent Mode v2 (plugin `antasline-consent`, default DENIED za sve 4 kategorije)
+- Consent Mode v2 (mu-plugin `al-tracking-gtm-consent.php`, banner sa kolačićem
+  `antasline_consent`) — **default GRANTED za sve 4 kategorije** dok korisnik
+  ne klikne (potvrđeno direktno iz live koda 2026-07-22, ranija napomena
+  "default DENIED" ovde je bila netačna/pretpostavljena, nikad verifikovana
+  protiv stvarnog koda). Skripta postavlja kolačić na potpuno odobreno ČIM se
+  banner prikaže, pre bilo kakve korisnikove akcije — otvoreno pitanje da li je
+  ovo namerno ili compliance bag, videti [[PROGRESS]] Blokeri
 - `generate_lead` je prevezan na **Page View trigger na `/hvala-za-poruku/`**
   (ne na submit forme — MonsterInsights je ranije delimično punio ovaj event;
   gašenje MI bez prevezivanja bi ga oborilo na nulu)
@@ -123,12 +129,18 @@ pretpostavka):**
   Potvrđeno na pravoj WooCommerce galeriji (`.woocommerce-product-gallery__image`
   klasa, PhotoSwipe lightbox).
 
-🔴 **Gotcha otkriven ovu sesiju**: lokalni build (`localhost`) ima gtag snippet
-stubovan na `id=DUMMY` (googletagmanager.com/gtag/js?id=DUMMY) — GTM Preview/
-Tag Assistant NE MOŽE da verifikuje pravi GTM-TRDT8K9 kontejner protiv
-lokalnog builda (uvek "Google Tag not found"). Ako treba live-test triggera
-pre Submit-a, jedina opcija je GTM Preview protiv **live** antasline.com URL-a
-(read-only, ne menja sajt — samo dodaje `gtm_debug` query param).
+🟢 **Ispravka 2026-07-22 (W3 3.10 regresija)**: stari "gtag stub id=DUMMY" gotcha
+gore je bio zastareo/netačan u trenutku pisanja — u stvarnosti lokalni build
+(`localhost`) nije imao NIKAKAV GTM/gtag kod, ni pravi ni DUMMY (BLOK A rad je
+postojao samo u GTM UI, embed snippet je ostao na starom Porto/Kallyas buildu i
+nikad nije prenet u WoodMart rebuild — nula analitike da je otišlo na migraciju
+neprimećeno). Popravljeno preko `mu-plugins/al-tracking-gtm-consent.php`
+(doslovna kopija live GTM+consent koda) — lokalni build sada učitava PRAVI
+GTM-TRDT8K9 kontejner. GTM Preview/Tag Assistant protiv `localhost` nije
+testiran ovu sesiju (moguće da i dalje ne radi iz drugih razloga — self-signed
+okruženje, CORS i sl.); ako zatreba live-test triggera pre Submit-a, i dalje je
+najsigurnija opcija GTM Preview protiv **live** antasline.com URL-a (read-only,
+samo dodaje `gtm_debug` query param).
 
 - **Enhanced Conversions** — GTM konfiguracija koja hešira (SHA-256) email/telefon
   iz kontakt forme i šalje ih Google Ads-u za precizniji cross-device match. Nije
