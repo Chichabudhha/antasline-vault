@@ -1,5 +1,16 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-22 [claude-code] [ODLUKA] — 2 #ceka-miroslav stavke zatvorene bez izmene (piklbol recenzije, sifrazaantasline.txt) ✅
+- Nastavak iste sesije. Piklbol fake recenzije: Miroslav potvrdio da ostaju (bez promene, isti obrazac kao 2026-07-21 odluka).
+- `sifrazaantasline.txt` lozinka (`1aa4oUpQgzw0&aduZE`): Miroslav ne prepoznaje za šta je, eksplicitno odlučio da se ne testira protiv živih sistema niti dalje istražuje. Fajl ostaje obezbeđen (već premešten van docroot-a 2026-07-22), ali lozinka se ne rotira niti dalje diramo. PROGRESS Blokeri ažuriran za obe stavke.
+- Detalji: [[PROGRESS]]
+
+## 2026-07-22 [claude-code] [ODLUKA] — Consent default GRANTED svesno zadržan (blokator zatvoren) ✅
+- Devetnaesta sesija dana. Otvaranje sesije po `/antasline-sesija` protokolu — pregled PROGRESS/Master Plan/BLOK-C pokazao da je skoro sve W1/W2/W3 zatvoreno ili blokirano na Miroslavu; jedini genuinno neblokiran zadatak (W5 5.6, GTM staging test) zahtevao je Basic Auth kredencijale koje čuva samo server (`~/staging-htaccess-creds.txt`), pa je ponuđen izbor da se umesto toga reši jedna #ceka-miroslav stavka.
+- Predočen tradeoff za consent default (GRANTED-by-default trenutno vs. standardna DENIED-by-default Consent Mode v2 praksa): puni podaci od prvog posetioca vs. banner koji stvarno kontroliše šta se šalje.
+- **Miroslav odlučio: zadržati GRANTED-by-default, namerno, i na live-u i na lokalu.** Nema izmene koda. PROGRESS Blokeri ažuriran (🔴→✅).
+- Detalji: [[PROGRESS]]
+
 ## 2026-07-22 [claude-code] [W3 3.10] — Crawl izlaznih linkova (775 unikatnih): 3 slomljena interna linka nađena i popravljena ✅
 - Osamnaesta sesija dana. Nastavak W3 3.10 — do sada je provereno da SVE stranice iz baze rade (214/214 200), ovaj prolaz proverava suprotan smer: da li linkovi KOJI SE POJAVLJUJU u sadržaju stvarno vode na postojeće ciljeve. Crawl svih 214 stranica → 775 unikatnih internih linkova → 564 još neprovereno (paginacija/kategorije/autor arhive/feed-ovi, WP-generisano, normalno) → status-check na svih 564.
 - **3 stvarno slomljena linka nađena i popravljena**:
