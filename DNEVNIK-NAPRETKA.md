@@ -1,5 +1,14 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-22 [cpanel-live] [W2 GEO] — Live 2542 GEO fix (alternativa epoksidu fraza) ✅
+- Sesija se pokazala da JE direktno na `wp1.oblak.host` (hostname/whoami/public_html potvrđeno) — dakle ovo je ta cPanel-live sesija koju je prethodna lokalna sesija čekala (v. unos ispod, prompt spreman: [[migracija/2026-07-22-prompt-live-2542-geo-fix]]).
+- Primenjene tačno dve dopune po pripremljenom promptu: (1) nova rečenica u uvodnom pasusu pre `<!--more-->` sa doslovnom frazom "alternativa epoksidnom podu za proizvodnu halu" + "interlocking (klik-sistem)"; (2) novo FAQ pitanje/odgovor istog stila kao postojećih 6, dodato i u vidljiv tekst i u FAQPage JSON-LD (sad 7 pitanja).
+- Live struktura post 2542 je čist HTML (bez WPBakery/Zion Builder shortcode-a, za razliku od nekih drugih live postova) — jednostavan `$wpdb->update()` preko `wp eval-file` skripte (izbegnut `wp_insert_post()`/inline `-r` zbog poznatih gotcha-a: kses briše `<script>` tagove, ugnježdeni navodnici mogu obrisati sadržaj).
+- Backup pre izmene: `migracija/backup-2542-live-pre-geo-fix-2026-07-22.html`. Skripta: `migracija/2026-07-22-live-2542-geo-fix.php`.
+- Verifikovano posle `wp litespeed-purge all`: 200 / tačno 1×H1 / fraza prisutna 2× (uvod+FAQ) / JSON-LD dekodiran bez greške, 7 pitanja, poslednje = novo pitanje.
+- Nije dirano ništa drugo na postu (title/meta van obima, stari 074 broj u tekstu ostavljen netaknut — poseban zadatak).
+- Zatvara #ceka-miroslav stavku iz [[PROGRESS]] Blokeri (live GEO fix na 2542). Lokalni deo je već bio zatvoren u paralelnoj sesiji istog dana.
+
 ## 2026-07-22 [claude-code] [W5 5.6] — Sesija pauzirana, čeka Miroslava na cPanel-u ⏸️
 - Posle 2 rešene #ceka-miroslav stavke (piklbol recenzije, sifrazaantasline.txt — videti unos ispod), prešli na W5 5.6 (GTM staging Preview test). Trebaju Basic Auth kredencijali za `staging.antasline.com` (korisničko ime `stagingtest`, lozinka u `~/staging-htaccess-creds.txt` na serveru) — ova lokalna sesija ne može SSH direktno na `wp1.oblak.host` (poznat port 22 timeout/firewall obrazac).
 - Miroslav ide direktno na cPanel da preuzme/koristi kredencijale. Sesija ovde pauzirana na njegov zahtev.
