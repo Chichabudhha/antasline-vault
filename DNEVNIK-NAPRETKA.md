@@ -1,5 +1,12 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-22 [claude-code] [AUDIT] — Sitewide provera praznih post_content (ZionBuilder duh-postovi) ✅
+- Petnaesta sesija dana. Nastavak posle CLAUDE.md ažuriranja — zatvara otvoreni #ceka-M nalaz iz W1 Faze 2 #4 (2026-07-11): tada je otkriveno da post 6588 ima potpuno prazan `post_content` dok pravi sadržaj živi u `zn_page_builder_els` serialized meta (ZionBuilder), sa napomenom da treba proveriti ima li još ovakvih slučajeva van originalnih 30 reimportovanih postova.
+- **Prolaz 1** (`/c/xampp/mysql/bin/mysql -u root antasline_local`): svi `publish` post/page sa `zn_page_builder_els` meta-om, sortirano po dužini `post_content` — samo 4 pogotka: 571 (O nama, 3.563 B), 5276 (Podloge za krovove, 4.628 B), 6588 (6.723 B, već fiksiran 07-11), 2699 (12.135 B, već fiksiran 07-11 u istom batch-u). Ručno pregledana 571 i 5276 (prethodno neproverena) — oba sadrže pravi tekst (571: WoodMart/VC hero markup sa `al-hero`/`al-section` klasama iz W1 1.1 silo rebuild-a; 5276: pravi Bergo krov/terasa tekst) — nisu prazna niti legacy-fallback (za razliku od poznatog post 1094 obrasca gde je `post_content` bio nepovezan stari tekst).
+- **Prolaz 2** (proširen van ZionBuilder filtera): svi `publish` post/page/product sitewide sa `LENGTH(TRIM(post_content))<50` — samo 2 pogotka: `Aktuelnosti` (ID 21, blog arhiva) i `Katalog` (ID 16736, shop stranica) — oba očekivano prazna po WP/WooCommerce dizajnu (arhiva/shop loop template ne koristi `post_content`), potvrđeno da nisu bag.
+- **Rezultat: nula pravih bagova.** Nalaz iz 07-11 formalno zatvoren kao "audit izvršen, čisto" — više nema otvorenih #ceka-M stavki vezanih za ovaj obrazac.
+- Read-only, bez izmena baze/koda. Detalji: [[PROGRESS]]
+
 ## 2026-07-22 [claude-code] [ODRŽAVANJE] — CLAUDE.md ažuriranje (Porto→WoodMart, go-live datum) ✅
 - Četrnaesta sesija dana. Sve očigledno lokalno neblokirano već iscrpljeno prethodnim 13 sesijama (W1 potpuno zatvoren, W2 content plan iscrpljen, W3 CWV gate skoro zatvoren, BLOK D odluke donete) — ponuđen izbor preko AskUserQuestion (CLAUDE.md ažuriranje / audit praznih ZionBuilder postova / rani start W3 3.10 checklist). Izabrano: CLAUDE.md ažuriranje — bio flagovan kao zastareo u ranijoj sesiji istog dana (vault-wide review) ali nikad ispravljen.
 - **§2 Stack (lokalno)**: Porto tema + WPBakery → WoodMart 8.5.4 + child (design sistem `antas-design.css`).
