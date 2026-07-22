@@ -603,6 +603,81 @@ radi u svim proizvod-skriptovima.
 **Fix primenjen**: sadržaj rekonstruisan (bare JSON pronađen regex-om, provera `json_decode()`
 uspešnosti pre upisa), pa upisan nazad preko `$wpdb->update()` sa pravim `<script>` omotačem.
 
+## F7.16 — Testimonials sekcija (W1 1.7, 2026-07-22)
+
+Figma link dobijen od Miroslava (`figma.com/proto/aEIaArDFo88XgnelDvMI9D/Antas-line`, isti fajl kao
+07-05 sync). Testimonials nisu bile deo glavnog "Desktop - 2" home frejma (97:189) — postojale su kao
+samostalna, nekomponovana "Cards" grupa na canvasu (node `12:100`, 3× "Customer Quote" kartica,
+prva kartica je čak imala Nevenin citat kao placeholder tekst u samom dizajnu).
+
+Sadržaj: GMB recenzije preko Windsor.ai `google_my_business` konektora (`review_reviewer`/
+`review_comment`/`review_star_rating` polja) — **6 recenzija ukupno, samo 2 imaju stvaran tekst**
+(ostale 4 su zvezdice bez komentara). M odluka: prikazati SAMO 2 prave (Nevena Đurac, Slobodan
+Dumonjić), grid `al-grid--2` umesto Figma 3-kolonskog rasporeda — bez izmišljanja treće kartice
+(isti princip kao izbegavanje fake-review problema sa `/teren-za-pickleball/`).
+
+Avatari: Figma koristi generičke stock foto avatare u krugu — namerno NE kopirano (ne predstavljati
+lažnu fotografiju kao pravu osobu). Zamenjeno inicijali u navy krugu (`.al-testimonial__avatar`,
+45×45px kao original). Prosečna ocena (4,7/5, 6 recenzija) dodata ispod grida kao real broj iz
+`review_average_rating_total`/`review_total_count` polja — ne izmišljeno.
+
+Implementacija: nova CSS klasa `.al-testimonial` (+ `.al-grid--2`, novi grid variant) u
+`antas-design.css`, sekcija ubačena u `post_content` (16550, home) preko `wp_update_post()`
+između Reference i Aktuelnosti — alternacija paper/mist pozadina očuvana tako što je Aktuelnosti
+red prebačen sa `al-section--mist` na `al-section--paper` (testimonials preuzele mist). Backup pre
+izmene: `antasline_local_2026-07-22_pre-testimonials.sql`.
+
+🔴 **Nov gotcha**: `mysql -N -e "SELECT post_content..."` u batch/redirect modu ESCAPUJE prave
+newline bajtove kao literalni `\n` tekst u izlazu (MySQL client batch-mode ponašanje) — izgleda kao
+da sadržaj nema pravih newline-ova, ali IMA. Ne kopirati takav dump doslovno u PHP single-quoted
+string (`'...\n...'`, gde `\n` ostaje 2 literalna karaktera) kao anchor za `str_replace` — mora
+double-quoted string (`"...\n..."`, PHP interpretira kao pravi newline bajt) ili direktan PHP dump
+(`var_export`/`bin2hex`) da se potvrdi stvarni sadržaj pre pisanja replace anchor-a.
+
+Verifikovano: HTTP 200 (home + 2 regresione stranice), 1×H1, 0 console grešaka, Chrome vizuelno
+(kartice/avatar-inicijali/UTF-8 ćčđšž ispravni, mist→paper prelaz ispravan).
+
+## F7.17 — "Najprodavanije podloge u 2025." foto baner (W1 1.7, 2026-07-22)
+
+Isti Figma fajl, node `284:790`/`284:752` ("Component 7"). Dizajn je Figma prototip sa 3 taba
+(Košarkaški tereni / Industrijski podovi / Poslovni prostori) koji menjaju pozadinsku fotografiju
+klikom — interaktivna prototip funkcija, ne stvarna implementacija. Odlučeno da se NE pravi JS
+tab-switcher (nepotrebna kompleksnost za promo baner) — umesto toga sva 3 taba su **prava 3 linka**
+ka stvarnim kategorijama (prvi kao pun `al-btn` CTA, ostala dva kao plain-text `al-promo-link`,
+verno originalnom vizuelnom hijerarhijom dizajna: aktivni tab = puno dugme, neaktivni = tekst),
+statična pozadinska fotografija (Spanoulis Court, već postojeća real reference slika).
+
+**Pozicioniranje**: Figma XML pokazuje ovaj node IZMEĐU USP sekcije (y=2740-3144) i teksta koji
+odgovara postojećoj Reference sekciji (y=4335) — ubačeno tačno tu (između USP i Reference), ne na
+kraj stranice gde je ranije ubačena testimonials sekcija (testimonials nemaju definisanu poziciju u
+Figmi, ostaju gde su bile).
+
+**Linkovi** (birani po stvarnom sadržaju/prioritetu, ne izmišljeno):
+- Košarkaški tereni → `/sportske-podloge/kosarkaske-konstrukcije/` (najveći organski GSC klaster, 923 klika/12mes, F6 pilot)
+- Industrijski podovi → `/industrijski-podovi/` (glavni silo)
+- Poslovni prostori → `/podovi-za-poslovni-prostor/` (isti target kao segment kartica na vrhu home-a)
+
+**"Najprodavanije" napomena**: sajt je catalog-mode (bez checkout-a) → nema pravih WooCommerce
+sales podataka. Ovo je merchandising copy (uobičajena praksa "istaknuto/popularno"), ne
+statistička tvrdnja — nije prekršaj "ne izmišljati brojeve" pravila jer se ne navodi nijedan broj.
+
+**Implementacija**: nova `.al-promo-photo`/`.al-promo-photo--najprodavanije`/`.al-promo-link` CSS
+(reuse `.al-hero`/`.al-hero__cta`/`.al-btn` za layout — minimalna nova CSS površina), navy overlay
+(60% `rgba(14,41,80,.6)`) isti obrazac kao `.al-hero-photo`. Ubačeno u home (16550) preko
+`wp_update_post()`. Backup pre izmene: `antasline_local_2026-07-22_pre-najprodavanije.sql`.
+
+Verifikovano: HTTP 200, 1×H1, sva 3 linka ispravna (`href` provera), 0 console grešaka, Chrome
+vizuelno, regresija 2 stranice čista.
+
+**Revizija (2026-07-22, isti dan)**: Miroslav tražio dve izmene — (1) "proizvodi" umesto "podloge" u naslovu, (2) 3 STVARNA proizvoda umesto 3 linka ka kategorijama. Naslov → "Najprodavaniji proizvodi u 2025.". Linkovi zamenjeni sa 3 mini-kartice pravih proizvoda (slika+naziv+cena) iz `kosarkaske-konstrukcije` kategorije (251) — jedina kategorija u katalogu sa PRAVIM fotkama i PRAVIM cenama (S7 sesija, Hoop n Court 2026-07-11), izbor namerno sa 3 različita brenda za realnu raznolikost (Goalrilla DC72E1 549.900 RSD, Hoopair D72 349.680 RSD, Goaliath GB60 246.750 RSD) umesto 3 varijante istog modela. Ispod kartica zadržan CTA link "Pogledajte celu ponudu →" ka istoj kategoriji da se ne izgubi vrednost prethodnog linka. Nova CSS: `.al-promo-products`/`.al-promo-product` (bela mini-kartica, thumbnail+naziv+cena, shadow za čitljivost na foto pozadini). Backup: `antasline_local_2026-07-22_pre-najprodavanije-proizvodi.sql`. Verifikovano isto kao gore + sve 3 proizvod stranice 200.
+
+Mobilna provera (390px, iframe harness metod iz F7.12): oba nova bloka (testimonials + najprodavaniji
+proizvodi) čista — kartice se ređaju u jednu kolonu, tekst se lepo prelama (naslov "NAJPRODAVANIJI
+PROIZVODI U / 2025." u 2 reda), bez preklapanja/overflow-a, foto pozadina i overlay ispravni.
+
+**W1 1.7 (Figma sync) sada u potpunosti zatvoren — testimonials (F7.16) + Najprodavaniji proizvodi (F7.17, revidirano), mobilno verifikovano.**
+
 ## Otvoreno
 - [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)
-- [ ] Figma sync — čeka link od Miroslava #ceka-miroslav
+- [x] ✅ 2026-07-22 — Testimonials sekcija (F7.16 iznad)
+- [x] ✅ 2026-07-22 — "Najprodavanije podloge u 2025." foto baner (F7.17 iznad) — **W1 1.7 u potpunosti zatvoren**

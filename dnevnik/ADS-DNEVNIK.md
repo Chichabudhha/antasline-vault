@@ -108,6 +108,11 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
 
+### 2026-07-22 [claude-code] — Nedeljni izveštaj potvrđuje: pauza traje, još reaktivacije
+- Windsor 15–21.07 vs 08–14.07: obe kampanje 0 RSD/0 klikova oba perioda (samo 1–2 stray impresije/nedelja). Miroslav potvrdio ove sesije: "ads je na pauzi" — i dalje namerno.
+- Plaćene konverzije kumulativ jun–21.07 i dalje 10 (35.301 RSD) — nepromenjeno od 07-21 nalaza, očekivano dok se ne reaktivira.
+- Nema akcije dok M ne da signal za reaktivaciju.
+
 ### 2026-07-21 [claude-code] — ✅ RAZREŠENO: blackout od 07-05 = namerna pauza (M godišnji odmor), NE throttling
 - Windsor potvrđuje: 0 RSD/0 prikaza kontinuirano 07-16 → 07-21 (17 dana), pre toga sporadični stray prikazi bez potrošnje 07-07/08/10/11/15.
 - **Miroslav potvrdio 2026-07-21: oglasi svesno isključeni zbog godišnjeg odmora** — nije nalog throttling (kao jun), nije billing/verifikacija problem. Ne treba dalja Ads UI provera po ovom nalazu.
