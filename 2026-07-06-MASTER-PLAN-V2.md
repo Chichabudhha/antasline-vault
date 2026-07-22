@@ -157,7 +157,7 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 - [ ] CWV lokal: 🔴 LCP <2,5s mobile (blokirano, čeka LiteSpeed na produkciji) · ✅ CLS <0,1 (2026-07-12) · ✅ INP/TBT proxy <200ms na home+kategorija (2026-07-22, proizvod stranice i dalje formalno crvene ali niska šteta — v. 3.6)
 - [ ] Sve Tier1 + Tier2 stranice žive na buildu (Tier3/4 nisu blokeri)
 - [ ] Content parity checklist prošao: svaka live stranica ima parnjaka ili 301 (inventar CSV = checklista)
-- [ ] Forme rade + `/hvala-za-poruku/` okida `generate_lead` + GTM verifikovan na buildu
+- [x] ✅ (2026-07-22) Forme rade + `/hvala-za-poruku/` okida `generate_lead` + GTM verifikovan na buildu — ali OVAJ gate je do 2026-07-22 bio lažno-zeleno-po-defaultu (GTM uopšte nije postojao lokalno pre W3 3.10 ranog starta, videti [[reference/naucene-lekcije]] "GTM UI konfiguracija ≠ embed"); sad stvarno verifikovano end-to-end (network requesti potvrđuju `generate_lead`+`page_view` na GA4 G-H8BRCZN8W4 + Ads AW-966742304 konverzija)
 - [ ] Woo checkout testiran
 - [ ] Svež backup live sajta (db + wp-content) + backup finalnog builda na 2 lokacije
 - [ ] Automatski noćni backup builda radi i testiran (3.13)
