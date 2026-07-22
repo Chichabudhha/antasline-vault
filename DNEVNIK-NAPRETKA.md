@@ -1,5 +1,16 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-22 [claude-code] [W3 3.10] — Crawl izlaznih linkova (775 unikatnih): 3 slomljena interna linka nađena i popravljena ✅
+- Osamnaesta sesija dana. Nastavak W3 3.10 — do sada je provereno da SVE stranice iz baze rade (214/214 200), ovaj prolaz proverava suprotan smer: da li linkovi KOJI SE POJAVLJUJU u sadržaju stvarno vode na postojeće ciljeve. Crawl svih 214 stranica → 775 unikatnih internih linkova → 564 još neprovereno (paginacija/kategorije/autor arhive/feed-ovi, WP-generisano, normalno) → status-check na svih 564.
+- **3 stvarno slomljena linka nađena i popravljena**:
+  1. `industrijski-podovi/ecotile-5007/` (404, nedostaje crta — trebalo `industrijski-pod/`) — pojavljivao se na 2 stranice (`podovi-za-hemijsku-i-prehrambenu-industriju` ID 17017, `podovi-za-teretane-i-fitnes-centre` ID 17020, obe iz W2 Tier3 sesije 2026-07-12, kada prava Ecotile 500/7 stranica — ID 16660, slug `industrijski-pod` — očigledno nije bila poznata autoru linka).
+  2. `spoljne-podne-obloge/` (404, nedostaje "j" — trebalo `spoljnje-podne-obloge/`) — na homepage-u (16550), u `.al-card` gridu (W1 1.7 "Terase i dom" karta, verovatno prepis stare live konvencije bez j, videti CLAUDE.md §7.2 C1 parity napomena).
+  - Fix: PHP skripta (`$wpdb->update()`, ne inline `-r`, po ustaljenom pravilu) sa `str_replace()` po ID-ju, 1 pogodak po stranici. Verifikovano: 200/1×H1/stari link nestao/novi link vodi na 200 cilj na sve 3 stranice, regresija čista.
+- **Lažna uzbuna istražena i zatvorena**: 5× "403" na `Bezicni-LED-signalni-senzor-za-pesake-–-dvostrani*.webp` (en-dash u imenu fajla) — uzrok je MOJ test alat (curl u Git-Bash na Windows enkodovao en-dash kao cp1252 `%96` umesto UTF-8 `%E2%80%93`), ne pravi sajt bag. Potvrđeno curl pozivom sa ručno ispravnim UTF-8 % enkodovanjem → 200. Pravi browser šalje ispravno enkodovanje automatski (stranica je UTF-8). Nema izmene.
+- **2× "301" provereno kao benigno**: `podovi-za-baste-splavove-bazene/bergo-unique/` → `proizvod/bergo-unique/` (200) i `sportska-podloga-za-odbojku/` → `podloga-za-odbojkaske-terene/` (200) — obični interni redirekti na zdrave ciljeve, ne bag.
+- Ostalo (400 na `wp-json/oembed`, 405 na `xmlrpc.php`, "301" na `http://localhost/antasline` bez trailing slash) — standardno WP ponašanje, ne bag.
+- Detalji: [[PROGRESS]]
+
 ## 2026-07-22 [claude-code] [W3 3.10] — Sitewide regresija (214 URL-ova): 2×H1 fix (7) + pokvarene apsolutne putanje priloga fix (13) ✅
 - Sedamnaesta sesija dana. Nastavak W3 3.10 ranog starta — prošireno sa 15-stranog uzorka na SVE objavljene stranice preko `wp-cli` (`post list --post_type=post,page,product --post_status=publish` + `product_cat` arhive) = 214 URL-ova ukupno.
 - **Prolaz 1 (HTTP status)**: svih 214 vraća 200. Nula pokvarenih stranica.
