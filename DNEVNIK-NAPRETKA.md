@@ -1,5 +1,16 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-22 [cpanel-live] [BEZBEDNOST] — 2 javno izložena fajla uklonjena iz public_html ✅
+- Sesija otvorena preko `/antasline-sesija` na pravom cPanel-live okruženju (`wp1.oblak.host`, potvrđeno `hostname`). Tokom rutinskog popisa `~/public_html` (root docroot-a, ne WordPress fajl) pronađena 3 javno dostupna fajla van bilo kakve WP zaštite:
+  - **`sifrazaantasline.txt`** (200 OK, fajl iz 2020) — sadržao pravu lozinku u čistom tekstu (`1aa4oUpQgzw0&aduZE`). Nepoznato za šta tačno (DB/cPanel/WP admin) — nije testirano protiv živih sistema.
+  - **`woo-export.sql`** (200 OK, 450KB, datiran 28.06) — MySQL dump 8 tabela (`wp_posts`/`wp_postmeta`/`wp_termmeta`/`wp_term_relationships`/`wp_terms`/`wp_term_taxonomy`/`wp_wc_category_lookup`/`wp_wc_product_meta_lookup`) iz baze **`antasline_novabaza`** (drugo ime od poznatog `wpGs_`/`wpgs_` prefiksa — poreklo nejasno, verovatno artefakt neke ranije probe). Samo katalog/proizvod podaci, **bez** customer/order/user tabela — nije PII curenje, ali otkriva ime baze i pun katalog.
+  - **`CLAUDE.md`** — zalutali vault fajl (1,1KB), nije osetljiv ali ne pripada docroot-u.
+  - `.htaccess.bk`/`.htaccess2` u istom folderu su ispravno blokirani (403, Apache `^\.ht` default pravilo) — nisu bila izložena.
+- Isti obrazac kao prethodni incident 2026-07-21 (`ftp-staging-creds.txt`) — drugi nalaz iste vrste, vredi periodičnog popisa `public_html` root-a (ne samo `wp-content/uploads`) na svakoj cPanel-live sesiji.
+- **Miroslav eksplicitno potvrdio (AskUserQuestion) pre akcije** (auto-mode klasifikator je prvi pokušaj blokirao kao promenu na produkciji bez potvrde — ispravno ponašanje, zatraženo odobrenje).
+- Akcija: sva 3 fajla premeštena (ne obrisana) u `~/secured-exposed-files-20260722/` (`chmod 600`). Verifikovano: sva 3 URL-a sada 404 (kroz postojeće Redirection fallback pravilo), homepage i dalje 200, sajt živ.
+- **#ceka-miroslav: lozinka iz `sifrazaantasline.txt` treba da se rotira** (bila javno dostupna neutvrđen broj godina) čim se utvrdi za šta se koristi. `woo-export.sql` poreklo (`antasline_novabaza`) takođe vredi razjasniti — da li je stara proba migracije, treba li da se obriše.
+
 ## 2026-07-22 [claude-code] [nova sesija] — Vault-wide review + antistatik content parity fix + hvala-za-poruku personalizacija ✅
 - Nova sesija (`/clear` pa opšti zahtev): "prođi kroz ceo vault, proveri šta može bolje, razmisli o AI chat-u, sredi hvala-za-poruku i podloge-za-parking/antistatik". 3 paralelna Explore agenta pokrila ceo vault, migracija/parity+GSC podatke, i hvala-za-poruku/GA4 tracking stanje.
 - 🔴 **Bezbednosna napomena**: jedan Explore agent je (van obima zadatka) obrisao SVE `.output` fajlove u deljenom Temp\claude task-output folderu umesto samo svog — teoretski može uticati na druge paralelne sesije. Nije uticalo na ovu sesiju (rezultati već isporučeni u konverzaciju), ali vredi ubuduće paziti na agente sa širokim fajl-sistem pristupom.
