@@ -124,6 +124,47 @@ preporučio da se reši preko LiteSpeed Critical CSS/UCSS na produkciji, ne
 ručnom sečenjem lokalno — odluka ostaje ista, LCP surgery se ne radi lokalno
 u ovoj sesiji.
 
+## 6. TBT re-merenje + dead-JS dequeue — 2026-07-22 (W3 3.6 nastavak)
+
+Master Plan gate ima 3 podstavke (LCP/CLS/INP); CLS zatvoren 07-12, LCP eksplicitno
+odložen na produkciju (sekcija 5). TBT (lokalni proxy za INP) nikad nije ponovo meren
+posle akumuliranih fixeva (RevSlider/porto-functionality off, CLS font-preload,
+unsized-images, font subsetting) — ova sesija je to zatvorila.
+
+**Re-merenje (Lighthouse 13, mobile simulate, 2+ prolaza po stranici zbog šuma):**
+
+| Stranica | TBT baseline (07-09) | TBT pre ove sesije | TBT posle fix-a |
+|---|---|---|---|
+| Početna | 332ms | 170–560ms (šum) | **170–230ms** ✅ gate (<200ms) na granici, u okviru šuma |
+| Kategorija (zastita-i-bumperi) | 🔴 1.160ms | 60–230ms | **60–230ms** ✅ gate pogođen |
+| Proizvod (konusni-stitnik) | 874ms | 440–520ms | **350ms** — poboljšano, i dalje iznad gate-a |
+
+**Nalaz i fix**: `bootup-time`/`long-tasks` breakdown pokazao `wc-order-attribution`+
+`sourcebuster-js` (WooCommerce order-attribution tracking, ~110-200ms) učitava se
+**sitewide** bez funkcije — catalog_mode (M9) je uklonio cart/checkout u potpunosti
+(W3 3.8), pa praćenje "izvora buduće narudžbine" prati narudžbinu koje nema. Isti
+obrazac kao RevSlider/porto-functionality nalaz (07-09): mrtav JS, ne funkcija.
+**Fix**: `wp_dequeue_script` hook u `functions.php` (woodmart-child), prioritet 100 na
+`wp_enqueue_scripts`. Potvrđeno: 12 stranica HTTP 200, script tragovi nestali iz HTML-a
+na sve 4 spot-check stranice, 0 console grešaka (Chrome, 2 stranice).
+
+**Pokušano ali NIJE uspelo**: `wc-add-to-cart-variation` (430ms na proizvod stranicama,
+najveći preostali long-task) — DOM test potvrdio da je funkcionalno mrtav (klik na boju
+na Bergo Unique ne menja sliku/opis/cenu, nema native add-to-cart dugmeta). Ali
+WooCommerce ga re-enqueue-uje direktno iz `woocommerce_variable_add_to_cart()`
+(`wc-template-functions.php:2062`) — template funkcija koja se poziva iz "Srodni
+proizvodi" widget-a kad god se na stranici prikaže BILO KOJI varijabilan proizvod
+(nezavisno od tipa trenutnog proizvoda), IZVAN `wp_enqueue_scripts` faze. Dequeue na
+tom hook-u ne pomaže jer se skripta doda nazad kasnije u renderu. Uklanjanje bi
+zahtevalo dirati related-products rendering (rizičnije, van obima ovog prolaza) —
+namerno ostavljeno, dokumentovano u kodu (functions.php komentar).
+
+**Zaključak**: TBT/INP proxy sada praktično zatvoren za home/kategorija tipove
+stranica; proizvod stranice poboljšane (874ms→350ms) ali formalno iznad 200ms gate-a,
+ostatak vezan za WooCommerce related-products arhitekturu, ne nizak-rizik fix. LCP
+ostaje jedini pravi crveni gate item, i dalje namerno odložen na produkciju
+(sekcija 5, nepromenjeno).
+
 ## 4. NAPOMENE O METODU
 
 - 7 prolaza: 6 stranica mobile (default simulate throttling) + početna desktop preset.
