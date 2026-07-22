@@ -25,6 +25,7 @@ azurirano: 2026-07-04
 ### 1. Tehnički pristup za AI crawlere ⭐⭐⭐ (5 min + odluka)
 - [ ] `robots.txt` na LIVE sajtu: proveriti/dozvoliti `GPTBot`, `OAI-SearchBot`, `PerplexityBot`, `ClaudeBot`, `Google-Extended` #ceka-miroslav
 - [x] ✅ ZATVORENO 2026-07-08 (lokal) + ✅ 2026-07-23 **deployovan direktno na LIVE** (`[cpanel-live]`, `~/public_html/llms.txt`, 200/text-plain, verifikovan) — ranije pravilo "aktivira se na migraciji" preskočeno na M zahtev, isti obrazac kao 2542 GEO fix (ranije GEO indeksiranje) → [[DNEVNIK-NAPRETKA]]
+- [x] ✅ 2026-07-23 — **`llms-full.txt` (pratilac fajl, pun tekst 7 ključnih stranica) deployovan na LIVE**, `~/public_html/llms-full.txt`, 200/charset=utf-8 → [[DNEVNIK-NAPRETKA]]. Napomena: adoptacija ovog fajla od strane glavnih AI asistenata (ChatGPT/Perplexity/Google) NIJE zvanično potvrđena — nizak trošak, neizvestan efekat; realna GEO poluga ostaje stvarni sadržaj stranica + GMB recenzije + PR/direktorijumi (v. sekcije 2/4 ovog plana)
 - Sajt je server-rendered WordPress ✓ (AI crawleri ne izvršavaju JS — mi smo OK)
 
 ### 2. Citabilan sadržaj ⭐⭐⭐ (već u toku kroz C3)
