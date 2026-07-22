@@ -48,6 +48,7 @@ AI za "najbolji X u Srbiji" agregira tuđe liste, portale, forume:
 
 ### 5. Merenje ⭐⭐ (u snapshot rutini)
 - [ ] GA4: pratiti "AI Assistant" kanal mesečno — baseline **9 korisnika/90d**
+- [x] ✅ NOVO 2026-07-23 — `[[analiza/BOT-CRAWLER-LOG]]` pokrenut: access log analiza svih bot/crawler hitova (AI asistenti/search/SEO-alati), baseline presek + prati da li AI botovi uopšte povlače `llms.txt`/`llms-full.txt` (0 organskih hitova u prvom preseku, prerano za zaključak). Ponoviti presek za ~1 nedelju.
 - [x] ✅ PRVI PUT IZVRŠENO 2026-07-22 — Mesečni AI test: 5 fiksnih promptova u ChatGPT (pravi Incognito, bez naloga). Rezultat: **2/5 pominjanja** (prompt 1 "industrijski PVC podovi" bez URL citata, prompt 5 "ko postavlja sportske terene" SA citatom na antasline.com). 🔴 2 gap-a otkrivena: prompt 3 (epoksid alternativa) AI ne pominje modularni PVC/Ecotile kategoriju uopšte; prompt 4 (terase bez lepljenja) AI misli samo na WPC deking, ne Bergo klik-sisteme. Detalji + puni odgovori: [[analiza/2026-07-22-ai-test-baseline]]. Ponoviti sledeći mesec istim promptovima za trend.
 
 **Fiksni test promptovi:**
