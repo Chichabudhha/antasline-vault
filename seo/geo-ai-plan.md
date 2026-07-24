@@ -59,6 +59,7 @@ AI za "najbolji X u Srbiji" agregira tuđe liste, portale, forume:
 5. "Ko postavlja sportske terene u Srbiji?"
 
 ## Veze
+- [[seo/backlink-plan]] — 🆕 2026-07-24: sistematski off-page/backlink plan (ova sekcija 4 je pokrivala samo AI-vidljivost ugao istih taktika, backlink-plan.md je domain-authority ugao)
 - [[seo/plan-novih-stranica]] — content = GEO gorivo
 - [[analiza/2026-07-04-snapshot-full]] §2.2 (AI Assistant kanal) + §6.3 (GMB)
 - [[analiza/2026-07-04-gsc-kw-analiza-16m]] — info klasteri (dimenzije/šljaka) = AI-citation mamci

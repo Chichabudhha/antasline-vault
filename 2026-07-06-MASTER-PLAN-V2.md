@@ -81,6 +81,7 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 | 2.7 | ✅ ZATVORENO 2026-07-08 — Product schema na sve WooCommerce proizvode (globalni `functions.php` fix, WC native izlaz se nije renderovao) | CC | Product snippet CTR 10,5% vs prosek 5,5%; bez aggregateRating (nema pravih recenzija) i bez izmišljene cene |
 | 2.8 | ✅ ZATVORENO 2026-07-08 (CC deo) — GEO paket: `llms.txt` kreiran + Organization proširen na LocalBusiness+NAP (filter, sitewide). "O nama" bio već gotov od ranije. Preostaje samo #ceka-miroslav deo (robots.txt na live, PR/GMB) | CC | — |
 | 2.9 | ✅ ZATVORENO 2026-07-10 (spojeno sa W1 Faza 2 #1 restyle) — GEO intro, goli FAQ JSON-LD popravljen u script tag, al-table, link na /industrijski-podovi-cena/, dupli _thumbnail_id dedupe | CC | title/meta već iz 2.3 |
+| 2.10 | 🆕 2026-07-24 — **Off-page/backlink plan** ([[seo/backlink-plan]]) — dobavljač dealer-locator linkovi (Bergo/Ecotile), NAP konzistentnost, PKS, PR ka sportskim portalima, B2B klijent pomeni, GSC Links baseline merenje | CC+M | Nula sistematskog off-page rada do sada — GEO plan (2.8) je pokrivao samo AI-vidljivost ugao. Tier 1 (#1 dobavljač mejl, #2 NAP) može odmah; Tier 2 (PR/klijenti) čeka M kontakte |
 
 ### W3 — SEO TEHNIČKA + MIGRACIJA (C1/C2 + CWV)
 > 🔄 **2026-07-07: C1/C2 pristup zamenjen parity strategijom** — build se pravi 1:1 prema live sajtu, redirect mapa se svodi na minimum. Izvor istine: [[migracija/PARITY-PLAN]], izvršenje kroz promptove [[migracija/promptovi/_README]] (F1–F7). Stare mape arhivirane u `migracija/arhiva/`.
@@ -261,4 +262,4 @@ live-a. Detalji + tvrda pravila (nikad ne izmišljati cenu/epoksid conquest): [[
 - GSC email alerti (crawl errors, security issues)
 
 ## Veze
-[[PROGRESS]] · [[DNEVNIK-NAPRETKA]] · [[blokovi/BLOK-C-sledece]] · [[seo/plan-novih-stranica]] · [[seo/geo-ai-plan]] · [[dnevnik/ADS-DNEVNIK]] · [[analiza/2026-07-04-snapshot-full]] · [[migracija/woodmart-sabloni]] · [[odluke/_pregled-odluka]]
+[[PROGRESS]] · [[DNEVNIK-NAPRETKA]] · [[blokovi/BLOK-C-sledece]] · [[seo/plan-novih-stranica]] · [[seo/geo-ai-plan]] · [[seo/backlink-plan]] · [[dnevnik/ADS-DNEVNIK]] · [[analiza/2026-07-04-snapshot-full]] · [[migracija/woodmart-sabloni]] · [[odluke/_pregled-odluka]]
