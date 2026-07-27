@@ -1,3 +1,9 @@
+## 2026-07-27 [chat] [W3 3.14] — Backup raspored na produkciji potvrđen (JetBackup 5) — zatvara M6 zavisnost
+- Nastavak posle cPanel-live sesije (NAP fix + bot-log): pitao Miroslava da proveri "WHM Backup Wizard/JetBackup" stavku iz 2026-07-21 popisa (3.14) — objašnjena razlika WHM (server-nivo, root) vs cPanel (nalog-nivo, dostupan Miroslavu) pre nego što je krenuo da traži.
+- Prvo pomenuo "Jetpack Backup" (WordPress plugin, Automattic) — proverio `wp plugin list` na live-u, plugin uopšte nije instaliran. Ispravio se: **JetBackup 5** (cPanel/WHM alat, JetApps) — dostupan direktno u njegovom cPanel-u, ne zaključan na WHM/root.
+- **M potvrdio direktno iz JetBackup 5 interfejsa**: dnevni backup, remote/off-site lokacija kod provajdera (Oblak Host), 90 dana retencije. Zatvara i sam nalaz i M6 zavisnost u master planu (fallback "backup raspored nema potvrdu" više ne važi).
+- Bez izmena sajta/koda — samo pitanje/potvrda + upis u [[PROGRESS]] i [[2026-07-06-MASTER-PLAN-V2]] M6.
+
 ## 2026-07-27 [cpanel-live] [W5 GEO] — Presek #2 bot-loga: AhrefsBot/SemrushBot/DotBot blok POTVRĐEN kao uspešan — SESIJA ZATVORENA ✅
 - Nastavak iste cPanel-live sesije (posle NAP fix-a). Zakazani presek (cilj ~07-30) izvršen ranije jer je prava `[cpanel-live]` sesija bila dostupna danas.
 - Log se u međuvremenu rotirao (`old.antasline.com-ssl_log` sad pokriva jun, ne 22-23.07) — nema kontinuiranog loga za ceo period 23→27.07, poređenje urađeno po hitova-po-satu stopi umesto apsolutne nedeljne sume (poznato ograničenje metodologije, dokumentovano u fajlu).
