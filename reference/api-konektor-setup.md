@@ -86,7 +86,16 @@ AntasLine" dok ga ručno ne dodaš kao managera:
    "Allow"/"Dozvoli"
 6. Kad terminal ispiše "Gotovo. Token sacuvan" — ovaj korak je završen
 
-## Korak D — Google Ads developer token 🔴 (jedini korak koji čeka Google)
+## Korak D — Google Ads developer token ✅ ZAVRŠENO 2026-07-27
+
+Miroslav dao developer token, upisan u `ads-config.json`, testirano uživo
+— **radi odmah, bez čekanja na odobrenje** (Basic access je očigledno već
+bio aktivan). `ads_report.py` vraća prave brojeve (npr. 20-26.07: 6.030
+RSD, 263 klika, 5 konverzija na 2 aktivne kampanje). Ceo Ads deo
+konektora je sad gotov.
+
+<details>
+<summary>Istorijski koraci (za slučaj da treba nov token/nalog)</summary>
 
 Jedini deo koji ne zavisi od nas — Google odobrava ručno, obično 1–3
 radna dana.
@@ -112,10 +121,13 @@ radna dana.
 pokušavati ranije — instant "test" developer token radi SAMO protiv test
 naloga, ne protiv pravog 156-886-0314.
 
+</details>
+
 ## Kad javiti da je gotovo
 
-GA4/GSC već rade — mogu odmah da ih koristim za izveštaje. Javi kad
-uradiš Korak A/B (GMB) i/ili C/D (Ads), ne mora sve odjednom.
+GA4/GSC/Ads već rade — mogu odmah da ih koristim za izveštaje. Preostaje
+SAMO GMB: probaj `gmb_report.py` ponovo (kvota se možda već sredila) ili
+javi ako i dalje javlja 429/403 pa gledamo Korak B.
 
 ## Veze
 - `.claude/skills/antasline-konektor/SKILL.md` — kako se skripte pokreću
