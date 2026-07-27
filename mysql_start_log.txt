@@ -28,3 +28,4 @@
 2026-07-27 11:24:42 0 [Note] Added new Master_info '' to hash table
 2026-07-27 11:24:42 0 [Note] C:\xampp\mysql\bin\mysqld.exe: ready for connections.
 Version: '10.4.32-MariaDB'  socket: ''  port: 3306  mariadb.org binary distribution
+2026-07-27 15:56:33 28 [Warning] Aborted connection 28 to db: 'antasline_local' user: 'root' host: 'localhost' (Got an error reading communication packets)
