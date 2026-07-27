@@ -241,10 +241,17 @@ ka 16657, isti obrazac kao basket→konstrukcije i fudbal→veštačka trava.
 (`/kako-napraviti-teren-za-basket…/`) jer 16586 postoji samo lokalno. Ovo je
 priprema za preuzimanje 31.08, ne očekivati pomak u GSC-u ranije.
 
-💡 Otvoreno (#ceka-miroslav): `namena-dvoriste` product_tag za tih 7 koševa, da i
-grid na 16657 prikazuje dvorišne modele umesto dvoranskih (`taxonomies="266"` =
-`namena-sport-dvorana`). F6 pravilo traži njegovu potvrdu mapiranja proizvod→namena
-pre upisa, pa je zasad urađena statička tabela — koja i bolje služi cenovnim upitima.
+❌ `namena-dvoriste` product_tag — **odbijeno (M odluka 2026-07-28)**, ne raditi.
+Statička tabela sa cenama ostaje jedino rešenje za dvorišni segment na 16657.
+
+🔴 **Usput ispravljeno na 16586 (2026-07-28)**: SVG skica FIBA terena imala je **pet
+grešaka u razmeri** — linija za 3 poena crtana kao Bézier parabola umesto luka
+r=6,75 m sa pravim delovima u uglovima, reket 7,37 m umesto 4,90 m, oba kruga
+2,36 m umesto 1,80 m, koš na 0,66 m umesto 1,575 m od osnovne linije, table nije
+bilo. Prijavio Miroslav — **standardna verifikacija ovo ne hvata** (skica prolazi
+HTTP/H1/schema provere i „izgleda kao teren"). Skica prekrojena iz konstante
+razmere 13,5 px/m i premerena nazad iz DOM-a. Pravilo upisano u
+[[migracija/woodmart-sabloni]] F7.4a.
 🟢 Usput potvrđeno: lokalni basket članak 2298 **više ne pominje fudbal** (skraćen
 pri ranijoj anti-kanibalizaciji) — fudbal upiti na migraciji gube slučajnog
 domaćina i prelaze na namensku stranicu bez sudara.

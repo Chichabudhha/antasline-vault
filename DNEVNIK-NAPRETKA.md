@@ -24,7 +24,27 @@ Sesija na `wp1.oblak.host` (produkcija), `wp db export` pre svih izmena baze (`~
 - **Verifikacija** (uklj. vizuelnu, F7.14 standard): oba 200 · 1×H1 · FAQPage JSON-LD parsira (8 i 7 pitanja) · svi interni linkovi 200 (15 i 19) · nema golog JSON-a u tekstu · alternacija sekcija ispravna · **mobilni 390px** (iframe harness, F7.12): nema horizontalnog overflow-a (373px), 1×H1, 0 slomljenih slika · Chrome screenshot obe sekcije čist.
   - 🟢 Usput popravljen **zatečen bug** (nije iz ove sesije): postojeća „Pet modela" tabela na 16657 bila je u golom `<div>` bez `overflow-x:auto` — na 390px se sekla jer `al-table` ima `min-width:640px`. Dodat omotač, sada obe tabele skroluju unutar sebe.
 - Backup pre izmena: `antasline_local_2026-07-28_pre-kos.sql` (48,7 MB).
-- 💡 **Otvoreno za Miroslava (nije rađeno, traži njegovu potvrdu po F6 pravilu)**: napraviti `namena-dvoriste` product_tag i dodeliti ga tih 7 koševa, pa grid na stranici prikazuje dvorišne modele umesto dvoranskih. F6 dokumentacija izričito traži da **on potvrdi mapiranje proizvod→namena pre upisa** (zna ponudu bolje od kategorija), pa je za sada urađena statička tabela sa cenama — koja i bolje služi cenovnim upitima jer se cene vide odmah u tekstu.
+- ❌ **`namena-dvoriste` product_tag — ODBIJEN (M odluka 2026-07-28)**, ne raditi. Statička tabela sa cenama ostaje jedino rešenje za dvorišni segment na 16657.
+
+### 🔴 SVG skica košarkaškog terena na 16586 bila netačna — prekrojena u razmeri
+Miroslav prijavio: „skica ima neispravnu liniju za 3 poena, a verovatno nije dobar ni reket… liči na teren za košarku, ali nije dobar". Provera protiv razmere same skice (380 px = 28 m → **13,571 px/m**) potvrdila je **pet grešaka**, ne dve:
+
+| Element | Bilo nacrtano | = u metrima | FIBA |
+|---|---|---|---|
+| **Linija za 3 poena** | Bézier parabola `M50 65 Q190 150 50 235` | — | luk **r=6,75 m** oko centra koša + **dve prave** 0,90 m od aut-linije |
+| Reket — širina | 100 px | **7,37 m** | 4,90 m |
+| Centralni krug | r=32 px | **2,36 m** | 1,80 m (prečnik 3,60) |
+| Krug slobodnih bacanja | r=32 px | **2,36 m** | 1,80 m |
+| Koš od osnovne linije | 9 px | **0,66 m** | 1,575 m |
+| Tabla | nije ni postojala | — | 1,80 m široka, na 1,20 m od osnovne linije |
+
+Reket-dubina (80 px = 5,89 m vs 5,80) je bila jedina mera u toleranciji — otud utisak „liči na teren".
+
+**Ispravka**: skica se više ne crta „na oko" nego se **generiše iz jedne konstante razmere** (`$s = 13.5` px/m) — svaka mera je `metri × $s`, uključujući tačku gde prava u uglu dodiruje luk (`dx = √(r₃² − dy²)` = 19,1 px od centra koša). Dodati i tabla, obruč i polukrug bez probijanja (1,25 m), koji su ranije nedostajali. Kota „6,75 m" postavljena pod −55° da ne upada u reket.
+
+**Verifikacija iz renderovanog DOM-a** (ne iz izvora): teren 28,00 × 15,00 m · oba reketa 5,80 × 4,90 m · centralni krug 1,80 m · obruči 0,22 m · obe 3-poena putanje su `L … A 91.13 … L` (prava→luk→prava) · **nijedna Bézier komanda nije ostala** (`[QqCc]` = 0). Mobilni 390px čist (375px, bez overflow-a, 1×H1). Chrome zoom vizuelno potvrđen.
+
+🔴 **Lekcija (upisana u [[migracija/woodmart-sabloni]] F7.4)**: ručno pisane tehničke skice prolaze HTTP/H1/JSON-LD verifikaciju i „izgledaju tačno" a mogu biti grubo pogrešne. Svaka `antas-skica` mora da se generiše iz konstante razmere i da se **premeri iz DOM-a nazad u metre** pre nego što se proglasi gotovom.
 
 ## 2026-07-27 [claude-code] [W2/W5] — Izvršni krug: 2 nove stranice, GTM mailto skripta, dijagnoza refresheva, AI saobraćaj, cPanel nalog
 Nastavak iste sesije (posle klaster analize). Miroslav dao 7 zadataka odjednom — redom šta je urađeno:

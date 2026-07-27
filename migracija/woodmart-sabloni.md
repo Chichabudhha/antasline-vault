@@ -220,6 +220,33 @@ Standard za tehničke ilustracije (presek slojeva, dimenzije, koraci montaže):
 Pilot primer: `esd-pod-presek-slojeva.svg` — presek ESD poda (betonska podloga → 7mm ESD ploča
 sa čeličnim vlaknima → uzemljenje), korišćen na `/antistatik-i-elektroprovodljivi-podovi/`.
 
+### 🔴 F7.4a — skice se GENERIŠU iz konstante razmere, ne crtaju „na oko" (2026-07-28)
+
+Skica FIBA terena na `/dimenzije-kosarkaskog-terena/` (16586) je preživela sve standardne
+provere (200, 1×H1, JSON-LD, mobilni) i **izgledala je kao teren za košarku** — a imala je
+pet grubih grešaka: linija za 3 poena crtana kao **Bézier parabola** (`Q` kontrolna tačka)
+umesto luka r=6,75 m sa pravim delovima u uglovima; reket širok 7,37 m umesto 4,90 m;
+centralni krug i krug slobodnih bacanja 2,36 m umesto 1,80 m; koš na 0,66 m od osnovne
+linije umesto 1,575 m; table uopšte nije bilo. Prijavio Miroslav, ne verifikacija.
+
+**Pravilo**: svaka `antas-skica` sa realnim merama piše se kao **generator**, ne kao ručni
+SVG string — jedna konstanta `$s` (px po metru), pa je svaka koordinata `metri * $s`.
+Izvedene tačke se računaju, ne procenjuju (npr. gde prava u uglu dodiruje luk za 3 poena:
+`dx = sqrt($r3*$r3 - $dy*$dy)`). Skripta na kraju ispiše sve mere nazad u metrima radi kontrole.
+
+**Obavezna dodatna provera** (standardni HTTP/H1/schema set je NE hvata) — premeriti iz
+renderovanog DOM-a nazad u metre i uporediti sa tabelom na istoj stranici:
+
+```js
+const s=13.5, svg=document.querySelector('svg.al-skica');
+[...svg.querySelectorAll('rect')].map(r=>[r.getAttribute('width')/s, r.getAttribute('height')/s]);
+[...svg.querySelectorAll('circle')].map(c=>c.getAttribute('r')/s);
+[...svg.querySelectorAll('path')].some(p=>/[QqCc]/.test(p.getAttribute('d'))); // mora biti false
+```
+
+Ako stranica ima tabelu mera, skica i tabela **moraju da se slažu do 2 decimale** — tabela je
+izvor istine, skica je njena ilustracija.
+
 ## F7.5 — Performanse-ograda (2026-07-07)
 
 Svi F7 dodaci na pilot stranici (antistatik): ikonice ~250–400B/kom, JS fasada 972B (footer,
