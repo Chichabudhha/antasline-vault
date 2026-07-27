@@ -108,6 +108,15 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
 
+### 2026-07-27 [claude-code] — 🟢 KAMPANJE REAKTIVIRANE (kraj godišnjeg) — prvi podaci preko sopstvenog konektora
+- 20–26.07 vs 13–19.07: potrošnja **6.029,65 RSD vs 0**, klikovi **263 vs 0**, prikazi 1.211 vs 1, uvezene konverzije **5 vs 0**. Blackout od 07-05 (22 dana) je završen.
+- Reaktivacija je krenula **posle 21.07**: kumulativ 01.06→26.07 = 41.330,64 RSD, a kroz 21.07 je bio 35.301 RSD — razlika je tačno potrošnja ove nedelje.
+- Obe kampanje rade: **Terase** 4.434,65 RSD / 231 klik / CTR 22,00% / CPC 19,20 / 2 konv · **ECOTILE** 1.595 RSD / 32 klika / CTR 19,88% / CPC 49,84 / 3 konv.
+- ECOTILE CPC 49,84 RSD (junski throttling špic je bio 74, pre toga ~26) uz visok CTR i mali apsolutni volumen prikaza (161) — pratiti sledeću nedelju pre nego što se zaključi da je ovo novi normal, ne novo zagušenje.
+- **Plaćene konverzije kumulativ od 01.06: 15** (bilo 10) — prag za Maximize Conversions (20–30) se ponovo pomera; pri ovom tempu (~5/ned) donja granica pada za ~1 nedelju.
+- Prvi Ads izveštaj povučen sopstvenim konektorom (Windsor istekao 07-27) — OAuth + developer token rade, `ads_report.py` vraća pune podatke po kampanji.
+- **Sledeći korak:** izveštaj sledeće nedelje = prva čista nedelja pune isporuke → tada odluka o Maximize Conversions (zadatak 4.8) ako kumulativ pređe 20.
+
 ### 2026-07-22 [claude-code] — Nedeljni izveštaj potvrđuje: pauza traje, još reaktivacije
 - Windsor 15–21.07 vs 08–14.07: obe kampanje 0 RSD/0 klikova oba perioda (samo 1–2 stray impresije/nedelja). Miroslav potvrdio ove sesije: "ads je na pauzi" — i dalje namerno.
 - Plaćene konverzije kumulativ jun–21.07 i dalje 10 (35.301 RSD) — nepromenjeno od 07-21 nalaza, očekivano dok se ne reaktivira.

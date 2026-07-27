@@ -77,7 +77,7 @@ Nijedan čist kandidat ovog kruga — sve stranice koje su ranije pretpostavljen
 | Live URL | Cilja na | Napomena |
 |---|---|---|
 | `/industrijski-podovi/elektroprovodni-podovi/` | `/antistatik-i-elektroprovodljivi-podovi/` | ✅ **REŠENO 2026-07-08** — #1 antistatik stranica gotova (ID 16658), redirect dodat u `redirect-mapa-FINAL.csv` + `htaccess-301-DRAFT.txt` (aktivira se tek na dan migracije) |
-| `/industrijski-podovi-najcesca-pitanja/` | TBD — konsolidacija | **Treća** skoro-identična FAQ varijanta (uz postojeće `izbor-industrijskog-poda-tri-najcesca-pitanja` i `-2`, oba već PARITY) — i dalje odloženo na **W2** po M odluci iz F4 (content-strategija, ne redirect posao); nema akcije ove sesije |
+| `/industrijski-podovi-najcesca-pitanja/` | ✅ **REŠENO 2026-07-27** | Sveža GSC provera (12mo, page-level) otkrila da nazivi zavaravaju: `-2` (3274) JESTE pravi duplikat 2622 (ista "3 pitanja" esej, samo prefraziran), ali `/industrijski-podovi-najcesca-pitanja/` je SASVIM DRUGAČIJI sadržaj (8 praktičnih instalacionih pitanja) koji je slučajno imao najbolji učinak od sve 3 (pos 6.9/CTR 4.92% vs 2622 pos 16.5/CTR 3.96% vs 3274 pos 26.1/CTR 0.64%) a nikad nije bio prenet na lokal. Rešenje: rekreirana lokalno na identičnom slugu (ID 17025, FAQPage schema dodat — live verzija ga nije imala), 3274 draftovan (pravi duplikat), redirect 3274→2622 dodat u `redirect-mapa-FINAL.csv`/`htaccess-301-DRAFT.txt` (aktivira se na dan migracije), cross-link dodat 2622→17025. Verifikovano 200/1×H1/JSON-LD validan (7 pitanja)/linkovi 200/regresija čista. |
 | `/podovi-za-radnje-i-maloprodajne-objekte/` ↔ `/industrijski-podovi/podovi-za-maloprodajne-objekte/` | — | ✅ **REŠENO 2026-07-08** (v. A #27/#31) — NISU duplikat, obe izgrađene kao zasebne stranice sa cross-linkom |
 
 ## 🅵 Kategorija F — product_tag termini ✅ ZATVORENO 2026-07-08
@@ -107,7 +107,7 @@ Svih 8 live `product_tag` termina rekreirano (term_id 272-279) i dodeljeno **ta�
 | B — sistemske | 0 (već rešeno/automatski) |
 | C — proizvod-stranice | 0 (sve premeštene u A) |
 | D — legal/utility | 1 gotovo, 1 delom u A |
-| E — konsolidacija | 2/3 rešeno 2026-07-08 (1 odloženo na W2 po M odluci) |
+| E — konsolidacija | ✅ 3/3 rešeno (2/3 2026-07-08, poslednji 2026-07-27 — FAQ trostruki duplikat) |
 | F — product_tag | ✅ 8/8 zatvoreno 2026-07-08 |
 
 **✅ REŠENO 2026-07-08 (#27/#31 sesija):** NISU duplikat — različit proizvod/ugao (R-Tile brendirana interlocking kolekcija za veliki promet vs. opšta Ecotile 500/5 preporuka za poslovne prostore). Obe izgrađene kao zasebne stranice, cross-link u oba smera. Usput otkriven i rešen orphan post 16142 (ceo sadržaj bio nevidljiv posetiocima zbog `conditional_render="administrator"` na svakom vc_row-u — verovatno zaboravljen probni upis iz februara 2026).
