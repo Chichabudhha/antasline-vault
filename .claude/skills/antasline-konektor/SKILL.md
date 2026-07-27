@@ -33,6 +33,20 @@ ne trebaju ovaj korak, rade preko service account-a odmah).
 | `gsc_report.py --from --to [--limit]` | `searchconsole` | lista `opportunities` (upit/prikazi/klikovi/CTR/pozicija) za poziciju 5–15 |
 | `ads_report.py --from --to` | `google_ads` | `campaigns[]` (spend_rsd/clicks/impressions/ctr_pct/avg_cpc_rsd/conversions) + `totals` |
 | `gmb_report.py --from --to [--location]` | GMB (Windsor pokrivenost je i onako bila ograničena) | `metrics` (impresije desktop/mobile maps/search, pozivi, klikovi na sajt, direkcije) |
+| `ai_report.py --from --to` | (nema Windsor pandana) | AI-asistent saobraćaj: `ai_sessions_total`, `ga4_channel_ai_assistant`, `podbacaj_kanala`, `po_izvoru`, `top_landing`, `eventi` |
+| `gtm_mailto_tag.py [--dry-run]` | (nema Windsor pandana — **write**, ne read) | kreira `mailto` trigger + GA4 Event tag u GTM **workspace-u**; ne objavljuje |
+
+⚠️ **`ai_report.py` postoji zato što GA4-ov ugrađeni kanal „AI Assistant" potcenjuje
+stvarni AI saobraćaj ~3×** — `medium=ai-assistant` klasifikacija je proradila tek u
+junu 2026, sve pre toga je razbacano po referral/organic/(not set)/gmb. Skripta
+agregira po hostname-u izvora, pa hvata sve varijante. (Mereno 2026-07-27: 98 stvarnih
+sesija vs 33 u GA4 kanalu.)
+
+⚠️ **`gtm_mailto_tag.py` je jedina skripta koja PIŠE.** Traži dva jednokratna koraka
+koja radi Miroslav: (1) uključiti „Tag Manager API" u istom Cloud projektu,
+(2) pokrenuti `authorize_oauth.py` ponovo (scope `tagmanager.edit.containers` je
+dodat 2026-07-27, postojeći `token.json` ga nema). Nikad ne objavljuje sam — Submit/Publish
+u GTM UI ostaje Miroslavljeva odluka.
 
 Svaka skripta traži **eksplicitne** `--from`/`--to` (YYYY-MM-DD) — nikad
 presets, ista disciplina kao kod Windsor rada (izbegava dvosmislenost oko

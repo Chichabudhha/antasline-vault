@@ -19,6 +19,10 @@ from auth import oauth_client_path, token_path  # noqa: E402
 SCOPES = [
     "https://www.googleapis.com/auth/adwords",
     "https://www.googleapis.com/auth/business.manage",
+    # dodato 2026-07-27 — GTM API (gtm_mailto_tag.py); trazi ukljucen "Tag Manager API"
+    # u istom Google Cloud projektu. Posle dodavanja scope-a ovaj skript se pokrece PONOVO
+    # (postojeci token.json nema tagmanager scope pa bi GTM poziv pukao na 403/insufficient).
+    "https://www.googleapis.com/auth/tagmanager.edit.containers",
 ]
 
 

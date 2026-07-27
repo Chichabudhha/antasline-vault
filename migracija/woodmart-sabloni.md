@@ -677,6 +677,24 @@ PROIZVODI U / 2025." u 2 reda), bez preklapanja/overflow-a, foto pozadina i over
 
 **W1 1.7 (Figma sync) sada u potpunosti zatvoren — testimonials (F7.16) + Najprodavaniji proizvodi (F7.17, revidirano), mobilno verifikovano.**
 
+## F7.18 — `_woodmart_title_off` NE radi za postove, samo za stranice (2026-07-27)
+
+🔴 Novi post `/dimenzije-fudbalskog-terena/` (17027) je dobio `_woodmart_title_off=on`
+kao i svaka nova stranica (F7.14 pravilo) — i **svejedno renderovao 2×H1**. Uzrok:
+WoodMart za `single-post` template ispisuje naslov kroz `wd-single-post-header`
+(`<h1 class="wd-entities-title wd-post-title title">`), što je **odvojen mehanizam** od
+page-title bara koji `_woodmart_title_off` gasi. Meta ključ se tiho ignoriše.
+
+**Pravilo**: kod **postova** hero naslov ide kao `<h2 class="al-display--xl">`, ne `<h1>` —
+tema već daje tačan H1 iz `post_title`. Kod **stranica** ostaje `<h1>` + `_woodmart_title_off=on`
+(tamo radi, potvrđeno na 17026 istog dana: 1×H1).
+
+Potvrda da nije izolovano: postojeći postovi 2699/4318 uopšte **nemaju** woodmart meta
+ključeve — njihov raniji 2×H1 fix je rađen uklanjanjem H1 iz sadržaja, istom logikom.
+
+Hvata se standardnom verifikacijom (broj `<h1>` u renderovanom HTML-u) — ne preskakati je
+za postove samo zato što je meta ključ postavljen.
+
 ## Otvoreno
 - [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)
 - [x] ✅ 2026-07-22 — Testimonials sekcija (F7.16 iznad)

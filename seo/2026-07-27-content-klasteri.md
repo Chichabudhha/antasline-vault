@@ -69,11 +69,32 @@ ne jedan broj).
 Postoji: ✅ `/spoljnje-podne-obloge/` (4.571/112) · ✅ `/spoljnje-podne-obloge/bergo-xl/`
 (3.312/151) · 🟡 `/gumeni-podovi-za-terase-cena/` (16873) · ✅ `/podloge-za-krovove-i-terase/`
 
-🔴 **Rupa: dvorište/staze intent** — `podne obloge za dvoriste` 590 impr 7 kl
-poz 4,8 + `plasticne staze za dvoriste` 280/27 poz 1,5 + `podne obloge za dvoriste`
-varijante ≈ **950 prikaza**. Trenutno se deli između `/spoljnje-podne-obloge/`
-i `/podloge-za-parkiraliste-i-staze/` — nijedna nije o dvorištu.
-→ **nova `/podne-obloge-za-dvoriste/`**
+### ⚠️ Dvorište — REVIDIRANO 2026-07-27, NE praviti novu stranicu
+
+Prvobitna preporuka u ovoj analizi je bila „nova `/podne-obloge-za-dvoriste/`".
+Provera na nivou **query→page parova** (a ne samo agregata) je to oborila —
+dvorište nije jedan intent nego **tri, i sva tri već imaju vlasnika**:
+
+| Pod-klaster | Prikazi | Vlasnik | Pozicija |
+|---|---:|---|---|
+| podne obloge / podloge za dvorište | ~900 | `/spoljnje-podne-obloge/` | **1,1–5,7** |
+| staze za auto / plastične ploče za dvorište | ~400 | `/podloge-za-parkiraliste-i-staze/` | **1,5–6,1** (CTR 9,6%) |
+| **koš za dvorište** | ~370 | `/sportske-podloge/kosarkaske-konstrukcije/` | 8,8–12,6 |
+
+Nova stranica bi kanibalizovala `/spoljnje-podne-obloge/` koji već rangira 1,1–5,7 —
+ista greška koju je W2 plan svesno izbegao dva puta (#7 šljaka, #10 piklbol).
+
+**Štaviše, fix već postoji lokalno:** lokalni Yoast title za `/spoljnje-podne-obloge/`
+je `Podovi za terase, dvorišta i bašte – Bergo PVC podne obloge` (sadrži „dvorišta"),
+a live i dalje servira `Podne obloge za bašte i terase…` (ne sadrži). Rupa se
+zatvara na migraciji — ili ranije, prenosom title/meta (P3 u
+[[migracija/2026-07-27-cpanel-sesija-plan]]).
+
+🔴 **Prava, neposlužena prilika u ovom klasteru je druga:** `koš za dvorište`
+(~370 prikaza, 30 klikova, poz 8,8–12,6) — **kupovna namera** (traže koš, ne pod)
+koja pada na stranicu na poziciji ~10. Ta stranica ima i **nezamenjen Yoast title
+šablon** (`%%sep%% %%sitename%%`). Ovo je jeftina komercijalna pobeda i uklapa se
+u „sportska enciklopedija" pozicioniranje.
 
 🔴 Manja rupa: `vinil podovi za terase` 399 impr poz 4,4 — nijedna stranica
 ne cilja vinil+terasa kombinaciju.
@@ -180,20 +201,60 @@ Postoji: ✅ `/antistatik-i-elektroprovodljivi-podovi/` (769/39)
 
 ## 4. Šta napraviti — prioritet
 
-| Prio | Šta | Klaster | Potencijal (90d prikaza) | Zašto sad |
+| Prio | Šta | Klaster | Potencijal (90d prikaza) | Status |
 |---|---|---|---|---|
-| **1** | 301 za dva 404 URL-a `[cpanel-live]` | 3, 4 | ~440 impr / 24 kl u 28d | Krvari **danas**, 15 min, ne čeka 31.08 |
-| **2** | **`/pvc-podne-ploce/`** — komercijalni hub | 8 | ~500 (poz 22 → top 10) | Glavni proizvod firme bez kategorijske stranice |
-| **3** | **`/dimenzije-fudbalskog-terena/`** | 3 | **2.409** | Najveći pojedinačni gap; dokazan obrazac (basket) |
-| **4** | "visina koša" odgovor-blok + FAQ na 16586 | 1 | ~1.089 | Poz 1–2 sa 0,8% CTR; nije nova stranica |
-| **5** | **`/podne-obloge-za-dvoriste/`** | 2 | ~950 | Intent bez vlasnika, deli se na 2 pogrešne stranice |
-| **6** | Yoast title fixevi (16616, 3318, 16613) + T2 dedupe | 4, 9 | ~500 | 20 min ukupno |
-| **7** | Revizija šljaka/odbojka refresha (zašto CTR nije mrdnuo) | 3 | ~2.230 | Refresh je urađen 07-08 i **nije radio** — dijagnoza pre novog rada |
-| 8 | `/epoksidni-podovi-za-terase/` conquest | 5 | 157 | Tek posle premeravanja GEO fixa (kraj avgusta) |
-| 9 | `industrijski linoleum` sekcija | 7 | 51 (CTR 15,7%) | Sitno, besplatno |
+| **1** | Dva 404 URL-a | 3, 4 | ~440 impr / 24 kl u 28d | ✅ **REŠENO 2026-07-27** — Miroslav objavio obe (bile DRAFT, ne obrisane); oba sad 200. Root-cause audit = P1 u [[migracija/2026-07-27-cpanel-sesija-plan]] |
+| **2** | **`/pvc-podne-ploce/`** — materijalni hub | 8 | ~500 (poz 22 → top 10) | ✅ **NAPRAVLJENO 2026-07-27** (ID 17026) |
+| **3** | **`/dimenzije-fudbalskog-terena/`** | 3 | **2.409** | ✅ **NAPRAVLJENO 2026-07-27** (post ID 17027, +futsal tabela → hvata i „mali fudbal" 150 impr) |
+| **4** | "visina koša" odgovor-blok + FAQ na 16586 | 1 | ~1.089 | ⏳ otvoreno — poz 1–2 sa 0,8% CTR; nije nova stranica |
+| **5** | ~~`/podne-obloge-za-dvoriste/`~~ → **`koš za dvorište` na 16657** | 2, 1 | ~370 (kupovna namera) | 🔄 **PREUSMERENO** — nova dvorište stranica bi kanibalizovala (v. reviziju gore); prava prilika je koš-klaster + nezamenjen Yoast title na 16657 |
+| **6** | Yoast title fixevi (16616, 3318, 16613, **16657**) + T2 dedupe | 4, 9, 1 | ~870 | ⏳ otvoreno — 25 min ukupno |
+| **7** | ~~Revizija šljaka/odbojka refresha~~ | 3 | ~2.230 | ✅ **DIJAGNOSTIKOVANO 2026-07-27** — refresh nije „pao", nikad nije ni otišao na produkciju (lokalni title ≠ live title). Fix = P3 u cPanel nalogu |
+| 8 | `/epoksidni-podovi-za-terase/` conquest | 5 | 157 | ⏳ tek posle premeravanja GEO fixa (kraj avgusta) |
+| 9 | `industrijski linoleum` sekcija | 7 | 51 (CTR 15,7%) | ⏳ sitno, besplatno |
+
+### Napravljeno 2026-07-27
+
+| Stranica | ID | Tip | Cilja | Verifikacija |
+|---|---|---|---|---|
+| `/pvc-podne-ploce/` | 17026 | page | `pvc podovi` (poz 22,3), `montažni podovi` (236 impr), `pvc podovi cena` | 200 · 1×H1 · FAQPage 6 pitanja · 21/21 linkova 200 |
+| `/dimenzije-fudbalskog-terena/` | 17027 | post (Sportski tereni) | `dimenzije fudbalskog terena` (2.409), `dimenzije terena za mali fudbal` (150) | 200 · 1×H1 · FAQPage 6 pitanja · 9/9 linkova 200 |
+
+Cross-linkovi dodati: 16567 → PVC hub · 16874 → PVC hub · 5119 (veštačka trava za
+fudbal) → dimenzije post. Regresija čista na sve tri.
+🟢 Usput potvrđeno: lokalni basket članak 2298 **više ne pominje fudbal** (skraćen
+pri ranijoj anti-kanibalizaciji) — fudbal upiti na migraciji gube slučajnog
+domaćina i prelaze na namensku stranicu bez sudara.
 
 **Ne graditi:** head termine iz PODOVI-OPŠTE (poz 18,7+), tartan, LVT nove
 stranice (5 postojećih već ne rangira — problem je autoritet, ne pokrivenost).
+
+## 4.1 Pozicioniranje: sportska **i** industrijska enciklopedija
+
+Odluka Miroslava 2026-07-27: sajt treba da bude enciklopedija za **oba** sveta —
+sportske podloge i industrijske/podne obloge — a ne da sport bude slučajni
+saobraćaj koji se trpi.
+
+Šta to menja u odnosu na §1 („sajt je sportska enciklopedija koja usput prodaje"):
+sportski saobraćaj se **ne obeshrabruje niti preusmerava**, nego se svaki
+informacioni klaster gradi sa komercijalnim izlazom u istom tekstu. Obrazac koji
+je već dokazano radio (basket dimenzije → konstrukcije) i koji je primenjen na
+fudbal (dimenzije → veštačka trava, poz 1,4 / CTR 35%):
+
+```
+[informacioni upit] → namenska stranica sa tabelom/odgovorom
+                    → cross-link na komercijalnu stranicu iste teme
+                    → FAQ + FAQPage schema (hvata snippet, ne gubi klik)
+```
+
+Praktične posledice za redosled rada:
+- Industrijska strana je **nedograđena enciklopedija** — 1.537 prikaza, poz 10,7,
+  a to je core biznis. `/pvc-podne-ploce/` je prvi kamen; sledeći kandidati su
+  `industrijski linoleum` (#9) i epoksid pod-intenti (#8).
+- Sportska strana je **jaka ali procurela** — 26.521 prikaz uz CTR 3,4%; tu se
+  ne grade nove stranice nego se popravlja CTR (#4 visina koša, P3 title/meta).
+- Ne graditi za head termine bez namere (`podne obloge`, `pod`) — enciklopedija
+  se gradi po **konkretnim pitanjima**, ne po generičkim pojmovima.
 
 ## 5. Metodološka napomena
 
