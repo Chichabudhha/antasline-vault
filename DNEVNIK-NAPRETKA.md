@@ -1,5 +1,15 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-27 [claude-code] [W5 GEO] — Čišćenje `seo/geo-ai-plan.md` checklist-e (stale kućice protiv stvarnog stanja)
+- Nastavak istog ponedeljka, drugi mini-zadatak posle M11/M12 provere. Miroslav tražio čišćenje GEO checklist-e — nekoliko kućica bilo neoznačeno iako je posao odrađen u drugim sesijama.
+- **#1 robots.txt AI crawleri** — ✅ zatvoreno: `curl https://www.antasline.com/robots.txt` (read-only, live se ne dira) potvrdio da fizički fajl (od 2026-07-23) blokira SAMO AhrefsBot/SemrushBot/DotBot; `GPTBot`/`OAI-SearchBot`/`PerplexityBot`/`ClaudeBot`/`Google-Extended` nikad nisu bili pomenuti pa prolaze kroz generički `User-agent: *` wildcard (koji samo blokira par WooCommerce/wp-admin putanja, bez uticaja na sadržaj) — stara kućica tražila "proveriti/dozvoliti", oboje sada potvrđeno bez akcije potrebne.
+- **FAQ+FAQPage schema** — kućica uklonjena, preformulisano kao "standing pravilo" (deo F7 content standarda, proverava se po stranici kroz `plan-novih-stranica`, nema jedno globalno "gotovo" stanje za štrikliranje).
+- **NAP konzistentnost** — ostaje otvoreno (#ceka-miroslav), ali dodat konkretan nalaz: `curl` na `/kontakt/` (live) pokazuje ISTOVREMENO "11000 Beograd" i "11050 Beograd" na istoj stranici — poznato od 2026-07-23 (CLAUDE.md napomena) ali nikad formalno rešeno. Ovo je sad najjeftiniji prvi korak od cele NAP stavke, spojeno sa Master Plan M4/5.3.
+- **GMB recenzije 6→20+** — dodata veza na Master Plan M4 rok (2026-07-31).
+- **AI Assistant kanal mesečno praćenje** — dodata napomena da nije poseban zadatak, ide u sledeći mesečni snapshot (počeak avgusta).
+- Ostalo (PR o projektima, upisi u direktorijume, Hankook/Amicus case studije) potvrđeno i dalje realno otvoreno — #ceka-miroslav, bez promene.
+- Bez izmena sajta/koda, samo vault fajl + 2 read-only curl provere na LIVE (bez izmena).
+
 ## 2026-07-27 [claude-code] [W1/W2] — M11/M12 provera: Hoop n Court cene centralizovane u cenovnik, ostalo i dalje čeka
 - Ponedeljak, N3→N4 prelaz. Sesija otvorena preko `/antasline-sesija`, pregled sekcije 4 zavisnosti pokazao da je skoro sve zatvoreno osim M4/M5 (rok 31.07, na Miroslavu) i M10 cenovnik (rok prošao 10.07, fallback "na upit" aktivan). Miroslav pitao da li cenovnik može da se puni i kad stiže na staging — objašnjena razlika lokalni build vs. `staging.antasline.com` (jednokratan snapshot od 21.07, ne živ sync).
 - Miroslav tražio proveru M11 (court builder cene: Bergo pločice/rampe/oprema) i M12 (brendovi generičke opreme) + upis brojeva koji već postoje, sa napomenom da će se prepisati kad stigne pun cenovnik.
