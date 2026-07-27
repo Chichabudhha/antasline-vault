@@ -30,8 +30,13 @@ account ključa (ga4/gsc/ads/gmb) — kopirao sam ih u
 - ⚠️ **Ads** — servisni ključ (`claude-mcp-ads`) **ne može da se koristi**
   za Google Ads API (Google to tehnički ne dozvoljava — Ads API zahteva
   isključivo OAuth sa pravim nalogom, ne service account, bez izuzetka).
-  Taj ključ ostaje neiskorišćen za ovu svrhu. Ads i dalje treba pravi
-  OAuth + developer token, vidi Korak B/C ispod.
+  Taj ključ ostaje neiskorišćen za ovu svrhu.
+- ✅ **OAuth Desktop klijent — ZAVRŠENO 2026-07-27** — Miroslav dao
+  `client_secret_2_...json` iz istog `Keys` foldera, autorizacija
+  odrađena (`authorize_oauth.py`), `token.json` sačuvan sa oba scope-a
+  (`adwords` + `business.manage`). Korak C ispod je sad istorijski
+  (samo za slučaj da se token ikad mora ponovo generisati).
+  Preostaje SAMO Korak D (Ads developer token) za Ads, i Korak A/B za GMB.
 
 ## Korak A — Uključi preostale API-je u `mcp-za-claude` (5 min)
 
@@ -62,7 +67,7 @@ AntasLine" dok ga ručno ne dodaš kao managera:
    OAuth Desktop klijenta (Korak C ispod) umesto service account-a,
    `gmb_report.py` je već napisan da automatski proba oba puta.
 
-## Korak C — OAuth Desktop klijent (SAMO za Ads, i za GMB ako Korak B ne uspe)
+## Korak C — OAuth Desktop klijent ✅ ZAVRŠENO 2026-07-27 (istorijski, samo ako treba ponoviti)
 
 1. U `mcp-za-claude` projektu: **APIs & Services → Credentials → Create
    Credentials → OAuth client ID** — tip **Desktop app**, bilo koje ime

@@ -1,5 +1,14 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-27 [claude-code] [W5] — Prvi probni nedeljni izveštaj (sopstveni konektor) + Ads OAuth završen
+- Prvi probni nedeljni izveštaj generisan sa novim konektorom: GA4 20-26.07 vs 13-19.07 (korisnici 775 vs 469 +65%, sesije 882 vs 551 +60%, generate_lead 23 vs 6 +283%, tel 21 vs 11 +91%, mailto 0 vs 0), GSC 28d top prilike (podovi za terase 301impr/poz10.9 i dalje najveća), hvala-proxy kumulativ od 13.06 povučen DIREKTNO iz GA4 (91, real broj umesto ručno praćenog) — Ads sekcija ispravno javila "Nema podataka" (OAuth još nije bio gotov u tom trenutku).
+- Miroslav zatim dao **preostale kredencijale direktno iz `C:\Miroslav\Antas line\AI\Keys\`**: prvo API key (AIzaSy..., objašnjeno da Ads API ne prihvata API key uopšte, samo OAuth), zatim OAuth client_id (bez secret-a), na kraju pravi `client_secret_2_...json` fajl (installed-app format, client_secret GOCSPX-...) — sve iz istog Keys foldera gde su bili i service account ključevi, znači ceo GCP setup je već postojao od ranije.
+- Kopiran u `credentials/oauth-client.json`, pokrenut `authorize_oauth.py` — **uspešno završeno u jednom prolazu** (browser flow, refresh_token sačuvan u `token.json` sa oba scope-a `adwords`+`business.manage`). Ads OAuth deo je sad potpuno gotov.
+- `ads_report.py` re-testiran: sad ispravno traži SAMO `ads-config.json` (developer token) — OAuth više nije blokator, jedino preostalo za Ads je Google-ovo odobrenje developer tokena (Korak D, van naše kontrole).
+- `reference/api-konektor-setup.md` ažuriran — Korak C markiran ✅ ZAVRŠENO.
+- GMB i dalje čeka Korak A (3 API-ja neuključena u `mcp-za-claude` projektu) — token.json sad ima i `business.manage` scope spreman za kad se to reši (OAuth fallback u `gmb_report.py` će raditi čim API-ji budu uključeni, čak i ako service-account-manager korak B ne uspe).
+- Bez izmena WordPress baze/koda ove sesije.
+
 ## 2026-07-27 [claude-code] [W5] — GA4 + GSC konektor RADI sa pravim podacima (nađeni postojeći GCP ključevi)
 - Direktan nastavak konektor sesije. Miroslav ukazao na `C:\Miroslav\Antas line\AI - GTM-ANTASLINE-CONFIG.TXT` — pročitano, ispalo je da je to zastareo/fabrikovan GTM export template (svi ID-evi "0", placeholder measurementId, sumnjivo redni fingerprint-ovi — flagovano kao nepouzdano, ne koristiti za GTM import, poklapa se sa poznatom lekcijom o JSON import bagu na ovom kontejneru), nevezano za konektor.
 - Zatim ukazao na `C:\Miroslav\Antas line\AI\Keys\` — 4 PRAVA service account JSON ključa, GCP projekat **`mcp-za-claude`**, jasno imenovani: `claude-mcp-ga4`, `claude-mcp-gsc`, `claude-mcp-ads`, `id-business-profile-performanc` (GMB). Znači Miroslav (ili ranija sesija van ovog vault-a) je već ranije napravio GCP projekat + service accounts, samo nikad povezano sa kodom.
