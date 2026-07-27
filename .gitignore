@@ -8,3 +8,8 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Python cache (antasline-konektor skripte) — kredencijali su van vault-a,
+# ovo je samo bajtkod keš, nikad tajni
+__pycache__/
+*.pyc
