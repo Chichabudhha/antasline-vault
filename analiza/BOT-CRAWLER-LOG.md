@@ -2,7 +2,7 @@
 tip: log
 naziv: Bot/crawler praćenje (access log analiza)
 status: aktivan
-azurirano: 2026-07-23
+azurirano: 2026-07-27
 ---
 
 # Bot/crawler log — antasline.com
@@ -81,9 +81,31 @@ na AI-asistent crawlere. Svaki novi presek se dodaje kao nova sekcija na dnu
 4. **GPTBot i PerplexityBot nisu viđeni u ovom prozoru** — ne znači da su blokirani (test pokazao 200 za ClaudeBot koji JESTE viđen), samo nisu prošli u ovih 14h. Pratiti u sledećem preseku.
 5. **`llms.txt`/`llms-full.txt` efekat: još nema podataka** (0 organskih hitova) — prerano za zaključak, prvi fajl je star manje od 24h. Sledeći presek (preporuka: za ~1 nedelju) treba da pokaže da li se ijedan AI bot uopšte javio po ove fajlove.
 
-## 🆕 Zakazano: Presek #2 — ciljni datum ~2026-07-30 (nedelju dana posle robots.txt bloka)
+## Presek #2 — 2026-07-27 (4 dana posle robots.txt bloka, izvršeno ranije od ciljnog ~07-30 jer je cPanel-live sesija bila dostupna)
 
-Miroslav tražio proveru za nedelju dana da li je broj hitova AhrefsBot/SemrushBot/DotBot pao posle 2026-07-23 `robots.txt` bloka. **Ne može se automatizovati preko cloud routine-a** — access log (`~/access-logs/antasline.com-ssl_log`) postoji samo na `wp1.oblak.host`, cloud agent nema SSH pristup tom serveru. Umesto toga: ovo je #ceka-sledeću-cPanel-live-sesiju stavka — prva sledeća `[cpanel-live]` sesija (ne mora biti tačno 2026-07-30, može i kasnije) treba da ponovi presek po uputstvu ispod i uporedi sa baseline brojevima (AhrefsBot 79, DotBot 13, SemrushBot 2 u ~14h prozoru).
+**Prozor:** 27/Jul/2026 10:56 — 18:59 (~8h — log se rotirao od baseline-a, `old.antasline.com-ssl_log` sad pokriva jun, znači **nema kontinuiranog loga za ceo period 23→27.07** — poređenje je po HITOVA-PO-SATU stopi, ne po apsolutnoj nedeljnoj sumi)
+**Ukupno zahteva u prozoru:** 3.364
+**Kategorisani bot zahtevi:** 174 (5,2%)
+
+### Ciljna 3 bota (svrha ovog preseka) — poređenje sa baseline (Presek #1, ~14h prozor)
+
+| Bot | Presek #1 (14h) | Presek #2 (8h) | Nalaz |
+|---|---|---|---|
+| **AhrefsBot** | 79 (200×79) | **0** | ✅ Potpuno prestao — robots.txt blok radi |
+| **SemrushBot** | 2 (200×2) | **0** | ✅ Potpuno prestao |
+| **DotBot** | 13 (200×13, stvaran crawl sadržaja) | **7, ali SVIH 7 samo `GET /robots.txt`** | ✅ Radi kako treba — DotBot više NE crawluje nijednu stvarnu stranicu, samo periodično proverava robots.txt (pošteno poštuje `Disallow: /`) |
+
+**Zaključak: sva 3 bota potvrđeno poštuju `robots.txt` blok od 2026-07-23.** DotBot i dalje pinguje `/robots.txt` samo da proveri pravilo (očekivano ponašanje, ne zaobilaženje) — nula stvarnog crawl-a sadržaja od bilo kog od 3 bota. Nalaz iz Preseka #1 (2026-07-23 stavka #1) sada potpuno potvrđen, ne samo pretpostavljen.
+
+### Ostali botovi u ovom prozoru (kontekst, nije bio primarni cilj preseka)
+- meta-externalagent/meta-webindexer: 24 (200×17, 301×4, 404×2, 429×1) — slična stopa kao baseline
+- bingbot 22, AdsBot-Google **65** (skok sa 17 u baseline — poklapa se sa Ads reaktivacijom kampanja 2026-07-27, očekivano), Googlebot 12, Googlebot-Image 14, Sogou 3
+- ClaudeBot 10, ChatGPT-User 4, OAI-SearchBot 4, YouBot 2 — svi normalno (200/301)
+- 🆕 **GPTBot prvi put viđen** (0 u baseline) — 3 hita, **sva 3 vratila 429** (rate-limited od servera pre nego što je uopšte stigao do sadržaja) — pratiti, ako se ponavlja vredi proveriti Imunify360 rate-limit prag za ovaj UA
+- Bytespider i dalje 403×1 (server-level blok, nepromenjeno)
+- llms.txt/llms-full.txt: i dalje 0 organskih (trećestranih) hitova u ovom prozoru — 4 dana je i dalje kratko za zaključak, sledeći presek (mesečni AI test ili sledeća cPanel sesija) treba dalje da prati
+
+**Sesija zatvorena — nema dalje planiranog preseka #3, ovo je bio potvrda-efekta zadatak, sad zatvoren kao uspešan.**
 
 ## Kako ponoviti (sledeći presek)
 ```bash

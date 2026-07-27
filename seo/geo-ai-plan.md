@@ -37,7 +37,7 @@ AI citira stranice sa jasnim činjenicama, tabelama i brojevima. **[[seo/plan-no
 ### 3. Entitet — nedvosmislen identitet ⭐⭐ (1–2h)
 - [x] ✅ ZATVORENO 2026-07-08 — `Organization` (Yoast, već postojao sa `sameAs`) proširen filterom na `LocalBusiness` + adresa/telefon (NAP) → [[DNEVNIK-NAPRETKA]]
 - [x] ✅ Već gotovo od 2026-07-07 — "O nama" ima proverljive činjenice (15+ godina, brendovi Ecotile/Bergo/Sit-in, imenovane reference HTEC/Bosch/Institut Vinča itd.)
-- [ ] NAP (ime/adresa/telefon 069 2340072) identičan: sajt = GMB = direktorijumi #ceka-cpanel-live — ✅ Miroslav potvrdio 2026-07-27: **tačan poštanski broj je 11000 Beograd**, "11050" je greška. Provereno da greška postoji ISKLJUČIVO na LIVE `/kontakt/` (lokalna baza nema nijedan pogodak na "11050" u sadržaju objavljenih stranica) — po pravilu #8 (live se ne dira van eksplicitnog `[cpanel-live]` zadatka) ispravka čeka sledeću cPanel-live sesiju, nije izvršena ovde. Kad se ispravi na sajtu, proveriti i GMB/direktorijume da svuda piše 11000.
+- [x] ✅ ZATVORENO 2026-07-27 `[cpanel-live]` — poštanski broj na `/kontakt/` ispravljen 11050→11000 (post 558, 5 DB redova: `panels_data`×2, `_panels_data_preview`×2, orphan `zn_page_builder_els`; backup pre izmene, verifikovano 0×"11050"/200/regresija čista) → [[reference/naucene-lekcije]], [[DNEVNIK-NAPRETKA]]. Preostaje: GMB profil i eksterni direktorijumi (Yellow Pages i sl.) nisu provereni ove sesije — #ceka-miroslav ili sledeća sesija da potvrdi da svuda piše 11000.
 
 ### 4. Pominjanja treće strane ⭐⭐⭐ (najjači signal, traje)
 AI za "najbolji X u Srbiji" agregira tuđe liste, portale, forume:
