@@ -1,4 +1,9 @@
-# Dnevnik napretka — Antasline SEO
+## 2026-07-27 [claude-code] [W5] — Ads developer token stigao, RADI ODMAH (bez čekanja) — konektor sad 3,5/4 gotov
+- Posle "zatvaranja" prethodne pod-sesije, Miroslav odmah dao Ads developer token (`egKlTOKGC9DR1UmOAt9IaQ`). Upisan u `credentials/ads-config.json`, testirano uživo — **radi instant, bez ikakvog čekanja na Google odobrenje** (moja ranija procena "1-3 radna dana" bila je konzervativna pretpostavka, u praksi Basic access je već bio aktivan na nalogu).
+- Prava potvrda potrošnje za 20-26.07: **6.030 RSD, 263 klika, 1.211 prikaza, 5 konverzija** na 2 aktivne kampanje (Podloge za terase i bazene: 4.435 RSD/231 klik/CTR 22%, ECOTILE INDUSTRIJSKI PODOVI: 1.595 RSD/32 klika/CTR 19,9%) — sve ostale kampanje u listi (30-ak) su stare/pauzirane, 0 svuda, očekivano.
+- `reference/api-konektor-setup.md` ažuriran: Korak D ✅ zatvoren (stari koraci sklonjeni u `<details>` istorijski blok), status fajla promenjen na "skoro-gotovo — samo GMB preostaje".
+- **Konektor status: GA4 ✅ · GSC ✅ · Ads ✅ · GMB 🟡** (čeka kvota propagaciju posle uključivanja API-ja, probati ponovo).
+- Ovo zatvara i otvorenu stavku iz prethodnog "probnog nedeljnog izveštaja" (koji je imao "Nema podataka za Ads") — sledeći nedeljni izveštaj može imati kompletnu Ads tabelu.
 
 ## 2026-07-27 [claude-code] [W5] — SESIJA ZATVORENA: GMB napredak (429 posle uključivanja API-ja) + GA4 6-mesečna istorija + naučene lekcije
 - Zatvaranje duge konektor-sesije (ceo dan, više pod-sesija istog dana — od AskUserQuestion izbora zadatka do punog Google API konektora).
