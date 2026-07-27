@@ -25,6 +25,11 @@ Redirect 301 /бренд/ergomat/ /brend/ergomat/
 # Woo nalog stranica: novi sajt je katalog režim (B2B, bez naloga/korpe)
 Redirect 301 /moj-nalog/ /kontakt/
 
+# --- Kategorija E: FAQ trostruki duplikat konsolidovan (2026-07-27) ---
+# 3274 draftovan lokalno (slabiji duplikat, pos 26.1/CTR 0.64%), 2622 ostaje kanonski (pos 16.5/CTR 3.96%)
+# Treca varijanta /industrijski-podovi-najcesca-pitanja/ (najbolji ucinak) rekreirana na identicnom slugu (ID 17025) - NE treba redirect
+Redirect 301 /izbor-industrijskog-poda-tri-najcesca-pitanja-2/ /izbor-industrijskog-poda-tri-najcesca-pitanja/
+
 # --- ✅ REŠENO 2026-07-08 — F5 rebuild završen na IDENTIČNOM URL-u, redirect NIJE potreban ---
 # /sportske-podloge/kosarkaske-konstrukcije/  -> gradjena na istom slugu (ID 16657)
 # /sportske-podloge/padel-tereni/             -> gradjena na istom slugu (ID 16670)
