@@ -53,12 +53,39 @@ status: čeka-popunu
 
 | Proizvod | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
 |---|---|---|---|---|
-| Bergo Ultimate (sportski pod) | | | m² | |
-| Lite Shot 325 (koš) | | | kom | |
-| Mini Shot 225 (koš) | | | kom | |
-| MicroShot 125 (koš) | | | kom | |
-| Koš na kolicima "Street Sport" | | | kom | |
-| Zglobni obruč za koš | | | kom | |
+| Bergo Ultimate (sportski pod, court builder pločica) | | | m² | čeka M11 — `al_cb_prices` opcija u WP adminu ("Cene planera") trenutno prazna, 0 redova u bazi |
+| Bergo Ultimate FLOW (pickleball podloga) | | | m² | čeka M11, isto kao gore |
+| Ecotile rampe/završni profili (4 proizvoda, 16930/16939/16943/16949) | | | m ili kom | čeka M11 — nema cene ni u WC ni u planeru |
+| Lite Shot 325 (koš) | | | kom | legacy proizvod (pre S7), cena nikad upisana |
+| Mini Shot 225 (koš) | | | kom | legacy proizvod (pre S7), cena nikad upisana |
+| MicroShot 125 (koš) | | | kom | legacy proizvod (pre S7), cena nikad upisana |
+| Koš na kolicima "Street Sport" | | | kom | legacy proizvod (pre S7), cena nikad upisana |
+| Zglobni obruč za koš | | | kom | legacy proizvod (pre S7), cena nikad upisana |
+
+### Hoop n Court koševi — VEĆ POTVRĐENO (S7, 2026-07-11, ne čeka M11)
+
+Ove cene već postoje kao pravi WooCommerce `_regular_price` na proizvodima (M dao punu
+cenovnu tabelu tada, EUR baza × ~117,5 kurs × 1,2 PDV) i Court builder ih **već vuče
+direktno odatle** (ne preko `al_cb_prices`) — upisano ovde samo radi centralne evidencije,
+ne treba dalja akcija dok se dobavljačka cena ne promeni.
+
+| Proizvod | Cena (RSD, sa PDV) | ID |
+|---|---|---|
+| Hoopair D72 profesionalni koš | 349.680 | 16952 |
+| Hoopair D60 koš | 320.070 | 16959 |
+| Hoopair D54-F koš sa ankerima | 313.020 | 16966 |
+| Goalrilla DC72E1 profesionalni koš | 549.900 | 16973 |
+| Goalrilla CV72 koš (Clear View) | 458.250 | 16978 |
+| Goaliath GB60 koš | 246.750 | 16984 |
+| Goaliath Gotek 54 koš | 167.790 | 16986 |
+| Goalrilla LED rasvetna oprema | 116.325 | 16988 |
+
+### Generička oprema (S8, 8 proizvoda) — čeka M12
+
+Tribina, stolica za tribine, go za mali fudbal, golovi rukomet/futsal, zaštitna mreža,
+mreža za tenis, mreža za padel, mrežica za koš — svi namerno bez brenda/cene dok se
+pregovori sa dobavljačima ne završe (M12). `_al_cb_equipment=1` flag postavljen, Court
+builder ih već prikazuje kao "na upit".
 
 ## Ergomat zaštita / DuraStripe
 
