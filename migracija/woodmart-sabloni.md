@@ -722,6 +722,67 @@ ključeve — njihov raniji 2×H1 fix je rađen uklanjanjem H1 iz sadržaja, ist
 Hvata se standardnom verifikacijom (broj `<h1>` u renderovanom HTML-u) — ne preskakati je
 za postove samo zato što je meta ključ postavljen.
 
+## 🔴 F7.19 — PRAVILO: vezane vrednosti idu u JEDNU custom property, nikad u dva pravila (2026-07-28)
+
+**Simptom (prijavio Miroslav):** „Brzi upit" forma na dnu stranice ispada ispod futera,
+vidi se samo deo bloka, futer seče preko dugmeta „Pošaljite upit".
+
+**Uzrok — sudar specifičnosti između dva pravila koja moraju da se slažu:**
+`.al-quick-quote` nosi `.al-diag-top`, čiji efekat čine **dve vezane vrednosti**:
+`top: -cut` (vizuelni pomak nagore) i `margin-bottom: -cut` (kompenzacija u toku,
+da futer krene tačno od vizuelnog dna). One su bile u različitim pravilima:
+
+| Vrednost | Iz pravila | Specifičnost | Pobeđuje u sidebar layoutu |
+|---|---|---|---|
+| `top: 0` | `body:has(.sidebar-container) .al-quick-quote` | (0,2,1) | ✅ |
+| `margin-bottom: -cut` | `.al-section.al-diag-top.al-quick-quote` | **(0,3,0)** | ✅ |
+
+Tri klase (0,3,0) tuku `body + :has() + klasa` (0,2,1) — `:has()` nosi specifičnost svog
+najspecifičnijeg argumenta, ne dodaje tip-selektor težinu. Rezultat: sekcija **nije**
+pomerena nagore, ali je futer **jeste** povučen nagore za ceo rez → preklop tačno
+`var(--al-cut)` (izmereno 76 px na 1280 px viewportu, `6vw`).
+
+Tro-klasno pravilo je i samo bilo raniji fix (F7.10, da pobedi temin `base.css`
+`:is(...) > :where(:last-child) { margin-bottom: 0 }`) — dakle **fix jednog problema je
+napravio drugi**, jer druga polovina para nije podignuta na istu specifičnost.
+
+**PRAVILO:** kad dve CSS vrednosti moraju da se menjaju zajedno (pomak + kompenzacija,
+visina + padding koji je uračunava, offset + njegov negativ), **ne pisati ih u dva
+pravila** — vezati ih za jednu custom property i gasiti/menjati promenljivu:
+
+```css
+.al-quick-quote            { --al-qq-shift: var(--al-cut); }   /* podrazumevano */
+body:has(.sidebar-container) .al-quick-quote { --al-qq-shift: 0px; }  /* isključi obe odjednom */
+
+.al-section.al-diag-top.al-quick-quote {
+	top:           calc(-1 * var(--al-qq-shift));
+	margin-bottom: calc(-1 * var(--al-qq-shift));
+}
+```
+
+Promenljiva se nasleđuje i razrešava po jednom kaskadnom takmičenju — obe vrednosti
+uvek čitaju isti rezultat, pa se **ne mogu raziići** bez obzira na to koje pravilo pobedi.
+
+**Obavezna provera (standardni HTTP/H1/schema set je NE hvata — problem je čisto layout):**
+premeriti dno sekcije protiv vrha futera, na **svim** stranicama i **obe** širine:
+
+```js
+const q=document.querySelector('.al-quick-quote'), f=document.querySelector('.wd-footer');
+const preklop = q.getBoundingClientRect().bottom - f.getBoundingClientRect().top; // mora <= 0
+const btn=q.querySelector('input[type=submit]');
+btn.getBoundingClientRect().bottom > f.getBoundingClientRect().top;                // mora false
+```
+
+Sken se radi kroz same-origin iframe (F7.12 metod), 1280 px i 390 px. ⚠️ Bug se ne
+pojavljuje svuda — javlja se **samo kad je sadržajna kolona viša od sidebar-a**, pa
+provera na jednoj-dve stranice nije dovoljna (na postovima sa dugim sidebar-om preklopa
+nema iako je CSS isti). Zadnji sken: **95 stranica × 2 širine, max preklop 0**.
+
+**Usput nađeno istim skenom** (F7.14 regresija): 7 stranica građenih 06–08.07, dakle
+pre nego što je F7.14 dokumentovan, nisu imale `_woodmart_main_layout=full-width` pa su
+padale na sidebar layout — 16585, 16586, 16688, 16584, 16581, 16582, 16583. Postavljeno.
+(`katalog` i `politika-kolacica` namerno preskočeni — nisu custom builder stranice.)
+
 ## Otvoreno
 - [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)
 - [x] ✅ 2026-07-22 — Testimonials sekcija (F7.16 iznad)
