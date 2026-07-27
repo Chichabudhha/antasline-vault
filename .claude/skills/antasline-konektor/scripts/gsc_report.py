@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from auth import get_gsc_service  # noqa: E402
+from auth import friendly_api_error, get_gsc_service  # noqa: E402
 
 SITE_URL = "sc-domain:antasline.com"
 
@@ -66,4 +66,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SystemExit:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        friendly_api_error(exc)

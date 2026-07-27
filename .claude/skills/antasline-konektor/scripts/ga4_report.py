@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from auth import get_ga4_credentials  # noqa: E402
+from auth import friendly_api_error, get_ga4_credentials  # noqa: E402
 
 GA4_PROPERTY = "292720335"
 KEY_EVENTS = ["generate_lead", "tel", "mailto"]
@@ -103,4 +103,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SystemExit:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        friendly_api_error(exc)

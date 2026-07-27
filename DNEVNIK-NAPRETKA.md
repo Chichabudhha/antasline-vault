@@ -1,5 +1,20 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-27 [claude-code] [W5] — GA4 + GSC konektor RADI sa pravim podacima (nađeni postojeći GCP ključevi)
+- Direktan nastavak konektor sesije. Miroslav ukazao na `C:\Miroslav\Antas line\AI - GTM-ANTASLINE-CONFIG.TXT` — pročitano, ispalo je da je to zastareo/fabrikovan GTM export template (svi ID-evi "0", placeholder measurementId, sumnjivo redni fingerprint-ovi — flagovano kao nepouzdano, ne koristiti za GTM import, poklapa se sa poznatom lekcijom o JSON import bagu na ovom kontejneru), nevezano za konektor.
+- Zatim ukazao na `C:\Miroslav\Antas line\AI\Keys\` — 4 PRAVA service account JSON ključa, GCP projekat **`mcp-za-claude`**, jasno imenovani: `claude-mcp-ga4`, `claude-mcp-gsc`, `claude-mcp-ads`, `id-business-profile-performanc` (GMB). Znači Miroslav (ili ranija sesija van ovog vault-a) je već ranije napravio GCP projekat + service accounts, samo nikad povezano sa kodom.
+- Kopirano (ne premešteno) u `C:\Users\Miroslav\antasline-connector\credentials\` kao `{ga4,gsc,gmb,ads}-service-account.json`. `auth.py` prepravljen sa jednog zajedničkog `service-account.json` na per-servis fajlove (`service_account_path(name)`).
+- **Testirano UŽIVO protiv pravih API-ja:**
+  - ✅ GA4: `{"users": 775, "sessions": 882, "generate_lead": 23, "tel": 21, "mailto": 0, "hvala_proxy": 18}` za 20-26.07 — GA4 Property Access već je bio odobren za `claude-mcp-ga4@...`, radi bez ikakvog dodatnog koraka.
+  - ✅ GSC: top upiti za 29.06-24.07 vraćeni ispravno (podovi za terase 278impr/poz10.9, industrijski podovi 170/11.7, itd.) — GSC user pristup već odobren za `claude-mcp-gsc@...`.
+  - 🔴 GMB: `403 SERVICE_DISABLED` — "My Business Account Management API" nije uključen u projektu `mcp-za-claude` (project number 561984657473). Google je vratio direktan link za aktivaciju u error poruci.
+  - ⚠️ Ads: potvrđeno (očekivano, dokumentovano u kodu/planu) da `claude-mcp-ads` service account **fizički ne može da se koristi** za Google Ads API — Google Ads API ne podržava service account autentifikaciju uopšte, samo OAuth sa pravim nalogom. Ovaj ključ ostaje neiskorišćen za ovu svrhu.
+- **Poboljšanje usput**: dodao `friendly_api_error()` u `auth.py` — hvata `googleapiclient.errors.HttpError` i ispisuje čistu "GRESKA: ..." poruku (status + Google-ova poruka, npr. link za aktivaciju API-ja) umesto sirovog Python tracebacka. Primenjeno na sve 4 `*_report.py` skripte (`try/except` oko `main()`).
+- `gmb_report.py` prepravljen da prvo proba service account (`gmb-service-account.json`), pa tek ako ne postoji padne na OAuth — `auth.get_gmb_service_account_credentials()` novi helper.
+- `reference/api-konektor-setup.md` kompletno prepisan da odražava stvarno stanje — Korak 1/2 (GCP projekat + service account) su MOOT (već gotovi), preostaje: Korak A (uključiti 3 preostala API-ja za GMB), Korak B (dodati GMB service account kao Manager na Business Profile stranici — ili OAuth fallback ako UI ne prihvata service account email), Korak C (OAuth Desktop klijent, samo za Ads i eventualno GMB), Korak D (Ads developer token, i dalje čeka Google odobrenje).
+- **Ovo znači: `nedeljni-izvestaj` skill može OD SADA da se koristi za GA4+GSC deo sa pravim podacima** — Ads deo ostaje "Nema podataka za Ads" dok se Korak C/D ne završe.
+- Bez izmena WordPress baze/koda ove sesije.
+
 ## 2026-07-27 [claude-code] [W5] — Sopstveni Google API konektor izgrađen (zamena Windsor.ai, koji je istekao)
 - Miroslav se vratio sa odmora, Ads kampanje reaktivirane. Windsor.ai konektor je istekao (pretplata otkazana 2026-07-21, konektor je "na kredit" radio do sad) — tražio sopstveni, prvostrani konektor bez trećih učesnika, sve četiri platforme (GA4/GSC/Ads/GMB) odjednom, upakovano kao skill da se ne troši kontekst svaki put.
 - **Plan Mode korišćen** (arhitekturna odluka, više fajlova, kredencijali van vault-a) — plan odobren pre pisanja koda, sačuvan na `C:\Users\Miroslav\.claude\plans\wild-chasing-origami.md`.

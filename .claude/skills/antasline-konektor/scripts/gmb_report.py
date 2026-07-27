@@ -18,9 +18,18 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from auth import get_oauth_credentials  # noqa: E402
+from auth import friendly_api_error, get_gmb_service_account_credentials, get_oauth_credentials  # noqa: E402
 
 SCOPES = ["https://www.googleapis.com/auth/business.manage"]
+
+
+def get_gmb_credentials():
+    """Prvo pokusaj service account (ako je dodat kao manager na Business Profile nalogu),
+    fallback na OAuth (authorize_oauth.py) ako service account ne postoji/ne uspe."""
+    creds = get_gmb_service_account_credentials(SCOPES)
+    if creds is not None:
+        return creds
+    return get_oauth_credentials(SCOPES)
 
 METRICS = [
     "BUSINESS_IMPRESSIONS_DESKTOP_MAPS",
@@ -64,7 +73,7 @@ def main() -> None:
     parser.add_argument("--location", default=None, help="npr. locations/1234567890 (preskace auto-discovery)")
     args = parser.parse_args()
 
-    creds = get_oauth_credentials(SCOPES)
+    creds = get_gmb_credentials()
 
     location = args.location or discover_location(creds)
 
@@ -114,4 +123,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SystemExit:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        friendly_api_error(exc)

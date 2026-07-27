@@ -30,13 +30,14 @@ def _fail(msg: str) -> None:
     sys.exit(1)
 
 
-def service_account_path() -> Path:
-    path = credentials_dir() / "service-account.json"
+def service_account_path(name: str) -> Path:
+    """name npr. 'ga4', 'gsc', 'gmb' -> credentials/{name}-service-account.json"""
+    path = credentials_dir() / f"{name}-service-account.json"
     if not path.exists():
         _fail(
             f"Nedostaje service account fajl na {path}. "
-            "Videti reference/api-konektor-setup.md korak 2 — kreiraj service account "
-            "u Google Cloud IAM & Admin, preuzmi JSON ključ, sačuvaj ga tačno na ovu putanju."
+            "Videti reference/api-konektor-setup.md — kreiraj/kopiraj service account "
+            "JSON ključ za ovaj servis na tačno ovu putanju."
         )
     return path
 
@@ -45,7 +46,7 @@ def get_ga4_credentials():
     from google.oauth2 import service_account
 
     scopes = ["https://www.googleapis.com/auth/analytics.readonly"]
-    return service_account.Credentials.from_service_account_file(str(service_account_path()), scopes=scopes)
+    return service_account.Credentials.from_service_account_file(str(service_account_path("ga4")), scopes=scopes)
 
 
 def get_gsc_service():
@@ -53,8 +54,18 @@ def get_gsc_service():
     from googleapiclient.discovery import build
 
     scopes = ["https://www.googleapis.com/auth/webmasters.readonly"]
-    creds = service_account.Credentials.from_service_account_file(str(service_account_path()), scopes=scopes)
+    creds = service_account.Credentials.from_service_account_file(str(service_account_path("gsc")), scopes=scopes)
     return build("searchconsole", "v1", credentials=creds)
+
+
+def get_gmb_service_account_credentials(scopes: list[str]):
+    """GMB — pokusaj prvo preko service account-a (ako je dodat kao manager na Business Profile nalogu)."""
+    from google.oauth2 import service_account
+
+    path = credentials_dir() / "gmb-service-account.json"
+    if not path.exists():
+        return None
+    return service_account.Credentials.from_service_account_file(str(path), scopes=scopes)
 
 
 def oauth_client_path() -> Path:
@@ -90,6 +101,24 @@ def get_oauth_credentials(scopes: list[str]):
         creds.refresh(Request())
         tpath.write_text(creds.to_json(), encoding="utf-8")
     return creds
+
+
+def friendly_api_error(exc: Exception) -> None:
+    """Pretvara sirov Google API HttpError u citljivu GRESKA: poruku (npr. 'API nije ukljucen',
+    sa direktnim linkom za aktivaciju ako Google ga vrati) umesto sirovog traceback-a."""
+    try:
+        from googleapiclient.errors import HttpError
+
+        if isinstance(exc, HttpError):
+            try:
+                detail = json.loads(exc.content.decode("utf-8"))
+                message = detail.get("error", {}).get("message", str(exc))
+            except Exception:
+                message = str(exc)
+            _fail(f"Google API greska ({exc.resp.status}): {message}")
+    except ImportError:
+        pass
+    _fail(f"{type(exc).__name__}: {exc}")
 
 
 def read_json(path: Path) -> dict:
