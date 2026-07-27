@@ -73,7 +73,7 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 | # | Zadatak | Vlasnik | Zavisi od |
 |---|---|---|---|
 | 2.1 | ✅ ZATVORENO 2026-07-10 — sve 4 objavljene (16873/16874/16875/16876) sa M1 fallback-om "na upit"; parking sa pravim cenama sa hub-a (2.800–4.200 din/m² PDV). Kad stignu cene (M10) → samo upis u tabele | CC | ~~cene od M~~ → naknadni upis |
-| 2.2 | Odbojka refresh (#9) — paket spakovan | CP | stranica samo na live → [cpanel-live] #ceka-miroslav |
+| 2.2 | ✅ ZATVORENO (datum nepoznat, potvrđeno 2026-07-27) — Odbojka refresh (#9), post 4318 na lokalu: Yoast title/meta cilja pravi klaster + FAQ+schema+cena u sadržaju. Red ovde bio zastareo ("samo na live") — stranica postoji i refresh je odavno urađen | CC | — |
 | 2.3 | ✅ ZATVORENO 2026-07-08 — Title/meta prepis 4 stranice: /pop-tenis/, /podloga-za-odbojkaske-terene/, /spoljnje-podne-obloge/, conquest 2542 (GSC query-level podaci pre pisanja, dedup Yoast postmeta, 074→072 fix u 2542) | CC | +500–700 kl./90d očekivano, prati se |
 | 2.4 | Tier2: šljaka hub (#7), tenis dimenzije (#8), piklbol (#10), padel refresh (#11) | CC | — |
 | 2.5 | ✅ ZATVORENO 2026-07-12 — Tier3: #12 kancelarije (title/meta refresh na postojećoj) → #13 restorani (Yoast title bug-fix) → #14 hemijska/prehrambena industrija (nova, ID 17017) → #15 radnje (deprioritizovano, nema GSC potražnje) → #16 zdravstvo (nova, ID 17018) → #17 štamparije (FAQ+schema dopuna) | CC | GSC provera pre svake stavke otkrila da je plan (07-04) delom zastareo — 2 stavke već imale stranice napravljene posle plana (07-08), refresh umesto novih stranica (anti-kanibalizacija) |
@@ -155,17 +155,19 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 
 - [x] ✅ (2026-07-21, reosveženo posle F1 baseline-a 2026-07-07) `parity-inventar.csv` kompletan (svaki live URL ima status) + minimalna redirect mapa (F4) potvrđena + .htaccess generisan i testiran na lokalu — v. [[migracija/PARITY-PLAN]] §2.1
 - [ ] CWV lokal: 🔴 LCP <2,5s mobile (blokirano, čeka LiteSpeed na produkciji) · ✅ CLS <0,1 (2026-07-12) · ✅ INP/TBT proxy <200ms na home+kategorija (2026-07-22, proizvod stranice i dalje formalno crvene ali niska šteta — v. 3.6)
-- [ ] Sve Tier1 + Tier2 stranice žive na buildu (Tier3/4 nisu blokeri)
-- [ ] Content parity checklist prošao: svaka live stranica ima parnjaka ili 301 (inventar CSV = checklista)
+- [x] ✅ (reosveženo 2026-07-27) Sve Tier1 + Tier2 stranice žive na buildu — Tier1 (2.1) ✅, Tier2 #7/#8/#11 ✅, **#9 odbojka refresh potvrđeno GOTOVO na lokalu** (post 4318, Yoast title/meta+FAQ+cena provereno direktno u bazi 2026-07-27 — red u W2 tabeli §2.2 "samo na live" je bio zastareo, ispravljen), #10 piklbol namerno preskočen (M odluka, postojeća `/teren-za-pickleball/` već pokriva klaster). Tier3/4 nisu blokeri.
+- [x] ✅ (reosveženo 2026-07-27) Content parity checklist — `parity-inventar.csv` (F1, 2026-07-21): 135 PARITY + 7 301-KANDIDAT (svi već imaju odluku u redirect-mapa-FINAL.csv) + 2 ARHIVA-STRANICA (sistemske, OK) + 29 LOKAL-NOVO (dodatne stranice, ne štete parity-ju). Jedini stvarni ostatak: 1× NEDOSTAJE-LOKAL (`/industrijski-podovi-najcesca-pitanja/`, FAQ konsolidacija, 15 kl./12mes) — svesno odloženo na W2 content-strategiju (F4 odluka), niska šteta, ne blokira migraciju (može dobiti 301 kao fallback na dan migracije ako se ne reši ranije).
 - [x] ✅ (2026-07-22) Forme rade + `/hvala-za-poruku/` okida `generate_lead` + GTM verifikovan na buildu — ali OVAJ gate je do 2026-07-22 bio lažno-zeleno-po-defaultu (GTM uopšte nije postojao lokalno pre W3 3.10 ranog starta, videti [[reference/naucene-lekcije]] "GTM UI konfiguracija ≠ embed"); sad stvarno verifikovano end-to-end (network requesti potvrđuju `generate_lead`+`page_view` na GA4 G-H8BRCZN8W4 + Ads AW-966742304 konverzija)
-- [ ] Woo checkout testiran
-- [ ] Svež backup live sajta (db + wp-content) + backup finalnog builda na 2 lokacije
-- [ ] Automatski noćni backup builda radi i testiran (3.13)
-- [ ] Rollback plan: live backup se vraća u <1h ako nešto pukne
-- [ ] SSH/hosting pristup potvrđen (M) + proba migracije na subdomen izvedena (3.14)
-- [ ] SERP snapshot top 20 upita snimljen pre migracije (3.15)
+- [x] ✅ (2026-07-21, v. W3 3.8) Woo checkout — N/A u izvornom obliku (catalog_mode/M9 uklonio cart/checkout u potpunosti), pravi tok "Zatraži ponudu"→kontakt→hvala-za-poruku testiran end-to-end
+- [ ] Svež backup live sajta (db + wp-content) — čeka `[cpanel-live]` sesiju, ne može odavde · backup finalnog builda na 2 lokacije — 🔴 trenutni skript piše na SAMO JEDNU destinaciju odjednom (prioritet G:→OneDrive→lokalno, ne sve tri paralelno) — ako treba doslovno "2 lokacije" pre migracije, potrebna ručna kopija drugde ili izmena skripte (nije rađeno ovu sesiju, samo primećeno)
+- [x] ✅ POPRAVLJENO 2026-07-27 — Automatski noćni backup builda: **nađen i popravljen pravi bag** — poslednji uspešan run bio 2026-07-22 (5 dana pauze), 07-27 su oba pokušaja (07:58, 08:04) pukla na `mysqldump exit code 2` jer XAMPP MySQL nije Windows servis i nije bio pokrenut u trenutku kad je task okinuo. Fix: `nocni-backup.ps1` sad proverava (`mysqladmin ping`) i sam pokreće MySQL headless pre dump-a ako ne radi (do 30s čekanja). Testirano uživo posle fixa — pun backup pokrenut (DB+wp-content, destinacija eksterni HDD "Maxtor", trenutno prikačen). Backup skripte: `.bak-2026-07-27` kopija sačuvana pre izmene. Detalji: [[DNEVNIK-NAPRETKA]]
+- [ ] 🟡 Rollback plan — **DRAFT napisan 2026-07-27** → [[migracija/rollback-plan]] (trigger uslovi, prereq backup checklist, koraci <1h budžet, ko odlučuje). Nije zatvoreno: 3 otvorena pitanja čekaju Miroslava (WHM auto-backup postoji li, CDN/edge keš sloj postoji li, ko izvršava ako on nije dostupan) — potvrditi pre N7 content freeze-a
+- [x] ✅ ZATVORENO 2026-07-21 — SSH/hosting pristup potvrđen (M) + proba migracije na subdomen izvedena (3.14, `staging.antasline.com`, M vizuelno potvrdio) — checkbox ovde bio zastareo, posao odavno gotov (v. §1 W3 3.14 + §4 M6)
+- [x] ✅ ZATVORENO 2026-07-21 — SERP snapshot top 20 upita snimljen pre migracije (3.15) — checkbox ovde bio zastareo (v. §1 W3 3.15)
 
 **Bilo koji gate crven → migracija se pomera za sledeći ponedeljak, ne gura se na silu.**
+
+**Reosveženo 2026-07-27**: od 11 gate stavki, stvarno crveno/otvoreno ostaje **3**: 🔴 LCP (blokirano na produkciju, poznato) · 🔴 live backup+2-lokacije pitanje (čeka cPanel-live sesiju, ne može se odavde) · 🟡 rollback plan (DRAFT gotov, [[migracija/rollback-plan]], 3 sitna pitanja čekaju Miroslava). Ostalih 8 je ili već bilo gotovo (samo neštriklovano — W1/W2/W3 rad odavno zatvoren, checklist nije osvežavan otkad su ti zadaci završeni) ili je upravo popravljeno ove sesije (noćni backup bag).
 
 ---
 
