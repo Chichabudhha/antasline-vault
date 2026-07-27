@@ -1,6 +1,10 @@
 # Dnevnik napretka — Antasline SEO
 
-## 2026-07-27 [claude-code] [W5 GEO] — Čišćenje `seo/geo-ai-plan.md` checklist-e (stale kućice protiv stvarnog stanja)
+## 2026-07-27 [claude-code] [W5 GEO] — NAP poštanski broj potvrđen (11000), fix spreman za sledeću `[cpanel-live]` sesiju
+- Direktan nastavak GEO checklist čišćenja — pitao Miroslava koji je poštanski broj tačan (11000 vs 11050 Beograd, oba se pojavljuju na live `/kontakt/`). Odgovor: **11000 je tačan**.
+- Provera pre bilo kakve izmene: pretraga lokalne baze (`post_content`, `postmeta`, `options` LIKE '%11050%') — 0 stvarnih pogodaka (par lažnih poklapanja u serialized attachment metadata brojevima, nevezano). Greška postoji ISKLJUČIVO na live sajtu.
+- Po pravilu #8 (live se ne dira van eksplicitnog `[cpanel-live]` zadatka) — **nije izvršena izmena**, ovo nije bila cPanel-live sesija. Umesto toga: `seo/geo-ai-plan.md` NAP stavka ažurirana sa potvrdom + [[PROGRESS]] Blokeri dobio novi red "spreman zadatak" sa jasnim uputstvom za sledeću cPanel-live sesiju (naći polje na `/kontakt/`, zameniti, verifikovati).
+- Bez izmena sajta/koda ove pod-sesije, samo čitanje DB + 2 vault fajla.
 - Nastavak istog ponedeljka, drugi mini-zadatak posle M11/M12 provere. Miroslav tražio čišćenje GEO checklist-e — nekoliko kućica bilo neoznačeno iako je posao odrađen u drugim sesijama.
 - **#1 robots.txt AI crawleri** — ✅ zatvoreno: `curl https://www.antasline.com/robots.txt` (read-only, live se ne dira) potvrdio da fizički fajl (od 2026-07-23) blokira SAMO AhrefsBot/SemrushBot/DotBot; `GPTBot`/`OAI-SearchBot`/`PerplexityBot`/`ClaudeBot`/`Google-Extended` nikad nisu bili pomenuti pa prolaze kroz generički `User-agent: *` wildcard (koji samo blokira par WooCommerce/wp-admin putanja, bez uticaja na sadržaj) — stara kućica tražila "proveriti/dozvoliti", oboje sada potvrđeno bez akcije potrebne.
 - **FAQ+FAQPage schema** — kućica uklonjena, preformulisano kao "standing pravilo" (deo F7 content standarda, proverava se po stranici kroz `plan-novih-stranica`, nema jedno globalno "gotovo" stanje za štrikliranje).

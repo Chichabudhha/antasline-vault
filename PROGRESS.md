@@ -179,6 +179,8 @@
 
 ## Blokeri
 
+- 🆕 **Spreman `[cpanel-live]` zadatak: NAP poštanski broj fix na `/kontakt/`** — Miroslav potvrdio 2026-07-27 da je **11000 Beograd** tačan, "11050 Beograd" (koji se pojavljuje na istoj live stranici) je greška za ispravku. Provereno: greška postoji samo na LIVE, lokalna baza je čista (0 pogodaka na "11050" u objavljenom sadržaju) — ne treba ništa raditi na lokalu. Čeka sledeću `[cpanel-live]` sesiju: naći tačno mesto na `/kontakt/` (post_content ili schema/ACF polje), zameniti sa "11000", verifikovati 200 + oba broja više se ne pojavljuju. Usput proveriti GMB/direktorijume (šire NAP stavka, [[seo/geo-ai-plan]] sekcija 3).
+
 - 🆕 **Podsetnik (ne blokira ništa, samo #ceka-sledeću-cPanel-sesiju): ponoviti bot-log presek ~2026-07-30** — proveriti da li je `robots.txt` blok (AhrefsBot/SemrushBot/DotBot, uveden 2026-07-23) stvarno smanjio broj hitova. Ne može cloud routine (nema SSH do `wp1.oblak.host`) — mora biti prava `[cpanel-live]` sesija. Uputstvo: [[analiza/BOT-CRAWLER-LOG]] "Kako ponoviti".
 
 - ✅ **AhrefsBot/SemrushBot/DotBot blokirani — ZATVORENO 2026-07-23** — M potvrdio da ne koristi nijedan, blokirano preko fizičkog `robots.txt`. Detalji: [[analiza/BOT-CRAWLER-LOG]], [[DNEVNIK-NAPRETKA]].
