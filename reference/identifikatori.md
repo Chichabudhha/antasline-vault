@@ -1,6 +1,6 @@
 ---
 tip: reference
-azurirano: 2026-06-28
+azurirano: 2026-07-27
 ---
 
 # Identifikatori
@@ -31,8 +31,9 @@ azurirano: 2026-06-28
 - Tema: Kallyas
 - CMP: sopstveni plugin `antasline-consent`
 
-## Konektori (Windsor.ai)
-- GA4: account 292720335, connector `googleanalytics4`
-- Ads: account 156-886-0314, connector `google_ads`
-- GSC: connector `searchconsole`
-- Windsor.ai je READ-ONLY — potvrđuje evente, ne menja GTM/GA4.
+## Konektori (sopstveni, Google API — od 2026-07-27)
+- Windsor.ai je istekao 2026-07-27 (pretplata otkazana 2026-07-21) — više se ne koristi.
+- Zamena: `.claude/skills/antasline-konektor/` — direktni pozivi GA4 Data API, Search Console API, Google Ads API, Business Profile Performance API preko lokalnih Python skripti. Kredencijali žive VAN vault-a (`C:\Users\Miroslav\antasline-connector\credentials\`), nikad u git-u.
+- Setup checklist: [[reference/api-konektor-setup.md]]
+- Isti javni ID-evi kao ranije (GA4 292720335, Ads 156-886-0314, GSC sc-domain:antasline.com) — samo je mehanika povlačenja podataka promenjena, ne nalozi sami.
+- Konektor je READ-ONLY (kao i Windsor pre njega) — potvrđuje evente, ne menja GTM/GA4.

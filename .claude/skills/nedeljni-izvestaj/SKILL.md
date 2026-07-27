@@ -1,12 +1,15 @@
 ---
 name: nedeljni-izvestaj
-description: Nedeljni mini-izveštaj za AntasLine — 7 dana vs prethodnih 7 (GA4 + Google Ads kroz Windsor.ai) + GSC 28d prilike, po formatu CLAUDE §10. Koristi kad Miroslav kaže "nedeljni izveštaj", "izveštaj", "kako stojimo ove nedelje", "performanse" ili pri W5 zadatku 5.4.
+description: Nedeljni mini-izveštaj za AntasLine — 7 dana vs prethodnih 7 (GA4 + Google Ads preko sopstvenog konektora) + GSC 28d prilike, po formatu CLAUDE §10. Koristi kad Miroslav kaže "nedeljni izveštaj", "izveštaj", "kako stojimo ove nedelje", "performanse" ili pri W5 zadatku 5.4.
 ---
 
 # Nedeljni izveštaj — 7d vs 7d
 
-Izvor podataka: Windsor.ai (read-only). Pun mesečni snapshot je POSEBAN
-posao (`[[analiza/_TEMPLATE-snapshot]]`) — ovo je mini verzija, ~15 min.
+Izvor podataka: sopstveni konektor (`[[.claude/skills/antasline-konektor]]`) —
+direktno na GA4/GSC/Ads API-je, bez trećih učesnika. Windsor.ai je istekao
+2026-07-27, više se ne koristi (videti [[DNEVNIK-NAPRETKA]]). Pun mesečni
+snapshot je POSEBAN posao (`[[analiza/_TEMPLATE-snapshot]]`) — ovo je mini
+verzija, ~15 min.
 
 ## 1. Periodi
 
@@ -15,24 +18,32 @@ posao (`[[analiza/_TEMPLATE-snapshot]]`) — ovo je mini verzija, ~15 min.
   (YYYY-MM-DD), nikad preset** za prethodni period (poznata Windsor zamka)
 - GSC sekcija: poslednjih 28 dana (GSC podaci kasne 2–3 dana — pomeri prozor)
 
-## 2. Šta se vuče (Windsor konektori)
+## 2. Šta se vuče (sopstveni konektor — `.claude/skills/antasline-konektor/scripts/`)
 
-### GA4 — `googleanalytics4`, account `['292720335']`
+Svaka skripta se poziva DVA puta (tekući period + prethodni), uvek
+eksplicitni `--from`/`--to`. Detalji pokretanja/kredencijala:
+`[[.claude/skills/antasline-konektor]]`.
+
+### GA4 — `ga4_report.py --from --to`
 - Korisnici, sesije (totals za oba perioda)
-- Eventi: povuci event_name + event_count **NEFILTRIRANO** pa agregiraj sam
-  (`in` filter operator je nepouzdan — naučena lekcija) → izdvoj
-  `generate_lead`, `tel`, `mailto`
-- Hvala-proxy (prava konverzija): `screen_page_views` sa filterom
-  `[["page_path", "contains", "hvala"]]`
+- Eventi: skripta već povlači SVE evente nefiltrirano i agregira ih
+  interno (rešava staru Windsor "in-filter nepouzdan" zamku) → vraća
+  gotove `generate_lead`, `tel`, `mailto` brojeve
+- Hvala-proxy (prava konverzija): `hvala_proxy_pageviews` polje u izlazu
+  (već filtrirano na `pagePath contains "hvala"`)
 
-### Google Ads — `google_ads`, account `['156-886-0314']`
-- Potrošnja (RSD), klikovi, CTR, CPC, uvezene konverzije — po kampanji + total
-- Ako kampanja vrati prazno: proveri spend+impressions pre nego što
-  pretpostaviš grešku konektora (throttling istorija)
-- Conversion action segmentacija vraća samo akcije sa ≥1 konverzijom u periodu
+### Google Ads — `ads_report.py --from --to`
+- Potrošnja (RSD), klikovi, CTR, CPC, konverzije — po kampanji + `totals`
+- Ako skripta javi grešku o `ads-config.json` → developer token još nije
+  odobren (čeka Google, [[reference/api-konektor-setup.md]] korak 4) —
+  napiši "Nema podataka za Ads" u izveštaju, ne izmišljaj
+- Ako kampanja vrati 0/prazno ALI skripta radi: proveri spend+impressions
+  pre nego što pretpostaviš grešku (throttling istorija — [[reference/naucene-lekcije]])
 
-### GSC — `searchconsole`, account `['sc-domain:antasline.com']`
-- Top upiti po prikazima sa **pozicijom 5–15 i niskim CTR-om** = prilike
+### GSC — `gsc_report.py --from --to`
+- Vraća već filtrirane `opportunities` (pozicija 5–15, sortirano po
+  prikazima) — top upiti sa niskim CTR-om
+- Pomeri `--to` 2–3 dana unazad (GSC kašnjenje)
 - Uporedi YoY gde je moguće (sezonski špic mar–maj maskira trendove)
 
 ## 3. Format izveštaja (tačan redosled, [[CLAUDE]] §10)

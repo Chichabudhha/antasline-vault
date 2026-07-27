@@ -57,10 +57,17 @@ Kad se nešto radi direktno na produkciji (cPanel), taj rad se taguje
 | GTM kontejner | `GTM-TRDT8K9` |
 | Google Ads konverzija (telefon, tel klik) | Conversion ID `966742304` / `AW-966742304` / Label `QQCBCNDQ_sUcEKCi_cwD` |
 
-**Windsor.ai konektori (zamenili Supermetrics, koji je ugašen):**
-- GA4 → `googleanalytics4`, account `['292720335']`
-- Google Ads → `google_ads`, account `['156-886-0314']` (hyphenated, u listi)
-- GSC → `searchconsole`, account `['sc-domain:antasline.com']`
+**Konektor za izveštavanje (od 2026-07-27, sopstveni — zamenio Windsor.ai,
+koji je pre toga zamenio Supermetrics):** Windsor.ai je istekao 2026-07-27
+(otkazan 2026-07-21). Zamena je `.claude/skills/antasline-konektor/` —
+direktni pozivi GA4 Data API / Search Console API / Google Ads API /
+Business Profile Performance API, bez trećih učesnika, kredencijali van
+vault-a. Isti nalozi kao ranije:
+- GA4 → property `292720335`
+- Google Ads → nalog `156-886-0314`
+- GSC → `sc-domain:antasline.com`
+
+Setup: [[reference/api-konektor-setup.md]] · korišćenje: [[reference/identifikatori]]
 
 Google My Business stranica: "Industrijski podovi AntasLine"
 
@@ -419,17 +426,22 @@ backup-a i bez odobrenja.
   putevi: (A) ručno kreiranje u GTM UI, ili (B) Export kontejnera pa merge u
   tačnom formatu
 
-**Windsor.ai / Google Ads dijagnostika:**
+**Konektor / Google Ads dijagnostika** (istorijski Windsor.ai lekcije, i
+dalje važe principijelno — Windsor je istekao 2026-07-27, zamenjen
+sopstvenim konektorom preko `.claude/skills/antasline-konektor/`, videti
+[[reference/api-konektor-setup.md]]):
 - ECOTILE kolaps isporuke (visok impression share + sitni apsolutni
   impressions + skok CPC) = throttling na nivou naloga (balans/verifikacija),
   ne pad tražnje na tržištu
-- Windsor.ai vraća prazne podatke za throttled kampanje — proveri
-  spend+impressions pre nego što pretpostaviš grešku konektora
-- Windsor.ai je read-only prema GTM/GA4 — potvrđuje da eventi stižu, ali ne
-  može da menja tagove/triggere/key event podešavanja
-- Windsor.ai ne izlaže GA4 audience membership size direktno — koristi
-  `active_users` segmentiran po `audience_name` kao proxy; prazne publike se
-  jednostavno ne pojavljuju u rezultatima
+- Prazan/nulti odgovor za kampanju ne znači grešku konektora — proveri
+  spend+impressions pre nego što pretpostaviš kvar (throttling istorija)
+- Konektor (i stari Windsor, i novi sopstveni) je read-only prema GTM/GA4
+  — potvrđuje da eventi stižu, ali ne može da menja tagove/triggere/key
+  event podešavanja
+- GA4 audience membership size se i dalje ne izlaže direktno preko
+  standardnog Data API runReport-a — `active_users` segmentiran po
+  `audience_name` (custom dimenzija, ako postoji) ostaje najbliži proxy;
+  prazne publike se jednostavno ne pojavljuju u rezultatima
 - Conversion action segmentacija vraća samo akcije sa bar jednom konverzijom
   u traženom periodu — nove akcije sa nula konverzija se neće pojaviti
 - GA4 `in`-operator filter je nepouzdan — povuci sve evente nefiltrirano i
