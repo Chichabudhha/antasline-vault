@@ -2,7 +2,7 @@
 tip: referenca
 datum: 2026-07-27
 namena: Miroslavljev jednokratni setup checklist za sopstveni Google API konektor (zamena Windsor.ai)
-status: delimično-gotovo
+status: skoro-gotovo — samo GMB preostaje
 ---
 
 # 🔌 Setup — sopstveni Google API konektor
