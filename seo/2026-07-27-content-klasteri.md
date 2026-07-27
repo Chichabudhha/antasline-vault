@@ -206,9 +206,9 @@ Postoji: ✅ `/antistatik-i-elektroprovodljivi-podovi/` (769/39)
 | **1** | Dva 404 URL-a | 3, 4 | ~440 impr / 24 kl u 28d | ✅ **REŠENO 2026-07-27** — Miroslav objavio obe (bile DRAFT, ne obrisane); oba sad 200. Root-cause audit = P1 u [[migracija/2026-07-27-cpanel-sesija-plan]] |
 | **2** | **`/pvc-podne-ploce/`** — materijalni hub | 8 | ~500 (poz 22 → top 10) | ✅ **NAPRAVLJENO 2026-07-27** (ID 17026) |
 | **3** | **`/dimenzije-fudbalskog-terena/`** | 3 | **2.409** | ✅ **NAPRAVLJENO 2026-07-27** (post ID 17027, +futsal tabela → hvata i „mali fudbal" 150 impr) |
-| **4** | "visina koša" odgovor-blok + FAQ na 16586 | 1 | ~1.089 | ⏳ otvoreno — poz 1–2 sa 0,8% CTR; nije nova stranica |
-| **5** | ~~`/podne-obloge-za-dvoriste/`~~ → **`koš za dvorište` na 16657** | 2, 1 | ~370 (kupovna namera) | 🔄 **PREUSMERENO** — nova dvorište stranica bi kanibalizovala (v. reviziju gore); prava prilika je koš-klaster + nezamenjen Yoast title na 16657 |
-| **6** | Yoast title fixevi (16616, 3318, 16613, **16657**) + T2 dedupe | 4, 9, 1 | ~870 | ⏳ otvoreno — 25 min ukupno |
+| **4** | "visina koša" odgovor-blok + FAQ na 16586 | 1 | ~1.283 | ✅ **URAĐENO 2026-07-28** — sekcija „Visina koša — 3,05 m, i kada nije" sa **tabelom po uzrastu** (odgovor koji snippet ne može da zatvori) + mere table/obruča + FAQ 7 pitanja |
+| **5** | ~~`/podne-obloge-za-dvoriste/`~~ → **`koš za dvorište` na 16657** | 2, 1 | ~370 (kupovna namera) | ✅ **URAĐENO 2026-07-28** — sekcija sa 7 dvorišnih koševa i **pravim cenama** (167.790–549.900 RSD) + Yoast title/meta prepisani |
+| **6** | Yoast title fixevi (16616, 3318, 16613) + T2 dedupe | 4, 9 | ~500 | ⏳ otvoreno — 16657 je rešen u okviru #5; ostaju 3 |
 | **7** | ~~Revizija šljaka/odbojka refresha~~ | 3 | ~2.230 | ✅ **DIJAGNOSTIKOVANO 2026-07-27** — refresh nije „pao", nikad nije ni otišao na produkciju (lokalni title ≠ live title). Fix = P3 u cPanel nalogu |
 | 8 | `/epoksidni-podovi-za-terase/` conquest | 5 | 157 | ⏳ tek posle premeravanja GEO fixa (kraj avgusta) |
 | 9 | `industrijski linoleum` sekcija | 7 | 51 (CTR 15,7%) | ⏳ sitno, besplatno |
@@ -222,6 +222,29 @@ Postoji: ✅ `/antistatik-i-elektroprovodljivi-podovi/` (769/39)
 
 Cross-linkovi dodati: 16567 → PVC hub · 16874 → PVC hub · 5119 (veštačka trava za
 fudbal) → dimenzije post. Regresija čista na sve tri.
+
+### Dorađeno 2026-07-28
+
+| Stranica | ID | Šta je dodato | Verifikacija |
+|---|---|---|---|
+| `/sportske-podloge/kosarkaske-konstrukcije/` | 16657 | sekcija „Koš za dvorište" — 7 modela sa **pravim cenama** (167.790–549.900 RSD, iz S7 upisa) + „šta proveriti pre kupovine"; Yoast title/meta prepisani (bio nezamenjen `%%sep%%` šablon); +3 FAQ → JSON-LD 8 pitanja | 200 · 1×H1 · 15/15 linkova · mobilni 390px čist |
+| `/dimenzije-kosarkaskog-terena/` | 16586 | sekcija „Visina koša — 3,05 m, i kada nije" — tabela po uzrastu + „kako se meri" + mere table/obruča; +2 FAQ → JSON-LD 7 pitanja | 200 · 1×H1 · 19/19 linkova · mobilni 390px čist |
+
+**Zašto tabela po uzrastu, a ne bolji tekst:** klaster „visina koša" je rangirao
+**poz 1–2 sa ~2 klika na 1.283 prikaza** — problem nije rangiranje nego to što
+Google odgovori „3,05 m" u snippet-u. Jedan broj se može zatvoriti u SERP-u,
+tabela sa četiri uzrasne kategorije ne može — korisnik mora da klikne da nađe svoju.
+Poslednji red tabele (podesivi dvorišni koševi 1,50–3,05 m) je komercijalni izlaz
+ka 16657, isti obrazac kao basket→konstrukcije i fudbal→veštačka trava.
+
+⚠️ **Efekat se ne vidi pre migracije**: „visina koša" trenutno rangira na **2298**
+(`/kako-napraviti-teren-za-basket…/`) jer 16586 postoji samo lokalno. Ovo je
+priprema za preuzimanje 31.08, ne očekivati pomak u GSC-u ranije.
+
+💡 Otvoreno (#ceka-miroslav): `namena-dvoriste` product_tag za tih 7 koševa, da i
+grid na 16657 prikazuje dvorišne modele umesto dvoranskih (`taxonomies="266"` =
+`namena-sport-dvorana`). F6 pravilo traži njegovu potvrdu mapiranja proizvod→namena
+pre upisa, pa je zasad urađena statička tabela — koja i bolje služi cenovnim upitima.
 🟢 Usput potvrđeno: lokalni basket članak 2298 **više ne pominje fudbal** (skraćen
 pri ranijoj anti-kanibalizaciji) — fudbal upiti na migraciji gube slučajnog
 domaćina i prelaze na namensku stranicu bez sudara.
