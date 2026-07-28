@@ -34,7 +34,9 @@ $post = get_post( $job['post_id'] );
 if ( ! $post ) { WP_CLI::error( 'Nema posta ' . $job['post_id'] ); }
 
 // ---- backup sadržaja pre izmene ----
-$bkDir = 'C:/Users/Miroslav/AppData/Local/Temp/claude/C--Projekti-antasline-vault/21101aee-b36f-40b9-be7a-84052e879608/scratchpad/content-backup';
+// Stabilna putanja — ranije je pokazivala na scratchpad JEDNE sesije, pa je backup
+// posle te sesije padao u folder koji više niko ne gleda.
+$bkDir = 'C:/Users/Miroslav/AppData/Local/Temp/al-content-backup';
 if ( ! is_dir( $bkDir ) ) { mkdir( $bkDir, 0777, true ); }
 file_put_contents( $bkDir . '/' . $post->ID . '-' . date( 'Ymd-His' ) . '.html', $post->post_content );
 
@@ -103,6 +105,9 @@ if ( ! $ids ) { WP_CLI::error( 'Nijedna slika nije uvezena' ); }
 // ---- sastavi HTML blok ----
 $cols = (int) ( $job['columns'] ?? 3 );
 $html = '';
+if ( ! empty( $job['label'] ) ) {
+	$html .= '<span class="al-label">' . esc_html( $job['label'] ) . '</span>';
+}
 if ( ! empty( $job['heading'] ) ) {
 	$html .= '<h2>' . esc_html( $job['heading'] ) . '</h2>';
 }
@@ -119,15 +124,40 @@ foreach ( $ids as $it ) {
 $html .= '</div>';
 
 // ---- ubaci u sadržaj ----
+//
+// `before` je u praksi jedini oblik koji treba: stranice su građene od `[vc_row]`
+// sekcija, pa se nova galerija umeće kao ZASEBNA sekcija pre one koja je prepoznata
+// po nizu (npr. "footer-top", "najčešća pitanja"). Dodavanje na kraj `post_content`-a
+// bi je ubacilo IZVAN poslednjeg `[vc_row]`, gde nema ni širinu ni razmake sekcije.
 $content = $post->post_content;
-if ( ! empty( $job['anchor'] ) && strpos( $content, $job['anchor'] ) !== false ) {
+
+// Stranice građene po WoodMart šablonu traže `al-section` klasu (i smenu paper/mist);
+// starije stranice su običan [vc_row]. Bez `section_class` ostaje neutralan red.
+// F7.20: NE dodavati `al-diag-*` ako susedna sekcija već nosi rez.
+$section = empty( $job['section_class'] )
+	? '[vc_row][vc_column][vc_column_text]' . $html . '[/vc_column_text][/vc_column][/vc_row]'
+	: '[vc_row full_width="stretch_row" el_class="' . esc_attr( $job['section_class'] ) . '"][vc_column][vc_column_text]'
+		. $html . '[/vc_column_text][/vc_column][/vc_row]';
+
+if ( ! empty( $job['before'] ) ) {
+	$parts = preg_split( '#(?=\[vc_row)#', $content );
+	$at    = null;
+	foreach ( $parts as $i => $p ) {
+		if ( false !== mb_stripos( $p, $job['before'] ) ) { $at = $i; break; }
+	}
+	if ( null === $at ) {
+		WP_CLI::warning( 'Nije nađeno "' . $job['before'] . '" — sekcija ide na kraj' );
+		$at = count( $parts );
+	}
+	array_splice( $parts, $at, 0, array( $section ) );
+	$content = implode( '', $parts );
+	$where   = sprintf( 'pre "%s" (pozicija %d/%d)', $job['before'], $at, count( $parts ) );
+} elseif ( ! empty( $job['anchor'] ) && strpos( $content, $job['anchor'] ) !== false ) {
 	$content = str_replace( $job['anchor'], $job['anchor'] . $html, $content );
 	$where = 'posle sidra';
-} elseif ( ( $job['position'] ?? 'end' ) === 'end' ) {
-	$content .= $html;
-	$where = 'na kraj';
 } else {
-	WP_CLI::error( 'Sidro nije nađeno: ' . $job['anchor'] );
+	$content .= $section;
+	$where = 'na kraj kao nova sekcija';
 }
 
 wp_update_post( array( 'ID' => $post->ID, 'post_content' => $content ) );
