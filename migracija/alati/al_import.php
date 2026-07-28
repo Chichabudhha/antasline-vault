@@ -15,7 +15,7 @@
  *
  * Pravila:
  *  - originali se ne diraju, kopija ide u uploads/YYYY/MM/
- *  - max 1600px duže stranice (lightbox meta), JPEG q82 — bez uvećavanja
+ *  - max 1600px duže stranice (lightbox meta), WebP q82 — bez uvećavanja
  *  - alt je OBAVEZAN (SEO/a11y); title priloga služi kao natpis u lightbox-u
  *  - ako fajl sa istim ciljnim imenom već postoji, prilog se ponovo koristi (bez duplikata)
  */
@@ -28,6 +28,7 @@ if ( ! $job ) { WP_CLI::error( 'Neispravan JSON' ); }
 require_once ABSPATH . 'wp-admin/includes/image.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/media.php';
+require_once __DIR__ . '/al_webp.php';
 
 $post = get_post( $job['post_id'] );
 if ( ! $post ) { WP_CLI::error( 'Nema posta ' . $job['post_id'] ); }
@@ -46,7 +47,7 @@ foreach ( $job['images'] as $img ) {
 
 	// ciljno ime: slug iz alt-a (čitljivo, SEO), bez dijakritika
 	$slug = sanitize_title( $img['title'] ?? pathinfo( $src, PATHINFO_FILENAME ) );
-	$ext  = strtolower( pathinfo( $src, PATHINFO_EXTENSION ) ) === 'png' ? 'png' : 'jpg';
+	$ext  = al_target_ext( $src );
 	$name = $slug . '.' . $ext;
 	$dest = $uploadDir['path'] . '/' . $name;
 
@@ -68,7 +69,7 @@ foreach ( $job['images'] as $img ) {
 		$editor->resize( $w >= $h ? 1600 : null, $h > $w ? 1600 : null, false );
 	}
 	$editor->set_quality( 82 );
-	$saved = $editor->save( $dest );
+	$saved = $editor->save( $dest, al_target_mime( $dest ) );
 	if ( is_wp_error( $saved ) ) { WP_CLI::warning( 'save: ' . $src ); continue; }
 	$dest = $saved['path'];
 
