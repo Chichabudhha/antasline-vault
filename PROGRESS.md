@@ -178,6 +178,7 @@
 
 ## Blokeri
 
+- 🔴 **NOVO 2026-07-28: Windsor.ai potpuno pao za GA4+Ads+GSC** (ne samo Ads kako je nađeno 07-24) — sva 3 konektora vraćaju "Free plan" grešku, GA4 prost upit ignoriše zadati datumski opseg. Miroslav javio da postoji **nov konektor dostupan samo lokalno**, naziv/tip nije naveden — #ceka-miroslav da se identifikuje i upiše ovde + `[[CLAUDE]]` §2/§4 radi kontinuiteta. Dok se ne razjasni: nedeljni/mesečni izveštaji i svaki cloud-sesijski Ads/GA4/GSC zadatak blokiran u cloud sesijama, mora kroz lokalnu. Detalji: [[DNEVNIK-NAPRETKA]]
 - 🆕 **Podsetnik (ne blokira ništa, samo #ceka-sledeću-cPanel-sesiju): ponoviti bot-log presek ~2026-07-30** — proveriti da li je `robots.txt` blok (AhrefsBot/SemrushBot/DotBot, uveden 2026-07-23) stvarno smanjio broj hitova. Ne može cloud routine (nema SSH do `wp1.oblak.host`) — mora biti prava `[cpanel-live]` sesija. Uputstvo: [[analiza/BOT-CRAWLER-LOG]] "Kako ponoviti".
 
 - ✅ **AhrefsBot/SemrushBot/DotBot blokirani — ZATVORENO 2026-07-23** — M potvrdio da ne koristi nijedan, blokirano preko fizičkog `robots.txt`. Detalji: [[analiza/BOT-CRAWLER-LOG]], [[DNEVNIK-NAPRETKA]].

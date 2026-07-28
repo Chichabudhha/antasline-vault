@@ -1,5 +1,11 @@
 # Dnevnik napretka — Antasline SEO
 
+## 2026-07-28 [chat] [W5] — Windsor.ai potpuno pao (GA4+Ads+GSC), nov lokalni konektor postoji ali nije dokumentovan
+- Pokušaj nedeljnog izveštaja (W5 5.4): sva 3 Windsor konektora (GA4/`google_ads`/`searchconsole`) vraćaju grešku *"connected more accounts than your Free plan allows"* — eskalacija u odnosu na 07-24 nalaz (tad je bio pogođen samo `google_ads`, GA4 je radio). Prost GA4 upit (samo sesije+datum) "radi" ali ignoriše zadati opseg datuma i vraća samo današnji dan (0) — ni to nije pouzdano.
+- Miroslav javio da postoji **nov konektor, ali dostupan samo na lokalnoj (ne cloud) sesiji** — nije naveden naziv/tip. Nije dokumentovan nigde u vault-u (`reference/identifikatori`, `CLAUDE.md` §2 Windsor sekcija, `ADS-DNEVNIK` header). #ceka-miroslav: šta je konektor (nova Windsor pretplata? drugi alat — GA4 API direktno? Ads API?), da se upiše ovde i u CLAUDE.md radi kontinuiteta između cloud i lokalnih sesija.
+- **Posledica:** W5 5.4 (nedeljni izveštaj) i svi budući cloud-sesijski Ads/GA4/GSC zadaci ne mogu se raditi odavde dok se ovo ne razjasni — moraju ići kroz lokalnu sesiju gde je nov konektor dostupan.
+- Nema izmena sajta/koda. Detalji: [[PROGRESS]] Blokeri.
+
 ## 2026-07-24 [chat] [W2/W6] — Novi backlink/off-page plan (`[[seo/backlink-plan]]`)
 - Miroslav pitao "kako ćemo da napravimo linkove ka sajtu da podignemo autoritet domena" — pretraga vault-a pokazala da ovo praktično **ne postoji** kao sistematski plan: `[[seo/geo-ai-plan]]` sekcija 4 ("Pominjanja treće strane") je jedino mesto koje se doticalo eksternih linkova, ali isključivo iz GEO/AI-vidljivost ugla, ne kao domain-authority rad. Sve postojeće "backlink" pomene u DNEVNIK-u/PROGRESS-u su bile INTERNI cross-linkovi (npr. "backlink dodat na hub 16667") — potpuno druga stvar.
 - Prvo napravljen samodovoljan prompt (`/tmp/.../backlink-prompt-za-druge-ai.md`, scratchpad) za druge AI asistente da predlože plan, na zahtev — nezavisno od toga, napisan i sopstveni konkretan plan.
