@@ -1,3 +1,76 @@
+## 2026-07-28 [claude-code] — Lightbox za sve slike u sadržaju + YouTube-stil play dugme (F7.21) ✅
+
+**Zahtev (M):** fotografije iz `C:\Miroslav\Antas line` i `C:\Miroslav\Antas Line priprema za sajt` upotrebiti na sajtu; slika na stranici treba da bude manja zbog brzine, a da se klikom otvara uvećana (≥1400px za landscape); video označiti play trouglom „u AntasLine stilu, u fazonu kao YouTube".
+
+**Odluke M na početku:** pun prolaz kroz sve stranice (ne samo prazne) · Caprari video (553 MB, `Antas line\Video`) se za sada preskače.
+
+### Šta je audit zatekao
+
+| Mera | Zatečeno |
+|---|---|
+| fotografija u `post_content` | 314 (na 77 stranica), 280 jedinstvenih fajlova |
+| `<img>` bez ikakvog resize-a (src = original) | **410 / 473** |
+| `<img>` sa `srcset` | **0 / 473** |
+| `<img>` sa `width`+`height` (CLS) | 140 / 473 |
+| slika koje se otvaraju uvećane | **0** |
+| WP galerije `[gallery link="file"]` | vode na **goli `.jpg`** — izlazak sa sajta |
+| stranica bez ijedne slike | 29 |
+
+### Rešenje — `the_content` filter, ne izmena baze
+
+Slike se **ne diraju u `post_content`**: filter je reverzibilan, hvata i sadržaj koji tek dolazi, i ne rizikuje kvarenje WPBakery shortcode-ova. `al_enhance_content_images()` (prio 20) prolazi kroz HTML **prateći dubinu `<a>` tagova**:
+
+- foto u `.al-card` / `.al-promo-product` (link ka drugoj stranici) → **samo** optimizacija veličine; lightbox bi oteo klik i pokvario navigaciju
+- `<a href="…jpg">` (WP galerija) → anchor se **pretvara** u lightbox okidač, href se prevodi na `al-lb`
+- slobodna foto u sadržaju → umotava se u `<a class="al-lb">`
+- `.al-icon`, SVG, `i.ytimg.com` thumb, logotipi partnera → preskače se
+
+**Sopstveni lightbox** (`js/al-lightbox.js`, ~3KB, bez zavisnosti) umesto WoodMart PhotoSwipe-a: PhotoSwipe (38KB JS + 7KB CSS + jQuery modul) se na stranicama/postovima uopšte **ne učitava** — uključivanje bi vratilo teret koji je W3 3.6 skidao. Klik / strelice / Esc / brojač / swipe / preload susednih / zaključavanje skrola / vraćanje fokusa.
+
+**Veličine:** `al-sm` 600 · `al-md` 900 · `al-lg` 1200 (ove tri u `srcset`) · `al-lb` 1600 — **namerno van `srcset`-a**, da se velika verzija plaća tek kad posetilac stvarno otvori sliku. Regenerisano **520 priloga** (265 iz sadržaja + 255 iz `[gallery]`/WooCommerce galerija/istaknutih slika).
+
+### 🔴 Tri baga uhvaćena tokom rada
+
+**(a) `:is()` specifičnost — isti obrazac kao F7.20.** WoodMart `base.css`:
+`:is(.btn, .button, button, [type="submit"], [type="button"]) { position: relative }`.
+`:is()` uzima specifičnost najjačeg argumenta → **(0,1,0)**, izjednačeno sa `.al-lb-close`, a `base.css` se učitava POSLE nas → dugmad lightboxa ispadala u normalan tok umesto u uglove. Podignuto na (0,2,0).
+> Usput otkriveno da je **play dugme na video fasadama bilo SIVO (#F3F3F3) umesto brend-crvenog i pre ove sesije** — isti bag, samo se nije primećivao jer je sivi krug sa ► i dalje ličio na play dugme.
+
+**(b) `[gallery]` piše href JEDNOSTRUKIM navodnicima.** WP-ov `wp_get_attachment_link()` generiše `<a href='…'>`. Regex pisan samo na `"` tiho je promašio **svih 42** linka u galeriji sportskih terena. Podmuklo je bilo to što je `<img>` unutar anchor-a **jeste** bio obrađen (srcset/width/height), pa je na prvi pogled izgledalo da filter radi — a anchor nije. Svi atributni regexi su zato prepisani na `("|\')…\1`.
+
+**(c) Duplirana `[vc_row]` sekcija** na 16171 (`galerija-sportskih-terena`) — prvi blok („Slike terena 3x3") stajao dva puta identično. Uklonjen.
+
+### 🔴 Ograničenje koje M treba da zna (zahtev ≥1400px)
+
+| | ≥1400px |
+|---|---|
+| slike trenutno na sajtu | **27 / 265** |
+| fotke u folderima (1.807 ukupno) | **364 (20%)** |
+| slike na sajtu koje u folderu imaju veću verziju | **8** (od toga samo 2 stižu do 1400px) |
+
+Originali su uglavnom **već bili skalirani pri importu**, a ni folderi nisu pretežno hi-res. **Lightbox otvara najveću dostupnu verziju i ne uvećava veštački** (uvećavanje bi dalo mutnu sliku). Praktična posledica: pri kuriranju treba birati iz hi-res foldera — `novo/slike bergo multisport` (43/47 ≥1400), `novo/ecotile` (37/42), `novi sajt/Bergo` (49/163), `novi sajt/tereni za basket` (29/91), `Karusel slike Dekorativne meni` (18/20), `slike 12-22/bergo ultimate` (17/29).
+
+### Play dugme
+
+Zamenjen tekstualni `&#9658;` glif (renderovao se različito po platformama, optički pomeren, zavisan od font fallback-a) **CSS trouglom** u zaobljenom pravougaoniku 72×50 — YouTube obrazac u brend crvenoj `#F04D22`. Dodato zatamnjenje kadra ispod dugmeta (da se vidi i na svetlom thumbnail-u), `focus-visible`, `prefers-reduced-motion`, i `is-playing` klasa koja skida zatamnjenje kad video krene. Dugme je `aria-hidden`/`tabindex="-1"` — klik i taster hvata ceo `.al-video-facade` (`role="button"`), pa se tabom više ne staje dva puta na isti kontrol.
+
+### Kuriranje — započeto
+
+**16657 „Košarkaške konstrukcije"** (478 GSC klikova, do sada **0 fotografija**) dobio novu sekciju „Naši izvedeni tereni sa konstrukcijama" — 9 fotki na 1600px sa srpskim `alt`/natpisima, kao zaseban `[vc_row … al-section--paper]` **bez `al-diag-*`** (susedna sekcija već nosi rez — F7.20), umetnut na tačan indeks pre FAQ-a. Kandidati birani preko **kontakt-lista** (mozaik sličica, `contact_sheet.php`) da se 24 fotke pregledaju kroz jednu sliku umesto jedne po jedne.
+
+### Verifikacija
+
+- **199/199 URL HTTP 200**, 0 PHP grešaka, **1×H1 svuda**
+- **371 lightbox link** sitewide (bilo 0)
+- 2.314 uploads slika: 46 bez `width+height`, 134 bez `srcset` (ostatak = WooCommerce galerije + 9 slika bez `_wp_attached_file` zapisa — namerno nedirane)
+- Chrome funkcionalni test: klik, strelice, Esc, brojač („4 / 42"), zaključavanje skrola, natpisi; **0 console grešaka**
+- Backup pre svih izmena: 30 MB dump (`wpGs_posts`+`wpGs_postmeta`), fajlovi teme, po-stranici snimak sadržaja
+
+> ⚠️ **Napomena o snimcima ekrana:** Chrome ekstenzija je nekoliko puta vratila snimak **pre iscrtavanja** (prozirna pozadina lightboxa, tamna kutija umesto video thumbnail-a) iako su izračunati stilovi i `elementFromPoint` bili ispravni. Dva puta je zamalo dovelo do „popravljanja" nepostojećeg baga. **Pravilo: kad se snimak ne slaže sa `getComputedStyle`, prvo ponoviti snimak.**
+
+### Ostaje
+- Kuriranje fotografija — pun prolaz kroz preostale stranice (~28 bez slika + dopuna postojećih). Alat i inventar spremni: `foto-inventar.csv` (1.807 fotki sa dimenzijama), `contact_sheet.php`, `al_import.php`.
+- Caprari video (553 MB) — M odložio.
 ## 2026-07-28 [claude-code] — 🔴 `/teren-za-pickleball/`: schema koja nikad nije bila emitovana + 5,3 KB golog JSON-a vidljivo na strani ✅
 
 Nastalo iz pitanja „šta je jutros oko 6.40 bilo započeto a nije završeno". U scratchpad-u sesije `a125d167…` nađene dve skripte pisane u **06:52 i 06:53**, obe **napisane ali nikad pokrenute** i bez dnevničkog unosa: `fix_prazanp.php` (prazan red pre `[vc_raw_html]`) i `fix_goliscript.php` (prazni redovi oko golog `<script ld+json>`).

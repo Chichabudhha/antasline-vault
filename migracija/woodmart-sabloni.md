@@ -851,7 +851,69 @@ Kroz iframe (F7.12), **sve stranice × 1280 i 390 px**, tri mere:
 `clip-path` forme (mora `none`), razmak `prethodna.bottom → forma.top` (mora 0),
 preklop `forma.bottom → futer.top` (mora ≤ 0). Poslednji sken: **95 × 2, sve nule.**
 
+## F7.21 — Slike u sadržaju: manja verzija na stranici + lightbox (2026-07-28)
+
+Zatečeno: 314 fotografija u `post_content`, **410/473 `<img>` bez ikakvog resize-a**
+(src = original), **0 sa `srcset`**, 140/473 sa `width+height`, i **nijedna slika se
+nije otvarala uvećana**. WP galerije (`[gallery link="file"]`) vodile su posetioca na
+goli `.jpg` — izlazak sa sajta.
+
+**Rešenje je `the_content` filter, ne izmena baze.** Slike se ne diraju u
+`post_content`: reverzibilno je, hvata i sadržaj koji tek dolazi, i ne rizikuje
+kvarenje WPBakery shortcode-ova. `al_enhance_content_images()` (prio 20, posle
+wpautop/do_shortcode/quick-form) prolazi kroz HTML prateći **dubinu `<a>` tagova**:
+
+| slučaj | postupak |
+|---|---|
+| foto u `.al-card` / `.al-promo-product` (link ka drugoj stranici) | samo optimizacija veličine — lightbox bi oteo klik i pokvario navigaciju |
+| `<a href="…jpg">` (WP galerija, `link="file"`) | anchor se pretvara u lightbox okidač, href se prevodi na `al-lb` |
+| slobodna foto u sadržaju | umotava se u `<a class="al-lb">` |
+| `.al-icon`, SVG, `i.ytimg.com` thumb, logotipi partnera | preskače se |
+
+Registrovane veličine: `al-sm` 600 · `al-md` 900 · `al-lg` 1200 (ove tri idu u
+`srcset`) · `al-lb` 1600 (samo meta lightbox linka — **namerno van `srcset`-a**, da se
+velika verzija plaća tek kad posetilac stvarno otvori sliku).
+
+### 🔴 Ograničenje koje treba znati pri izboru fotki
+Od 265 priloga u sadržaju **samo 27 ima verziju ≥1400px** — originali su uglavnom već
+bili skalirani pri importu. Uparivanje sa folderima (`C:\Miroslav\Antas line`,
+`…priprema za sajt`, 1.807 fotki) našlo je **svega 8** slika sa većom verzijom u
+folderu. I u samim folderima je samo **20% (364/1807) ≥1400px**.
+**Lightbox ne uvećava veštački** — otvara najveću dostupnu. Zato pri kuriranju
+**birati iz hi-res foldera**: `novo/slike bergo multisport` (43/47 ≥1400),
+`novo/ecotile` (37/42), `novi sajt/Bergo` (49/163), `novi sajt/tereni za basket` (29/91),
+`Karusel slike Dekorativne meni` (18/20), `slike 12-22/bergo ultimate` (17/29).
+
+### 🔴 Dve zamke specifičnosti (isti obrazac kao F7.20)
+WoodMart `base.css` ima
+`:is(.btn, .button, button, [type="submit"], [type="button"]) { position: relative }`.
+`:is()` uzima specifičnost **najjačeg argumenta** → **(0,1,0)**, izjednačeno sa
+`.al-lb-close` / `.al-video-facade__play`, a `base.css` se učitava POSLE nas → gazio je.
+Oba su podignuta na **(0,2,0)** (`.al-lb-overlay .al-lb-close`,
+`.al-video-facade .al-video-facade__play`).
+
+> Usput otkriveno: **play dugme na video fasadama bilo je SIVO (#F3F3F3) umesto
+> brend-crvenog** i pre ove sesije — isti bag, samo se nije primećivao jer je sivi krug
+> sa ► i dalje ličio na play dugme.
+
+### 🔴 `[gallery]` piše href JEDNOSTRUKIM navodnicima
+WP-ov `wp_get_attachment_link()` generiše `<a href='…'>`. Regex pisan samo na `"`
+tiho je promašio **svih 42** linka u galeriji sportskih terena — `<img>` unutra jeste
+bio obrađen (pa je izgledalo da filter radi), a anchor nije. **Svi atributni regexi u
+ovom filteru su zato `("|\')…\1`.**
+
+### Natpis u lightbox-u
+`al_image_caption()`: `alt` → caption priloga → naslov priloga. WP podrazumevano upisuje
+**ime fajla** kao naslov ("Final-3x3-Graz"), što je šum ispod slike. Odbacuje se ako je
+(a) slugifikovan naslov = ime fajla, ili (b) nema nijedan razmak a ima crticu/donju crtu.
+
+### Nova sekcija sa galerijom u WPBakery stranici
+Umetati kao zaseban `[vc_row el_class="al-section al-section--paper"]` na tačan indeks
+(`preg_split('#(?=\[vc_row)#')`), **bez `al-diag-*`** ako susedna sekcija već nosi rez
+(F7.20). Slike u sekciju ići kao **gol `<img>`** — filter ih sam umota i doda srcset.
+
 ## Otvoreno
+- [ ] ⏳ Kuriranje fotografija — pun prolaz kroz sve stranice (v. F7.21). Urađeno: 16657. Ostaje ~28 stranica bez slika + dopuna postojećih.
 - [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)
 - [x] ✅ 2026-07-22 — Testimonials sekcija (F7.16 iznad)
 - [x] ✅ 2026-07-22 — "Najprodavanije podloge u 2025." foto baner (F7.17 iznad) — **W1 1.7 u potpunosti zatvoren**
