@@ -1,0 +1,20 @@
+tabele treba da budu kompletno vidljive na mobilnom telefonu, umesto da se skroluju u stranu. Naslovi u tabeli treba da budu font weight 500. Četiri modela na veštačkoj travi da linkuju na proizvode adekvatne.
+Svi postovi treba da imaju kategoriju.
+
+Na mobilnoj verziji "kolačići" kocka ide preko call to action banera za mobilni - ispraviti. Ikonice na call to action delu na mobile su duplirane. Idu neke crvene preko crnih. Youtube dugme neka bude u antas line boji. Može plava ili narandžasta. Beli trouglic treba da bude u centru crvenog, nekako je pobegao-ispraviti.
+
+
+Na kontakt stranici dugme "pošalji poruku" je zelene boje, a placeholderi treba da budu malo svetliji da više liče na placeholder, sada izgledaju kao da je popunjen obrazac. Treba na dugmetu da piše "pošaljite poruku".
+
+Na katalog stranici su izlistane sve kategorije proizvoda. To treba da se drugačije reši. Ovako je nepregledno. Možda sa nekim side menijem? Stoji "products" a treba da bude na srpskom-prevesti.
+Show: 9/12... dugme, i sva ostala u nizu skloniti-to niko ne koristi.
+Nemaju svi proizvodi slike. Pronađi odgovarajuće slike proizvoda.
+
+Filteri na desktop treba da budu kao sidebar sa leve strane. Na kategorijama proizvoda, Iznad filtera proizvoda je veliki prazan prostor-srediti.
+
+U sidebar na postovima je pretraga "search for posts" - prevesti. Deo ispod naslova "posted by i datum" ne treba da se prikazuje. Svakom postu dodeliti kategoriju.
+Ispod posta stoje dugmići za deljenje na social - skloniti. Levo, desno postovi su newer i older - prevedi.
+
+U futeru ikonice su su orange, neka budu bele ili sivkaste kao tekst. OVako štrče i ne slažu se sa ostatkom. Social ikonice treba da budu okrugle, sad su nekako jajaste, a slova nisu u centru. Ovo © 2026 AntasLine - antas line treba da bude odvojeno, a godina da se menja automatski, jer to svi zaborave da promene.
+
+Heder slika na svim stranicama je ista, a sad imamo fotografije koje mogu da se postave umesto plave pozadine. Postavi adekvatne fotke u velikoj rezoluciji. Ako ima i za home page neka fotka u većoj rezoluciji bilo bi odlično da se zameni jer je ona fotka odlična, ali je musava na desktopu
