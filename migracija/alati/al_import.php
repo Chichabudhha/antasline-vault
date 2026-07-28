@@ -140,10 +140,13 @@ $section = empty( $job['section_class'] )
 		. $html . '[/vc_column_text][/vc_column][/vc_row]';
 
 if ( ! empty( $job['before'] ) ) {
+	// 🔴 Traži se POSLEDNJI pogodak, ne prvi. Namera je uvek „pred kraj stranice", a
+	// isti niz se po pravilu javlja i ranije: na 16589 je `al-section--navy` i hero
+	// sekcija sa H1 i završni CTA — prvi pogodak je ubacio galeriju IZNAD H1.
 	$parts = preg_split( '#(?=\[vc_row)#', $content );
 	$at    = null;
 	foreach ( $parts as $i => $p ) {
-		if ( false !== mb_stripos( $p, $job['before'] ) ) { $at = $i; break; }
+		if ( false !== mb_stripos( $p, $job['before'] ) ) { $at = $i; }
 	}
 	if ( null === $at ) {
 		WP_CLI::warning( 'Nije nađeno "' . $job['before'] . '" — sekcija ide na kraj' );
