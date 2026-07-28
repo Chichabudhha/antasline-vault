@@ -1,3 +1,61 @@
+## 2026-07-28 [claude-code] — Kuriranje fotografija: 23 stranice dobile galerije (F7.23) ✅
+
+**Zahtev (M):** „nastavi sa preostalih 30 stranica".
+
+**Rezultat: 31 → 8 stranica bez ijedne slike.** Svih 8 preostalih je **namerno** izostavljeno (v. niže). Ukupno **~170 fotografija** raspoređeno na 23 stranice, sve WebP, sa srpskim `alt` tekstom i lightbox-om.
+
+### Posao je prvo morao da postane ponovljiv
+
+Prva stranica (15580) je tražila zaseban PHP skript. Za 30 stranica to je neodrživo, pa je `al_import.php` proširen: `before` (umetanje pre sekcije prepoznate po nizu), `section_class` (WoodMart `al-section` smena paper/mist), `label`, i `raw` (za postove bez ikakvog WPBakery markupa). Svaka stranica je time **jedan JSON**, ne nov skript.
+
+### 🔴 Četiri greške uhvaćene tokom prolaza
+
+**(a) `before` je hvatao PRVI pogodak umesto poslednjeg.** Na 16589 je `al-section--navy` i hero sekcija sa H1 i završni CTA → galerija je legla **iznad H1**. Namera je uvek „pred kraj", pa se sada traži poslednji pogodak. Zatečena greška ispravljena `al_move_section.php`-om (nov alat).
+
+**(b) Slug stranice ume da vara.** `/zastitne-podloge-za-travu-i-plocnike/` zvuči kao Geoplast rešetke za travu — H1 je zapravo **„Bergo Solid"**, sadržaj su zaštitne ploče za teret. Da nisam otvorio sadržaj pre izbora, otišle bi potpuno pogrešne fotke. **Pravilo: profil stranice (H1/H2) pre izbora fotografija, nikad po slugu.**
+
+**(c) 🔴 EXIF orijentacija — `WP_Image_Editor` je NE primenjuje** kad se poziva direktno (WordPress to radi samo kroz `wp_create_image_subsizes()`). Veliki deo arhive snimljen telefonom nosi `Orientation: 6`; bez rotacije fotke legnu **bočno**, a `getimagesize()` i dalje prijavljuje „landscape" pa se ni po brojkama ne primeti.
+
+> **Ali EXIF u ovoj arhivi nije pouzdan u oba smera.** `bergo solid.JPG` ima `Orientation: 6`, a pikseli su mu **već uspravni** — rotacija bi ga pokvarila. Zato je i `contact_sheet.php` prepravljen da prikazuje sliku POSLE rotacije: mozaik sada pokazuje ono što uvoz stvarno daje, pa se izbor potvrđuje okom. Fotka je već bila uvezena ispravno (pre nego što je rotacija dodata) i ostavljena je takva.
+
+**(d) Kontakt-list mora da odgovara cevovodu uvoza.** Direktna posledica (c): alat za pregled i alat za uvoz ne smeju da se razilaze, inače se bira po jednoj slici a na sajt ode druga.
+
+### Šta je gde otišlo
+
+| Grupa | Stranice |
+|---|---|
+| Parking / Geoplast | 15580 · 16589 |
+| Zaštitne ploče (Bergo Solid) | 15793 |
+| ESD / antistatik | 16658 |
+| Bergo (Ultimate, Easy, hub, terase) | 15480 · 16665 · 17019 · 16590 |
+| Industrijski / PVC | 16660 · 17026 · 17025 · 6588 |
+| Sport — mere i izgradnja | 16586 · 16585 · 16688 · 17027 · 5754 |
+| Veštačka trava | 5119 · 5455 |
+| Poslovni / maloprodaja (LVT) | 5512 · 16683 |
+| Obeležavanje | 16666 |
+| O nama | 571 |
+
+Redosled u galeriji je svuda isti obrazac: **rezultat → reference → proces/detalj**.
+
+### 🔴 Dve stranice namerno BEZ galerije — nedostaje materijal
+
+- **16677 `/reflektori-za-sportske-terene/`** — stranica je o **mobilnim LED reflektorima bez kablova**. U arhivi ne postoji nijedna fotografija tog proizvoda; ono što filter nađe su „Bežični LED signalni senzori za pešake" (drugi proizvod). Fotke terena sa fiksnim stubovima rasvete bi implicirale posao koji nije naš. **Treba M da obezbedi fotke proizvoda.**
+- **16671 `/bumperi-zastita-za-police-regale-i-zidove/`** — samo **1** upotrebljiva fotka u primeni (`odbojnik za zid u magacinu.webp`), a stranica već ima mrežu proizvoda; galerija istih proizvoda bila bi duplikat. **Treba M da obezbedi fotke bumpera u pogonu.**
+
+Ostalih 6 bez slika je po prirodi bez fotografija: `politika-kolacica`, `kontakt`, `hvala-za-poruku`, `katalog`, `aktuelnosti` (arhiva), `planer-terena` (interaktivni alat).
+
+### Verifikacija
+- **199/199 HTTP 200**, 1×H1 svuda, 0 PHP grešaka
+- 0 priloga sa nedostajućim veličinama (439 pregledanih)
+- Ponovna upotreba priloga radi: 17019 i 571 nisu napravili nijedan duplikat fajla (`postoji: …` za svih 6+6)
+- 6588 (`raw`) — 0 neobrađenih `[vc_row` u izlazu
+- Backup sadržaja pre svake izmene u `%TEMP%/al-content-backup`
+
+### Ostaje
+- 16 stranica sa 1–2 slike (dopuna) — najveće: `industrijski-podovi-cena` (997 reči, 1 sl.), `podloge-za-parkiraliste-cena` (958, 2), `industrijski-podovi-montaza-preko-ostecenog-epoksida` (906, 1)
+- Fotografije za 16677 i 16671 — **#ceka-miroslav**
+- Caprari video (553 MB) — M odložio
+
 ## 2026-07-28 [claude-code] — WebP izvedene veličine + iskren `sizes` + ujednačene proporcije (F7.22) ✅
 
 **Povod (M):** „da li si dodao sve slike iz foldera i da li su u webp?" → **ne i ne.**
