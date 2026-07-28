@@ -1,3 +1,64 @@
+## 2026-07-28 [claude-code] — W7 planiran: ~30 zamerki svelo se na 4 sistemske greške 📋
+
+**Zahtev (M):** prolaz kroz sajt sa ~30 zamerki (stari template, nečitljiv tekst, praznina, meni, futer, mobilni…), pa: „napravi plan izvršenja za ovo prvo, upiši u dnevnik i raspored, pa ćemo onda preći na realizaciju."
+
+**Plan:** [[migracija/2026-07-28-W7-sanacija-builda]] — odobren, izvršenje po fazama F1–F4.
+
+### Zašto plan ide po uzrocima, a ne po stranicama
+
+Od ~30 zamerki, četiri sistemske greške objašnjavaju većinu. Jedna CSS izmena zatvara 29 kartica na 4 stranice; jedan skript zatvara 11 stranica sa praznim prostorom.
+
+**1. 🔴 `.al-card__title` pada preko `.al-card__body`** — `antas-design.css:290` ima `position:absolute; bottom:16px; color:#fff`. Naslov je pozicioniran u odnosu na `.al-card` (`position:relative`), **a ne u odnosu na `.al-card__media`**. Kad kartica ima i `body`, bela verzalna reč legne preko sivog teksta na beloj podlozi.
+
+> To je bio odgovor na M-ovo „tekst na slikama je nešto što nije čitljivo" na Expona stranici. **Slike su čiste** — swatch teksture nemaju utisnut tekst (provereno okom, ne pretpostavkom). Nečitljivo je bilo preklapanje dva sloja teksta. Pogođeno **29 kartica / 4 stranice**: `16684` (12), `16685` (12), `16686` (4), `5438` (1).
+
+**2. 🔴 Nesparen `</div>` u `post_content` — 11 stranica.** WPBakery renderuje `[vc_column_text]` kao `<div class="wpb_text_column"><div class="wpb_wrapper">…`; jedan višak `</div>` prerano zatvori `.wpb_wrapper`, ostatak sekcije ispadne iz kolone → velika bela rupa. Potvrđeno vizuelno na `vestacka-trava-za-terase` (rupa odmah posle tabele modela, `16673` ima **+2** viška). Ostale: `16659`, `16669`, `16670`, `16672`, `16675`, `16677`, `16678`, `16680`, `16687`, `17004`.
+
+> ⚠️ Naivna regex pretraga „praznih divova" daje lažne pogotke — `bergo-unique`, `bergo-elite`, `bergo-easy`, `ecotile-5005`, `zastitne-podloge`, `podloge-za-parking` izlaze **samo zbog color-swatch kockica** (namerno prazan `<div>`). Nisu bug.
+
+**3. Grupa „spoljne obloge" nikad nije povezana sa katalogom.** 7 stranica → **0 linkova ka `/proizvod/`**, iako proizvodi postoje (`16534` Unique, `16815` XL, `16823` Elite, `16843` Solid, Radici/Condor trave). 6 od 7 nema `_thumbnail_id`; jedina koja ima (`16659` bergo-xl) nosi **pogrešnu bazensku sliku** (att. `5057`). Hub `16590` linkuje 3 od 6 svoje dece.
+
+**4. 🔴 Meni je zamenjen ali stari sadržaj nije povučen.** Aktivan meni je term **67** („O firmi", `main-menu`); term **28** („Glavni izbornik", 66 stavki) je **mrtav** — nije dodeljen nijednoj lokaciji.
+
+> Otud M-ovo pitanje „ove stranice nema u meniju — kako?". `15580` podloge-za-parking postoji **samo u mrtvom meniju**, a već je zamenjena novom `16589` koja jeste u aktivnom. Dve druge (`5791` štale, `15793` zaštita trave) **jesu** u aktivnom meniju, ali nova verzija nikad nije napravljena — otud stari WPBakery izgled. `5791` uz to nema `_woodmart_title_off=on`, pa dobija i WoodMart naslovnu traku i odudara još jače.
+
+### Usput nađeno (nije bilo u zamerkama)
+
+- **26 gotovih `al-*` stranica nije nigde linkovano** — dimenzije terena, 4 cena-stranice, planer terena, hemijska/zdravstvo/teretane. Najveći brzi SEO dobitak u celom W7.
+- **40 od 94 proizvoda nema glavnu sliku** (Geoplast 7, Radici/Condor 9, Bergo 5, Ecotile rampe 4, sportska oprema 6).
+- **`uploads/2026/2026/01/`** — duplo ugnežden folder, **2.492 fajla, 0 referenci iz baze**, nedostupni preko WP URL-ova (posledica live importa). Sadrži upotrebljive ambijentalne Expona fotke koje su sve vreme bile „izgubljene".
+- **Tri Expona PDF-a leže na disku van medijateke** (`2019/11/BROCHURE-EXPONA-DESIGN.pdf`, tehnički list, EN Flow brošura) — zbog čega je tvrdnja u opisu proizvoda `16918` da „tehnički list nije dobavljen od distributera" **netačna**.
+- **Reference:** home (`16550`) ima `.al-logo-row` + 3 foto-kartice, „O nama" (`571`) ima 20 imena klijenata kao goli tekst, bez ijednog logotipa. Dve različite liste. Galerija „Iz naših radova" tvrdi „kliknite na sliku" a slike nisu klikabilne.
+- **2 posta samo u „nekategorizovano"** (`6824`, `6874`); kategorija `tereni` i `pod-za-garaze` su prazne, `Uncategorized @sr` / `nekategorizovano` su duplikat.
+
+### Odluke M-a u planiranju
+
+| Pitanje | Odluka |
+|---|---|
+| Expona — šta znači „umesto slike proizvod" | **Zameniti 12 dezen-tekstura mrežom od 4 stvarna proizvoda** (Clic/Commercial/Flow/Simplay), teksture seliti u Woo galeriju |
+| Tri stare stranice | **Dizajn-parity** — isti tekst, nov `al-*` omotač; `15580` → 301 na `16589` |
+| Meni | **Preurediti u celosti + ugraditi svih 26 siročadi**, nov „Cene" hub |
+| Raspored | **Po fazama, brzi dobici prvi** — F1 popravke → F2 sadržaj → F3 meni → F4 hero |
+
+### Raspored
+
+| Faza | Obim | Procena |
+|---|---|---|
+| **F1** Globalne popravke (CSS, tema, prevodi, katalog, mobilni) | 13 stavki | 1 sesija |
+| **F2** Sadržaj (Expona, Bergo, spoljne obloge, 40 proizvoda, 9 postova) | 9 stavki | 2–3 sesije |
+| **F3** Meni i navigacija (26 siročadi, „Cene" hub, 3 stare stranice) | 5 stavki | 1 sesija |
+| **F4** Hero fotografije po stranici + home u većoj rezoluciji | 2 stavke | 1 sesija |
+
+Redosled je namerno „popravke pre sadržaja" — F1 menja izgled svih stranica odjednom, pa sadržajni rad u F2 ide nad već ispravnim rasterom.
+
+### #ceka-miroslav
+
+1. **Slug `spoljnje-` → `spoljne-`** menja URL hub-a i svih 6 pod-stranica — traži 301 unos u redirect mapu. Predlog: uraditi (pravopisna greška, grupa nije u top-15 GSC).
+2. **Engleske Expona brošure** — skidanje sa objectflor.de je radnja ka spolja, čeka se „da" uz tačan URL/naziv/veličinu.
+3. **Mapiranje 4 modela veštačke trave na proizvode** — ako specifikacije ne poklapaju jednoznačno, pitam umesto da nagađam.
+
+---
+
 ## 2026-07-28 [claude-code] — Kuriranje fotografija: 23 stranice dobile galerije (F7.23) ✅
 
 **Zahtev (M):** „nastavi sa preostalih 30 stranica".
