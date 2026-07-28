@@ -31,6 +31,7 @@ ne trebaju ovaj korak, rade preko service account-a odmah).
 |---|---|---|
 | `ga4_report.py --from --to` | `googleanalytics4` | `users`, `sessions`, `events.{generate_lead,tel,mailto}`, `hvala_proxy_pageviews` |
 | `gsc_report.py --from --to [--limit]` | `searchconsole` | lista `opportunities` (upit/prikazi/klikovi/CTR/pozicija) za poziciju 5–15 |
+| `gsc_page_queries.py --from --to --page URL [--page URL …]` | (nema Windsor pandana) | upiti po KONKRETNOJ stranici — `total_impressions`, `total_clicks`, `queries[]`. Za odluku rebuild vs 301, dijagnozu kanibalizacije, „koja stranica drži koji upit" |
 | `ads_report.py --from --to` | `google_ads` | `campaigns[]` (spend_rsd/clicks/impressions/ctr_pct/avg_cpc_rsd/conversions) + `totals` |
 | `gmb_report.py --from --to [--location]` | GMB (Windsor pokrivenost je i onako bila ograničena) | `metrics` (impresije desktop/mobile maps/search, pozivi, klikovi na sajt, direkcije) |
 | `ai_report.py --from --to` | (nema Windsor pandana) | AI-asistent saobraćaj: `ai_sessions_total`, `ga4_channel_ai_assistant`, `podbacaj_kanala`, `po_izvoru`, `top_landing`, `eventi` |

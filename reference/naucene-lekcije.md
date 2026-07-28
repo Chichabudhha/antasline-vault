@@ -1,6 +1,6 @@
 ---
 tip: reference
-azurirano: 2026-07-22
+azurirano: 2026-07-28
 ---
 
 # Naučene lekcije (tehnički gotchas)
@@ -199,3 +199,24 @@ require_once ABSPATH.'wp-admin/includes/taxonomy.php';
 - **Provera šta se STVARNO renderuje pre svake izmene**: `curl` na pravu URL i `grep -c` za obe varijante broja — pokazalo tačno JEDNO mesto gde se "11050" pojavljuje na strani (unutar `panels_data`), dok header top-bar (drugi, nezavisan izvor) već ispravno prikazuje "11000". Bez ovog koraka lako se prevideti dupli/orphan redovi koji ne utiču na frontend, ili obrnuto — promeniti pogrešan izvor i misliti da je live popravljen.
 - **Trik za bezbednu izmenu serijalizovanih PHP polja (`panels_data`, `zn_page_builder_els` i sl.)**: ako je zamenski string ISTE dužine kao originalni (`"11050"` → `"11000"`, oba 5 karaktera), `UPDATE ... SET meta_value = REPLACE(meta_value, 'stari', 'novi')` je bezbedan — PHP serijalizacija čuva `s:N:"..."` length-prefiks koji ostaje tačan bez ikakve re-serijalizacije. Da su dužine različite, direktan `REPLACE()` bi pokvario ceo builder (WordPress/SiteOrigin bi odbio da deserijalizuje polje). Za nejednake dužine potrebna je prava re-serijalizacija (PHP `unserialize()`/`serialize()` ciklus), ne string replace.
 - **Backend-only polja (`woocommerce_store_postcode`, `woocommerce_pos_store_address`) namerno ostavljena netaknuta** — potvrđeno grep-om kroz temu/mu-plugins da se nigde ne koriste za frontend render ni schema izlaz, van obima ovog fix-a (čisto WooCommerce admin podešavanje).
+
+## Live export sa samo `publish` statusom = tih blind spot u celom migracionom planu (draft blind spot, 2026-07-28)
+- Live export od 2026-07-05 (`migracija/live-export-2026-07-05/`), izvor istine za `parity-inventar.csv` i ceo F1–F7 tok, sadrži **isključivo postove sa statusom `publish`**. Dve stranice sa realnim GSC saobraćajem (`/sportske-podloge/sportski-podovi-za-teniske-terene/` 552 impr u Q1, `/gumeni-podovi-javne-objekte-i-teretane/` 433 impr / 12 kl) bile su tada `draft` na live-u — nikad nisu ušle u inventar, pa bi 2026-08-31 nestale bez ijednog upozorenja. Otkrivene tek slučajno, kroz 404 dijagnostiku 27.07.
+- **Pravilo: svaki naredni live export mora uključivati i draftove** (i `private`/`pending`), pa ih tek onda svesno filtrirati uz zabelešku — a ne ih nikad ni ne videti. Isto važi za bilo koji „popis live stanja": sitemap i sitemap-bazirani skenovi po definiciji ne vide draftove.
+- **Šta bi ovo uhvatilo ranije**: unakrsna provera GSC URL liste (28d/90d) protiv `parity-inventar.csv` — svaki live URL sa nenultim impresijama koji NIJE u inventaru je alarm. Ta provera je jednokratno urađena 27.07 na 136 GSC URL-ova (nema drugih velikih slučajeva), ali nije deo rutine.
+
+## GSC podatak „koja stranica drži koji upit" je ono što odlučuje rebuild vs 301 (2026-07-28)
+- Standardni `gsc_report.py` agregira po upitu preko celog sajta i ne može da odgovori na pitanje koje se stvarno postavlja pri migracionoj odluci. Skripta `gsc_page_queries.py` (dodata u konektor 2026-07-28) filtrira po `page` dimenziji i vraća upitni klaster po konkretnoj stranici.
+- **Zašto to menja odluku, konkretno**: `/gumeni-podovi-javne-objekte-i-teretane/` je „stranica o teretanama" po naslovu, pa je 301 na postojeći lokalni `/industrijski-podovi/podovi-za-teretane-i-fitnes-centre/` delovao očigledno. Upitni podatak pokazuje suprotno — klaster je **materijal** („gumeni podovi" 28 impr, poz. 8,8), ne namena, a ciljna stranica prodaje PVC, ne gumu. 301 bi bio tematski promašaj i izgubio bi ceo klaster. Isti alat je 27.07 rešio i „podovi za terase" kanibalizaciju.
+- **Obrazac**: pre svake odluke „301 na nešto slično" — povuci upite obe stranice i uporedi klastere, ne naslove.
+
+## Unutar PHP **single-quoted** stringa navodnik se piše go, bez beksleša (2026-07-28)
+- Pri programskoj prepravci generisanog PHP-a ubačen je `<p style=\"…\">` unutar single-quoted PHP stringa. PHP u single-quoted stringu razrešava SAMO `\\` i `\'` — `\"` ostaje doslovno, pa bi u HTML izašao literalni beksleš i pokvario atribut.
+- Rođak je postojećeg gotcha-e #12 iz [[migracija/woodmart-sabloni]] (`\xNN` hex escape isto ne radi u single-quoted stringu). Ista klasa greške ponovila se istog dana i u Python heredoc-u pri upisu ove lekcije (`\x` u tripl-quoted stringu = `SyntaxError`) — **kad se piše kod koji generiše kod, sadržaj ide u fajl pa se čita, ne u ugnježden string literal.**
+- Uhvaćeno pre nego što je bilo vidljivo, jer verifikaciona skripta eksplicitno traži `style=\"` artefakt u HTML izlazu — vredi zadržati tu proveru u standardu verifikacije novih stranica.
+
+## Schema može mesecima da „postoji" a da nikad nije emitovana — postmeta/sadržaj nije dokaz (pickleball 16616, 2026-07-28)
+- Na `/teren-za-pickleball/` je `kses` pojeo oba `<script type="application/ld+json">` omotača (F7.15 obrazac), pa je stranica istovremeno: (a) prikazivala **5,3 KB sirovog JSON-a kao vidljiv tekst** posetiocu i (b) emitovala **nula** custom scheme. Trajalo je mesecima a niko nije primetio — jer je JSON bio na samom dnu, ispod kontakt-bloka, i jer standardne provere gledaju „ima li schema u sadržaju", ne „šta stranica stvarno emituje".
+- **Provera koja ovo hvata** (dodata u verifikacioni skript): iz renderovanog HTML-a izvući sve `<script application/ld+json>` blokove i `json_decode`-ovati ih; zatim iz istog HTML-a skinuti sve tagove i tražiti `@context` / `"@type"` / `acceptedAnswer` u **vidljivom tekstu** — ako se tamo pojave, `<script>` omotač je nestao.
+- **Sistemska posledica**: jedan otvoreni „rizik" iz [[PROGRESS]] (izmišljene recenzije kao Product `aggregateRating` na toj stranici) sve vreme uopšte nije bio aktivan, jer Google taj blok nikad nije parsirao. **Pre nego što se pokvarena schema „samo vrati u `<script>`", proveriti šta se tim vraćanjem PRVI PUT aktivira** — u ovom slučaju bi to bile fabrikovane recenzije, cena `0.00 EUR / InStock` na katalog-režim sajtu i `image` koja pokazuje na nepostojeći fajl. Popravka pokvarenog bloka nije neutralna operacija.
+- **Kad se na jednoj stranici otkrije da su recenzije, cena i slika izmišljeni — ostatak istog bloka tretirati kao neproveren.** Ovde su `sku`/`mpn` ostali, ali označeni za potvrdu, ne prihvaćeni kao tačni.

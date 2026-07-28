@@ -783,6 +783,74 @@ pre nego što je F7.14 dokumentovan, nisu imale `_woodmart_main_layout=full-widt
 padale na sidebar layout — 16585, 16586, 16688, 16584, 16581, 16582, 16583. Postavljeno.
 (`katalog` i `politika-kolacica` namerno preskočeni — nisu custom builder stranice.)
 
+## 🔴 F7.20 — Dijagonalni rezovi: dva reza uzastopno + tema koja gazi kompenzaciju (2026-07-28)
+
+Nastavak F7.19 (isti dan, isti blok). Pošto je „Brzi upit" forma prestala da se pomera
+nagore, isplivala su **dva zasebna problema** koja je raniji pomak maskirao.
+
+### (a) Dva reza jedan za drugim = navy blok ispada kao klin
+
+Sekcija ispred forme je na **svih 55 stranica** (izmereno, ne procenjeno) navy CTA sa
+`al-diag-top--rev` — rez ↘ na njenom vrhu. Forma je imala `al-diag-top` — rez ↗ na
+svom vrhu, dakle **odmah ispod, u suprotnom smeru**. Navy sekcija time dobija kosinu
+i gore i dole, u suprotnim smerovima, i vizuelno postaje iskošen klin.
+
+**Odluka:** forma više nema `al-diag-top` (klasa uklonjena u `functions.php`). Poenta te
+sekcije je bila **kontra-boja** (svetla traka između navy CTA i tamnog futera, M zamerka
+„sve plavo na dnu") — nju nosi `--al-mist` pozadina, rez nije bio potreban.
+
+**Pravilo:** dva `al-diag-*` reza ne smeju biti na uzastopnim sekcijama. Rez ima smisla
+kao prelaz *između dve različite boje*, ne kao ukras na svakoj sekciji. Pre dodavanja
+`al-diag-*` na bilo koju sekciju proveriti šta je neposredno iznad i ispod.
+
+### (b) Tema gazi kompenzacioni margin → praznina visine `cut + 20px`
+
+`base.css` (WoodMart) ima:
+
+```css
+:is(.wd-entry-content,.entry-content,.is-layout-flow,.is-layout-constrained,
+    .is-layout-constrained>.wp-block-group__inner-container) > * { margin-block: 0 var(--wd-block-spacing) }
+```
+
+`:is()` uzima specifičnost **najspecifičnijeg argumenta** — ovde `.is-layout-constrained >
+.wp-block-group__inner-container` = **(0,2,0)**. To gazi `.al-diag-top` / `.al-diag-top--rev`
+(0,1,0). Posledica: `top: -cut` pomak ostane, kompenzacija `margin-bottom: -cut` **nestane**
+i umesto nje dođe `+20px` → praznina visine `cut + 20px` ispod sekcije.
+
+Zato je i `margin-bottom` na tim rezovima podignut na **tri klase (0,3,0)**:
+
+```css
+.entry-content .al-section.al-diag-top,
+.entry-content .al-section.al-diag-top--rev,
+.wd-entry-content .al-section.al-diag-top,
+.wd-entry-content .al-section.al-diag-top--rev { margin-bottom: calc(-1 * var(--al-cut)); }
+```
+
+⚠️ Ovo je **treći** slučaj istog obrasca (F7.10 quick-quote, F7.19 sudar `top`/`margin-bottom`,
+sada i sami rezovi). Kad god pišeš pravilo koje kontroliše razmak elementa u
+`entry-content`, računaj da ti je protivnik **(0,2,0)**, ne (0,1,0).
+
+### (c) `wpautop` artefakti oko JSON-LD blokova
+
+Prazan `<p>` (24px) odnosno `<br>` + prazan `<p>` javljaju se od praznog reda ispred
+schema bloka — i kod `[vc_raw_html]` varijante i kod golog `<script type="application/ld+json">`
+u `post_content`. Ranije ih je krio pomak forme. Očišćeno na 16 stranica; ubuduće **ne
+ostavljati prazan red ispred schema bloka** pri programskom upisu (`$c .= "\n" . $jsonld;`
+→ `$c .= $jsonld;`).
+
+Uz to, WPBakery daje svakom `.wpb_content_element` (pa i nevidljivom `vc_raw_html`)
+`margin-bottom: 35px`. Neutralisano ciljano, samo za blokove koji sadrže isključivo script:
+
+```css
+.wpb_raw_code:has(> .wpb_wrapper > script:only-child) { margin-bottom: 0; }
+```
+
+### Provera (obavezna posle svake izmene `al-diag-*` ili strukture dna stranice)
+
+Kroz iframe (F7.12), **sve stranice × 1280 i 390 px**, tri mere:
+`clip-path` forme (mora `none`), razmak `prethodna.bottom → forma.top` (mora 0),
+preklop `forma.bottom → futer.top` (mora ≤ 0). Poslednji sken: **95 × 2, sve nule.**
+
 ## Otvoreno
 - [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)
 - [x] ✅ 2026-07-22 — Testimonials sekcija (F7.16 iznad)

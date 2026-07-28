@@ -1,3 +1,72 @@
+## 2026-07-28 [claude-code] — 🔴 `/teren-za-pickleball/`: schema koja nikad nije bila emitovana + 5,3 KB golog JSON-a vidljivo na strani ✅
+
+Nastalo iz pitanja „šta je jutros oko 6.40 bilo započeto a nije završeno". U scratchpad-u sesije `a125d167…` nađene dve skripte pisane u **06:52 i 06:53**, obe **napisane ali nikad pokrenute** i bez dnevničkog unosa: `fix_prazanp.php` (prazan red pre `[vc_raw_html]`) i `fix_goliscript.php` (prazni redovi oko golog `<script ld+json>`).
+
+**Provera je pokazala da su obe uglavnom promašivale metu**, ali da ispod njih stoji pravi bug:
+
+| | Nalaz | Stvarno stanje |
+|---|---|---|
+| A | prazan red pre `[vc_raw_html]` | **0 stranica** — `fix_prazanp.php` nije imao šta da radi (raniji broj „21" bio je artefakt shell-escape-ovanog `REGEXP`-a, bracket je protumačen kao karakter-klasa) |
+| B | goli `<script ld+json>` u `post_content` | **10 stranica**, ali sve renderuju čisto i schema im je validna → čista kozmetika u izvoru. **M odluka 2026-07-28: ostaviti** |
+| C | 🔴 JSON **bez ijednog** `<script>` omotača | **1 stranica — 16616 `/teren-za-pickleball/`** |
+
+**C je pravi bug (F7.15 obrazac):** `kses` je pojeo **oba** `<script>` omotača, pa je stranica mesecima:
+- prikazivala **5,3 KB sirovog JSON-a kao vidljiv tekst** odmah ispod „📧 Email… 🌐 www.antasline.com",
+- emitovala **nula** custom scheme (samo Yoast Article/WebPage/BreadcrumbList) — FAQPage sa 5 pitanja i Product blok bili su mrtvi.
+
+Oba bloka su i dalje parsirala (3.553 + 1.768 bajtova), pa je fix bio ponovno umotavanje, bez rekonstrukcije sadržaja.
+
+🔑 **Obrt koji menja otvoreni bloker iz [[PROGRESS]]**: drugi blok (`#product-reviews`) nosio je `aggregateRating 4.9/18` + 3 izmišljene recenzije (Marko Petrović, Ana Jovanović, Ivan M.) — one koje je M 21.07 svesno ostavio „kao test za Google". Pošto nikad nisu bile u `<script>` tagu, **Google ih nikad nije ni video** → rizik od manual action je sve vreme bio nula, ali bi ponovno umotavanje „kako jeste" taj rizik **prvi put stvarno aktiviralo**. Pitanje postavljeno M-u pre bilo kakve izmene.
+
+**M odluka 2026-07-28 → izvršeno:**
+- Vraćen **FAQPage (5 pitanja) + Product** u `<script type="application/ld+json">`, upis preko `$wpdb->update` (nikad `wp_update_post` — ponovo bi ga pojeo kses).
+- **Ceo blok 2 obrisan** — sadržao je isključivo `name` + `aggregateRating` + `review`, ništa upotrebljivo.
+- Usput izbačeno i ono što je **provereno netačno**, da se ne aktivira po prvi put: `offers` sa `price "0.00" EUR` + `availability InStock` (sajt je katalog-režim, cene su „na upit") i `image` koja pokazuje na **nepostojeći fajl** `2025/10/bergo-flov-pickleball.jpg` → zamenjena `2025/02/bergo-flow-pickleball-1.jpg`, slikom koju stranica stvarno koristi (HTTP 200 potvrđen pre upisa).
+- Skripta ima tri `PREKID` provere pre upisa (broj blokova, parsiranje pre i posle, i da između blokova nema sadržaja koji bi se izgubio).
+
+**Verifikacija:** HTTP 200 · 1×H1 · goli JSON u vidljivom tekstu **nestao** · emituju se 3 validna JSON-LD bloka, među njima **FAQPage(5) + Product** · `aggregateRating`, imena recenzenata i `price 0.00` **više se ne pojavljuju nigde u HTML-u** · Product polja ostala: `@id, @type, brand, category, description, image, material, mpn, name, sku, weight` · 6 slika i 60 internih linkova 200 · Chrome vizuelno (dno stranice čisto: video → „Zatražite ponudu" forma → social) · post_content 12.764 → 10.906 bajtova.
+- ⚠️ Lažna uzbuna usput: velika prazna površina iznad „Postavi pitanje" u screenshot-u je samo `bergo-flow-pickleball-6.jpg` (860×645, `loading="lazy"`) koji se nije bio učitao — nije posledica izmene.
+- Backup: `antasline-backups/antasline_local_2026-07-28_pre-pickleball-schema.sql` (48,8 MB).
+- 🔓 **Posledica**: title/meta refresh na `/teren-za-pickleball/`, odložen od 21.07 samo zbog ovog pitanja, više nije blokiran.
+- ⏭️ `sku: BERGO-FLOV-PICKLEBALL` i `mpn: FLOV7MM` **nisu provereni** — na stranici na kojoj su recenzije, cena i slika ispali izmišljeni, vredi da M potvrdi da li su ove oznake stvarne (#ceka-miroslav, nisko prioritetno).
+
+---
+
+## 2026-07-28 [claude-code] W3 3.1 — Draft blind spot zatvoren: 2 live stranice dobile lokalni pandan + parity redove ✅
+
+Direktan nastavak sinoćne `[cpanel-live]` sesije — jedini 🔴 `#claude-code` rep iz nje (dve stranice koje su bile draft, M ih objavio 27.07, nisu bile u `parity-inventar.csv` ni na lokalu → 31.08. bi se ponovo izgubile). Ujedno N4 stavka (W3 3.1–3.2 C1 finalna verifikacija). Backup pre svega: `antasline-backups/antasline_local_2026-07-28_pre-draft-blindspot-parity.sql` (48,8 MB).
+
+**Analiza pre gradnje (novi alat).** Napisana skripta koja vuče GSC upite po KONKRETNOJ stranici (`page` + `query` dimenzije) — `gsc_report.py` to ne može jer agregira po upitu preko celog sajta. Rezultat je odlučio pristup:
+
+| Live URL | 28d (06-28→07-25) | apr–jun | jan–mar | Klaster |
+|---|---|---|---|---|
+| `/sportske-podloge/sportski-podovi-za-teniske-terene/` | 41 impr / 0 kl | 442/5 | 552/8 | „us open podloga" poz **4,3**, „najbrza podloga u tenisu", „podloga za teniski teren cijena" |
+| `/gumeni-podovi-javne-objekte-i-teretane/` | 67/6 | 196/7 | 433/12 | „gumeni podovi" 28 impr poz **8,8**, „gumeni podovi za teretane" 9 impr/3 kl |
+
+28d prozor je potcenjen — obe su bile 404 veći deo tog perioda. Obe imaju održivu istoriju → nijedna se ne sme pustiti da nestane.
+
+**Ključni nalaz: nijedna nije duplikat postojećeg lokalnog sadržaja** (zato rebuild, ne 301):
+- Tenis — lokalni post 2699 `/podloga-za-teniske-terene/` je o **šljaci / izboru podloge** (Yoast title već usidren na „Šljaka … cena"); live stranica je o **izradi** (akril US open, veštačka trava, Bergo PP). Podela: članak = izbor/cena, landing = izrada + reference.
+- Guma — lokalni 17020 `/industrijski-podovi/podovi-za-teretane-i-fitnes-centre/` prodaje **Ecotile PVC**; live stranica prodaje **SaarFloor/Objectflor gumu**. Upiti su za *materijal* („gumeni podovi"), ne za *namenu* → 301 na 17020 bi bio tematski promašaj. **M potvrdio 2026-07-28 da je SaarFloor i dalje u ponudi** (pitano pre gradnje, po Bergo Soft lekciji od 27.07).
+
+**Izvršeno:**
+- **ID 17028** `/sportske-podloge/sportski-podovi-za-teniske-terene/` — `post_parent` 5438, F5 Kategorija A rebuild na identičnom live slug-u. Uporedna tabela 3 sistema (ITF brzine), 3 sekcije sa pravim referentnim fotkama (Opština UB 2019, TK Slice Valjevo 2019, Dom učenika Patrijarh Pavle 2019 — sve već postojale lokalno), 5 FAQ + FAQPage JSON-LD. 1.171 reč.
+- **ID 17029** `/gumeni-podovi-javne-objekte-i-teretane/` — top-level, isto Kategorija A. **Live ima 2×H1 bug, lokalna verzija ima 1×H1.** 4 USP kartice, lista 6 namena, 8 pravih SaarFloor dezena (370×370 iz lokalne biblioteke), 5 FAQ + JSON-LD. 956 reči.
+- **Hub `/sportske-podloge/` (5438)**: kartica „Teniski tereni" prevezana sa članka 2699 na novu disciplinsku landing stranicu (silo redosled: hub → landing → članak; 2699 ostaje linkovan iz same landing stranice).
+- **`migracija/parity-inventar.csv`**: 2 nova reda, oba `PARITY` + puna napomena o uzroku (draft blind spot). 175→177 redova, BOM/CRLF/9 kolona očuvano i verifikovano parserom.
+- **`.claude/skills/antasline-konektor/scripts/gsc_page_queries.py`** — jednokratna skripta promovisana u konektor + upisana u `SKILL.md` tabelu. Testirana sa nove putanje.
+- Nedostajuća slika `2022/05/teg-na-podu.jpg` (postojala samo na live-u) povučena u lokalne `uploads/` — isto što bi rsync uradio na dan migracije.
+
+**Dve greške uhvaćene u prvom prolazu i ispravljene pre zatvaranja:**
+- 🔴 Referentne fotke su 4:3 (800×600, 992×744), a ja sam ih deklarisao kao 768×432 (16:9) — pogrešan `width`/`height` = CLS regresija, tačno ono što je W3 3.6 zatvarao 12.07. Ispravljeno na prave dimenzije + `max-width:720px` (na 100% širine 4:3 fotka je bila ~730px visoka).
+- 🔴 Python `str.replace` pri prepravci ubacio `style=\"…\"` u PHP **single-quoted** string — tamo se `\"` NE razrešava, pa bi u HTML izašao literalni bekslеš. Uhvaćeno lint+verifikacijom pre nego što je bilo vidljivo. (Rođak gotcha-e #12 iz `woodmart-sabloni`: `\x` escape isto ne radi u single-quoted stringu.)
+
+**Verifikacija** (obe stranice + regresija na 17020 i 5438): HTTP 200 · tačno 1×H1 · FAQPage JSON-LD validan (5+5 pitanja) · nema golog JSON-a u tekstu · nema escape artefakata · sve slike 200 (3 + 9) · svi interni linkovi 200 (44 + 43) · `_woodmart_main_layout=full-width` + `_woodmart_title_off=on` upisani · Chrome vizuelna provera obe stranice (F7.14 zahtev) · 0 console grešaka · obe u `page-sitemap.xml`.
+
+**Napomena o Yoast title-u**: obe stranice su dobile bolji title od live-a (live tenis title je bio „Izrada terena za tenis; vestacka trava; US open podloga;" — bez dijakritika, sa tačka-zarezima, 0% CTR na poz. 4,3). Nisu u top-15 GSC URL-ova, pa strogi title-parity ne važi. Efekat vidljiv tek posle migracije.
+
+---
+
 ## 2026-07-28 [cpanel-live] — Radni nalog P1–P5 izvršen (UŽIVO), izvor: [[migracija/2026-07-27-cpanel-sesija-plan]]
 
 Sesija na `wp1.oblak.host` (produkcija), `wp db export` pre svih izmena baze (`~/db-backups/antasline_pre-cpanel-2026-07-28_004738.sql`). Sve verifikovano `curl`-om posle `wp litespeed-purge all`.
@@ -21,6 +90,15 @@ Sesija na `wp1.oblak.host` (produkcija), `wp db export` pre svih izmena baze (`~
 - ℹ️ Test artefakt, ne bug: `/bergo-unique/` je u skenu ispao „bez forme" jer taj slug ima i **proizvod**, pa flat URL 301-uje na `/proizvod/bergo-unique/`; prava stranica je `/spoljnje-podne-obloge/bergo-unique/` i uredno ima formu.
 - **Pravilo upisano**: [[migracija/woodmart-sabloni]] **F7.19** — kad dve CSS vrednosti moraju da se menjaju zajedno (pomak + kompenzacija, offset + njegov negativ), ne pisati ih u dva pravila nego ih vezati za jednu custom property; + gotov snippet za proveru preklopa i napomena da sken mora ići kroz sve stranice i obe širine.
 - Izmenjen fajl: `woodmart-child/css/antas-design.css` (lokalni build; `filemtime` verzionisanje sam pokupi novu verziju).
+
+### 🔴 Nastavak istog dana — kad je forma prestala da se pomera, isplivala su tri skrivena problema
+Miroslav prijavio: „red pre zatražite ponudu ima neku kosinu na gore, umesto da prelaz bude skroz ravan". Raniji pomak forme (`top:-cut`) je maskirao **tri zasebna defekta** — svi su sada rešeni i skenirani. Detalji i pravila: [[migracija/woodmart-sabloni]] **F7.20**.
+
+- **(a) Dva dijagonalna reza uzastopno.** Sekcija ispred forme je na **svih 55 stranica** (izmereno skenom, ne procenjeno) navy CTA sa `al-diag-top--rev` — rez ↘ na njenom vrhu. Forma je imala `al-diag-top` — rez ↗ odmah ispod, **u suprotnom smeru**. Navy blok time dobija kosinu i gore i dole i vizuelno postaje iskošen klin. **Rešeno uklanjanjem `al-diag-top` sa forme** (`functions.php`): poenta te sekcije je bila kontra-boja (svetla traka između navy CTA i tamnog futera, stara M zamerka „sve plavo na dnu") — nju nosi `--al-mist` pozadina, rez nije bio potreban. Novo pravilo: **dva `al-diag-*` reza ne smeju biti na uzastopnim sekcijama.**
+- **(b) Tema gazi kompenzacioni margin — praznina `cut + 20px` na 10 stranica.** `base.css` ima `:is(.wd-entry-content,.entry-content,…) > * { margin-block: 0 var(--wd-block-spacing) }`; `:is()` uzima specifičnost **najspecifičnijeg argumenta** (`.is-layout-constrained>.wp-block-group__inner-container` = **(0,2,0)**), što gazi `.al-diag-top--rev` (0,1,0). Rezultat: `top:-cut` pomak ostane, kompenzacija nestane, umesto nje dođe +20px. Uzrok nađen tek **isključivanjem stylesheet-ova jedan po jedan** — enumeracija `cssRules` ga nije našla (selektor puca na `matches()`). Podignuto na tri klase (0,3,0). ⚠️ **Treći put isti obrazac** (F7.10, F7.19, sad rezovi) — u `entry-content` je protivnik uvek (0,2,0), ne (0,1,0).
+- **(c) `wpautop` artefakti oko JSON-LD blokova — 8 stranica × 24px.** Prazan red ispred schema bloka postaje prazan `<p>` (kod `[vc_raw_html]`) odnosno `<br>` + prazan `<p>` (kod golog `<script type="application/ld+json">`). Očišćeno programski na **16 stranica** (7 + 9). Ubuduće: ne ostavljati prazan red ispred schema bloka pri upisu (`$c .= "\n" . $jsonld;` → `$c .= $jsonld;`). Uz to neutralisan WPBakery `margin-bottom:35px` na nevidljivim raw blokovima, ciljano: `.wpb_raw_code:has(> .wpb_wrapper > script:only-child)`.
+- **Finalni sken: 95 stranica × 2 širine (1280 i 390 px)** — `clip-path` forme, razmak prethodna→forma, preklop forma→futer, dugme vs futer, horizontalni overflow: **sve nule, 0 problematičnih.**
+- Backup pre izmena teme: `woodmart-child/functions.php.bak-2026-07-28`, `css/antas-design.css.bak-2026-07-28`.
 
 ## 2026-07-28 [claude-code] [W2] — „Koš za dvorište" (16657) i „visina koša" (16586) sređeni — oba prioriteta #4 i #5 iz klaster analize zatvorena
 
