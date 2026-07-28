@@ -63,14 +63,26 @@ foreach ( $job['images'] as $img ) {
 	$info = getimagesize( $src );
 	if ( ! $info ) { WP_CLI::warning( 'nije slika: ' . $src ); continue; }
 	list( $w, $h ) = $info;
-	$editor = wp_get_image_editor( $src );
-	if ( is_wp_error( $editor ) ) { WP_CLI::warning( 'editor: ' . $src ); continue; }
-	if ( max( $w, $h ) > 1600 ) {
-		$editor->resize( $w >= $h ? 1600 : null, $h > $w ? 1600 : null, false );
+
+	// Deo arhive (npr. `novi sajt/podloge za parking`) je VEĆ WebP i već ispod 1600px.
+	// Tu nema šta da se radi — prekodiranje bi bilo čist gubitak generacije, pa se
+	// fajl samo kopira.
+	$srcMime  = $info['mime'] ?? '';
+	$needsFit = max( $w, $h ) > 1600;
+	if ( ! $needsFit && $srcMime === al_target_mime( $dest ) ) {
+		if ( ! copy( $src, $dest ) ) { WP_CLI::warning( 'kopija: ' . $src ); continue; }
+		$saved = array( 'path' => $dest, 'width' => $w, 'height' => $h, 'mime-type' => $srcMime );
+		WP_CLI::log( '  (kopirano bez prekodiranja)' );
+	} else {
+		$editor = wp_get_image_editor( $src );
+		if ( is_wp_error( $editor ) ) { WP_CLI::warning( 'editor: ' . $src ); continue; }
+		if ( $needsFit ) {
+			$editor->resize( $w >= $h ? 1600 : null, $h > $w ? 1600 : null, false );
+		}
+		$editor->set_quality( 82 );
+		$saved = $editor->save( $dest, al_target_mime( $dest ) );
+		if ( is_wp_error( $saved ) ) { WP_CLI::warning( 'save: ' . $src ); continue; }
 	}
-	$editor->set_quality( 82 );
-	$saved = $editor->save( $dest, al_target_mime( $dest ) );
-	if ( is_wp_error( $saved ) ) { WP_CLI::warning( 'save: ' . $src ); continue; }
 	$dest = $saved['path'];
 
 	$att = array(
