@@ -28,6 +28,22 @@ foreach ($list as $i => $path) {
         default => null,
     };
     if (!$src) { continue; }
+
+    // 🔴 Kontakt-list MORA da prikazuje ono što uvoz stvarno daje, uključujući EXIF
+    // rotaciju — inače se bira na osnovu jedne slike a na sajt ode druga.
+    // Napomena: EXIF u ovoj arhivi nije pouzdan (ima fajlova sa `Orientation: 6`
+    // čiji su pikseli već uspravni, gde bi rotacija POKVARILA sliku), zato se izbor
+    // i dalje potvrđuje okom, nad ovim mozaikom.
+    if (preg_match('/\.jpe?g$/i', $path) && function_exists('exif_read_data')) {
+        $e = @exif_read_data($path);
+        $o = (int)($e['Orientation'] ?? 1);
+        $deg = match ($o) { 3 => 180, 6 => -90, 8 => 90, default => 0 };
+        if ($deg !== 0) {
+            $rot = imagerotate($src, $deg, 0);
+            if ($rot) { imagedestroy($src); $src = $rot; $info[0] = imagesx($src); $info[1] = imagesy($src); }
+        }
+    }
+
     $c = $i % $cols; $r = intdiv($i, $cols);
     $x = $pad + $c * ($cw + $pad);
     $y = $pad + $r * ($ch + $labelH + $pad);

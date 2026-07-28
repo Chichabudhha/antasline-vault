@@ -66,18 +66,39 @@ foreach ( $job['images'] as $img ) {
 	if ( ! $info ) { WP_CLI::warning( 'nije slika: ' . $src ); continue; }
 	list( $w, $h ) = $info;
 
+	// 🔴 EXIF orijentacija se MORA primeniti ručno. `WP_Image_Editor` je ne primenjuje
+	// pri `load()` — WordPress to radi samo kroz `wp_create_image_subsizes()`, a ovde
+	// se editor poziva direktno. Veliki deo arhive snimljen telefonom nosi
+	// `Orientation: 6` (rotacija za 90°): bez ovoga fotke legnu BOČNO na stranicu, a
+	// `getimagesize()` i dalje prijavljuje "landscape" pa se ni po brojkama ne primeti.
+	$exifRot = false;
+	if ( preg_match( '/\.jpe?g$/i', $src ) && function_exists( 'exif_read_data' ) ) {
+		$ex      = @exif_read_data( $src );
+		$exifRot = ! empty( $ex['Orientation'] ) && (int) $ex['Orientation'] > 1;
+	}
+
 	// Deo arhive (npr. `novi sajt/podloge za parking`) je VEĆ WebP i već ispod 1600px.
 	// Tu nema šta da se radi — prekodiranje bi bilo čist gubitak generacije, pa se
 	// fajl samo kopira.
 	$srcMime  = $info['mime'] ?? '';
 	$needsFit = max( $w, $h ) > 1600;
-	if ( ! $needsFit && $srcMime === al_target_mime( $dest ) ) {
+	if ( ! $needsFit && ! $exifRot && $srcMime === al_target_mime( $dest ) ) {
 		if ( ! copy( $src, $dest ) ) { WP_CLI::warning( 'kopija: ' . $src ); continue; }
 		$saved = array( 'path' => $dest, 'width' => $w, 'height' => $h, 'mime-type' => $srcMime );
 		WP_CLI::log( '  (kopirano bez prekodiranja)' );
 	} else {
 		$editor = wp_get_image_editor( $src );
 		if ( is_wp_error( $editor ) ) { WP_CLI::warning( 'editor: ' . $src ); continue; }
+
+		if ( $exifRot && method_exists( $editor, 'maybe_exif_rotate' ) ) {
+			$editor->maybe_exif_rotate();
+			$sz = $editor->get_size();          // posle rotacije se širina i visina zamene
+			$w  = $sz['width'];
+			$h  = $sz['height'];
+			$needsFit = max( $w, $h ) > 1600;
+			WP_CLI::log( '  (EXIF rotacija primenjena)' );
+		}
+
 		if ( $needsFit ) {
 			$editor->resize( $w >= $h ? 1600 : null, $h > $w ? 1600 : null, false );
 		}
@@ -134,10 +155,16 @@ $content = $post->post_content;
 // Stranice građene po WoodMart šablonu traže `al-section` klasu (i smenu paper/mist);
 // starije stranice su običan [vc_row]. Bez `section_class` ostaje neutralan red.
 // F7.20: NE dodavati `al-diag-*` ako susedna sekcija već nosi rez.
-$section = empty( $job['section_class'] )
-	? '[vc_row][vc_column][vc_column_text]' . $html . '[/vc_column_text][/vc_column][/vc_row]'
-	: '[vc_row full_width="stretch_row" el_class="' . esc_attr( $job['section_class'] ) . '"][vc_column][vc_column_text]'
+// `raw` za postove koji uopšte nemaju WPBakery markup (npr. 6588): tamo ubacivanje
+// `[vc_row]` nosi rizik da se shortcode ne obradi i ispiše kao goli tekst.
+if ( ! empty( $job['raw'] ) ) {
+	$section = $html;
+} elseif ( empty( $job['section_class'] ) ) {
+	$section = '[vc_row][vc_column][vc_column_text]' . $html . '[/vc_column_text][/vc_column][/vc_row]';
+} else {
+	$section = '[vc_row full_width="stretch_row" el_class="' . esc_attr( $job['section_class'] ) . '"][vc_column][vc_column_text]'
 		. $html . '[/vc_column_text][/vc_column][/vc_row]';
+}
 
 if ( ! empty( $job['before'] ) ) {
 	// 🔴 Traži se POSLEDNJI pogodak, ne prvi. Namera je uvek „pred kraj stranice", a
