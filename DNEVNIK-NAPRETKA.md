@@ -1,3 +1,103 @@
+## 2026-07-28 [claude-code] — WebP izvedene veličine + iskren `sizes` + ujednačene proporcije (F7.22) ✅
+
+**Povod (M):** „da li si dodao sve slike iz foldera i da li su u webp?" → **ne i ne.**
+Prethodna sesija je uvezla **9 od 1.807** fotki (samo 16657), i to kao JPEG. Zatim:
+„mogu li male slike na stranici stvarno da budu male (npr. 300×200)?" i
+„slike u pregledu treba da budu istih proporcija".
+
+### 🔴 `sizes` je lagao — najveći pojedinačni nalaz
+
+Mereno na 16657 u Chrome-u: slika se crta na **381 px**, a `sizes` je tvrdio **760 px**
+(grana „sadržaj", pisana za jednokolonski tekst — slike u `.al-grid--3` su upadale u
+nju). Browser je zato skidao **900w**: 9 slika = **1.038 KB**.
+
+`al_sizes_attr()` sada računa ćeliju iz broja kolona: `(1192 − 24×(N−1))/N`. Filter
+uz dubinu `<a>` prati i dubinu `<div>` sa stekom otvorenih `.al-grid--N`.
+
+| korak | bira se | 9 slika |
+|---|---|---|
+| zatečeno | 900w jpg | 1.038 KB |
+| tačan `sizes` | 600w | ~510 KB |
+| + `al-xs` 400 | 400w | ~360 KB |
+| **+ WebP (izmereno)** | **400w webp** | **233 KB (−78%)** |
+
+Odgovor na „300×200": na 381 px prikaza 300w bi se **uvećavalo** i bilo mekše, pa je
+400 pošten minimum. Na retina telefonu browser i dalje uzima 900w — to je ispravno,
+zato `srcset` i postoji; poenta je pun spisak stepenika + iskren `sizes`.
+
+### 🔴 „400w" koji je pokazivao na fajl od 366 KB
+
+Čim je `al-xs` dodat u `srcset`, a fajlovi još nisu bili generisani,
+`wp_get_attachment_image_src()` je vraćao **URL ORIGINALA sa umanjenim brojkama** —
+`srcset` je nudio 1600px/366 KB fajl kao „najjeftinijih 400w". Prepisano na
+`image_get_intermediate_size()`, koji vrati `false` kad fajl ne postoji.
+
+### WebP — prvi pristup je bio pogrešan, izmereno
+
+Prvo je pisan `al_convert_webp.php` koji konvertuje **sam original**. Rezultat na 9
+slika: **−5%**, dve slike **veće**. Uzrok: original je već jednom kompresovan JPEG,
+pa je to bilo prekodiranje već izgubljenog. Dodatno: palette PNG **fatalno ruši** GD
+(`Palette image not supported by webp`), a pristup traži prepisivanje URL-ova kroz
+`post_content`.
+
+Prešlo se na `image_editor_output_format` (WP ≥5.8): **original se ne dira**, samo
+`-WxH` varijante — one koje se stvarno učitavaju — izlaze kao WebP. Bez ijedne izmene
+`post_content`-a. Mereno na 600w: **39,6 KB jpg → 29,1 KB webp**.
+
+> Iz izvora, ne iz gotovog JPEG-a, WebP na 600w daje −17% do −34% (q82), odnosno
+> −34% do −53% (q75). Ostalo se na **q82** — isti kvalitet kao dosad.
+
+### 🔴 Bag koji sam sâm napravio pa uhvatio
+
+`al_regen_sizes.php` je brisao stari `al-*` fajl bez provere da li ta ista putanja
+služi i nekoj **drugoj** veličini. WordPress deli fajl između veličina istih
+dimenzija — kod 16621 su i `al-sm` i `woocommerce_single` bili `…-600x400.jpg`.
+Rezultat: **212 pokvarenih WooCommerce slika**, koje standardna provera (HTTP 200 /
+H1 / PHP greške) **ne vidi**, jer stranica i dalje vraća 200.
+
+Uhvaćeno tek novom proverom koja skuplja `src`+`srcset`+`href` sa svih 199 URL-ova i
+HEAD-uje svaku sliku. Popravljeno `al_fix_missing_sizes.php` (212/212), a brisanje u
+`al_regen_sizes.php` sada proverava deljene putanje.
+
+> ⚠️ **Pravilo:** posle svakog masovnog rada nad medijatekom pustiti i proveru slika,
+> ne samo proveru stranica. 404 na slici ne obara HTTP status stranice.
+
+### Ujednačene proporcije (zahtev M)
+
+`.al-grid .al-lb img` → `aspect-ratio: 4/3` + `object-fit: cover`. Kadriranje je
+**čisto vizuelno** — fajl se ne seče, `srcset` je isti, lightbox otvara celu sliku.
+4:3 je najčešći odnos u arhivi. Specifičnost (0,2,1) zbog WoodMart `:is()` zamke.
+
+### Još jedna rupa u izboru priloga
+
+Prvi izbor je gledao samo `<img>` u `post_content` i time **preskočio celu
+`/galerija-sportskih-terena/`** (2,7 MB): tamo je `[gallery ids="…"]` shortcode, koji
+u bazi nema nijedan `<img>`. `al_ids_from_content()` sada hvata oba oblika.
+Ta stranica: **2.679 KB → 1.011 KB (−62%)**.
+
+### Kuriranje — nastavljeno
+
+**15580 „Podloge za parking"** (2.123 reči, 0 fotki, poklapa se sa publikom
+„Parking & spoljne podloge") → 9 fotki iz `novi sajt/podloge za parking`, redosled
+rezultat → reference → proces/detalj. Izvori su već WebP ispod 1600px, pa ih
+`al_import.php` sada **kopira bez prekodiranja** (nema gubitka generacije).
+
+### Verifikacija
+
+- **199/199 HTTP 200**, 1×H1 svuda, **0 PHP grešaka**
+- **0 pokvarenih slika** (preostalih 20× „403" su artefakt `curl`-a na en-crti `–` u
+  imenu fajla — sa procentualnim kodiranjem vraća 200)
+- 287 priloga regenerisano, 212 popravljeno, 0 nedostajućih veličina
+- Backup pre izmena: 29,1 MB (`wpGs_posts` + `wpGs_postmeta`)
+
+### Ostaje
+- **30 stranica bez ijedne slike** (popis: `al_regen_sizes`/`bezslika` upit) —
+  najveće: `zastitne-podloge-za-travu-i-plocnike` (1.643 reči),
+  `antistatik-i-elektroprovodljivi-podovi` (1.526), `bergo-ultimate` (1.181)
+- 16 stranica sa 1–2 slike
+- 9 priloga bez `_wp_attached_file` zapisa — filter ih namerno ne dira
+- Caprari video (553 MB) — M odložio
+
 ## 2026-07-28 [claude-code] — Lightbox za sve slike u sadržaju + YouTube-stil play dugme (F7.21) ✅
 
 **Zahtev (M):** fotografije iz `C:\Miroslav\Antas line` i `C:\Miroslav\Antas Line priprema za sajt` upotrebiti na sajtu; slika na stranici treba da bude manja zbog brzine, a da se klikom otvara uvećana (≥1400px za landscape); video označiti play trouglom „u AntasLine stilu, u fazonu kao YouTube".

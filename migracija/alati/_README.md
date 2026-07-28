@@ -64,14 +64,40 @@ lakše kopirati njega i izmeniti listu nego pisati JSON.
 php wp-cli.phar --path="C:\xampp\htdocs\antasline" eval-file job.php
 ```
 
+## Alati (F7.22, 2026-07-28)
+
+| Skript | Šta radi |
+|---|---|
+| `al_webp.php` | zajedničke funkcije: `al_target_ext/mime`, `al_ids_from_content` (hvata i `<img>` i `[gallery ids]`) |
+| `al_import.php` | uvoz iz foldera + ubacivanje bloka; WebP izlaz, kopira bez prekodiranja ako je izvor već WebP ≤1600px |
+| `al_regen_sizes.php` | regeneriše SAMO `al-*` veličine (kao WebP). `content` \| `post:ID` \| `17031,17032` |
+| `al_fix_missing_sizes.php` | popravlja priloge kojima u zapisu piše veličina bez fajla; korisno i kao provera zdravlja medijateke |
+| `al_convert_webp.php` | ⛔ **superseded** — konvertuje sam original. Zadržan kao trag; v. dnevnik zašto je pristup napušten |
+| `contact_sheet.php` | mozaik sličica za pregled kandidata |
+| `job-15580-parking.php` | primer stvarno izvršenog posla (uz `primer-job-16657.php`) |
+
+Poziv: `php wp-cli.phar --path="C:\xampp\htdocs\antasline" eval-file <skript> [args]`
+(prvo bez `apply` — svi skriptovi imaju probu).
+
+> `mysql` mora biti na PATH-u: `$env:PATH="C:\xampp\mysql\bin;$env:PATH"`.
+
 ## Pravila kojih se držati
 
 - **`alt` je obavezan**, na srpskom, opisuje ŠTA se vidi (ne ime fajla). Ide i u
   `_wp_attachment_image_alt` i u `<img alt>`.
 - Naslov priloga = ljudski natpis **sa razmacima** — koristi se kao natpis u
   lightbox-u (`al_image_caption()` odbacuje naslove koji liče na ime fajla).
-- Skaliranje na **max 1600px** duže stranice, JPEG q82, **bez uvećavanja**.
-  1600 = `al-lb`, verzija koju otvara lightbox.
+- Skaliranje na **max 1600px** duže stranice, q82, **bez uvećavanja**.
+  1600 = `al-lb`, verzija koju otvara lightbox. Izvor koji je već WebP i ispod
+  1600px se **kopira**, ne prekodira (prekodiranje = čist gubitak generacije).
+- **Original se NE konvertuje u WebP.** WebP izlaze samo izvedene `-WxH` veličine,
+  preko `image_editor_output_format` filtera u `woodmart-child/functions.php`.
+  Konvertovanje originala je probano i izmereno kao pogrešno (−5%, dve slike veće,
+  palette PNG fatalno ruši GD) — v. dnevnik 2026-07-28.
+- **Posle svakog masovnog rada nad medijatekom** pustiti i proveru slika
+  (`src`+`srcset`+`href` sa svih 199 URL-ova → HEAD svake slike), ne samo proveru
+  stranica: 404 na slici **ne** obara HTTP status stranice, pa ga standardna
+  provera ne vidi. Tako je uhvaćeno 212 pokvarenih `woocommerce_single` slika.
 - Slike u sadržaj ubacivati kao **gol `<img>`** — `al_enhance_content_images()`
   ih sam umota u lightbox link i doda `srcset`/`width`/`height`/`lazy`.
 - Nova sekcija = zaseban `[vc_row el_class="al-section al-section--paper"]`
@@ -85,5 +111,10 @@ php wp-cli.phar --path="C:\xampp\htdocs\antasline" eval-file job.php
 ## Stanje kuriranja
 
 - [x] **16657** Košarkaške konstrukcije — 9 fotki, sekcija „Naši izvedeni tereni"
-- [ ] ~28 stranica bez ijedne slike (v. popis u [[DNEVNIK-NAPRETKA]] 2026-07-28)
-- [ ] dopuna stranica koje imaju malo/slabe slike
+- [x] **15580** Podloge za parking — 9 fotki, „Naši izvedeni parkinzi, prilazi i staze"
+- [ ] **30 stranica bez ijedne slike**, najveće po tekstu:
+  `zastitne-podloge-za-travu-i-plocnike` (1.643 reči) ·
+  `antistatik-i-elektroprovodljivi-podovi` (1.526) · `bergo-ultimate` (1.181) ·
+  `dimenzije-kosarkaskog-terena` (1.167) · `pvc-podne-ploce` (1.123) ·
+  `spoljnje-podne-obloge` (1.094)
+- [ ] 16 stranica sa 1–2 slike (dopuna)
