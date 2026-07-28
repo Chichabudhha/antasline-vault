@@ -75,14 +75,33 @@ prazan naslov, jedna je duplikat.
 
 | Faza | Obim | Procena | Status |
 |---|---|---|---|
-| **F1** Globalne popravke (tema, CSS, prevodi, šablon) | 13 stavki | 1 sesija | ⏳ |
+| **F1** Globalne popravke (tema, CSS, prevodi, šablon) | 13 stavki | 1 sesija | ✅ 2026-07-28 |
 | **F2** Sadržaj (Expona, Bergo, spoljne obloge, slike) | 9 stavki | 2–3 sesije | ⏳ |
 | **F3** Meni i navigacija | 5 stavki | 1 sesija | ⏳ |
 | **F4** Hero fotografije po stranici | 2 stavke | 1 sesija | ⏳ |
 
 ---
 
-## F1 — Globalne popravke
+## F1 — Globalne popravke — ✅ ZATVORENO 2026-07-28
+
+> **Ispravke dijagnoze, izmerene pri izvršenju** (detalji: [[DNEVNIK-NAPRETKA]]):
+> - **1.1 obim je 28 kartica / 3 stranice**, ne 29 / 4 — `5438` je lažan pogodak
+>   (11 kartica media+naslov i 6 samo-telo, nikad u istoj kartici). Brojanje u
+>   `post_content`-u ne dokazuje da su oba u ISTOJ `.al-card`; mereno nad DOM-om.
+> - **1.6 prelom je 1024px, ne 767px**; `.wd-toolbar` je `height:55px`, a
+>   `--wd-sticky-nav-h` ne postoji (`--wd-sticky-nav-w` je *širina* bočnog menija).
+> - **1.8 je već bio rešen u F7.21** — dugme je `--al-red` sa `inset:0;margin:auto`,
+>   odstupanje centra 0px; opis „plavo + `translate(-50%,-50%)`" je bio zastareo.
+> - **1.4 pravilo** „ukloni zatvarajuće **na kraju bloka**" ne bi popravilo `16659`
+>   (iza viška ide još pasus) ni `17004` (blok nema nijedan otvarajući `<div>`) —
+>   alat briše `</div>` na kome bilans padne ispod nule.
+> - **1.9 okrugla social dugmad su već bila okrugla** (`wd-shape-circle` → 50%).
+> - **1.11**: `Search for posts` ne postoji nigde; `Products` postoji ali samo na
+>   `/katalog/`. Trebalo je **tri** filtera (`gettext_`, `gettext_with_context_`
+>   za `esc_attr_x` placeholder, `ngettext_` za srpsku množinu).
+>
+> Otvoreno posle F1: boja futer ikonica · crveno vs narandžasto play dugme ·
+> katalog „filteri levo" (v. [[PROGRESS]] Blokeri).
 
 Sve u `woodmart-child` (`css/antas-design.css`, `functions.php`) osim 1.4 i 1.6.
 Bekap oba fajla po konvenciji `*.bak-YYYY-MM-DD`.

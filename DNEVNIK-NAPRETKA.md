@@ -1,3 +1,71 @@
+## 2026-07-28 [claude-code] W7 F1 — Globalne popravke: 13 stavki, 3 tvrdnje plana oborene merenjem ✅
+
+**Zadatak:** F1 iz [[migracija/2026-07-28-W7-sanacija-builda]] — prva faza sanacije, namerno pre F2 da sadržajni rad ide nad ispravnim rasterom.
+
+**Bekap pre svega:** `antasline_local_2026-07-28_pre-W7-F1.sql` (48,7 MB) + `antas-design.css` / `functions.php` / `al-video-facade.js` / `al-tracking-gtm-consent.php` kao `*.bak-2026-07-28-w7f1`.
+
+### 🔴 Tri stavke plana su bile netačne — uhvaćeno merenjem, ne primenjeno naslepo
+
+**(1) F1.1 obim: 28 kartica / 3 stranice, ne 29 / 4.** Plan je brojao pojavljivanja `al-card__title` i `al-card__body` u `post_content`-u, što ne dokazuje da su u ISTOJ kartici. Mereno nad renderovanim DOM-om (XPath: `.al-card` koja sadrži oba) — `5438` **ne** izlazi: tamo su 11 kartica media+naslov i 6 kartica samo-telo, dve različite vrste, bez preklapanja. Isti tip lažnog pogotka na koji plan sâm upozorava kod stavke 2 (color-swatch kockice).
+
+**(2) F1.6 prelom i visina bili pogrešni.** Plan: `@media(max-width:767px)` i `var(--wd-sticky-nav-h, 56px)`. Stvarno: `.wd-toolbar` je `height:55px` i prikazuje se **do 1024px**, a `--wd-sticky-nav-w` je *širina* bočnog menija — nepostojeća promenljiva bi se svela na fallback, ali bi opseg **768–1024px ostao pokvaren**. Upisano `bottom:55px` (banner) / `67px` (dugme) uz `body.sticky-toolbar-on`, iste vrednosti koje tema koristi za `.wd-sticky-btn` i `.scrollToTop`.
+
+**(3) F1.8 je već bio rešen.** Plan opisuje plavo dugme sa `translate(-50%,-50%)`; u kodu je od F7.21 (ranije istog dana) `--al-red`, 72×50, `border-radius:14px`, `inset:0;margin:auto`. Izmereno u Chrome-u: odstupanje centra **0px po obe ose**. Bez izmene — ostaje samo pitanje boje za M (v. Otvoreno).
+
+### Šta je urađeno
+
+| # | Šta | Kako |
+|---|---|---|
+| 1.1 | naslov kartice preko teksta (28 kartica / 3 str.) | `.al-card:has(.al-card__body)` — naslov u tok, navy, gradijent preko slike ugašen. Specifičnost (0,3,0) nadjačava WoodMart `:is()` (0,2,0), F7.20 |
+| 1.2 | tabele bez bočnog skrola | `min-width:640px` **uklonjen** — nijedna od 42 tabele nije bila u omotaču sa skrolom, pa je na 390px terao skrol CELE STRANICE. >3 kolone (13 tabela) → „stacked" prikaz, natpis iz `data-label` |
+| 1.3 | naslovi u tabeli 600 → 500 | `antas-design.css` |
+| 1.4 | nesparen `</div>` — 11 stranica | nov `alati/al_fix_divs.php`, 12 uklanjanja |
+| 1.5 | mreža 3 kolone sa 5 kartica | `16673`: nova `.al-grid--5` (paleta boja u jednom redu) |
+| 1.6 | kolačići preko sticky bara | mu-plugin; usput `Kolacici` → `Kolačići` |
+| 1.7 | duplirana ikonica u mobilnom CTA | tema crta `--wd-tools-icon:"\f140"` kroz `.wd-tools-icon:before` u ISTOM span-u u kom child crta brend SVG → `content:none` na naša tri linka |
+| 1.8 | play dugme | **već rešeno u F7.21**, bez izmene |
+| 1.9 | futer | godina → shortcode `[al_godina]` (`copyrights` prolazi kroz `do_shortcode`); okrugla social dugmad **već** `border-radius:50%` |
+| 1.10 | kontakt forma | CF7 stilovi prebačeni sa `.al-quick-quote` na `.al-section` (glavna forma 16593 nije u „Brzi upit" sekciji, pa je nosila WoodMart default), dugme „Pošalji" → „Pošaljite poruku", placeholder `#5B6B7E` → `#93A1B0` |
+| 1.11 | prevodi | v. ispod |
+| 1.12 | blog bez „Objavio + datum" i bez deljenja | WoodMart `parts_meta`, bez `display:none` i bez `remove_action` |
+| 1.13 | katalog | widget „Kategorije" na vrh `filters-area` (nije postojao), „Show 9/12" ugašeno (`per_page_links`). **Filteri levo — v. Otvoreno** |
+
+### F1.11 — plan je promašio dve od tri mete, ali je `Products` postojao
+
+Plan je tražio `Products`, `Search for posts`, `Newer/Older`. Sken renderovanih stranica: `Search for posts` **ne postoji nigde**. Stvarno neprevedeno je bilo `Older`/`Newer`/`Back to list`, `Home`/`Blog`/`Page`, `Show sidebar`, `Filters`, `Quick view`, `Posted by`, `Search for products` i — tek kad sam otvorio `/katalog/`, što prvi sken nije obuhvatio — `Products` u brojaču kategorija.
+
+🔴 **Tri različita filtera, jer tri različite funkcije:**
+- `gettext_woodmart` — obični stringovi
+- `gettext_with_context_woodmart` — placeholder pretrage ide kroz `esc_attr_x()` (kontekst `submit button`), pa ga prva mapa **ne vidi**
+- `ngettext_woodmart` + `ngettext_woocommerce` — brojač „2 products". Srpska množina: `1 proizvod` / `2 proizvoda` / `21 proizvod` (`n%10==1 && n%100!=11`)
+
+Sve mape imaju `is_admin()` izlaz — bez toga bi se `Blog`/`Home`/`Page` preimenovali i u podešavanjima teme.
+
+### 🔴 al_fix_divs.php — pravilo iz plana ne bi popravilo 2 od 11 stranica
+
+Plan: „uklanja **samo** nesparene zatvarajuće tagove **na kraju bloka**". Izmereno: na `16659` iza viška ide još jedan pasus, a `17004` u celom bloku **nema nijedan otvarajući** `<div>` — višak sedi ispred JSON-LD skripte. Alat zato prolazi blok redom i briše tačno onaj `</div>` na kome bilans padne ispod nule.
+
+### F1.12 — tri putanje, jer tema `parts_meta` postavlja na tri mesta
+
+1. arhiva `/aktuelnosti/` → opcija `parts_meta` (`woodmart_main_loop`)
+2. srodni postovi i ostale petlje → `add_action('wp', …, 51)` (setup visi na 50 i sam izlazi ako je globalna već postavljena)
+3. `[woodmart_blog]` na početnoj → atribut u sadržaju, jer tema zove `shortcode_atts()` **bez trećeg argumenta** pa filter `shortcode_atts_woodmart_blog` uopšte ne postoji
+
+🔴 Usput: prvo sam upisao `parts_meta="false"` — string `'false'` je u PHP-u **istinit**, pa se ništa nije promenilo. Tema koristi `1`/`0` (`true_state`/`false_state` u VC mapi).
+
+### Provera
+
+- **215 URL-ova** (105 stranica/postova + 110 proizvoda i kategorija): **HTTP 200 svuda, tačno 1×H1, 0 PHP grešaka, 0 nebalansiranih `<div>`** (pre F1.4 bilo 11 stranica)
+- Chrome 1500px: `expona-click` (naslovi navy, u toku, bez preklapanja — mereno `preklapa:false`), `vestacka-trava` (tabela unutar `.wpb_wrapper` na punih 1192px, grid 5×219px), `/kontakt/`, `/katalog/`, futer
+- Chrome 390px (iframe harness — `resize_window` i dalje ne radi): tabela kao kartice „Model | Highlands", `scrollWidth 371 < 386` → **nema bočnog skrola**, toolbar ikonice bez tamnog glifa, dugme „Kolačići" iznad sticky bara
+- **Regresija:** kartice **bez** `body` i dalje `position:absolute` + beli naslov — `:has()` pravilo nije procurilo na 11 kartica na `5438`
+
+### Otvoreno — čeka M
+
+1. **Boja dve kontakt ikonice u futeru** — narandžaste (`#F04D22`) dok su tekst i social bele. Plan kaže „boja ikonica" ali ne koju.
+2. **Play dugme: crveno (sada) ili narandžasto** — plan je tražio narandžasto uz obrazloženje „plava se gubi na tamnim thumbnail-ima", a dugme nije plavo nego crveno, pa je obrazloženje bespredmetno.
+3. **Katalog „filteri levo"** — sada su u WoodMart padajućem panelu (`.filters-area`, `display:none` dok se ne klikne „Filteri"), ne u levom sidebaru. Prebacivanje 9 widgeta u sidebar menja UX kataloga — nije rađeno bez potvrde.
+
 ## 2026-07-28 [claude-code] — W7 planiran: ~30 zamerki svelo se na 4 sistemske greške 📋
 
 **Zahtev (M):** prolaz kroz sajt sa ~30 zamerki (stari template, nečitljiv tekst, praznina, meni, futer, mobilni…), pa: „napravi plan izvršenja za ovo prvo, upiši u dnevnik i raspored, pa ćemo onda preći na realizaciju."

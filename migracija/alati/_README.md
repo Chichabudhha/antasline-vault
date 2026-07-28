@@ -75,6 +75,7 @@ php wp-cli.phar --path="C:\xampp\htdocs\antasline" eval-file job.php
 | `al_fix_missing_sizes.php` | popravlja priloge kojima u zapisu piše veličina bez fajla; korisno i kao provera zdravlja medijateke |
 | `al_convert_webp.php` | ⛔ **superseded** — konvertuje sam original. Zadržan kao trag; v. dnevnik zašto je pristup napušten |
 | `contact_sheet.php` | mozaik sličica za pregled kandidata |
+| `al_fix_divs.php` | **W7 F1.4** — briše nesparen `</div>` iz `[vc_column_text]` blokova (višak prerano zatvori `.wpb_wrapper` pa ostatak sekcije ispadne iz kolone → bela rupa). `al_fix_divs.php` \| `16673` \| `all apply`. 🔴 NE briše „na kraju bloka" nego tačno onaj `</div>` na kome bilans padne ispod nule — na `16659` iza viška ide još pasus, `17004` u bloku nema nijedan otvarajući `<div>`. Ne dira ništa van `[vc_column_text]`, pa prazne `<div>` kockice u paletama boja ostaju netaknute |
 | `job-15580-parking.php` | primer stvarno izvršenog posla (uz `primer-job-16657.php`) |
 
 Poziv: `php wp-cli.phar --path="C:\xampp\htdocs\antasline" eval-file <skript> [args]`

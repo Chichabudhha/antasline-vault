@@ -18,6 +18,26 @@ azurirano: 2026-07-28
   **Pravilo:** svako pravilo koje stilizuje `<button>` ili `.btn`/`.button` u child temi piši sa **(0,2,0)** (`.roditelj .dugme`), ne (0,1,0). Ovo je četvrti slučaj istog obrasca (F7.10, F7.19, F7.20, F7.21) — u `entry-content` protivnik je (0,2,0), kod dugmadi (0,1,0).
   **Dijagnostika koja ga nađe za 10 sekundi:** proći kroz `document.styleSheets` i za svako pravilo proveriti `el.matches(r.selectorText)` + da li dira sporno svojstvo — vraća i fajl i selektor krivca.
 
+## Prevodi (gettext) u WoodMart-u / WooCommerce-u (W7 F1.11, 2026-07-28)
+- 🔴 **Jedna mapa na `gettext_<domen>` NE hvata sve** — WP ima tri porodice filtera, po jednoj za svaku porodicu funkcija:
+  - `__()` / `_e()` / `esc_html__()` → `gettext_<domen>`
+  - `_x()` / `esc_attr_x()` → **`gettext_with_context_<domen>`** (3 argumenta: `$translation, $text, $context`)
+  - `_n()` / `_nx()` → **`ngettext_<domen>`** (4 argumenta: `$translation, $single, $plural, $number`)
+  Placeholder pretrage (`esc_attr_x('Search for products','submit button','woodmart')`) je zato ostao engleski uprkos tačnom unosu u `gettext_woodmart` mapi. Ako string uporno „ne prima" prevod — pogledaj kojom se funkcijom emituje, ne da li je ključ tačan.
+- **Ista reč ume da dolazi iz dva domena.** Brojač „2 products" na `/katalog/` je WoodMart `_n('product','products',…,'woodmart')` (bez `%s`), a WooCommerce ima svoj `_n('%s product','%s products',…,'woocommerce')`. Pokriti oba.
+- **Srpska množina:** `1 proizvod` / `2–4 proizvoda` / `5+ proizvoda` / `21 proizvod`. Pošto su „few" i „other" ista reč, pravilo je `($n % 10 === 1 && $n % 100 !== 11) ? 'proizvod' : 'proizvoda'`.
+- ✅ **Svaka gettext mapa mora imati `is_admin()` izlaz.** Generičke reči (`Blog`, `Home`, `Page`, `Products`) postoje i kao nazivi kontrola u podešavanjima teme — bez izlaza se preimenjuje i administracija.
+- **Ne tražiti stringove naslepo po planu** — skenirati renderovane stranice po TIPU (početna, arhiva, pojedinačan post, `/katalog/`, proizvod, pretraga). U ovoj sesiji `Search for posts` nije postojao nigde, a `Products` se pojavio tek na `/katalog/`, koji prvi sken nije obuhvatio.
+
+## WoodMart — prekidači umesto CSS zakrpa (W7 F1.12/F1.13, 2026-07-28)
+- **Pre `display:none` i pre kopiranja šablona, potraži `woodmart_get_opt()` gate u samom šablonu.** Ceo blog meta blok (autor + datum + deljenje) zatvara `parts_meta`; „Show 9/12" zatvara `per_page_links`.
+- 🔴 **Isti loop prop tema postavlja na tri mesta, i sva tri se moraju pokriti:**
+  1. arhiva → opcija (`woodmart_main_loop()`)
+  2. ostale petlje (srodni postovi) → `woodmart_setup_loop()` default; hvata se sa `add_action('wp', …, 51)` jer setup visi na 50 i **sam izlazi** ako je `$GLOBALS['woodmart_loop']` već postavljen
+  3. `[woodmart_blog]` šortkod → sopstveni atribut. Filter `shortcode_atts_woodmart_blog` **ne postoji** — tema zove `shortcode_atts()` bez trećeg argumenta.
+- 🔴 **Šortkod atributi su stringovi: `parts_meta="false"` je ISTINIT.** Tema koristi `1`/`0` (`true_state`/`false_state` u VC mapi). Uvek proveriti mapu u `inc/integrations/visual-composer/maps/`.
+- **`copyrights` opcija prolazi kroz `do_shortcode()`** — tekuća godina ide kao sopstveni shortcode, ne kao ukucan broj i ne kao filter nad izlazom.
+
 ## WordPress core — markup zamke
 - 🔴 **`wp_get_attachment_link()` piše `href` JEDNOSTRUKIM navodnicima** (2026-07-28, F7.21). WP core generiše `<a href='…jpg'>` za `[gallery link="file"]`. Regex pisan samo na `"` tiho promašuje **sve** galerijske linkove. Podmuklo: `<img>` **unutar** tog anchor-a jeste obrađen (jer WP njega piše dvostrukim navodnicima), pa na prvi pogled izgleda da filter radi. **Svaki regex nad renderovanim WP HTML-om piši kao `("|\')…\1`, nikad samo na `"`.**
 - **`[gallery]` slike ne postoje kao `<img>` u `post_content`** — audit koji broji `<img>` u bazi ih neće videti (stranica izgleda „bez slika" a ima 42). Uvek proveriti i `[gallery ids="…"]`, `_product_image_gallery` i `_thumbnail_id`.
