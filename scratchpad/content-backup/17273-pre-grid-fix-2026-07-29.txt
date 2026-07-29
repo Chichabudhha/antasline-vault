@@ -1,0 +1,24 @@
+[vc_row full_width="stretch_row" el_class="al-section al-section--navy al-plates al-diag-bottom"][vc_column][vc_column_text]
+<div class="al-hero"><span class="al-label">Cene</span><h1 class="al-display--xl">Cene podova — pregled po nameni</h1><p class="al-hero__sub">Cena poda zavisi od namene, opterećenja i kvadrature. Ispod su okvirne cene po m² za četiri najtraženije grupe — za tačnu ponudu pošaljite dimenzije prostora.</p><div class="al-hero__cta"><a class="al-btn" href="http://localhost/antasline/kontakt/">Zatražite ponudu</a><a class="al-btn al-btn--ghost" href="tel:+381692340072">069 234 00 72</a></div></div>
+[/vc_column_text][/vc_column][/vc_row]
+[vc_row full_width="stretch_row" el_class="al-section al-section--paper"][vc_column][vc_column_text]
+<span class="al-label">Pregled</span>
+<h2 class="al-display--lg">Izaberite namenu</h2>
+<p>Svaka stranica nosi cenu po m², šta je uključeno u tu cenu i šta je utiče naviše ili naniže. Cene su okvirne i važe za standardne uslove montaže.</p>
+<div class="al-grid al-grid--2" style="margin-top: 32px"><a href="http://localhost/antasline/industrijski-podovi-cena/" class="al-card"><span class="al-card__body"><h3>Industrijski podovi — cena</h3><p>Cena po m² za Ecotile PVC ploče u magacinima, halama i radionicama — po debljini ploče i opterećenju.</p></span></a><a href="http://localhost/antasline/gumeni-podovi-za-terase-cena/" class="al-card"><span class="al-card__body"><h3>Gumeni podovi za terase — cena</h3><p>Cena podloga za terase, balkone i dvorišta — po vrsti ploče i kvadraturi.</p></span></a><a href="http://localhost/antasline/podloge-za-parkiraliste-cena/" class="al-card"><span class="al-card__body"><h3>Podloge za parkiralište — cena</h3><p>Geoplast rešetke za parking, prilaze i staze — cena po m² od 2.800 din.</p></span></a><a href="http://localhost/antasline/podovi-za-garaze/" class="al-card"><span class="al-card__body"><h3>Podovi za garaže — cena</h3><p>Cena podnih ploča za garaže i auto-servise — otporne na ulja, gume i točkove dizalice.</p></span></a></div>
+[/vc_column_text][/vc_column][/vc_row]
+[vc_row full_width="stretch_row" el_class="al-section al-section--mist"][vc_column][vc_column_text]
+<span class="al-label">Šta utiče na cenu</span>
+<h2 class="al-display--lg">Zašto se cena razlikuje</h2>
+<p>Četiri stvari pomeraju cenu poda, bez obzira na to koju grupu gledate:</p>
+<ul>
+<li><strong>Opterećenje.</strong> Viljuškar, teretno vozilo ili samo pešački saobraćaj određuju debljinu ploče — a debljina je najveća stavka u ceni.</li>
+<li><strong>Kvadratura.</strong> Veće površine imaju nižu cenu po m², jer se fiksni troškovi montaže raspoređuju na više metara.</li>
+<li><strong>Stanje podloge.</strong> Ecotile i Bergo ploče se postavljaju i preko oštećenog betona ili starog epoksida, bez skidanja — što je često najveća ušteda u odnosu na livene podove.</li>
+<li><strong>Dodaci.</strong> Rampe, trake za obeležavanje, ESD uzemljenje i ivične ploče se računaju posebno.</li>
+</ul>
+<p>Za poređenje sa livenim podovima pogledajte i <a href="http://localhost/antasline/epoksidni-podovi-ili-ecotile-podovi/">epoksidni podovi ili Ecotile ploče</a>, a za tehničke detalje <a href="http://localhost/antasline/industrijski-podovi/">industrijske podove</a>.</p>
+[/vc_column_text][/vc_column][/vc_row]
+[vc_row full_width="stretch_row" el_class="al-section al-section--navy"][vc_column][vc_column_text]
+<div class="al-cta"><h2 class="al-display--lg">Recite nam kvadraturu i namenu</h2><p>Dobijate cenu po m² i ukupan iznos u roku od jednog radnog dana.</p><div class="al-hero__cta"><a class="al-btn" href="http://localhost/antasline/kontakt/">Pošaljite upit</a><a class="al-btn al-btn--ghost" href="tel:+381692340072">069 234 00 72</a></div></div>
+[/vc_column_text][/vc_column][/vc_row]
