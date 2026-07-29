@@ -461,8 +461,14 @@ sopstvenim konektorom preko `.claude/skills/antasline-konektor/`, videti
   (478 GSC klikova) bez potvrđenog redirect cilja — visok prioritet
 
 **Telefon:**
-- Broj 072 dominira klikovima na telefon (~50 vs ~7 za 074); ~46/50 klikova
-  sa mobilnog → prioritet 072 u ad asset-ima i on-page CTA-ovima
+- 🔴 **Oba broja su `069`** (potvrđeno na live-u i u temi 2026-07-29). „072" i
+  „074" su skraćenice za POSLEDNJE DVE CIFRE, ne prefiksi:
+  **linija 72** = `069 234 00 72` (`tel:+381692340072`) ·
+  **linija 74** = `069 234 00 74` (`tel:+381692340074`).
+  Nikad ne pisati „072 234 00 72" — takav zapis je stajao na 50 lokalnih
+  stranica i 37 Yoast metaopisa, ispravljen 2026-07-29.
+- **Linija 72 dominira** klikovima na telefon (~50 vs ~7 za liniju 74);
+  ~46/50 klikova sa mobilnog → prioritet linije 72 u ad asset-ima i on-page CTA-ovima
 - `mailto` sa pre-populate `?subject=` postoji na bar jednoj stranici
   proizvoda — vredi proširiti na ostale
 

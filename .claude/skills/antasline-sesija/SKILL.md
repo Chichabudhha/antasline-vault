@@ -37,7 +37,7 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
 - Master lista: `[[seo/plan-novih-stranica]]` (20 stranica, 4 tijera, checkbox)
 - Draftovi Tier1 postoje u `dnevnik/2026-07-05-draft-*.md` — ne pisati ispočetka
 - Pravila po stranici: Yoast >80 · FAQ + FAQPage/Product schema · cena od–do
-  ili placeholder · CTA 072 + forma · interni link ka `/industrijski-podovi/` ·
+  ili placeholder · CTA `069 234 00 72` + forma · interni link ka `/industrijski-podovi/` ·
   prvi pasus = direktan odgovor (GEO) · anti-kanibalizacija provera
   (postojeći sadržaj na istu temu → skratiti + linkovati)
 - Cene: prvo proveri `[[reference/cenovnik]]` (M10) pre nego što tražiš od
@@ -79,7 +79,7 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
 | PHP skripte | scratchpad + `C:\xampp\php\php.exe skripta.php` (wp-load bootstrap) |
 | Backup | `mysqldump -u root antasline_local > C:\xampp\htdocs\antasline-backups\antasline_local_YYYY-MM-DD_pre-<opis>.sql` |
 | Tema | WoodMart 8.5.4 + child; design system `antas-design.css`; `_woodmart_title_off=on` protiv 2×H1 |
-| CTA telefon | 072 → `tel:+381692340072` |
+| CTA telefon | **`069 234 00 72`** → `tel:+381692340072` (tzv. „linija 72"; druga linija je `069 234 00 74`). 🔴 Prefiks je **069**, ne 072 — v. [[CLAUDE]] §9 |
 
 Bash ograničenja: komande >965 bajtova pucaju (piši fajl pa izvrši); brace
 expansion `{a,b}` pravi literalne foldere; velike fajlove čitaj Read alatom.
