@@ -1,3 +1,62 @@
+## 2026-07-29 [claude-code] W7 F2.9 rep — Condor/Radici batch: 2/10 proizvoda dobila sliku, 8/10 prijavljena kao nedostajuća (naziv-mismatch rizik, ne pogrešna boja ovaj put)
+
+**Zadatak:** treći batch iz „40 proizvoda bez slike". Linija: Condor Grass „trava u boji" (`16877` Schools, `16885` Playgrass — oba variable proizvodi sa 7 varijacija boje: Crvena/Žuta/Plava/Bela/Roze/Zelena/Braon) + `16893` Condor shock-pad (podloga ispod trave) + 7 Radici tehničkih sportskih trava (`16894` ULTRAMIX EVO mali fudbal, `16895` Tournament 20 tenis/padel, `16899` rugbi, `16900` golf, `16901` hokej, `16902` Multisport MX, `16906` pejzažne površine).
+
+**Rezultat:**
+- ✅ `16877`/`16885` — roditelj-thumbnail postavljen na `17166` (`trava-u-boji.webp`, plava nijansa) — **jedina fotografija u arhivi koja se sa sigurnošću poklapa** sa zvaničnom paletom od 7 boja (arhiva inače ima antracit/crnu/limun/ljubičastu/srebrnu/tamno-sivu — nijedna od tih nije na zvaničnoj listi ovih proizvoda, pa nisu korišćene). 14 pojedinačnih varijacija boje (7+7, `16878`–`16884`, `16886`–`16892`) ostaje bez sopstvene slike — to je veći, poseban posao (nabavka/uvoz fotografije po boji), nije rađeno ovde.
+- 🔴 `16893` Condor shock-pad — podloga se ugrađuje ISPOD trave (nikad vidljiva), 0 fotografija u arhivi — prirodno bez proizvodne slike.
+- 🔴 **7 Radici tehničkih trava — NIJE nađen pouzdan materijal.** Jedina kandidatska fotka (`XJ performance` folder, „vestacka-trava-za-fudbalski-teren.jpg") je za potpuno **drugi, već postojeći proizvod** u bazi („XJ Performance"/„XJ Competition", posts `5087`–`5100`, odvojena stara linija) — ne za Radici ULTRAMIX EVO (koji je specifično no-infill sistem, Field Green + Dark Green, FIFA/FIGC 38mm vlakno). Različit brend/sistem → korišćenje te fotke bi predstavilo pogrešan proizvod, isti princip kao Bergo Ultimate PLUS slučaj. Bez fotografije za Tournament 20/rugbi/golf/hokej/Multisport MX/pejzažne — arhiva ih uopšte ne pokriva pod tim imenima.
+
+**Verifikovano:** oba izmenjena proizvoda 200/1×H1/0 PHP grešaka, slika 200. Backup: `antasline_local_2026-07-29_pre-F2.9-condor-slike.sql`. Skripta: `f29_condor_slike.php`.
+
+**#ceka-miroslav:** fotografije za 7 Radici tehničkih trava (od proizvođača/distributera Radici, ne zamenjivati sa XJ Performance arhivom) + shock-pad (ako je uopšte potrebna) + 14 pojedinačnih boja Condor Schools/Playgrass.
+
+---
+
+## 2026-07-29 [claude-code] W7 F2.9 rep — Geoplast batch: 4/7 proizvoda dobila sliku (thumbnail + galerija), 3/7 prijavljena kao nedostajuća
+
+**Zadatak:** drugi batch iz „40 proizvoda bez glavne slike" (nastavak posle Bergo). Linija: 7 Geoplast travnih rešetki (`16907` Salvaverde Type A, `16908` Salvaverde Type B, `16909` Runfloor, `16910` Geograss, `16911` Geocross, `16912` Geogravel, `16913` Geoflor) — svih 7 već ima pun opis/specifikacije/FAQ (isti obrazac kao Bergo: gap je bio samo slika).
+
+**Rezultat:**
+- ✅ `16909` Runfloor, `16911` Geocross, `16912` Geogravel, `16913` Geoflor — svaka dobila thumbnail (čist proizvođački render rešetke) + 3–4 galerijske slike (instalirano/u upotrebi/proces postavljanja), sve iz **već uvezenih** priloga (`uploads/2025/12/`, prethodno korišćeni na parking stranicama `16589`/`16876`, sad povezani i sa proizvodima). Ove 4 rešetke imaju vizuelno različitu strukturu ćelija (talasasta/heksagonalna/okrugla/kvadratna), pa je poklapanje slika sa specifičnim proizvodom nedvosmisleno — nema rizika od boje/varijante kao kod Bergo Ultimate PLUS.
+- 🔴 `16907`/`16908` Salvaverde Type A/B i `16910` Geograss — **0 fotografija u celoj arhivi** (pretraga po nazivu modela, bez pogotka). Bez izmene, ista logika kao Bergo brodske palube.
+
+**Verifikovano:** sva 4 izmenjena proizvoda 200/1×H1/0 PHP grešaka, svih 17 dodirnutih slika (4 thumbnail + 13 galerija) HEAD-ovano 200. Backup pre izmene: `antasline_local_2026-07-29_pre-F2.9-geoplast-slike.sql`. Skripta: `f29_geoplast_slike.php` (scratchpad).
+
+**#ceka-miroslav:** Salvaverde A/B i Geograss ostaju bez slike dok se ne nabavi fotografija.
+
+---
+
+## 2026-07-29 [claude-code] W7 F2.9 rep — Bergo batch: 2/5 proizvoda dobila sliku, 3/5 prijavljena kao nedostajuća (poštena provera po boji/varijanti)
+
+**Zadatak:** prvi batch iz preostalih „40 proizvoda bez glavne slike" (F2.9 rep). Izabrana Bergo linija (5 proizvoda: `16800` Ultimate PLUS by GreenMatter, `16801` Ultimate FLOW/pickleball, `16830` Nova, `16836` Excellence, `16842` Extreme IMO) — svih 5 već ima pun opis/atribute/Yoast/FAQ (F2.9 dijagnoza gore od očekivanog: gap je stvarno bio SAMO slika, ne ceo proizvod).
+
+**Rezultat — namerno ne 5/5:**
+- ✅ `16801` Bergo Ultimate FLOW (pickleball) — 6 slika (već uvezene u medijateku, `uploads/2022/03/bergo-flow-pickleball-{1,2,4,5,6,8}.jpg`) pokrivaju 3 od 13 zvaničnih boja proizvoda (Dark Blue/Plain Orange/Plain Red + 2 makro plana) → thumbnail + puna galerija. Usput nađen **neregistrovan PDF prospekt** (`uploads/2025/02/bergo-ultimate-flow-pickleball-leaflet-lr.pdf`, fizički na disku ali nikad `wp_insert_attachment`-ovan) → uvezen (#17495), link dodat u „Tehnička dokumentacija".
+- ✅ `16830` Bergo Nova — thumbnail iz postojećeg priloga `8645` (`nova_bergo_stone_grey-scaled.jpg`, Stone Grey — jedna od 5 zvaničnih boja).
+- 🔴 `16800` Ultimate PLUS by GreenMatter — **NIJE dodata slika.** Proizvod je specifično Darkgreen recikliran varijanta (šarža od istrošene veštačke trave, artikal 811DG96). Jedine dve kandidatske fotke u arhivi (`Bergo ultimate plus ploca.jpg` — crvena ploča, i `Bergo_Ultimate_PLUS_3x3_Yellow_Darkblue.jpg` — CGI render žuto/tamnoplavog 3x3 terena) su **obe pogrešne boje** i druga je i vizuelno sintetički render, ne prava fotografija → nijedna ne predstavlja tačno ovaj proizvod, ni jedna dodata.
+- 🔴 `16836` Excellence i `16842` Extreme IMO (obe brodske palube — PP/PA kompozit ploče 302,1×302,1mm) — **0 fotografija u celoj arhivi** (pretraga po nazivu linije, „paluba"/"boat"/"trajekt"/"jaht"/"kruzer"/"IMO"/"marina" — sve 0 pogodaka). Ovo su fizički drugačije ploče od svih ostalih Bergo linija (perforacija/dimenzije/materijal), pa slika bilo koje druge Bergo linije ne bi bila tačna. Isti obrazac kao ranije `16677`/`16671` — prijavljuje se nedostatak umesto guranja pogrešne slike.
+
+**Verifikovano:** oba izmenjena proizvoda 200, 1×H1, 0 PHP grešaka, svih 6+1 slika i PDF HEAD-ovano 200, JSON-LD/Yoast nedirano (već ispravno pre ove sesije). Backup pre izmene: `antasline-backups/antasline_local_2026-07-29_pre-F2.9-bergo-slike.sql`. Skripta: `f29_bergo_slike.php` (scratchpad, jednokratna — ne generička, ručno birani attachment ID-jevi po proizvodu).
+
+**#ceka-miroslav:** `16800`/`16836`/`16842` ostaju bez slike dok se ne nabavi prava fotografija (Darkgreen GreenMatter ploča odn. bilo koja instalacija na brodskoj palubi) — isto pravilo kao za `16677`/`16671`, ne izmišljati.
+
+---
+
+## 2026-07-29 [claude-code] W7 F3 §3.5 — Dizajn-parity: 5791 (podovi-za-štale) + 15793 (zaštitne-podloge/Bergo Solid) prevedene u al-section ✅ — **F3 (meni i navigacija) sada u potpunosti zatvoren**
+
+**Zadatak:** poslednja neizvršena stavka iz F3 ([[migracija/2026-07-28-W7-sanacija-builda]]) — jedina koja nije čekala Miroslavljevu odluku. Predložen kao glavni zadatak, potvrđen.
+
+**Zatečeno merenjem (obe tvrdnje plana delimično netačne):** (1) `15793` **već ima** `_woodmart_title_off=on` (nema dupliranog naslova, suprotno planu koji je tražio isti tretman za obe stranice) — samo `5791` je stvarno falilo. (2) Oba `<vc_row conditional_render="...value_role:administrator...">` atributa na `15793` su **inertni** — `conditional_render` nije registrovan parametar u aktivnom `js_composer`-u (grep potvrdio 0 pogodaka u plugin kodu), WPBakery ga tiho ignoriše; stranica se renderovala identično svim posetiocima, ne samo adminima. Slično: `[porto_product use_simple="" id="15631"]` na `15793` je **mrtav shortcode** (post 15631 ne postoji u bazi + `porto_product` je u `functions.php` no-op listi iz W1 1.11 gotcha-e) i `[porto_block id="4945"]` na oba posta je isti no-op obrazac — oba su renderovala prazan string i pre ove izmene, uklonjeni bez gubitka vidljivog sadržaja.
+
+**Urađeno:** WPBakery `vc_row`/`vc_column` skela zamenjena `al-section` omotačem (navy hero → paper/mist naizmenično → navy CTA, isti obrazac kao SILO šablon) na obe stranice, **tekst 1:1 očuvan** (samo `[gallery]`/`[vc_single_image]` shortcode-ovi pretvoreni u plain `<img>` unutar `al-grid`/`al-card` — sitewide `the_content` lightbox filter (F7.21) ih automatski hvata, potvrđeno u renderu). `5791` dobio `_woodmart_title_off=on` (nedostajao). Oba dobila `_yoast_wpseo_metadesc` (nijedno nije imalo) + `yoast_indexable` keš red obrisan (lekcija #12) da se prisili regeneracija. Prazne dekorativne „b-hide footer-top" kružić-sekcije (Porto ostatak, `text=""`, već nevidljive) uklonjene i zamenjene standardnim navy CTA zatvaranjem koje svaka druga konvertovana stranica već ima.
+
+**Verifikovano:** oba 200, 1×H1 (`grep` na renderu), 0 PHP grešaka/warninga, div balans tačan (148/148 i 179/179 open/close), 0 neizvršenih shortcode-ova u HTML-u, svih 10+19 slika 200 (WebP izvedene veličine automatski primenjene), svi interni linkovi (kontakt, proizvod/mosolut-heavy) 200, `<title>`/`<meta name="description">` tačni u `<head>`, 0 console grešaka (oba, posle reload-a), regresija čista (`privremene-podloge-isotrack`, `sportske-podloge`, `kontakt` i dalje 200). Chrome vizuelno na 1500px (desktop) potvrđeno čisto na oba — mobilni `resize_window` i dalje ne menja stvarni viewport (poznato dugogodišnje ograničenje alata), mobilna provera oslonjena na postojeće `al-grid`/`al-table` media query pravila koja su već sitewide testirana. Backup pre izmene: `antasline-backups/antasline_local_2026-07-29_pre-F3.5-dizajn-parity.sql`.
+
+**F3 (meni i navigacija) je ovim u potpunosti zatvoren** — poslednja otvorena stavka (3.5) rešena, ostatak F3 (3.1–3.4) već zatvoren 2026-07-29 ranije danas.
+
+---
+
 ## 2026-07-29 [claude-code] W7 F4.1 — Hero fotografije: 62/63 stranica sa navy pozadinom sad ima fotografiju ✅
 
 **Zadatak:** F4 (Hero fotografije) iz [[migracija/2026-07-28-W7-sanacija-builda]] — sledeća neotvorena faza posle F1–F3. Izabran kao glavni zadatak sesije preko korisnika (ponuđene 3 opcije, F4 odabran).

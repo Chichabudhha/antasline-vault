@@ -77,8 +77,8 @@ prazan naslov, jedna je duplikat.
 |---|---|---|---|
 | **F1** Globalne popravke (tema, CSS, prevodi, šablon) | 13 stavki | 1 sesija | ✅ 2026-07-28 |
 | **F2** Sadržaj (Expona, Bergo, spoljne obloge, slike) | 9 stavki | 2–3 sesije | ✅ **ZATVOREN 2026-07-29** (2.1–2.4 · 2.5–2.7 · 2.9) — 2.8 blokiran na M, v. Otvoreno |
-| **F3** Meni i navigacija | 5 stavki | 1 sesija | ✅ **2026-07-29** (3.1–3.4 + 15580 deo 3.5) — ostaje dizajn-parity za `5791`/`15793` |
-| **F4** Hero fotografije po stranici | 2 stavke | 1 sesija | ⏳ |
+| **F3** Meni i navigacija | 5 stavki | 1 sesija | ✅ **ZATVOREN 2026-07-29** (3.1–3.4 + ceo 3.5, uklj. dizajn-parity `5791`/`15793`) |
+| **F4** Hero fotografije po stranici | 2 stavke | 1 sesija | ✅ **ZATVORENO 2026-07-29** |
 
 ---
 
@@ -290,7 +290,8 @@ na stranici (visina trave, broj uboda/m²), ne po imenu naslepo.
 
 ## F3 — Meni i navigacija
 
-> **✅ ZATVORENO 2026-07-29** (osim dizajn-parity dela 3.5). Ispravke dijagnoze,
+> **✅ ZATVORENO 2026-07-29 U POTPUNOSTI** (uklj. dizajn-parity deo 3.5, zatvoren
+> istog dana u posebnoj sesiji — v. [[DNEVNIK-NAPRETKA]]). Ispravke dijagnoze,
 > izmerene pri izvršenju (detalji: [[DNEVNIK-NAPRETKA]]):
 > - **3.2 „5 stavki bez naslova" nije defekt** — `wp_update_nav_menu_item()` namerno
 >   prazni `post_title` kad je labela ista kao naslov ciljne stranice; stavka nasleđuje
@@ -357,15 +358,37 @@ Nova **„Cene" hub stranica** se pravi u F3 (`al-grid--2`, 4 kartice + kratak u
 4 cena-stranice su gotove i nose komercijalne upite, a sad su nevidljive.
 
 **3.5 Stare stranice — dizajn-parity** (odluka M: isti tekst, nov `al-*` omotač):
-- `5791` podovi-za-stale — prevesti WPBakery u `al-section`; dodatno **nema
-  `_woodmart_title_off=on`** (otud dupla naslovna traka) i nema `_yoast_wpseo_metadesc`
-- `15793` zaštitne-podloge — isto (H1 je „Bergo Solid", ne rešetke za travu!)
-- `15580` podloge-za-parking → `noindex` + 301 na `16589`, uz **prenos njenog boljeg
-  Yoast title/metadesc na 16589** (sad postoji SEO kanibalizacija na „parking" upitima)
+- ✅ **ZATVORENO 2026-07-29** `5791` podovi-za-stale — prevedeno WPBakery→`al-section`,
+  `_woodmart_title_off=on` dodat (falio), `_yoast_wpseo_metadesc` dodat (falio)
+- ✅ **ZATVORENO 2026-07-29** `15793` zaštitne-podloge — isto; mereno da je
+  `_woodmart_title_off=on` **već postojao** (plan je pogrešno pretpostavio da fali i
+  ovde), samo `_yoast_wpseo_metadesc` je stvarno falio. H1 ostaje „Bergo Solid" (isti
+  tekst, sadržajni mismatch naziv-stranice-vs-H1 nije u obimu ovog zadatka)
+- `15580` podloge-za-parking → `noindex` + 301 na `16589` — **već izvršeno u ranijoj
+  F3 sesiji istog dana** (v. gore, 3.4/3.5 napomena); prenos Yoast-a nije rađen jer je
+  merenje pokazalo da `16589` već ima bolji title/metadesc od `15580`
 
 ---
 
-## F4 — Hero fotografije
+## F4 — Hero fotografije — ✅ ZATVORENO 2026-07-29
+
+> **Zatečeno pri otvaranju**: jutarnja sesija (isti dan) je već izgradila mehanizam
+> i primenila ga na 25 stranica + home, ali stala na `16684`/`16685` bez upisa u
+> dnevnik — verifikovano (HTTP/H1/Chrome) i nastavljeno, ne ponovljeno ispočetka.
+> Mehanizam u praksi: `.al-hero-photo` klasa (`antas-design.css:353`, ne
+> `.al-hero--photo`/`.al-promo-photo` kako je plan pretpostavio) + WPBakery
+> `css=".vc_custom_heroF4{ID}{background-image:...}"` na prvom `[vc_row]`.
+> **62/63** navy-hero stranica sad ima fotografiju: 27 ponovnom upotrebom
+> postojećih kuriranih fotki iz sopstvenog sadržaja, 5 svežim uvozom sa diska,
+> 5 svesno ostaje navy (`61` Kontakt, `16671` Bumperi, `16677` reflektori,
+> `17004` planer, `17273` Cene hub — nema odgovarajuće fotke, alatne/kartične
+> stranice ne traže emotivni hero). 4.2 (home rezolucija) potvrđeno već zatvoreno
+> u jutarnjoj sesiji — `spanoulis-court-beograd-suton.webp` 960×641 je **plafon
+> dostupne rezolucije** za tu scenu (najveća alternativa u arhivi 1024×683),
+> „2400px" iz plana ispod nije bilo dostižno za ovu konkretnu fotografiju.
+> 🔴 Nov bag nađen i popravljen: WPBakery `_wpb_shortcodes_custom_css` postmeta
+> se kod 3/32 stranice tiho nije regenerisala posle `wp_update_post()` — v.
+> [[reference/naucene-lekcije]]. Detalji: [[DNEVNIK-NAPRETKA]] 2026-07-29 F4.1.
 
 **4.1** — sve stranice dele istu plavu `al-section--navy` pozadinu. Posle F7.23
 postoji ~170 kuriranih WebP fotografija. Dodati `.al-hero--photo` po uzoru na
