@@ -51,16 +51,16 @@ status: čeka-popunu
 
 ## Sportski tereni / konstrukcije
 
-| Proizvod                                                             | Cena od (RSD) | Cena do (RSD) | Jedinica  | Napomena                                                                                       |
-| -------------------------------------------------------------------- | ------------- | ------------- | --------- | ---------------------------------------------------------------------------------------------- |
-| Bergo Ultimate (sportski pod, court builder pločica)                 | Na upit       |               | m²        | čeka M11 — `al_cb_prices` opcija u WP adminu ("Cene planera") trenutno prazna, 0 redova u bazi |
-| Bergo Ultimate FLOW (pickleball podloga)                             |               |               | m²        | čeka M11, isto kao gore                                                                        |
-| Ecotile rampe/završni profili (4 proizvoda, 16930/16939/16943/16949) |               |               | m ili kom | čeka M11 — nema cene ni u WC ni u planeru                                                      |
-| Lite Shot 325 (koš)                                                  |               |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
-| Mini Shot 225 (koš)                                                  |               |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
-| MicroShot 125 (koš)                                                  |               |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
-| Koš na kolicima "Street Sport"                                       |               |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
-| Zglobni obruč za koš                                                 |               |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
+| Proizvod                                                             | Cena od (RSD)  | Cena do (RSD) | Jedinica  | Napomena                                                                                       |
+| -------------------------------------------------------------------- | -------------- | ------------- | --------- | ---------------------------------------------------------------------------------------------- |
+| Bergo Ultimate (sportski pod, court builder pločica)                 | Na upit        |               | m²        | čeka M11 — `al_cb_prices` opcija u WP adminu ("Cene planera") trenutno prazna, 0 redova u bazi |
+| Bergo Ultimate FLOW (pickleball podloga)                             | Na upit        |               | m²        | čeka M11, isto kao gore                                                                        |
+| Ecotile rampe/završni profili (4 proizvoda, 16930/16939/16943/16949) | Na upit        |               | m ili kom | čeka M11 — nema cene ni u WC ni u planeru                                                      |
+| Lite Shot 325 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
+| Mini Shot 225 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
+| MicroShot 125 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
+| Koš na kolicima "Street Sport"                                       | 294000         |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
+| Zglobni obruč za koš                                                 | nema na stanju |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
 
 ### Hoop n Court koševi — VEĆ POTVRĐENO (S7, 2026-07-11, ne čeka M11)
 
@@ -89,16 +89,16 @@ builder ih već prikazuje kao "na upit".
 
 ## Ergomat zaštita / DuraStripe
 
-| Proizvod | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
-|---|---|---|---|---|
-| Odbojnici/bumperi (razne varijante) | | | kom | ima 15+ varijanti — ili paušalno "od X do Y po tipu" ili batch popuniti pri /obogati-proizvod sesiji |
-| DuraStripe trake za obeležavanje | | | m ili rolna | |
+| Proizvod                            | Cena od (RSD) | Cena do (RSD) | Jedinica    | Napomena                                                                                             |
+| ----------------------------------- | ------------- | ------------- | ----------- | ---------------------------------------------------------------------------------------------------- |
+| Odbojnici/bumperi (razne varijante) | 1000          | 3000          | kom         | ima 15+ varijanti — ili paušalno "od X do Y po tipu" ili batch popuniti pri /obogati-proizvod sesiji |
+| DuraStripe trake za obeležavanje    | na upit       |               | m ili rolna |                                                                                                      |
 
 ## Veštačka trava
 
-| Usluga | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
-|---|---|---|---|---|
-| Veštačka trava (dvorište/teren) | | | m² | |
+| Usluga                          | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
+| ------------------------------- | ------------- | ------------- | -------- | -------- |
+| Veštačka trava (dvorište/teren) | 3200          | 4500          | m²       |          |
 
 ## Veze
 
