@@ -21,7 +21,7 @@ $struktura = array(
 		'naslov' => 'Sport',
 		'page'   => 5438,
 		'design' => 'sized',
-		'width'  => 1020,
+		'width'  => 760,
 		'deca'   => array(
 			array(
 				'naslov' => 'Tereni po sportu',
@@ -65,7 +65,7 @@ $struktura = array(
 		'naslov' => 'Industrija',
 		'page'   => 16567,
 		'design' => 'sized',
-		'width'  => 1020,
+		'width'  => 760,
 		'deca'   => array(
 			array(
 				'naslov' => 'Po delatnosti',
@@ -107,7 +107,7 @@ $struktura = array(
 		'naslov' => 'Terase i dom',
 		'page'   => 16590,
 		'design' => 'sized',
-		'width'  => 700,
+		'width'  => 540,
 		'deca'   => array(
 			array(
 				'naslov' => 'Bergo ploče',
@@ -131,10 +131,10 @@ $struktura = array(
 		),
 	),
 	array(
-		'naslov' => 'Poslovni prostori',
+		'naslov' => 'Poslovni',
 		'page'   => 16667,
 		'design' => 'sized',
-		'width'  => 760,
+		'width'  => 540,
 		'deca'   => array(
 			array(
 				'naslov' => 'EXPONA LVT program',
@@ -159,25 +159,53 @@ $struktura = array(
 		),
 	),
 	array(
-		'naslov' => 'Specijalni podovi',
+		'naslov' => 'Specijalni',
 		'url'    => '#',
+		'design' => 'sized',
+		'width'  => 540,
 		'deca'   => array(
-			array( 'naslov' => 'Privremene podloge — Isotrack',       'page' => 16111 ),
-			array( 'naslov' => 'Podloge za parkiralište i staze',     'page' => 16589 ),
-			array( 'naslov' => 'Zaštita trave i pločnika',            'page' => 15793 ),
-			array( 'naslov' => 'Podovi za štale i hipodrome',         'page' => 5791 ),
-			array( 'naslov' => 'Sajmovi i manifestacije — Bergo Easy', 'page' => 16665 ),
-			array( 'naslov' => 'Rentiranje mobilnih podloga',         'page' => 16663 ),
+			array(
+				'naslov' => 'Privremene i mobilne',
+				'url'    => '#',
+				'deca'   => array(
+					array( 'naslov' => 'Isotrack — puteva i gradilišta', 'page' => 16111 ),
+					array( 'naslov' => 'Sajmovi i manifestacije',        'page' => 16665 ),
+					array( 'naslov' => 'Rentiranje podloga',             'page' => 16663 ),
+				),
+			),
+			array(
+				'naslov' => 'Spoljne površine',
+				'url'    => '#',
+				'deca'   => array(
+					array( 'naslov' => 'Parkiralište i staze',    'page' => 16589 ),
+					array( 'naslov' => 'Zaštita trave i pločnika', 'page' => 15793 ),
+					array( 'naslov' => 'Štale i hipodromi',        'page' => 5791 ),
+				),
+			),
 		),
 	),
 	array(
 		'naslov' => 'Cene',
 		'page'   => 17273,
+		'design' => 'sized',
+		'width'  => 540,
 		'deca'   => array(
-			array( 'naslov' => 'Industrijski podovi — cena',    'page' => 16874 ),
-			array( 'naslov' => 'Gumeni podovi za terase — cena', 'page' => 16873 ),
-			array( 'naslov' => 'Podloge za parkiralište — cena', 'page' => 16876 ),
-			array( 'naslov' => 'Podovi za garaže — cena',        'page' => 16875 ),
+			array(
+				'naslov' => 'Industrija',
+				'url'    => '#',
+				'deca'   => array(
+					array( 'naslov' => 'Industrijski podovi', 'page' => 16874 ),
+					array( 'naslov' => 'Podovi za garaže',    'page' => 16875 ),
+				),
+			),
+			array(
+				'naslov' => 'Spolja',
+				'url'    => '#',
+				'deca'   => array(
+					array( 'naslov' => 'Gumeni podovi za terase', 'page' => 16873 ),
+					array( 'naslov' => 'Podloge za parkiralište', 'page' => 16876 ),
+				),
+			),
 		),
 	),
 );
