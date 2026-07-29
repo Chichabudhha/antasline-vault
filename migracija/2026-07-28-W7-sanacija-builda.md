@@ -100,8 +100,11 @@ prazan naslov, jedna je duplikat.
 >   `/katalog/`. Trebalo je **tri** filtera (`gettext_`, `gettext_with_context_`
 >   za `esc_attr_x` placeholder, `ngettext_` za srpsku množinu).
 >
-> Otvoreno posle F1: boja futer ikonica · crveno vs narandžasto play dugme ·
-> katalog „filteri levo" (v. [[PROGRESS]] Blokeri).
+> **Tri odluke M-a, izvršene u istoj sesiji:** futer ikonice → **bele**
+> (`filter: brightness(0) invert(1)`, bez diranja SVG fajlova) · play dugme →
+> **narandžasto** (`--al-orange`) · katalog → **padajući panel ostaje**, filteri
+> se NE sele u levi sidebar (mreža bi pala sa 4 na 3 kolone); widget „Kategorije"
+> ostaje na vrhu panela. F1 zatvoren bez repova.
 
 Sve u `woodmart-child` (`css/antas-design.css`, `functions.php`) osim 1.4 i 1.6.
 Bekap oba fajla po konvenciji `*.bak-YYYY-MM-DD`.

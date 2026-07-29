@@ -60,11 +60,15 @@ Plan: „uklanja **samo** nesparene zatvarajuće tagove **na kraju bloka**". Izm
 - Chrome 390px (iframe harness — `resize_window` i dalje ne radi): tabela kao kartice „Model | Highlands", `scrollWidth 371 < 386` → **nema bočnog skrola**, toolbar ikonice bez tamnog glifa, dugme „Kolačići" iznad sticky bara
 - **Regresija:** kartice **bez** `body` i dalje `position:absolute` + beli naslov — `:has()` pravilo nije procurilo na 11 kartica na `5438`
 
-### Otvoreno — čeka M
+### Tri odluke — postavljene M-u i izvršene u istoj sesiji
 
-1. **Boja dve kontakt ikonice u futeru** — narandžaste (`#F04D22`) dok su tekst i social bele. Plan kaže „boja ikonica" ali ne koju.
-2. **Play dugme: crveno (sada) ili narandžasto** — plan je tražio narandžasto uz obrazloženje „plava se gubi na tamnim thumbnail-ima", a dugme nije plavo nego crveno, pa je obrazloženje bespredmetno.
-3. **Katalog „filteri levo"** — sada su u WoodMart padajućem panelu (`.filters-area`, `display:none` dok se ne klikne „Filteri"), ne u levom sidebaru. Prebacivanje 9 widgeta u sidebar menja UX kataloga — nije rađeno bez potvrde.
+Tri stavke nisu imale jednoznačan odgovor u planu, pa nisu odlučene prećutno:
+
+1. **Boja dve kontakt ikonice u futeru** — bile narandžaste (`#F04D22`) dok su tekst i social bele; plan kaže „boja ikonica" ali ne koju. → **M: bele.** Izvedeno `filter: brightness(0) invert(1)` nad `<img>` SVG-om umesto izmene fajlova, jer se iste ikonice koriste i na svetloj podlozi.
+2. **Play dugme: crveno ili narandžasto** — plan je tražio narandžasto uz obrazloženje „plava se gubi na tamnim thumbnail-ima", a dugme nije plavo nego crveno, pa je obrazloženje bespredmetno. → **M: narandžasto** (`--al-orange`), doslovno po planu.
+3. **Katalog „filteri levo"** — filteri su u WoodMart padajućem panelu (`.filters-area`, `display:none` dok se ne klikne „Filteri"), ne u levom sidebaru; prebacivanje 9 widgeta menja UX kataloga (mreža bi pala sa 4 na 3 kolone). → **M: panel ostaje**, bez izmene. Novi widget „Kategorije" ostaje na vrhu panela.
+
+**F1 time zatvoren bez repova.** Posle obe izmene ponovljena puna provera: 215 URL-ova, 200/1×H1/0 PHP grešaka/0 nebalansiranih `<div>`.
 
 ## 2026-07-28 [claude-code] — W7 planiran: ~30 zamerki svelo se na 4 sistemske greške 📋
 
