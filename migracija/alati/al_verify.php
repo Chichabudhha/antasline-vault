@@ -45,6 +45,35 @@ $urls = array_filter( $urls, function ( $u ) { return is_string( $u ) && $u; }, 
 
 echo 'Provera ' . count( $urls ) . ' URL-ova' . ( $CHECK_IMG ? ' + slike' : '' ) . "\n\n";
 
+/* ----------------------------------------- naslovne slike koje pokazuju u prazno */
+
+/**
+ * `_thumbnail_id` postoji, ali prilog nema fajl na disku → kartica u arhivi/petlji
+ * ostaje prazna. Stranica i dalje vraća 200 i ima 1×h1, a slika se ne pojavljuje ni
+ * u `<img src>` na samoj stranici — dakle ni provera slika iznad je ne vidi.
+ * Nađeno 2026-07-29 na `6588` i `16608` (blog arhiva `/aktuelnosti/`).
+ */
+if ( ! $ONLY ) {
+	global $wpdb;
+	$thumbs = $wpdb->get_results(
+		"SELECT p.ID, p.post_type, p.post_title, m.meta_value AS thumb
+		 FROM {$wpdb->posts} p
+		 JOIN {$wpdb->postmeta} m ON m.post_id = p.ID AND m.meta_key = '_thumbnail_id'
+		 WHERE p.post_status = 'publish'
+		   AND p.post_type IN ('page','post','product')
+		   AND m.meta_value <> ''"
+	);
+	$mrtvi = array();
+	foreach ( $thumbs as $t ) {
+		$f = get_attached_file( $t->thumb );
+		if ( ! $f || ! file_exists( $f ) ) {
+			$mrtvi[] = "{$t->ID}  {$t->post_type}  thumb={$t->thumb}  {$t->post_title}";
+		}
+	}
+	printf( "Naslovna slika bez fajla: %d\n", count( $mrtvi ) );
+	foreach ( $mrtvi as $l ) { echo "   {$l}\n"; }
+}
+
 /* ------------------------------------------------------- paralelno preuzimanje */
 
 /** Vraća array(url => array('code'=>int,'body'=>string)). */

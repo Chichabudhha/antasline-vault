@@ -1,3 +1,66 @@
+## 2026-07-29 [claude-code] W7 F2.9 — naslovne slike, logotipi na „O nama", 🔴 mrtav CPT je 404-ovao 6 stranica — **F2 ZATVOREN** ✅
+
+**Zadatak:** poslednja preostala celina F2 iz [[migracija/2026-07-28-W7-sanacija-builda]]. Otvaranje sesije je zateklo **neupisan rad iz jutrošnje sesije (09:33–09:41)**: F2.5, F2.6 i F2.7 su izvršene (bekapi sadržaja i skripte postoje, git commit-ovi 09:34 i 09:44), ali nikad nisu ušle u dnevnik ni PROGRESS. Ova sesija ih je verifikovala i zatvorila zajedno sa 2.9.
+
+**Bekap:** `antasline_local_2026-07-29_pre-W7-F2.9.sql` (48,9 MB) + `functions.php.bak-2026-07-29` + `antas-design.css.bak-2026-07-29` + `post_content` po stranici u `scratchpad/content-backup/`.
+
+### 🔴 Glavni nalaz: 6 stranica je vraćalo 404, a uzrok nije bio u njima
+
+Provera je našla da **svih 6 pod-stranica grupe „spoljne obloge"** (`bergo-xl`, `bergo-elite`, `bergo-unique`, `bergo-easy`, `podovi-za-bazene`, `vestacka-trava-za-terase`) vraća **404**, dok hub radi.
+
+Baza je bila ispravna — `post_parent`, `post_name`, `post_status` svi tačni, `get_page_by_path()` i `WP_Query(pagename=…)` **oba nalaze pravu stranicu**. Kvar je bio u rutiranju: u `rewrite_rules` stoji pravilo
+
+```
+spoljne-podne-obloge/([^/]+)(?:/([0-9]+))?/?$ → index.php?spoljne-podne-obloge=$matches[1]
+```
+
+koje dolazi **ispred** generičkog page pravila. Registruje ga **legacy CPT `spoljne-podne-obloge` („Podovi za bašte")** iz Custom Post Type UI — ostatak starog Porto sajta. CPT nema **nijedan objavljen post** (9 draft + 1 pending), pa je svaki zahtev za dvosegmentnom putanjom išao njemu i završavao u 404. Hub (jedan segment) je radio, pa se kvar nije video na njemu — a Yoast je usput na hub stavljao `noindex, follow`, što je nestalo čim je rutiranje popravljeno.
+
+Ista zamka postoji za još **četiri mrtva CPT-a**: `industrija-podovi`, `podovi-posl-prostor`, `sportski-podovi2`, `vestacka-trava`. Dovoljno je da slug bilo koje buduće stranice bude jednak njihovom i njena deca tiho postaju 404.
+
+**Popravka:** filter `register_post_type_args` u `woodmart-child/functions.php` gasi `public`/`rewrite`/`has_archive` za svih pet. Ništa se ne briše — vraća se uklanjanjem bloka. Posle `rewrite flush`: svih 7 URL-ova 200.
+
+> 🔴 **Zašto ranija provera nije ovo uhvatila.** Rewrite pravila žive u keširanoj `rewrite_rules` opciji i regenerišu se **tek na flush**. Prethodna sesija je brisala taksonomijske termine, što flush okida — dakle pravilo mrtvog CPT-a je tad ušlo u tabelu i oborilo stranice koje su do tada radile. **Posledica za rad: posle svake izmene termina/slugova/permalinka obavezno `rewrite flush` pa ponovna provera URL-ova**, inače kvar isplivava tek sledeće sesije.
+
+### 🔴 Drugi nalaz: `amss-logo.webp` nije AMSS logo
+
+Fajl `2023/01/amss-logo.webp` sadrži **žut znak sa natpisom „AMCC"**, a AMSS (Auto-moto savez Srbije) ima sasvim drugačiji amblem (provereno okom u Chrome-u, uvećano na 220px). Pogrešno imenovan fajl iz batch-a 2023/01. **AMSS ostaje u tekstualnoj listi referenci** (to je M-ova tvrdnja), ali **bez logotipa** — tuđ znak pod tuđim imenom je gora greška od nedostajućeg logotipa. Isto pravilo primenjeno na `Mup-logo.webp`: MUP nije naveden među referencama, pa nije ni dodat.
+
+### Šta je urađeno
+
+| # | Šta |
+|---|---|
+| **2.9a** | **9 postova bez naslovne slike → 0.** Slika birana iz sadržaja samog članka, po temi a ne po slugu: `2699` dobio plastičnu podlogu za tenis (proizvod koji prodajemo) umesto šljake/betona koje članak samo upoređuje; `16609` Ecotile u garaži umesto generičke „lux" garaže; `16610` fotku hale umesto preseka-dijagrama. Tri slike su bile **u sadržaju ali nikad registrovane u medijateci** → uvezene (`17268`, `17269`, `17270`) |
+| **2.9b** | **`wp term recount`** (najavljeni rep prethodne sesije) — 5 ustajalih brojki ispravljeno (`basta` 15→0, `Trava u boji` 8→0, `Poslovni prostor` 4→0, `Podloge za bazene` 3→0, `Specijalni podovi` 1→0). Posle recount-a **5 kategorija je prazno** — kandidati za brisanje, v. Otvoreno |
+| **2.9c** | **„O nama" (`571`) — dva reda logotipa.** Proizvođači (Bergo, Ecotile, Sit-in by Radici) uz pasus koji ih imenuje; klijenti (Bosch, Institut Vinča, Adient, Philip Morris, Orion telekom) iznad spiska referenci. Pravilo: **dodaje se samo logotip firme koju stranica već pominje imenom** |
+| **2.9d** | `.al-logo-row` dobio margine — izmereno u DOM-u da je razmak do sledećeg naslova bio **0px** (traka se lepila uz „ŠTA NUDIMO?"). Na ≤576px razmak i visina smanjeni: sa 40px razmaka na 390px staje **jedan** logotip po redu (153+40+153 = 346 > 341 raspoloživih), sa 24px staju dva — traka 244px → 170px |
+| **2.9e** | 🔴 **2 posta sa naslovnom slikom koja pokazuje u prazno** (`6588`, `16608`) — `_thumbnail_id` postoji, prilog nema fajl → kartica u `/aktuelnosti/` prazna. **Nijedna dosadašnja provera ovo ne vidi**: stranica je 200, ima 1×h1, a slike nema ni u `<img src>` pa je ni provera slika ne hvata. Popravljeno + provera ugrađena u nov alat |
+| **F2.5–2.7** (jutros) | Verifikovano: svih 7 stranica grupe ima `_thumbnail_id`, `16659` više ne nosi pogrešnu bazensku `5057`, hub linkuje **6/6** dece, 5 od 7 linkuje svoj Woo proizvod. Galerija od 6 fotki na `16679`, `.al-swatch` komponenta zamenila 84 inline kvadrata na 5 stranica |
+
+**Nov alat `migracija/alati/al_verify.php`** — sitewide provera se do sada pisala iznova svake sesije. Sada je trajna: 216 URL-ova paralelno (curl_multi), HTTP 200 / 1×`<h1>` / 0 PHP grešaka, opciono HEAD svake slike iz `src`+`srcset`+`al-lb href`, plus provera naslovnih slika bez fajla.
+
+### Verifikovano
+
+**216 URL-ova: 0×(≠200), 0×(≠1 h1), 0 PHP grešaka · 2.799 slika: 0 loših · 0 naslovnih slika bez fajla.** Chrome 1500px i 390px (iframe harness): „O nama" bez horizontalnog skrola, 9 → 8 logotipa učitano, grayscale filter radi; `/aktuelnosti/` 10 kartica, 10 slika. Regresija na početnoj (deli `.al-logo-row`): razmak gore 24px, traka poslednja u sekciji pa donja margina nevidljiva, 1×h1, bez overflow-a.
+
+### 🔴 Nova pravila / gotcha-i
+
+- **`wp media import --skip-copy` na Windows-u je pokvaren**: pojede obrnute kose crte u putanji (`C:xampphtdocs…`) i upiše ekstenziju `.webp` umesto `.jpg` (jer `image_editor_output_format` filter iz F7.22 važi i za original). Posle uvoza **obavezno** ispraviti `_wp_attached_file` na relativnu putanju sa `/` i pravom ekstenzijom, pa `wp media regenerate`.
+- **`_thumbnail_id` koji postoji ≠ slika koja postoji.** Provera „koliko postova nema naslovnu sliku" je lagala — 0, a dva su pokazivala na obrisan prilog.
+- **Mrtav CPT je aktivna zamka**, ne inertan zapis: dok je `public=1`, njegov rewrite slug zaklanja svaku stranicu istog imena i svu njenu decu.
+
+### Otvoreno — čeka Miroslava
+
+1. **F2.8 mapiranje veštačke trave je nemoguće po specifikacijama** — 4 modela na stranici (`Highlands`, `Nature`, `Put`, `Springgrass`) su **Condor Grass dekorativni modeli za koje u katalogu ne postoji nijedan proizvod**. U katalogu su `Condor Schools` i `Condor Playgrass` (trava u boji za igrališta, druga namena) i `Radici Landscape` (pejzažne površine). Kartice zato vode na kategoriju, ne na model. Pitanje: napraviti 4 proizvoda za te modele, ili kartice vezati za `Radici Landscape`?
+2. **5 praznih kategorija posle recount-a** (`basta`, `Trava u boji`, `Poslovni prostor`, `Podloge za bazene`, `Specijalni podovi`) — nijedna nije u `parity-inventar.csv`, dakle nema živi pandan. Brisati kao prošli put, ili ostaviti?
+3. **Duplikat na live-u: `6588` i `16613` imaju isti naslov** „Šta postaviti preko starog parketa ili pločica?" i **oba su `PARITY`** u inventaru (dakle oba postoje i na produkciji). `6588` je noviji i bogatiji (671 reč, 6 kuriranih WebP fotki, ispravan Yoast title), `16613` stariji (382 reči) i nosi **nezamenjen Yoast šablon** `PVC podovi i podovi od vinila %%sep%% %%sitename%%`. Predlog: konsolidovati u `6588` + 301, ali odluka traži GSC presek po obe stranice.
+4. **AMSS bez logotipa** — ako M ima pravi AMSS logo, dodaje se u red; do tada ime stoji samo kao tekst.
+
+### Detalji
+[[migracija/2026-07-28-W7-sanacija-builda]] · [[migracija/alati/_README]] · [[reference/naucene-lekcije]]
+
+---
+
 ## 2026-07-29 [claude-code] W7 F2.1–2.4 — Expona blok: teksture → proizvodi, nova Simplay stranica, dokazano netačna napomena ✅
 
 **Zadatak:** prvi deo F2 iz [[migracija/2026-07-28-W7-sanacija-builda]] (Expona celina), izabran jer je jedini deo F2 bez odluka koje blokiraju usred rada.

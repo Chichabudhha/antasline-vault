@@ -79,6 +79,9 @@ php wp-cli.phar --path="C:\xampp\htdocs\antasline" eval-file job.php
 | `al_scan_lost_originals.php` | **2026-07-29** — prilozi čiji ORIGINAL ne postoji na disku, ali postoji blizanac sa drugom ekstenzijom (rep napuštenog `al_convert_webp.php`). Razlika prema `al_fix_missing_sizes.php`: tamo fali izvedena veličina, ovde sam original — što obara sve veličine odjednom. Tih kvar: javni URL radi, `get_attached_file()` puca |
 | `job-15580-parking.php` | primer stvarno izvršenog posla (uz `primer-job-16657.php`) |
 | `job-w7f2-expona*.php`, `job-w7f2-simplay-*.php` | **2026-07-29** — W7 F2.1–2.4; primeri zamene cele `[vc_row]` sekcije i pravljenja nove stranice od nule (svi imaju probu pre `apply`) |
+| **`al_verify.php`** | **2026-07-29 — sitewide provera builda.** Do sada se pisala iznova svake sesije, sada je trajna. 216 URL-ova paralelno (`curl_multi`, 8 konekcija): HTTP 200 · tačno 1×`<h1>` · 0 PHP grešaka · **naslovne slike bez fajla** (`_thumbnail_id` postoji, prilog obrisan — kartica u arhivi prazna, a ni provera stranica ni provera slika to ne vide). Sa `slike`: HEAD svake slike iz `src`+`srcset`+`al-lb href` (~2.800). `al_verify.php` \| `al_verify.php slike` \| `al_verify.php 571,2699` |
+| `job-w7f2-spoljne-obloge.php`, `job-w7f2-bergo-unique.php`, `al_swatches.php` | **2026-07-29** — W7 F2.5–2.7: thumbnaili + cross-linkovi grupe, galerija na `16679`, `.al-swatch` komponenta (84 inline kvadrata na 5 stranica) |
+| `job-w7f29-post-thumbs.php`, `job-w7f29-o-nama-logotipi.php` | **2026-07-29** — W7 F2.9. Prvi u probi **ispisuje naslov posta + sve slike iz sadržaja sa dimenzijama**, pa se izbor pravi nad onim što članak stvarno govori (pravilo „po H1, ne po slugu"). Drugi nosi pravilo: **dodaje se samo logotip firme koju stranica već pominje imenom** |
 
 Poziv: `php wp-cli.phar --path="C:\xampp\htdocs\antasline" eval-file <skript> [args]`
 (prvo bez `apply` — svi skriptovi imaju probu).

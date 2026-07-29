@@ -1,9 +1,21 @@
 ---
 tip: reference
-azurirano: 2026-07-28
+azurirano: 2026-07-29
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Rewrite pravila i mrtvi CPT-ovi (W7 F2.9, 2026-07-29)
+- 🔴 **Mrtav CPT nije inertan zapis nego aktivna zamka.** Legacy CPT `spoljne-podne-obloge` iz Custom Post Type UI (ostatak Porto sajta, **0 objavljenih postova**) registruje pravilo `spoljne-podne-obloge/([^/]+)/?$ → index.php?spoljne-podne-obloge=$matches[1]`, koje stoji **ispred** generičkog page pravila. Rezultat: **svih 6 pod-stranica stranice sa istim slugom vraćalo je 404**, dok je hub (jedan segment) radio — pa se kvar nije video na njemu. Yoast je usput hub-u lepio `noindex, follow`, što je nestalo čim je rutiranje popravljeno.
+- **Baza može biti potpuno ispravna dok URL 404-uje.** `post_parent`/`post_name`/`post_status` tačni, `get_page_by_path()` **i** `WP_Query(pagename=…)` oba nalaze pravu stranicu — a zahtev i dalje pada. Dijagnostika koja odmah pokaže krivca: proći kroz `get_option('rewrite_rules')` i ispisati **prvi** obrazac koji `preg_match`-uje traženu putanju.
+- 🔴 **Rewrite pravila se regenerišu tek na flush** — zato kvar isplivava sa zakašnjenjem. U ovom slučaju prethodna sesija je brisala taksonomijske termine (što okida flush), pa je pravilo mrtvog CPT-a tek tada ušlo u tabelu i oborilo stranice koje su do tada uredno radile i prošle proveru. **Pravilo: posle svake izmene termina, slugova ili permalink strukture → `wp rewrite flush` pa ponovna provera URL-ova**, inače se kvar pripisuje sledećoj sesiji.
+- ⚠️ **`wp rewrite flush` ume da pukne u pola posla** (kod nas timeout na 2 min): pravila ostanu delimično upisana i stranice krenu da rade **301 na početnu** umesto 404. Ako se posle flush-a vidi masovno 301→home, flush nije završio — ponoviti sa većim timeout-om, ne tražiti uzrok drugde.
+- Popravka bez brisanja: filter `register_post_type_args` u child temi gasi `public`/`publicly_queryable`/`rewrite`/`has_archive` za mrtve CPT-ove. Reverzibilno (uklanjanje bloka), ne dira podatke plugina.
+
+## Medijateka — provere koje lažu (W7 F2.9, 2026-07-29)
+- 🔴 **`_thumbnail_id` koji postoji ≠ slika koja postoji.** Upit „koliko postova nema naslovnu sliku" vraćao je **0**, a dva posta (`6588`, `16608`) su pokazivala na prilog **bez fajla na disku** → kartica u `/aktuelnosti/` prazna. **Nijedna standardna provera ovo ne vidi**: stranica je 200, ima 1×`<h1>`, a slike nema ni u `<img src>` pa je ne hvata ni provera slika. Proveravati `file_exists(get_attached_file($thumb))`, ne prisustvo meta ključa (ugrađeno u `alati/al_verify.php`).
+- 🔴 **`wp media import --skip-copy` je pokvaren na Windows-u.** Pojede obrnute kose crte iz putanje (`_wp_attached_file` postane `C:xampphtdocsantaslinewp-contentuploads201912/fajl…`) i upiše ekstenziju **`.webp` umesto `.jpg`**, jer `image_editor_output_format` filter (F7.22) važi i za original. Posle uvoza obavezno: ispraviti `_wp_attached_file` na relativnu putanju sa `/` i pravom ekstenzijom, pa `wp media regenerate`.
+- **Ime fajla nije dokaz šta je na slici.** `2023/01/amss-logo.webp` sadrži žut znak sa natpisom **„AMCC"**, a AMSS ima sasvim drugačiji amblem. Pre nego što se logotip stavi pod nečijim imenom — pogledati ga uvećano (`img.style.height='220px'; filter:none` pa screenshot). Tuđ znak pod tuđim imenom je gora greška od izostavljenog logotipa.
 
 ## GTM
 - Import ručno pisanog JSON-a NE prolazi — greška "Error deserializing enum type [EventType]". Pouzdano: (A) ručno u GTM UI ili (B) Export → ubaci evente u tačan format → Merge.

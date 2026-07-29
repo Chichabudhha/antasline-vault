@@ -76,7 +76,7 @@ prazan naslov, jedna je duplikat.
 | Faza | Obim | Procena | Status |
 |---|---|---|---|
 | **F1** Globalne popravke (tema, CSS, prevodi, šablon) | 13 stavki | 1 sesija | ✅ 2026-07-28 |
-| **F2** Sadržaj (Expona, Bergo, spoljne obloge, slike) | 9 stavki | 2–3 sesije | 🔄 2.1–2.4 ✅ 2026-07-29 · 2.9 taksonomija ✅ · ostaje 2.5–2.8 + slike |
+| **F2** Sadržaj (Expona, Bergo, spoljne obloge, slike) | 9 stavki | 2–3 sesije | ✅ **ZATVOREN 2026-07-29** (2.1–2.4 · 2.5–2.7 · 2.9) — 2.8 blokiran na M, v. Otvoreno |
 | **F3** Meni i navigacija | 5 stavki | 1 sesija | ⏳ |
 | **F4** Hero fotografije po stranici | 2 stavke | 1 sesija | ⏳ |
 
@@ -219,6 +219,24 @@ obrascu Click stranice (proizvod `16916` ima thumb + 4 galerijske + 4 PDF-a).
 Bez slike i bez galerije. Uvezti `BROCHURE-EXPONA-DESIGN.pdf` + tehnički list i slike
 iz `2020/12/`. **Ukloniti iz opisa netačnu rečenicu** „tehnički list još nije dobavljen
 od distributera" — dokument leži na disku.
+
+> **2.5–2.7 ✅ ZATVORENO 2026-07-29** (izvršeno jutarnjom sesijom 09:33–09:41, verifikovano
+> i upisano popodnevnom). Dijagnoza je i ovde bila delom zastarela: **svih 7 stranica grupe
+> je već imalo `_thumbnail_id`** (ne 1 od 7), `16659` više nije nosila pogrešnu bazensku
+> `5057`, a **hub je linkovao dvosegmentne `/spoljnje-` URL-ove** kojih na lokalu nema
+> (lokalni slug je oduvek `spoljne-`, bez „j") — to su bili mrtvi linkovi, ne 3-od-6 pitanje.
+> Posle popravke hub linkuje **6/6** dece, 5 od 7 stranica linkuje svoj Woo proizvod.
+> `.al-swatch` komponenta zamenila **84 inline kvadrata na 5 stranica**.
+>
+> 🔴 **2.7, poslednji red (slug `spoljnje-` → `spoljne-`) je pogrešno postavljen.** Lokal je
+> već `spoljne-`, live je `spoljnje-` — dakle pitanje nije „da li preimenovati lokal" nego
+> **„da li prihvatiti razliku prema live-u i upisati 301"**. Ostaje M-ova odluka.
+
+> **2.9 ✅ ZATVORENO 2026-07-29.** 9 postova bez naslovne slike → 0 · `term recount` (5
+> ustajalih brojki, 5 kategorija ispalo prazno) · „O nama" dobio dva reda logotipa.
+> **40 proizvoda bez slike ostaje** — to je serijski posao za skil `/obogati-proizvod`,
+> vodi se odvojeno. Usput: 🔴 **mrtvi legacy CPT-ovi su 404-ovali celu grupu „spoljne
+> obloge"** (v. [[DNEVNIK-NAPRETKA]] 2026-07-29) — popravljeno filterom u child temi.
 
 ### 2.5 Bergo Unique (`16679`) — slike proizvoda i upotrebe
 Sad ima samo 6 SVG ikonica + 3 montažne fotke + YT thumb. Dodati galeriju iz
