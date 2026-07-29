@@ -61,7 +61,7 @@ foreach ( $ids as $id ) {
 	if ( $hero_i < 0 ) { $skip_no_hero[] = $id; continue; }
 
 	if ( strpos( $parts[ $hero_i ], 'al-hero-photo' ) !== false ) { $skip_has_photo[] = $id; continue; }
-	if ( in_array( $id, $EXCLUDE, true ) ) { $skip_excluded[] = $id; continue; }
+	if ( in_array( (int) $id, $EXCLUDE, true ) ) { $skip_excluded[] = $id; continue; }
 
 	// Kandidati: svi <img src="...uploads..."> iz CELE stranice (ne samo hero segmenta) —
 	// najveća curated fotka na stranici je i dalje najbolji izbor za pozadinu, ma u kojoj sekciji živela.
