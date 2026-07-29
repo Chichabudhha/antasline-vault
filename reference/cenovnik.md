@@ -55,7 +55,7 @@ status: čeka-popunu
 | -------------------------------------------------------------------- | -------------- | ------------- | --------- | ---------------------------------------------------------------------------------------------- |
 | Bergo Ultimate (sportski pod, court builder pločica)                 | Na upit        |               | m²        | čeka M11 — `al_cb_prices` opcija u WP adminu ("Cene planera") trenutno prazna, 0 redova u bazi |
 | Bergo Ultimate FLOW (pickleball podloga)                             | Na upit        |               | m²        | čeka M11, isto kao gore                                                                        |
-| Ecotile rampe/završni profili (4 proizvoda, 16930/16939/16943/16949) | Na upit        |               | m ili kom | čeka M11 — nema cene ni u WC ni u planeru                                                      |
+| Ecotile rampe/završni profili (4 proizvoda, 16930/16939/16943/16949) | 1560           |               | m ili kom | čeka M11 — nema cene ni u WC ni u planeru                                                      |
 | Lite Shot 325 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
 | Mini Shot 225 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
 | MicroShot 125 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |

@@ -411,6 +411,14 @@ Claude analizira i predlaže opcije → Miroslav odobrava → Claude Code izvrš
 lokalno. Ne izvršavati destruktivne/nepovratne izmene na bazi bez prethodnog
 backup-a i bez odobrenja.
 
+### 8.6 Token usage tracking
+Log: `Token Logs/.token_log.jsonl` (vault root, append-only, JSONL). Posle
+svake logičke akcije u sesiji ispiši na konzolu `✓ {akcija} | +Xk tokens |
+Session: Yk` i append-uj log unos. Brojevi dolaze iz stvarnog usage polja u
+Claude Code transkriptu sesije (`~/.claude/projects/<slug>/<session-id>.jsonl`),
+ne iz procene. Preko 150k u sesiji → predloži `/clear`. Ne čitati log fajl
+tokom rada osim na eksplicitan zahtev. Detalji i formula: [[reference/token-tracking]].
+
 ---
 
 ## 9. KLJUČNE LEKCIJE (da se ne ponavljaju greške)
@@ -553,6 +561,7 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 - `[[reference/claude-skilovi]]` — Pregled Claude Code skilova (/antasline-sesija, /obogati-proizvod, /w6-social, /nedeljni-izvestaj)
 - `[[reference/drustvene-mreze]]` — Popis social profila (W6 Faza 0, Miroslav popunjava)
 - `[[reference/cenovnik]]` — Jedinstveni cenovnik (M10, Miroslav popunjava jednom, Claude vuče odatle)
+- `[[reference/token-tracking]]` — Token usage tracking konvencija (Token Logs/.token_log.jsonl)
 
 ### 📚 DOKUMENTACIJA
 - `[[briefs/_README]]` — (ako postoji brief za kampanje)

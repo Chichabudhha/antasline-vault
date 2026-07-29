@@ -1,3 +1,60 @@
+## 2026-07-29 [claude-code] N5 rani start — Meni/footer/mobile QA: sve čisto, 0 pravih bugova (1 lažna uzbuna razrešena)
+
+**Zadatak:** N5 je planiran 04–10.08, ali pošto je W7 F3 (rebuild menija na term 390) i F4 (hero fotografije) ušlo u kod tek 07-28/07-29, rani start ove nedelje pokriva sveži rad pre nego što se regresija nagomila. Obim (M odluka): fokus na meni (term 390, svih 6 grupa) + footer (5 kolona) na 1500px i 390px, plus smoke na 8-10 reprezentativnih stranica — ne pun sitewide sken (taj je već urađen u F1/F3/F4).
+
+**Rezultat — sve zeleno:**
+- **Desktop meni (1500px):** svih 6 grupa (Sport/Industrija/Terase i dom/Poslovni/Specijalni/Cene) — bez preloma u drugi red, širine ispravne (F3 bag "Specijalni/Cene nasledili sized bez širine" **ostaje popravljen**, potvrđeno vizuelno). Spot-check linkova (Podovi za garaže) → 200.
+- **Mobilni hamburger (390px):** otvaranje, 3 nivoa navigacije (npr. Sport → Tereni po sportu → Teniski tereni) sa scroll-om unutar panela, navigacija radi i zatvara panel, `Escape` zatvara panel čisto.
+- **Footer (5 kolona):** Logo+adresa/Podovi/Antas Line/Kontaktirajte nas/Pratite nas — svih 8 internal linkova 200, telefon `069 234 00 72` tačan (`tel:+381692340072`), mailto tačan, 4 social ikonice (FB/IG/Pinterest/LinkedIn). Mobilni akordeon (chevron expand/collapse) radi, testirano na "Pratite nas".
+- **Smoke 9 stranica** (home, /cene/, /expona-simplay/, /kontakt/, /industrijski-podovi/, /podovi-za-garaze/, /katalog/, /sportske-podloge/, /o-nama/): svuda 1×H1, 0 horizontalni overflow na 390px, 0 slomljenih slika. Console: 0 grešaka na home/kontakt/expona-simplay. Product CTA test (Bergo XL "Zatražite ponudu") → ispravan redirekt na `/kontakt/?form-naslov=Ponuda: Bergo XL...`.
+
+**🔴 Lažna uzbuna istražena i razrešena (vredna zapisa za metodologiju):** na `/sportske-podloge/sportski-podovi-za-teniske-terene/` (17028), H1 u iframe 390px harnessu ("resize_window ne radi" workaround, [[migracija/woodmart-sabloni]] F1.6) je vizuelno pokazivao teško preklopljen tekst (Bebas Neue, 4 reda). Sumnjao sam na `line-height: 0.98` (globalno na `body h1, body h2, .al-display`, `antas-design.css:137`) kao uzrok — ali izolovan test (identičan CSS+font, bez ostatka sajta, i unutar i van iframe-a) renderovao **čisto, bez preklapanja**. Presudan test: **direktna navigacija na istu URL (bez iframe-a) na širokom viewport-u** pokazala **savršeno čist** natpis u 3 reda. Zaključak: **sam iframe 390px harness ima render glitch sa ovim custom webfont-om na uskim širinama** — nije pravi bug, ne bi ga video pravi korisnik na telefonu. **Novo pravilo za [[migracija/woodmart-sabloni]]:** kad iframe harness pokaže sumnjiv problem sa TEKSTOM (ne layout/overflow — to ostaje pouzdano), potvrditi direktnom navigacijom na punu širinu pre prijave kao bug. Automatski JS sken (scrollWidth/H1 count/broken images) kroz iframe ostaje pouzdan jer je čisto layout matematika, ne font paint.
+
+**Verifikovano:** 0 pravih defekata nađeno. Nema izmena baze/koda ove sesije (samo QA, privremeni test fajl `C:\xampp\htdocs\test-overlap.html` kreiran i obrisan). Master plan N5 red "footer/meni/mobile QA" — rani deo obavljen, preostaje puni CWV/checkout deo (3.6, 3.8) u pravoj N5 nedelji (04–10.08).
+
+---
+
+## 2026-07-29 [claude-code] W7 F3 — 15580→16589 sadržaj: PROVERENO, prenos nije potreban (bloker zatvoren bez izmene baze)
+
+**Zadatak:** poslednja preostala stavka iz W7 F3 blokera (§3, tačka 3) — plan je tvrdio da 2182 reči na `15580` naspram 751 na `16589` znači neiskorišćen sadržaj (RUNFLOOR/GEOCROSS/GEOGRAVEL opisi) koji treba preseliti pre nego što `15580` ode na trajni noindex.
+
+**Merenje pre izvršenja (isti obrazac kao ranije oborene tvrdnje plana ove sesije):** pročitan `post_content` oba posta direktno iz baze. `16589` **već pokriva sva 4 Geoplast proizvoda** (Runfloor/Geocross/Geogravel/Geoflor) — moderan `al-section` šablon sa tačnim cenama (2.800–4.200 din/m²), nosivostima, uporednom tabelom, FAQPage schema-om (4 pitanja) i 9 sopstvenih referentnih fotki. Poređenje cena otkriva da `15580` nosi **stare/nedosledne brojke** (Geocross 3.600 vs potvrđenih 4.200 na 16589, Geogravel 3.500 vs 4.000). „751 reči" iz plana je bila zastarela procena — stvarni tekst na 16589 je znatno obimniji i kvalitetniji od 15580.
+
+**Odluka:** prenos NIJE izvršen. Migracija bi dupliranjem unela zastarele cene u već ispravnu stranicu — nema stvarnog sadržajnog gapa. Ovim je bloker iz [[PROGRESS]] (W7 F3, treća stavka) zatvoren bez ijedne izmene baze. `15580` ostaje noindex + 301→16589 (aktivira se na dan migracije), kako je već upisano u `[[migracija/redirect-mapa-FINAL]]`.
+
+---
+
+## 2026-07-29 [claude-code] W7 F2.9 rep — Sportska oprema batch: 2/8 dobila sliku — **ovim je ceo originalni popis „40 proizvoda bez slike" iscrpljen**
+
+**Zadatak:** peti i poslednji batch. `16999` Golovi za rukomet i futsal i `17000` Zaštitna mreža za sportske terene — oba generičkih specifikacija bez brend/model tvrdnje („tačan model na upit"), pa je generička prava fotografija bezbedna (nema rizika pogrešne boje/varijante).
+
+**Rezultat:**
+- ✅ `16999` — thumbnail (rukometni gol na terenu, real fotografija).
+- ✅ `17000` — thumbnail (crna zaštitna mreža oko terena).
+- 🔴 `16990` Tribina montažno-demontažna, `16991` Stolica za tribine, `16998` Go za mali fudbal, `17001` Mreža za tenis, `17002` Mreža za padel, `17003` Mrežica za koš — **0 fotografija u arhivi**, bez izmene.
+
+**Verifikovano:** oba proizvoda 200/1×H1/0 PHP grešaka, obe slike 200. Backup: `antasline_local_2026-07-29_pre-F2.9-sportska-oprema-slike.sql`. Skripta: `f29_sportska_oprema_slike.php`.
+
+**Zbirno F2.9 rep (5 batch-eva, ova sesija):** 40 proizvoda pregledano → **12 dobilo sliku**, **28 prijavljeno #ceka-miroslav** (nema pouzdanog materijala u arhivi ili jedina kandidatska fotka pripada drugom proizvodu/pogrešnoj boji). Nijedna slika nije nasilno primenjena — svaki „ne" slučaj je proveren pojedinačno (specifikacija/boja/brend) pre odbijanja. Detaljan spisak 28 nedostajućih po grupi: [[PROGRESS]] Blokeri.
+
+---
+
+## 2026-07-29 [claude-code] W7 F2.9 rep — R-Tile batch: 2/2 dobila sliku; Ecotile rampe (4) + PermaStripe + SureGrip prijavljeni kao nedostajući
+
+**Zadatak:** četvrti batch. R-Tile Urban (`16920`, beton/terrazzo teksture) i R-Tile Design (`16921`, kamena/drvena dekor linija) — obe već potpuno opisane, samo bez slike.
+
+**Rezultat:**
+- ✅ `16920` Urban — thumbnail + 2 galerijske (siva/tamna betonska tekstura u prodavnicama, već uvezeno u medijateku).
+- ✅ `16921` Design — thumbnail (krem kamena tekstura u trgovačkom centru). Obe linije dele terrazzo/beton opcije u zvaničnom spisku tekstura, pa siva fotka ide uz Urban a topla krem uz Design — bez tvrdnje o tačnom nazivu dezena.
+- 🔴 **Usput uhvaćeno:** fajl „podne-obloge-u-pomocnim-objektima.webp" (naziv sugeriše R-Tile) je zapravo **isti žuto-crni sigurnosni pod** kao `rtile-magacin.jpg` — potpuno drugi proizvod (penasta/interlocking magacinska podloga, ne vinil R-Tile) — **isključen**, nije korišćen uprkos imenu fajla.
+- 🔴 **Proverene i prijavljene bez slike u istoj sesiji** (deo šireg popisa, nema fotografija u arhivi): 4 Ecotile rampe/spojnice (`16930` E500 T-Joint, `16939` E500 T-Joint ugaona, `16943` X500 X-Joint, `16949` X500 X-Joint ugaona — samo instalaciono uputstvo PDF postoji, 0 fotografija), `16922` PermaStripe traka za obeležavanje, `16929` SureGrip stepenišni profil.
+
+**Verifikovano:** oba R-Tile proizvoda 200/1×H1/0 PHP grešaka, sve 4 slike HEAD-ovano 200. Backup: `antasline_local_2026-07-29_pre-F2.9-rtile-slike.sql`. Skripta: `f29_rtile_slike.php`.
+
+**#ceka-miroslav:** fotografije za 4 Ecotile rampe (male prelazne komade retko fotografišu posebno — moguće da ih treba tražiti direktno od Ecotile UK), PermaStripe, SureGrip.
+
+---
+
 ## 2026-07-29 [claude-code] W7 F2.9 rep — Condor/Radici batch: 2/10 proizvoda dobila sliku, 8/10 prijavljena kao nedostajuća (naziv-mismatch rizik, ne pogrešna boja ovaj put)
 
 **Zadatak:** treći batch iz „40 proizvoda bez slike". Linija: Condor Grass „trava u boji" (`16877` Schools, `16885` Playgrass — oba variable proizvodi sa 7 varijacija boje: Crvena/Žuta/Plava/Bela/Roze/Zelena/Braon) + `16893` Condor shock-pad (podloga ispod trave) + 7 Radici tehničkih sportskih trava (`16894` ULTRAMIX EVO mali fudbal, `16895` Tournament 20 tenis/padel, `16899` rugbi, `16900` golf, `16901` hokej, `16902` Multisport MX, `16906` pejzažne površine).

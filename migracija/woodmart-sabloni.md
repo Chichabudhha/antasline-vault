@@ -529,6 +529,14 @@ Puna strategija i uputstvo: [[migracija/brzi-upit-forma]]. Ovde samo gotcha-i:
   same-origin **iframe širine 390px** u praznom tabu; media queries u iframe-u reaguju na širinu
   iframe-a. Automatski smoke po stranicama: `scrollWidth>390` (h-overflow), broj `<h1>`, slomljene
   slike (`img.complete && naturalWidth===0`); `lazy.svg` unosi su WoodMart lazy placeholder, ne greška.
+  🔴 **Ograničenje uočeno 2026-07-29**: iframe harness je pouzdan za layout/overflow proveru (čista
+  geometrija), ali može dati **lažnu vizuelnu uzbunu za TEKST** — na `/sportske-podloge/sportski-podovi-
+  za-teniske-terene/` je H1 (Bebas Neue, 4 reda na 390px) u iframe screenshotu izgledao teško preklopljen,
+  a direktna navigacija na istu URL (bez iframe-a, pun viewport) pokazala savršeno čist tekst. Uzrok je
+  render glitch samog nested-iframe + custom webfont paint-a u ovom Chrome automation okruženju, ne pravi
+  bug. **Pravilo:** sumnjiv TEKST nalaz iz iframe screenshot-a → pre prijave kao bug, potvrditi direktnom
+  navigacijom (bez iframe-a) na istu URL, po mogućstvu i na širem viewport-u gde tekst i dalje ide u više
+  redova. Automatski JS sken (scrollWidth/H1 count/broken images) ostaje pouzdan bez ove provere.
 - 2 posta su u kategoriji НЕКАТЕГОРИЗОВАНО (term 64) — vidljivo kao ćirilični bedž na home blog
   karticama; dodeliti prave kategorije tokom Faza 2 batch-a.
 - 🔴 **Goli JSON-LD može biti i LAŽNA Review schema** (2298: izmišljena recenzija "Sava Marković"

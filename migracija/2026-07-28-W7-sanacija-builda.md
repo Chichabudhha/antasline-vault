@@ -267,9 +267,11 @@ na stranici (visina trave, broj uboda/m²), ne po imenu naslepo.
 ### 2.9 Slike i kategorije koje nedostaju
 - **9 postova bez `_thumbnail_id`**: `17027`, `16614`, `16612`, `16610`, `3398`,
   `16609`, `3318`, `3257`, `2699`
-- **40 od 94 proizvoda bez glavne slike** — Geoplast (7), Radici/Condor (9), Bergo (5),
-  Ecotile rampe (4), sportska oprema (6), Expona (2), R-Tile (2), ostalo. Serijama po
-  liniji, skil `/obogati-proizvod`
+- ✅ **40 proizvoda bez glavne slike — PREGLEDANO 2026-07-29** (5 sesija istog dana,
+  skil `/obogati-proizvod`): **12/40 dobilo sliku**, 28 prijavljeno `#ceka-miroslav`
+  (nema pouzdanog materijala u arhivi, ili jedina kandidatska fotka je pogrešna
+  boja/varijanta ili pripada drugom proizvodu). Spisak i detalji: [[PROGRESS]]
+  Blokeri, [[DNEVNIK-NAPRETKA]]
 - ✅ **ZATVORENO 2026-07-29** — **2 posta samo u „nekategorizovano"**: `6824` → **Pod za
   prodavnice i radnje** (141), `6874` → **Industrijski podovi** (51); obrisane prazne
   `tereni` (59), `pod-za-garaze` (52, duplikat živog „Garažni podovi" 140) i

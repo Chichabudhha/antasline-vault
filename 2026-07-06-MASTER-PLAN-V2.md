@@ -140,7 +140,7 @@ N1  07–13.07  W2: Tier1 (čim stignu cene) + 2.3 title/meta ×4 · W1: silo re
 N2  14–20.07  W2: Tier2 (odbojka/tenis/šljaka/padel) · W4: 4.4 ad grupe · W1: blog import · W3: 3.4 Woo slugovi
 N3  21–27.07  W1: preostale pages (top GSC prioritet) · W2: 2.7 Product schema + 2.8 GEO paket · W3: 3.3 blog slug
 N4  28.07–03.08  W2: Tier3 vertikali · W3: 3.1–3.2 C1 finalna verifikacija + konstrukcije odluka · W5: 5.2–5.3 GMB paket
-N5  04–10.08  W3: 3.6 CWV optimizacija · W1: footer/meni/mobile QA · W3: 3.8 checkout test
+N5  04–10.08  W3: 3.6 CWV optimizacija · W1: footer/meni/mobile QA ✅ rani start 2026-07-29 (0 bugova, v. DNEVNIK) · W3: 3.8 checkout test
 N6  11–17.08  W2: Tier4 · W4: 4.7 Enhanced Conversions priprema · W3: full regression start + 3.14 proba migracije na subdomen + 3.15 SERP snapshot
 N7  18–24.08  CONTENT FREEZE · W3: 3.9 .htaccess + 3.10 checklist + backupi · GSC priprema
 N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
