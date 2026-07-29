@@ -96,7 +96,9 @@ nikad na live sajtu.
    - "Primena" sekcija (use-cases, interni linkovi)
    - "Ugradnja" sekcija (klik-sistem, bez lepka — gde važi)
    - 3 FAQ pitanja
-   - CTA: telefon **072** (`tel:+381692340072`) + link ka kontakt formi
+   - CTA: telefon **`069 234 00 72`** (`tel:+381692340072`) + link ka kontakt formi.
+     🔴 Prefiks je **069** — „072" je skraćenica za poslednje dve cifre, nikad ne
+     pisati „072 234 00 72" (v. [[CLAUDE]] §9)
    - `post_excerpt` (kratak opis) = 1–2 rečenice benefita
 5. **Yoast**: `_yoast_wpseo_title` + `_yoast_wpseo_metadesc` postmeta za svaki
    proizvod. Title ≤60 znakova sa ključnom reči, metadesc ≤155.
