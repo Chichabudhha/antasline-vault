@@ -77,7 +77,7 @@ prazan naslov, jedna je duplikat.
 |---|---|---|---|
 | **F1** Globalne popravke (tema, CSS, prevodi, šablon) | 13 stavki | 1 sesija | ✅ 2026-07-28 |
 | **F2** Sadržaj (Expona, Bergo, spoljne obloge, slike) | 9 stavki | 2–3 sesije | ✅ **ZATVOREN 2026-07-29** (2.1–2.4 · 2.5–2.7 · 2.9) — 2.8 blokiran na M, v. Otvoreno |
-| **F3** Meni i navigacija | 5 stavki | 1 sesija | ⏳ |
+| **F3** Meni i navigacija | 5 stavki | 1 sesija | ✅ **2026-07-29** (3.1–3.4 + 15580 deo 3.5) — ostaje dizajn-parity za `5791`/`15793` |
 | **F4** Hero fotografije po stranici | 2 stavke | 1 sesija | ⏳ |
 
 ---
@@ -289,6 +289,32 @@ na stranici (visina trave, broj uboda/m²), ne po imenu naslepo.
 ---
 
 ## F3 — Meni i navigacija
+
+> **✅ ZATVORENO 2026-07-29** (osim dizajn-parity dela 3.5). Ispravke dijagnoze,
+> izmerene pri izvršenju (detalji: [[DNEVNIK-NAPRETKA]]):
+> - **3.2 „5 stavki bez naslova" nije defekt** — `wp_update_nav_menu_item()` namerno
+>   prazni `post_title` kad je labela ista kao naslov ciljne stranice; stavka nasleđuje
+>   naslov i renderuje se ispravno. Isti tip lažnog pogotka kao F1.1.
+> - **3.2 rupa u `menu_order` i duplikata redosleda nije bilo** (0/0). Duplikat je bio
+>   *cilja*: „Sport" i „Sportske podloge" obe na `5438`.
+> - **Stvarno stanje gore od dijagnoze:** term 67 je imao **31 dete pod jednom grupom**,
+>   gnežđenje pomereno („Veštačka trava" pod *Industrijom*, „basket" pod *Terasama*).
+> - **3.4 siročadi je 40, ne 26** — razliku od 14 pokrivaju **utility meni** (term 280,
+>   ide preko WoodMart header builder-a a NE preko `nav_menu_locations` — zato ga
+>   `get_nav_menu_locations()` ne prijavljuje) i futer.
+> - **3.5: `15580` nema bolji Yoast.** `16589` ima merljivo bolji (nosi cenu
+>   2.800 din/m² + imena Geoplast modela) → **prenos nije izvršen**, suprotno planu.
+>   Umesto toga: `15580` → `noindex`, dolazni linkovi sa `16550` i `16876` prevezani
+>   na `16589`, 301 upisan u [[migracija/redirect-mapa-FINAL.csv]].
+> - **Nova struktura ima 6 grupa, ne 5+Cene sa običnim padajućim menijima** — sve
+>   grupe su mega-meni (`_menu_item_design=sized`) jer WoodMart walker **ne resetuje
+>   `design` između grupa**; grupa bez eksplicitnog dizajna nasledi susedov i ostane
+>   bez širine (panel se skupi na 182px). Vidi [[reference/naucene-lekcije]].
+> - **Labele skraćene** jer se meni prelamao u drugi red na 1500px: „Poslovni prostori"
+>   → **Poslovni**, „Specijalni podovi" → **Specijalni**.
+>
+> Struktura živi u skripti `migracija/alati/job-w7f3-meni.php` (jedini izvor istine —
+> meni se ne uređuje ručno u adminu, nego se skripta pusti ponovo).
 
 **3.1 Bekap menija** pre svega — `mysqldump` samo `wpGs_terms`, `wpGs_term_taxonomy`,
 `wpGs_term_relationships` + `wpGs_posts`/`wpGs_postmeta` gde je
