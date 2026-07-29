@@ -235,9 +235,16 @@ na stranici (visina trave, broj uboda/m²), ne po imenu naslepo.
 - **40 od 94 proizvoda bez glavne slike** — Geoplast (7), Radici/Condor (9), Bergo (5),
   Ecotile rampe (4), sportska oprema (6), Expona (2), R-Tile (2), ostalo. Serijama po
   liniji, skil `/obogati-proizvod`
-- **2 posta samo u „nekategorizovano"**: `6824` (→ Poslovni prostor / Pod za prodavnice),
-  `6874` (→ Industrijski podovi). Usput očistiti prazne kategorije `tereni`,
-  `pod-za-garaze` i duplikat `Uncategorized @sr` / `nekategorizovano`
+- ✅ **ZATVORENO 2026-07-29** — **2 posta samo u „nekategorizovano"**: `6824` → **Pod za
+  prodavnice i radnje** (141), `6874` → **Industrijski podovi** (51); obrisane prazne
+  `tereni` (59), `pod-za-garaze` (52, duplikat živog „Garažni podovi" 140) i
+  `Uncategorized @sr` (1). 15 → 12 kategorija.
+  🔴 Term 1 je bio `default_category` — WP ne dozvoljava brisanje podrazumevane
+  kategorije, pa je redosled morao biti: prvo `default_category` → 64, pa brisanje.
+  Term 64 preimenovan `Некатегоризовано` → `Nekategorizovano`, ostaje kao fallback (0 postova).
+  🔴 **Rep za sledeću F2 sesiju:** `count` u `wpGs_term_taxonomy` je ustajao sitewide
+  (`Poslovni prostor` 65 tvrdi 4, ima 0 publish) → `wp term recount category`, nije
+  rađeno bez najave jer menja brojke svuda.
 - **Reference na „O nama" (`571`)** — 20 imena klijenata kao goli tekst, bez ijednog
   logotipa. Home (`16550`) već ima `.al-logo-row` (grayscale + hover,
   `antas-design.css:421`) i 3 foto-kartice. Preneti obe komponente na „O nama".

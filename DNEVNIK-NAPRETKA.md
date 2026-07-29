@@ -1,3 +1,36 @@
+## 2026-07-29 [claude-code] W7 F2.9 (deo) — Taksonomija: 2 posta prekategorisana, 3 prazne kategorije obrisane ✅
+
+**Zadatak:** M ima ~15 min do prekida sesije → izabran najkraći izolovani deo F2.9 iz [[migracija/2026-07-28-W7-sanacija-builda]] (taksonomija), umesto otvaranja cele F2 faze.
+
+**Bekap:** `antasline_local_2026-07-29_pre-taksonomija-cleanup.sql` (samo 4 taksonomijske tabele — `wpGs_terms`, `wpGs_term_taxonomy`, `wpGs_term_relationships`, `wpGs_termmeta`).
+
+### Šta je urađeno
+
+| Šta | Detalj |
+|---|---|
+| `6824` R-Tile u supermarketima | „Некатегоризовано" → **Pod za prodavnice i radnje** (141) |
+| `6874` ESD podovi — priča kupca | „Некатегоризовано" → **Industrijski podovi** (51) |
+| Obrisane prazne kategorije | `Uncategorized @sr` (1), `Pod za garaže` (52, duplikat živog „Garažni podovi" 140), `tereni` (59) |
+| `Некатегоризовано` (64) | preimenovan u **Nekategorizovano** (latinica) i postavljen kao `default_category` |
+
+Kategorija: 15 → 12.
+
+### 🔴 Gotcha: `default_category` je štitio duplikat
+
+Plan kaže „očistiti duplikat `Uncategorized @sr` / `nekategorizovano`", ali `Uncategorized @sr` (term 1) je bio upisan u opciju `default_category` — WP ne dozvoljava brisanje podrazumevane kategorije. Redosled je zato morao biti: **prvo** prebaciti `default_category` na 64 (jedini od dva koji se stvarno koristio — držao je oba posta), **pa** obrisati term 1. Obrnut redosled bi tiho pukao.
+
+Usput preimenovan i sam term 64 u latinicu — ostaje kao obavezan WP fallback (svaki WP mora imati podrazumevanu kategoriju), ali sad sa 0 postova i imenom koje odgovara ekavici/latinici sajta.
+
+### 🔴 Nalaz: `count` u `wpGs_term_taxonomy` je bio ustajao sitewide
+
+Posle izmene `Industrijski podovi` je pokazao **17**, a pre izmene **20** — iako mu je post *dodat*. Provera direktnim brojanjem relacija: 17 publish + 9 draft = 26 redova, dakle stara „20" nije bila ni jedno ni drugo, nego zaostala vrednost (verovatno od 2026-07-21 kad je 25 orphan legacy CPT postova prebačeno u draft, bez recount-a). `wp post term set` je usput prebrojao samo termove kojih se dotakao.
+
+**Ostaje otvoreno (nije dirano):** `Poslovni prostor` (65) prijavljuje `count=4` a ima **0 publish** postova — isti obrazac, samo na terminu koji ova sesija nije dotakla. Verovatno ih ima još. Popravlja se jednim `wp term recount category` (bezbedno, samo prepiše brojače), ali menja brojke sitewide pa nije rađeno bez najave. Uzeti u sledećoj F2 sesiji.
+
+**Verifikovano:** oba posta 200 · 1×`<h1>` · 0 PHP grešaka · obe ciljne arhive (`/category/pod-za-prodavnice-i-radnje/`, `/category/industrijski-podovi/`) 200 · `/category/nekategorizovano/` 200 · arhiva obrisanog term 1 vraća 404 (nema zaostalog linka).
+
+**Napomena o URL-u:** `category_base` je prazan, pa je baza podrazumevana `/category/` (ne `/kategorija/` kako sam prvo testirao). `/kategorija/industrijski-podovi/` daje 301 na stranicu `/industrijski-podovi/` (16567) — postojeće ponašanje, ne posledica ove izmene.
+
 ## 2026-07-28 [claude-code] W7 F1 — Globalne popravke: 13 stavki, 3 tvrdnje plana oborene merenjem ✅
 
 **Zadatak:** F1 iz [[migracija/2026-07-28-W7-sanacija-builda]] — prva faza sanacije, namerno pre F2 da sadržajni rad ide nad ispravnim rasterom.
