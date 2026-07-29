@@ -1,3 +1,77 @@
+## 2026-07-29 [claude-code] W7 F3 — Meni prekomponovan, 26 siročadi povezano, nova „Cene" stranica ✅
+
+**Zadatak:** F3 iz [[migracija/2026-07-28-W7-sanacija-builda]] — meni i navigacija. Izabran jer je sledeći po redosledu, M je već doneo sve odluke koje traži, i jer je 26 gotovih stranica stajalo bez ijednog internog linka.
+
+**Bekap:** `antasline_local_2026-07-29_pre-W7-F3-meni_FULL.sql` (48,9 MB) + zasebno `…_TAX.sql` (taksonomijske tabele) + `post_content` po stranici u `scratchpad/content-backup/`.
+
+### Tri tvrdnje plana oborene merenjem
+
+**(1) „5 stavki menija bez naslova" nije defekt.** Plan navodi `16697`, `16701`, `16702`, `16703`, `16711`, `16713` kao stavke bez naslova. Sirov `post_title` im jeste prazan — ali to je **namerno ponašanje WP jezgra**: `wp_update_nav_menu_item()` prazni `post_title` kad je labela identična naslovu ciljne stranice, pa stavka nasleđuje naslov. Sve su se renderovale ispravno (`0` praznih `nav-link-text` u HTML-u). Isti tip lažnog pogotka kao F1.1 — mereno nad sirovom bazom umesto nad izlazom.
+
+**(2) Rupa u `menu_order` i duplikat nisu postojali** u aktivnom meniju (term 67): 0 rupa, 0 duplikata redosleda. Postojao je duplikat **cilja** — „Sport" i „Sportske podloge" su obe vodile na `5438`.
+
+**(3) 15580 nema bolji Yoast.** Plan traži prenos njenog title/metadesc na `16589`. Izmereno: `16589` ima **merljivo bolji** (`Podloge za parking i staze — Geoplast rešetke od 2.800 din/m²` + imena modela Runfloor/Geocross/Geogravel/Geoflor), a `15580` generički `… - Antasline` bez cene. **Prenos nije izvršen**, `16589` zadržava svoj.
+
+### Stvarno stanje menija bilo je gore nego što plan opisuje
+
+Aktivan term 67 je imao **31 dete pod jednom grupom** („Specijalni podovi"), a gnežđenje pomereno: „Veštačka trava" pod *Industrijom*, „Tereni za basket" pod *Terasama*, „pickleball" pod *Poslovnim prostorima*. Siročadi je **40, ne 26** — razlika su 14 starih (ne-`al-*`) stranica koje plan nije brojao; od njih su Početna/Aktuelnosti/O nama/Kontakt pokriveni **utility menijem** (term 280, renderuje se kao topbar preko header builder-a, ne preko `nav_menu_locations` — zato ga prva provera nije videla), a katalog i kolačići futerom.
+
+### Urađeno
+
+- **Nov meni (term 390, 79 stavki)** izgrađen skriptom, ne ručno. Građen kao **nov term**, stari 67 ostavljen netaknut → povratak je jedna izmena `nav_menu_locations`.
+- **Šest grupa, tri nivoa kroz mega-meni kolone**: Sport (3 kolone/18 stranica) · Industrija (3/16) · Terase i dom (2/7) · Poslovni (2/8) · Specijalni (2/6) · Cene (2/4).
+- **Pokrivenost je provera, ne pretpostavka**: skripta poredi sve objavljene stranice sa onim što ulazi u meni i **odbija da nastavi ako ijedna ostane bez upisanog razloga**. Rezultat: 76 objavljenih, 64 u meniju, 12 van menija sa razlogom.
+- **Nova stranica `/cene/` (ID 17273)** — hub sa 4 kartice ka cena-stranicama, „šta utiče na cenu", CTA, Yoast, `_woodmart_title_off=on`.
+- **15580** → `noindex`; dolazni linkovi sa **početne (16550)** i **16876** prevezani na `16589` (inače bi posle migracije postali redirect skokovi); 301 red upisan u [[migracija/redirect-mapa-FINAL.csv]].
+
+### 🔴 WoodMart walker ne resetuje `design` između grupa
+
+`class-mega-menu-walker.php:242` — `if ( 0 === $depth && $design ) { $this->design = $design; }`. `$this->design` je **svojstvo instance i ostaje postavljeno** kad sledeća grupa nema svoj `_menu_item_design`. Posledica: „Specijalni" i „Cene" su renderovani kao `wd-design-sized` iako im dizajn nikad nije postavljen, a bez `--wd-dropdown-width` panel se skupio na **182px** i 5 od 6 stavki se lomilo u dva reda.
+
+**Pravilo: svaka grupa najvišeg nivoa mora imati eksplicitan `_menu_item_design`** — nasleđivanje od suseda nije opcija koja se sme ostaviti slučaju. Obe grupe su prekomponovane u dvokolonske mega-grupe radi doslednosti sa ostale četiri.
+
+### 🔴 Meni se prelamao u drugi red na 1500px
+
+Šest grupa sa punim nazivima nije stalo: navigaciona kolona je **673px**, stavke su tražile **666px + razmaci** → „CENE" je pao u drugi red i header narastao. Skraćeno „Poslovni prostori" → **Poslovni** i „Specijalni podovi" → **Specijalni** (−137px). Posle: jedan red (42px), nijedan padajući panel ne izlazi van 1500px (najdalja desna ivica 1458px).
+
+### 🔴 BreadcrumbList schema — 4 stranice bez međukoraka
+
+`16664`, `16671`, `17018`, `17020` su emitovale `Početna > [stranica]` bez „Industrijski podovi", iako im je `post_parent` tačno `16567`. Uzrok: u `wpgs_yoast_indexable_hierarchy` im je `ancestor_id = 42`, a **indexable 42 ne postoji** (obrisan) — Yoast tada tiho ispusti pretka. Popravka: `UPDATE … SET ancestor_id=325` (325 = indexable za 16567), tačno 4 reda. **Posle: 30/30 ugnježdenih stranica ima pun lanac.**
+
+Ovo je bitno jer silo korist dolazi baš od breadcrumb scheme i internog linkovanja ([[CLAUDE]] §9).
+
+> ⚠️ **Sopstvena greška, uhvaćena i vraćena.** Prvi pokušaj popravke je brisao „redove hijerarhije čiji predak ne postoji" — ali uslov je pokupio i `ancestor_id = 0` (stranice najvišeg nivoa, kod kojih je nula normalna), pa je obrisano ~290 indexable redova umesto 4 i pokvarenih stranica je poraslo sa 4 na 26. Vraćeno iz jutrošnjeg bekapa (samo dve Yoast tabele, izvučene `awk`-om iz punog dumpa), pa primenjena ciljana izmena. **Pravilo: `ancestor_id = 0` nije sirak nego koren — svaki „nađi siročiće" uslov mora eksplicitno izuzeti nulu.**
+
+### 🔴 `wpautop` razbio mrežu na novoj stranici
+
+Kartice na `/cene/` su prvo napisane kao `<a class="al-card"><span class="al-card__body"><h3>…</h3><p>…</p></span></a>`. `wpautop` je svaki `<a>` posle prvog **umotao u `<p>`** i napravio **4 prazna polja mreže** (mreža je pokazivala 8 dece umesto 4). Uzrok nije prelom reda — markup je bio u jednoj liniji — nego **blok-tagovi (`<h3>`, `<p>`) unutar inline `<span>`**. Postojeće stranice (npr. `16684`) rade jer koriste `<div class="al-card"><div class="al-card__body">`.
+
+**Pravilo: unutrašnjost `.al-card` mora biti blok (`<div>`), nikad `<span>`, čim sadrži `<h3>`/`<p>`.**
+
+> ⚠️ **Druga sopstvena greška, uhvaćena i vraćena.** Skripta za popravku mreže je upisala **sam isečak** (`$m[1] . $novi . $m[3]`) kao ceo `post_content` → hero i dve sekcije obrisane, `[vc_row]` pao sa 4 na 0. Vraćeno iz bekapa koji je skripta sama napisala pre izmene, pa zamena urađena kroz `preg_replace_callback` nad **celim** sadržajem, uz tvrdu proveru da bilans `[vc_row]`/`[vc_column_text]` posle izmene mora biti **identičan** onom pre — inače skripta odbija upis. **Pravilo: kad se menja deo `post_content`-a, uporediti bilans šortkodova pre i posle i stati na neslaganju.**
+
+### Verifikacija
+
+- **217 URL-ova** — 0×(≠200) · 0×(≠1 h1) · 0 PHP grešaka · 0 naslovnih slika bez fajla
+- **BreadcrumbList: 30/30** ugnježdenih stranica sa punim lancem (pre: 26/30)
+- Meni: **79 stavki, 0 sa praznom renderovanom labelom, 0 ciljeva van `publish`, 0 stranica u meniju dvaput**
+- Chrome **1500px**: jedan red navigacije, sva 6 panela unutar viewporta, mega-kolone sa zaglavljima
+- Chrome **390px**: bez horizontalnog prelivanja (`scrollWidth` 375), troslojni akordeon radi, svih 79 stavki prisutno
+- `/cene/`: 1×H1, 4×H2, mreža 2×2 sa 0 praznih polja, 0 golih šortkodova, „Brzi upit" forma se pojavljuje
+- 0 console grešaka
+
+### Ostalo za sledeću sesiju
+
+**F3.5 dizajn-parity za `5791` (štale) i `15793` (zaštita trave)** nije rađen — to je pun W1 rebuild dve stranice (30–90 min svaka) i nije stao uz ostatak F3. Obe su u meniju i rade; menja se samo omotač. `15580` deo F3.5 jeste zatvoren.
+
+**Stari meniji nisu brisani**: term 67 („O firmi", 39 stavki) namerno ostaje kao rollback, term 28 („Glavni izbornik", 65 stavki, mrtav) i 10 praznih/legacy Porto menija čekaju M-ovu potvrdu da meni radi kako treba.
+
+**532 mrtva reda** u `wpgs_yoast_indexable_hierarchy` (sopstveni `indexable_id` više ne postoji) — Yoast ih ne čita, bezopasni, nisu dirani posle današnjeg iskustva.
+
+**Skripte:** `migracija/alati/job-w7f3-meni.php` (cela struktura + provera pokrivenosti), `job-w7f3-cene-hub.php`, `al_check_breadcrumbs.php` (nova trajna provera — BreadcrumbList schema vs `post_parent` lanac, za sve ugnježdene stranice).
+
+---
+
 ## 2026-07-29 [claude-code] W7 F2.9 — naslovne slike, logotipi na „O nama", 🔴 mrtav CPT je 404-ovao 6 stranica — **F2 ZATVOREN** ✅
 
 **Zadatak:** poslednja preostala celina F2 iz [[migracija/2026-07-28-W7-sanacija-builda]]. Otvaranje sesije je zateklo **neupisan rad iz jutrošnje sesije (09:33–09:41)**: F2.5, F2.6 i F2.7 su izvršene (bekapi sadržaja i skripte postoje, git commit-ovi 09:34 i 09:44), ali nikad nisu ušle u dnevnik ni PROGRESS. Ova sesija ih je verifikovala i zatvorila zajedno sa 2.9.
