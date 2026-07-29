@@ -76,7 +76,9 @@ php wp-cli.phar --path="C:\xampp\htdocs\antasline" eval-file job.php
 | `al_convert_webp.php` | ⛔ **superseded** — konvertuje sam original. Zadržan kao trag; v. dnevnik zašto je pristup napušten |
 | `contact_sheet.php` | mozaik sličica za pregled kandidata |
 | `al_fix_divs.php` | **W7 F1.4** — briše nesparen `</div>` iz `[vc_column_text]` blokova (višak prerano zatvori `.wpb_wrapper` pa ostatak sekcije ispadne iz kolone → bela rupa). `al_fix_divs.php` \| `16673` \| `all apply`. 🔴 NE briše „na kraju bloka" nego tačno onaj `</div>` na kome bilans padne ispod nule — na `16659` iza viška ide još pasus, `17004` u bloku nema nijedan otvarajući `<div>`. Ne dira ništa van `[vc_column_text]`, pa prazne `<div>` kockice u paletama boja ostaju netaknute |
+| `al_scan_lost_originals.php` | **2026-07-29** — prilozi čiji ORIGINAL ne postoji na disku, ali postoji blizanac sa drugom ekstenzijom (rep napuštenog `al_convert_webp.php`). Razlika prema `al_fix_missing_sizes.php`: tamo fali izvedena veličina, ovde sam original — što obara sve veličine odjednom. Tih kvar: javni URL radi, `get_attached_file()` puca |
 | `job-15580-parking.php` | primer stvarno izvršenog posla (uz `primer-job-16657.php`) |
+| `job-w7f2-expona*.php`, `job-w7f2-simplay-*.php` | **2026-07-29** — W7 F2.1–2.4; primeri zamene cele `[vc_row]` sekcije i pravljenja nove stranice od nule (svi imaju probu pre `apply`) |
 
 Poziv: `php wp-cli.phar --path="C:\xampp\htdocs\antasline" eval-file <skript> [args]`
 (prvo bez `apply` — svi skriptovi imaju probu).
@@ -96,7 +98,16 @@ Poziv: `php wp-cli.phar --path="C:\xampp\htdocs\antasline" eval-file <skript> [a
 - **Redosled u galeriji:** rezultat → reference → proces/detalj.
 - **Ne praviti galeriju bez materijala.** Ako za temu stranice ne postoje prave
   fotografije, bolje je prijaviti nedostatak nego popuniti stranicu slikama koje
-  impliciraju posao koji nije naš (v. 16677, 16671).
+  impliciraju posao koji nije naš (v. 16677, 16671, 16919).
+- 🔴 **Ime datoteke nije dokaz o sadržaju** (2026-07-29) — pretraga `*design*` u
+  arhivi daje 20+ pogodaka, a **nijedan nije EXPONA Design**: `Designboden-…` je
+  nemački za „dizajn pod" pa hvata Commercial i Simplay, a `Design-Tile-…` je
+  R-Tile. Isti tip lažnog pogotka kao izbor fotke po slugu — proveriti sadržaj,
+  ne ime.
+- **Kad u arhivi nema fotke, proizvođačeva brošura je legitiman izvor** za
+  *proizvod* (ne za referencu/izvedeni posao): `pdfimg.py` vadi DCTDecode blokove,
+  filtrira ispod 60 KB (ikone/logotipi), pa kroz `contact_sheet.php` na izbor.
+  Tako je `16918` dobio 6 fotki. Za *reference* i dalje važi pravilo iznad.
 
 - **`alt` je obavezan**, na srpskom, opisuje ŠTA se vidi (ne ime fajla). Ide i u
   `_wp_attachment_image_alt` i u `<img alt>`.

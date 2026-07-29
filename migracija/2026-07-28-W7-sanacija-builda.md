@@ -76,7 +76,7 @@ prazan naslov, jedna je duplikat.
 | Faza | Obim | Procena | Status |
 |---|---|---|---|
 | **F1** Globalne popravke (tema, CSS, prevodi, šablon) | 13 stavki | 1 sesija | ✅ 2026-07-28 |
-| **F2** Sadržaj (Expona, Bergo, spoljne obloge, slike) | 9 stavki | 2–3 sesije | ⏳ |
+| **F2** Sadržaj (Expona, Bergo, spoljne obloge, slike) | 9 stavki | 2–3 sesije | 🔄 2.1–2.4 ✅ 2026-07-29 · 2.9 taksonomija ✅ · ostaje 2.5–2.8 + slike |
 | **F3** Meni i navigacija | 5 stavki | 1 sesija | ⏳ |
 | **F4** Hero fotografije po stranici | 2 stavke | 1 sesija | ⏳ |
 
@@ -162,6 +162,23 @@ Boja: narandžasta `--al-orange` (plava se gubi na tamnim thumbnail-ima).
 ---
 
 ## F2 — Sadržaj
+
+> **2.1–2.4 ✅ ZATVORENO 2026-07-29.** Ispravke dijagnoze, izmerene pri izvršenju
+> (detalji: [[DNEVNIK-NAPRETKA]]):
+> - **2.1: `16667` VEĆ ima sekciju „EXPONA program"** — i to pokvarenu (kartica
+>   „EXPONA Design" vodila na stranicu Commercial-a; proza opisivala Simplay kao
+>   „klik sistem", a Simplay je `loose-lay`). Sekcija je **prepisana, ne dodata**.
+> - **2.2: treći PDF je duplikat** — `2019/10/Brochure-EXPONA-FLOW-English…` je
+>   bajt-identičan (isti md5) prilogu `5593`. Uvezena samo dva Design PDF-a.
+> - **2.4: napomena je netačna SAMO na `16918`** — tehnički list sadrži baš ono što
+>   navodi kao nepoznato (42 dezena, klase 23/34/43, R10/DS, IAC Gold). Na **`16919`
+>   Living Clic je TAČNA** (nula dokumenata i fotki za tu kolekciju) → ostavljena.
+> - **2.4: „slike iz `2020/12/`" za Design ne postoje** — sve `*design*` datoteke su
+>   zapravo Commercial/Simplay/R-Tile („Designboden" = nemački „dizajn pod"). Fotke
+>   su izvučene iz proizvođačeve brošure.
+> - **Usput:** `16685` je imao nezatvoren `[vc_column_text]` (6/5) — zatvoren zamenom
+>   sekcije. Kartice po odluci M vode na PROIZVODE, pa su pod-stranice linkovane iz
+>   proze hub-a (inače bi nova 17252 bila 27. siroče).
 
 ### 2.1 Expona — zameniti dezene proizvodima
 Odluka M: mreža od 12 tekstura se **uklanja**, umesto nje 4 stvarna proizvoda.

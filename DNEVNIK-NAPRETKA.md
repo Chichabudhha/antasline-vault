@@ -1,3 +1,46 @@
+## 2026-07-29 [claude-code] W7 F2.1–2.4 — Expona blok: teksture → proizvodi, nova Simplay stranica, dokazano netačna napomena ✅
+
+**Zadatak:** prvi deo F2 iz [[migracija/2026-07-28-W7-sanacija-builda]] (Expona celina), izabran jer je jedini deo F2 bez odluka koje blokiraju usred rada.
+
+**Bekap:** `antasline_local_2026-07-29_pre-W7-F2-expona.sql` (48,7 MB, pun dump) + `post_content` po stranici u `al-content-backup/` (skripte to rade same).
+
+### 🔴 Četiri tvrdnje plana oborene merenjem
+
+**(1) 16667 već IMA sekciju „EXPONA program"** — plan je tretira kao novu. Zatečena verzija je imala pomešane ciljeve: kartica „EXPONA Design" vodila je na stranicu **Commercial-a**, a proza je EXPONA Simplay opisivala kao **„klik sistem montaže"** — Simplay je `loose-lay`, klik je Clic (potvrđeno iz `post_excerpt`-a samih proizvoda 16916/16917). Sekcija je prepisana, ne dodata; opisi su sada doslovno iz proizvoda, ne parafraza.
+
+**(2) Treći PDF iz plana je duplikat.** `2019/10/Brochure-EXPONA-FLOW-English…pdf` je **bajt-identičan** (isti md5 `b9c7373…`) prilogu `5593` koji je već u medijateci. Uvoz bi napravio duplikat → preskočen. Uvezena su samo dva Design PDF-a.
+
+**(3) Napomena „tehnički list nije dobavljen od distributera" je netačna SAMO na 16918.** Plan je stavku 2.4 pisao za oba proizvoda. Izvučen tekst iz `Expona-Design-tehnički-podaci.pdf` sadrži baš ono što napomena navodi kao nepoznato — **42 dezena, klase 23/34/43, protivkliznost R10 (DIN 51130) / DS (EN 13893), Indoor Air Comfort Gold**. Na **16919 Living Clic** ista napomena je **TAČNA**: za tu kolekciju na disku nema nijednog dokumenta ni fotografije. Ostavljena netaknuta.
+
+**(4) „Slike iz 2020/12" za Design ne postoje.** Sve `*design*` datoteke u arhivi su zapravo Commercial (`Designboden-Expona_Commercial-*`), Simplay ili R-Tile — „Designboden" je samo nemački za „dizajn pod". Nula fotki EXPONA Design-a.
+
+### Šta je urađeno
+
+| # | Šta |
+|---|---|
+| **2.1** | Mreže od 12 tekstura uklonjene sa `16684` (Click) i `16685` (Commercial); `16667` prepisan; `16668` (Flow) dobio sekciju. Kartice vode na 4 **proizvoda**, svaka pod-stranica izostavlja **svoju** karticu (4/3/3/3). Ceo karton je link (`a.al-card`, `antas-design.css:396`) umesto samo naslova. **24 teksture preseljene u Woo galerije** — `16917` Clic i `16914` Commercial, 5 → 17 slika svaka, redosled sa stranice (beton → metal → škriljac → drvo) |
+| **2.2** | 2 Design PDF-a registrovana u medijateci (`#17244`, `#17245`) — fajlovi su već ležali u `uploads/2019/11/` i bili javno dostupni, falio je samo zapis. **Engleske Commercial/Simplay brošure sa objectflor.de NISU skidane** — radnja ka spolja, čeka M |
+| **2.3** | Nova **`/lvt-podovi-za-komercijalne-i-javne-prostore/expona-simplay/` (ID 17252)**: 8 sekcija po obrascu 16684, galerija od 6 fotki, skraćena tabela (pun tehnički list ostaje na proizvodu — anti-kanibalizacija), FAQ 4 pitanja + FAQPage schema, Yoast title/metadesc, `_woodmart_title_off=on`. Hub 16667 dopunjen: proza sad linkuje **sve 4** pod-stranice umesto jedne (da 17252 ne postane 27. siroče) |
+| **2.4** | `16918` Design: glavna slika + 5 galerijskih, netačna napomena obrisana, tabela dopunjena sa 3 reda iz tehničkog lista, sekcija „Tehnička dokumentacija" sa 2 PDF-a |
+
+**Fotografije za Design** su izvučene iz proizvođačeve brošure (`pdfimg.py`, DCTDecode blokovi >60 KB → 22 kandidata → kontakt-list → 6 izabranih). To je objectflor-ova sopstvena fotografija njihovog proizvoda, isti izvor kao već korišćene Expona press fotke (`Expona-Flow-Cafeteria-9862-gross.jpg`) — ne tuđi izvedeni posao.
+
+### Usput uhvaćeno (nije bilo u planu)
+
+- 🔴 **`16685` je imao NEZATVOREN `[vc_column_text]`** (6 otvorenih / 5 zatvorenih u celom `post_content`-u). Zamena cele sekcije ga je usput zatvorila. Sad su sve 4 stranice 6/6 (odnosno 7/7), `<div>` balans 0.
+- 🔴 **50 stranica prikazuje „072 234 00 72" uz `href="tel:+381692340072"`** — dakle broj koji korisnik pročita nije broj koji pozove. Izmereno: **171 href je `+38169…`, 0 je `+38172…`, tema 15/15 na „069 234 00 72"**, 123 stranice već prikazuju ispravno. Isti tip greške koji je M već naložio da se ispravi na live `/kontakt/` (P2 radnog naloga). **Nije mešano u ovaj obim** — nova stranica koristi ispravan par, ostalo čeka odluku (v. Blokeri).
+- 🔴 **7 pokvarenih referenci na slike, rep napuštenog `al_convert_webp.php` pristupa** (v. dnevnik 2026-07-28 zašto je odbačen): **6 priloga** je imalo `_wp_attached_file` na `.jpg` kog nema dok `.webp` blizanac leži pored (tih — javni URL nigde ne puca, ali `get_attached_file()` da, pa bi puklo na dan migracije — isti obrazac kao 13 apsolutnih putanja od 07-22), i **1 zakucan `.jpg` URL** na izvedenu veličinu u sadržaju `17017` (jedini vidljiv 404). Svih 7 popravljeno; nov alat `al_scan_lost_originals.php` (0 mrtvih zapisa bez blizanca).
+
+### Verifikacija
+
+**216 URL-ova × (HTTP 200 · tačno 1×`<h1>` · 0 PHP grešaka) → 0 pokvarenih stranica.** Provera slika: **2.752 jedinstvena fajla** HEAD-ovana (`src` + `srcset` + `href` na pdf/slike) — posle popravke **0 pravih 404**. Preostalih 19 „grešaka" su poznata **lažna uzbuna sa en-dash-om** u imenu fajla (`Bezicni-LED-…-–-dvostrani`): uz ispravno `urllib.parse.quote` kodiranje sve vraćaju 200, isto kao 2026-07-22.
+
+FAQPage schema na 17252: **0 pojavljivanja van `<script>`** (F7.15 nije ponovljen — `kses_remove_filters()` je bio obavezan jer WP-CLI radi bez ulogovanog korisnika pa kses inače pojede `<script>` omotač), JSON validan, 4 pitanja. Chrome: desktop 1500px i mobilni 390px (iframe harness, obrisan iz docroot-a posle provere), 0 console grešaka, kartice čitljive, tabele bez bočnog skrola, sticky bar i kolačić dugme na mestu.
+
+### Alati
+
+Novi u `migracija/alati/`: `job-w7f2-expona.php`, `job-w7f2-expona-design.php`, `job-w7f2-simplay-stranica.php`, `job-w7f2-simplay-link.php`, `al_scan_lost_originals.php` (svi sa probom pre `apply`).
+
 ## 2026-07-29 [claude-code] W7 F2.9 (deo) — Taksonomija: 2 posta prekategorisana, 3 prazne kategorije obrisane ✅
 
 **Zadatak:** M ima ~15 min do prekida sesije → izabran najkraći izolovani deo F2.9 iz [[migracija/2026-07-28-W7-sanacija-builda]] (taksonomija), umesto otvaranja cele F2 faze.
