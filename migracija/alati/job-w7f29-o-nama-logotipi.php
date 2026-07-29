@@ -35,9 +35,17 @@ $klijenti = array(
 	12350 => 'Institut Vinča',
 	15350 => 'Adient Kragujevac',
 	15348 => 'Philip Morris Niš',
-	15347 => 'AMSS',
 	15346 => 'Orion telekom',
 );
+
+/*
+ * 🔴 15347 `amss-logo.webp` NIJE AMSS logo — provereno okom u Chrome-u (uvećano na
+ * 220px): fajl sadrži žut znak sa natpisom „AMCC", a AMSS (Auto-moto savez Srbije)
+ * ima sasvim drugačiji amblem. Pogrešno imenovan fajl iz batch-a 2023/01.
+ * AMSS ostaje u tekstualnoj listi referenci (to je M-ova tvrdnja), ali bez logotipa —
+ * tuđ znak pod tuđim imenom je gora greška od nedostajućeg logotipa.
+ * Isto važi za 15351 `Mup-logo.webp`: MUP nije naveden među referencama pa nije dodat.
+ */
 
 /** Gradi `.al-logo-row` iz priloga; preskače ono što nema fajl na disku. */
 function al_logo_row( array $logos, &$fale ) {
