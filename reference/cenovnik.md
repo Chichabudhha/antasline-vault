@@ -1,8 +1,9 @@
 ---
 tip: referenca
 datum: 2026-07-07
+azurirano: 2026-07-29
 namena: Jedinstveni cenovnik — izvor istine za sve cene na stranicama i proizvodima (M10)
-status: čeka-popunu
+status: popunjen (M10 zatvoren 2026-07-29) — preostaje samo svesno "na upit" (ESD 7mm, DuraStripe, 3 legacy koša) i M12 (generička oprema, brend pregovori)
 ---
 
 # 💰 Cenovnik — AntasLine
@@ -53,14 +54,14 @@ status: čeka-popunu
 
 | Proizvod                                                             | Cena od (RSD)  | Cena do (RSD) | Jedinica  | Napomena                                                                                       |
 | -------------------------------------------------------------------- | -------------- | ------------- | --------- | ---------------------------------------------------------------------------------------------- |
-| Bergo Ultimate (sportski pod, court builder pločica)                 | Na upit        |               | m²        | čeka M11 — `al_cb_prices` opcija u WP adminu ("Cene planera") trenutno prazna, 0 redova u bazi |
-| Bergo Ultimate FLOW (pickleball podloga)                             | Na upit        |               | m²        | čeka M11, isto kao gore                                                                        |
-| Ecotile rampe/završni profili (4 proizvoda, 16930/16939/16943/16949) | 1560           |               | m ili kom | čeka M11 — nema cene ni u WC ni u planeru                                                      |
-| Lite Shot 325 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
-| Mini Shot 225 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
-| MicroShot 125 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
-| Koš na kolicima "Street Sport"                                       | 294000         |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
-| Zglobni obruč za koš                                                 | nema na stanju |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
+| Bergo Ultimate (sportski pod, court builder pločica)                 | Na upit        |               | m²        | konačna odluka M (potvrđeno 2x) — projektna/upit cena, ne unosi se u `al_cb_prices` (`tile:16770` ostaje prazan, planer prikazuje "na upit" za ovu stavku) |
+| Bergo Ultimate FLOW (pickleball podloga)                             | Na upit        |               | m²        | isto kao gore (`tile:16801` prazan)                                                            |
+| Ecotile rampe/završni profili (4 proizvoda, 16930/16939/16943/16949) | 1560           |               | m ili kom | ✅ primenjeno 2026-07-29 — WC već imao 1560/varijanta (S6 import), `al_cb_prices` opcija dopunjena (`ramp`/`ramp_corner` = 1300 bez PDV + 20% PDV = 1560) |
+| Lite Shot 325 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena i dalje neupisana                                               |
+| Mini Shot 225 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena i dalje neupisana                                               |
+| MicroShot 125 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena i dalje neupisana                                               |
+| Koš na kolicima "Street Sport"                                       | 294000         |               | kom       | ✅ primenjeno 2026-07-29 u WC (ID 16532, `_regular_price`)                                      |
+| Zglobni obruč za koš                                                 | nema na stanju |               | kom       | ✅ primenjeno 2026-07-29 u WC (ID 16536, `_stock_status`→outofstock)                            |
 
 ### Hoop n Court koševi — VEĆ POTVRĐENO (S7, 2026-07-11, ne čeka M11)
 

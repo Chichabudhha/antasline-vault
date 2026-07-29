@@ -1,3 +1,17 @@
+## 2026-07-29 [claude-code] M10/M11 — Cenovnik popunjen, propagacija u WC + Court builder ✅
+
+**Zadatak:** M javio da je `[[reference/cenovnik]]` (M10) popunjen. Provera pre akcije: W2 Tier1 stranice (16873 terase/16874 industrijski/16875 garaže/16876 parking) **već su imale identične brojke** (3.300/5.800/3.900 Bergo, 4.600–5.500/6.800 Ecotile, 2.800–4.200 parking, 3.200–4.500 trava) — WC varijacije su te cene nosile još od S-sesija u julu (dobavljačka cena pri kreiranju proizvoda), cenovnik.md ih je danas samo centralizovao radi evidencije. **Nulta izmena stranica bila potrebna** — sprečen nepotreban rewrite.
+
+**Stvarno novo i primenjeno:**
+- **Ecotile rampe (16930/16939/16943/16949)** — WC već imao 1560/varijanta, ali `al_cb_prices` opcija (Court builder "Cene planera") bila prazna (0 redova) → dopunjena `ramp`/`ramp_corner` = 1300 RSD bez PDV + 20% (=1560 sa PDV, sklad sa WC brojkom). Court builder sada prikazuje pravi ramp/corner subtotal umesto "na upit" (grand_total i dalje "na upit" jer Bergo Ultimate/FLOW tile cena ostaje neupisana — v. dole).
+- **Košarkaški koš na kolicima "Street Sport" (16532)** — `_regular_price`/`_price` → 294.000 RSD.
+- **Zglobni obruč za koš (16536)** — `_stock_status` → `outofstock` ("nema na stanju" iz cenovnika).
+- 🔴 **Bergo Ultimate (16770) / FLOW (16801) namerno ostaju "na upit"** — cenovnik.md potvrđuje ovo dvaput (12:26 i 12:28 pass), nije propust nego M-ova odluka (projektna/upit cena za sportski pod, ne fiksna m² cena). `tile:16770`/`tile:16801` u `al_cb_prices` namerno prazni.
+- Cenovnik.md ažuriran: napomene uz svaki red sada odražavaju šta je primenjeno gde (WC vs. `al_cb_prices`), status frontmatter promenjen `čeka-popunu`→`popunjen`. Master Plan V2 M10 zatvoren, M11 delimično zatvoren (ramp/corner da, tile ne, M odluka).
+- **Van obima ove sesije (namerno preskočeno)**: bumperi/odbojnici (1000–3000, 15+ varijanti) — cenovnik sam upućuje na batch primenu kroz `/obogati-proizvod` sesiju, ne pojedinačno ovde. Lite Shot/Mini Shot/MicroShot i dalje bez cene (legacy, M nije popunio). ESD 7mm/DuraStripe ostaju "na upit" (svesna odluka, ne nedostatak).
+
+Backup pre izmena: `antasline_local_2026-07-29_pre-cenovnik-propagacija.sql`. Verifikovano: 16532/16536 200 (pravi permalink kroz redirect), 1× Product schema na 16532 (bez dupliranja — stara S4 lekcija i dalje drži), stock class `out-of-stock`/schema `OutOfStock` na 16536, `/planer-terena/` 200 posle izmene opcije, 0 novih PHP grešaka u debug.log.
+
 ## 2026-07-29 [claude-code] N5 rani start — Meni/footer/mobile QA: sve čisto, 0 pravih bugova (1 lažna uzbuna razrešena)
 
 **Zadatak:** N5 je planiran 04–10.08, ali pošto je W7 F3 (rebuild menija na term 390) i F4 (hero fotografije) ušlo u kod tek 07-28/07-29, rani start ove nedelje pokriva sveži rad pre nego što se regresija nagomila. Obim (M odluka): fokus na meni (term 390, svih 6 grupa) + footer (5 kolona) na 1500px i 390px, plus smoke na 8-10 reprezentativnih stranica — ne pun sitewide sken (taj je već urađen u F1/F3/F4).

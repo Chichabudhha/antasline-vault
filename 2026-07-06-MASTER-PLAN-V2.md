@@ -184,8 +184,8 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 | M7 | ✅ ZATVORENO 2026-07-22 — Figma link dat, testimonials sadržaj sa GMB umesto čekanja na M copy | ~~W1 poliranje~~ | — | — |
 | M8 | ✅ ODLUČENO 2026-07-07 — **pun reimport svih 30 postova sa live** (lokalni "stari stil" se briše, restyle posle) | ~~blog import~~ | — | — |
 | M9 | ✅ ODLUČENO 2026-07-07 — **katalog režim** ("Zatraži ponudu" umesto korpe/cene) | W1 zadatak 1.8, W3 zadatak 3.8 | — | — |
-| M10 | 🆕 Popuni `[[reference/cenovnik]]` (jedna tabela, sve cene odjednom) — sprečava ping-pong "koja je cena za X" po svakoj sesiji | W2 Tier1 (M1) + obogaćivanje proizvoda | 2026-07-10 | isto kao M1 — "na upit" placeholder |
-| M11 | 🆕 2026-07-11 — Cene za court builder predračun (Bergo ploče/rampe/oprema u [[reference/cenovnik]]) | ništa ne blokira — samo kvalitet outputa 1.12 | pre live-a | PDF ostaje "Specifikacija — cene na upit"; kad se popuni, automatski postaje predračun |
+| M10 | ✅ ZATVORENO 2026-07-29 — `[[reference/cenovnik]]` popunjen; provereno da su Tier1 W2 stranice (16873/16874/16875/16876) već vukle iste brojke iz WC-a ranije (podudaranje 1:1, ništa nije trebalo menjati na strankama) | ~~W2 Tier1 (M1) + obogaćivanje proizvoda~~ | — | — |
+| M11 | ✅ DELIMIČNO ZATVORENO 2026-07-29 — Ecotile rampe cena (1560) primenjena u `al_cb_prices` (`ramp`/`ramp_corner` = 1300 bez PDV + 20%); Bergo Ultimate/FLOW **ostaju "na upit" kao M-ova konačna odluka** (potvrđeno 2x u cenovniku), `tile:16770`/`tile:16801` namerno prazni — Court builder i dalje prikazuje "na upit" samo za taj deo predračuna | ništa ne blokira — samo kvalitet outputa 1.12 | pre live-a | PDF ostaje delimično "na upit" za tile cenu dok M ne odluči da li ide fiksna m² cena ili ostaje projektna |
 | M12 | 🆕 2026-07-11 — Brendovi/dobavljači za tribine, stolice, golove, mreže (pregovori u toku) | ništa — proizvodi se prave generički (1.11 S8) | kad se pregovori završe | ostaju generički "na upit"; dopuna brendom naknadno |
 
 ---
