@@ -1,3 +1,26 @@
+## 2026-07-29 [claude-code] W7 F4.1 — Hero fotografije: 62/63 stranica sa navy pozadinom sad ima fotografiju ✅
+
+**Zadatak:** F4 (Hero fotografije) iz [[migracija/2026-07-28-W7-sanacija-builda]] — sledeća neotvorena faza posle F1–F3. Izabran kao glavni zadatak sesije preko korisnika (ponuđene 3 opcije, F4 odabran).
+
+**Zatečeno pri otvaranju:** MySQL i Apache su bili ugašeni (isti simptom kao 07-27 backup incident — XAMPP MySQL nije Windows servis) → ručno pokrenuti. Skener `al-section--navy` pozadina je otkrio **neupisan rad iz jutrošnje sesije** (backup-ovi u `scratchpad/content-backup/*-pre-f4hero.txt` sa timestampom 12:17–12:28, CSS komentar „W7 F4.2 (2026-07-29)"): **25 stranica + home hero** su već imale foto-hero primenjen (mehanizam `.al-hero-photo` klasa + WPBakery `css=".vc_custom_heroF4{ID}{background-image:...}"`, radi kroz `antas-design.css:353`), stalo tačno na `16684`/`16685` (Expona Click/Commercial). Pre nastavka: HTTP+1×H1+hero-class provera na svih 26 (0 grešaka) + Chrome vizuelno na 5 stranica (desktop 1500px + mobile 390px) — kvalitet dobar, fotke tematski tačne, tekst čitljiv na gradijentu.
+
+**Nastavak — preostalih 37 stranica:**
+- **27 ponovo iskorišćeno** iz postojećeg sadržaja same stranice (fotke već uvezene u F7.23/F2.5-2.7 kuriranju) — bez novog uvoza, bira se najveća/najreprezentativnija po H1 temi.
+- **5 sveže uvezeno** sa diska (`al_import.php` obrazac, WP `wp_generate_attachment_metadata` → automatski WebP + big-image-threshold skaliranje): `16673` veštačka trava (makro rosa trava, banner 1920×696), `16659` Bergo XL (pravi balkon sa terasnim šahovnica pločama, 4724×3151→auto-skalirano), `17029` gumeni podovi teretane (realna teretana, 1100×521), `16684`/`16685` Expona Click/Commercial (nema posvećenih ambijentalnih fotki za Click specifično — iskorišćena proizvođačeva render-fotografija enterijera; Commercial dobio pravu fotku prodavnice u tržnom centru).
+- **5 namerno preskočeno, ostaju navy** (nema odgovarajuće fotke u arhivi, pravilo iz [[migracija/alati/_README]] „prijaviti nedostatak, ne nametati pogrešnu sliku"): `61` Kontakt, `16671` Bumperi, `16677` LED reflektori, `17004` Planer terena (alat, ne treba mu emotivni hero), `17273` Cene (kartični hub, ne treba mu foto-hero).
+
+🔴 **Bag nađen i rešen (nov, dokumentovan u [[reference/naucene-lekcije]]):** kod 3 od 32 programski izmenjene stranice (`5438`, `16684`, `16685`) WPBakery-jev `_wpb_shortcodes_custom_css` postmeta se **tiho nije regenerisao** posle `wp_update_post()` iz WP-CLI konteksta — `el_class`/`css` atribut je ispravno sačuvan u `post_content`, red se renderovao sa tačnom klasom (`vc_custom_heroF4{ID}`), ali stil-blok koji bi iscrtao `background-image` **nikad nije emitovan**, pa je stranica ostala vizuelno navy uprkos ispravnom markup-u. HTTP/H1 provera ovo ne hvata (stranica je i dalje 200/1×H1) — otkriveno samo Chrome vizuelnim pregledom. Uzrok nije potvrđen do kraja (`Vc_Base::parseShortcodesCss()` pozvan ručno nad istim sadržajem radi ispravno — nije problem u regexu/formatu), ali pouzdano popravljivo pozivom `wpbakery()->buildShortcodesCss($id, 'custom')` posle izmene. **Novo pravilo verifikacije: posle programske izmene stranice sa WPBakery `css=` atributom, proveriti i `wpGs_postmeta._wpb_shortcodes_custom_css`, ne samo HTTP/H1/klasu.**
+
+**F4.2 (home hero rezolucija) — potvrđeno već zatvoreno u jutrošnjoj sesiji, bez dalje akcije:** `spanoulis-court-beograd-suton.webp` (960×641, zamenio raniji 800×533) je **plafon dostupne rezolucije** za tu scenu — provereno u `foto-inventar.csv`, najveća alternativa u celoj arhivi je 1024×683 (6% veće, nije vredno menjanja). Plan je tražio „granica 2400px" kao opšte pravilo, ali za ovu konkretnu fotografiju izvorni materijal to ne dozvoljava.
+
+**Verifikovano:** 32/32 novoizmenjenih stranica 200/1×H1/`al-hero-photo` klasa · 32/32 hero slika HTTP 200 · 32/32 `_wpb_shortcodes_custom_css` sadrži `background-image` (posle fix-a) · 0 PHP grešaka u logu · Chrome vizuelno 1500px+390px na 6 stranica (3 ponovo-iskorišćene, 3 sveže uvezene, uklj. oba Expona popravljena). Ukupno: **62/63** navy-hero kandidata sada ima fotografiju (26 zatečeno + 32 ova sesija), 5 svesno ostaje navy.
+
+**Otvoreno za M:** nijedno — svih 5 „skip" odluka je tehnička (nema fotke), ne čeka odobrenje. F4 (obe stavke) je sada zatvorena.
+
+Detalji: [[migracija/2026-07-28-W7-sanacija-builda]], [[reference/naucene-lekcije]]
+
+---
+
 ## 2026-07-29 [claude-code] W7 F3 — Meni prekomponovan, 26 siročadi povezano, nova „Cene" stranica ✅
 
 **Zadatak:** F3 iz [[migracija/2026-07-28-W7-sanacija-builda]] — meni i navigacija. Izabran jer je sledeći po redosledu, M je već doneo sve odluke koje traži, i jer je 26 gotovih stranica stajalo bez ijednog internog linka.
