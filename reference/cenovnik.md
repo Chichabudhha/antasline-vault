@@ -23,44 +23,44 @@ status: čeka-popunu
 
 ## Terase i spoljne podloge (W2 Tier1 #1, #6)
 
-| Proizvod/usluga | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
-|---|---|---|---|---|
-| Bergo XL | | | m² | |
-| Bergo Elite | | | m² | |
-| Bergo Unique | | | m² | |
-| Bergo Easy | | | m² | |
-| Montaža (rad) | | | m² ili paušal | |
-| Podloge za parking/staze | | | m² | |
+| Proizvod/usluga          | Cena od (RSD) | Cena do (RSD) | Jedinica      | Napomena                                       |
+| ------------------------ | ------------- | ------------- | ------------- | ---------------------------------------------- |
+| Bergo XL                 | 3300          | 3300          | m²            |                                                |
+| Bergo Elite              | 5800          | 5800          | m²            |                                                |
+| Bergo Unique             | 3900          | 3900          | m²            |                                                |
+| Bergo Easy               |               |               | m²            | nema više u ponudi                             |
+| Montaža (rad)            | paušal        |               | m² ili paušal | paušal - u zavisnosti od kvadrature i lokacije |
+| Podloge za parking/staze | 2800          | 4200          | m²            |                                                |
 
 ## Industrijski podovi (W2 Tier1 #2)
 
-| Proizvod | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
-|---|---|---|---|---|
-| Ecotile E500/7 | | | m² | |
-| Ecotile E500/10 | | | m² | |
-| ESD 7mm ploče | | | m² | |
-| Mosolut Heavy | | | m² | |
-| Montaža (rad) | | | m² ili paušal | |
+| Proizvod        | Cena od (RSD) | Cena do (RSD) | Jedinica      | Napomena                                       |
+| --------------- | ------------- | ------------- | ------------- | ---------------------------------------------- |
+| Ecotile E500/7  | 4600          | 5500          | m²            |                                                |
+| Ecotile E500/10 | 6800          | 6800          | m²            |                                                |
+| ESD 7mm ploče   | na upit       |               | m²            | cena na upit                                   |
+| Mosolut Heavy   | 5200          |               | m²            |                                                |
+| Montaža (rad)   | paušal        |               | m² ili paušal | paušal - u zavisnosti od kvadrature i lokacije |
 
 ## Garaže (W2 Tier1 #3)
 
-| Rešenje | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
-|---|---|---|---|---|
-| PVC ploče za garažu | | | m² | |
-| Gumeni pod za garažu | | | m² | |
+| Rešenje              | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
+| -------------------- | ------------- | ------------- | -------- | -------- |
+| PVC ploče za garažu  | 4600          | 5500          | m²       |          |
+| Gumeni pod za garažu | 4600          | 5500          | m²       |          |
 
 ## Sportski tereni / konstrukcije
 
-| Proizvod | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
-|---|---|---|---|---|
-| Bergo Ultimate (sportski pod, court builder pločica) | | | m² | čeka M11 — `al_cb_prices` opcija u WP adminu ("Cene planera") trenutno prazna, 0 redova u bazi |
-| Bergo Ultimate FLOW (pickleball podloga) | | | m² | čeka M11, isto kao gore |
-| Ecotile rampe/završni profili (4 proizvoda, 16930/16939/16943/16949) | | | m ili kom | čeka M11 — nema cene ni u WC ni u planeru |
-| Lite Shot 325 (koš) | | | kom | legacy proizvod (pre S7), cena nikad upisana |
-| Mini Shot 225 (koš) | | | kom | legacy proizvod (pre S7), cena nikad upisana |
-| MicroShot 125 (koš) | | | kom | legacy proizvod (pre S7), cena nikad upisana |
-| Koš na kolicima "Street Sport" | | | kom | legacy proizvod (pre S7), cena nikad upisana |
-| Zglobni obruč za koš | | | kom | legacy proizvod (pre S7), cena nikad upisana |
+| Proizvod                                                             | Cena od (RSD) | Cena do (RSD) | Jedinica  | Napomena                                                                                       |
+| -------------------------------------------------------------------- | ------------- | ------------- | --------- | ---------------------------------------------------------------------------------------------- |
+| Bergo Ultimate (sportski pod, court builder pločica)                 | Na upit       |               | m²        | čeka M11 — `al_cb_prices` opcija u WP adminu ("Cene planera") trenutno prazna, 0 redova u bazi |
+| Bergo Ultimate FLOW (pickleball podloga)                             | Na upit       |               | m²        | čeka M11, isto kao gore                                                                        |
+| Ecotile rampe/završni profili (4 proizvoda, 16930/16939/16943/16949) |               |               | m ili kom | čeka M11 — nema cene ni u WC ni u planeru                                                      |
+| Lite Shot 325 (koš)                                                  |               |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
+| Mini Shot 225 (koš)                                                  |               |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
+| MicroShot 125 (koš)                                                  |               |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
+| Koš na kolicima "Street Sport"                                       |               |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
+| Zglobni obruč za koš                                                 |               |               | kom       | legacy proizvod (pre S7), cena nikad upisana                                                   |
 
 ### Hoop n Court koševi — VEĆ POTVRĐENO (S7, 2026-07-11, ne čeka M11)
 
