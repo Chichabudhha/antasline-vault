@@ -1,3 +1,17 @@
+## 2026-07-30 [claude-code] [W1 Polish Faza 3] Batch 5/5 — FAZA 3 U POTPUNOSTI ZATVORENA (10 postova, samo linkovi/nbsp) ✅
+
+**Zadatak:** poslednji batch reda čekanja — svih 10 preostalih postova, svi 0 GSC klikova/90d: `5411` (modularni-industrijski-podovi), `16614` (sportska-igrališta), `16608` (oštećeni-industrijski-pod), `5163` (montaža-antistatik-poda-Quectel), `16610` (zamena-parketa-u-sportskim-salama), `3257` (ugradnje-industrijskog-poda), `4813` (bergo-ultimate-i-ultimate-plus), `6824` (prednosti-r-tile-design), `6874` (esd-podovi-priča-kupca), `17021` (montaža-antistatik-poda-HTEC-Niš).
+
+**Dijagnostika pre koda (obavezan korak) potvrdila konačan trend batch 2-4: NIJEDAN post nema GEO-intro/CTA-box obrazac** — izvorni "Faza 3" retrofit obim ostaje zatvoren na batch 1. Svih 10 nosi isti root-relativni link bag (`href="/slug/"` bez `/antasline/` prefiksa → 404 na lokalu, radiće ispravno na produkciji). `5411` i `3257` dodatno imali nbsp (`\xc2\xa0`) otpad usred rečenica (11× i 4×, vidljiv dupli razmak) — isti obrazac kao batch 1 (5170). `antasline.com` pogodak u 5411/16614 je samo `office@antasline.com` tekst/mailto adresa, ne live-domen link — nije diran. Nijedan od 10 nema JSON-LD u sadržaju (nema rizika od "gole scheme" bag-a).
+
+**Urađeno:** 12 root-relativnih linkova popravljeno (localhost prefiks) preko `migracija/alati/job-w1-polish-faza3-batch5.php` (proba pa `apply`, isti `$wpdb->update()` obrazac kao batch 3/4), nbsp otpad uklonjen na 5411/3257. Svih 10 ciljnih URL-ova i 30 slika iz sadržaja HEAD-ovano PRE upisa (0 grešaka) — nijedna popravka nije pogađala nepostojeći cilj.
+
+**Verifikovano:** svih 10 stranica 200/1×H1/0 PHP grešaka · root-relativnih linkova i flag-ovanog nbsp-a 0 posle upisa · regresija čista (home, `/industrijski-podovi/`, `podloge-za-krovove-i-terase` iz batch4). Backup: `antasline_local_2026-07-30_pre-w1-polish-faza3-batch5.sql`.
+
+**FAZA 3 ZATVORENA U POTPUNOSTI (30/30 postova pregledano kroz batch 1-5).** Ukupan rezime: batch 1 = jedini sa stvarnim GEO-intro/CTA-box retrofitom (5 postova) + usputni JSON-LD/wp_unslash bagovi; batch 2-5 = opšte QA (root-relativni linkovi, tipfeleri, nbsp, goli JSON-LD na 16616) na preostalih 25, sa nekoliko postova verifikovano čistih bez izmena (5181, 16615, 16613, 16612, 16609). Detalji: [[migracija/w1-polish-red-cekanja]].
+
+---
+
 ## 2026-07-30 [claude-code] [W1 Polish Faza 3] Retrofit batch 4 (5 postova) — potvrđen trend: izvorni GEO-intro/CTA-box obim iscrpljen posle batch 1 ✅
 
 **Zadatak:** nastavak iste sesije ("4/6"). Batch iz preostalih 15 (svi 0 GSC klikova/90d) — top 5 po impresijama: **5276 podloge-za-krovove (181), 5181 podne-ploce-za-kontejnere (101), 2622 izbor-industrijskog-poda (93), 3388 podovi-za-stamparije (87), 16615 podovi-za-detailing-radionice (36)**.

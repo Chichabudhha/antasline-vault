@@ -75,10 +75,16 @@ fake-review Product schema blokatora, čeka Miroslavljevu odluku (videti Blokeri
 | 2 | GSC top 5 od preostalih 25 (brojke osvežene 2026-07-30, 90d, www domen — stari Faza 2 redosled bio zastareo) | 16611 pop-tenis (30kl), 5637 podovi-za-radionice (17kl), 2641 pvc-podne-ploce (15kl), 16609 koji-pod-postaviti-u-garazu (12kl), 4318 podloga-za-odbojkaske-terene (8kl) | ✅ 2026-07-30 — 16611/4318 `.al-geo-intro`, 5637 `.al-cta-box`+`.al-btn` (mrtve dugme-klase), 2641 samo link-fix, 16609 verifikovano čist bez izmena. Usput nađen root-relativni link bag (v. DNEVNIK) |
 | 3 | GSC top 5 od preostalih 20 (iste 07-30 brojke, bez ponovnog API poziva) | 16613 sta-postaviti-preko-starog-parketa (6kl), 16612 ftalati (5kl), 16616 teren-za-pickleball (3kl), 3398 montazni-podovi (2kl), 3318 zasto-vam-je-potreban-esd-pod (0kl, 247 impr) | ✅ 2026-07-30 — 16613/16612 verifikovano čisti bez izmena. 🔴🔴 16616: FAQPage+Product JSON-LD dodat 07-28 nikad nije bio u `<script>` — renderovao se kao vidljiv tekst na dnu stranice, popravljeno (v. DNEVNIK). 3398/3318 dobili link-fix (root-relativni linkovi 404 na lokalu). |
 | 4 | Top 5 po impresijama od preostalih 15 | 5276 podloge-za-krovove (181), 5181 podne-ploce-za-kontejnere (101), 2622 izbor-industrijskog-poda (93), 3388 podovi-za-stamparije (87), 16615 podovi-za-detailing-radionice (36) | ✅ 2026-07-30 — potvrđen trend: NIJEDAN nije imao GEO-intro/CTA-box pattern. 5276 dva tipfelera popravljena, 2622/3388 link-fix, 5181/16615 čisti bez izmena. |
-| 5 | — | 5411, 16614, 16608, 5163, 16610, 3257, 4813, 6824, 6874, 17021 | ⏳ 10 preostalih, svi 0 GSC klikova (90d, izmereno 07-30). Redosled po impresijama: 5411 (26), 16614 (23), 16608 (22), 5163 (20), 16610 (1), 3257/4813/6824/6874/17021 (0 — najniži prioritet, mogu biti potpuno bez ikakvog bug/pattern). **Naslov "Faza 3" od batch 2 nadalje realno znači "opšta QA/bugfix provera reda čekanja"**, ne GEO-intro/CTA-box retrofit (taj obim je zatvoren u batch 1) — obavezna dijagnostika sadržaja PRE pisanja koda za svaki batch (kao dosad), moguće da neki od preostalih 10 neće trebati nijednu izmenu. |
+| 5 | Poslednji, svi 0 GSC klikova | 5411, 16614, 16608, 5163, 16610, 3257, 4813, 6824, 6874, 17021 | ✅ 2026-07-30 — dijagnostika potvrdila trend (nijedan GEO-intro/CTA-box), svih 10 imalo root-relativni link bag (12 linkova), 5411/3257 dodatno nbsp otpad. Verifikovano 200/1×H1/0 grešaka na svih 10, regresija čista. Backup: `antasline_local_2026-07-30_pre-w1-polish-faza3-batch5.sql`. |
+
+**FAZA 3 ZATVORENA U POTPUNOSTI 2026-07-30 (30/30 postova, batch 1-5).** Batch 1 = jedini sa
+stvarnim GEO-intro/CTA-box retrofitom (5 postova); batch 2-5 = opšta QA/bugfix na preostalih 25
+(root-relativni linkovi, tipfeleri, nbsp, gola JSON-LD na 16616), sa nekoliko postova verifikovano
+čistih bez izmena (5181, 16615, 16613, 16612, 16609). Nijedan naknadni "Faza" nastavak nije planiran —
+sledeći W1 rad ide kroz novi zadatak ako se pojavi (npr. novi audit).
 
 **Napomena:** `16616` (teren-za-pickleball) više NIJE blokiran (fake-review
-schema nalaz zatvoren 2026-07-28) — može ući u normalan redosled Faze 3.
+schema nalaz zatvoren 2026-07-28) — obrađen u batch 3.
 
 ## Pravila (ista kao w1-red-cekanja)
 
