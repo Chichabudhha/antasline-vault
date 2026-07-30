@@ -72,7 +72,8 @@ fake-review Product schema blokatora, čeka Miroslavljevu odluku (videti Blokeri
 | # | Batch | ID-jevi | Status |
 |---|---|---|---|
 | 1 | Najveći GSC saobraćaj: basket teren, conquest 2542, teniski tereni, TC Galerija, parket/pločice | 2298, 2542, 2699, 5170, 6588 | ✅ 2026-07-30 — al-geo-intro/al-cta-box retrofit + 2699 mrtva dugmad→al-btn + 🔴 usput nađen i popravljen pre-postojeći neispravan FAQPage JSON-LD na 2298 (v. F7.24 wp_unslash gotcha) |
-| 2 | — | 2622, 2641, 3257, 3318, 3388, 3398, 4318, 4813, 5163, 5181, 5276, 5411, 5637, 6824, 6874, 16608, 16609, 16610, 16611, 16612, 16613, 16614, 16615, 16616, 17021 | ⏳ 25 preostalih, redosled po GSC saobraćaju (ista lista kao Faza 2, sad ažurirati brojke) |
+| 2 | GSC top 5 od preostalih 25 (brojke osvežene 2026-07-30, 90d, www domen — stari Faza 2 redosled bio zastareo) | 16611 pop-tenis (30kl), 5637 podovi-za-radionice (17kl), 2641 pvc-podne-ploce (15kl), 16609 koji-pod-postaviti-u-garazu (12kl), 4318 podloga-za-odbojkaske-terene (8kl) | ✅ 2026-07-30 — 16611/4318 `.al-geo-intro`, 5637 `.al-cta-box`+`.al-btn` (mrtve dugme-klase), 2641 samo link-fix, 16609 verifikovano čist bez izmena. Usput nađen root-relativni link bag (v. DNEVNIK) |
+| 3 | — | 2622, 3257, 3318, 3388, 3398, 4813, 5163, 5181, 5276, 5411, 6824, 6874, 16608, 16610, 16612, 16613, 16614, 16615, 16616, 17021 | ⏳ 20 preostalih. Sledeći batch: osvežiti GSC brojke ponovo pre izbora (obrazac batch 2 pokazao da je stara lista nepouzdana) — po trenutnim (07-30) brojkama sledećih 5 najprometnijih su 16613 (6kl), 3398 (2kl), ostatak 0kl (redosled među 0-klik postovima proizvoljan, npr. po impresijama) |
 
 **Napomena:** `16616` (teren-za-pickleball) više NIJE blokiran (fake-review
 schema nalaz zatvoren 2026-07-28) — može ući u normalan redosled Faze 3.

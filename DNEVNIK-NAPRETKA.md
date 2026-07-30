@@ -1,3 +1,24 @@
+## 2026-07-30 [claude-code] [W1 Polish Faza 3] Retrofit batch 2 (5 postova) — manje uniforman od batch 1, 2 posta bez izmena, 1 širi bag nađen ✅
+
+**Zadatak:** nova sesija (posle jutrošnje). `/antasline-sesija` predložio nastavak Faze 3 (batch 2/6, sledećih 5 od 25 u redu čekanja); M potvrdio.
+
+**GSC brojke osvežene pre izbora batch-a** (skript `gsc_page_queries.py`, 90d, `www.antasline.com` — bez `www` skripta tiho vraća 0 svuda, novo upozorenje). Originalni Faza 2 redosled (2622/3257/3318/3388) je zastareo — sva četiri sad imaju **0 klikova**. Stvarni top 5: **16611 pop-tenis (30kl)**, **5637 podovi-za-radionice (17kl)**, **2641 pvc-podne-ploce-ili-gumeni-podovi (15kl)**, **16609 koji-pod-postaviti-u-garazu (12kl)**, **4318 podloga-za-odbojkaske-terene (8kl)** — ovih 5 je stvarno obrađeno umesto originalnog plana.
+
+**🔴 Nalaz koji menja pristup za ostatak reda čekanja:** za razliku od batch 1 (svih 5 postova imalo isti "Kratak odgovor" + ad-hoc `#EEF3F8` CTA box obrazac), ovaj batch je bio neuniforman — svaki post proveren pojedinačno (`grep`/`substr_count` dijagnostika PRE pisanja koda):
+- **16611**: imao GEO intro (`Kratak odgovor`), nije imao ad-hoc CTA box → samo `.al-geo-intro` wrap
+- **5637**: nije imao GEO intro, ali JESTE imao **mrtve dugme-klase** (`.btn.btn-primary` na mailto CTA dugmetu) — ceo post je custom-built članak (`.garage-flooring-article`, `.lede`, `section.cta` itd.) čije klase **ne postoje nigde u CSS-u** (potvrđeno grep-om kroz `antas-design.css`+`style.css`+temu), isti obrazac kao `zn_contact_submit` u batch 1 → zatvarajući CTA odeljak dobio `.al-cta-box`, dugme `.al-btn`
+- **2641**: nije imao ni GEO intro ni CTA box — samo popravljen bag (v. dole)
+- **16609**: verifikovano čist, **bez izmena** (nema ad-hoc pattern, nema pokvarenih linkova) — prvi post u celoj Fazi 3 koji ne treba ništa
+- **4318**: imao GEO intro → wrap; plus isti link bag kao 2641 (5 pojava)
+
+**🔴🔴 Novi, širi bag nađen (van izvornog obima Faze 3): root-relativni interni linkovi (`href="/slug/"` bez `/antasline/` prefiksa) su na lokalnom XAMPP setup-u 404** — WP živi u `/antasline/` podfolderu, ne u korenu, pa `href="/industrijski-podovi/"` pogađa XAMPP koren umesto sajta (potvrđeno curl-om: `/industrijski-podovi/` → 404, `/antasline/industrijski-podovi/` → 200). Ovo je **drugačiji bug od poznatog "live-domen linkovi" gotcha-a** (koji hvata pune `antasline.com` URL-ove, ne root-relativne). Nađeno i popravljeno u dodiru: 2641 (1×), 4318 (5×: `/lvt-podovi-za-komercijalne-i-javne-prostore/`, `/sportski-podovi-za-sale-i-balone/`, `/sportske-podloge/` ×2, `/` → `antasline.com`). **Nije rađen sitewide sken** — ostaje otvoreno da li postoji na još postova van ovog batch-a, kandidat za posebnu proveru.
+
+**Upis isključivo preko `$wpdb->update()`** (F7.24 pravilo — 16611 i 4318 imaju `<script>` FAQPage JSON-LD, `wp_update_post()` bi rizikovao isti unslash bag kao 2298 juče). Anchor-based PHP (strpos/substr_replace) umesto ručno prekucanih "old" string literala — izbegava NBSP/Unicode-normalizacija zamke iz F7.24 (5170 juče). Skripta: `migracija/alati/job-w1-polish-faza3-batch2.php`.
+
+**Verifikovano:** `al_verify.php` na svih 5 (200/1×H1/0 PHP grešaka) · `json_decode()` OK na oba FAQPage JSON-LD (16611, 4318) · svi ispravljeni/novi linkovi HTTP 200 (curl) · Chrome vizuelno na 16611 (geo-intro), 5637 (cta-box + al-btn dugme umesto ranije neobojenog), 4318 (geo-intro) · regresija čista (home, 2542 iz batch1). Backup: `antasline_local_2026-07-30_pre-w1-polish-faza3-batch2.sql`. **23 posta ostaje u redu čekanja** (25 − 2 obrađena van redosleda... zapravo 5 obrađeno, videti ažuriran spisak u [[migracija/w1-polish-red-cekanja]]). Detalji: [[migracija/woodmart-sabloni]] F7.24.
+
+---
+
 ## 2026-07-30 [claude-code] [W1 Polish Faza 3] GEO-intro/CTA-box klase + retrofit batch 1 (5 postova) ✅
 
 **Zadatak:** nova sesija (posle jutrošnje). Ponuđena dva neblokirana zadatka (W1 Polish Faza 3 tipografska konzistentnost postova, ili W4 4.7 Enhanced Conversions priprema) — M izabrao Faza 3.
