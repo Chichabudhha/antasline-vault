@@ -1,3 +1,36 @@
+## 2026-07-30 [claude-code] [W1 Polish Faza 3] GEO-intro/CTA-box klase + retrofit batch 1 (5 postova) ✅
+
+**Zadatak:** nova sesija (posle jutrošnje). Ponuđena dva neblokirana zadatka (W1 Polish Faza 3 tipografska konzistentnost postova, ili W4 4.7 Enhanced Conversions priprema) — M izabrao Faza 3.
+
+**Kontekst:** W8 audit (07-29) je kvantifikovao da 30/31 objavljenih postova ne koristi `al-section` dizajn sistem. Pregled `post_content`-a je pokazao nešto konkretnije od opšte "neujednačenosti": klase `.al-geo-intro`/`.al-cta-box` su se već pojavljivale u 2 posta (6588, 5170) — i u samom CLAUDE.md GEO pravilu ("prvi pasus = direktan odgovor") — ali **nikad nisu imale CSS definiciju**, pa su se renderovale kao goli tekst bez ijedne vizuelne razlike. Drugi postovi (2298, 2542) su isti vizuelni efekat postizali ad-hoc inline stilom (`style="background:#EEF3F8;border-left:4px solid #F04D22;padding:16px 20px;margin:24px 0"` — bukvalno ručno kopirani `--al-mist`/`--al-red` tokeni dizajn-sistema, bez klase).
+
+**Rešenje:** prave definicije dodate u `antas-design.css`:
+- `.al-geo-intro` — mist pozadina + crveni levi border (GEO "Kratak odgovor" pasus)
+- `.al-cta-box` — mist kartica sa okvirom, centriran tekst + `.al-btn` (zatvarajući CTA)
+- `.al-grid` dobio `margin: 24px 0` u samoj klasi (bio ad-hoc inline na delu stranica) — isti F7.19/F7.20 specificity gotcha, `.entry-content .al-grid` selektor da pobedi temin `:is(.entry-content,…)>*{margin-block:0 20px}`
+- `.al-btn--ghost` dobio entry-content override (bez njega belo-na-belom van `.al-section`)
+
+**Batch 1 (5 najprometnijih postova po ranije poznatim GSC brojkama): 2298 (basket teren), 2542 (conquest epoksid), 2699 (teniski tereni), 5170 (TC Galerija 3x3), 6588 (parket/pločice).** "Kratak odgovor" pasusi → `.al-geo-intro`, ad-hoc callout div-ovi → `.al-cta-box`, `2699` mrtve `zn_contact_submit btn btn-fullcolor btn--rounded` klase (Zion Builder ostatak — tema je odavno WoodMart, renderovale su se kao neobojen pravougaonik bez ijednog stila) → `.al-btn`/`.al-btn--ghost` (3 dugmeta × 5 pojava kroz tekst).
+
+**🔴 Usput nađen i popravljen pre-postojeći bag (nepovezan sa zadatkom):** verifikacija je otkrila da `2298` ima neispravan FAQPage JSON-LD (`json_decode` greška). Uzrok: originalni tekst odgovora sadrži srpski nizak-visok navodnik `„uradi sam"` gde je zatvarač obična ASCII `"` — unutar JSON stringa ta `"` mora biti eskejpovana (`\"`), i **originalno JESTE bila** (potvrđeno iz mysql dump-a pre bilo kakve izmene ove sesije). Prava sekvenca događaja, otkrivena tek posle:
+
+1. Batch-1 upis (2298 GEO-intro/CTA-box retrofit) je išao preko `wp_update_post()`.
+2. `wp_update_post()` zove `wp_unslash()` nad **CELIM** `post_content`-om pre upisa u bazu — ne samo nad delom koji str_replace cilja. To je tiho pretvorilo prethodno ispravan `\"` u JSON-LD bloku u goli `"`, iako nijedan replacement cilj tog batch-a nije ni dodirivao taj deo teksta.
+3. Prvi pokušaj popravke (ubaciti `\"` nazad, opet preko `wp_update_post()`) je **opet tiho promašio** — isti `wp_unslash()` je pojeo i moj dodati backslash, bez greške, bez upozorenja.
+4. Pravi fix je morao ići preko `$wpdb->update()` direktno (isti princip kao već dokumentovani gotcha #9 za `<script>` tagove) — taj put zaobilazi `wp_unslash()` u potpunosti.
+
+**Nova sistemska lekcija upisana u [[migracija/woodmart-sabloni]] F7.24: svaki upis posta koji sadrži `<script>` JSON-LD ili bilo koji eskejpovan backslash MORA ići preko `$wpdb->update()`, nikad `wp_update_post()` — čak i kad izmena naizgled ne dodiruje taj deo sadržaja**, jer `wp_unslash()` deluje nad celim poljem.
+
+**Dve dodatne manje gotcha (iste sesije, na 5170):**
+- **NBSP (U+00A0) umesto običnog razmaka** — TinyMCE je između `<em>` i `<a>` ostavio nevidljiv non-breaking space (bajtovi `C2 A0`), ne `20`. Vizuelno i u tekstualnom prikazu fajla identično, `str_replace` tiho promašio (0 pogodaka). Dijagnostika zahtevala `bin2hex()` poređenje dva stringa, ne vizuelni diff.
+- **Full-paragraph string match krhk na Unicode normalizaciji** — poređenje celog pasusa (300+ karaktera) kao cilj je puklo na JEDNOM karakteru (NFC/NFD razlika istog dijakritika), iako su DB i ručno otkucan tekst izgledali bajt-za-bajt identično. Rešenje: cilj svesti na minimalan ASCII fragment (`<p style="text-align: left">` → `<p>`, ne ceo pasus) kad god posao to dozvoljava.
+
+**Verifikacija:** svih 5 postova 200/1×H1/JSON-LD validan (uklj. popravljen 2298)/Chrome vizuelno (geo-intro box, cta-box, dugmad na 2699) potvrđeno na 1500px. Backup: `antasline_local_2026-07-30_pre-w1-polish-faza3-batch1.sql`. Alati: `migracija/alati/job-w1-polish-faza3-batch1.php`, `job-w1-polish-faza3-fix-json.php`. Nova tabela [[migracija/w1-polish-red-cekanja]] Faza 3 — **25 postova ostaje u redu čekanja**, redosled po GSC saobraćaju (ista prioritetna lista kao Faza 2). `16616` (teren-za-pickleball) više NIJE blokiran (fake-review nalaz zatvoren 07-28) — ulazi u normalan red.
+
+**Usputni environment nalaz:** `wp eval-file` preko golog `php.exe wp-cli.phar` koristi WEB `php.ini` (max_execution_time=300s) umesto CLI podrazumevanog neograničenog vremena — WoodMart-ov gutenberg carousel bootstrap kod je dovoljno spor da to pogodi na ovoj mašini. Fix: `-d max_execution_time=0 -d memory_limit=512M` eksplicitno u svakom pozivu (dodato u sve skripte ove sesije).
+
+---
+
 ## 2026-07-30 [claude-code] [W5 5.4 + W3] Nedeljni izveštaj + Agentic Browsing audit baseline ✅
 
 **Zadatak:** M izabrao dva neblokirana zadatka redom: nedeljni izveštaj (overdue, poslednji 07-22), pa accessibility/Lighthouse "agentic browsing" scoring audit (M dao URL 2026-07-29, ranije samo dijagnostikovano kao poseban zadatak).

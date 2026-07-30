@@ -86,18 +86,21 @@ al_faza3_apply( 2699, array(
 	),
 	// zn_contact_submit/btn-fullcolor su mrtve Zion Builder klase (theme promenjen na WoodMart) —
 	// renderovale su se kao neobojen pravougaonik bez ijednog stila. Isto dugme 4x kroz post.
-	array( '<a class="zn_contact_submit btn btn-fullcolor btn--rounded  " href="tel:+381692340072">Pozovi</a>', '<a class="al-btn" href="tel:+381692340072">Pozovi</a>', 4 ),
-	array( '<a class="zn_contact_submit btn btn-fullcolor btn--rounded  " href="mailto:office@antasline.com">Pošalji upit</a>', '<a class="al-btn al-btn--ghost" href="mailto:office@antasline.com">Pošalji upit</a>', 4 ),
-	array( '<a class="zn_contact_submit btn btn-fullcolor btn--rounded  " href="http://localhost/antasline/sportske-podloge/">Saznaj više</a>', '<a class="al-btn al-btn--ghost" href="http://localhost/antasline/sportske-podloge/">Saznaj više</a>', 4 ),
+	array( '<a class="zn_contact_submit btn btn-fullcolor btn--rounded  " href="tel:+381692340072">Pozovi</a>', '<a class="al-btn" href="tel:+381692340072">Pozovi</a>', 5 ),
+	array( '<a class="zn_contact_submit btn btn-fullcolor btn--rounded  " href="mailto:office@antasline.com">Pošalji upit</a>', '<a class="al-btn al-btn--ghost" href="mailto:office@antasline.com">Pošalji upit</a>', 5 ),
+	array( '<a class="zn_contact_submit btn btn-fullcolor btn--rounded  " href="http://localhost/antasline/sportske-podloge/">Saznaj više</a>', '<a class="al-btn al-btn--ghost" href="http://localhost/antasline/sportske-podloge/">Saznaj više</a>', 5 ),
 ), $apply );
 
 // ---------- 5170: Teren za basket (3x3) TC Galerija ----------
 al_faza3_apply( 5170, array(
-	array( '<p style="text-align: left">Sredinom 2022. godine u saradnji sa Dunk Shop-om smo postavili teren za basket na krovu TC Galerija.</p>', '<p>Sredinom 2022. godine u saradnji sa Dunk Shop-om smo postavili teren za basket na krovu TC Galerija.</p>', 1 ),
-	array( '<p style="text-align: left">Teren je napravljen za potrebe promocije Dunk Shop-a ali i za promociju basketa. Kupci kao i posetioci TC Galerija mogu da se oprobaju i da igraju basket.</p>', '<p>Teren je napravljen za potrebe promocije Dunk Shop-a ali i za promociju basketa. Kupci kao i posetioci TC Galerija mogu da se oprobaju i da igraju basket.</p>', 1 ),
-	array( '<p style="text-align: left">Postavljena je podloga za basket poslednje generacije Švedskog proizvodjača Bergo flooring. Na istoj podlozi će se u septembru 2022 godine u Austriji odigrati finale 3x3 evropskog prvenstva. Podloga je rađena po FIBA standardima sa gumenim slojem izmedju betonskih ploča i podloge za basket. Svečanom otvaranju radnje kao i terena za basket prisustvovali su poznati iz sveta košarke i 3x3.</p>', '<p>Postavljena je podloga za basket poslednje generacije Švedskog proizvodjača Bergo flooring. Na istoj podlozi će se u septembru 2022 godine u Austriji odigrati finale 3x3 evropskog prvenstva. Podloga je rađena po FIBA standardima sa gumenim slojem izmedju betonskih ploča i podloge za basket. Svečanom otvaranju radnje kao i terena za basket prisustvovali su poznati iz sveta košarke i 3x3.</p>', 1 ),
+	// full-paragraph string match je pukao na Unicode normalizaciji jednog
+	// diakritika (izmereno 2026-07-30: NFC/NFD razlika, DB nije ASCII-identičan
+	// ručno otkucanom tekstu iako izgleda identično) — svedeno na čist ASCII cilj.
+	array( '<p style="text-align: left">', '<p>', 3 ),
 	array(
-		'Saznaj više o podlogama za basket : <span style="color: #ff0000"><em> <a style="color: #ff0000" href="http://localhost/antasline/sportske-podloge/">http://localhost/antasline/sportske-podloge/</a></em></span>',
+		// napomena: "\xc2\xa0" je NBSP (TinyMCE artefakt) između <em> i <a> u bazi,
+		// ne obična razmaka — obična razmaka ovde ne pogađa (izmereno 2026-07-30, hex diff).
+		'Saznaj više o podlogama za basket : <span style="color: #ff0000"><em>' . "\xc2\xa0" . '<a style="color: #ff0000" href="http://localhost/antasline/sportske-podloge/">http://localhost/antasline/sportske-podloge/</a></em></span>',
 		'<p>Saznaj više o <a href="http://localhost/antasline/sportske-podloge/">podlogama za basket</a>.</p>',
 		1,
 	),

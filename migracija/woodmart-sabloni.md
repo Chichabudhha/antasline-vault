@@ -920,6 +920,73 @@ Umetati kao zaseban `[vc_row el_class="al-section al-section--paper"]` na tačan
 (`preg_split('#(?=\[vc_row)#')`), **bez `al-diag-*`** ako susedna sekcija već nosi rez
 (F7.20). Slike u sekciju ići kao **gol `<img>`** — filter ih sam umota i doda srcset.
 
+## F7.24 — Post/članak GEO-intro + CTA-box klase (W1 Polish Faza 3, 2026-07-30)
+
+**Nalaz koji je pokrenuo zadatak (iz W8 audita 07-29/30):** 30/31 objavljenih
+postova ne koristi `al-section` dizajn sistem — koriste plain WoodMart default
+template. Merenje pokazalo da su `.al-geo-intro`/`.al-cta-box` klase već
+POSTOJALE u `post_content`-u dva posta (6588, 5170) i u samom CLAUDE.md GEO
+pravilu ("prvi pasus = direktan odgovor"), ali **nikad nisu imale CSS** —
+renderovale su se kao goli tekst bez ijedne vizuelne razlike. Ostali postovi
+(2298, 2542) su isti efekat postizali ad-hoc inline stilom
+(`style="background:#EEF3F8;border-left:4px solid #F04D22;…"`, ručno kopiranim
+tokenima dizajn-sistema bez klase).
+
+**Rešenje:** prave definicije dodate u `antas-design.css` (posle `.al-table`
+bloka):
+- `.al-geo-intro` — mist pozadina + crveni levi border, za GEO "Kratak odgovor"
+  pasus na vrhu članka
+- `.al-cta-box` — mist kartica sa okvirom, centriran tekst + `.al-btn`, za
+  zatvarajući CTA na dnu članka
+- `.al-grid` dobio `margin: 24px 0` u CSS (bio je ad-hoc `style="margin:24px 0"`
+  inline na delu stranica) — isti F7.19/F7.20 specificity gotcha
+  (`:is(.entry-content,…)>*{margin-block:0 20px}` iz base.css je (0,2,0),
+  gazi golu `.al-grid` klasu (0,1,0)) → selektor `.entry-content .al-grid,
+  .wd-entry-content .al-grid` da pobedi
+- `.al-btn--ghost` dobio isti entry-content override kao `.al-section--paper/
+  --mist` (bez njega je ghost dugme belo-na-belom, nevidljivo van `.al-section`)
+
+**Retrofit prvog batch-a (2298, 2542, 2699, 5170, 6588):** "Kratak odgovor"
+pasusi prevedeni na `.al-geo-intro`, ad-hoc callout div-ovi na `.al-cta-box`,
+mrtve `zn_contact_submit btn btn-fullcolor btn--rounded` klase (Zion Builder
+ostatak, renderovale su se kao neobojen pravougaonik — tema je odavno
+WoodMart) zamenjene sa `.al-btn`/`.al-btn--ghost` (2699, 3 dugmeta × 5 pojava
+kroz tekst). Alat: `migracija/alati/job-w1-polish-faza3-batch1.php`.
+
+### 🔴🔴 `wp_update_post()` iz CLI zove `wp_unslash()` nad CELIM post_content-om
+Ne samo nad delom koji se menja — nad **svim** postojećim backslash-escape
+sekvencama u sadržaju, čak i onim van dosega tvog `str_replace`-a. Na 2298 je
+originalni FAQPage JSON-LD imao ispravno eskejpovan navodnik u tekstu odgovora
+(`„uradi sam\"`, srpski nizak-visok navodnik gde zatvarač „`"`" mora biti
+eskejpovan unutar JSON stringa) — potpuno nepovezana izmena (GEO-intro
+retrofit) je preko `wp_update_post()` tiho pretvorila taj `\"` u goli `"` i
+pokvarila JSON (potvrđeno `json_decode()` grešku posle, dok je pre bio
+validan). Pokušaj popravke istim putem (`wp_update_post()` sa novim `\"`
+ubačenim u string) je **opet tiho promašio** — isti unslash je pojeo i moj
+dodati backslash. Radi tek preko `$wpdb->update()` direktno (gotcha #9,
+zaobilazi `wp_unslash()` u potpunosti). **Pravilo: svaki put kad post sadrži
+`<script>` JSON-LD ILI bilo koji drugi eskejpovan backslash, upis ide
+isključivo preko `$wpdb->update()`, nikad preko `wp_update_post()` — čak i
+kad izmena naizgled ne dodiruje taj deo sadržaja.**
+
+### NBSP (U+00A0) umesto običnog razmaka — nevidljiv u editoru, kida `str_replace`
+Na 5170, TinyMCE je između `<em>` i `<a>` ostavio `&nbsp;` (bajtovi `C2 A0`),
+ne obični razmak (`20`). Vizuelno identično u browseru i u tekstualnom prikazu
+fajla, ali `substr_count()`/`str_replace()` ga tretira kao drugačiji karakter
+→ tiho 0 pogodaka. Dijagnostika: `bin2hex()` na oba stringa uporedo (ne
+osloniti se na vizuelni diff). Fix: `"\xc2\xa0"` eksplicitno u PHP izvoru
+umesto kucanog razmaka na sumnjivim mestima (posle `<em>`, oko `<br>`, ispred
+zatvarajućih tagova — tipična mesta gde WYSIWYG editor ubacuje NBSP).
+
+### Full-paragraph string match je krhk na Unicode normalizaciji
+Poređenje celog pasusa (300+ karaktera sa dijakritikom) kao `str_replace` cilj
+je na "Postavljena je podloga…" (5170) pukao na JEDNOM karakteru — DB i ručno
+otkucan tekst izgledaju bajt-za-bajt identično, `cmp` ipak javlja razliku
+(NFC/NFD normalizacija istog dijakritika). Kad je moguće, cilj svesti na
+najmanji dovoljan ASCII fragment (npr. samo `<p style="text-align: left">` →
+`<p>`, ne cela sadržina pasusa) — manje površine za promašaj, i posao svejedno
+ne zahteva dodirivanje dijakritičkog teksta.
+
 ## Otvoreno
 - [ ] ⏳ Kuriranje fotografija — pun prolaz kroz sve stranice (v. F7.21). Urađeno: 16657. Ostaje ~28 stranica bez slika + dopuna postojećih.
 - [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)

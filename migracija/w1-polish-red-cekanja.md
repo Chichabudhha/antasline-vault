@@ -58,6 +58,25 @@ tipografija, interni linkovi. Redosled po GSC saobraćaju:
 postova restilizovano. Jedini preostali: `teren-za-pickleball` (16616) — namerno preskočen zbog
 fake-review Product schema blokatora, čeka Miroslavljevu odluku (videti Blokeri sekciju u [[PROGRESS]]).
 
+## 🅲️ FAZA 3 — postovi: tipografska konzistentnost (`al-geo-intro`/`al-cta-box`)
+
+> Otvorena 2026-07-30 (W8 audit 07-29 kvantifikovao: 30/31 objavljenih postova
+> ne koristi `al-section` dizajn sistem). Obrazac i CSS: [[migracija/woodmart-sabloni]] F7.24.
+> Za razliku od Faze 2 (dedupe/linkovi/H1), ovde je cilj vizuelni: GEO intro
+> pasus i zatvarajući CTA dobijaju konzistentnu klasu na svakom postu, ukloniti
+> ad-hoc inline stilove i mrtve dugme-klase gde se nađu. **Ne radi se puni
+> landing-page rebuild** (nav hero/plates) — postovi zadržavaju WoodMart
+> default template (sidebar, kategorije), `_woodmart_title_off` ionako ne radi
+> za `post` tip (F7.18).
+
+| # | Batch | ID-jevi | Status |
+|---|---|---|---|
+| 1 | Najveći GSC saobraćaj: basket teren, conquest 2542, teniski tereni, TC Galerija, parket/pločice | 2298, 2542, 2699, 5170, 6588 | ✅ 2026-07-30 — al-geo-intro/al-cta-box retrofit + 2699 mrtva dugmad→al-btn + 🔴 usput nađen i popravljen pre-postojeći neispravan FAQPage JSON-LD na 2298 (v. F7.24 wp_unslash gotcha) |
+| 2 | — | 2622, 2641, 3257, 3318, 3388, 3398, 4318, 4813, 5163, 5181, 5276, 5411, 5637, 6824, 6874, 16608, 16609, 16610, 16611, 16612, 16613, 16614, 16615, 16616, 17021 | ⏳ 25 preostalih, redosled po GSC saobraćaju (ista lista kao Faza 2, sad ažurirati brojke) |
+
+**Napomena:** `16616` (teren-za-pickleball) više NIJE blokiran (fake-review
+schema nalaz zatvoren 2026-07-28) — može ući u normalan redosled Faze 3.
+
 ## Pravila (ista kao w1-red-cekanja)
 
 - Pre sesije: [[migracija/woodmart-sabloni]] (gotcha-i, uklj. novi F7.9 CF7 odeljak)
