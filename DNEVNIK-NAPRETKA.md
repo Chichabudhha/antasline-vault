@@ -1,3 +1,15 @@
+## 2026-07-30 [claude-code] [W2] #10 piklbol — title/meta refresh na `/teren-za-pickleball/` ZATVORENO ✅
+
+**Zadatak:** poslednji otvoreni W2 stavak (2.4 Tier2, #10 piklbol) — blokiran od 2026-07-08 fake-review Product schema pitanjem, odblokiran 2026-07-28 (M odluka: FAQPage+Product bez `aggregateRating`), ali nikad izvršen — nalaz iz W5 5.4 nedeljnog izveštaja (isti dan): piklbol 160 impr/0 klikova (28d). Nova stranica `/piklbol/` ostaje namerno preskočena (kanibalizacija, `/teren-za-pickleball/` već dominira klaster) — ovo je refresh postojeće stranice (ID 16616), ne nova stranica.
+
+**Nalaz:** Yoast title je bio potpuno prazan (padao na WP/tema default), metadesc je pominjao samo englesko "Pickleball", ne "piklbol" (srpska fonetska varijanta iz GSC upita). Cena ostaje "na upit" (Bergo Ultimate FLOV — nema je u cenovniku), nije pominjana.
+
+**Urađeno** (`migracija/alati/job-piklbol-title-refresh.php`): novi Yoast title "Teren za piklbol (pickleball) — dimenzije i sportska podloga" (60 char) + metadesc sa dimenzijama (13,4×6,1 m, mreža 86 cm, iz postojećeg sadržaja) + CTA `069 234 00 72` (123 char) — isti stil kao raniji refresh na 16688/2699/4318.
+
+**Verifikovano:** 200/1×H1/0 grešaka, `<title>`/`<meta description>` u `<head>` ispravni, FAQPage+Product JSON-LD i dalje validan (regresija na 2026-07-28 fix čista). Backup: `antasline_local_2026-07-30_pre-piklbol-title-refresh.sql`. **Time je ceo W2 (SEO content) workstream u potpunosti zatvoren** — svih 20 stranica iz plana (4 tijera) obrađeno, jedino preskočeno je namerno (#10 nova stranica, #15/#18 deprioritizovano). Detalji: [[seo/plan-novih-stranica]], [[PROGRESS]].
+
+---
+
 ## 2026-07-30 [claude-code] [W1 Polish Faza 3] Batch 5/5 — FAZA 3 U POTPUNOSTI ZATVORENA (10 postova, samo linkovi/nbsp) ✅
 
 **Zadatak:** poslednji batch reda čekanja — svih 10 preostalih postova, svi 0 GSC klikova/90d: `5411` (modularni-industrijski-podovi), `16614` (sportska-igrališta), `16608` (oštećeni-industrijski-pod), `5163` (montaža-antistatik-poda-Quectel), `16610` (zamena-parketa-u-sportskim-salama), `3257` (ugradnje-industrijskog-poda), `4813` (bergo-ultimate-i-ultimate-plus), `6824` (prednosti-r-tile-design), `6874` (esd-podovi-priča-kupca), `17021` (montaža-antistatik-poda-HTEC-Niš).

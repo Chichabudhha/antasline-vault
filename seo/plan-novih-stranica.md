@@ -84,7 +84,7 @@ Svaka završena stranica: red u [[DNEVNIK-NAPRETKA]] + update [[PROGRESS]] + št
 - [x] #6 parking cena — ✅ 2026-07-10 `/podloge-za-parkiraliste-cena/` (ID 16876) — **sa PRAVIM cenama** (Runfloor 2.800–3.400, Geoflor 3.400, Geogravel 4.000, Geocross 4.200 din/m² sa PDV; nosivosti 600/400/100 t/m² — izvor: hub 16589 parity sadržaj, draft je pogrešno pretpostavljao 200 t/m²) → [[DNEVNIK-NAPRETKA]]
 - [x] #7–8 tenis hub — ✅ oba zatvorena 2026-07-08 (videti Tier2 tabelu redovi #7/#8 gore — stale checkbox ispravljen 2026-07-12)
 - [x] #11 padel refresh — ✅ 2026-07-08: title/meta prepisan (`/pop-tenis/`, cilja "dimenzije padel terena" klaster ~8.000 impr, poz. 1,2–1,5, CTR je bila 1,6%) + dodat FAQ blok (4 pitanja) + FAQPage JSON-LD (nije postojao ranije) → [[DNEVNIK-NAPRETKA]]
-- [ ] #10 piklbol — nova stranica `/piklbol/`, još nije rađeno, blokirano fake-review pitanjem #ceka-miroslav
+- [x] #10 piklbol — ✅ 2026-07-30 title/meta refresh na postojećoj `/teren-za-pickleball/` (16616), NE nova stranica (nova `/piklbol/` ostaje namerno preskočena, kanibalizacija). Fake-review blokator zatvoren 07-28, title/meta izvršen 07-30 → [[DNEVNIK-NAPRETKA]]
 - [x] #12 kancelarije — ✅ 2026-07-12 title/meta refresh na postojećoj stranici (videti Tier3 tabelu)
 - [x] #13 restorani/kafići — ✅ 2026-07-12 Yoast title bug-fix na postojećoj stranici (videti Tier3 tabelu)
 - [x] #14 hemijska/prehrambena industrija — ✅ 2026-07-12 nova stranica ID 17017 (videti Tier3 tabelu)
@@ -95,12 +95,13 @@ Svaka završena stranica: red u [[DNEVNIK-NAPRETKA]] + update [[PROGRESS]] + št
 - [x] #19 /bergo/ brend hub — ✅ 2026-07-12 nova stranica ID 17019 (videti Tier4 tabelu)
 - [x] #20 teretane — ✅ 2026-07-12 nova stranica ID 17020, product-fit pitanje rešeno uz Miroslavljevu potvrdu (videti Tier4 tabelu)
 
-## Status 2026-07-12: W2 content plan praktično iscrpljen
+## Status 2026-07-30: W2 content plan U POTPUNOSTI ZATVOREN
 
 Svih 20 stavki obrađeno (zatvoreno, refresh-ovano, ili svesno deprioritizovano/blokirano uz razlog).
-Otvoreno ostaje samo: **#10 piklbol** (blokirano fake-review Product schema pitanjem, #ceka-miroslav),
-**#15 tržni centri** (nema GSC potražnje, čeka signal), **#18 reference** (postojeća pokrivenost dovoljna).
-Sledeći W2 rad: pratiti GSC posle migracije za nove signale, ili se vratiti na #10/#15/#18 ako se prilika promeni.
+**#10 piklbol zatvoren 2026-07-30** (title/meta refresh, fake-review blokator uklonjen 07-28).
+Otvoreno ostaje samo svesno deprioritizovano: **#15 tržni centri** (nema GSC potražnje, čeka signal),
+**#18 reference** (postojeća pokrivenost dovoljna) — oba čekaju signal, ne rad.
+Sledeći W2 rad: pratiti GSC posle migracije za nove signale, ili se vratiti na #15/#18 ako se prilika promeni.
 
 ## Veze
 - [[blokovi/BLOK-C-sledece]] — C3 hub
