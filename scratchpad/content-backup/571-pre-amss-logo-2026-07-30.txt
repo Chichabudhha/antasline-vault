@@ -1,0 +1,40 @@
+[vc_row full_width="stretch_row" el_class="al-section al-section--navy al-hero-photo al-plates al-diag-bottom" css=".vc_custom_heroF4571{background-image: url('http://localhost/antasline/wp-content/uploads/2026/07/magacinski-pod-sa-zutom-ivicom.webp') !important;}"][vc_column][vc_column_text]
+<div class="al-hero"><span class="al-label">O NAMA</span><h1 class="al-display--xl">AntasLine — Vaš partner za industrijske podove</h1><p class="al-hero__sub">Više od 15 godina iskustva u nabavci, prodaji i montaži vrhunskih industrijskih i sportskih podloga za sve vrste prostora.</p></div>
+[/vc_column_text][/vc_column][/vc_row]
+[vc_row full_width="stretch_row" el_class="al-section al-section--paper"][vc_column][vc_column_text]
+<h2>Ko smo mi?</h2>
+<p>AntasLine je vodeći distributer industrijskih podova, sportskih terena i spoljašnjih podloga na tržištu Srbije, Crne Gore, Makedonije, Bosne i Hercegovine i Hrvatske. Zastupamo svetski priznate proizvođače — Ecotile Flooring (Engleska) za industrijske PVC podove, Bergo Flooring za multifunkcionalne spoljne podloge i Sit-in by Radici Group za veštačku travu. Svi proizvođači koje zastupamo poseduju najstrože evropske sertifikate o kvalitetu i bezbednosti.</p>
+
+<div class="al-logo-row"><img src="http://localhost/antasline/wp-content/uploads/2015/11/bergoflooring_logo.png" alt="Bergo Flooring" width="113" height="114" loading="lazy" /><img src="http://localhost/antasline/wp-content/uploads/2015/11/ecotile-logo.jpg" alt="Ecotile Flooring" width="202" height="99" loading="lazy" /><img src="http://localhost/antasline/wp-content/uploads/2018/06/SITIN-LOGO.png" alt="Sit-in by Radici Group" width="224" height="224" loading="lazy" /></div>
+
+<h2>Šta nudimo?</h2>
+<ul>
+<li><strong>Industrijski podovi</strong> — ESD, antistatik, proizvodne podloge, obeležavanje zona i odbojnici (bumperi)</li>
+<li><strong>Sportski tereni</strong> — veštačka trava, košarkaški, padel i pickleball tereni, oprema i konstrukcije za sportske hale</li>
+<li><strong>Spoljne podloge</strong> — Bergo ploče za terase i bazene, veštačka trava</li>
+<li><strong>Poslovni prostori</strong> — LVT podovi (Expona Clic, Commercial, Flow) za maloprodaju i kancelarije</li>
+<li><strong>Specijalne podloge</strong> — privremeni putevi (Isotrack), podovi za sajmove, štale i trkališta, iznajmljivanje opreme</li>
+<li><strong>Tehnička podrška</strong> — konsultacije, projektovanje, montaža</li>
+</ul>
+
+<h2>Zašto nas izaberite?</h2>
+<p>Donosimo vam kvalitet, pouzdanost i dugoročnu saradnju. Svaki projekat tretiramo kao da je naš — od analize potreba do post-montažne podrške.</p>
+
+<h2>Reference</h2>
+<p>Deo firmi za koje smo izveli podove — pun spisak referenci po delatnostima je ispod.</p>
+<div class="al-logo-row al-logo-row--klijenti"><img src="http://localhost/antasline/wp-content/uploads/2023/01/bosch-logo.webp" alt="Robert Bosch" width="250" height="75" loading="lazy" /><img src="http://localhost/antasline/wp-content/uploads/2018/06/Vinca_Logo.png" alt="Institut Vinča" width="224" height="180" loading="lazy" /><img src="http://localhost/antasline/wp-content/uploads/2023/01/adient-logo.webp" alt="Adient Kragujevac" width="250" height="75" loading="lazy" /><img src="http://localhost/antasline/wp-content/uploads/2023/01/philip-morris-logo.webp" alt="Philip Morris Niš" width="250" height="75" loading="lazy" /><img src="http://localhost/antasline/wp-content/uploads/2023/01/orion-logo.webp" alt="Orion telekom" width="250" height="75" loading="lazy" /></div>
+
+<h3>Industrija</h3>
+<div class="al-ref-row"><span>HTEC</span><span>Apple servis Macola</span><span>Robert Bosch</span><span>Institut Vinča</span><span>Adient Kragujevac</span><span>Philip Morris Niš</span><span>AIK Bačka Topola</span><span>AMSS</span><span>Orion telekom</span><span>Farmalogist</span></div>
+<h3 style="margin-top:28px">Sport</h3>
+<div class="al-ref-row"><span>Spanoulis Court</span><span>Beobasket</span><span>Maxima kamp Pecarski (Zlatibor)</span><span>Dunk Shop</span><span>BG liga 3x3</span><span>Luštica Bay</span></div>
+<h3 style="margin-top:28px">Ugostiteljstvo</h3>
+<div class="al-ref-row"><span>Hotel Prag Beograd</span><span>Metropolis Caffe</span><span>Cafe Arabika Kruševac</span><span>Restoran Sidro</span></div>
+[/vc_column_text][/vc_column][/vc_row]
+[vc_row full_width="stretch_row" el_class="al-section al-section--mist al-diag-top al-section--compact"][vc_column][vc_column_text]
+<h2>Kontaktirajte nas</h2>
+<p>Slobodno nam se obratite sa pitanjima, zahtevima za ponudu ili tehničkom konsultacijom.</p>
+[/vc_column_text][/vc_column][/vc_row]
+[vc_row full_width="stretch_row" el_class="al-section al-section--paper"][vc_column][vc_column_text]<span class="al-label">Reference</span><h2>Iz naših radova</h2><p>Presek onoga što radimo — industrijski i antistatik podovi, sportski tereni, terase i vodopropusna parkirališta. Kliknite na sliku za uvećan prikaz.</p><div class="al-grid al-grid--3" style="margin:24px 0"><img src="http://localhost/antasline/wp-content/uploads/2026/07/magacinski-pod-sa-zutom-ivicom.webp" alt="Industrijski pod u magacinu sa žutom ivičnom rampom" /><img src="http://localhost/antasline/wp-content/uploads/2026/07/esd-pod-u-laboratoriji-za-elektroniku.webp" alt="Antistatik ESD pod u laboratoriji za elektroniku" /><img src="http://localhost/antasline/wp-content/uploads/2026/07/kosarkaski-teren-u-dvoristu.webp" alt="Košarkaški teren sa konstrukcijom izveden u dvorištu" /><img src="http://localhost/antasline/wp-content/uploads/2026/07/teniski-teren-kosmaj.webp" alt="Teniski teren sa plavom podlogom i belim linijama" /><img src="http://localhost/antasline/wp-content/uploads/2026/07/terasa-sa-pogledom-na-vodu.webp" alt="Terasa obložena Bergo pločama sa pogledom na vodu" /><img src="http://localhost/antasline/wp-content/uploads/2026/07/parking-sa-geogravel-podlogom.webp" alt="Vodopropusno parkiralište izvedeno GEOGRAVEL podlogom" /></div>[/vc_column_text][/vc_column][/vc_row][vc_row full_width="stretch_row" el_class="al-section al-section--navy al-plates al-diag-top--rev"][vc_column][vc_column_text]
+<div class="al-hero"><span class="al-label">Kontakt</span><h2 class="al-display--lg">Spremni za saradnju?</h2><div class="al-hero__cta"><a class="al-btn" href="http://localhost/antasline/#upit">Pošaljite upit</a><a class="al-btn al-btn--ghost" href="tel:+381692340072">069 234 00 72</a></div></div>
+[/vc_column_text][/vc_column][/vc_row]
