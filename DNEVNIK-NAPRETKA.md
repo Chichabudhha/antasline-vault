@@ -3282,3 +3282,27 @@ Miroslav objavio `/sportske-podloge/sportski-podovi-za-teniske-terene/` i `/gume
 - 🔴 **Potvrđen dublji uzrok = tačno scenario koji je 07-05 unos predvideo:** `need_pull` opcija stoji na `9` (STATUS_PULLED), nikad ne prelazi na `6` (STATUS_NOTIFIED) → **QUIC.cloud notify webhook i dalje ne stiže** (0 `notify_img` poziva u access logu od registracije cron-a). Plugin nema fallback za "poll cloud direktno" — `pull()` metoda čita ISKLJUČIVO redove sa statusom NOTIFIED, koji se postavlja samo preko webhook-a. Bez njega, poslatih 200 slika ostaje zaglavljeno zauvek i blokira sve nove batch-eve.
 - **Zaključak:** lokalna automatizacija (reset + manual send + cronjob) je urađena i radi ispravno, ali ne može zaobići problem — webhook mora da radi da bi se red ikad pomerio. **Sledeći korak nije više lokalni fix, nego QUIC.cloud podrška** (potvrditi da li njihov notify_img callback stvarno stiže do servera; moguće je da firewall/CDN nešto blokira samo za njihove IP-ove, što se ne može testirati iznutra).
 - #ceka-miroslav: otvoriti tiket QUIC.cloud podršci (linked domain je aktivan/linked, `qc_activated: "linked"` potvrđeno u opcijama) — ili privremeno isključiti LiteSpeed image optimizaciju dok se ne reši, da cronjob ne troši resurse uzalud svakih 15 min bez efekta.
+
+## 2026-07-30 [cpanel-live] — M5 audit mejlova sa kontakt formi: P1-P4 izvršeno, veliki nalaz o istoriji mailbox-a (UŽIVO, READ-ONLY)
+
+**Šta je urađeno (čisto čitanje, bez izmena sajta/baze):**
+
+**P1 — korekcija plana:** Live sajt NE koristi Contact Form 7 (plan je pretpostavio ID-eve 16593/16737 sa lokalnog WoodMart rebuild-a — ti ID-evi ne postoje na produkciji). Live je i dalje stari Kallyas/Zion Builder sajt; svih 49 formi na sajtu (kontakt + "brzi upit" na proizvod/uslugama) šalju na `office@antasline.com` sa `no-reply@antasline.com`, potvrđeno programski (svih 49 konzistentno). `admin_email` u WP je nepovezan eksterni Gmail (prima samo WP sistemske mejlove, ne lead-ove). SPF/DKIM ispravni; DMARC zapis ne postoji (manji gap, verovatno ne uzrok gubitka).
+
+**P1.5 — 🔴 glavni nalaz:** `office@antasline.com` mailbox na cPanel-u ima **samo 74 mejla ukupno, ikad**, najstariji od **2026-07-13**. Od toga samo **11 pravih lead-notifikacija** (`no-reply@antasline.com`), sve od **2026-07-16 do danas** — nula za ceo jun i prvu polovinu jula, iako hvala-proxy (GA4) pokazuje 93 kumulativna leada od 01.06. **Sent/Archive/Trash folderi su potpuno prazni (0 mejlova ikad)** — nema server-side traga nijednog odgovora, ikad. `maildirsize` log pokazuje ponovljene velike brisanja tokom istorije mailbox-a. Najverovatnije objašnjenje: mail klijent (desktop/mobilni) je podešen na POP3 sa "delete from server" — mailbox na serveru drži samo rolling ~2-nedeljni prozor, prava istorija živi samo lokalno kod Miroslava, van cPanel domašaja.
+
+**Odluka (Miroslav, upitan direktno):** nastaviti P3/P4 samo sa dostupnih 11 lead-mejlova (16–30.07), umesto zaustavljanja ili čekanja provere lokalnog mail klijenta.
+
+**P3/P4 — agregatni rezultat (11 lead-mejlova, 16–30.07):**
+- 6/11 imalo prepoznatljivu email adresu (Reply-To); 5/11 nije (forma bez email polja/validacije)
+- Odgovor pronađen u Sent folderu: 0/6 — ali Sent je prazan za sva vremena, ovo je odsustvo podataka, ne dokaz da nije odgovoreno
+- Klijent poslao nov mejl u narednih 14 dana (proxy za nastavljen razgovor): 5/6 — ograda: ovo ne razlikuje "razgovor nastavljen posle odgovora" od "klijent navaljuje jer ćuti"
+- Spam folder (11 mejlova u periodu): svi pošiljaoci nasumični spam domeni, nijedan pravi lead nije pogrešno klasifikovan kao spam
+
+**Zaključak:** M5 (šta biva sa kontaktima) delimično zatvoreno — mehanizam dostave leadova je razjašnjen i ispravan (SPF/DKIM ok, sve forme dosledno šalju na pravu adresu), ali **stvarna stopa odgovora se ne može meriti sa cPanel strane** zbog kratke retencije mailbox-a. Za punu M5 analizu potrebna je provera Miroslavljevog lokalnog mail klijenta (Outlook/Thunderbird/telefon) — POP podešavanje "ostavi kopiju na serveru" bi rešilo i ovaj i buduće audite.
+
+#ceka-miroslav: proveriti POP3/IMAP podešavanje na uređaju koji čita `office@antasline.com` — ako je "delete from server" uključeno, promeniti na "leave copy on server" (ili preći na IMAP) da bi cPanel mailbox čuvao punu istoriju za buduće audite.
+
+**Privatnost:** nijedno ime klijenta, email adresa ili sadržaj poruke nije upisano u ovaj unos ili bilo koji vault fajl — samo agregatni brojevi (v. `[[migracija/2026-07-30-cpanel-sesija-plan-mejlovi]]` §Privatnost).
+
+Detalji radnog naloga: `[[migracija/2026-07-30-cpanel-sesija-plan-mejlovi]]`
