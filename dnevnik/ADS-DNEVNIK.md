@@ -108,6 +108,13 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
 
+### 2026-07-30 [claude-code] — Prva puna nedelja reaktivacije: potrošnja 8,7× veća, kumulativ 18 (blizu praga 20-30)
+- 23–29.07 vs 16–22.07: potrošnja **8.010,35 RSD vs 922,65** (+768%), klikovi **347 vs 45** (+671%), uvezene konverzije **8 vs 0**.
+- Obe kampanje pune isporuke: **Terase** 5.348,35 RSD / 296 klika / CTR 23,34% / CPC 18,07 / 3 konv · **ECOTILE** 2.662 RSD / 51 klik / CTR 20,73% / CPC 52,20 / 5 konv.
+- ECOTILE CPC 52,20 RSD ostaje u istom opsegu kao prošlonedeljni nalaz (49,84) — potvrđuje se kao "novi normal" posle reaktivacije, ne novo zagušenje (junski throttling špic bio 74).
+- **Plaćene konverzije kumulativ od 01.06: 18** (bilo 15) — **prag za Maximize Conversions (20–30) je sad na dohvat ruke**, pri ovom tempu (~8/ned od pune reaktivacije) prag se dostiže za manje od nedelju dana.
+- **Sledeći korak:** ako sledeći izveštaj pokaže kumulativ ≥20, otvoriti odluku 4.8 (prelazak na Maximize Conversions) sa Miroslavom.
+
 ### 2026-07-27 [claude-code] — 🟢 KAMPANJE REAKTIVIRANE (kraj godišnjeg) — prvi podaci preko sopstvenog konektora
 - 20–26.07 vs 13–19.07: potrošnja **6.029,65 RSD vs 0**, klikovi **263 vs 0**, prikazi 1.211 vs 1, uvezene konverzije **5 vs 0**. Blackout od 07-05 (22 dana) je završen.
 - Reaktivacija je krenula **posle 21.07**: kumulativ 01.06→26.07 = 41.330,64 RSD, a kroz 21.07 je bio 35.301 RSD — razlika je tačno potrošnja ove nedelje.

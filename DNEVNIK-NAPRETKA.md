@@ -1,3 +1,27 @@
+## 2026-07-30 [claude-code] [W5 5.4 + W3] Nedeljni izveštaj + Agentic Browsing audit baseline ✅
+
+**Zadatak:** M izabrao dva neblokirana zadatka redom: nedeljni izveštaj (overdue, poslednji 07-22), pa accessibility/Lighthouse "agentic browsing" scoring audit (M dao URL 2026-07-29, ranije samo dijagnostikovano kao poseban zadatak).
+
+**1. Nedeljni izveštaj (23–29.07 vs 16–22.07), preko sopstvenog konektora:**
+- GA4: korisnici 761 vs 564 (+34,9%), sesije 875 vs 652 (+34,2%), `generate_lead` 18 vs 14 (+28,6%), `tel` 18 vs 17 (stabilno), `mailto` 0 vs 0 (i dalje mrtav).
+- 🟢 **Najveći nalaz: prva puna nedelja Ads reaktivacije posle godišnjeg odmora.** Potrošnja 8.010,35 RSD vs 922,65 (+768%), klikovi 347 vs 45 (+671%), uvezene konverzije 8 vs 0. Terase: 5.348,35 RSD/296 klika/CTR 23,34%/3 konv. ECOTILE: 2.662 RSD/51 klik/CTR 20,73%/CPC 52,20/5 konv — CPC potvrđen u istom opsegu kao prošlonedeljni (49,84), znači "novi normal" posle reaktivacije, ne throttling.
+- **Plaćene konverzije kumulativ od 01.06: 18** (bilo 15 na 07-27) — prag za Maximize Conversions (20–30) na dohvat ruke, sledeći izveštaj verovatno prelazi 20. Hvala-proxy kumulativ: **93**.
+- GSC 28d top prilika: `piklbol` (160 impr/0 klikova/poz 12,8) — title/meta refresh na `/teren-za-pickleball/` je odblokiran još 07-28 (fake-recenzije nalaz zatvoren) ali nije izvršen, sad ima merljiv razlog da se uradi prvi.
+- Uneto u [[dnevnik/ADS-DNEVNIK]] (novi log unos) + [[PROGRESS]] ADS sekcija ažurirana (reaktivacija + kumulativ).
+
+**2. Agentic Browsing audit (baseline) — [[dnevnik/AGENTIC-BROWSING-AUDIT]]:**
+- Nova Lighthouse 13.4 kategorija (M dao `developer.chrome.com/docs/lighthouse/agentic-browsing/scoring`) — WebFetch objašnjenja + direktna inspekcija instaliranog paketa (Chrome 150.0.7871.187 već lokalno prisutan, Lighthouse CLI 13.4.1 keš). 6 provera: `agent-accessibility-tree` (uži ARIA/naming podskup, ~29 pravila), `llms-txt`, `cumulative-layout-shift`, 3× WebMCP (registered-tools/form-coverage/schema-validity).
+- Nije ožičeno kao `--only-categories` CLI preset — pozvano direktno preko `--config-path=node_modules/lighthouse/core/config/agentic-browsing-config.js` iz pravog npx keš foldera.
+- **6 reprezentativnih stranica** (home, industrijski-podovi, sportske-podloge, conquest 2542, kategorija-proizvoda zastita-i-bumperi, katalog): **1/1 na svih 6** za `agent-accessibility-tree` i CLS (0–0,008, davno ispod gate-a). WebMCP sve notApplicable (sajt ne implementira — van obima, veže se na BLOK D odluku, ne bug).
+- 🔴 **`llms.txt` notApplicable svuda — dokazano lažna crvena, ne pravi nedostatak.** Gatherer fetch-uje `/llms.txt` na KORENU domena, a lokalni WP živi u `/antasline/` podfolderu → `localhost/llms.txt` 404, `localhost/antasline/llms.txt` 200. Ručna provera sadržaja: H1 ✅, 17 markdown linkova ✅, dužina >>50 karaktera ✅ — fajl bi prošao svaki kriterijum da je na pravom path-u. Na produkciji (koren=koren, posle migracije 08-31) proći će stvarno bez izmene fajla.
+- Napomena: `agent-accessibility-tree` 1/1 NIJE isto što i pun a11y skor 100 — uži je podskup (imena/uloge/ARIA) od punog Lighthouse Accessibility audita (i dalje 84–90 iz W3 3.5 baseline-a, nije ponovo mereno ovu sesiju).
+- Preporuka upisana u audit fajl: ponoviti posle migracije (uz 3.12/5.7) da se `llms.txt` provera stvarno potvrdi zelenom na živom korenu.
+- Nova lekcija: [[reference/naucene-lekcije]] (CLI invokacija, root-path zamka, Windows cleanup stack-trace koja ne kvari JSON izlaz).
+
+**Zatvoreno u PROGRESS:** W8 polish bloker stavka #3 (accessibility audit) sad ✅, ostaju 2 (garažna foto rezolucija, post tipografija Faza 3).
+
+---
+
 ## 2026-07-29 [claude-code] W8 polish — 11-stavki lista sa proizvoda/postova: 8 rešeno, 2 delimično, 1 pitanje ✅
 
 **Zadatak:** M naveo listu od 11 UX/pristupačnost zamerki uočenih na buildu. Dijagnostika pre svake izmene (root-cause, ne per-page patch), po istom obrascu kao W7 sanacija.
