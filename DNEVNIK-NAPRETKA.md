@@ -1,3 +1,26 @@
+## 2026-07-30 [claude-code] [W7] Slug spoljnje/spoljne M odluka izvršena + 14 proizvoda dobilo fotografiju sa sajta proizvođača ✅
+
+**1. Slug `spoljne-podne-obloge` → `spoljnje-podne-obloge` — VRAĆENO, bez 301 (M odluka: "neka budu spoljnje - ostaviti staro, skini 301").** Backup: `antasline_local_2026-07-30_pre-spoljnje-slug-revert.sql`. Hub (16590) `post_name` vraćen na `spoljnje-podne-obloge` (title nedirnut — `post_title` "Spoljne podne obloge..." je uvek bio odvojen od slug pitanja, potvrđeno da nema istorijski trag da je ikad glasio "Spoljnje" u naslovu). 15 publish stranica/proizvoda je imalo hardkodovan `href="…/spoljne-podne-obloge/…"` (bez j) — popravljeno preciznim `REPLACE()` na `antasline/spoljne-podne-obloge` string (ne dira anchor-tekst "spoljne podne obloge" koji ostaje ispravno bez prefiksa). 2 stara Porto `porto_builder` posta (5751/15371, footer template) imala su isti bag ali su van aktivne teme (WoodMart, ne Porto) — namerno nedirnuta. `flush_rewrite_rules()` pokrenut. Verifikovano: hub+6 dece 200, stari `spoljne-podne-obloge/` sad ispravno 404 (nema redirect po M instrukciji, nema live parnjaka koji bi na njega upućivao), 1×H1, homepage kartica linkuje na ispravan URL. Redirect-mapa-FINAL.csv nije imao red za ovo (proveren), nema šta da se ukloni.
+
+**2. 14/28 proizvoda bez slike — dobili pravu fotografiju sa zvaničnog sajta proizvođača** (M: "pronađi slike ili po folderima ili na sajtu proizvođača"). Lokalna arhiva (`novi sajt/`, `Backup/woo-extracted/`) ponovo pretražena — 0 novih pogodaka za preostalih 28 (potvrđuje raniju dijagnozu, nema šta da se nađe lokalno). Web istraživanje po dobavljaču pronašlo prave fotografije za:
+- **Bergo Flooring** (bergoflooring.com): 16800 Ultimate PLUS by GreenMatter (tamnozelena), 16836 Excellence (plava, marine), 16842 Extreme IMO (plava sa IMO sertifikacionom pločicom — dobar bonus za "sertifikovana" u nazivu)
+- **Geoplast** (geoplastglobal.com): 16907+16908 Salvaverde Type A/B (identičan proizvod, A/B se razlikuju samo u dimenzijama pakovanja po zvaničnom data-listu — ista slika za oba, opravdano), 16910 Geograss
+- **Radici Sport** (radicisport.it): 16895 Tournament 20 (ime 1:1 poklapa sa nazivom proizvoda), 16894 Ultramix Evo N.I. (instalaciona fotografija sa sertifikovanog FIFA terena, ime 1:1 poklapa)
+- **Ecotile** (shop.ecotileflooring.com + ecotileflooring.com): 16929 SureGrip (ime 1:1), 16930/16939 E500 T-Joint rampa+ugaona rampa u Graphite (usklađeno sa bojom postojećeg E500/7 glavnog proizvoda), 16943/16949 X500 X-Joint rampa+ugaona u istoj tamnoj nijansi (usklađeno sa X500/10 Dark Grey)
+- **Heskins** (heskins.com): 16922 PermaStripe
+
+Sve slike obrađene lokalno pre uvoza (centar-crop na 1:1, max 1000px, WebP q90 — memorisan pravilo za AntasLine proizvode) preko `process_images.php`, vizuelno pregledane pre upisa (svih 14 potvrđeno da prikazuju ispravan proizvod, ne pogrešnu varijantu). Uvoz preko novog `migracija/alati/job-w7f29-dobavljac-slike.php` (proba pa `apply`, isti obrazac kao `job-w7f29-post-thumbs.php`) — `wp_insert_attachment` + `_thumbnail_id`, izvor upisan u alt tekst radi sledljivosti. Backup: `antasline_local_2026-07-30_pre-w7f29-dobavljac-slike.sql`. Verifikovano: svih 14 proizvod-stranica 200/1×H1, nova slika se renderuje.
+
+**Namerno NEreseno — rizik od pogrešnog pripisivanja veći od koristi, prijavljeno umesto forsirano:**
+- **Condor shock-pad (16893)** — condor-group.eu ima samo generičku fotografiju terena sa infill-om, ne izolovan snimak shock-pad materijala; nije dovoljno specifično da se koristi kao "ovo je proizvod koji prodajemo"
+- **5× Radici veštačka trava bez specifičnog imena modela** (16899 rugbi, 16900 golf, 16901 hokej, 16902 Multisport MX, 16906 pejzažne površine) — radicisport.it kategorije su JS-renderovane (WebFetch ih ne vidi) i generičko ime u našem katalogu ne mapira pouzdano na nijedan konkretan Radici model (isti tip rizika kao već poznat slučaj "Highlands/Nature/Put/Springgrass" iz W7 F2 blokera — pogrešan specifičan model bi bio gore od bez slike)
+- **6× generička sportska oprema** (16990 tribina, 16991 stolica za tribine, 16998 gol za mali fudbal, 17001/17002/17003 mreže tenis/padel/koš) — nema poznatog dobavljača u katalogu (hoopncourt.com, prvobitno pretpostavljen izvor, potvrđeno NE prodaje tribine/stolice/golove/mreže); nasumičan izbor sa generičkog sportskog sajta bi rizikovao da se prikaže tuđi proizvod koji AntasLine stvarno ne prodaje (isto pravilo kao 2026-07-28 nalaz "ne stavljati sliku koja implicira tuđi posao")
+- **Expona Living Clic (16919)** — ostaje kako je već dijagnostikovano 2026-07-29 (nema materijala kod distributera), officialni objectflor.de floor-finder URL za ovu liniju vraća 404, nije dalje forsirano
+
+Preostaje **13/28** (bio 28, sad 14 manje) — spisak iznad ide u PROGRESS Blokeri kao ažuriran #ceka-miroslav.
+
+---
+
 ## 2026-07-30 [claude-code] [W7] Blokeri batch: 3/4 zatvoreno, 1 zaustavljeno na kontradiktornom nalazu ✅⚠️
 
 **Zadatak:** M odobrio 4 stavke iz reda čekanja blokera (PROGRESS) u jednoj seriji. Backup pre svega: `antasline_local_2026-07-30_pre-4-blokeri-batch.sql`.
