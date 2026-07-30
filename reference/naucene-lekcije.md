@@ -1,9 +1,22 @@
 ---
 tip: reference
-azurirano: 2026-07-29
+azurirano: 2026-07-30
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Deljene WoodMart CSS promenljive imaju širi domet nego što ime kaže (W8 polish, 2026-07-29)
+- 🔴 **`--wd-title-font` nije "font naslova" — koristi ga i `table th`, `.wd-nav-tabs>li>a` (tab navigacija), `.title`, `.font-primary`, `legend`, cart-block naslovi.** Kad je promenljiva globalno postavljena na Bebas Neue (za H1/H2), Bebas + faux-bold (weight 600 na fontu koji ima samo 400) je tiho procurio i u tabele tehničkih karakteristika i u Opis/Dodatne informacije tabove — "nabijena slova" žalba je zapravo ovaj font na pogrešnom mestu, ne CSS bag u letter-spacing-u. **Pre nego što se globalna WoodMart promenljiva prepravi, grep-ovati pun spisak selektora koji je koriste u `style.min.css`** (`grep -o "[^}{]*{[^}]*var(--wd-ime)[^}]*}"`) da se zna stvarni domet pre izmene. Fix ovde je bio TARGETIRAN (`table th`, `.wd-nav-tabs>li>a { font-family: var(--al-text) }`), ne menjanje same promenljive (previše potrošača, nepoznat rizik).
+- WooCommerce native `.shop_attributes th/td` NIJE bio pogođen istim curenjem — ima `font-family:inherit` sa višom specifičnošću (`.shop_attributes :is(th,td)` > bare `table th`), pa nasleđuje od roditelja umesto promenljive. Pre popravke proveriti da li je nešto već slučajno imuno, da se ne pravi nepotrebna izmena.
+
+## Hero foto overlay — horizontalni gradijent se lomi na mobilnom (W8 polish, 2026-07-29)
+- **Overlay gradijent dizajniran za desktop raspored (tekst levo ~40%, slika desno) ima jak alfa levo i slab desno** (`linear-gradient(90deg, rgba(navy,.94) 0%, ... .28 100%)`). Na mobilnom tekst zauzima punu širinu i upada i u slabi pojas — čitljivost pada tačno na uskim ekranima gde je najbitnija. Ispod breakpoint-a (767px) overlay treba da postane UJEDNAČEN (vertikalni gradijent, viša minimalna neprozirnost), ne isti horizontalni recept skaliran na uži ekran.
+- **`text-shadow` je jeftina, foto-nezavisna sigurnosna mera** za tekst preko fotografija: neke fotke imaju svetle/bele oblasti (npr. bela garažna vrata) tačno iza naslova gde ni tamniji overlay nije dovoljan. Dodat kao dodatni sloj, ne zamena za overlay.
+- 🔴 **Iframe QA harness (`al-harness.html`) i dalje ima dokumentovan render-artefakt na TEKSTU pri uskim širinama** (ista zamka kao N5 sesija 2026-07-29: "iframe... pokazao teško preklopljen H1 tekst... direktna navigacija potvrdila da je stranica potpuno čista"). `resize_window` alat i dalje ne radi (tiho ne menja veličinu, screenshot ostaje na desktop širini bez greške). Kad je pitanje SPECIFIČNO o čitljivosti teksta (ne o layout/overflow), matematička provera kompozitne boje (overlay % preko uzorka piksela fotografije) je pouzdanija od iframe screenshot-a.
+
+## WPBakery hero `background-image` se otkriva kasnije od `.al-section--navy` boje → vizuelni blesak (W8 polish, 2026-07-29)
+- Po-stranici hero pozadina živi u WPBakery `css` atributu (`.vc_custom_heroFxxxxx{background-image:url(...)}`), koji je deo istog render-blocking CSS lanca kao poznati W3 3.6 nalaz (js_composer 437KB, namerno odloženo na LiteSpeed produkciju). Rezultat: navy boja (mala, brzo-parsirana pravila) se crta pre nego browser otkrije URL fotografije.
+- **Fix bez diranja redosleda/bundle-a CSS-a** (rizično, već procenjeno u ranijem auditu): `wp_head` filter koji regex-om izvuče URL iz `post_content` (`.vc_custom_hero\w+{...background-image:url(...)`) i emituje `<link rel="preload" as="image">` — čisto aditivno, daje browseru raniji hint, ne utiče na LCP merenje niti na postojeći render-blocking lanac.
 
 ## Meni — WoodMart mega-meni i WP jezgro (W7 F3, 2026-07-29)
 - 🔴 **WoodMart walker ne resetuje `design` između grupa.** `class-mega-menu-walker.php`: `if ( 0 === $depth && $design ) { $this->design = $design; }` — `$this->design` je **svojstvo instance** i ostaje postavljeno kad sledeća grupa najvišeg nivoa nema svoj `_menu_item_design`. Posledica: grupa bez dizajna se renderuje kao `wd-design-sized` (nasledi od suseda) ali **bez `--wd-dropdown-width`**, pa se panel skupi na ~182px i stavke se lome u dva reda. **Pravilo: svaka grupa najvišeg nivoa dobija eksplicitan `_menu_item_design`** — nikad se ne oslanjati na podrazumevano.
