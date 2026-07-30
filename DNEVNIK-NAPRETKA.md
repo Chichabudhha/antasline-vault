@@ -1,3 +1,32 @@
+## 2026-07-30 [claude-code] [W1 Polish Faza 3] Retrofit batch 4 (5 postova) — potvrđen trend: izvorni GEO-intro/CTA-box obim iscrpljen posle batch 1 ✅
+
+**Zadatak:** nastavak iste sesije ("4/6"). Batch iz preostalih 15 (svi 0 GSC klikova/90d) — top 5 po impresijama: **5276 podloge-za-krovove (181), 5181 podne-ploce-za-kontejnere (101), 2622 izbor-industrijskog-poda (93), 3388 podovi-za-stamparije (87), 16615 podovi-za-detailing-radionice (36)**.
+
+**🔴 Potvrđen trend iz batch 2/3: NIJEDAN post u ovom batch-u nije imao "Kratak odgovor"/ad-hoc CTA pattern** — izvorni Faza 3 obim (GEO-intro/CTA-box retrofit) je suštinski iscrpljen posle batch 1 (tih 5 postova je slučajno bio ceo skup sa tim specifičnim ad-hoc obrascem). Preostali rad u redu čekanja je opšte QA/bugfix, ne retrofit klasa — vredan posao, ali druga vrsta zadatka od naslova "Faza 3".
+
+**Urađeno:**
+- **5276**: 2 tipfelera u vidljivom tekstu — `Bero Elite` → `Bergo Elite` (brend ime u link tekstu, potencijalno zbunjujuće/nekredibilno) i `krovovoe` → `krovove`.
+- **5181, 16615**: verifikovano čisti, bez izmena.
+- **2622, 3388**: isti root-relativni link bag kao batch 2/3 (`href="/industrijski-podovi/"` → 404 na lokalu bez `/antasline/` prefiksa). 3388 usput potvrđeno da VEĆ ima ispravno omotan `<script>` FAQPage JSON-LD (za razliku od 16616 juče) — nije dirano.
+
+**Verifikovano:** `al_verify.php` 200/1×H1/0 grešaka na svih 5 · JSON-LD na 3388 i dalje validan · popravljeni linkovi 200 · Chrome vizuelno potvrdio "Bergo Elite" ispravku i da stranica nije razbijena · regresija čista (home, teren-za-pickleball iz batch3). Backup: `antasline_local_2026-07-30_pre-w1-polish-faza3-batch4.sql`. **10 postova ostaje u redu čekanja**, svi 0 GSC klikova — sledeći batch bira po impresijama i traži dijagnostikom stvarni posao (moguće da neki od preostalih nemaju nikakav bug/pattern, po uzoru na 5181/16615/16613/16612 iz ove i prethodne sesije). Detalji: [[migracija/w1-polish-red-cekanja]].
+
+---
+
+## 2026-07-30 [claude-code] [W1 Polish Faza 3] Retrofit batch 3 (5 postova) — 🔴🔴 najveći nalaz cele Faze 3: vidljiv sirov JSON-LD na živoj stranici ✅
+
+**Zadatak:** nastavak iste sesije, "nastavi" (batch 3/6). GSC top 5 od preostalih 20 uzeto iz brojki već povučenih u batch 2 (ista 90d/`www` sesija, bez ponovnog API poziva): **16613 sta-postaviti-preko-starog-parketa (6kl), 16612 ftalati (5kl), 16616 teren-za-pickleball (3kl), 3398 montazni-podovi (2kl), 3318 zasto-vam-je-potreban-esd-pod (0kl, najviše impresija od preostalih 0-klik postova: 247)**.
+
+**Nijedan od ova 5 nije imao "Kratak odgovor"/ad-hoc CTA obrazac** (dijagnostika pre pisanja koda, kao u batch 2) — 16613 i 16612 verifikovano čisti, bez izmena.
+
+**🔴🔴 16616 (teren-za-pickleball) — najveći pojedinačni nalaz cele Faze 3, van izvornog obima ali prioritetan:** FAQPage+Product JSON-LD dodat 2026-07-28 (posle čišćenja fake-review scheme, v. PROGRESS Blokeri) **nikad nije bio omotan u `<script>`** — ceo blok (5 FAQ pitanja + Product, ~90 redova sirovog JSON-a) renderovao se kao **vidljiv tekst na dnu žive stranice** (`wptexturize` je čak pretvorio `"` u „" pošto tekst nije bio u `<script>`/`<pre>`, potvrđeno u Chrome-u pre i posle). Praktična posledica: schema **nikad nije funkcionisala kao structured data** (Google ne čita plain tekst) — cela namera te sesije (title/meta refresh "nije više blokiran") stajala je na netačnoj pretpostavci od 2 dana. Popravljeno anchor-based (pronađen `[embed]` marker, pa prvo `{` posle njega, `json_decode()` provera pre upisa) — isti obrazac kao poznati "goli FAQ JSON-LD" bag iz Faze 2 (2542, 5637 itd.), samo dosad neuhvaćen na ovom postu jer je nastao KASNIJE, van tog čišćenja. Usput: `href="tel:+381 69 234 00 72"` (razmaci unutar `tel:` URI-ja, nevalidno po RFC 3966 i nekonzistentno sa ostatkom sajta) → normalizovano na `tel:+381692340072`.
+
+**3398, 3318**: isti root-relativni link bag kao batch 2 (`href="/slug/"` bez `/antasline/` prefiksa → 404 na lokalu) — 2398 ima 2× isti link, 3318 ima 2 različita linka (i USPUT potvrđeno da 3318 na DRUGA dva mesta već koristi ISPRAVAN apsolutni oblik istog cilja — nekonzistentnost u istom postu, ne samo između postova).
+
+**Verifikovano:** `al_verify.php` 200/1×H1/0 PHP grešaka na svih 5 · `json_decode()` OK na 16616 novoomotanom JSON-LD · svi popravljeni linkovi HTTP 200 · Chrome vizuelno potvrdio da je sirovi JSON nestao sa 16616 (stranica sad ide direktno iz kontakt bloka u "Zatražite ponudu" formu) · regresija čista (home, pop-tenis iz batch2). Backup: `antasline_local_2026-07-30_pre-w1-polish-faza3-batch3.sql`. **15 postova ostaje u redu čekanja.** Detalji: [[migracija/w1-polish-red-cekanja]].
+
+---
+
 ## 2026-07-30 [claude-code] [W1 Polish Faza 3] Retrofit batch 2 (5 postova) — manje uniforman od batch 1, 2 posta bez izmena, 1 širi bag nađen ✅
 
 **Zadatak:** nova sesija (posle jutrošnje). `/antasline-sesija` predložio nastavak Faze 3 (batch 2/6, sledećih 5 od 25 u redu čekanja); M potvrdio.
