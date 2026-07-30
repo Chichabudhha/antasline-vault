@@ -1,3 +1,33 @@
+## 2026-07-30 [claude-code] [W7] Blokeri batch: 3/4 zatvoreno, 1 zaustavljeno na kontradiktornom nalazu ✅⚠️
+
+**Zadatak:** M odobrio 4 stavke iz reda čekanja blokera (PROGRESS) u jednoj seriji. Backup pre svega: `antasline_local_2026-07-30_pre-4-blokeri-batch.sql`.
+
+**1. Parket/pločice duplikat (6588 vs 16613) — ZATVORENO, sa GSC podatkom.** Prvi put dobijen stvaran presek: `-2` slug (lokalni 6588) na produkciji nosi 3.353 impr/258 kl/poz 5,5 (2026-01-01→07-27), nesufiksirani ekvivalent (lokalni 16613) samo 1.667 impr/84 kl/poz 7,6 — jasna pobeda 6588, potvrđuje raniju pretpostavku da je 16613 slabiji (slomljen Yoast šablon, nikad zamenjen `%%sep%%` placeholder). `migracija/alati/job-16613-parket-konsolidacija.php`: 16613 → noindex (nema dolaznih internih linkova za prevezivanje), 301 red upisan u `[[migracija/redirect-mapa-FINAL]]` za dan migracije.
+
+**2. Slug `spoljnje-`→`spoljne-` — NIJE IZVRŠENO, kontradikcija nađena pre upisa.** Bloker je tvrdio "grupa nije u top-15 GSC URL-ova" — sveža GSC provera (2026-01-01→07-27) pokazuje suprotno: hub `/spoljnje-podne-obloge/` nosi **890 klikova/23.371 prikaza**, `bergo-xl` pod-stranica **628 klikova/10.255 prikaza** — jedan od najvrednijih klastera na sajtu, uporediv sa `kosarkaske-konstrukcije` (923 klika) koji je dobio poseban tretman baš zbog obima. Originalna F4 parity odluka od 2026-07-07 (`parity-inventar.csv`) je ovo već predvidela: *"1304 klika (visok saobraćaj, blizu top15) - hibrid pravilo poziva na parity (vratiti j)"* — što je suprotno smeru koji bloker iz 07-28 predlaže. Trenutno stanje: lokalni slug je već "spoljne" (bez j, verovatno posledica W7 sanacije koja je pregazila raniju 07-07 parity odluku bez da to primeti). **#ceka-miroslav: nova odluka sa ispravnim brojkama** — ili (a) vratiti "j" (spoljnje) da se izbegne 301 rizik na 900+ klik stranici, ili (b) svesno prihvatiti rizik i zadržati "spoljne" + 301 na dan migracije. Ništa nije upisano, red u redirect-mapa-FINAL NIJE dodat za ovu stavku.
+
+**3. Stari meniji — ZATVORENO.** `migracija/alati/job-stari-meniji-cleanup.php`: term 28 "Glavni izbornik" (65 stavki, mrtav) + 10 praznih Porto menija (Company/Main Menu/Services/drugi meni/Bergo/Ecotile/Galerija/Gornji menu/Menu 1/Social Networks) obrisani preko `wp_delete_nav_menu()`. Pre brisanja potvrđeno: `nav_menu_locations` pokazuje samo `main-menu=>390`, `widget_nav_menu` prazan, 0 postmeta referenci na ijedan od ovih term_id-eva. term 67 "O firmi" (stari aktivni, rollback) i term 280 "Utility meni" (header builder) NAMERNO nedirnuti — nisu bili u odobrenom spisku.
+
+**4. Prazne kategorije — ZATVORENO, uz sopstvenu lažnu uzbunu usput.** `migracija/alati/job-prazne-kategorije-cleanup.php`: basta(58)/Trava u boji(60)/Podloge za bazene(61)/Poslovni prostor(65)/Specijalni podovi(138) obrisane. 🔴 Usput: prva provera preko `COUNT(rel.object_id)` u LEFT JOIN je pogrešno vratila 21/16/10/29/1 "živih" veza (SQL greška — brojao je `rel.object_id` umesto `p.ID`, pa je LEFT JOIN na `post_status='publish'` filtrirao kolone ali ne redove) — zaustavio sam izvršenje, ispravio na `COUNT(p.ID)`, dobio ispravnih 0/0/0/0/0. Stvarne veze su drafts iz već mrtvih legacy CPT-ova (`spoljne-podne-obloge`/`vestacka-trava`, ugašeni `public`/`rewrite` u W7 F2.9) + attachment prilozi — brisanje termina nije dirnulo nijedan objavljen sadržaj.
+
+**Verifikovano:** 200/1×H1 na home/katalog/aktuelnosti/kontakt/industrijski-podovi/spoljne-podne-obloge posle svake od 3 izvršene izmene. Detalji: [[PROGRESS]].
+
+---
+
+## 2026-07-30 [claude-code] [W2] GSC signal provera + "mali fudbal" title/meta/sadržaj refresh (futsal, ID 16581) ✅
+
+**Zadatak:** rutinska GSC signal provera (nije u planu kao numerisana stavka) — dva cilja: (1) proveriti da li se za W2 #15 "tržni centri" (deprioritizovano 2026-07-12, 0 GSC rezultata) u međuvremenu pojavila potražnja, (2) sken 90-dnevnog opsega upita van standardnog pozicija-5–15 filtera za nove klastere.
+
+**Nalaz #1 — tržni centri: i dalje 0 signala.** Pretraga `prodavnic`/`maloprodaj`/`trgovin`/`tržni centar`/`apotek` na 7 meseci GSC podataka: samo 1 pogodak — "podovi za apoteke" (40 impr/7mo, 0 klikova, poz. 8.9), i to **0 u poslednjih 28 dana**. Deprioritizacija iz [[seo/plan-novih-stranica]] ostaje ispravna, ne graditi.
+
+**Nalaz #2 — "mali fudbal" sinonim potpuno odsutan sa futsal stranice.** Upit "dimenzije terena za mali fudbal" (152 impr/90d, poz. 21.8, 0 klikova, praktično nevidljivo) — stranica `/podloge-za-futsal-terene/` (ID 16581) već sadrži tačne dimenzije (38–42 × 18–22 m) ali isključivo pod imenom "futsal", 0 pojava kolokvijalnog srpskog sinonima "mali fudbal" u Yoast title/meta/sadržaju. Manji, upitan kandidat: "oprema za piklbol" (156 impr/90d, poz. 17.6) — bez akcije, AntasLine ne prodaje piklbol reket-opremu, samo podloge/terene, sadržaj bi bio neprirodan.
+
+**Urađeno** (`migracija/alati/job-futsal-mali-fudbal-refresh.php`): Yoast title "Futsal (mali fudbal) teren — dimenzije i podloga | Antas Line" (61 char) + metadesc sa dimenzijama i CTA (139 char) + 3 ciljane izmene sadržaja (hero label, H2 dimenzija, prvo FAQ pitanje) — svaka izmena anchor-based sa brojanjem pojava pre upisa (F7.24 pravilo), ništa izmišljeno (dimenzije/materijali identični postojećem sadržaju, samo dodat sinonim gde je "futsal" već stajao). Backup: `antasline_local_2026-07-30_pre-mali-fudbal-refresh.sql`.
+
+**Verifikovano:** 200/1×H1/`<title>` i `<meta description>` u `<head>` ispravni/"mali fudbal" 0→3 pojave u sadržaju. Detalji: [[PROGRESS]].
+
+---
+
 ## 2026-07-30 [claude-code] [W2] #10 piklbol — title/meta refresh na `/teren-za-pickleball/` ZATVORENO ✅
 
 **Zadatak:** poslednji otvoreni W2 stavak (2.4 Tier2, #10 piklbol) — blokiran od 2026-07-08 fake-review Product schema pitanjem, odblokiran 2026-07-28 (M odluka: FAQPage+Product bez `aggregateRating`), ali nikad izvršen — nalaz iz W5 5.4 nedeljnog izveštaja (isti dan): piklbol 160 impr/0 klikova (28d). Nova stranica `/piklbol/` ostaje namerno preskočena (kanibalizacija, `/teren-za-pickleball/` već dominira klaster) — ovo je refresh postojeće stranice (ID 16616), ne nova stranica.
