@@ -1,3 +1,23 @@
+## 2026-07-30 [claude-code] [W1] Lighthouse Accessibility + Agentic-Browsing plan istražen i odobren, ČEKA IZVRŠENJE 📋
+
+**M tražio usklađivanje sajta sa Google Lighthouse smernicama** (Accessibility scoring + Agentic Browsing scoring). Sesija je urađena kroz istraživanje (2 Explore agenta paralelno: istorija prethodnog rada + live kod pregled) i jedan Plan agent za sekvencioniranje — **plan odobren, ali izvršenje NIJE počelo** (sesija zatvorena pre starta, na M zahtev).
+
+**Nalaz 1 — agentic-browsing kategorija je već zatvorena.** 07-30 baseline (ranije istog dana, [[dnevnik/AGENTIC-BROWSING-AUDIT]]): 1/1 na `agent-accessibility-tree` + CLS na svih 6 test-stranica. WebMCP namerno van obima (čeka BLOK D), `llms.txt` dokazano lažna crvena (lokalni `/antasline/` podfolder). Nema koda za promenu ovde.
+
+**Nalaz 2 — standardna Accessibility kategorija (84–90, 07-09 baseline) nikad ponovo merena**, iako je bilo dosta a11y-susednih izmena (W8 polish). Konkretni, file:line potvrđeni problemi nađeni:
+- 🔴 **Aktivan `meta-viewport` fail**: WoodMart-ov fabrički default za `site_viewport` je `not_scalable` (niko nije svesno birao), blokira pinch-zoom sitewide.
+- **Court builder (`/planer-terena/`)**: mreža za bojenje terena je operabilna SAMO mišem/dodirom (0 tastature — WCAG 2.1.1), input za količinu opreme nema label, erase-dugme ima pogrešno accessible-ime (glif "×" pobeđuje `title`), line-palette swatch 22×22px (ispod 24×24 minimuma), nema aria-live na status/greška porukama.
+- **2 stranice sa heading-order preskokom** (5754 izgradnja-terena-za-tenis: h1→h3, h2→h4; 15480 bergo-ultimate: h2→h4) — h2/h3/h4 imaju različite veličine fonta u WoodMart bazi (24/22/18px), pa prost tag-swap nije vizuelno bezopasan, treba size-preserving pristup po stavci.
+- **2 stranice sa duplikat ID-jem** (5769 `vestacka-trava`, 15580 WPBakery leftover `eluid54d67c12`).
+- **Kontrast**: brend crvena `#F04D22` (`--al-red`) kao bela-na-crvenoj tekst/dugme ili kao sama-tekst na belom ne prolazi WCAG AA (3.63:1 vs potrebnih 4.5:1) na 5 mesta — `.al-btn` (glavno CTA dugme, brend-knjiga eksplicitno vezuje ovu boju za CTA), `.al-mobile-tel` ikona, `.al-label`, `.al-quick-quote__sub a`, `.al-promo-product__price`.
+- Alt tekst: 67/81 proizvoda bez slike-alt-a (veliki, mehanički rešiv gap), 180/684 slika u sadržaju sa `alt=""` (zahteva ručnu procenu po slici).
+
+**M odluke (ovaj razgovor):** (1) Kontrast dugmeta → uvećati tekst dugmeta da se kvalifikuje za WCAG "veliki tekst" 3:1 izuzetak, NE menjati brend boju (preostale 3 manje instance teksta idu na `--al-red-dark`, već postojeća nijansa). (2) Alt tekst za slike → van obima ove ture, poseban budući zadatak.
+
+**Pun plan (4 batch-a, tačne linije, redosled, verifikacija)** upisan u vault (kopija Claude Code plan-mode fajla, da preživi van te sesije): → [[migracija/2026-07-30-lighthouse-a11y-plan]]. Sledeća sesija na ovom zadatku: pročitati taj fajl u celosti pre starta.
+
+---
+
 ## 2026-07-30 [claude-code] [W1] 🔴🔴 Sitewide title/meta mojibake nađen i popravljen (93 naslova/103 opisa) + Välinge objašnjenje + WoodMart breadcrumb schema bag ✅
 
 **M prijavio čudne karaktere u title tag-u na `/proizvod/expona-commercial-lvt-vinil-plocice/`, tražio proveru gde se još moglo ponoviti.**
