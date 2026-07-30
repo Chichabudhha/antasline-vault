@@ -218,6 +218,8 @@
 
 4. ✅ **SEO quick-win: title/meta prepis 4 stranice — ZATVORENO 2026-07-08** (W2 2.3) — pop-tenis, podloga-za-odbojkaske-terene, spoljnje-podne-obloge, conquest 2542. Očekivano: +500–700 klikova/90d, prati se u narednim GSC izveštajima.
 
+- 🆕 **Radni nalog za sledeću `[cpanel-live]` sesiju spreman (2026-07-30)**: audit mejlova sa kontakt formi (da li se odgovara na ~93 leada od 01.06, koliko brzo, da li se nastavlja komunikacija) — direktno zatvara M5 pitanje iz master plana. → [[migracija/2026-07-30-cpanel-sesija-plan-mejlovi]]
+
 ## Blokeri
 
 - ✅ **Dugme "Kolačići" (persistent handle) — ZATVORENO 2026-07-30.** M odlučio: ukloniti trajno posle Prihvati/Odbij/Sačuvaj. Urađeno u `al-tracking-gtm-consent.php` (backup `.bak-2026-07-30-cookie-handle`), consent-default-granted nalaz iz CLAUDE.md §4 ostaje netaknut/i dalje čeka posebnu M odluku.
