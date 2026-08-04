@@ -1,9 +1,28 @@
 ---
 tip: reference
-azurirano: 2026-07-30
+azurirano: 2026-08-04
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Gemini Veo (video) nema free API tier — samo web UI; DeepSeek/Groq nemaju regionalno ograničenje za Srbiju (AI orkestracija istraživanje, 2026-08-04)
+- Gemini **slike** (`gemini-2.5-flash-image`, "Nano Banana") imaju solidan free API tier (~500/dan) i Srbija je zvanično podržan region — proxy/VPN nepotreban za foto rad.
+- Gemini **Veo (video)** nema free API tier uopšte — besplatan video generisan Veo modelom postoji SAMO kroz Gemini app / Google Flow **web interfejs** (50 kredita/dan). Ne pokušavati video kroz API dok Google ne uvede free tier — pravi se lažna automatizacija koja pada.
+- "Proksi" u razgovoru se ispostavio da znači **claude-code-router (CCR)** — lokalni alat koji rutira Claude Code-ove sopstvene tekst/coding pozive ka drugim provajderima (DeepSeek/Gemini/Groq) po kategoriji zadatka (`default`/`background`/`think`/`longContext`), ne mrežni proxy za regionalni pristup. Kad korisnik pomene "proksi"/"ruter" u kontekstu AI alata, proveriti da li misli na network proxy ili na model-routing alat pre planiranja.
+
+## Zion Builder forma na live sajtu tiho odbija validne unose — regex validacija bez poruke greške (kontakt forma, 2026-08-04)
+- `zn_validate_is_letters_ws` (Firma/Ime) je `e.val().match(/[^A-Za-z\s]/i)` — prihvata SAMO ASCII slova+razmak. Brojevi, tačke, "&", crte, pa i **srpska slova sa dijakritikom (ćčžšđ) i ćirilica** odbijaju unos ("Antas d.o.o." bi palo).
+- `zn_validate_is_numeric` (Kontakt telefon) je `isNaN(e.val())` — razmaci/crte/`+` odbijaju unos. Ironično: broj je svuda na sajtu ispisan baš sa razmacima ("069 234 00 72"), pa korisnik koji kuca po tom uzoru dobija tihu blokadu.
+- Kad validacija padne: JS doda crvenu ivicu (`zn_field_not_valid`) na polje i **NIKAD ne pošalje AJAX ka `admin-ajax.php`** — nema poruke, nema redirect-a. Dokazivo samo network-om (0 zahteva), ne vizuelnim pregledom (polje samo ima suptilnu crvenu ivicu).
+- **Test protokol koji je ovo otkrio:** popuniti formu čistim tekstom prvo (baseline uspešan submit + redirect potvrđen), pa ciljano probati "prljave" varijante (crta/tačka/razmak) jedno po jedno da se izoluje TAČNO koje polje/karakter puca — ne menjati više polja odjednom, inače se ne zna koje je uzrok.
+- Nije nova regresija — JS nepromenjen, dugogodišnji baseline gubitak submit-ova. Primenjivo na SVAKU Zion Builder/Kallyas formu na live sajtu (49 formi sitewide koriste isti obrazac po M5 audit-u od 07-30), ne samo `/kontakt/`.
+
+## WoodMart core widget naslov tag je JEDNA opcija koja pokriva 8+ widget area-a odjednom — `widget_title_tag` (heading-order fix, 2026-08-04)
+- `woodmart_get_widget_title_tag()` (`inc/integrations/woocommerce/helpers.php:10`) čita `xts-woodmart-options['widget_title_tag']` (default `h5` ako nije eksplicitno setovano, ali na ovom sajtu JESTE eksplicitno `h5` u 883-key opcionom nizu). Koristi ga: glavni sidebar, portfolio sidebar, shop sidebar, shop filteri, single-product sidebar, my-account (deprecated), full-screen menu, mobile-menu-widgets, SVE footer kolone, + "You may also like" upsells naslov na proizvodu — jedna promena pogađa praktično ceo sajt.
+- Bio je uzrok sitewide `heading-order` Lighthouse a11y crvenog nalaza: svuda gde H2/H3 glavni sadržaj prethodi widget-u (skoro svaka stranica sa sidebar-om ili footer-om), skače se na H5, WCAG heading-order violation.
+- **Fix je bezbedan po konstrukciji**: dizanje nivoa (h5→h3) nikad ne UNOSI nov skip, samo uklanja postojeći — potvrđeno da je nivo neposredno pre widget-a na testiranim stranicama uvek H2 ili H3 (nikad H4), pa h3 posle njih je uvek validno. Ne treba proveravati svaku stranicu pojedinačno pre primene ovakve promene, dovoljno je proveriti par reprezentativnih tipova.
+- Promena je `update_option('xts-woodmart-options', ...)` sa samo tim jednim ključem izmenjenim (ne dirati ostatak 883-key niza) — ne postoji poseban Customizer URL/settings panel prečica za ovo, ide direktno kroz opcioni niz.
+- **Ne meša se sa `wd-post-title`** (blog/post kartice) — to je ODVOJEN hardkodovan `<h3>` koji ne ide kroz ovu opciju, pa blog arhiva (`/aktuelnosti/`) i dalje ima svoj heading-order problem (H1→H3 skip) nedirnut ovim fix-om. Kad se traži "sve heading-order nalaze odjednom", proveriti oba mehanizma odvojeno.
 
 ## WoodMart VENDOR tema (ne child) generiše nevalidnu BreadcrumbList schema — dvostruko ugnježden niz (pickleball/pop-tenis, 2026-07-30)
 - `wp-content/themes/woodmart/inc/modules/seo-scheme/class-breadcrumbs.php:56` ručno dodaje `[`/`]` oko `wp_json_encode($this->schema_items)` u `itemListElement` — ali `$this->schema_items` je već niz asocijativnih nizova, pa `wp_json_encode()` sam vrati `[{...}]`; rezultat je `"itemListElement": [[{...}]]`, nevalidna structured data (Rich Results/schema validator bi ovo odbio). Ovo je NEZAVISNO od Yoast-ove sopstvene `yoast-schema-graph` (koja je ispravna) — WoodMart ubacuje DRUGI, sopstveni `<script type="application/ld+json">` blok preko `add_filter('wp_footer', ...)`.

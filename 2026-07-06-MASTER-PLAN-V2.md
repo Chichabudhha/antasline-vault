@@ -118,6 +118,10 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 | 4.8 | Na 20–30 plaćenih konverzija → Maximize Conversions; broad tek tada | M | — |
 | 4.9 | Faza 4: call asset 072, mobilni bid +15–20%, publike u Observation, Customer Match (email-ovi iz upita) | M+CC | zaobilazi prag publika |
 | 4.10 | Na dan migracije: final URL audit svih oglasa (novi slugovi!) | CC+M | čuva QS posle migracije |
+| 4.11 | 🆕 2026-08-04 — **Meta (FB) Pixel** preko GTM-a (isti kontejner, isti Consent Mode gate): `PageView` svuda + `Lead` na `/hvala-za-poruku/` (isti trigger kao `generate_lead`) + `Contact` na tel/mailto — ista taksonomija kao GA4, gradi audience/Lookalike podatke i pre nego što krenu pravi Meta Ads budžeti. Pokriva i Instagram (isti Meta Business Manager/Pixel, nema poseban rad). Faza B (Conversions API, server-side) odložena do stvarnog Meta Ads budžeta — traži Business Manager + verifikovan domen + bezbedno čuvan access token | M+CC | zaobilazi iOS/ad-blocker gubitak (Faza B), gradi retargeting bazu ranije (Faza A) |
+| 4.12 | 🆕 2026-08-04 — **LinkedIn Insight Tag** preko GTM-a (isti kontejner, isti Consent Mode gate) — gradi matched audience/retargeting bazu za B2B segment (ESD/industrijski podovi, poslovni prostori), gde LinkedIn targeting (industrija/veličina firme/pozicija) bolje pogađa nego Meta/Google demografija. Sadi se sad, koristi se kad krene pravi LinkedIn Ads budžet — CPC znatno skuplji od Google/Meta, pa plaćene kampanje čekaju posebnu M odluku | M+CC | retargeting baza spremna unapred za B2B; ne pokreće trošak sam po sebi |
+| 4.13 | 🆕 2026-08-04 — **Display remarketing (Google Ads)**, NE cold-prospecting. Uslov za start: (a) 4.8 zatvoreno (Maximize Conversions dostignuto) I (b) bar jedna GA4 publika pređe prag serviranja (100 za Display/YouTube — trenutno sve 4 ispod praga). Cilja postojeće publike (Form Abandoners, High-Intent B2B Bidders) — CPM, ne konkuriše Search budžetu | M+CC | jeftin, visoko-kvalifikovan dodatni kanal, tek posle preduslova |
+| 4.14 | 🆕 2026-08-04 — **Video/YouTube oglasi** — čeka i budžet i pravi video materijal (court builder demo, montaža terena, pre/posle transformacija poda); generički/stock video za nišni B2B proizvod (ESD/industrijski podovi) obično ne opravdava CPM. Ne pokretati bez konkretne kreative | M+CC | potencijalno jak kanal za demo-proizvod, ali samo uz pravu produkciju |
 
 ### W5 — TRACKING / MERENJE (GA4 + GSC + GMB)
 | # | Zadatak | Vlasnik | Napomena |
@@ -130,6 +134,7 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 | 5.6 | 🔄 2026-07-22 — `gallery_view`+`pdf_download` napravljeni u GTM UI (trigger+tag), DRAFT u Workspace-u, **NIJE Submit-ovano**. M odluka 2026-07-22: test se radi kad `staging.antasline.com` bude live (GTM Preview ne radi na localhost) — Submit čeka do tada | M+CC | #ceka-miroslav: staging live, pa GTM Preview test, pa Submit |
 | 5.7 | Post-live: GA4 real-time verifikacija, GTM preview na produkciji, key eventi okidaju, Ads import radi | CC+CP | dan migracije |
 | 5.8 | Konverzioni levak downstream: šta biva sa ~55 kontakata/mes (CRM/email follow-up?) | M | odgovor oblikuje Fazu 4 |
+| 5.9 | 🆕 2026-08-04 — **GA4 → BigQuery export** (Daily export, besplatan tier 10GB/1TB upita mesečno). Korak 1 (M): GCP projekat + omogućen Cloud Billing nalog (platna kartica, i dalje besplatan tier posle) → GA4 Admin → BigQuery Linking. Korak 2 (CC): Python povlačenje preko `google-cloud-bigquery`, isti servisni nalog princip kao `antasline-konektor`, dodaje se kao novi izvor pored GA4/GSC/Ads/GMB. Koristi se za: tačnu audience membership veličinu (GA4 Data API je ne izlaže direktno), multi-touch put do leada (sekvenca evenata po `user_pseudo_id`), spajanje sa GSC/Ads podacima u jednom upitu umesto ručno u Python-u | M+CC | raw event-level podaci bez API sampling/threshold ograničenja |
 
 ---
 
@@ -187,6 +192,9 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 | M10 | ✅ ZATVORENO 2026-07-29 — `[[reference/cenovnik]]` popunjen; provereno da su Tier1 W2 stranice (16873/16874/16875/16876) već vukle iste brojke iz WC-a ranije (podudaranje 1:1, ništa nije trebalo menjati na strankama) | ~~W2 Tier1 (M1) + obogaćivanje proizvoda~~ | — | — |
 | M11 | ✅ DELIMIČNO ZATVORENO 2026-07-29 — Ecotile rampe cena (1560) primenjena u `al_cb_prices` (`ramp`/`ramp_corner` = 1300 bez PDV + 20%); Bergo Ultimate/FLOW **ostaju "na upit" kao M-ova konačna odluka** (potvrđeno 2x u cenovniku), `tile:16770`/`tile:16801` namerno prazni — Court builder i dalje prikazuje "na upit" samo za taj deo predračuna | ništa ne blokira — samo kvalitet outputa 1.12 | pre live-a | PDF ostaje delimično "na upit" za tile cenu dok M ne odluči da li ide fiksna m² cena ili ostaje projektna |
 | M12 | 🆕 2026-07-11 — Brendovi/dobavljači za tribine, stolice, golove, mreže (pregovori u toku) | ništa — proizvodi se prave generički (1.11 S8) | kad se pregovori završe | ostaju generički "na upit"; dopuna brendom naknadno |
+| M13 | 🆕 2026-08-04 — Pristup Meta Business Manager nalogu (M proverava da li već postoji, još nema pristup) — potreban za Pixel ID pre GTM ožičavanja (4.11 Faza A) | W4 4.11 | otvoreno | čeka — Faza A ne može početi bez Pixel ID-a |
+| M14 | 🆕 2026-08-04 — Pristup LinkedIn Campaign Manager nalogu (postoji li već, ko ima pristup) — potreban za Insight Tag ID pre GTM ožičavanja (4.12) | W4 4.12 | otvoreno | čeka — 4.12 ne može početi bez Insight Tag ID-a |
+| M15 | 🆕 2026-08-04 — GCP projekat + omogućen Cloud Billing nalog (platna kartica) za GA4 BigQuery export (5.9) — export sam ostaje besplatan tier, ali GCP traži povezanu karticu da se uključi | W5 5.9 | otvoreno | čeka — 5.9 korak 2 (Python povlačenje) ne može početi bez linkovanja |
 
 ---
 
@@ -249,6 +257,17 @@ UNAPRED da se ne dočeka nespremno.
 Customer-facing chatbot (Q&A + lead-kvalifikacija), RAG nad katalogom/FAQ, timing posle
 live-a. Detalji + tvrda pravila (nikad ne izmišljati cenu/epoksid conquest): [[blokovi/BLOK-D-ai-chat]].
 
+### BLOK E — AI orkestracija (Gemini foto/video + DeepSeek/CCR ruter, odlučeno 2026-08-04)
+Gemini preuzima foto/video rad (unapređenje postojećih proizvod fotografija,
+nove/slične varijante, video za sajt/oglase/social), Claude vodi prioritetni
+red i prati free kvotu (~500 slika/dan). DeepSeek eksperiment za kodiranje
+preko `claude-code-router` (CCR), opt-in po sesiji. Dvoslojna arhitektura
+(generički `~/.claude/skills/ai-vizuali/` + projektni
+`.claude/skills/gemini-vizuali/`) namerno gradi ovo tako da bude ponovo
+upotrebljivo na budućim projektima. **Aktivno odmah** (foto rad na
+postojećem katalogu ne čeka live) — čeka samo Miroslavljev Gemini API ključ.
+Detalji: [[blokovi/BLOK-E-ai-orkestracija]].
+
 ### W7 — Sezonski kalendar (veže W2/W4/W6, sprečava da 2027 GSC špic zatekne nespremne)
 | Period | Fokus | Zašto |
 |---|---|---|
@@ -263,4 +282,4 @@ live-a. Detalji + tvrda pravila (nikad ne izmišljati cenu/epoksid conquest): [[
 - GSC email alerti (crawl errors, security issues)
 
 ## Veze
-[[PROGRESS]] · [[DNEVNIK-NAPRETKA]] · [[blokovi/BLOK-C-sledece]] · [[seo/plan-novih-stranica]] · [[seo/geo-ai-plan]] · [[dnevnik/ADS-DNEVNIK]] · [[analiza/2026-07-04-snapshot-full]] · [[migracija/woodmart-sabloni]] · [[odluke/_pregled-odluka]]
+[[PROGRESS]] · [[DNEVNIK-NAPRETKA]] · [[blokovi/BLOK-C-sledece]] · [[blokovi/BLOK-E-ai-orkestracija]] · [[seo/plan-novih-stranica]] · [[seo/geo-ai-plan]] · [[dnevnik/ADS-DNEVNIK]] · [[analiza/2026-07-04-snapshot-full]] · [[migracija/woodmart-sabloni]] · [[odluke/_pregled-odluka]]

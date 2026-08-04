@@ -1,3 +1,21 @@
+## 2026-08-04 [claude-code] [BLOK E] AI orkestracija — Gemini foto/video sloj implementiran, CCR/DeepSeek dokumentovan (plan mode sesija) ✅
+
+**Zadatak:** Miroslav zatražio da Gemini preuzme foto/video rad za AntasLine (unapređenje postojećih proizvod fotografija, nove/slične varijante, video za sajt/oglase/social) u free modu, uz Claude koji vodi prioritetni red i prati kvotu. Uzgred pomenut "proksi" se u razjašnjenju ispostavio da je zapravo **claude-code-router (CCR)** — alat za rutiranje Claude Code-ovih poziva ka drugim modelima (DeepSeek za kodiranje, Gemini za long-context tekst), ne mrežni proxy za regionalni pristup. Dodatan zahtev: setup mora biti ponovo upotrebljiv na budućim projektima.
+
+**Istraženo (WebSearch):** Gemini image API (`gemini-2.5-flash-image`, "Nano Banana") ima solidan free tier (~500 poziva/dan, reset ponoć Pacific Time), Srbija je zvanično podržan region (proxy nije potreban). **Veo (video) nema free API tier** — besplatan video postoji samo kroz Gemini app/Google Flow web UI (50 kredita/dan) — video ostaje ručni rad. Šire poređenje uradjeno i za DeepSeek (5M token grant), Groq (brz, bez kineske infrastrukture — fallback za DeepSeek), Kimi/GLM/Qwen (rezerva), OpenAI free tier (zahteva data-sharing opt-in, namerno isključen), Microsoft Designer/Bing Image Creator (15 boost/nedeljno, ručna foto rezerva).
+
+**Arhitektura — dva sloja** (da bi setup bio ponovo upotrebljiv van AntasLine):
+1. Generički: `~/.claude/skills/ai-vizuali/` (user-level, cross-project) + `C:\Users\Miroslav\ai-tools\` (kredencijali/venv/logovi, namerno odvojeno od `antasline-connector` koji ostaje isključivo Google Ads/GA4/GSC/GMB).
+2. Projektni: `.claude/skills/gemini-vizuali/` u vault-u — poziva generički sloj, dodaje proizvod-spec/WooCommerce putanju/GSC red čekanja.
+
+**Implementirano:** `ai-vizuali` skill (SKILL.md + auth.py/gemini_image.py/quota_tracker.py + requirements.txt), `ai-tools/` folder struktura (prazna, čeka ključ), `gemini-vizuali` projektni skill, `reference/gemini-vizuali-setup.md` (checklist + opcioni CCR korak), `reference/gemini-red-cekanja.md` (prazan red), `reference/identifikatori.md` dopunjen, `blokovi/BLOK-E-ai-orkestracija.md` (pun kontekst), uklopljeno u `2026-07-06-MASTER-PLAN-V2` §8 + Veze. Memory housekeeping: postojeća memorija o proizvod-slika spec-u (1000×1000) flagovana kao neusaglašena sa `reference/standard-slika-proizvoda.md` (1080×1080) — proveriti pre prvog batch-a.
+
+**#ceka-miroslav:** Gemini API ključ → `ai-tools/credentials/gemini_api_key.txt` + `python -m venv venv` u `ai-tools/` (koraci 1-3, `reference/gemini-vizuali-setup.md`). CCR/DeepSeek ostaje potpuno opciono, ne blokira foto rad.
+
+**Ništa nije commit-ovano ovu sesiju** (nije traženo).
+
+---
+
 ## 2026-08-04 [claude-code] [W3] Sitewide heading-order fix — widget naslovi H5→H3, jučerašnji Lighthouse a11y nalaz zatvoren ✅
 
 **Zadatak:** nastavak jučerašnjeg (2026-08-04) Lighthouse a11y plana — otkriveni "novi nalaz za sledeću turu" (`heading-order` + `target-size` sitewide) sad dijagnostikovan i zatvoren u istoj sesiji.

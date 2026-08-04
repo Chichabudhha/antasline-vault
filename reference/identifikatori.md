@@ -37,3 +37,16 @@ azurirano: 2026-07-27
 - Setup checklist: [[reference/api-konektor-setup.md]]
 - Isti javni ID-evi kao ranije (GA4 292720335, Ads 156-886-0314, GSC sc-domain:antasline.com) — samo je mehanika povlačenja podataka promenjena, ne nalozi sami.
 - Konektor je READ-ONLY (kao i Windsor pre njega) — potvrđuje evente, ne menja GTM/GA4.
+
+## AI vizuali / ruter (od 2026-08-04)
+- Gemini image model: `gemini-2.5-flash-image` ("Nano Banana") — free tier
+  ~500 poziva/dan, reset ponoć Pacific Time.
+- Region: Srbija je zvanično podržan region za Gemini API — proxy/VPN nije
+  potreban. ("Region not supported" greška, ako se pojavi, je verovatno
+  false-positive po IP detekciji.)
+- Kredencijali (Gemini/DeepSeek/Groq): `C:\Users\Miroslav\ai-tools\credentials\`
+  — namerno odvojeno od `antasline-connector` (taj ostaje isključivo za
+  Google Ads/GA4/GSC/GMB). Setup: [[reference/gemini-vizuali-setup.md]]
+- `claude-code-router` (CCR) config: `~/.claude-code-router/config.json`
+  (van vault-a) — opciono rutiranje `background`/`longContext` Claude Code
+  poziva ka DeepSeek/Gemini. Detalji: [[blokovi/BLOK-E-ai-orkestracija]]
