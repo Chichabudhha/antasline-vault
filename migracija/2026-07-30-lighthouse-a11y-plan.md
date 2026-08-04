@@ -2,9 +2,14 @@
 tip: radni-nalog
 datum: 2026-07-30
 blok: W1
-status: odobreno-ceka-izvrsenje
+status: zatvoreno-2026-08-04
 izvor: "M tražio usklađivanje sajta sa Lighthouse Accessibility + Agentic Browsing smernicama"
 ---
+
+> **ZATVORENO 2026-08-04** — sva 4 batch-a izvršena, Accessibility skor 84–90 → 95–99
+> na 7 test-stranica. 3 dodatna nalaza otkrivena tek pravim Lighthouse run-om (mist-
+> pozadina kontrast, CF7 submit dugme, WoodMart core `.wd-product-cats`) i zatvorena
+> usput. Detalji: [[DNEVNIK-NAPRETKA]] 2026-08-04.
 
 # 🔧 Radni nalog — Lighthouse Accessibility + Agentic-Browsing usklađivanje
 

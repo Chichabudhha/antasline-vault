@@ -1,3 +1,25 @@
+## 2026-08-04 [claude-code] [W3] Lighthouse Accessibility plan — sva 4 batch-a izvršena, skor 84–90 → 95–99 ✅
+
+**Izvršen odobreni radni nalog od 07-30** ([[migracija/2026-07-30-lighthouse-a11y-plan]]) — svi batch-evi po planu, plus 3 novootkrivena nalaza usput (real Lighthouse run pokazao ono što statična analiza planom nije mogla). Backup pre svakog DB dela: `antasline_local_2026-08-04_pre-lighthouse-a11y-batch1.sql` (full) + `...batch2.sql` (posts tabela).
+
+**Batch 1 — mehaničke ispravke.** `site_viewport` `not_scalable`→`scalable` preko privremenog mu-plugin-a (trosmerni merge, 883 ključa netaknuta, potvrđeno pre/posle). Court builder: aria-live na `.al-cb__warning`/`.al-cb__save-msg`, `aria-label` na equipment-qty input i palette swatch/erase dugmad, line-palette swatch 22×22→24×24px. Verifikovano: `<meta viewport>` bez `maximum-scale`/`user-scalable=no` sitewide.
+
+**Batch 2 — heading-order + duplikat ID (4 stranice, DB upis preko `$wpdb->update()`).** 5754 (h3→h2 + h4→h3, `style="font-size:Npx"` da vizuelno ostane isto) i 15480 (h4→h3) — oba sad bez preskoka (`1>2>2>3>2>3>2>3>2` i `1>2>3>2>3>3>2`). Duplikat ID: 5769 `vestacka-trava` — plan je pretpostavio 2 pojave, u praksi 2 IZVORA (jedan goli `<span id>`, jedan WPBakery `el_id`) + 1 interni href; href je pokazivao na PRVI DOM-match (prazan span, pogrešna meta), preimenovanjem spana u `-2` href sad ispravno cilja pravu sekciju — usput ispravljen i UX bag, ne samo lint. 15580 `eluid54d67c12`: plan je rekao "2×", stvarno 4× (4 skoro-identična H2 bloka) — zadržan prvi, ostala 3 sufiksirana `-2/-3/-4`, bez href pogodaka nigde sitewide.
+
+**Batch 3 — court builder tastatura, čisto dodavanje (mouse/touch handleri i `paintCell()` netaknuti).** Roving tabindex (`state.focusIdx`, clamp na resize), keydown na `gridWrap` (strelice pomeraju fokus + tabindex swap, Enter/Space poziva POSTOJEĆI `paintCell()`), `:focus-visible` + JS fallback klasa (focus/blur capture-listeneri, jer ti eventi ne buboluju). Testirano kroz pravi Chrome: 3× ArrowRight pomerilo fokus 0→3 sa tabindex swap + klasa, Enter obojio TAČNO fokusiranu ćeliju (fill boja + tally tabela ažurirana identično kliku).
+
+**Batch 4 — kontrast, M odluka (dugme veći tekst, ne boja).** `.al-btn` `clamp(17px,1.4vw,21px)`→`clamp(24px,1.6vw,26px)`. 🔴 **3 nova nalaza koja plan nije predvideo** (otkrivena tek pravim `npx lighthouse` run-om, ne statičkom analizom):
+1. `--al-red-dark` (plan: "4,71:1, prolazi") prolazi na BELOJ pozadini ali pada na **4,22:1 na `--al-mist` (#EEF3F8)** pozadini — `.al-label` i `.al-quick-quote__sub a` se oba renderuju na mist sekcijama. Fix: `.al-section--mist .al-label` i `.al-quick-quote__sub a` dobili dodatno zatamnjenu `#C73813` (izračunato, 4,70:1 na mist pozadini), `--al-red-dark` ostaje netaknut svuda drugde (npr. `.al-promo-product__price` je na paper/belo, prošao bez izmene).
+2. CF7 submit dugme (`input[type="submit"]`, "Brzi upit" forma #16737) — bela na `--al-red`, 15px bold = 3,62:1, ispod praga. Font-size 15→19px (WCAG veliki-tekst-bold prag je 18,66px) — isti obrazac kao `.al-btn` M odluka, boja netaknuta.
+3. **WoodMart CORE tema** (`--color-gray-400 #a5a5a5`, 2,46:1 na belom) za `.wd-product-cats` kategorija-link ispod naziva proizvoda na SVAKOJ product kartici — override u child temi (`.wd-product-cats a { color: var(--al-muted) }`, 5,46:1), ne u vendor fajlu (theme-update bi ga izgubio, isti gotcha kao breadcrumb schema 07-30).
+`.al-mobile-tel` — plan je tražio potvrdu pre izmene: **potvrđeno da NE ispada u nijednom od 7 Lighthouse run-ova, nedirano.**
+
+**Rezultat (Lighthouse standardna Accessibility, `--only-categories=accessibility`, 7 test-stranica):** Home/Industrijski/Sportske podloge/Conquest 2542/Planer terena **0,99** (bilo 0,84–0,90 07-09 baseline), Proizvod (konusni-štitnik) **0,99**, Kategorija (zaštita-i-bumperi) **0,95**. `color-contrast` PASS na svih 7. Preostalo (van obima ovog naloga, nov nalaz za buduću sesiju): `heading-order` i dalje crveno na SVE ostale stranice (plan je namerno skoping samo 2 posta, ne sitewide sweep) + `target-size` na product-karticama (`h3.wd-entities-title a` + `.wd-product-cats a` nedovoljan razmak, WoodMart core layout, sitewide, veći zahvat).
+
+**Verifikacija:** 11 URL-ova (5 Lighthouse test + proizvod + kategorija + 4 Batch2 stranice) 200/1×H1/0 PHP grešaka, 0 console grešaka (Chrome), CTA dugme vizuelno provereno 1500px i 390px (harness `al-harness.html?w=390&u=...` — ispravan query format je `w`/`u`, ne `width`/`url`) bez preloma/overflow-a. Detalji: [[migracija/2026-07-30-lighthouse-a11y-plan]] (sad zatvoren).
+
+---
+
 ## 2026-07-30 [claude-code] [W1] Lighthouse Accessibility + Agentic-Browsing plan istražen i odobren, ČEKA IZVRŠENJE 📋
 
 **M tražio usklađivanje sajta sa Google Lighthouse smernicama** (Accessibility scoring + Agentic Browsing scoring). Sesija je urađena kroz istraživanje (2 Explore agenta paralelno: istorija prethodnog rada + live kod pregled) i jedan Plan agent za sekvencioniranje — **plan odobren, ali izvršenje NIJE počelo** (sesija zatvorena pre starta, na M zahtev).
