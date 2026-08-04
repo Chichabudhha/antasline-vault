@@ -1,3 +1,19 @@
+## 2026-08-04 [claude-code] [W3] Sitewide heading-order fix — widget naslovi H5→H3, jučerašnji Lighthouse a11y nalaz zatvoren ✅
+
+**Zadatak:** nastavak jučerašnjeg (2026-08-04) Lighthouse a11y plana — otkriveni "novi nalaz za sledeću turu" (`heading-order` + `target-size` sitewide) sad dijagnostikovan i zatvoren u istoj sesiji.
+
+**Dijagnoza:** curl-om izvučen redosled `<h1-6>` na home/kategorija/proizvod/blog stranicama pokazao dosledan obrazac — svuda gde je sidebar/footer/upsells widget prisutan, naslov skače sa H2 ili H3 (glavni sadržaj) direktno na **H5** (`widget-title`), preskačući nivo(e). Uzrok: WoodMart core `woodmart_get_widget_title_tag()` (`inc/integrations/woocommerce/helpers.php:10`) čita `xts-woodmart-options['widget_title_tag']`, eksplicitno postavljeno na `h5` u bazi (883-key opcioni niz), koristi ga **svih 8 sidebar/widget registracija** (glavni sidebar, shop sidebar, shop filteri, single-product sidebar, footer kolone ×N, mobile menu, full-screen menu) + "You may also like" upsells naslov na single-product.
+
+**Fix:** jedna vrednost promenjena `h5`→`h3` u `xts-woodmart-options` (`update_option()`, ostatak niza netaknut). Sigurno po WCAG heading-order logici — dizanje nivoa (h5→h3) nikad ne može UNETI novi skip, samo ukloniti postojeći (potvrđeno merenjem: na sve testirane stranice nivo neposredno pre widget-a je H2 ili H3, nikad H4). Backup: `antasline_local_2026-08-04_pre-widget-title-tag-fix.sql` (`wpGs_options`).
+
+**Verifikacija (Lighthouse 13.4, `--only-categories=accessibility`):** home i proizvod stranica sad **1.0 a11y score, heading-order i target-size oba PASS** (bili crveni pre fixa). Kategorija (`industrijski-podovi`) heading-order+target-size PASS. HTTP 200/1×H1 na 4 regresivne stranice (5754, 15480, kontakt, cene), 0 novih PHP grešaka u debug.log.
+
+**🆕 Nov, odvojen nalaz (nije popravljen ovu sesiju):** blog arhiva (`/aktuelnosti/`) i dalje ima `heading-order` score 0 — H1 (naslov arhive) skače direktno na H3 (`wd-post-title`, post kartice), preskače H2. **Drugi uzrok** od widget-title problema (post-title tag je hardkodovan `<h3>` u `woocommerce_template_loop_product_title`-analognom kodu za blog, ne kroz `widget_title_tag` opciju) — treba posebnu dijagnozu (verovatno dodavanje H2 sekcijskog wrapper-a oko liste postova, ili provera da li WoodMart nudi opciju za post-title tag kao za proizvod). Nije #ceka-miroslav, samo red čekanja za narednu W3/a11y sesiju.
+
+**Kvantifikacija obima (potvrđuje "veći zahvat" iz jučerašnje napomene):** izmena je pogodila SVE tipove stranica sa bilo kojim widget area-om — home, sve kategorije, svi proizvodi (upsells + sidebar), sve blog stranice (footer), praktično ceo sajt u jednom potezu umesto po-stranici izmena.
+
+---
+
 ## 2026-08-04 [cpanel-live] 🔴 Nalaz: kontakt forma na `/kontakt/` tiho odbija validne unose — Firma/Ime i Kontakt telefon polja, bez poruke greške korisniku
 
 **Povod:** nedeljni izveštaj pokazao pad `hvala-za-poruku` pageview-a (6 vs 16, -62%) i `generate_lead` (9 vs 20, -55%) ove nedelje. Umesto nagađanja, testirano uživo na `/kontakt/` (3 test-slanja kroz pravu formu, uz M odobrenje pre svakog — svi test podaci jasno označeni "TEST DIJAGNOSTIKA").
