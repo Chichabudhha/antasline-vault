@@ -1,3 +1,23 @@
+## 2026-08-05 [claude-code] [BLOK E] Prva prava Gemini foto-batch — 5 proizvoda, pun tok od praznog reda do WooCommerce prikaza ✅
+
+**Zadatak:** Nastavak BLOK E rada (M: "radili smo na gemini i rutiranju, želim da nastavimo"). `reference/gemini-red-cekanja.md` je od 08-04 bio prazan — popuniti ga i stvarno pustiti prvu foto-batch.
+
+**Audit kataloga:** DB upit + `getimagesize()` na `_thumbnail_id` datoteku svih 94 objavljenih proizvoda protiv standarda (1080×1080, kvadrat, bela pozadina) → 9 OK_STANDARD, **72 NONSTANDARD** (prava fotografija, van spec-a — kandidat za `--mode enhance`), **13 NO_THUMBNAIL** (nema nijedne fotografije u arhivi). Red čekanja popunjen sa 4 tijera po poslovnom prioritetu (ESD/industrijski → sport/Bergo → terase/parking/LVT → Ergomat pribor).
+
+**🔴 Nova politika (upisana u skill Gotchas):** `--mode enhance` (postojeća prava slika na ulazu) je bezbedan — model samo čisti kadar. `--mode generate` od-nule za **konkretan brendiran/tehnički proizvod** se NE koristi — rizikuje pogrešnu boju/dimenziju/spoj i implicitno predstavlja nešto što nismo fotografisali, isto obrazloženje kao ranija W7 F2.9 politika. Zato svih 13 NO_THUMBNAIL ostaje van ovog reda, i dalje #ceka-miroslav.
+
+**Backup baze pre rada:** `antasline_local_2026-08-05_pre-gemini-foto-pilot.sql`.
+
+**Pilot + batch, 5 proizvoda stvarno obrađeno:** Ecotile E500/7 (#16538→attach 17522), Ecotile E500/10 (#16540→17524), Ecotile ESD 7mm (#16542→17525), Bergo Ultimate (#16770→17523), Bergo Ultimate FLOW (#16801→17526). Svih 5 verifikovano: HTTP 200 na proizvod-stranici, HTML referencira novi fajl, `_thumbnail_id` ažuriran. Stare slike nisu obrisane (ostaju kao odvojeni attachment, rollback-safe).
+
+**🔴🔴 Krupan nalaz — SKILL.md korak 4 je bio nepotpun/pogrešan.** "Snimi direktno u WooCommerce uploads folder" nije dovoljno — fajl na disku se ne pojavljuje kao glavna slika proizvoda bez pravog WP attachment zapisa. Napisan i testiran `.claude/skills/gemini-vizuali/scripts/import-gemini-photo.php` (bootstrap `wp-load.php` → `wp_insert_attachment()` + `wp_generate_attachment_metadata()` + `set_post_thumbnail()`), SKILL.md ažuriran da referencira pravi tok.
+
+**🔴 Sitan nalaz — generički `gemini_image.py` je jednom pao** na `AttributeError: 'NoneType' object has no attribute 'parts'` (odgovor bez slike uprkos `finish_reason=STOP`, potvrđeno debug pozivom da je `content` bio prazan). Izgleda kao prolazna API varijacija — prost retry istog poziva je rešio (2/2 puta testirano), nije potrebna izmena skripte.
+
+**Usput:** i MySQL i Apache su bili ugašeni na početku sesije (isti simptom kao ranije zabeleženi obrasci) — oba ručno pokrenuta pre bilo kakvog DB/HTTP rada.
+
+**Kvota:** 493/500 preostalo posle batch-a (reset ponoć PT). Sledeći korak: nastaviti kroz `reference/gemini-red-cekanja.md` Tier 1 (preostala 4: rampe + SureGrip) pa dalje, isti tok, batch po sesiji.
+
 ## 2026-08-04 [claude-code] [BLOK E] Gemini foto sloj ZAVRŠEN i uživo testiran — API (uz billing) + Chrome chat fallback ✅
 
 **Zadatak:** Nastavak istog dana — prethodna sesija implementirala skillove/skripte i stala na "čeka Miroslavljev API ključ". Ova sesija: pravi setup do kraja i testira uživo.

@@ -45,10 +45,17 @@ izveštavanje). Setup checklist: `reference/gemini-vizuali-setup.md`.
 3. Spec (`reference/standard-slika-proizvoda.md`): 1080×1080, čista bela
    pozadina (#FFFFFF), ~15% margina, WebP, ime fajla
    `<slug-proizvoda>-<boja>.webp`.
-4. Snimi direktno u WooCommerce uploads folder na lokalnom build-u
-   (`C:\xampp\htdocs\antasline\wp-content\uploads\...`) — **bez traženja
-   odobrenja pre postavljanja** (Miroslavljeva odluka), on pregleda naknadno
-   na sajtu.
+4. Fajl iz koraka 2 ide u scratchpad, ne direktno u uploads — mora postati
+   pravi WP attachment (ne samo fajl na disku) da bi se pojavio kao glavna
+   slika: `php .claude/skills/gemini-vizuali/scripts/import-gemini-photo.php
+   <product_id> <src.webp> <ime-fajla>.webp`
+   (bootstrap-uje `wp-load.php`, `wp_insert_attachment()` +
+   `wp_generate_attachment_metadata()` + `set_post_thumbnail()`). Skripta
+   testirana i potvrđena 2026-08-05 (Ecotile E500/7 #16538, Bergo Ultimate
+   #16770 — oba HTTP 200, HTML referencira novi fajl, `_thumbnail_id`
+   ažuriran). **Bez traženja odobrenja pre postavljanja** (Miroslavljeva
+   odluka), on pregleda naknadno na sajtu. Stara slika ostaje kao odvojen
+   attachment (nije obrisana) — bezbedan rollback ako treba.
 5. Upiši kratku belešku u `PROGRESS`/dnevnik šta je urađeno (koji proizvod,
    koliko slika, koliko kvote ostalo).
 
@@ -89,6 +96,23 @@ danas) | reset za HH:MM PT` posle svakog poziva.
 - Video (Veo) nema free API tier — samo web UI.
 - Ako Gemini vrati format koji ne odgovara spec-u, generički skript radi
   eksplicitan resize/convert — ne treba ručna doobrada.
+- 🆕 **Generisanje samo od-nule (`--mode generate`, bez `--input`) se NE
+  koristi za konkretan brendiran/tehnički proizvod** — rizikuje pogrešnu
+  boju/dimenziju/spoj. `--mode enhance` (postojeća prava fotografija na
+  ulazu) je bezbedan jer model samo čisti kadar/pozadinu. Isto obrazloženje
+  kao W7 F2.9 politika (ne gurati sliku koja implicira tuđi posao) —
+  proizvodi bez ijedne fotografije u arhivi (`reference/gemini-red-cekanja.md`
+  "Van reda") ostaju #ceka-miroslav, ne idu na Gemini.
+- 🆕 **Generički `gemini_image.py` retko vrati odgovor bez `inline_data`**
+  (potvrđeno 2026-08-05, `AttributeError: 'NoneType' object has no attribute
+  'parts'`) čak i uz ispravan `finish_reason=STOP` — izgleda kao prolazna
+  API varijacija, ne sistemska greška. Prost retry istog poziva je rešio
+  problem oba puta testirano. Nije (još) potrebna izmena skripte, samo
+  ponoviti poziv ako padne.
+- 🆕 **`--mode enhance` fajl mora stvarno postati WP attachment**, ne samo
+  fajl u uploads folderu — v. korak 4 iznad (`import-gemini-photo.php`,
+  testiran 2026-08-05). Sam fajl na disku se neće pojaviti kao proizvod
+  slika bez `wp_insert_attachment()`/`set_post_thumbnail()`.
 
 ## Veze
 - `~/.claude/skills/ai-vizuali/` — generički Gemini image sloj (cross-project)

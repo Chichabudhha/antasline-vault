@@ -1,8 +1,8 @@
 ---
 tip: blok
 blok: E
-status: aktivno — Gemini foto sloj RADI (API + Chrome fallback), CCR čeka Miroslavljev setup
-azurirano: 2026-08-04
+status: aktivno — Gemini foto sloj RADI, prva prava foto-batch izvršena (5 proizvoda), CCR čeka Miroslavljev setup
+azurirano: 2026-08-05
 ---
 
 # BLOK E — AI orkestracija (Gemini foto/video + DeepSeek/CCR ruter)
@@ -113,10 +113,74 @@ umesto `claude` — normalan `claude` poziv ostaje netaknut.
 uz billing). **Sekundarno/fallback: Gemini Chat kroz Chrome** (besplatno,
 ali ručno, jedna slika po ciklusu) — koristi se svesno, ne default.
 
+## Prva prava foto-batch — 2026-08-05
+
+Red čekanja popunjen (`reference/gemini-red-cekanja.md`): audit svih 94
+objavljenih proizvoda (`getimagesize()` na svaku `_thumbnail_id` datoteku)
+protiv standarda (1080×1080, kvadrat, bela pozadina) → **9 već OK, 72
+kandidata za `--mode enhance`, 13 bez ijedne fotografije u arhivi** (ti
+ostaju van reda, ne idu na Gemini — v. politika ispod).
+
+**Pravilo utvrđeno ovom sesijom: `--mode enhance` da, `--mode generate`
+od-nule ne za konkretan brendiran/tehnički proizvod** (rizik pogrešne boje/
+dimenzije/spoja, isto obrazloženje kao ranija W7 F2.9 politika o nefotografisanim
+proizvodima). Upisano u skill Gotchas.
+
+**Prvih 5 proizvoda stvarno obrađeno (backup baze pre rada:
+`antasline_local_2026-08-05_pre-gemini-foto-pilot.sql`)**: Ecotile E500/7
+(#16538, attach 17522), Ecotile E500/10 (#16540, attach 17524), Ecotile ESD
+7mm (#16542, attach 17525), Bergo Ultimate (#16770, attach 17523), Bergo
+Ultimate FLOW (#16801, attach 17526). Svih 5: HTTP 200, `_thumbnail_id`
+ažuriran, HTML referencira novi fajl — verifikovano end-to-end. Stare slike
+nisu obrisane (ostaju kao odvojeni attachment-i, bezbedan rollback).
+
+🔴🔴 **Nov nalaz: SKILL.md korak 4 je bio pogrešan** — "snimi direktno u
+uploads folder" nije dovoljno da se slika pojavi kao glavna slika proizvoda;
+mora postati pravi WP attachment. Napisan i testiran
+`.claude/skills/gemini-vizuali/scripts/import-gemini-photo.php`
+(`wp_insert_attachment()` + `wp_generate_attachment_metadata()` +
+`set_post_thumbnail()`), SKILL.md ažuriran da ga referencira.
+
+🔴 **Nov nalaz: generički `gemini_image.py` je jednom pao** na
+`AttributeError: 'NoneType' object has no attribute 'parts'` (odgovor bez
+slike uprkos `finish_reason=STOP`) — izgleda kao prolazna API varijacija,
+prost retry je rešio (potvrđeno 2x). Nije potrebna izmena skripte za sada.
+
+Kvota posle batch-a: 493/500 preostalo (kvota se resetuje ponoć PT).
+Sledeći korak: nastaviti kroz `reference/gemini-red-cekanja.md` Tier 1→4
+istim tokom, batch po batch po sesiji.
+
+## CCR instalacija — stanje 2026-08-05 (sesija pukla usred rada)
+
+Miroslav je pokušao instalaciju CCR-a ("ruter"), Claude Code se srušio
+usred toga. Dijagnostikovano u nastavku sesije:
+
+- ✅ `~/.claude/settings.json` — čist, NIJE prepisan (proveren sadržaj:
+  `{"model":"sonnet","enabledPlugins":{},"effortLevel":"medium",
+  "theme":"dark","agentPushNotifEnabled":true}`)
+- 🔴 `ccr` komanda **nije nađena** (ni Git Bash PATH ni PowerShell)
+- 🔴 `npm list -g --depth=0` pokazuje samo `@anthropic-ai/claude-code`,
+  `firebase-tools`, `npm` — **`claude-code-router` paket NIJE globalno
+  instaliran**. Instalacija se nije završila pre pada sesije.
+
+**Sledeći korak (kad Miroslav da OK):** `npm install -g
+@musistudio/claude-code-router`, zatim podesiti provider config (routing
+predlog je već iznad u ovom fajlu), testirati `ccr start` / `ccr ui`
+(`http://127.0.0.1:3458`), pa `ccr code` kao opt-in poziv (obican `claude`
+ostaje netaknut).
+
+**Radni tok (referenca, Miroslavljeva uputstva ovoj sesiji):**
+- `claude` → direktno na Anthropic (AntasLine SEO rad)
+- `ccr code` → kroz router na Gemini (WordPress/Big Panda rad)
+- Pre `ccr code`: proveriti da je servis aktivan (`ccr start`)
+- Ako ConnectionRefused: proveriti `~/.claude/settings.json` na
+  "127.0.0.1:3456"/"gemini" trag da CCR nije prepisao config → očistiti na
+  gornju čistu vrednost
+
 ## Šta čeka Miroslava
 
-- (Opciono, kad/ako DeepSeek eksperiment krene) CCR instalacija + DeepSeek/
-  Groq ključevi (Korak 4, `reference/gemini-vizuali-setup.md`)
+- CCR instalacija (npm paket nedostaje, v. sekcija iznad) + DeepSeek/Groq
+  ključevi (Korak 4, `reference/gemini-vizuali-setup.md`)
 
 ## Veze
 - `.claude/skills/gemini-vizuali/SKILL.md`
