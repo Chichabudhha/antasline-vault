@@ -1,7 +1,7 @@
 ---
 tip: blok
 blok: E
-status: aktivno — Gemini foto sloj RADI, prva prava foto-batch izvršena (5 proizvoda), CCR čeka Miroslavljev setup
+status: aktivno — Gemini foto sloj RADI, ceo red čekanja (96/97 proizvoda, Tier 1-4) obrađen 2026-08-05, CCR instalacija nedovršena (npm paket nedostaje, čeka Miroslavljev nastavak)
 azurirano: 2026-08-05
 ---
 
@@ -147,8 +147,32 @@ slike uprkos `finish_reason=STOP`) — izgleda kao prolazna API varijacija,
 prost retry je rešio (potvrđeno 2x). Nije potrebna izmena skripte za sada.
 
 Kvota posle batch-a: 493/500 preostalo (kvota se resetuje ponoć PT).
-Sledeći korak: nastaviti kroz `reference/gemini-red-cekanja.md` Tier 1→4
-istim tokom, batch po batch po sesiji.
+
+## Foto-batch #2 i #3 — 2026-08-05 (isti dan, nastavak sesije) — CEO RED ZATVOREN
+
+**Batch #2** (5 slika): preostalih 5 proizvoda Tier 1 (Ecotile T-Joint/X-Joint
+rampe + SureGrip profil) — Tier 1 time potpuno zatvoren (8/8). Kvota posle:
+12/500 danas.
+
+**Batch #3** (61 slika, jedan skriptovani prolaz): ceo ostatak reda čekanja
+odjednom — Tier 2 (16/17, Bergo linija + košarkaške konstrukcije), Tier 3
+(17/17, Geoplast travne rešetke + EXPONA/R-Tile LVT + veštačka trava),
+Tier 4 (28/28, Ergomat bumperi/DuraStripe trake/senzori). Napravljen
+`run_batch3.py` — Python driver koji direktno importuje `call_gemini()` i
+`save_formatted()` iz generičkog `gemini_image.py` (izbegava subprocess
+overhead za CLI po stavci), sa retry (2 pokušaja) po stavci na
+`AttributeError`/API grešku, zatim poziva `import-gemini-photo.php` preko
+`subprocess` za svaki uspešan Gemini poziv. **0 grešaka na 61 poziva**,
+sve HTTP 200 na spot-proveri. Preskočen #16536 (Zglobni obruč za koš) —
+outofstock, ostaje #ceka-miroslav (potvrda da je proizvod aktivan) pre
+nego što se ulaže Gemini rad na njega, po istoj logici kao NO_THUMBNAIL
+politika.
+
+Kvota posle batch #3: **73/500 danas, 427 preostalo.** Ceo katalog (96/97
+stavki, sve osim outofstock #16536) sada ima standardizovanu 1080×1080
+belu glavnu sliku. Sledeći foto rad: novi proizvodi kako se dodaju u
+katalog, ili re-run kad Miroslav odobri stvarne fotografije za 13
+NO_THUMBNAIL proizvoda.
 
 ## CCR instalacija — stanje 2026-08-05 (sesija pukla usred rada)
 
