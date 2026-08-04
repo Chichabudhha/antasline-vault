@@ -2,8 +2,14 @@
 tip: referenca
 datum: 2026-08-04
 namena: Miroslavljev jednokratni setup checklist za Gemini foto/video sloj (ai-vizuali) + opciono CCR ruter
-status: nije počelo — čeka Miroslavljeve korake
+status: ✅ ZAVRŠENO (Korak 1-3) 2026-08-04 — API radi uz billing, Chrome fallback testiran. Korak 4 (CCR) i dalje opciono.
 ---
+
+> **Ažurirano 2026-08-04**: Korak 1 napomena "besplatan, bez kartice za osnovni free tier"
+> se pokazala netačnom za image generisanje — free tier vraća `limit: 0` za sve
+> image modele (2.5 i 3.1), samo tekst-only pozivi su besplatni. M je dodao platnu
+> karticu na GCP projekat, posle čega API radi normalno (jeftino po slici). Detalji:
+> [[blokovi/BLOK-E-ai-orkestracija]].
 
 # 🔌 Setup — AI vizuali (Gemini) + opciono CCR ruter
 

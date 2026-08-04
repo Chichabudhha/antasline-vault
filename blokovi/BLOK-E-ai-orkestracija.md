@@ -1,7 +1,7 @@
 ---
 tip: blok
 blok: E
-status: aktivno — Gemini foto sloj implementiran, CCR čeka Miroslavljev setup
+status: aktivno — Gemini foto sloj RADI (API + Chrome fallback), CCR čeka Miroslavljev setup
 azurirano: 2026-08-04
 ---
 
@@ -38,7 +38,8 @@ instalacije/kredencijala.
 
 | Provajder | Free tier | Pogodno za | Napomena |
 |---|---|---|---|
-| **Gemini** (slike, `gemini-2.5-flash-image`) | ~500 poziva/dan, reset ponoć PT | Foto (primarno) | Najizdašniji free image API, Srbija podržan region |
+| **Gemini API** (slike, `gemini-2.5-flash-image`/`3.1-flash-lite-image`) | 🔴 **`limit: 0` — API nema besplatnu image kvotu za ovaj nalog**, obara originalnu pretpostavku "~500/dan besplatno". Tekst-only pozivi (`gemini-2.5-flash`) rade na free tier bez problema. | Foto (primarno) — **zahteva billing** | Testirano uživo 2026-08-04 protiv 2 modela (2.5 i 3.1 lite), oba `RESOURCE_EXHAUSTED`/limit 0. M dodao platnu karticu na GCP projekat → API radi (potvrđeno, jeftino po slici, ~500/dan i dalje važi kao SOFT limit u `quota_tracker.py`, sad je to naš izbor koliko trošimo, ne Google-ov free-tier plafon) |
+| **Gemini CHAT** (gemini.google.com, konzumerski nalog) | Odvojena besplatna kvota od API-ja, bez kartice | Foto — **fallback/ručna dopuna preko Chrome automatizacije** | Testirano uživo 2026-08-04: prompt → generisanje (~15s) → download dugme → fajl u `Downloads/`. Radi, ali nije skriptabilno (nema headless pristup) — Claude vozi kroz `claude-in-chrome` alat po potrebi, jedna slika po ciklusu, ne za veliki batch |
 | **Gemini** (tekst, Flash/Pro) | Visok rate limit, veliki kontekst | Long-context tekst | CCR `longContext` kandidat |
 | **Gemini Veo** (video) | **Nema free API tier** | — | Samo web UI (Gemini app/Google Flow, 50 kredita/dan) — ručni tok |
 | **DeepSeek** | 5M tokena, 30-dnevni grant po prijavi | Kodiranje | Dobar kvalitet, kineska infrastruktura |
@@ -82,22 +83,40 @@ umesto `claude` — normalan `claude` poziv ostaje netaknut.
 
 - ✅ `~/.claude/skills/ai-vizuali/` — SKILL.md + `scripts/` (auth.py,
   gemini_image.py, quota_tracker.py) + requirements.txt
-- ✅ `C:\Users\Miroslav\ai-tools\` — credentials/ + logs/ + README.md
-  (folderi prazni, čekaju Miroslavljev API ključ)
+- ✅ `C:\Users\Miroslav\ai-tools\` — credentials/ + logs/ + venv/ (svi
+  popunjeni, setup ZAVRŠEN)
 - ✅ `.claude/skills/gemini-vizuali/` — AntasLine projektni skill
 - ✅ `reference/gemini-vizuali-setup.md` — jednokratni checklist (Gemini +
   opciono CCR korak 4)
 - ✅ `reference/identifikatori.md` — dopunjen javnim model ID-evima
 - ✅ `reference/gemini-red-cekanja.md` — prazan red čekanja, popuniti prvom
   sledećom foto sesijom
+- ✅ **Gemini API image generisanje — RADI, testirano uživo 2026-08-04.**
+  Put do rada: free tier `limit:0` otkriven → M dodao billing karticu na
+  GCP projekat → test poziv uspešan (`test.webp` generisan i obrisan).
+  Usput 2 bug-fixa u skripti: (1) Windows nema IANA tz bazu → `tzdata`
+  paket dodat u `requirements.txt` uz `sys_platform=="win32"` marker,
+  (2) `quota_tracker.py` je pucao na `✓` karakteru u Windows cp1250
+  konzoli → `sys.stdout.reconfigure(encoding="utf-8")` dodat.
+- ✅ **Gemini CHAT (Chrome) fallback — testiran uživo 2026-08-04.**
+  `claude-in-chrome` alat otvara gemini.google.com (već ulogovan
+  Miroslavljev nalog), prompt → generisanje (~15s) → download dugme
+  (gornji desni ugao slike) → fajl pada u `~\Downloads\`. Nema headless/
+  skriptovan pristup (Google nema public API za konzumerski chat) — ovo
+  je ručni Claude-vođeni tok za pojedinačne slike, ne za veliki batch.
+  Koristiti kad: API budžet/kvota postane briga, ili za eksperimentalne
+  prompte pre nego što se puste na API trošak.
+
+## Odluka o rutiranju foto rada (2026-08-04)
+
+**Primarno: Gemini API** (skriptabilno, pouzdano, jeftino po slici — sad
+uz billing). **Sekundarno/fallback: Gemini Chat kroz Chrome** (besplatno,
+ali ručno, jedna slika po ciklusu) — koristi se svesno, ne default.
 
 ## Šta čeka Miroslava
 
-- Gemini API ključ → `ai-tools/credentials/gemini_api_key.txt` (Korak 1-3,
-  `reference/gemini-vizuali-setup.md`)
-- Python venv setup u `ai-tools/`
 - (Opciono, kad/ako DeepSeek eksperiment krene) CCR instalacija + DeepSeek/
-  Groq ključevi (Korak 4 istog fajla)
+  Groq ključevi (Korak 4, `reference/gemini-vizuali-setup.md`)
 
 ## Veze
 - `.claude/skills/gemini-vizuali/SKILL.md`

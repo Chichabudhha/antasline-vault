@@ -1,3 +1,21 @@
+## 2026-08-04 [claude-code] [BLOK E] Gemini foto sloj ZAVRŠEN i uživo testiran — API (uz billing) + Chrome chat fallback ✅
+
+**Zadatak:** Nastavak istog dana — prethodna sesija implementirala skillove/skripte i stala na "čeka Miroslavljev API ključ". Ova sesija: pravi setup do kraja i testira uživo.
+
+**Tok:** M napravio Gemini API ključ (Google AI Studio) → sačuvan kao `gemini_api_key.txt.txt` (Notepad dupli ekstenzion) → preimenovan u `gemini_api_key.txt`. `python -m venv venv` + `pip install -r requirements.txt` prošlo čisto. Prvi test poziv (`gemini_image.py --mode generate`) pukao na `ModuleNotFoundError: tzdata` (Windows nema ugrađenu IANA tz bazu, `zoneinfo` je oslonjen na sistemsku bazu koja postoji na Linux/Mac ali ne na Windows-u) → `tzdata` dodat u `requirements.txt` sa `sys_platform=="win32"` markerom.
+
+**🔴 Glavni nalaz — originalna pretpostavka "besplatno bez kartice" je bila netačna za image generisanje.** Posle tzdata fixa, poziv je pao na `429 RESOURCE_EXHAUSTED, limit: 0` — ne privremeni rate-limit, nego **free tier ne pokriva image modele uopšte** (0 dozvoljenih zahteva/dan). Provereno da nije specifično za jedan model: i `gemini-2.5-flash-image` i `gemini-3.1-flash-lite-image` (noviji, iz Gemini 3 generacije koja je u međuvremenu izašla) vraćaju isti `limit: 0`. Kontrolni test potvrdio da tekst-only pozivi (`gemini-2.5-flash`, `generate_content` bez slike) rade normalno na free tier-u — problem je izolovan na image-generation modele, ne na ceo nalog/ključ. WebSearch rezultati o "500 besplatnih slika/dan" su se pokazali zastareli/netačni za ovaj nalog (verovatno SEO-marketing sadržaj API-preprodavaca, ne primarni izvor).
+
+**Odluka (M, posle predočenih opcija):** dodao platnu karticu na GCP projekat vezan za API ključ. Posle toga test poziv prošao čisto — slika generisana i sačuvana. Usput drugi sitan bug: `quota_tracker.py` je pucao na `✓` karakteru (Windows cp1250 konzola ne zna UTF-8 podrazumevano) → `sys.stdout.reconfigure(encoding="utf-8")` dodat, ponovljen test čist.
+
+**Dopunska putanja — Gemini Chat kroz Chrome (M pitao "da li Gemini chat može besplatno da pravi slike"):** potvrđeno da konzumerski gemini.google.com ima ODVOJENU besplatnu kvotu od developer API-ja (dva različita proizvoda, različite kvote — zato chat radi besplatno dok je API vraćao limit 0). Testirano uživo preko `claude-in-chrome` alata: navigacija na gemini.google.com (već ulogovan Miroslavljev nalog), prompt za sliku, generisanje ~15s, klik na download dugme → fajl pao u `~/Downloads/`. Radi, ali nema headless/skriptovan pristup (Google nema public API za konzumerski chat) — ovo je Claude-vođen ručni tok, jedna slika po ciklusu, ne za veliki batch. Dokumentovano kao svestan fallback (API budžet postane briga / eksperimentalni promptovi), ne kao default put.
+
+**Zatvoreno:** Korak 1-3 iz `reference/gemini-vizuali-setup.md` gotovi, status ažuriran. `blokovi/BLOK-E-ai-orkestracija.md` dopunjen tačnim free-tier nalazom (zamenjuje raniju netačnu "~500/dan besplatno" tvrdnju) + Chrome fallback sekcijom. PROGRESS.md bloker red zatvoren. Test fajlovi (`test.webp`, Chrome download PNG) obrisani posle verifikacije, ništa nije ostalo u repo-u.
+
+**Preostaje potpuno opciono:** CCR/DeepSeek (Korak 4 istog setup fajla), ne blokira foto rad.
+
+---
+
 ## 2026-08-04 [claude-code] [BLOK E] AI orkestracija — Gemini foto/video sloj implementiran, CCR/DeepSeek dokumentovan (plan mode sesija) ✅
 
 **Zadatak:** Miroslav zatražio da Gemini preuzme foto/video rad za AntasLine (unapređenje postojećih proizvod fotografija, nove/slične varijante, video za sajt/oglase/social) u free modu, uz Claude koji vodi prioritetni red i prati kvotu. Uzgred pomenut "proksi" se u razjašnjenju ispostavio da je zapravo **claude-code-router (CCR)** — alat za rutiranje Claude Code-ovih poziva ka drugim modelima (DeepSeek za kodiranje, Gemini za long-context tekst), ne mrežni proxy za regionalni pristup. Dodatan zahtev: setup mora biti ponovo upotrebljiv na budućim projektima.
