@@ -1,3 +1,25 @@
+## 2026-08-04 [cpanel-live] 🔴 Nalaz: kontakt forma na `/kontakt/` tiho odbija validne unose — Firma/Ime i Kontakt telefon polja, bez poruke greške korisniku
+
+**Povod:** nedeljni izveštaj pokazao pad `hvala-za-poruku` pageview-a (6 vs 16, -62%) i `generate_lead` (9 vs 20, -55%) ove nedelje. Umesto nagađanja, testirano uživo na `/kontakt/` (3 test-slanja kroz pravu formu, uz M odobrenje pre svakog — svi test podaci jasno označeni "TEST DIJAGNOSTIKA").
+
+**Uzrok, potvrđen direktno u kombinovanom JS fajlu teme** (`wp-content/litespeed/js/e728…js`, Zion Builder form validacija):
+```js
+zn_validate_is_letters_ws → e.val().match(/[^A-Za-z\s]/i)   // Firma/Ime — SAMO ASCII slova+razmak
+zn_validate_is_numeric    → isNaN(e.val())                   // Kontakt telefon — razmaci/crte/+ odbijeni
+```
+- **Firma/Ime**: bilo koji broj, tačka, "&", crta, ili **srpska slova sa dijakritikom / ćirilica** odbijaju unos ("Antas d.o.o." bi palo).
+- **Kontakt telefon**: `isNaN()` odbacuje razmake — a broj je **svuda na sajtu ispisan baš sa razmacima** ("069 234 00 72"), pa korisnik koji kuca po tom uzoru dobija tihu blokadu.
+- Kad validacija padne: JS doda crvenu ivicu (`zn_field_not_valid`) i **NIKAD ne pošalje AJAX ka `admin-ajax.php`** — nema poruke, nema redirect-a, korisnik ne zna zašto se ništa ne desilo. Potvrđeno network-om (0 zahteva ka serveru kod pada validacije).
+- Test #2 (čist unos, samo slova) je **prošao ispravno** — AJAX poslat, redirect na `/hvala-za-poruku/` radi. Forma sama po sebi radi, problem je isključivo u prestrogoj/tihoj validaciji.
+
+**Nije nova regresija ove nedelje** — nema `[cpanel-live]` izmena forme u dnevniku, JS je nepromenjen. Verovatno dugogodišnji UX bag koji stalno "krade" deo submit-ova (baseline gubitak), ne objašnjenje celog pada 16→6 ove nedelje (to ostaje moguće prosta varijacija saobraćaja).
+
+**Napomena:** test #2 je poslao pravi test-mejl na `office@antasline.com` (Test Dijagnostika / test-diagnostika@example.com) i upisao +1 u `hvala-za-poruku` pageview brojaču — bezopasno, ignorisati/obrisati mejl.
+
+**#ceka-miroslav odluka o fix pristupu** — nije diran live kod ove sesije (samo read-only browser test). Predlog kad se odobri: ublažiti regex (dozvoliti brojeve/tačke/dijakritiku u Firma/Ime, dozvoliti razmake/crte/+ u telefonu pre normalizacije) + dodati vidljivu poruku greške umesto samo crvene ivice. Detalji: v. [[PROGRESS]] Blokeri.
+
+---
+
 ## 2026-08-04 [claude-code] [W3] Lighthouse Accessibility plan — sva 4 batch-a izvršena, skor 84–90 → 95–99 ✅
 
 **Izvršen odobreni radni nalog od 07-30** ([[migracija/2026-07-30-lighthouse-a11y-plan]]) — svi batch-evi po planu, plus 3 novootkrivena nalaza usput (real Lighthouse run pokazao ono što statična analiza planom nije mogla). Backup pre svakog DB dela: `antasline_local_2026-08-04_pre-lighthouse-a11y-batch1.sql` (full) + `...batch2.sql` (posts tabela).
