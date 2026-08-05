@@ -1,3 +1,15 @@
+## 2026-08-05 [claude-code] [W3/a11y] Blog arhiva (/aktuelnosti/) heading-order fix — H1→H3 skip zatvoren ✅
+
+**Zadatak:** Red čekanja od 08-04 (v. [[reference/naucene-lekcije]]/PROGRESS Blokeri) — `/aktuelnosti/` je jedina stranica koja je preživela sitewide heading-order fix (widget H5→H3, 08-04) i dalje sa skip-om, drugačiji uzrok od widget-a.
+
+**Dijagnoza potvrđena:** WoodMart core `templates/content-default.php` (i 5 sličnih varijanti) hardkoduje `<h3 class="wd-post-title">` za svaku karticu u blog loop-u — nema theme opcije analogne `widget_title_tag` za post-title u loop-u (proverено u `xts-woodmart-options`, postoje samo `page_title_tag` i `widget_title_tag`). Arhiva ima H1 (naslov "Aktuelnosti", `page_for_posts`=21) → odmah H3 kartice, nula H2 između.
+
+**Fix (bez diranja vendor/core fajlova):** core funkcija `woodmart_page_title()` već zove `do_action('woodmart_page_title_after_title')` odmah posle H1, u svakoj grani (portfolio/shop/generic/blog). Novi mu-plugin `mu-plugins/al-a11y-blog-archive-h2.php` kači se na taj hook, ubacuje vizuelno sakriven `<h2 class="al-sr-only">Lista članaka</h2>` samo kad `is_home() && !is_front_page()` (=/aktuelnosti/, ne home). Nova utility klasa `.al-sr-only` (clip-based sakrivanje, standardni obrazac) dodata u `antas-design.css`. Ostaje i posle migracije (nije lokalni workaround kao mail-log/harness).
+
+**Verifikovano:** `/aktuelnosti/` 200, heading niz sada H1→H2→H3 (curl potvrđen), 0 PHP grešaka/warning-a u izlazu. Regresija čista: home 200, proizvod-stranica 200, `/industrijski-podovi/` 200, `/pop-tenis/` 200, `/kontakt/` 200, conquest-post 200.
+
+**Nov, odvojen nalaz (van obima ove sesije):** single post stranice (npr. `epoksidni-podovi-ili-ecotile-podovi/`) imaju `<h3 class="entry-title title">` PRE glavnog `<h1 class="wd-entities-title wd-post-title title">` u document-outline redosledu (verovatno related-posts/sličan blok iznad `<article>`, ne diranje ove sesije) — nema poznatog fix-a, ide u red čekanja za sledeću a11y turu, nije #ceka-miroslav.
+
 ## 2026-08-05 [claude-code] [BLOK E] Prva prava Gemini foto-batch — 5 proizvoda, pun tok od praznog reda do WooCommerce prikaza ✅
 
 **Zadatak:** Nastavak BLOK E rada (M: "radili smo na gemini i rutiranju, želim da nastavimo"). `reference/gemini-red-cekanja.md` je od 08-04 bio prazan — popuniti ga i stvarno pustiti prvu foto-batch.
