@@ -108,6 +108,11 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
 
+### 2026-08-05 [claude-code] — Faza 1 RSA Terase pripremljena za upis (char-limit provera)
+- RSA banka za "Podloge za terase i bazene" (postoji od 2026-07-01) provereno karakter-po-karakter: 15/15 headline-a ≤30 karaktera, 4/4 descriptions ≤90 karaktera — ništa nije trebalo skraćivati, banka je spremna za copy-paste bez izmena.
+- Upis u Ads UI ostaje M akcija (nije nešto što se piše preko API-ja bez eksplicitne potvrde). Predat Miroslavu formatiran tekst spreman za paste.
+- **Sledeći korak:** M upisuje u Ads UI → javlja Ad Strength ocenu → CC upisuje rezultat i prelazi na Fazu 2 (ad grupe terase/bazeni/bergo).
+
 ### 2026-07-30 [claude-code] — Prva puna nedelja reaktivacije: potrošnja 8,7× veća, kumulativ 18 (blizu praga 20-30)
 - 23–29.07 vs 16–22.07: potrošnja **8.010,35 RSD vs 922,65** (+768%), klikovi **347 vs 45** (+671%), uvezene konverzije **8 vs 0**.
 - Obe kampanje pune isporuke: **Terase** 5.348,35 RSD / 296 klika / CTR 23,34% / CPC 18,07 / 3 konv · **ECOTILE** 2.662 RSD / 51 klik / CTR 20,73% / CPC 52,20 / 5 konv.
