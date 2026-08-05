@@ -1,3 +1,15 @@
+## 2026-08-05 [claude-code] [W3/a11y] Alt tekst u sadržaju postova — pravih 26/26 zatvoreno, 154 ikonice potvrđene ispravne ✅
+
+**Zadatak:** Nastavak crvenog reda čekanja "180/684 slika u sadržaju sa `alt=""`" iz ranije 08-05 sesije. Prvo dijagnostika (novi alat, `scan-alt-empty.php`, WP-CLI eval-file preko wp-load bootstrap-a) — brojka 180 potvrđena tačno.
+
+**Ključan nalaz koji menja obim zadatka:** od 180, **154 su dekorativne SVG ikonice** (`montaza.svg`, `izdrzljivost.svg`, `protivklizna.svg`, `odrzavanje.svg`, `izgled.svg`, `fleksibilna.svg`, `namena-*.svg`, `sertifikat.svg`, `garancija.svg`, `dostava.svg`) korišćene u `.al-card` F7 standard blokovima na ~33 stranice/posta — svaka stoji direktno pored `<h3>` naslova koji nosi ISTU informaciju (npr. `<img alt="" src=".../montaza.svg"/><h3>Montaža bez zastoja</h3>`). Prazan `alt` na dekorativnoj slici čija se informacija dupliraju u susednom tekstu je **ispravna WCAG praksa** (screen reader ne čita redundantno), ne bag — te 154 NISU dirane.
+
+**Stvarni red čekanja bio je 26 pravih fotografija u 11 postova** (case-study slike, proizvod-u-primeni, sertifikat/garancija bedževi): `3388` štamparije (4), `16608` oštećen industrijski pod (4), `16609` garaža (4), `16611` padel tenis (3), `4813` Bergo ultimate sertifikati (3), `3318` ESD pod (2), `3398` Bergo Solid (2), `3257`/`5276`/`6874`/`16613` (1 svaki). Alt tekst izveden iz postojećeg vidljivog caption-a odmah ispod slike (WP caption obrazac, npr. "Amicus, Beograd", "Ecotile pod u Hankook fabrici nakon 10 godina korišćenja") ili najbližeg naslova — ništa izmišljeno van onoga što stranica već tvrdi.
+
+Upis preko `$wpdb->update()` direktno (F7.24 pravilo — `wp_update_post()` bi pozvao `wp_unslash()` nad celim `post_content`-om). Proba pre upisa: 26/26 `<img>` tagova pronađeno tačno jednom po src-u, 0 preskočeno. Backup: `antasline_local_2026-08-05_pre-alt-tekst-sadrzaj-postovi.sql`.
+
+**Verifikovano:** ponovni sken posle upisa → tačno 154 preostalih (33 postova, sve ikonice, kako je i predviđeno), 11/11 izmenjenih URL-ova 200/1×H1. Zadatak zatvoren u potpunosti — nema više preostalih pravih fotografija bez alt-a u sadržaju postova/stranica; preostalih 154 je namerno `alt=""` i ne treba dirati.
+
 ## 2026-08-05 [claude-code] [W3/a11y] PROGRESS Blokeri čišćenje — stara h3-pre-h1 stavka uklonjena ✅
 
 **Zadatak:** Nova sesija (drugi `/antasline-sesija` poziv istog dana) izabrala "h3-pre-h1 istraga" kao glavni zadatak, na osnovu 🆕-obeležene stavke u PROGRESS Blokeri sekciji. Nezavisna istraga (`curl` + grep na `/epoksidni-podovi-ili-ecotile-podovi/`, pa `template-tags.php:1723`) je došla do IDENTIČNOG nalaza koji je ranija sesija istog dana već zatvorila (v. dole, "h3-pre-h1 nalaz na single post stranicama — PROVEREN, NIJE STVARAN BAG"): `woodmart_page_title()` ima hardkodovanu h3 granu za blog-single kontekst, ali Lighthouse `heading-order` flaguje samo skokove unapred — verifikovan non-issue.

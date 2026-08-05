@@ -1,9 +1,15 @@
 ---
 tip: reference
-azurirano: 2026-08-04
+azurirano: 2026-08-05
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## `alt=""` na slikama u sadržaju NIJE uvek bag — dekorativna ikonica pored istog teksta je ispravna WCAG praksa (alt-tekst red čekanja, 2026-08-05)
+- Red čekanja "180 slika bez alt-a u sadržaju" (nasleđen iz 07-30 a11y plana) je pretpostavljao da je svaka prazna `alt=""` propust. Merenje je pokazalo da je **154/180 dekorativna F7-standard ikonica** (`montaza.svg`, `izdrzljivost.svg` itd.) koja stoji direktno pored `<h3>` naslova sa ISTOM informacijom (npr. `<img alt="" src=".../montaza.svg"/><h3>Montaža bez zastoja</h3>`) — prazan `alt` tu je namerna, ispravna WCAG praksa (screen reader ne duplira info), ne propust.
+- Pravi obim je bio samo 26 slika (prave fotografije/case-study/sertifikat bedževi u 11 blog postova) — 7× manji nego što je red čekanja tvrdio.
+- **Pravilo ubuduće:** pre nego što se "N slika bez alt-a" tretira kao mehanički/veliki zadatak, prvo grupisati po `src` basename-u — ako se isti fajl (ikonica) ponavlja na desetine stranica pored teksta koji već nosi tu informaciju, to nije red čekanja nego već-zatvoren nalaz. Samo jedinstveni content-fotografije idu u pravi red čekanja.
+- Alt tekst za prave fotografije je najbezbednije izvući iz **postojećeg vidljivog caption-a/naslova odmah posle slike** (WP-ov caption obrazac, npr. "Amicus, Beograd") — ništa se ne izmišlja van onoga što stranica već tvrdi.
 
 ## Gemini Veo (video) nema free API tier — samo web UI; DeepSeek/Groq nemaju regionalno ograničenje za Srbiju (AI orkestracija istraživanje, 2026-08-04)
 - Gemini **slike** (`gemini-2.5-flash-image`, "Nano Banana") imaju solidan free API tier (~500/dan) i Srbija je zvanično podržan region — proxy/VPN nepotreban za foto rad.
