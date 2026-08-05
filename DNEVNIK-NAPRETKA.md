@@ -12,6 +12,19 @@
 
 **Nije urađeno:** verifikacija domena u Meta Events Manager (Business Settings → Brand Safety), Event Match Quality provera, Conversions API (server-side) — nema pristup Meta Business nalogu, Miroslav mora sam. Enhanced Conversions za Google Ads (pomenuto u CLAUDE.md §4.1) ostaje odvojen, nedirnut zadatak.
 
+**Dopuna, ista sesija — Advanced Matching (dupli sloj, Automatic + Manual):** Miroslav pokušao da uključi Automatic Advanced Matching u Meta Events Manager (Settings), prvi pokušaj se tiho vraćao na off bez poruke o grešci — drugi pokušaj uspeo (vrv. bio privremen glič ili je trebalo vreme da se propagira domain verifikacija). Odlučeno da se paralelno doda i **Manual Advanced Matching** preko GTM-a (Meta kombinuje oba signala, nema konflikta).
+
+**GTM izmene (GTM-TRDT8K9, Version 13):**
+- Novi trigger `Klik na Posalji (Zion forma)` — Click, All Elements, Click Classes contains `zn_contact_submit`
+- Novi tag `Meta Pixel - Capture Lead Data` — Custom HTML, koristi built-in `{{Click Element}}` varijablu, na klik hvata email/telefon iz forme (`form.closest('form.zn_contact_form')`, polja preko `input.zn_validate_is_email`/`input[name*="telefon"]`), normalizuje (lowercase email; telefon → digits-only sa `381` prefiksom umesto vodeće nule), upisuje u `sessionStorage` (`al_am_em`/`al_am_ph`) — **samo** ako `data-redirect` atribut forme sadrži `hvala-za-poruku` (safety guard)
+- `Meta Pixel - Base Code` izmenjen: čita `sessionStorage` na svakom page loadu, prosleđuje `em`/`ph` kao treći parametar `fbq('init', ...)` (Meta pixel.js sam hešuje SHA-256 u browseru), pa odmah briše sessionStorage da se ne provuče u nepovezane naredne page view-ove u istoj sesiji
+
+**Verifikacija (bez slanja prave lažne prijave u office@antasline.com — namerno izbegnut klik na pravi Submit):**
+1. Selektori/normalizacija testirani direktno preko JS na `/kontakt/` (test vrednosti upisane u polja, izvučene, normalizovane, pa odmah očišćene) — email `test.lead@example.com`, telefon `069 234 00 72` → `381692340072`, `data-redirect` ispravno pročitan
+2. Read-strana testirana preko GTM Preview (Tag Assistant) na `/hvala-za-poruku/` sa ručno seed-ovanim `sessionStorage` — `fbq._instance.pixelsByID['179235072594933'].userData` potvrđeno sadrži `em`+`ph` posle page load-a, `sessionStorage` potvrđeno očišćen posle čitanja
+
+**🔴 Poznato ograničenje, upisano u opis verzije:** selektori su vezani za trenutna imena polja na **live Zion Builder** formi (`zn_form_field_email_*`, `zn_form_field_kontakt_telefon_*`, klasa `zn_contact_submit`) — lokalni WoodMart build već koristi CF7 sa drugačijim imenima, pa će ovaj GTM tag morati da se prepravi na dan migracije (2026-08-31). Svesna odluka (M: "sada na live formi", ne čekati migraciju) — ubaciti u migracioni checklist kao stavku za taj dan.
+
 ---
 
 ## 2026-08-05 [claude-code] [W4 4.12] LinkedIn Insight Tag — GTM spec pripremljen, čeka Partner ID 📋
