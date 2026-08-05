@@ -1,7 +1,7 @@
 ---
 tip: blok
 blok: E
-status: aktivno — Gemini foto sloj RADI, ceo red čekanja (96/97 proizvoda, Tier 1-4) obrađen 2026-08-05, CCR instalacija nedovršena (npm paket nedostaje, čeka Miroslavljev nastavak)
+status: aktivno — Gemini foto sloj RADI, ceo red čekanja (96/97 proizvoda, Tier 1-4) obrađen 2026-08-05, CCR odbačen (M odluka 2026-08-05, nije potreban)
 azurirano: 2026-08-05
 ---
 
@@ -174,32 +174,31 @@ belu glavnu sliku. Sledeći foto rad: novi proizvodi kako se dodaju u
 katalog, ili re-run kad Miroslav odobri stvarne fotografije za 13
 NO_THUMBNAIL proizvoda.
 
-## CCR instalacija — stanje 2026-08-05 (sesija pukla usred rada)
+## CCR — ODUSTALO 2026-08-05 (nakon istrage, M odluka)
 
-Miroslav je pokušao instalaciju CCR-a ("ruter"), Claude Code se srušio
-usred toga. Dijagnostikovano u nastavku sesije:
+Miroslavljev prvi pokušaj instalacije se srušio usred rada; u nastavku
+(sledeća sesija) dijagnostikovano:
 
-- ✅ `~/.claude/settings.json` — čist, NIJE prepisan (proveren sadržaj:
-  `{"model":"sonnet","enabledPlugins":{},"effortLevel":"medium",
-  "theme":"dark","agentPushNotifEnabled":true}`)
-- 🔴 `ccr` komanda **nije nađena** (ni Git Bash PATH ni PowerShell)
-- 🔴 `npm list -g --depth=0` pokazuje samo `@anthropic-ai/claude-code`,
-  `firebase-tools`, `npm` — **`claude-code-router` paket NIJE globalno
-  instaliran**. Instalacija se nije završila pre pada sesije.
+- ✅ `~/.claude/settings.json` — čist, NIJE prepisan, ostao netaknut
+- 🔴 `ccr` komanda nije nikad ostala instalirana (npm paket se nije
+  dovršio pre pada) — nema rezidualnog stanja, čist povratak na nulu
+- **Verovatan uzrok kvara** (istraženo WebSearch/WebFetch, GitHub README +
+  ClaudeLog): CCR nema način da "default" rutira kroz postojeću Claude Code
+  pretplatu/login — svaka kategorija, uklj. `default`/`think`, mora imati
+  pravi provajder+API ključ u `config.json`. Ako je "anthropic" ostao kao
+  default bez posebnog Anthropic Console API ključa (odvojenog, plativog
+  po tokenu, različitog od pretplate), CCR traži ključ koji Miroslav nema
+  → otud "traži API" i nepovezani/zbunjeni odgovori od pogrešno
+  konfigurisanog provajdera.
 
-**Sledeći korak (kad Miroslav da OK):** `npm install -g
-@musistudio/claude-code-router`, zatim podesiti provider config (routing
-predlog je već iznad u ovom fajlu), testirati `ccr start` / `ccr ui`
-(`http://127.0.0.1:3458`), pa `ccr code` kao opt-in poziv (obican `claude`
-ostaje netaknut).
-
-**Radni tok (referenca, Miroslavljeva uputstva ovoj sesiji):**
-- `claude` → direktno na Anthropic (AntasLine SEO rad)
-- `ccr code` → kroz router na Gemini (WordPress/Big Panda rad)
-- Pre `ccr code`: proveriti da je servis aktivan (`ccr start`)
-- Ako ConnectionRefused: proveriti `~/.claude/settings.json` na
-  "127.0.0.1:3456"/"gemini" trag da CCR nije prepisao config → očistiti na
-  gornju čistu vrednost
+**M odluka (2026-08-05, posle razjašnjenja):** CCR se **ne instalira**.
+Nema stvarne potrebe — foto/video rad već ide direktno kroz
+`~/.claude/skills/ai-vizuali/` (Gemini API poziv iz skripte, bez ikakvog
+proxy sloja), a istraživanje/kod/planiranje već radi Claude sâm. CCR bi
+doneo samo optimizaciju troška (jeftiniji model za pozadinske Claude Code
+pozive), što je bila eksperimentalna, ne stvarna potreba — rizik/setup
+(API ključevi, config, prošli pad) ne vredi za to. Routing predlog iznad
+u fajlu ostaje kao istorijska referenca, ne kao aktivan plan.
 
 ## Foto arhiva (Downloads) — inventar 2026-08-05, čeka M odluku
 
@@ -212,8 +211,6 @@ ništa postavljeno — v. #ceka-M ispod.
 
 ## Šta čeka Miroslava
 
-- CCR instalacija (npm paket nedostaje, v. sekcija iznad) + DeepSeek/Groq
-  ključevi (Korak 4, `reference/gemini-vizuali-setup.md`)
 - Foto arhiva (Downloads) — odluka o (1) poreklu/pravima za Geoplast i
   Ergomat materijal, (2) kategorizaciji ~7 fotki bez jasne ključne reči u
   imenu, (3) formatu upotrebe (referenca-galerija na proizvodima / posebna
