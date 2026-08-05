@@ -1,3 +1,19 @@
+## 2026-08-05 [claude-code] [W4 4.11, M13] Meta Pixel ugrađen preko GTM — GTM-TRDT8K9 Version 12, potvrđeno da stiže na Meta strani ✅
+
+**Kontekst:** M13 (Pixel ID od Miroslava) je bio blokator za W4 4.11 — stigao usred sesije (`179235072594933`), zajedno sa potvrdom da ide preko GTM-a (isti obrazac kao GA4/Ads), na lokalu vs. live (odgovor: "izgleda da je već na sajtu" — provereno da NIJE, ni na lokalu ni na live pre ove sesije).
+
+**Urađeno:** dva nova GTM taga u GTM-TRDT8K9, isti obrazac kao postojeći GA4 setup:
+- **Meta Pixel - Base Code** — Custom HTML (standardni fbq init + PageView), trigger *All Pages*
+- **Meta Pixel - Lead** — `fbq('track','Lead')`, trigger *Page View - Thank You* (isti trigger kao `GA4 - Generate Lead`, `/hvala-za-poruku/`), sa Tag Sequencing (Base Code garantovano fajruje prvo)
+
+**Verifikacija (troslojna):** (1) GTM Preview na live URL-u pre objave — oba taga fired 1×, `fbevents.js` učitan, `fbq.loaded=true`, queue prazan. (2) `curl` direktno na `googletagmanager.com/gtm.js?id=GTM-TRDT8K9` posle objave — potvrđen pixel ID i `connect.facebook.net` u živom kontejneru (CDN propagacija prošla). (3) Miroslav potvrdio u Meta Events Manager: **2 eventa stigla sa antasline.com**.
+
+**Usput:** Submit je objavio i 2 ranije neodobrena drafta iz iste Workspace (`pdf_download`, `gallery_view`) po M odobrenju — sad su i oni live. GTM Version 12, opis verzije sadrži pun spisak. Pristup GTM-u zahtevao prebacivanje Chrome naloga (bio ulogovan pogrešan Google nalog `crpgujam@gmail.com` bez GTM pristupa; ispravan je `miroslav.markovic109@gmail.com`).
+
+**Nije urađeno:** verifikacija domena u Meta Events Manager (Business Settings → Brand Safety), Event Match Quality provera, Conversions API (server-side) — nema pristup Meta Business nalogu, Miroslav mora sam. Enhanced Conversions za Google Ads (pomenuto u CLAUDE.md §4.1) ostaje odvojen, nedirnut zadatak.
+
+---
+
 ## 2026-08-05 [claude-code] [W4 4.12] LinkedIn Insight Tag — GTM spec pripremljen, čeka Partner ID 📋
 
 **Kontekst:** Pixel ID za Meta (4.11, M13) još nije stigao od Miroslava — dok se čeka, uzet paralelan zadatak 4.12 (LinkedIn Insight Tag), takođe blokiran na pristupu (M14), ali priprema spec-a ne zavisi od pristupa.
