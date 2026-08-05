@@ -1,3 +1,20 @@
+## 2026-08-05 [claude-code] [BLOK E] Foto arhiva (Downloads) — inventar napravljen, čeka M odluku 📋
+
+**Zadatak:** "Pogledaj opet one foldere sa fotkama, vidi da li Gemini tu može da pomogne da se još neka iskoristi za sajt." Gemini-vizuali skill učitan, ali postojeći proizvod-foto red (`reference/gemini-red-cekanja.md`) je već bio potpuno zatvoren (96/97, 2026-08-05) — trebalo je naći na šta se zahtev zapravo odnosi.
+
+**Nalaz:** `C:\Users\Miroslav\Downloads` (deljen sa Miroslavljevim drugim poslovima — Qoltec elektronika, solarni paneli, Dahua/Hikvision kamere, R-Tek mreže, roofing stock foto) sadrži veliki, neiskorišćen arhiv **pravih referentnih/instalacionih fotografija** za AntasLine, potpuno odvojen od proizvod-kataloga: ~185 jedinstvenih fajlova posle uklanjanja duplikata i filtriranja nepovezanog sadržaja.
+
+- **Sport tereni (Bergo/3×3/pickleball/tenis/odbojka) ~100** — najveći deo: 2× identična ZIP arhiva "tereni za basket" (Google Drive export, 92 fajla, koristiti samo jednu) + ~10 van zipa. Lokacije širom Srbije/regiona (Avala, Subotica, Zlatibor, Bezdan, Despotovac, Slankamen, Valjevo, Vrčin, Vrdnik, Kanjiža, Jakovo, Sremčica, Graz, Švedska federacija...).
+- **ESD/antistatik industrijski ~10** — prave montaže kod klijenata: HTEC Niš, Quectel Beograd, Simanovci, Macola. Direktno pokriva CLAUDE.md §1 glavni B2B fokus.
+- **Geoplast/Runfloor (terase/parking) ~20** — mešavina pravih instalacija i proizvođačkih instrukcionih dijagrama, poreklo treba proveriti pre javne upotrebe.
+- **Ergomat linija (Isotrack/X-Mat/Mosolut) ~8** — verovatno proizvođački materijal, isto pitanje porekla.
+
+**Odluka Miroslava (AskUserQuestion):** "Samo organizuj i sačekaj moju odluku" (ne postavljati ništa na sajt još) + Gemini `--mode enhance` selektivno kad se izabere konkretan set (ne trošiti kvotu unapred na ceo arhiv).
+
+**Izvršeno:** pun kategorizovan inventar upisan u `reference/foto-arhiva-inventar.md` (kategorije, lokacije po imenu fajla, šta je namerno isključeno kao nepovezano/šum, otvorena pitanja). Bez izmena baze/sajta. Dodato u plan na zahtev: red u PROGRESS.md "Urađeno" tabeli + Blokeri sekciji, dopuna `blokovi/BLOK-E-ai-orkestracija.md` ("Šta čeka Miroslava").
+
+**#ceka-M:** (1) poreklo/prava korišćenja za Geoplast i Isotrack/X-Mat/Mosolut materijal (proizvođački vs. sopstveni), (2) kategorizacija ~7 fotki bez jasne ključne reči u imenu fajla (Bela Crkva, Srebrenica, British International School Belgrade, Spanoulis-Belgrade-7, OS Jovan Cvijić), (3) format upotrebe — referenca-galerija na proizvod stranicama vs. posebna "Reference" portfolio stranica vs. blog ilustracije.
+
 ## 2026-08-05 [claude-code] [W3/a11y] Alt tekst u sadržaju postova — pravih 26/26 zatvoreno, 154 ikonice potvrđene ispravne ✅
 
 **Zadatak:** Nastavak crvenog reda čekanja "180/684 slika u sadržaju sa `alt=""`" iz ranije 08-05 sesije. Prvo dijagnostika (novi alat, `scan-alt-empty.php`, WP-CLI eval-file preko wp-load bootstrap-a) — brojka 180 potvrđena tačno.

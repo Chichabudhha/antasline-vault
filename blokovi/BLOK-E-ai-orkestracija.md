@@ -201,10 +201,23 @@ ostaje netaknut).
   "127.0.0.1:3456"/"gemini" trag da CCR nije prepisao config → očistiti na
   gornju čistu vrednost
 
+## Foto arhiva (Downloads) — inventar 2026-08-05, čeka M odluku
+
+Van postojećeg proizvod-foto reda: `C:\Users\Miroslav\Downloads` sadrži
+~185 pravih referentnih/instalacionih fotografija (sport tereni Bergo/3×3/
+pickleball/tenis ~100, ESD/antistatik montaže ~10, Geoplast/Runfloor ~20,
+Ergomat Isotrack/X-Mat/Mosolut ~8) koje nikad nisu ušle u sajt. Pun inventar
+i kategorizacija: `reference/foto-arhiva-inventar.md`. Samo organizovano,
+ništa postavljeno — v. #ceka-M ispod.
+
 ## Šta čeka Miroslava
 
 - CCR instalacija (npm paket nedostaje, v. sekcija iznad) + DeepSeek/Groq
   ključevi (Korak 4, `reference/gemini-vizuali-setup.md`)
+- Foto arhiva (Downloads) — odluka o (1) poreklu/pravima za Geoplast i
+  Ergomat materijal, (2) kategorizaciji ~7 fotki bez jasne ključne reči u
+  imenu, (3) formatu upotrebe (referenca-galerija na proizvodima / posebna
+  "Reference" stranica / blog). Detalji: `reference/foto-arhiva-inventar.md`.
 
 ## Veze
 - `.claude/skills/gemini-vizuali/SKILL.md`
