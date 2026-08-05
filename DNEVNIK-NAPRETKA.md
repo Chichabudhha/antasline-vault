@@ -1,3 +1,13 @@
+## 2026-08-05 [claude-code] [a11y] Alt tekst za 76/94 proizvoda bez alt-a na glavnoj slici — ZATVORENO ✅
+
+**Zadatak:** Sledeći stavak posle zatvaranja a11y reda čekanja iz 08-04/08-05 — "Alt tekst za slike (67/81 proizvoda bez alt-a)" je bio namerno van obima 07-30 Lighthouse a11y ture, poseban budući zadatak (v. `[[migracija/2026-07-30-lighthouse-a11y-plan]]`). Sveža provera (baza je od 07-30 narasla sa 81→94 objavljenih proizvoda, uglavnom kroz S-serije/Gemini foto rad): **76/94** i dalje bez alt-a na `_thumbnail_id` slici.
+
+**Pristup:** alt = `post_title` (mehanički, ne izmišljena vizuelna deskripcija boje/materijala) — za razliku od ranijih ručno kuriranih alt-ova ("Bergo Excellence — ploča za brodske palube") koji su rađeni pojedinačno uz uvid u fotografiju. 76 proizvoda odjednom bez pregleda svake slike bi rizikovalo netačan opis (protiv CLAUDE.md pravila "ne izmišljati specifikacije") — naziv proizvoda je uvek tačan, sitewide minimum umesto delimičnog kuriranog rada.
+
+**Izvršeno:** `migracija/alati/job-alt-tekst-proizvodi.php` (wp-cli eval-file, proba pa `apply`) — upisuje `_wp_attachment_image_alt` SAMO gde je prazno/NULL, ne dira postojećih 18 kuriranih alt-ova. Dry-run potvrdio listu od 76 (13 proizvoda bez `_thumbnail_id` uopšte, van obima ovog fixa — nepovezano sa F2.9 "40 proizvoda bez slike" redom, koji čeka M). Upis primenjen, verifikovano: DB re-count 0 preostalih bez alt-a, live spot-check (`konusni-stitnik-za-i-profil`) potvrdio `alt="Konusni štitnik za I-profil"` u `<img>`, regresija `/kategorija-proizvoda/industrijski-podovi/` 200. Backup: `antasline_local_2026-08-05_pre-alt-tekst-proizvodi.sql`.
+
+**Preostalo van obima ove sesije:** 180/684 slika UNUTAR sadržaja postova/stranica sa `alt=""` — veći, ne-mehanički zadatak (svaka slika treba pregled konteksta, ne mehaničko popunjavanje kao proizvod-thumbnail), red čekanja za buduću sesiju, nije #ceka-miroslav.
+
 ## 2026-08-05 [claude-code] [W3/a11y] h3-pre-h1 nalaz na single post stranicama — PROVEREN, NIJE STVARAN BAG ✅
 
 **Zadatak:** Poslednja stavka iz a11y reda čekanja (08-05 nalaz): single post stranice imaju `<h3 class="entry-title title">Aktuelnosti</h3>` PRE glavnog `<h1 class="wd-entities-title wd-post-title title">`.
