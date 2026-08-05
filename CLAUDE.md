@@ -191,64 +191,7 @@ Negativna ključna reč `marmoleum` je dodata (broad).
 
 Lista "AntasLine — univerzalne negativne", primenjena na obe aktivne kampanje:
 
-```
-kupujemprodajem
-polovni
-polovno
-polovne
-polovan
-jysk
-"topli pod"
-stakla
-metalni
-ferobeton
-ferobetona
-betonski
-"industrijski beton"
-flooring
-tarkett
-sika
-rinol
-ibotac
-bimeco
-megapod
-"mega pod"
-teron
-"galerija podova"
-epoksi
-epoksid
-epoksidni
-epoksidnih
-epoksidne
-epoksidnog
-epoxy
-epoxi
-epoxidni
-епоксидни
-smola
-smole
-premaz
-izlivanje
-izliveni
-tecni
-tečni
-poliuretan
-poliuretanski
-[podovi]
-[podne obloge]
-[podovi cena]
-marmoleum
-deking
-decking
-wpc
-ikea
-teraco
-letvice
-pevex
-"uradi sam"
-"keramičke pločice"
-"podne pločice"
-```
+Puna lista: [[reference/negativne-kljucne-reci]]
 
 > Stanje potvrđeno u Ads UI 2026-07-06 (M2 zatvoren): lista primenjena na obe
 > kampanje, dodato 13 negativnih koje su falile, pauzirani KW `bastenski
@@ -419,6 +362,53 @@ Claude Code transkriptu sesije (`~/.claude/projects/<slug>/<session-id>.jsonl`),
 ne iz procene. Preko 150k u sesiji → predloži `/clear`. Ne čitati log fajl
 tokom rada osim na eksplicitan zahtev. Detalji i formula: [[reference/token-tracking]].
 
+### 8.7 MCP server i skillovi isključeni po defaultu — uključi po potrebi
+Sledeće je namerno isključeno 2026-08-05 (`/doctor` čišćenje — nula poziva
+u 50 skeniranih sesija), radi manje potrošnje konteksta. **Ako zadatak
+liči na bilo šta od opisanog ispod, predloži Miroslavu da uključiš dotičnu
+stavku i sačekaj potvrdu — ne uključuj sam bez pitanja, i ne pretpostavljaj
+da ne postoji samo zato što je isključeno.**
+
+- **`magic` (MCP server)** — `@21st-dev/magic`, AI generator UI komponenti
+  iz opisa/screenshot-a. Uključi: `/mcp enable magic`.
+  Kad: generisanje/pretraga gotove UI komponente (frontend build, novi
+  WoodMart blok, vizuelni prototip).
+- **`design` (globalni skill)** — brand identity, design token-i, UI
+  styling, generisanje loga (55 stilova), CIP (50 deliverable-a), HTML
+  prezentacije, banner/icon dizajn, social foto. Uključi: obriši
+  `"design": "off"` iz `skillOverrides` u `~/.claude/settings.json`.
+  Kad: sveobuhvatan brend/dizajn zadatak (npr. rad na brend knjizi,
+  logu, CIP-u).
+- **`ui-ux-pro-max` (globalni skill)** — UI/UX intelligence: 67 stilova,
+  161 paleta, 57 font-parova, 25 chart tipova, 21 stack (React, Vue,
+  Tailwind, shadcn/ui...). Uključi: isto, obriši
+  `"ui-ux-pro-max": "off"`. Kad: build/review/fix UI koda, izbor
+  palete/tipografije/layout-a za WoodMart rebuild stranice.
+- **`banner-design` (globalni skill)** — baneri za social/ads/web
+  hero/print, više art-direction opcija. Uključi: obriši
+  `"banner-design": "off"`. Kad: W6 social/Ads kreativa.
+- **`brand` (globalni skill)** — brand voice, vizuelni identitet,
+  messaging framework, konzistentnost brenda. Uključi: obriši
+  `"brand": "off"`. Kad: pitanja tona/glasa brenda, brend usklađenost
+  sadržaja.
+- **`design-system` (globalni skill)** — arhitektura design token-a,
+  specifikacije komponenti, generisanje slajdova. Uključi: obriši
+  `"design-system": "off"`. Kad: sistematizacija dizajna preko više
+  stranica/komponenti.
+- **`slides` (globalni skill)** — strateške HTML prezentacije sa
+  Chart.js, copywriting formule. Uključi: obriši `"slides": "off"`.
+  Kad: Miroslav traži prezentaciju/izveštaj u slide formatu.
+- **`ui-styling` (globalni skill)** — shadcn/ui, Tailwind CSS,
+  canvas-based dizajn, dark mode, teme. Uključi: obriši
+  `"ui-styling": "off"`. Kad: implementacija UI komponenti sa
+  shadcn/Tailwind stack-om.
+- **`frontend-design` (plugin skill, `frontend-design@claude-plugins-official`)**
+  — vođenje ka nešablonskom, autorskom vizuelnom pravcu (paleta,
+  tipografija, layout) pri gradnji nove ili preoblikovanju postojeće UI.
+  Uključi: u `.claude/settings.local.json` postavi
+  `"frontend-design@claude-plugins-official": true` (ili obriši ključ).
+  Kad: potreban je izražen estetski pravac, ne generički template.
+
 ---
 
 ## 9. KLJUČNE LEKCIJE (da se ne ponavljaju greške)
@@ -582,37 +572,9 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 
 ## 14. ⛔ ISTORIJSKI SNAPSHOT (2026-07-02) — SUPERSEDED, ne koristiti za "gde smo stali"
 
-> Ova sekcija je snimak stanja od 2026-07-02 (BLOK A/B tek zatvoreni, W1 rebuild
-> jedva počeo). Svi brojevi/blokeri ispod su odavno rešeni ili prevaziđeni —
-> zadržano samo kao istorijski trag. **Za trenutno stanje uvek koristi §12**
-> (redom: [[2026-07-06-MASTER-PLAN-V2]] → [[PROGRESS]] → [[DNEVNIK-NAPRETKA]]).
-
-### 🎯 Konačan cilj (kako je glasio 2026-07-02)
-Redizajn sajta + live deployment (do 2026-09-02 — **datum prevaziđen, važeći go-live je 2026-08-31 po [[2026-07-06-MASTER-PLAN-V2]]**) za maksimalnu prodaju sa minimalnim budžetom.
-Prioritet: **Tehnička → SEO → Ads**
-
-### ✅ Gotovo (na dan 2026-07-02)
-- BLOK A (Tracking) + BLOK B (Publike)
-- Lokalni WordPress build
-- Vault organizacija
-- 8 nedeljnih dnevnika sa planovima
-
-### ⏳ U toku (na dan 2026-07-02, sve odavno zatvoreno — vidi [[PROGRESS]])
-- BLOK C (Redirect mapa, Content parity, On-page) — ✅ iscrpljen, vidi [[blokovi/BLOK-C-sledece]]
-- 4 nove landing stranice (iz GSC keywords) — ✅ objavljene (W2 Tier1, 2026-07-10)
-- FAQ + schema za basketball — ✅ zatvoreno
-
-### 🔴 Kritični blokeri na dan 2026-07-02 (svi rešeni)
-1. ✅ SSH config — WooCommerce migracija — import na lokal urađen 2026-07-04 (bez SSH, export/import); SSH za live prebacivanje potvrđen 2026-07-21 (M6)
-2. ✅ Google Ads balans + verifikacija — odblokirano 2026-07-04
-3. ✅ GA4 publike — 6 publika kreirano, BLOK B zatvoren
-4. ✅ Konverzije info — hvala-proxy praćen nedeljno od 2026-07-21 (W5 5.4)
-
-### 📊 Metrike na dan 2026-07-02 (istorijske, videti [[PROGRESS]] za aktuelne)
-- 53 kontakta/mesec (`/hvala-za-poruku/`) — jul projekcija ~92/mes (5.1)
-- 94% organski, 6% plaćeni
-- Conversion rate: 0,88%
-- Ads spend: 40k RSD/mesec (kampanje trenutno pauzirane, M na godišnjem)
+Arhivirano u [[dnevnik/2026-07-02-arhiva-snapshot]] (izmešteno tokom `/doctor`
+čišćenja 2026-08-05). Za trenutno stanje uvek koristi §12 (redom:
+[[2026-07-06-MASTER-PLAN-V2]] → [[PROGRESS]] → [[DNEVNIK-NAPRETKA]]).
 
 ---
 
