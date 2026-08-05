@@ -1,3 +1,11 @@
+## 2026-08-05 [claude-code] [W3/a11y] PROGRESS Blokeri čišćenje — stara h3-pre-h1 stavka uklonjena ✅
+
+**Zadatak:** Nova sesija (drugi `/antasline-sesija` poziv istog dana) izabrala "h3-pre-h1 istraga" kao glavni zadatak, na osnovu 🆕-obeležene stavke u PROGRESS Blokeri sekciji. Nezavisna istraga (`curl` + grep na `/epoksidni-podovi-ili-ecotile-podovi/`, pa `template-tags.php:1723`) je došla do IDENTIČNOG nalaza koji je ranija sesija istog dana već zatvorila (v. dole, "h3-pre-h1 nalaz na single post stranicama — PROVEREN, NIJE STVARAN BAG"): `woodmart_page_title()` ima hardkodovanu h3 granu za blog-single kontekst, ali Lighthouse `heading-order` flaguje samo skokove unapred — verifikovan non-issue.
+
+**Uzrok neusklađenosti:** "Urađeno" tabela u PROGRESS.md i DNEVNIK su ažurirani kad je nalaz zatvoren, ali odgovarajuća stavka u Blokeri sekciji (🆕 red) nije uklonjena u istoj izmeni — ostala je da izgleda kao otvoren zadatak.
+
+**Izvršeno:** stari 🆕 red obrisan iz PROGRESS.md Blokeri. Nema izmena koda/baze — čisto dokumentaciono usklađivanje. **Pravilo za ubuduće:** kad se stavka zatvara u "Urađeno", odmah proveriti da li ista stavka postoji i u Blokeri sekciji pa je ukloniti u istom prolazu.
+
 ## 2026-08-05 [claude-code] [a11y] Alt tekst za 76/94 proizvoda bez alt-a na glavnoj slici — ZATVORENO ✅
 
 **Zadatak:** Sledeći stavak posle zatvaranja a11y reda čekanja iz 08-04/08-05 — "Alt tekst za slike (67/81 proizvoda bez alt-a)" je bio namerno van obima 07-30 Lighthouse a11y ture, poseban budući zadatak (v. `[[migracija/2026-07-30-lighthouse-a11y-plan]]`). Sveža provera (baza je od 07-30 narasla sa 81→94 objavljenih proizvoda, uglavnom kroz S-serije/Gemini foto rad): **76/94** i dalje bez alt-a na `_thumbnail_id` slici.
