@@ -1,3 +1,37 @@
+## 2026-08-05 [claude-code] [W3/a11y] h3-pre-h1 nalaz na single post stranicama — PROVEREN, NIJE STVARAN BAG ✅
+
+**Zadatak:** Poslednja stavka iz a11y reda čekanja (08-05 nalaz): single post stranice imaju `<h3 class="entry-title title">Aktuelnosti</h3>` PRE glavnog `<h1 class="wd-entities-title wd-post-title title">`.
+
+**Uzrok nađen:** to je WoodMart core "page title" traka (`woodmart_page_title()`, hardkodovana h3 grana kod blog single konteksta, `inc/template-tags/template-tags.php:1723`) koja prikazuje naziv blog arhive ("Aktuelnosti") kao kontekst/breadcrumb iznad stvarnog članka — sličan obrazac kao WooCommerce shop naslov iznad kategorija, ali za blog je hardkodovan na h3 umesto promenljivog `$title_tag`.
+
+**Provera (Lighthouse `heading-order` audit, axe-core pravilo):** pravilo flaguje SAMO skokove unapred (npr. H1→H3, kao što je bio slučaj sa `/katalog/` ranije u ovoj sesiji) — opadajući redosled (H3→H1→H2...) nije prekršaj. Pokrenut pun accessibility audit na `/epoksidni-podovi-ili-ecotile-podovi/`: **score 1.0, `heading-order` score=1, 0 stavki.** Nema šta da se popravlja — red čekanja se zatvara kao verifikovan non-issue, ne kao odloženi rad.
+
+## 2026-08-05 [claude-code] [W3/a11y] color-contrast na "sa PDV" cena-sufiksu (mist sekcije) — ZATVORENO ✅
+
+**Zadatak:** Nastavak iste sesije — nalaz otkriven usput dok se verifikovala regresija heading-order/target-size fixa (v. dole).
+
+**Dijagnoza:** `.woocommerce-price-suffix` ("sa PDV") nasleđuje generičku sivu boju (#767676, WooCommerce/tema default) — na beloj pozadini prolazi (4.545:1), ali product grid na kategorija stranicama ide kroz `.al-section--mist` wrapper (`--al-mist: #EEF3F8`), gde isti tekst pada na 4.06:1 (min 4.5:1). Isti obrazac kao već zatvoren `.al-label` mist-fix iz 07-30 batch-a (v. `[[DNEVNIK-NAPRETKA]]` 2026-08-04 Lighthouse plan) — taj batch je pokrio custom `.al-` komponente, ne generičke WooCommerce elemente kao ovaj.
+
+**Fix:** `.al-section--mist .woocommerce-price-suffix { color: #555; }` u `antas-design.css`, odmah posle postojećeg `.al-label` mist-fix reda (isti obrazac, isti `--color-gray-700` token). Testirano uživo pre upisa (screenshot: tekst vidljivo tamniji, bez pomeranja layout-a).
+
+**Verifikovano:** `/kategorija-proizvoda/industrijski-podovi/` accessibility 1.0 → 1.0 (heading-order/target-size iz prethodnog fixa i dalje score=1, color-contrast sada takođe 1). Regresija: `kosarkaske-konstrukcije` i `vestacka-trava` kategorije 200.
+
+## 2026-08-05 [claude-code] [W3/a11y] Sitewide heading-order (shop/search) + target-size (product kartice) — oba ZATVORENA ✅
+
+**Zadatak:** Najavljena "sledeća a11y tura" iz 08-04/08-05 zapisa (PROGRESS Blokeri): sitewide `heading-order` + `target-size` na product karticama, WoodMart core layout.
+
+**Dijagnoza (Lighthouse 13.4, `npx lighthouse --only-categories=accessibility`, JSON audit detalji):**
+- `heading-order`: samo `/katalog/` (WooCommerce shop archive) i pretraga (`?s=...&post_type=product`) idu H1→H3 direktno (nema H2 između) — product-kategorija arhive (`/kategorija-proizvoda/...`) VEĆ imaju sopstveni H2 (al-display--lg sekcije), home/single-product/blog arhiva su čisti, nisu dirani.
+- `target-size`: `h3.wd-entities-title a` (naslov proizvoda) i `.wd-product-cats a` (kategorija-tag) na SVAKOJ product kartici sitewide — goli tekst linkovi ~16-18px visoki, ispod Lighthouse minimuma 24×24px + nedovoljan razmak između njih.
+
+**Fix (bez diranja vendor/core fajlova, isti obrazac kao 08-04/08-05 heading fixevi):**
+- `mu-plugins/al-a11y-blog-archive-h2.php` proširen (bio samo za blog arhivu): sad ubacuje `<h2 class="al-sr-only">Lista proizvoda</h2>` i za `is_shop()`/`is_search()`, preko istog postojećeg core hook-a `woodmart_page_title_after_title`.
+- `antas-design.css`: nova sitewide pravila `.wd-entities-title a, .wd-product-cats a { display: inline-block; padding: 4px 0; }` — raste stvarna klikljiva površina (title link 17.8px→29px, cats link 16.7px→27.9px, oba ≥24px) bez menjanja vidljivog font-size-a. Testirano uživo preko Chrome DevTools injekcije PRE upisa u fajl (screenshot pre/posle, razlika samo par px dodatnog razmaka između naslova i kategorije, grid se ne lomi).
+
+**Verifikovano (Lighthouse re-run posle fixa):** `/katalog/` accessibility 1.0 (heading-order + target-size oba score=1, 0 stavki), pretraga heading-order/target-size score=1 (ukupan 0.97 zbog NEPOVEZANOG nalaza ispod). Regresija čista na 4 već-čiste stranice (home, kategorija, proizvod, blog arhiva) — heading-order/target-size ostaju score=1 svuda.
+
+**🆕 Nov, odvojen nalaz (van obima, potvrđeno da NIJE regresija ovog fixa — isti score i u baseline pre-fix merenju):** `color-contrast` na `/kategorija-proizvoda/industrijski-podovi/` (i verovatno sve kategorije) — `.woocommerce-price-suffix` ("sa PDV" tekst uz cenu) 4.06:1 kontrast, ispod 4.5:1 minimuma (`#767676` na `#eef3f8` pozadini, 10.8px font). Red čekanja za narednu a11y sesiju, nije #ceka-miroslav.
+
 ## 2026-08-05 [claude-code] [W3/a11y] Blog arhiva (/aktuelnosti/) heading-order fix — H1→H3 skip zatvoren ✅
 
 **Zadatak:** Red čekanja od 08-04 (v. [[reference/naucene-lekcije]]/PROGRESS Blokeri) — `/aktuelnosti/` je jedina stranica koja je preživela sitewide heading-order fix (widget H5→H3, 08-04) i dalje sa skip-om, drugačiji uzrok od widget-a.
