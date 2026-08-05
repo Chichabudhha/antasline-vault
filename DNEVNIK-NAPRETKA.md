@@ -1,3 +1,13 @@
+## 2026-08-05 [claude-code] [W4 4.12] LinkedIn Insight Tag — GTM spec pripremljen, čeka Partner ID 📋
+
+**Kontekst:** Pixel ID za Meta (4.11, M13) još nije stigao od Miroslava — dok se čeka, uzet paralelan zadatak 4.12 (LinkedIn Insight Tag), takođe blokiran na pristupu (M14), ali priprema spec-a ne zavisi od pristupa.
+
+**Urađeno:** `[[reference/linkedin-insight-tag-prep]]` — pun GTM ožičavanje spec: Faza A (built-in "LinkedIn Insight Tag" tag, All Pages trigger, `ad_storage` consent gate — isti mehanizam kao postojeći GA4/tel tagovi, bez izmena na WP mu-plugin strani) + Faza B (Conversion Tracking, Lead-ekvivalent event na `/hvala-za-poruku/` Page View, mirror `generate_lead` triggera — odloženo do stvarnog Ads naloga). Konkretni koraci za Miroslava upisani u fajl (Campaign Manager pristup → Insight Tag → Partner ID).
+
+**Nije urađeno:** stvarno kreiranje taga u GTM UI-ju — čeka Partner ID od Miroslava (M14 i dalje otvoreno), kao i kod 4.11.
+
+---
+
 ## 2026-08-05 [claude-code] [BLOK E] Foto arhiva (Downloads) — inventar napravljen, čeka M odluku 📋
 
 **Zadatak:** "Pogledaj opet one foldere sa fotkama, vidi da li Gemini tu može da pomogne da se još neka iskoristi za sajt." Gemini-vizuali skill učitan, ali postojeći proizvod-foto red (`reference/gemini-red-cekanja.md`) je već bio potpuno zatvoren (96/97, 2026-08-05) — trebalo je naći na šta se zahtev zapravo odnosi.
