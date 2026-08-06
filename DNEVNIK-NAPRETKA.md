@@ -26,6 +26,8 @@
 
 **Zaključak:** V3 pun restore zatvoren tehnički — čeka **Miroslavljevu ličnu vizuelnu proveru** pre konačnog zatvaranja (isti korak koji je prošli put uhvatio problem koji su automatski testovi propustili).
 
+**M vizuelna provera (2026-08-06, isti dan):** "za sada je sve ok na prvi pogled" — prva potvrda, **nije još pun regresioni pregled** (prošli put je baš dublji pregled, ne prvi utisak, uhvatio 82/108 slomljenih slika). Ne proglašavati V3 konačno zatvorenim dok se ne uradi šira provera (forme, linkovi, mobilni prikaz) ili dok M eksplicitno ne potvrdi da je gotovo.
+
 ---
 
 ## 2026-08-06 [claude-code] [W3 migracija] Staging puno postavljanje V3 — 3 čista paketa napravljena i prebačena na FTP, cPanel prompt spreman
