@@ -1,6 +1,6 @@
 ---
 tip: reference
-azurirano: 2026-08-05
+azurirano: 2026-08-06
 ---
 
 # Naučene lekcije (tehnički gotchas)
@@ -10,6 +10,16 @@ azurirano: 2026-08-05
 - **Pravi uzrok otkriven tek kad je i 5-bajtni test fajl pao** sa `451 Error during write to file` — to je server-side (Pure-FTPd) greška, ne mrežni prekid. FTP nalog je imao disk kvotu (~530–560 MB, `.ftpquota` fajl vidljiv u root listing-u tog naloga) koja se tiho ispraznila oko pola giga uploadovanog sadržaja; svaki dalji pisanje (čak i 5 bajtova) je odbijeno. Potvrđeno brisanjem dela već-otpremljenog sadržaja → test fajl odmah prošao.
 - **Pravilo ubuduće:** kad veliki FTP transfer konzistentno umire na (grubo) istoj kumulativnoj količini podataka bez obzira na chunk veličinu/resume pokušaje — prvo posumnjati na kvotu naloga (probaj upload trivijalnog test fajla), tek onda trošiti vreme na mrežnu dijagnostiku (chunking, resume, retry loops). `curl -I ftp://.../fajl` vraća `Content-Length` preko `SIZE` komande — koristan brz način provere koliko je stvarno stiglo na server bez punog re-liste.
 - **Rešenje kad je kvota stvarni limit:** ne šalji sve odjednom — razdvoji na (a) kod-only paket (tema/plagini/WP core, bez media biblioteke) i (b) diff-only paket (samo NOVI/izmenjeni fajlovi od poslednjeg punog uploada, filtrirano po mtime + putanji na trenutni mesec/godinu folder da se izbegnu lažni pogoci od starih fajlova čiji je mtime dirnut nekim ranijim bulk restore/copy procesom bez stvarne izmene sadržaja).
+
+## Staging kod-paket sa lokala nosi i `wp-config.php`/`.htaccess` — oba se moraju ručno ispraviti posle raspakivanja (staging refresh, 2026-08-06)
+- Kod-only tar.gz (tema/plugin/core) pakovan direktno iz lokalnog XAMPP docroot foldera povlači i `wp-config.php` (DB_NAME/DB_USER/lozinka za `antasline_local`/`root`) i `.htaccess` (WordPress blok sa `RewriteBase /antasline/`, i briše Basic Auth blok koji na stagingu stoji IZNAD WordPress bloka). Poznat je bio samo `.htaccess` gotcha (07-21); `wp-config.php` prepis nije bio predviđen u planu i probio je Korak 4 ("samo proveri da radi") jer je fajl izgledao kao da postoji ali su vrednosti tihe pogrešne.
+- **Pravilo ubuduće za svaki sledeći FTP/kod-paket refresh**: posle raspakivanja koda, PRVO proveriti `grep DB_NAME wp-config.php` (očekivati `antasline_staging`, ne `antasline_local`) PRE bilo kakvog `wp option get` poziva — greška je vidljiva odmah kao "Access denied for root@localhost" a ne kao suptilan podatak problem.
+- `.htaccess` Basic Auth se popravlja ručno odmah; `RewriteBase`/`index.php` deo WordPress bloka se sam ispravi posle `wp rewrite flush --hard` (Korak 7) jer WP taj blok generiše iz tekućeg `siteurl`-a — ne treba ga ručno dirati, samo ne preskočiti flush korak.
+
+## Tabela prefiks u SQL dump-u može biti `wpgs_` (malo slovo) iako je dokumentacija svuda "wpGs_" (staging refresh, 2026-08-06)
+- `lower_case_table_names=0` na ovom MySQL serveru (Linux, cPanel) — dakle server ništa ne lowercase-uje sam; ako je stvarni sadržaj dump-a `wpgs_*`, to je tako pisano od izvora (verovatno kako se ispostavilo da lokalni MariaDB export ozbiljno tretira case iz nekog ranijeg koraka gde je prefiks svuda upisan malim slovom, uprkos tome što se u pisanoj dokumentaciji — CLAUDE.md, PROGRESS, DNEVNIK — svuda referiše kao "wpGs_").
+- Simptom: `wp option get siteurl` posle importa vraća "The site you have requested is not installed... Found installation with table prefix: wpgs_" iako `$table_prefix` u `wp-config.php` piše `'wpGs_'` slovo-po-slovo iz uputstva.
+- **Pravilo ubuduće (posebno bitno za 31.08 pravu migraciju)**: pre pisanja `$table_prefix` u `wp-config.php`, proveriti stvarni sadržaj dump-a — `grep -o "CREATE TABLE \`[a-zA-Z_]*\`" dump.sql | head -3` — i koristiti TAČNO to, ne prepisivati "wpGs_" iz dokumentacije bez provere. Ako se ovaj mismatch nikad ne pojavi na pravoj live→produkcija migraciji (mogu biti različiti dump-ovi/export putevi), ovo pravilo se briše kao irelevantno; do tada je aktivna provera.
 
 ## `alt=""` na slikama u sadržaju NIJE uvek bag — dekorativna ikonica pored istog teksta je ispravna WCAG praksa (alt-tekst red čekanja, 2026-08-05)
 - Red čekanja "180 slika bez alt-a u sadržaju" (nasleđen iz 07-30 a11y plana) je pretpostavljao da je svaka prazna `alt=""` propust. Merenje je pokazalo da je **154/180 dekorativna F7-standard ikonica** (`montaza.svg`, `izdrzljivost.svg` itd.) koja stoji direktno pored `<h3>` naslova sa ISTOM informacijom (npr. `<img alt="" src=".../montaza.svg"/><h3>Montaža bez zastoja</h3>`) — prazan `alt` tu je namerna, ispravna WCAG praksa (screen reader ne duplira info), ne propust.

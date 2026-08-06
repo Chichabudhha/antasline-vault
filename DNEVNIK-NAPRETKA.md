@@ -26,6 +26,27 @@
 **Van obima ove sesije (namerno neizvršeno):** `porto`/`porto-child` legacy teme (37 MB, mrtve, zamenjene WoodMart-om još u julu) primećene tokom veličina-foldera provere ali NISU uklonjene — M nije to tražio ovom prilikom, ostaje kao mogući budući quick-win.
 
 ---
+## 2026-08-06 [cpanel-live] [W3 migracija] Staging refresh — ZATVOREN, delimičan preko FTP-a, 3 nova gotcha-a ✅
+
+**Kontekst:** Izvršen `[[migracija/2026-08-06-prompt-staging-refresh]]` na cPanel terminalu (`wp1.oblak.host`) — delimičan refresh postojećeg `staging.antasline.com` (živi od 07-21): kod+baza potpuno zamenjeni, `wp-content/uploads` samo dopunjen diff paketom (FTP kvota ~530-560MB je onemogućila slanje pune sveže arhive, v. [[reference/naucene-lekcije]] FTP kvota unos od ranije danas).
+
+**Pre-koraka:** obrisana 2 stara 07-21 artefakta iz `~/` (3.0GB `antasline-wp-site-20260721.tar.gz` + 47MB `antasline_staging_dump_20260721.sql`) — potvrđeno bezbedno (već raspakovani 07-21, prompt Korak 9 ih i onako traži da se obrišu).
+
+**Izvršeno 1:1 po promptu (Koraci 0-11):** docroot potvrđen nepromenjen (`/home/antasline/staging`, bez mismatch-a ovog puta) → 17 chunk delova (8 uploads-diff + 9 kod) spojeno, svi md5sum OK, oba tar.gz prošla integritet proveru → kod paket raspakovan (`--strip-components=1`) → uploads-diff raspakovan (595 fajlova u `2026/08/`) → DB reset + import (`antasline_staging_dump_2026-08-06.sql`) → `wp search-replace localhost/antasline → https://staging.antasline.com` (**14.124 zamena**) → rewrite flush --hard → cleanup svih upload artefakata sa FTP landing foldera i docroot-a → HTTP verifikacija.
+
+**🔴 Gotcha #1 (poznat, ponovljen): kod paket je prepisao `.htaccess`** — Basic Auth blok izgubljen + `RewriteBase`/`index.php` target pokupili lokalni `/antasline/` prefiks iz izvornog XAMPP builda. Basic Auth blok vraćen ručno pre nastavka; RewriteBase se sam ispravio posle `wp rewrite flush --hard` (WordPress regeneriše taj blok iz tačnog `siteurl`-a).
+
+**🔴🔴 Gotcha #2 (NOV, nije bio predviđen u promptu): kod paket je TAKOĐE prepisao `wp-config.php`** sa lokalnim dev vrednostima (`DB_NAME=antasline_local`, `DB_USER=root`, prazna lozinka) — jer je izvorni paket na lokalu pakovan iz celog docroot foldera uključujući `wp-config.php`, ne samo tema/plugin/core fajlove kako je pretpostavljeno. Ispravljeno na `DB_NAME=antasline_staging`, `DB_USER=antasline_antasline` (potvrđeno preko `uapi Mysql list_users` — **ne** preko imena FTP naloga `staging@`, to bi dalo pogrešnog korisnika).
+
+**🔴🔴🔴 Gotcha #3 (NOV): `~/staging-db-credentials.txt` lozinka nije radila** — `Access denied for user antasline_antasline@localhost (using password: YES)`, potvrđeno i direktno preko `mysql` klijenta (ne samo WP-CLI), bez skrivenih CRLF/whitespace problema u fajlu (proveren `od -c`). Isti obrazac kao raniji `ftp-staging-creds.txt` slučaj (pogrešno označen sadržaj) — fajl je imao "username: staging" što ne odgovara stvarnom cPanel MySQL korisniku. **M odobrio reset preko cPanel-a** (`uapi Mysql set_password user=antasline_antasline`), nova lozinka potvrđena direktnim mysql konektom PRE upisa u `wp-config.php`, `~/staging-db-credentials.txt` ažuriran sa tačnim DB_NAME/DB_USER/DB_PASSWORD/DB_HOST i napomenom zašto je promenjeno.
+
+**🔴🔴🔴🔴 Gotcha #4 (NOV, važno za pravu migraciju 31.08): tabela prefiks u dump-u je `wpgs_` (malo g), NE `wpGs_` kako CLAUDE.md/PROGRESS/skill svuda pišu.** Posle importa, WP-CLI je javljao "site not installed... Found installation with table prefix: wpgs_" — `SHOW TABLES` i `grep CREATE TABLE` u samom dump fajlu potvrdili da su tabele doslovno `wpgs_*` (proveren i `lower_case_table_names=0` na serveru, dakle MySQL ništa ne lowercase-uje sam — dump je od početka pisan malim slovom). `table_prefix` u `wp-config.php` ispravljen na `'wpgs_'` da odgovara stvarnom sadržaju. **Pravilo za 31.08 pravu migraciju: proveriti stvarni prefiks u dump/CREATE TABLE pre pisanja wp-config.php, ne pretpostaviti "wpGs_" iz dokumentacije.**
+
+**Verifikacija (Korak 10):** 401 bez auth / 200 sa auth (`curl -I`) · `/industrijski-podovi/`, `/katalog/`, `/kontakt/` sve 200 · bare `/proizvod/` 404 (očekivano — samo permalink base slug, ne prava arhiva stranica, isto kao `/kategorija-proizvoda/` bare) ali `/proizvod/mrezica-za-kos/` (pravi proizvod slug) 200 potvrđuje da permalink struktura radi · homepage `<title>Početna | Antas Line</title>` (Rank Math aktivan, sanity check prošao) · nova avgustovska slika (`16919-gallery-1-300x300.webp`) 200 potvrđuje da je uploads-diff stvarno upisao fajlove.
+
+**Backup napomena:** DB reset je bio bez `wp db export` pred-koraka (prompt ga nije tražio jer je staging jednosmerni radni prostor, ne izvor istine) — ako zatreba rollback na pre-refresh stanje, jedini put je ponovno postavljanje sa 07-21 arhivom koja je upravo obrisana; nije rizik po pravi sadržaj (lokal + live ostaju netaknuti).
+
+Nove lekcije upisane u [[reference/naucene-lekcije]]. Sledeći korak: Miroslav vizuelno pregleda `staging.antasline.com` (auth `stagingtest`/kredencijali u `~/staging-htaccess-creds.txt`).
 
 ## 2026-08-06 [claude-code] [W1 meni] Mega meni — sticky header fix + ikonice, ikonice na kraju nerešene — SESIJA ZATVORENA 🟡
 
