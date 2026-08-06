@@ -8,7 +8,7 @@ kampanje:
   - Podloge za terase i bazene
   - ECOTILE INDUSTRIJSKI PODOVI
 prag-maximize-conversions: 20-30
-azurirano: 2026-07-01
+azurirano: 2026-08-06
 sinhronizovano-sa: [[DNEVNIK-NAPRETKA]], [[PROGRESS]]
 ---
 
@@ -107,6 +107,13 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 ## 🗒️ Log
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
+
+### 2026-08-06 [claude-code] — Kumulativ konverzija dostigao prag 20–30 (24) — odluka 4.8 otvorena za Miroslava
+- 30.07–05.08 vs 23–29.07: potrošnja **9.142,12 RSD vs 8.010,35** (+14,1%), klikovi **345 vs 347** (stabilno), uvezene konverzije **6 vs 8** (−25%, jedna nedelja).
+- **Terase**: 6.003,17 RSD / 304 klika / CTR 19,88% / CPC 19,75 / 5 konv (prethodno 5.348,35 / 296 / 23,34% / 18,07 / 3).
+- **ECOTILE**: 3.138,95 RSD / 41 klik / CTR 17,98% / CPC 76,56 / 1 konv (prethodno 2.662 / 51 / 20,73% / 52,20 / 5) — CPC +47% uz pad klikova, prati se sledeći presek pre zaključka o uzroku.
+- **Kumulativ (01.06→05.08, preračunat direktno iz GA4/Ads API-ja, ne sabiranjem nedeljnih brojki)**: hvala-proxy **109**, Ads uvezeno **24** — **prag 20–30 dostignut**.
+- **Sledeći korak:** odluka 4.8 (Maximize Clicks → Maximize Conversions) otvorena — čeka Miroslavljevu potvrdu, promena strategije licitiranja ide kroz Ads UI (M akcija).
 
 ### 2026-08-05 [claude-code] — Faza 1 RSA Terase pripremljena za upis (char-limit provera)
 - RSA banka za "Podloge za terase i bazene" (postoji od 2026-07-01) provereno karakter-po-karakter: 15/15 headline-a ≤30 karaktera, 4/4 descriptions ≤90 karaktera — ništa nije trebalo skraćivati, banka je spremna za copy-paste bez izmena.

@@ -1,3 +1,70 @@
+## 2026-08-06 [claude-code] [W5 5.4] Nedeljni izveštaj (30.07–05.08 vs 23–29.07) — SESIJA ZATVORENA ✅
+
+**Kontekst:** Poslednji nedeljni izveštaj bio 07-30 (tačno nedelju dana ranije) — dospeo po ritmu, izabran kao glavni zadatak posle otvaranja sesije (W1/W3/C1-C3 iscrpljeni, W2 preostalo čeka M).
+
+**Rezultat (preko sopstvenog konektora, GA4+Ads+GSC):**
+- GA4: korisnici 790 (766, +3,1%), sesije 915 (878, +4,2%) — oboje stabilno. `generate_lead` 19 (18), `tel` 19 (19) skoro nepromenjeni. `mailto` i dalje 0 — čeka M odobrenje za GTM Submit (spojeno sa već odobrenim `pdf_download`/`gallery_view` draftovima).
+- **Hvala-proxy (prava konverzija) 16 vs 12, +33%** — najjači realan signal nedelje, iznad generate_lead/tel.
+- Ads: potrošnja 9.142,12 RSD (8.010,35, +14,1%), klikovi 345 (347, stabilno), **konverzije 6 vs 8 (−25%)** — ECOTILE CPC skočio 52,20→76,56 RSD (+47%) uz pad klikova (51→41). Jedna nedelja, ne trend — pratiti sledeći presek.
+- 🔑 **Kumulativ (od 01.06, mesec-nula) preračunat direktno umesto sabiranja nedeljnih brojki**: hvala-proxy **109**, Ads uvezeno **24** — poslednje je ušlo u prag 20–30 za Smart Bidding odluku (zadatak 4.8, Maximize Clicks → Maximize Conversions). Ranije PROGRESS brojke (93/18, od 07-30) bile zastarele.
+- GSC 28d (06.07–03.08): top 5 prilika i dalje dominirane epoksid upitima (4/5) — očekivano po conquest strategiji, ne prava rupa. `podovi za terase` (292 impr, poz 10,4) i `industrijski podovi` (175 impr, poz 11,7) su realni core kandidati za dalji refresh.
+
+**Akcija nedelje predložena Miroslavu:** razmotriti prelazak na Maximize Conversions (Ads kumulativ 24, unutar praga).
+
+**Nije urađeno dalje ove sesije** — nema drugog neblokiranog glavnog zadatka bez nove M odluke (pun spisak #ceka-M u [[PROGRESS]] Blokeri, W2 stavke iz prethodnog dela sesije: PR/direktorijumi/GMB recenzije/Ads landing preusmeravanje).
+
+Detalji: [[PROGRESS]], [[dnevnik/ADS-DNEVNIK]]
+
+---
+
+## 2026-08-06 [claude-code] [W2 GEO §3] NAP eksterni direktorijumi provereni — 11000 potvrđen dominantan, 2 sitna van-kontrole nalaza ✅
+
+**Kontekst:** Poslednja otvorena stavka iz `[[seo/geo-ai-plan]]` sekcije 3 (Entitet/NAP) — posle 07-27 fix-a na `/kontakt/` (11050→11000) ostalo je neprovereno da li GMB profil i eksterni direktorijumi (Yellow Pages i sl.) i dalje negde nose stari poštanski broj.
+
+**Metod:** WebSearch/WebFetch (read-only, van naše kontrole — ne može se menjati odavde, samo dijagnostika).
+
+**Nalaz:** 11000 je dominantan i tačan gde god postoji izvor — Google-ov sopstveni sažetak (verovatno iz GMB Knowledge panela) i `mojakompanija.com` oba eksplicitno "Ulcinjska 13, 11000 Beograd". `011info.com`/`daibau.rs` ne prikazuju poštanski broj uopšte.
+
+🟡 **Dva sitna nalaza, van naše kontrole, #ceka-miroslav ako želi ispravku:**
+1. `gradnja.rs/adresar` navodi broj **"Ulcinjska 13-15"** umesto "13"
+2. `planplus.rs` (ulični/poštanski registar, ne firma-specifičan unos) tvrdi da je Ulcinjska ulica u Zvezdari zvanično pod poštanskim brojem **11050** — suprotno M odluci od 07-27. Nezavisan izvor, vredi da M svesno potvrdi da je 11000 i dalje namerno pojednostavljenje, ne da se ovaj nalaz protumači kao da je 07-27 odluka bila pogrešna.
+
+**Nije urađeno:** izmena na eksternim direktorijumima (nema pristup njihovim panelima, to je M teren ako odluči da je vredno).
+
+Zatvara poslednju otvorenu stavku [[seo/geo-ai-plan]] §3. Detalji: [[seo/geo-ai-plan]]
+
+---
+
+## 2026-08-06 [claude-code] GMB kvota retest — i dalje 429, sesija zatvorena bez daljeg rada 🟡
+
+**Kontekst:** Otvaranje sesije preko `/antasline-sesija` — N5 (04–10.08) glavni zadatak je W3 3.6 CWV, ali LCP nema više nizak-rizik lokalnih koraka (blokirano na LiteSpeed, hosting eksplicitno odbio 07-30 zbog bezbednosnih napada). W1/W3/C1–C3 suštinski iscrpljeni, skoro sve preostalo u Blokerima čeka M odluku. Ponuđene opcije Miroslavu — izabrao GMB kvota quick-win retest.
+
+**Urađeno:** `gmb_report.py --from 2026-07-30 --to 2026-08-05` — isti rezultat kao 07-30 i 08-05: `429 Quota exceeded (mybusinessaccountmanagement.googleapis.com, Requests per minute)`. Treći uzastopni retest bez promene — Google revizija/propagacija i dalje u toku, nema nove akcije na našoj strani. PROGRESS.md Blokeri red ažuriran (datum).
+
+**Nije urađeno:** ništa dalje ove sesije — nema neblokiranog glavnog zadatka bez nove M odluke (v. Blokeri u [[PROGRESS]] za pun spisak #ceka-M stavki: BLOK E foto arhiva, mailto GTM Submit, kontakt forma validacija na live, veštačka trava mapiranje, 14 proizvoda bez slike).
+
+Detalji: [[PROGRESS]]
+
+---
+
+## 2026-08-06 [claude-code] EXPONA Living Clic (16919) — materijal nađen na polyflor.se, uvezen; PROGRESS Blokeri čišćenje ✅
+
+**Kontekst:** M pitao gde stojimo sa čekanjem-na-Miroslava stavkama; PROGRESS.md Blokeri je flagovao 16919 kao „nema materijala na disku, distributer nije dostavio" (zapis 2026-07-29). M tražio: proveriti na proizvođačevom sajtu pre nego što se proizvod prebaci u draft, i počistiti zastarele tragove u istoj sesiji.
+
+**Nalaz:** ranija provera je gledala samo lokalni disk + `objectflor.de` (floor-finder 404 za ovu liniju, poznato od ranije). Nije probala `polyflor.se` — isti proizvođač (Polyflor/James Halstead grupa), ista šema kao ranija Commercial/Simplay EN brošura sesija (2026-07-30). Tamo postoji pun EN tehnički list (fajl ima "SE" u imenu ali sadržaj je engleski Polyflor Nordic obrazac), brošura i 8 fotografija — materijal postoji, nije trebalo prebacivati proizvod u draft.
+
+**Urađeno:** backup (`antasline-backups/antasline_local_2026-08-06_pre-expona-living-clic.sql`), preuzeto sa `polyflor.se`: tehnički list + brošura (PDF, uvezeni u medijateku), glavna slika (600×600 uzorak dezena, već kvadratna) + 3 galerijske fotografije ugrađenog poda (1600×1400/1523×1333 → center-crop 1:1, max 1000px, WebP — isti obrazac kao `job-w7f29-dobavljac-slike.php`). Nova sekcija „Tehnička dokumentacija" dodata na stranicu. Skripta: `migracija/alati/job-16919-expona-living-clic.php`.
+
+🔴 **Usput ispravljena netačna specifikacija**: postojeći tekst je tvrdio sloj za habanje **0,55 mm** — vrednost očigledno prepisana sa EXPONA Commercial (ista brojka), nikad proverena za Living Clic. Pravi tehnički list kaže **0,3 mm**. Cela tabela zamenjena stvarnim podacima iz PDF-a (18 dB redukcija zvuka, Bfl-s1 požarna klasa, R10/DS protivkliznost, 2G/5G Välinge sistem, IXPE 1,0mm, itd.) — ništa nije izmišljeno, sve direktno iz `Tekniskt-datablad_Expona-Living-Clic` PDF-a. „Tehnički list još nije dobavljen" napomena uklonjena, FAQ odgovor ažuriran (više ne upućuje na kontakt za nedostajuće podatke).
+
+**Verifikacija:** HTTP 200, 1×H1, oba PDF linka 200, oba JSON-LD bloka (Rank Math Product + FAQPage) `json_decode` validna, slika korišćena 17× na stranici (thumbnail + galerija + lightbox varijante). Upis preko `$wpdb->update()` direktno (F7.24 pravilo, izbegnut `wp_update_post()` unslash rizik).
+
+**PROGRESS Blokeri čišćenje (isti zahtev):** dva zastarela zapisa uklonjena/skraćena — (1) red „W7 F2 — dve preostale stavke" je i dalje sadržao AMSS logo pitanje iako je ono zatvoreno 2026-07-30 (zaseban red iznad) — uklonjen taj deo, ostavljena samo živa stavka (mapiranje veštačke trave). (2) ceo red „W7 — dve preostale odluke koje čekaju M" (2026-07-28) obrisan — obe njegove stavke (engleske Expona brošure, mapiranje trave) su duplikat/već zatvorene drugde u istoj sekciji.
+
+Detalji: [[PROGRESS]], `migracija/alati/job-16919-expona-living-clic.php`
+
+---
+
 ## 2026-08-05 [claude-code] [W4 4.11, M13] Meta Pixel ugrađen preko GTM — GTM-TRDT8K9 Version 12, potvrđeno da stiže na Meta strani ✅
 
 **Kontekst:** M13 (Pixel ID od Miroslava) je bio blokator za W4 4.11 — stigao usred sesije (`179235072594933`), zajedno sa potvrdom da ide preko GTM-a (isti obrazac kao GA4/Ads), na lokalu vs. live (odgovor: "izgleda da je već na sajtu" — provereno da NIJE, ni na lokalu ni na live pre ove sesije).
