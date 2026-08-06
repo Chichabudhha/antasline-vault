@@ -1,3 +1,32 @@
+## 2026-08-06 [claude-code] [W3 migracija] Staging puno postavljanje V3 — 3 čista paketa napravljena i prebačena na FTP, cPanel prompt spreman
+
+**Kontekst:** Nastavak iste sesije — M odlučio da poveća FTP kvotu na 7GB i da se odmah pošalje pun paket (ne čeka se dalja diskusija oko diff-a, v. unos ispod za zašto je diff bio besmislen posle wipe-a).
+
+**Urađeno:**
+- `build-staging-package.sh` pokrenut u `full` modu — usput nađen i ispravljen bag: root-fajl whitelist je koristio golo `find`+word-splitting, što je pucalo na fajlu `wp-config – kopija.php` (razmaci/crtica u imenu). Popravljeno na eksplicitnu whitelist niz (bash array) SAMO pravih WP core fajlova — **namerno isključuje `wp-config.php`/`wp-config-sample.php`/"kopija" varijante** (staging dobija svoj wp-config, lokalni bi ga prepisao dev vrednostima — isti gotcha kao ranije danas) **i lokalne debug/import skripte** (`add-blocks-*.php`, `fix-*.php`, `import-*.php`, `restore-and-fix.php`, itd. — ostaci lokalnog rada, bezbednosni rizik ako slete na server).
+- Rezultat: kod paket 77MB (4×20MB dela), uploads paket 2,6GB (133×20MB dela), + svež `mysqldump` od `antasline_local` 37MB (2 dela) — ovaj poslednji nije bio deo originalne skripte, napravljen posebno jer je pun restore trebao i bazu, ne samo fajlove.
+- Očišćeni stari artefakti iz `antasline-staging-upload/` (zaostali `antasline-wp-site-2026-08-06.tar.gz` 3,4GB "smeće" tar cele XAMPP fascikle iz prethodnog pokušaja, stari `chunks/` folder, stari md5 fajlovi) — da se ne pobrka sa novim čistim paketima.
+- **Sva 3 paketa (parts + md5 manifesti) uspešno prebačena preko FTP-a** (`ftp-upload-chunks.sh`, proširen da prima `DIR` kao 2. argument umesto hardkodovane putanje). Jedan tranzijentan pad na delu 002 koda (10/10 pokušaja, verovatno mrežni hiccup) — ručni retry odmah uspeo od tačke prekida (curl `-C -` resume).
+- Napisan pun cPanel prompt: [[migracija/2026-08-06-prompt-staging-full-restore]] (V3) — pokriva pun restore (ne delta), fresh `wp-config.php` (bez prepisivanja lokalnim), proveru stvarnog `$table_prefix` u dump-u pre pisanja (potvrđeno `wpgs_` malim slovom na ovom dump-u, ali prompt insistira da se PONOVO proveri na serverskom fajlu, ne veruje se dokumentaciji), upravljanje diskom tokom raspakivanja (brisanje delova/arhiva odmah posle uspešne verifikacije, da se ne pređe 7GB kvota), i **širu verifikaciju slika/ikonica nego prošli put** (bar 5 nasumičnih putanja iz baze + eksplicitna provera `meni-ikonice` foldera) — cilj da se uhvati ista vrsta promašaja koja je prošli put prošla kroz sve automatske provere neopaženo.
+
+**Sledeći korak (M):** otvoriti Claude Code na cPanel terminalu, nalepiti prompt iz [[migracija/2026-08-06-prompt-staging-full-restore]]. Posle izvršenja: **obavezno lično vizuelno pregledati staging.antasline.com** pre nego što se ovo proglasi zatvorenim (prošli put je baš taj korak uhvatio 82/108 slomljenih slika).
+
+---
+
+## 2026-08-06 [claude-code] [W3 migracija] Staging redo priprema — skripta za čist paket + ključan nalaz: diff mod je sad besmislen
+
+**Kontekst:** Nastavak posle revert-a ispod. M odlučio da se ova sesija fokusira na *pripremu* sledećeg pokušaja (bez slanja na cPanel), da izvršenje kad M odluči (a) diff vs (b) puna arhiva bude brzo i tačno.
+
+**Ključan nalaz — menja pitanje koje je bilo postavljeno M-u:** posle revert-a, staging docroot+baza su **potpuno prazni** (v. unos ispod). Diff mod ("samo fajlovi izmenjeni posle 21.07") pretpostavlja postojeću 07-21 osnovu na koju se lepi — te osnove više nema na serveru. **Dakle opcija (a) diff trenutno nije izvodljiva, bez obzira na M odluku** — sledeći refresh mora biti PUN paket dok se staging ne vrati u neko poznato stanje. Diff mod ostaje koristan tek za refresh POSLE tog punog postavljanja.
+
+**Merena veličina punog paketa:** `wp-content/uploads` 2,9GB, ceo WP install (`C:\xampp\htdocs\antasline`) 3,4GB. FTP nalog `staging@antasline.com` ima kvotu ~530–560MB (nalaz iz prethodne sesije) — potrebno povećanje na bar 4–5GB, ne "malo više" kako je ranije uokvireno. #ceka-miroslav: (1) povećati FTP kvotu na taj red veličine (cPanel → FTP Accounts → Quota, ili proveriti da li `uapi Ftp` API to može uraditi iz cPanel-live sesije bez ručnog UI koraka), ili (2) alternativni transportni kanal koji zaobilazi tu FTP potkvotu (npr. direktno u cPanel home preko iste cPanel-live sesije koja već radi na `wp1.oblak.host`, ako postoji SCP/rsync put — lokalna sesija i dalje nema direktan SSH na server, port 22 timeout, poznato od ranije).
+
+**Urađeno (priprema, ništa poslato):** `migracija/alati/build-staging-package.sh` — nova skripta koja popravlja oba uzroka pada iz prethodnog pokušaja: (1) kod paket pakuje SAMO `wp-admin`/`wp-includes`/`wp-content`+root fajlove iz `WP_ROOT`, eksplicitni exclude (`.git`,`.claude`,`*.sql`,`al-harness.html`,`wp-content/cache`,`mail-log.txt`) — ne više tar cele XAMPP fascikle; (2) uploads diff mod (kad postane relevantan) koristi `find -newermt` preko CELOG uploads stabla, ne filtriranje po imenu foldera (uzrok prethodnog promašaja: WP čuva fajlove u folderu originalnog uploada, ne datuma izmene, pa su webp-regen i novi `meni-ikonice` folder bili u "starim" folderima van filtera). Skripta chunk-uje oba paketa na 20MB delove + md5sum, isti obrazac kao postojeći `ftp-upload-chunks.sh`. Nije pokrenuta (velika/spora operacija, čeka M odluku o kvoti pre nego što ima smisla praviti pun 2,5–3GB gzip paket).
+
+**Sledeći korak:** M odlučuje o kvoti/transportnom kanalu → onda `bash migracija/alati/build-staging-package.sh full` lokalno → `ftp-upload-chunks.sh` sa novim imenom paketa → cPanel-live sesija raspakuje (isti koraci kao [[migracija/2026-08-06-prompt-staging-refresh]], ali PUN docroot restore, ne delimičan, jer je trenutno stanje prazno).
+
+---
+
 ## 2026-08-06 [cpanel-live] [W3 migracija] Staging refresh — PONIŠTEN posle vizuelne provere, docroot+baza vraćeni na prazno ⛔
 
 **Kontekst:** Nastavak iste `[cpanel-live]` sesije, odmah posle unosa ispod ("ZATVOREN, delimičan preko FTP-a"). Miroslav vizuelno pregledao `staging.antasline.com` posle tog refresh-a i prijavio: nedostaju slike na svim stranicama, nema ikonica u meniju, nema favicona, linkovi nose čudan `?_gl=...` nastavak.

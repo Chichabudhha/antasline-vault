@@ -4,7 +4,7 @@
 # za velike/duge transfere pada posle ~15-20s (verovatno firewall/NAT na wifi-ju) -
 # zato se salje po 50MB umesto jednog 3.18GB streama.
 
-DIR="/c/xampp/htdocs/antasline-staging-upload/chunks"
+DIR="${2:-/c/xampp/htdocs/antasline-staging-upload/chunks}"
 CREDS='staging@antasline.com:1~LI$$Ex&^gm~A2e'
 PATTERN="${1:-antasline-wp-site-2026-08-06.tar.gz.part-*}"
 
