@@ -1,3 +1,27 @@
+## 2026-08-06 [cpanel-live] [W3 migracija] Staging refresh — PONIŠTEN posle vizuelne provere, docroot+baza vraćeni na prazno ⛔
+
+**Kontekst:** Nastavak iste `[cpanel-live]` sesije, odmah posle unosa ispod ("ZATVOREN, delimičan preko FTP-a"). Miroslav vizuelno pregledao `staging.antasline.com` posle tog refresh-a i prijavio: nedostaju slike na svim stranicama, nema ikonica u meniju, nema favicona, linkovi nose čudan `?_gl=...` nastavak.
+
+**Dijagnoza pre poništavanja (za buduću referencu, da se ne ponovi ista greška):**
+- **82/108 jedinstvenih upload URL-ova na početnoj stranici vraćalo 404** — izmereno automatskim skenom, ne pretpostavka.
+- **Uzrok #1**: `wp-content/uploads/meni-ikonice/` (69 SVG fajlova, meni ikonice iz istoimene sesije ranije istog dana) je CEO folder nedostajao — uploads-diff paket je bio filtriran samo na `2026/07/*` (posle 21.07) i `2026/08/*`, a ovo je custom folder van te šeme, pa filter nikad nije ni pogledao u njega.
+- **Uzrok #2**: `.webp` verzije starih slika (2018/2020/2022/2025/2026-01 folderi) nedostaju iako `.jpg` postoji (npr. `ecotile-floor-1-600x371.jpg` postoji, `ecotile-floor-1-600x371.webp` ne) — nešto je na lokalu generisalo/regenerisalo WebP verzije kroz CELU biblioteku posle 07-21, ali pošto WordPress čuva originalni datum uploada u putanji foldera, te izmene su sletele u STARE datumske foldere koje filter (ograničen na `2026/07+`/`2026/08`) nije pokrivao.
+- **Favicon**: `site_icon` opcija je `0` u samom dump-u — nije transfer bag, lokalni build trenutno nema podešen favicon uopšte.
+- **`?_gl=` parametar na linkovima**: Google GA4/GTM automatska cross-domain "linker" dekoracija — `staging.antasline.com` nije u GTM kontejnerovoj listi konfigurisanih domena (samo produkcija verovatno jeste), pa gtag dekoriše SVE linkove uključujući interne. Očekivana nuspojava korišćenja ISTOG živog GTM kontejnera na drugom hostname-u, ne bag ovog transfera — ne vredi rešavati za privremeni staging.
+- **Pravi koren problema**: strategija "diff po imenu datumskog foldera" (2026/07+, 2026/08) je pogrešna pretpostavka — pretpostavlja da se SVE izmene dešavaju samo u foldeima tekućeg meseca, a WordPress fizički čuva fajlove po datumu ORIGINALNOG uploada, ne datumu poslednje izmene. Prava dopuna mora ići preko `find -newer <referentni-fajl-sa-07-21-timestamp>` preko CELOG `wp-content/uploads` stabla, ne filtrirano po nazivu foldera.
+
+**Dodatni nalaz usput (nezavisno od slika)**: sam raspakovani "kod paket" se ispostavio da je bio tar cele lokalne XAMPP docroot fascikle, ne čist WP install — docroot je posle raspakivanja nosio **4.8GB** smeća: 13+ starih `backup-*.sql` dump-ova (uklj. 127MB `antasline-live-FIXED.sql`), desetak debug/import PHP skripti (`add-blocks-*.php`, `import-*.php`, `fix-*.php`), `.claude/` folder, `wp.bat`, `CLAUDE.md`/`PROGRESS.md.bak`/`DNEVNIK-NAPRETKA.md.bak`, `scratchpad/` sa content-backup fajlovima. Ovo je bilo samo delimično bezbedno (Basic Auth blokira spoljni pristup) ali nikad ne bi trebalo da završi u paketu za deploy.
+
+**M odluka: prekinuti, ne krpiti dalje.** "Obriši poslate fajlove u poslednjoj sesiji i radimo sve od početka na lokalu." Izvršeno:
+- Docroot (`/home/antasline/staging/`) obrisan do gole kože — obrisano SVE osim `.htaccess`/`.htpasswd`/`.ftpquota`/`.well-known` (Basic Auth infrastruktura i FTP nalog metapodaci, nisu deo "poslatih fajlova" ove sesije, nema razloga da se ponovo grade). 4.8GB → 24KB.
+- Baza `antasline_staging` DROP + CREATE prazna (utf8mb4/utf8mb4_unicode_ci) — bez WP tabela.
+- FTP landing folder (`/home/antasline/antasline.com/staging/`) već je bio prazan (Korak 9 prethodnog unosa).
+- Verifikovano: `curl -I` bez auth → 401 (Basic Auth i dalje aktivan, staging nije javno vidljiv iako prazan) · sa auth → 500 (očekivano, nema `index.php`/WP instalacije — isti obrazac kao prvobitno 07-21 pre-config stanje).
+
+**Šta OSTAJE netaknuto**: `~/staging-db-credentials.txt` (ažuriran ranije ovu sesiju, tačan DB_USER/lozinka i dalje važe za sledeći pravi setup), `~/staging-htaccess-creds.txt` (Basic Auth `stagingtest` lozinka), MySQL korisnik `antasline_antasline` (samo baza prazna, nalog/lozinka nepromenjeni).
+
+**Sledeći korak (lokal, nova sesija)**: pravi "od početka" pristup — ili (a) ispraviti diff generaciju na pravi `find -newer` preko celog uploads stabla umesto po imenu foldera, ili (b) povećati FTP kvotu i poslati punu svežu arhivu odjednom (M nije još odlučio između ova dva, videti [[PROGRESS]]). U svakom slučaju: **ne pakovati ceo XAMPP docroot** za kod paket — izdvojiti čist WP core+tema+plugin bez debug/backup smeća pre tar-ovanja. Novi Korak 0 setup je identičan 07-21 prvobitnom postavljanju (docroot prazan), ne "refresh".
+
 ## 2026-08-06 [cpanel-live] [W3 migracija] Staging refresh — ZATVOREN, delimičan preko FTP-a, 3 nova gotcha-a ✅
 
 **Kontekst:** Izvršen `[[migracija/2026-08-06-prompt-staging-refresh]]` na cPanel terminalu (`wp1.oblak.host`) — delimičan refresh postojećeg `staging.antasline.com` (živi od 07-21): kod+baza potpuno zamenjeni, `wp-content/uploads` samo dopunjen diff paketom (FTP kvota ~530-560MB je onemogućila slanje pune sveže arhive, v. [[reference/naucene-lekcije]] FTP kvota unos od ranije danas).
