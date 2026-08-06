@@ -16,7 +16,7 @@ DOPUNJUJU novim/izmenjenim fajlovima od 21.07.
 ## 🔴 VAŽNO — zašto ovaj put NIJE poslata cela arhiva (pročitaj pre početka)
 
 Prvobitni plan (v1 ovog naloga) je bio poslati kompletnu svežu arhivu
-(3,18 GB, sve slike uključene) preko FTP-a. **To je pukло** — FTP nalog
+(3,18 GB, sve slike uključene) preko FTP-a. **To je puklo** — FTP nalog
 `staging@antasline.com` ima **disk kvotu od otprilike 530–560 MB**
 (otkriveno empirijski: transferi su počeli da padaju sa `451 Error during
 write to file` čim je ukupno otpremljeno prešlo tu granicu, potvrđeno da
