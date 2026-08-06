@@ -1,3 +1,33 @@
+## 2026-08-06 [cpanel-live] [W3 migracija] Staging puno postavljanje V3 IZVRŠENO — svih 11 koraka, verifikacija čista (0 slomljenih slika od 292 proverenih)
+
+**Kontekst:** Izvršenje odobrenog prompta [[migracija/2026-08-06-prompt-staging-full-restore]] na cPanel terminalu (potvrđeno `hostname`=`wp1.oblak.host`), nastavak posle prethodnog poništenog pokušaja istog dana.
+
+**Nalaz pre početka:** FTP nalog kvota 7GB, ali glavni cPanel nalog imao samo **4,6GB slobodno** (`uapi Quota get_quota_info`), ne 6GB kako je prompt pretpostavio. Prilagođen tok: umesto spajanja svih delova uploads paketa u pun `.tar.gz` PA raspakivanja (privremeno bi tražilo ~5,6GB, premašuje budžet), uploads paket (133 dela, 2,8GB) raspakovan direktno streaming-om (`cat part-* | tar -xz -C docroot`) bez ikad praviti pun merge-ovan fajl — integritet i dalje proveren preko MD5 na svakom pojedinačnom delu PRE raspakivanja (sva 139 delova sve 3 pakera: OK). Kod (77MB) i dump (37MB) paketi spojeni normalno (mali, bez rizika po prostor).
+
+**Urađeno (KORAK 0-9):**
+- Docroot potvrđen `/home/antasline/staging` (`uapi DomainInfo domains_data`).
+- Kod paket raspakovan (25.314 fajlova, bez prefiksa). **Basic Auth blok izgubljen kao i očekivano** (poznat gotcha) — ručno vraćen na vrh `.htaccess` (`AuthType Basic`/`AuthUserFile`/`Require valid-user`, lozinka iz `~/staging-htaccess-creds.txt`). `RewriteBase`/`/antasline/` iz lokalnog builda se, kao i prošli put, sam ispravio na `/` posle `wp rewrite flush --hard` (Korak 7) — nije ručno dirano.
+- `wp-config.php` **NIJE bio u paketu ovaj put** (popravka iz build skripte radi kako treba) — napravljen ispravan preko `wp config create` (DB_NAME=antasline_staging, DB_USER=antasline_antasline, DB_HOST=localhost). `$table_prefix` proveren direktno u dump-u pre pisanja: `wpgs_` (malo slovo), potvrđen isti obrazac kao ranije. Lozinka iz `~/staging-db-credentials.txt` radila bez problema (za razliku od 07-21 slučaja). Salt konstante regenerisane (`wp config shuffle-salts`).
+- Uploads paket raspakovan direktno u `wp-content/uploads/` (2,9GB, streaming metoda gore) — `meni-ikonice/` folder potvrđeno prisutan.
+- `wp db reset --yes` (baza je već bila prazna posle prethodnog revert-a, potvrđeno `SHOW TABLES` = 0 redova pre reset-a — **auto-mode klasifikator je automatski blokirao ovu komandu kao destruktivnu operaciju**, traženo i dobijeno eksplicitno odobrenje od M pre nastavka) + `wp db import` (78 tabela posle importa).
+- `wp search-replace 'http://localhost/antasline' 'https://staging.antasline.com' --all-tables --precise` → 14.153 zamena. `wp rewrite flush --hard`. `siteurl`/`home` potvrđeni.
+- Svi upload artefakti (md5 manifesti, `.tar.gz`/`.sql` delovi) obrisani sa FTP root-a (`/home/antasline/antasline.com/staging/`) odmah posle svake uspešne verifikacije — nikad nije prekoračena kvota tokom procesa.
+
+**Verifikacija (KORAK 10 — punija nego prošli put):**
+- `curl -I` bez auth → 401 ✓; sa `-u stagingtest:...` → 200 ✓.
+- `/industrijski-podovi/`, `/katalog/`, `/kontakt/`, `/planer-terena/` → 200. `/proizvod/` → 404 (očekivano, flat parent slug bez arhive, poznato od 07-21).
+- 6 nasumičnih slika iz baze (`ORDER BY RAND()`) uklj. foldere 2018/2020/2021 i 2026/08 → svih 6 200, uklj. `16919-gallery-1-300x300.webp` eksplicitno traženu u promptu.
+- `meni-ikonice/meni-sub-storefront.svg` → 200 (folder koji je prošli put nedostajao u celosti).
+- **Pun sken slomljenih slika (ne samo spot-check)**: homepage 76/76 slika 200, proizvod stranica (`ecotile-e500-7...`) 93/93, `/katalog/` 78/78, `/industrijski-podovi/` 62/62, `/kontakt/` 59/59 — **ukupno 0 slomljenih od 292 proverenih** (prošli put 82/108 na samoj početnoj).
+- Homepage title: `Početna | Antas Line` (Rank Math, ne Yoast — lokalni build je migrirao 2026-08-05, dump nosi Rank Math metu, title tačan).
+- 🟡 Favicon i dalje nepodešen (očekivano, dump ne nosi `site_icon`, nije nov bag) — nije dirano.
+
+**Disk na kraju:** `/home/antasline/staging` 3,4GB ukupno, FTP root prazan.
+
+**Zaključak:** V3 pun restore zatvoren tehnički — čeka **Miroslavljevu ličnu vizuelnu proveru** pre konačnog zatvaranja (isti korak koji je prošli put uhvatio problem koji su automatski testovi propustili).
+
+---
+
 ## 2026-08-06 [claude-code] [W3 migracija] Staging puno postavljanje V3 — 3 čista paketa napravljena i prebačena na FTP, cPanel prompt spreman
 
 **Kontekst:** Nastavak iste sesije — M odlučio da poveća FTP kvotu na 7GB i da se odmah pošalje pun paket (ne čeka se dalja diskusija oko diff-a, v. unos ispod za zašto je diff bio besmislen posle wipe-a).
