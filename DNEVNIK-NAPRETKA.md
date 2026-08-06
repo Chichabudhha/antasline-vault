@@ -1,3 +1,32 @@
+## 2026-08-06 [claude-code] [W3/staging] Plugin+DB čišćenje lokalnog builda + staging refresh paket pripremljen i otpremljen na FTP — čeka cPanel sesiju 🔄
+
+**Kontekst:** Nova sesija istog dana. M zahtev: "pripremi sve za upload na staging, pre toga očisti neiskorišćene plagine sa sajta i iz baze." Odgovoreno kroz AskUserQuestion na 4 pitanja (cilj = osvežiti postojeći staging.antasline.com probu, ne pomeriti pravu migraciju; ManageWP Worker/Duplicator/WPML sva tri M potvrdio da se uklone).
+
+**Plugin/DB čišćenje (lokalni build, `antasline_local`):**
+- Backup pre svega: `antasline-backups/antasline_local_2026-08-06_pre-plugin-cleanup.sql`
+- 11 neaktivnih plagina obrisano sa diska: `duplicate-page`, `duplicator`, `media-sync`, `porto-functionality`, `revslider`, `sitepress-multilingual-cms`+`wp-seo-multilingual`+`wpml-media-translation` (WPML), `under-construction-page`, `wordpress-importer`, `worker` (ManageWP). **`wordpress-seo` (Yoast) namerno NIJE dirano** (rollback rezerva po CLAUDE.md §7.1).
+- Baza: 33 osirotele plugin-tabele obrisane (18× `wpgs_icl_*`, 14× `wpgs_revslider_*`, 1× `wpgs_duplicator_packages`) + odgovarajući `wp_options`/`wp_postmeta`/`wp_usermeta` redovi (wpml/icl/porto/revslider/duplicator/mwp_ prefiksi) + 2 osirotela cron hook-a (preko `migracija/alati/job-plugin-cleanup-cron.php`).
+- **Bonus nalaz zatvoren usput**: 9 "duh" `wp_*` (stari prefiks) tabela — poznat niskoprioritetan artefakt iz 2026-07-21 uvoza (nikad korišćen, `wp-config` koristi `wpGs_`) — sada obrisan iz izvora.
+- DB 83,2 MB posle čišćenja (dump 37,7 MB, bilo ~51 MB). Verifikovano: `wp plugin list` čist (9 aktivnih + Yoast inactive + 3 mu-plugin-a), homepage/proizvod stranica 200, 0 fatal grešaka.
+
+**🔴 FTP kvota nalaz (najveći deo sesije):** Prvi pokušaj — pun re-upload sveže arhive (3,18 GB, sve slike uključene) preko `staging@antasline.com` — je konzistentno padao usred transfera (`Send failure: Connection was aborted/reset`), izgledalo je kao mrežna/firewall nestabilnost (probano: chunk-ovanje na 50MB, resume preko `curl -C -`, retry loop). **Pravi uzrok otkriven tek kad je i 5-bajtni test fajl pao** sa `451 Error during write to file` — server-side greška, ne mreža. FTP nalog ima disk kvotu ~530–560 MB (`.ftpquota` fajl potvrđuje quota tracking), potvrđeno brisanjem dela sadržaja → test fajl odmah prošao. Nova lekcija upisana: [[reference/naucene-lekcije]] "FTP 451 = kvota, ne mreža".
+
+**Rešenje — M uputio da staging već ima uploads od 07-21, treba samo razlika:**
+- Kod-only paket (tema+plagini+WP core, BEZ `wp-content/uploads`) — 169 MB, 28.428 fajlova
+- Uploads-diff paket (SAMO slike dodate/izmenjene posle 21.07 — `wp-content/uploads/2026/07/*` posle 21.07 + sav `2026/08/*`; isključeni lažni pogoci iz starih foldera kao `2015/11/` koji su bili mtime šum od ranijeg bulk restore-a, ne stvaran sadržaj) — 151 MB, 2.762 fajla
+- SQL dump — 36 MB (nepromenjeno)
+- Sva 3 paketa (kod+uploads-diff chunk-ovani na 20MB delove radi pouzdanosti veze, md5sum-ovani) uspešno otpremljena na FTP — ukupno ~356 MB, staje u kvotu. Svi delovi prošli iz prve (0 retry-a) posle prelaska na manji chunk size.
+
+**Radni nalog kompletno prepisan** (delimičan refresh — kod+baza se menjaju u potpunosti, postojeći uploads se DOPUNJUJE ne briše): [[migracija/2026-08-06-prompt-staging-refresh]]. Sadrži: spajanje delova, md5sum verifikacija PRE raspakivanja, tar integritet provera, raspakivanje koda preko postojećeg (ne dira uploads), raspakivanje uploads-diff preko postojećeg (ne dira starije slike), DB reset+import, search-replace, rewrite flush, Basic Auth provera (nasleđen), čišćenje artefakata, verifikacija (200/401 + Yoast title sanity check + spot-check nove avgustovske slike), vault update.
+
+**Fajlovi VEĆ NA FTP-u** (`staging@antasline.com`) — cPanel sesija ne treba ništa dodatno da otprema, samo da izvrši radni nalog.
+
+**Sledeći korak (M):** otvoriti Claude Code na cPanel terminalu, nalepiti prompt iz [[migracija/2026-08-06-prompt-staging-refresh]]. Kad završi i pushuje, lokalna sesija proverava rezultat preko HTTP-a.
+
+**Van obima ove sesije (namerno neizvršeno):** `porto`/`porto-child` legacy teme (37 MB, mrtve, zamenjene WoodMart-om još u julu) primećene tokom veličina-foldera provere ali NISU uklonjene — M nije to tražio ovom prilikom, ostaje kao mogući budući quick-win.
+
+---
+
 ## 2026-08-06 [claude-code] [W1 meni] Mega meni — sticky header fix + ikonice, ikonice na kraju nerešene — SESIJA ZATVORENA 🟡
 
 **Kontekst:** Nastavak sesije istog dana (posle nedeljnog izveštaja ispod). Glavni zadatak isprva bio "probna migracija na staging" — preusmereno na M zahtev da meni bude vizuelno doteran pre toga (ikonice, sticky header, veći dropdown).
