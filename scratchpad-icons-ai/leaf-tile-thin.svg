@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <title>Floor tile with base layer</title>
+  <!-- Primary element: Top floor tile (isometric rhombus) -->
+  <path d="M12 4 L22 9 L12 14 L2 9 Z" fill="#0E2950"/>
+  
+  <!-- Secondary element: Thin base layer beneath (isometric chevron) -->
+  <path d="M12 17 L22 12 L22 15 L12 20 L2 15 L2 12 Z" fill="#0E2950"/>
+</svg>

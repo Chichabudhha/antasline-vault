@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-labelledby="tentIconTitle" role="img">
+  <title id="tentIconTitle">Tent</title>
+  <!-- Primary tent body with tie-down pegs -->
+  <path fill="#0E2950" d="M12 2 L3 19 l-2 2 h2 l1 -2 h16 l1 2 h2 l-2 -2 Z" />
+  <!-- Secondary inner door opening with curved tied-back flaps -->
+  <path fill="#0E2950" d="M12 8 Q11.5 14 7.5 18 h9 Q12.5 14 12 8 Z" />
+</svg>

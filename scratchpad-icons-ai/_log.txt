@@ -1,0 +1,120 @@
+[1/59] Generating: leaf-basketball-ball -- basketball ball, solid silhouette with panel seams as negative-space cutouts
+[1/59] OK: leaf-basketball-ball
+[2/59] Generating: leaf-3x3 -- half basketball court top-down, solid silhouette with center circle arc as negative-space cutout
+[2/59] OK: leaf-3x3
+[3/59] Generating: leaf-tennis -- tennis ball, solid silhouette with curved S-seam as negative-space cutout
+[3/59] OK: leaf-tennis
+[4/59] Generating: leaf-padel -- padel racket with small perforation holes, solid silhouette, holes as negative-space cutouts
+[4/59] OK: leaf-padel
+[5/59] Generating: leaf-pickleball -- pickleball paddle, solid silhouette, small round holes as negative-space cutouts
+[5/59] OK: leaf-pickleball
+[6/59] Generating: leaf-futsal -- soccer/futsal ball, solid silhouette with pentagon panel pattern as negative-space cutouts
+[6/59] OK: leaf-futsal
+[7/59] Generating: leaf-hockey -- hockey stick and puck, solid silhouette
+[7/59] OK: leaf-hockey
+[8/59] Generating: leaf-tabletennis -- table tennis paddle (round racket) with short handle, solid silhouette
+[8/59] OK: leaf-tabletennis
+[9/59] Generating: namena-sport-dvorana -- indoor sports hall dome building, solid silhouette
+[9/59] OK: namena-sport-dvorana
+[10/59] Generating: leaf-tile-studs -- modular interlocking floor tile with four corner studs, solid silhouette
+[10/59] OK: leaf-tile-studs
+[11/59] Generating: leaf-grass-wide -- three tall grass blades, solid silhouette
+[11/59] OK: leaf-grass-wide
+[12/59] Generating: leaf-whistle -- sports whistle, solid silhouette
+[12/59] OK: leaf-whistle
+[13/59] Generating: leaf-floodlight -- stadium floodlight on a pole, solid silhouette
+[13/59] OK: leaf-floodlight
+[14/59] Generating: leaf-gallery -- photo gallery, two overlapping picture frames with mountain and sun, solid silhouette
+[14/59] OK: leaf-gallery
+[15/59] Generating: leaf-ruler-ball -- diagonal ruler with tick marks and small ball, solid silhouette
+[15/59] OK: leaf-ruler-ball
+[16/59] Generating: leaf-backboard-dim -- basketball backboard with dimension arrow below, solid silhouette
+[16/59] OK: leaf-backboard-dim
+[17/59] Generating: leaf-ruler-vert -- vertical ruler with tick marks, solid silhouette
+[17/59] OK: leaf-ruler-vert
+[18/59] Generating: leaf-ruler-horiz -- horizontal ruler with tick marks, solid silhouette
+[18/59] OK: leaf-ruler-horiz
+[19/59] Generating: namena-magacin-hala -- warehouse building with loading dock door, solid silhouette
+[19/59] OK: namena-magacin-hala
+[20/59] Generating: namena-garaza -- car inside a garage, solid silhouette
+[20/59] FAILED (no SVG): namena-garaza
+[21/59] Generating: leaf-flask -- chemistry erlenmeyer flask, solid silhouette
+[21/59] OK: leaf-flask
+[22/59] Generating: leaf-health -- medical cross inside a circle, solid silhouette
+[22/59] OK: leaf-health
+[23/59] Generating: leaf-dumbbell -- gym dumbbell, weight plates on a short bar, solid silhouette, simple and correctly proportioned
+[23/59] OK: leaf-dumbbell
+[24/59] Generating: leaf-landmark -- public building with classical columns and steps, solid silhouette
+[24/59] OK: leaf-landmark
+[25/59] Generating: leaf-tile-overview -- three square floor tiles side by side, solid silhouette
+[25/59] OK: leaf-tile-overview
+[26/59] Generating: leaf-tile-thin -- floor tile with a thin base layer beneath it, solid silhouette
+[26/59] OK: leaf-tile-thin
+[27/59] Generating: leaf-tile-medium -- floor tile with a medium-thickness base layer beneath it, solid silhouette
+[27/59] OK: leaf-tile-medium
+[28/59] Generating: leaf-tile-thick -- floor tile with a thick base layer beneath it, solid silhouette
+[28/59] OK: leaf-tile-thick
+[29/59] Generating: namena-esd -- lightning bolt, solid silhouette
+[29/59] OK: namena-esd
+[30/59] Generating: leaf-tape -- roll of marking tape with a dispenser, solid silhouette
+[30/59] OK: leaf-tape
+[31/59] Generating: leaf-shield -- shield with a checkmark inside, solid silhouette
+[31/59] OK: leaf-shield
+[32/59] Generating: leaf-footprints -- pair of footprints, solid silhouette
+[32/59] OK: leaf-footprints
+[33/59] Generating: namena-radionica -- wrench, solid silhouette
+[33/59] OK: namena-radionica
+[34/59] Generating: leaf-question -- question mark inside a circle, solid silhouette
+[34/59] OK: leaf-question
+[35/59] Generating: leaf-tile-grid-overview -- grid of six square floor tiles, solid silhouette
+[35/59] OK: leaf-tile-grid-overview
+[36/59] Generating: leaf-tile-dot -- square floor tile with a single dot in the center, solid silhouette
+[36/59] OK: leaf-tile-dot
+[37/59] Generating: leaf-tile-diamond -- square floor tile with a diamond shape in the center, solid silhouette
+[37/59] OK: leaf-tile-diamond
+[38/59] Generating: leaf-tile-x -- square floor tile with an X mark in the center, solid silhouette
+[38/59] OK: leaf-tile-x
+[39/59] Generating: leaf-pool -- swimming pool water waves, two wavy lines, solid silhouette
+[39/59] OK: leaf-pool
+[40/59] Generating: leaf-leaf -- single plant leaf, solid silhouette
+[40/59] FAILED (no SVG): leaf-leaf
+[41/59] Generating: leaf-grass-swatches -- grid of four small grass texture swatches, solid silhouette
+[41/59] OK: leaf-grass-swatches
+[42/59] Generating: leaf-plank-clic -- wood floor plank with click-lock tabs on top edge, solid silhouette
+[42/59] OK: leaf-plank-clic
+[43/59] Generating: leaf-plank-commercial -- wood floor plank with a small briefcase icon above it, solid silhouette
+[43/59] OK: leaf-plank-commercial
+[44/59] Generating: leaf-plank-flow -- wood floor plank with a flowing wavy line above it, solid silhouette
+[44/59] OK: leaf-plank-flow
+[45/59] Generating: leaf-plank-simplay -- wood floor plank with sound wave bars above it, solid silhouette
+[45/59] OK: leaf-plank-simplay
+[46/59] Generating: leaf-desk -- office desk with a monitor screen, solid silhouette
+[46/59] OK: leaf-desk
+[47/59] Generating: leaf-cup -- coffee cup with steam, solid silhouette
+[47/59] FAILED (no SVG): leaf-cup
+[48/59] Generating: leaf-bag -- shopping bag, solid silhouette
+[48/59] OK: leaf-bag
+[49/59] Generating: leaf-cart -- shopping cart, solid silhouette
+[49/59] FAILED (no SVG): leaf-cart
+[50/59] Generating: leaf-cone -- traffic safety cone, solid silhouette
+[50/59] OK: leaf-cone
+[51/59] Generating: leaf-tent -- simple triangular tent, solid silhouette
+[51/59] OK: leaf-tent
+[52/59] Generating: leaf-exchange -- two circular exchange/rotation arrows, solid silhouette
+[52/59] OK: leaf-exchange
+[53/59] Generating: leaf-parking -- letter P parking sign inside a square, solid silhouette
+[53/59] OK: leaf-parking
+[54/59] Generating: leaf-grid-protect -- protective grid pattern over a square surface, solid silhouette
+[54/59] OK: leaf-grid-protect
+[55/59] Generating: namena-stala -- horse stable building, solid silhouette
+[55/59] OK: namena-stala
+[56/59] Generating: leaf-factory-small -- small factory building with chimneys, solid silhouette
+[56/59] OK: leaf-factory-small
+[57/59] Generating: leaf-car -- car side view, solid silhouette
+[57/59] OK: leaf-car
+[58/59] Generating: leaf-rubber-tile -- square rubber tile with small texture dots, solid silhouette
+[58/59] OK: leaf-rubber-tile
+[59/59] Generating: leaf-road-stripe -- road with dashed center line, solid silhouette
+[59/59] OK: leaf-road-stripe
+
+DONE: 55/59 succeeded

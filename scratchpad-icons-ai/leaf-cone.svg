@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-labelledby="trafficConeTitle" role="img">
+  <title id="trafficConeTitle">Traffic Safety Cone</title>
+  <path fill="#0E2950" d="M10 2h4l2 6H8zm-3 9h10l1 3H6zm-2 6h14l1 3h2c.55 0 1 .45 1 1s-.45 1-1 1H2c-.55 0-1-.45-1-1s.45-1 1-1h2z"/>
+  <path fill="#0E2950" d="M8 8h8l1 3H7zm-2 6h12l1 3H5z"/>
+</svg>

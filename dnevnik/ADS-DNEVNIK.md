@@ -42,7 +42,7 @@ Nalog: `156-886-0314` (Gogin Nalog) · Strategija: **Maximize Clicks** (namerno,
 ### Faza 0 — Odblokiraj nalog `[✅ zavrseno 2026-07-04]`
 - [x] Dopuna balansa
 - [x] Završena verifikacija oglašivača
-- [ ] Potvrda da su ECOTILE prikazi/CPC vraćeni na normalu (uporedi sa snimkom u Logu)
+- [x] Potvrda da su ECOTILE prikazi/CPC vraćeni na normalu — ✅ 2026-08-06: nalog-širok throttling potvrđeno prošao, ALI CPC i dalje raste (52,20→78,98 RSD) zbog kampanja-specifičnog dnevnog budžet cap-a (1.300 RSD) koji na spike-danima gubi 50% prikaza — v. Log 2026-08-06, #ceka-miroslav odluka o povećanju budžeta
 
 ### Faza 1 — RSA kreativa (Terase odmah, ECOTILE pripremljeno)
 - [ ] "Podloge za terase i bazene": ubaci 15 headline-a + 4 description-a (banka niže) → cilj **Ad Strength ≥ Good**
@@ -107,6 +107,28 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 ## 🗒️ Log
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
+
+### 2026-08-06 [claude-code] — W4 4.2 ECOTILE potvrda: CPC trend NIJE stao na 76,56, popeo se na 78,98 — drugi throttling potpis potvrđen + W4 4.6 overlap pravilo re-verifikovano
+
+**4.2 — ECOTILE prikazi/CPC posle odblokiranja (2026-07-04): NIJE se vratilo na normalu.**
+| Period | Impr. | CPC (RSD) | Napomena |
+|---|---|---|---|
+| 16–22.07 | 12 | 38,00 | blackout rep, n=1, šum |
+| 23–29.07 | 246 | 52,20 | prva puna nedelja posle reaktivacije |
+| 30.07–05.08 | 228 | 76,56 | +47% (već upisano juče) |
+| 01–05.08 (podskup) | 161 | 78,98 | **potvrđuje trend, nije bio jednonedeljni šum** |
+
+Za poređenje (iz junskog throttling incidenta, već u dnevniku): pre-throttle **802 impr / ~26 RSD CPC**, throttling špic **261 impr / 74 RSD CPC**. Trenutne brojke (150–250 impr, CPC sad **78,98 — iznad** junskog špica od 74) nose isti potpis koji [[CLAUDE]] §9 opisuje: "visok impression share + sitni apsolutni impressions + skok CPC = throttling na nivou naloga, ne pad tražnje". Terase kampanja u istom periodu ide suprotnim smerom (CPC 20,11→18,07→17,95 opadajuće, impresije rastu 218→1268→1065) — dakle problem NIJE tržišni niti nalog-širok (odblokiranje 07-04 je i dalje na snazi), izolovan je na ECOTILE kampanju specifično. Mogući uzroci van dosega konektora (read-only): dnevni budžet cap koji je postao preplitak za novi (viši) CPC opseg, ili Quality Score/Ad Rank efekat na uskom setu ključnih reči. **Nije izvršena nikakva izmena** (konektor je read-only za Ads write akcije) — upisano kao nalaz za Miroslava, v. Bloker ispod.
+
+**4.6 — Pravilo preklapanja organik/plaćeno — sveže GSC (06.07–03.08) potvrđuje raniji zaključak iz [[analiza/2026-07-04-snapshot-full]], sa ažuriranim brojkama:**
+- **Terase-cena klaster i dalje organski dominantan (NE plaćati baš na ove tačne fraze):** "gumeni podovi za terase cena" poz. 1,6 (215 impr, CTR 5,12%) · "gumene podloge za terasu" poz. 2,1 · "gumeni podovi za terase" poz. 3,2 · "podloge za terasu" poz. 2,6 — svi top-3.
+- **Terase — mid-tail i dalje slab organski (vredi plaćati, i to Ads trenutno pokriva):** "podovi za terase" poz. 10,4 (292 impr) · "podne obloge za terasu" poz. 12,9 · "podloga za terasu" poz. 11,0 · "vinil podovi za terase" poz. 13,4 · "pvc podovi za terase" poz. 12,5.
+- **Industrijski — široka fraza i dalje slaba (vredi plaćati, potvrđuje ECOTILE targeting):** "industrijski podovi" poz. 11,7 (175 impr) · "industrijski pod" poz. 11,4 · "industrijski podovi cena po m2" poz. 7,1. Uža fraza "pvc industrijski podovi" je top-3 (poz. 2,3) ali premali volumen/preusko da bi se posebno targetiralo.
+- **Zaključak:** pravilo iz plana §4.6 i dalje tačno u smeru, brojke su ažurirane (industrijski poz. 11,7 umesto stare "poz. 11", terase-cena poz. 1,6–3,2 umesto stare "poz. 1,4"). Trenutna Ads targeting struktura (broad/phrase mid-tail termini) je ispravno pozicionirana — problem u ECOTILE-u je isporuka (4.2), ne pogrešan izbor ključnih reči.
+
+**Dopuna — uzrok nađen preko `search_budget_lost_impression_share` (dnevni segment, 23.07–04.08):** ECOTILE dnevni budžet je **1.300 RSD** (Terase 800 RSD). Prosečna dnevna potrošnja ECOTILE-a (~460 RSD/dan) je duboko ispod tog cap-a, ALI na 2 od 12 dana (26.07, 31.07) budžet je izgubio **50% mogućih prikaza** zbog budžeta (ostali dani 0–12%). Dakle nije trajno budžetsko ograničenje (kao junski throttling na nivou celog naloga), nego **povremeni intraday spike** — dani sa visokom aukcijskom konkurencijom guraju CPC gore i budžet od 1.300 RSD se potroši pre kraja dana, gubeći polovinu prikaza baš tog dana. To objašnjava rastući prosečni CPC (skuplji klikovi preživljavaju kad budžet postane oskudan usred dana) bez pravog pada obima. **Ovo NIJE identičan potpis junskom throttling-u** (koji je bio nalog-širok, blokada/verifikacija) — ovo je kampanja-specifičan, budžet-nivo nalaz.
+
+**Sledeći korak:** #ceka-miroslav — razmotriti podizanje ECOTILE dnevnog budžeta (npr. 1.300→1.800–2.000 RSD) da se apsorbuju spike dani bez gubitka prikaza; ne diram budžet sam (write akcija, M odluka). Alternativa bez trošenja više: ništa, prihvatiti povremeni 50% gubitak prikaza na najskupljim danima kao cenu trenutnog budžeta.
 
 ### 2026-08-06 [claude-code] — Kumulativ konverzija dostigao prag 20–30 (24) — odluka 4.8 otvorena za Miroslava
 - 30.07–05.08 vs 23–29.07: potrošnja **9.142,12 RSD vs 8.010,35** (+14,1%), klikovi **345 vs 347** (stabilno), uvezene konverzije **6 vs 8** (−25%, jedna nedelja).

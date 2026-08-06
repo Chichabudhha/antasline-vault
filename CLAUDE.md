@@ -410,51 +410,50 @@ Claude Code transkriptu sesije (`~/.claude/projects/<slug>/<session-id>.jsonl`),
 ne iz procene. Preko 150k u sesiji → predloži `/clear`. Ne čitati log fajl
 tokom rada osim na eksplicitan zahtev. Detalji i formula: [[reference/token-tracking]].
 
-### 8.7 MCP server i skillovi isključeni po defaultu — uključi po potrebi
-Sledeće je namerno isključeno 2026-08-05 (`/doctor` čišćenje — nula poziva
-u 50 skeniranih sesija), radi manje potrošnje konteksta. **Ako zadatak
-liči na bilo šta od opisanog ispod, predloži Miroslavu da uključiš dotičnu
-stavku i sačekaj potvrdu — ne uključuj sam bez pitanja, i ne pretpostavljaj
-da ne postoji samo zato što je isključeno.**
+### 8.7 Design skillovi — uključeni 2026-08-06, koristi automatski kad treba dizajn
+Ranije (od 2026-08-05) su ovi skillovi bili isključeni po defaultu (`/doctor`
+čišćenje, nula poziva u 50 skeniranih sesija) i trebalo je pitati Miroslava
+pre uključivanja. **Posle sesije doterivanja meni ikonica (2026-08-06,
+mnogo rundi ručnog SVG rada) Miroslav je eksplicitno tražio da se svi trajno
+uključe** — `skillOverrides` "off" unosi uklonjeni iz `~/.claude/settings.json`,
+`frontend-design@claude-plugins-official` postavljen na `true` u
+`.claude/settings.local.json`. **Od sada: kad zadatak liči na bilo šta od
+opisanog ispod (dizajn, ikonice, baneri, UI, brend, prezentacije), koristi
+dotični skill direktno — ne pitaj za dozvolu, ne pretpostavljaj da je i
+dalje isključen.**
 
 - **`magic` (MCP server)** — `@21st-dev/magic`, AI generator UI komponenti
-  iz opisa/screenshot-a. Uključi: `/mcp enable magic`.
-  Kad: generisanje/pretraga gotove UI komponente (frontend build, novi
-  WoodMart blok, vizuelni prototip).
+  iz opisa/screenshot-a. Kad: generisanje/pretraga gotove UI komponente
+  (frontend build, novi WoodMart blok, vizuelni prototip). Napomena: ovaj
+  MCP server nema lokalni `.mcp.json` u vault-u — ako se ne pojavljuje u
+  alatima, Miroslav treba jednom da pokrene `/mcp enable magic` ručno
+  (slash komanda, Claude Code je ne može izvršiti sam).
 - **`design` (globalni skill)** — brand identity, design token-i, UI
   styling, generisanje loga (55 stilova), CIP (50 deliverable-a), HTML
-  prezentacije, banner/icon dizajn, social foto. Uključi: obriši
-  `"design": "off"` iz `skillOverrides` u `~/.claude/settings.json`.
-  Kad: sveobuhvatan brend/dizajn zadatak (npr. rad na brend knjizi,
-  logu, CIP-u).
+  prezentacije, banner/icon dizajn, social foto. Kad: sveobuhvatan
+  brend/dizajn zadatak (npr. rad na brend knjizi, logu, CIP-u, ikonicama
+  za meni/UI).
 - **`ui-ux-pro-max` (globalni skill)** — UI/UX intelligence: 67 stilova,
   161 paleta, 57 font-parova, 25 chart tipova, 21 stack (React, Vue,
-  Tailwind, shadcn/ui...). Uključi: isto, obriši
-  `"ui-ux-pro-max": "off"`. Kad: build/review/fix UI koda, izbor
+  Tailwind, shadcn/ui...). Kad: build/review/fix UI koda, izbor
   palete/tipografije/layout-a za WoodMart rebuild stranice.
 - **`banner-design` (globalni skill)** — baneri za social/ads/web
-  hero/print, više art-direction opcija. Uključi: obriši
-  `"banner-design": "off"`. Kad: W6 social/Ads kreativa.
+  hero/print, više art-direction opcija. Kad: W6 social/Ads kreativa.
 - **`brand` (globalni skill)** — brand voice, vizuelni identitet,
-  messaging framework, konzistentnost brenda. Uključi: obriši
-  `"brand": "off"`. Kad: pitanja tona/glasa brenda, brend usklađenost
-  sadržaja.
+  messaging framework, konzistentnost brenda. Kad: pitanja tona/glasa
+  brenda, brend usklađenost sadržaja.
 - **`design-system` (globalni skill)** — arhitektura design token-a,
-  specifikacije komponenti, generisanje slajdova. Uključi: obriši
-  `"design-system": "off"`. Kad: sistematizacija dizajna preko više
-  stranica/komponenti.
+  specifikacije komponenti, generisanje slajdova. Kad: sistematizacija
+  dizajna preko više stranica/komponenti.
 - **`slides` (globalni skill)** — strateške HTML prezentacije sa
-  Chart.js, copywriting formule. Uključi: obriši `"slides": "off"`.
-  Kad: Miroslav traži prezentaciju/izveštaj u slide formatu.
+  Chart.js, copywriting formule. Kad: Miroslav traži prezentaciju/izveštaj
+  u slide formatu.
 - **`ui-styling` (globalni skill)** — shadcn/ui, Tailwind CSS,
-  canvas-based dizajn, dark mode, teme. Uključi: obriši
-  `"ui-styling": "off"`. Kad: implementacija UI komponenti sa
-  shadcn/Tailwind stack-om.
+  canvas-based dizajn, dark mode, teme. Kad: implementacija UI komponenti
+  sa shadcn/Tailwind stack-om.
 - **`frontend-design` (plugin skill, `frontend-design@claude-plugins-official`)**
   — vođenje ka nešablonskom, autorskom vizuelnom pravcu (paleta,
   tipografija, layout) pri gradnji nove ili preoblikovanju postojeće UI.
-  Uključi: u `.claude/settings.local.json` postavi
-  `"frontend-design@claude-plugins-official": true` (ili obriši ključ).
   Kad: potreban je izražen estetski pravac, ne generički template.
 
 ---

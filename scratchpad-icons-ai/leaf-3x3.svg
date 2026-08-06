@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <title>Half Basketball Court</title>
+  <path fill-rule="evenodd" fill="#0E2950" d="
+    M 2 2 H 22 V 22 H 2 Z
+    M 4 2 V 4.5 A 8 8 0 0 0 20 4.5 V 2 H 18.5 V 4.5 A 6.5 6.5 0 0 1 5.5 4.5 V 2 Z
+    M 17 22 A 5 5 0 0 0 7 22 H 8.5 A 3.5 3.5 0 0 1 15.5 22 Z
+    M 8 2 V 11 H 9 A 3 3 0 0 0 15 11 H 16 V 2 H 14.5 V 9.5 H 9.5 V 2 Z
+    M 13.5 11 A 1.5 1.5 0 0 1 10.5 11 Z
+    M 10 3 V 4 H 11 V 5.5 H 13 V 4 H 14 V 3 Z
+    M 11.5 4 H 12.5 V 5 H 11.5 Z
+  " />
+</svg>

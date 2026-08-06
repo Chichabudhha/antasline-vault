@@ -1,0 +1,5 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <title>Public Building</title>
+  <path fill="#0E2950" d="M0 22 V20 H2 V18 H3 V12 H2 V10 H1 L12 2 L23 10 H22 V12 H21 V18 H22 V20 H24 V22 Z M5 12 V18 H7 V12 Z M9 12 V18 H11 V12 Z M13 12 V18 H15 V12 Z M17 12 V18 H19 V12 Z"/>
+  <circle cx="12" cy="7" r="1.5" fill="#0E2950"/>
+</svg>

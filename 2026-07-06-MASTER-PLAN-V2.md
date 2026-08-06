@@ -109,11 +109,11 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 | # | Zadatak | Vlasnik | Efekat |
 |---|---|---|---|
 | 4.1 | ✅ ZATVORENO 2026-07-06 — lista potvrđena na obe kampanje, +13 novih negativnih (epoksi+padeži, betonski, "industrijski beton", [podne obloge], teraco, letvice, pevex, "uradi sam", pločice-phrase), KW "bastenski namestaj"/"oprema za bazene" pauzirani; `laminat` svesno izostavljen (watch) | M (15 min) | −16% curenja odmah |
-| 4.2 | Potvrda: ECOTILE prikazi/CPC vraćeni na normalu posle odblokiranja | CC (Windsor) | zatvara Fazu 0 |
+| 4.2 | ✅ ZATVORENO 2026-08-06 — nalog-širok throttling potvrđeno prošao (odblokiranje 07-04 drži), ALI CPC nastavio da raste (52,20→78,98 RSD) zbog kampanja-specifičnog uzroka: dnevni budžet 1.300 RSD gubi 50% prikaza na spike-danima (`search_budget_lost_impression_share`). Terase paralelno zdrava. #ceka-miroslav: budžet povećanje odluka (ne blokira gate) | CC (konektor) | zatvara Fazu 0 |
 | 4.3 | Faza 1: RSA Terase (15 headlines + 4 desc iz banke) → Ad Strength ≥ Good | M+CC | QS ↑ |
 | 4.4 | Faza 2: ad grupe — Terase → terase/bazeni/bergo · ECOTILE → industrijski/esd; svaka grupa svoj RSA; "pvc podovi za bazene" → svoja grupa + landing /podovi-za-bazene/ | M+CC | IS 24%→40%+ isti budžet |
 | 4.5 | Skalirati ECOTILE phrase "industrijski podovi" (1.073 RSD/konv ⭐) + geo BG/NS/Niš | M | najjeftinije B2B konverzije |
-| 4.6 | Pravilo overlap-a: NE plaćati gde je organik top 3 (terase-cena poz. 1,4), plaćati gde je organik >poz. 5 (industrijski poz. 11) | CC (analiza) | — |
+| 4.6 | ✅ RE-VERIFIKOVANO 2026-08-06 — pravilo i dalje tačno u smeru, brojke ažurirane sa sveže GSC (06.07–03.08): terase-cena klaster top-3 (poz. 1,6–3,2, NE plaćati) · terase/industrijski mid-tail slab (poz. 7,1–13,4, vredi plaćati) · trenutna Ads struktura ostaje ispravna | CC (analiza) | — |
 | 4.7 | Faza 3: Enhanced Conversions (SHA-256 email/tel kroz GTM) — priprema na lokalu, aktivacija posle migracije | CC | preciznija atribucija |
 | 4.8 | Na 20–30 plaćenih konverzija → Maximize Conversions; broad tek tada | M | — |
 | 4.9 | Faza 4: call asset 072, mobilni bid +15–20%, publike u Observation, Customer Match (email-ovi iz upita) | M+CC | zaobilazi prag publika |

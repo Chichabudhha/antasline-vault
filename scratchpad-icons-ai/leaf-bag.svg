@@ -1,0 +1,5 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Shopping Bag" role="img">
+  <title>Shopping Bag</title>
+  <path fill="#0E2950" d="M7 8C7 5.239 9.239 3 12 3C14.761 3 17 5.239 17 8L19 8C20.104 8 21 8.896 21 10L21 20C21 21.104 20.104 22 19 22L5 22C3.896 22 3 21.104 3 20L3 10C3 8.896 3.896 8 5 8L7 8ZM9 8L15 8C15 6.343 13.657 5 12 5C10.343 5 9 6.343 9 8Z"/>
+  <path fill="#0E2950" d="M12 12.5L14.5 15L12 17.5L9.5 15Z"/>
+</svg>

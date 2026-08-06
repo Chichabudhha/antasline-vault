@@ -987,6 +987,44 @@ najmanji dovoljan ASCII fragment (npr. samo `<p style="text-align: left">` →
 `<p>`, ne cela sadržina pasusa) — manje površine za promašaj, i posao svejedno
 ne zahteva dodirivanje dijakritičkog teksta.
 
+### Header Builder CSS se generiše JEDNOM i keš-uje u wp_options — ne prati izmenu koda
+WoodMart `Frontend::print_header_styles()` (`inc/modules/header-builder/class-frontend.php`)
+generiše `<style>` blok za header (uklj. `--wd-top-bar-sticky-h` i sl. CSS
+custom property-je) i piše ga preko `Styles_Storage` u opcije
+`xts-{header_id}-css-data`/`-status`/`-version`/`-site-url` (za default header:
+`xts-default_header-*`). `print_header_styles()` regenerises **SAMO ako**
+`is_css_exists()` vrati false, a to zavisi od `theme_version`/`site_url`
+poklapanja — **izmena PHP filtera (`woodmart_default_header_structure`) ili
+postmeta (`_menu_item_width`, `_menu_item_sticky`...) ne invalidira ovaj keš
+sama od sebe.** Nalaz 2026-08-06: izmena `sticky`/`sticky_height` na top-bar
+redu je tiho pala na stari keš (`--wd-top-bar-sticky-h: .00001px` i dalje u
+generisanom CSS-u iako je izvorni podatak već 30). **Fix: `DELETE FROM
+wp_options WHERE option_name IN ('xts-default_header-css-data',
+'xts-default_header-site-url', 'xts-default_header-status',
+'xts-default_header-version')`** — sledeći page load regeneriše čisto.
+**Pravilo: nakon SVAKE izmene header strukture/params preko koda (ne kroz
+Header Builder UI), obrisati ova 4 reda pre verifikacije.**
+
+### CSS custom property "increment" (`calc(var(--x) + Npx) !important`) na potomku ne radi pouzdano ovde
+Pokušaj da se `--wd-dropdown-width` (setovan inline na `<li>` preko
+`_menu_item_width`) uveća za dropdown preko `.wd-dropdown-menu { --wd-dropdown-width:
+calc(var(--wd-dropdown-width) + 140px) !important; }` je slomio layout —
+panel je pao na ~186px (3 kolone u 1) umesto da se malo proširi. Uzrok nije
+utvrđen do kraja (očekivano da se `var()` razreši na inherited vrednost sa
+`<li>` pre nego što se novi override primeni, ali se to ovde nije desilo
+predvidivo). **Pravilo: za širinu dropdown-a menjati izvornu `_menu_item_width`
+postmeta vrednost direktno, ne CSS var self-reference trik.**
+
+### WP attachment slike (SVG/PNG) nemaju `?ver=` cache-busting po defaultu
+Za razliku od `wp_enqueue_style/script` (koji dobijaju `?ver=` iz filemtime-a
+ako se to eksplicitno prosledi), `wp_get_attachment_image()`/`<img src=...>`
+generisan preko `_thumbnail_id` NE dobija verzionu oznaku — URL fajla ostaje
+identičan i posle izmene sadržaja. Browser (i lokalni test i budući posetioci)
+može agresivno keš-ovati stari sadržaj na istom URL-u. **Kad se prepisuje
+sadržaj postojećeg attachment fajla (npr. menjanje SVG ikonice u meniju),
+obavezno hard-refresh (Ctrl+Shift+R) pri proveri — običan refresh može
+pokazati staru verziju i navesti na lažan zaključak da izmena "nije stigla".**
+
 ## Otvoreno
 - [ ] ⏳ Kuriranje fotografija — pun prolaz kroz sve stranice (v. F7.21). Urađeno: 16657. Ostaje ~28 stranica bez slika + dopuna postojećih.
 - [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)

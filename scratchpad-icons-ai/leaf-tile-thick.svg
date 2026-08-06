@@ -1,0 +1,6 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <title>Floor Tile with Thick Base Layer</title>
+  <path fill="#0E2950" d="M12 2 L22 7 L12 12 L2 7 Z" />
+  <path fill="#0E2950" d="M2 9 L11.5 13.75 L11.5 21.75 L2 17 Z" />
+  <path fill="#0E2950" d="M22 9 L12.5 13.75 L12.5 21.75 L22 17 Z" />
+</svg>

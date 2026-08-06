@@ -1,0 +1,8 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img">
+  <title>Modular Interlocking Floor Tile</title>
+  <path fill="#0E2950" d="M3 5h5V3h6v2h5v5h2v6h-2v5h-5v-2H8v2H3v-5h2v-6H3V5z"/>
+  <circle fill="#0E2950" cx="5.5" cy="7.5" r="1.5"/>
+  <circle fill="#0E2950" cx="16.5" cy="7.5" r="1.5"/>
+  <circle fill="#0E2950" cx="5.5" cy="18.5" r="1.5"/>
+  <circle fill="#0E2950" cx="16.5" cy="18.5" r="1.5"/>
+</svg>

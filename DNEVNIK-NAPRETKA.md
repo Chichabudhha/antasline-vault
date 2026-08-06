@@ -1,3 +1,34 @@
+## 2026-08-06 [claude-code] [W1 meni] Mega meni — sticky header fix + ikonice, ikonice na kraju nerešene — SESIJA ZATVORENA 🟡
+
+**Kontekst:** Nastavak sesije istog dana (posle nedeljnog izveštaja ispod). Glavni zadatak isprva bio "probna migracija na staging" — preusmereno na M zahtev da meni bude vizuelno doteran pre toga (ikonice, sticky header, veći dropdown).
+
+**Trajno urađeno i zadovoljavajuće (nije vraćano nazad):**
+- **Ceo header (topbar + glavni red) sad je sticky** — pre ove sesije bio je sticky samo glavni red. Pravi uzrok komplikacije: WoodMart header CSS se generiše JEDNOM i keš-uje u `wp_options` (`xts-default_header-css-data`/`-status`/`-version`/`-site-url`), bez auto-refresh na izmenu koda — prva izmena (`_menu_item_width`/`sticky` postmeta na top-bar redu) je tiho pala na stari keš (`--wd-top-bar-sticky-h: .00001px`). Fix: obrisan keš (4 opcije), forsirana regeneracija. **Nova lekcija upisana ispod.**
+- **Logo suženo** (200→160px desktop, 150→120 sticky) i **CTA polje** — telefon zamenjen dugmetom "Zatraži ponudu" (`/kontakt/`) — desktop telefon slabo konvertuje naspram forme (prava konverzija = `/hvala-za-poruku/`, ne poziv). Telefon ostaje u topbar-u i mobilnom meniju.
+- **Meni "Terase i dom" prelom teksta unutar stavke** — WoodMart `.nav-link-text` je `white-space:normal` + flex-shrink, pa je dvočlana labela pucala u 2 reda umesto da cela stavka prelomi u novi red. Fix: `white-space:nowrap !important` na `.wd-nav-main > li > a .nav-link-text`.
+- **Dropdown paneli uvećani** — širina podignuta na izvoru (`_menu_item_width` postmeta: 760→900px za Sport/Industrija, 540→660px za ostale 4), padding/font-size kolona uvećani u CSS. 🔴 Prvi pokušaj (CSS `calc(var(--wd-dropdown-width) + 140px) !important` na `.wd-dropdown-menu`) je slomio layout (panel pao na ~186px, 3 kolone u 1) — self-referencing CSS custom property se nije razrešio kako se očekivalo. Rešeno menjanjem izvorne vrednosti umesto CSS var trika.
+
+**Ikonice — 8+ rundi, na kraju nerešeno, Miroslav sam traži zamenu:**
+1. FA font ikonice (6 top-level) → ✅ prihvaćeno
+2. Proširenо na 14 podsekcija + 59 pojedinačnih linkova (custom SVG linijski stil, WoodMart native "Menu item icon" mehanizam — `_thumbnail_id`+`_menu_item_image-type=image`, ne font-icon) → ❌ "previše generičke, previše istih" (npr. tenis/stoni tenis ista ikonica)
+3. Solid-fill Noun Project stil (14px) → ❌ "ne prepoznaje se šta je"
+4. Linijski stil vraćen, tanje linije (1.3 umesto 1.7), uvećano (18-24px) → ❌ "vratio si stare, nije dobro" — traženi Noun Project primeri
+5. Struktura promenjena po M zahtevu: top-level čist tekst (bez ikonica), naslovi kolona bez ikonica, ikonice SAMO na 59 pojedinačnih linkova, uvećano na 30px/17px font
+6. Boja promenjena crvena→navy (`--al-navy #0E2950`), Sport ikonica zamenjena stvarnim Noun Project fajlom (`noun-soccer-ball-5709538`, Miroslavljev Pro nalog — attribution tekst bezbedno isečen jer ima Pro pretplatu) → ✅ ova jedna ikonica prihvaćena
+7. **Design skillovi trajno uključeni** (M eksplicitni zahtev) — `~/.claude/settings.json` `skillOverrides` "off" unosi obrisani za design/ui-ux-pro-max/banner-design/brand/design-system/slides/ui-styling; `frontend-design@claude-plugins-official`→`true` u `.claude/settings.local.json`; `CLAUDE.md` §8.7 prepisan (auto-koristi kad treba dizajn, ne pitaj)
+8. Ikonice generisane preko `design` skila (Gemini 3.1 Pro, SVG tekst) — **2 prava bug-a nađena i popravljena u `~/.claude/skills/design/scripts/icon/generate.py`** (SVG se sekao pre kraja markdown fence-a kad model potroši budžet na "thinking" tokene → dodat fallback ekstraktor; `--output` nije pravio folder → dodat `os.makedirs`). Batch od 59 (~35 min), **~18/59 vizuelno pokvareno** (isti detalj-boja-na-boju problem ili potpuno prazno, XML validan ali besmisleno) — zamenjeno ručnim dizajnom. → ❌ "ne valja i dalje"
+9. Ručni redizajn preko `frontend-design` skila — potpis "kos ugao" (isti `clip-path` motiv kao sajt-ovi CTA dugmići) primenjen na 16 pločica/planki ikonica → ❌ "ne valja i dalje"
+
+**Finalno stanje (svesno ostavljeno takvo):** top-level meni = čist tekst, 14 naslova kolona = čist tekst, **59 pojedinačnih linkova imaju ikonice** (mešano: par desetina AI+ručno, navy boja, `uploads/meni-ikonice/*.svg`, WP attachment-i 17606-17678 + 17620-17678). Miroslav je odlučio da **sam nađe adekvatne ikonice** (Noun Project ili drugde) i preda ih — čeka se predaja fajlova, ne nova runda dizajna.
+
+**#ceka-miroslav:** ikonice za meni (Miroslav samostalno traži/bira). Kad stignu — samo prepisati sadržaj postojećih fajlova u `wp-content/uploads/meni-ikonice/meni-<naziv>.svg` (isti attachment ID-evi, nema DB izmene potrebne), isti postupak kao za `noun-soccer-ball-5709538`.
+
+**Backup-ovi (baza, hronološki):** `antasline_local_2026-08-06_pre-meni-ikonice-postmeta.sql` → `-podsekcije.sql` → `-sve-stavke.sql` → `-svg-ikonice.sql` → `-samo-top-ikonice.sql` → `-meni-submeni-ikonice.sql` → `-meni-leaf-ikonice.sql`. CSS/PHP `.bak-2026-08-06-*` fajlovi u `woodmart-child/`.
+
+**Migracija na staging (originalni zadatak) — NIJE izvršena ove sesije**, potisnuta menu poliranjem. Ostaje sledeći kandidat.
+
+---
+
 ## 2026-08-06 [claude-code] [W5 5.4] Nedeljni izveštaj (30.07–05.08 vs 23–29.07) — SESIJA ZATVORENA ✅
 
 **Kontekst:** Poslednji nedeljni izveštaj bio 07-30 (tačno nedelju dana ranije) — dospeo po ritmu, izabran kao glavni zadatak posle otvaranja sesije (W1/W3/C1-C3 iscrpljeni, W2 preostalo čeka M).
