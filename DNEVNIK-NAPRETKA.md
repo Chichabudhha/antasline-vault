@@ -13,7 +13,16 @@ Svih 5 upisano preko `$wpdb->update()` (3388 ima FAQPage `<script>` JSON-LD u `p
 
 **Verifikacija:** 5/5 HTTP 200, 1×H1, `.al-geo-intro` prisutan tačno 1× po stranici, FAQPage JSON-LD na 3388 i dalje valid (`json_decode` OK, 4 pitanja), regresija čista (homepage/industrijski-podovi/conquest 2542 i dalje 200).
 
-**Preostalo (van obima ove sesije):** batch 2 (prioriteti 6–11: 16615, 16613, 16612, 16616 ⚠️ ima <script>, 3398, 2641) i batch 3 (12–21, GSC 0-klik grupa) — osvežiti GSC brojke pre izvršenja ako je prošlo >2-3 nedelje od 07-30 zapisa. Detalji: [[migracija/w1-polish-red-cekanja]] Faza 4.
+**Nastavak iste sesije (na M zahtev "nastavi fazu 4 do kraja"):** batch 2 i batch 3 urađeni odmah posle batch 1, GSC brojke nisu osvežavane (isti dan kao 08-07 zapisi, nema potrebe za re-fetch).
+
+- **Batch 2 (prioriteti 6–11):** 16615 (detailing radionice — Bergo Ultimate/Ecotile 500/7), 16613 (preko starog parketa/pločica — Objectflor Clic/Ecotile/R-tek), 16612 (ftalati — EU/Srbija zabrana za dečije igračke, AntasLine podovi bez ftalata), 16616 (teren za pickleball — dimenzije 13,4×6,1m + Bergo Ultimate FLOV™, ⚠️ `@graph` FAQPage+Product `<script>`), 3398 (Bergo Solid za teška vozila — HDPE, 100m²/h), 2641 (PVC vs guma — krutost/vek trajanja/recikliranje). Skripta: `migracija/alati/job-w1-polish-faza4-batch2.php`.
+- **Batch 3 (prioriteti 12–21, GSC 0-klik grupa) — zatvara CEO red čekanja:** 5411 (modularni podovi vs epoksid), 16614 (sportska igrališta/Bergo WISH kampanja), 16608 (oštećen industrijski pod — uzroci + Ecotile rešenje), 5163 (Quectel case study, Beograd), 16610 (Naxos preko starog parketa u salama), 3257 (ugradnja preko starih/vlažnih površina), 4813 (Bergo Ultimate/PLUS EN 14877), 6824 (R-Tile Design vs pločice u supermarketima), 6874 (Secure Innovation case study, UK — 660m²+87m² ESD ploča), 17021 (HTEC Niš case study). Skripta: `migracija/alati/job-w1-polish-faza4-batch3.php`.
+
+Svih 16 upisano preko `$wpdb->update()` (isti F7.24 gotcha na 16616). Dry-run pa apply na oba batch-a, oba čista.
+
+**Verifikacija (16/16):** HTTP 200, 1×H1, `.al-geo-intro` tačno 1× po stranici, `@graph` JSON-LD na 16616 i dalje valid (FAQPage + Product). Sitewide provera potvrdila 0 duplikata `.al-geo-intro` klase na bilo kom postu. Regresija čista (homepage 301→OK poznat redirect, industrijski-podovi/conquest 2542/3318/3388 svi 200).
+
+**FAZA 4 U POTPUNOSTI ZATVORENA (22/22 posta, batch 1-3, sve u jednoj sesiji 2026-08-07).** Ceo W1 Polish red čekanja (Faze 1-4) je time zatvoren. Detalji: [[migracija/w1-polish-red-cekanja]] Faza 4.
 ## 2026-08-07 [cpanel-live] [W4/W6 Customer Match] Pravi --confirm upload pokušan — BLOKIRAN na developer token access level, ne na kodu 🔴
 
 **Nastavak iste sesije** — Miroslav potvrdio "pošalji upload sad, --confirm" pošto je prethodni dry-run prošao čisto.
