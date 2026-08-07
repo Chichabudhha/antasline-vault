@@ -1,3 +1,33 @@
+## 2026-08-07 [claude-code] [W3 3.6 CWV] Sitewide dequeue WC add-to-cart JS steka + jQuery Migrate uklonjen ✅
+
+**Kontekst:** Nastavak sesije posle W1 Faza 3 batch 6 zatvaranja — M pitao "šta se može isključiti u temi, višak CSS/JS?". Umesto nagađanja, provereno stvarno stanje u bazi/kodu/uživo (xts-woodmart-options, curl na 5 tipova stranice, Chrome).
+
+**Nalaz #1 — WC add-to-cart JS stek učitava se SVUDA a nema šta da radi.** Katalog režim (WoodMart nativni `catalog_mode` opcija + child-theme override na `woocommerce_single_product_summary` prio 30, M9 odluka od 2026-07-07) zamenjuje SVAKO add-to-cart dugme (single + loop) linkom ka `/kontakt/?form-naslov=...`. Provereno direktno: nema nijedne `<form class="cart">`/`.single_add_to_cart_button` na sajtu, čak ni na 23/94 proizvoda koji imaju upisanu pravu `_price` vrednost (`is_purchasable()=true`, ali `wc_get_page_id('cart')`/`('checkout')` pokazuju na postove koji ne postoje u bazi — 1615/1616 obrisani). Core `woocommerce.min.js` selektori (`.woocommerce-ordering`, `.password-input`, `.remove_from_cart_button`, `.woocommerce-store-notice`) takođe bez mete (sort-by widget ugašen 2026-07-08, nema my-account/cart stranica).
+
+**Izvršeno #1:** 10 handle-ova dequeue-ovano u `wp-content/themes/woodmart-child/functions.php` (novi blok posle postojećeg W3 3.6 `sourcebuster-js` dequeue-a, isti hook/prioritet `wp_enqueue_scripts` prio 100): `woocommerce`, `wc-add-to-cart`, `wc-add-to-cart-variation`, `wc-jquery-blockui`/`jquery-blockui`, `wc-js-cookie`/`js-cookie`, `vc_woocommerce-add-to-cart-js`, `wd-update-cart-fragments-fix`, `wd-action-after-add-to-cart`, `wd-add-to-cart-all-types`, `wd-sticky-add-to-cart`. CSS namerno nedirano (`wd-woocommerce-base` i dalje stilizuje cenu/grid/badge-ove — to jeste u upotrebi).
+
+**Verifikacija #1 (curl, 5 tipova stranice):** sadržajna (`/industrijski-podovi/`), home, blog arhiva → 0 preostalih WC-cart handle-ova. Katalog + proizvod sa varijabilnim "Srodnim proizvodima" → 2 preostala (`wc-jquery-blockui` + `wc-add-to-cart-variation`) — **poznat, već dokumentovan slučaj** iz originalnog W3 3.6 nalaza (`woocommerce_variable_add_to_cart()` template funkcija re-enqueue-uje direktno POSLE ovog hook-a kad "Srodni proizvodi" widget prikazuje varijabilan proizvod, bez obzira na tip trenutnog proizvoda — dequeue na `wp_enqueue_scripts` ne pomaže, van obima ovog prolaza). Cena i dalje ispravno renderovana (`woocommerce-Price-amount`), HTTP 200/1×H1 svuda, nema PHP grešaka.
+
+**Nalaz #2 — jQuery Migrate.** Preostali kandidat od uobičajenih WP performance stavki (emoji/dashicons/comment-reply/reCAPTCHA su već bili isključeni, WC block CSS-ovi registrovani ali nikad enqueue-ovani). Za razliku od WC dequeue-a, ovo NIJE curl-verifikabilno — greška bi bila tiha vizuelna/interaktivna, ne HTTP status.
+
+**Izvršeno #2:** `add_action('wp_default_scripts', ...)` (frontend samo, `!is_admin()`) uklanja `jquery-migrate` iz `jquery` handle-ovog `deps` niza — WP core ga automatski vezuje po defaultu, ovo je standardan WP obrazac za uklanjanje.
+
+**Verifikacija #2 — pravi browser test kroz Chrome (ne samo curl), pre nego što je ovo proglašeno gotovim:**
+- Mega-meni dropdown (SPORT, 3 kolone, hover) ✅
+- Mobilni off-canvas meni (390px, `al-harness.html` iframe harness) ✅
+- AJAX pretraga (upit "ecotile" → live rezultati sa slikama/cenama) ✅
+- PhotoSwipe lightbox na proizvod-galeriji (zoom/navigacija/fullscreen/close) ✅
+- **Court builder canvas** (`/planer-terena/`, najkompleksniji JS na sajtu) — klik na boju obojio celu 14×14 mrežu, tabela ažurirana uživo (196/196 ploča, 27,61 m²) ✅
+- 0 console grešaka na fresh page load (proveravano i na proizvod i na court builder stranici)
+
+**Backup:** `functions.php.bak-2026-08-07-pre-wc-dequeue`, `functions.php.bak-2026-08-07-pre-jquery-migrate-dequeue` (obe u `wp-content/themes/woodmart-child/`).
+
+**Gotcha za budućnost:** oba dequeue-a su u **child** temi (`woodmart-child/functions.php`), ne u parent `woodmart` temi — theme update na WoodMart ih neće prebrisati (za razliku od `class-breadcrumbs.php` vendor-fajl fixa od 2026-07-30, koji JESTE u parent temi i treba proveravati posle svakog update-a).
+
+**Van obima/nedovršeno:** `wc-add-to-cart-variation` re-enqueue na stranicama sa varijabilnim "Srodnim proizvodima" ostaje nerešeno (poznato, dokumentovano dva puta sada) — zahtevalo bi diranje related-products rendera, ne samo dequeue hook. Sledeći korak za CWV liniju: brojčana Lighthouse LCP potvrda na produkciji (UCSS ponovo uključen 2026-08-07, ali numerička <2,5s potvrda posle toga nije merena).
+
+---
+
 ## 2026-08-07 [claude-code] [W1 Polish Faza 3] Batch 6 — generički .al-cta-box na 22 posta bez GEO-intro/CTA teksta (M odluka: mehanički, bez novog teksta)
 
 **Kontekst:** Otvaranje sesije predložilo nastavak "W1 Polish Faza 3" (PROGRESS blokeri red 2026-07-30, item "post tipografska neujednačenost"). DB provera pokazala da je F7.24 retrofit (`.al-geo-intro`/`.al-cta-box` na POSTOJEĆI ad-hoc GEO-intro tekst) već zatvoren 2026-07-30 (batch 1-5, 30/30) — ali samo 8/31 posta je stvarno dobilo te klase (imali su tekst za prevesti), preostalih 23 nikad nije imalo GEO-intro/CTA obrazac pa ih batch 2-5 nisu dirali (samo link/tipfeler fixevi). Znači "30/31 bez al-section" nalaz je i dalje bio tačan.
