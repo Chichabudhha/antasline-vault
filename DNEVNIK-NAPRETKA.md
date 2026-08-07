@@ -1,3 +1,21 @@
+## 2026-08-07 [claude-code] [BLOK A] — GTM `mailto` event vraćen u život (trigger+tag preko Chrome automatizacije) — ZATVORENO ✅
+
+**Kontekst:** Poslednja otvorena stavka iz BLOK A čišćenja — `mailto` GA4 event je bio mrtav od 2026-06-27 (uzrok nađen 2026-07-27: pratio ga je MonsterInsights, ne GTM; gašenje MI-ja ga je oborilo na nulu dok su `generate_lead`/`tel` bili prevezani). Fix je čekao odobrenje za GTM Submit (`[[PROGRESS]]` Blokeri, redovi 300+306).
+
+**Urađeno — direktno preko Chrome browser automatizacije (Claude-in-Chrome), bez API/OAuth koraka:**
+- Ulogovan nalog u Tag Manageru je bio pogrešan (`cpgujam@gmail.com`, bez pristupa) — prebačeno na `miroslav.markovic109@gmail.com`, isti gotcha kao 2026-08-05 Meta Pixel sesija.
+- Novi trigger **"Klik na mailto"** (Just Links, Click URL contains `mailto:`) — identičan obrazac kao postojeći `Klik na telefon`.
+- Novi tag **"Analitika tag - mailto"** (Google Analytics: GA4 Event, Measurement ID `G-H8BRCZN8W4` preko "Google tag found in this container", Event Name `mailto`, parametar `email_address={{Click URL}}`) — identičan obrazac kao postojeći `Analitika tag - telefon`.
+- **Testirano PRE objave** preko GTM Preview (Tag Assistant) na živom `/kontakt/`: klik na `mailto:office@antasline.com` link → tag se okinuo tačno 1×, hit `mailto` poslat na `G-H8BRCZN8W4` sa ispravnim `email_address` parametrom.
+- **Submit + Publish**: Version 14 "mailto GA4 event", opis sa punim kontekstom uzroka i fix-a. Version Changes potvrđuje TAČNO 2 stavke (tag added + trigger added) — ništa drugo zahvaćeno. Usput potvrđeno da su `pdf_download`/`gallery_view` draftovi VEĆ bili objavljeni (Version 12, 2026-08-05) — nisu bili deo ovog Submit-a kako je stara PROGRESS napomena pretpostavljala.
+- Posle objave: potvrđeno direktnim fetch-om `googletagmanager.com/gtm.js?id=GTM-TRDT8K9` da `mailto` string postoji u živom kontejneru (CDN propagacija prošla).
+
+**🔴 Gotcha (browser automatizacija, ne GTM specifično):** Google Tag Manager-ov "Submit Changes" panel (Version Name/Description polja) je u jednom trenutku prestao da prima klik+type unos preko Claude-in-Chrome computer tool-a — `computer.left_click` na `ref` je vraćao uspeh, ali `document.activeElement` je i dalje bio prazan `<div tabindex="-1">`, a input vrednost ostajala prazna. Simptom se poklopio sa Chrome extension prozorom koji je počeo da vraća sumnjivo mali viewport (837×61) na screenshot-ima uprkos `resize_window` pozivu — verovatno privremeni desinhronizovan render state u ekstenziji, ne GTM UI bag. **Rešeno zaobilaznim putem**: `javascript_tool` sa `Object.getOwnPropertyDescriptor(el.__proto__,'value').set` (native setter, obavezan da bi Angular/React registrovao promenu) + ručni `dispatchEvent(new Event('input'/'change', {bubbles:true}))` — vrednost je ostala i Publish je prošao sa tačnim imenom/opisom verzije. Upisano u [[reference/naucene-lekcije]].
+
+Nema DB backup-a (GTM-only izmena, nema WordPress/SQL rada ove stavke). Preostalo (van dosega Claude Code-a, potvrđeno na kraju prošle sesije): Meta Business Manager domain verifikacija, Event Match Quality, Conversions API — traže pristup Miroslavljevom Meta nalogu.
+
+---
+
 ## 2026-08-07 [cpanel-live] Staging V3 šira provera — forme/linkovi/mobilni: 3 bag-a nađena i popravljena (UŽIVO)
 
 **Kontekst:** Nastavak otvorene stavke iz [[PROGRESS]] 2026-08-06 (Staging V3 full setup) — #ceka-miroslav "šira provera (forme, linkovi, mobilni) ili eksplicitna potvrda pre konačnog zatvaranja". Miroslav prijavio "linkovi u meniju su pokvareni — imaju čudan nastavak" → istraga otkrila DVA odvojena nalaza, pa nastavljena puna šira provera na `staging.antasline.com`.

@@ -1,9 +1,14 @@
 ---
 tip: reference
-azurirano: 2026-08-06
+azurirano: 2026-08-07
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Chrome browser automatizacija (Claude-in-Chrome): klik+type na neke web-app inpute ne registruje unos — proveriti pre Submit-a (GTM mailto tag, 2026-08-07)
+- Prilikom popunjavanja GTM "Submit Changes" panela (Version Name/Description) preko `computer` tool-a, `left_click`+`type` je prijavljivao uspeh, ali `document.activeElement` je i dalje bio prazan `<div tabindex="-1">` i input vrednosti su ostajale prazne — simptom se poklopio sa Chrome extension prozorom koji je vraćao sumnjivo mali viewport (837×61) na screenshot-ima uprkos `resize_window` pozivu (verovatno privremen desinhronizovan render state u ekstenziji, ne bag ciljne web app).
+- **Rešeno preko `javascript_tool`**: native setter (`Object.getOwnPropertyDescriptor(el.__proto__,'value').set`) da se React/Angular kontrola stvarno registruje kao promenjena, plus ručni `dispatchEvent(new Event('input'/'change', {bubbles:true}))` — bez toga framework ne vidi promenu iako je DOM `value` atribut fizički postavljen.
+- **Pravilo ubuduće:** posle svakog `computer` click+type unosa u formu koja izgleda "nemo" (nema vizuelne potvrde ili je screenshot sumnjivo mali/prazan), PRE bilo kakve nepovratne akcije (Submit/Publish/Save) proveriti stvarnu DOM vrednost preko `javascript_tool` (`document.querySelector(...).value`) — ne verovati samo uspešnom povratu `computer` tool-a. Ako je prazno, koristiti native-setter+dispatchEvent obrazac umesto ponovnog pokušaja klika.
 
 ## FTP "451 Error during write to file" na velikom transferu = disk kvota, NE mreža/firewall (staging refresh, 2026-08-06)
 - Pokušaj slanja pune 3,18 GB staging arhive preko FTP-a (`staging@antasline.com`) je konzistentno padao usred transfera (`curl: (55) Send failure: Connection was aborted/reset`), uvek posle kratke inicijalne eksplozije podataka pa potpunog zastoja ~15-20s pa reseta — simptom koji IZGLEDA identično nestabilnoj wifi/NAT/firewall konekciji (baš je i takva dijagnoza prvo pretpostavljena, uz pokušaje chunk-ovanja/resume-a preko `-C -`).
