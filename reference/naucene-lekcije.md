@@ -5,6 +5,14 @@ azurirano: 2026-08-07
 
 # Naučene lekcije (tehnički gotchas)
 
+## Customer Match upload zahteva Standard developer token (Basic access ne radi) + membership_life_span max je 540 dana, ne 10000 (2026-08-07)
+- Prvi stvaran `customer_match_upload.py --confirm` pokušaj (posle scan_leads.py fix-a) pao je u dva koraka:
+  1. `user_list.membership_life_span = 10000` ("konvencija za bez isteka") odbijeno sa `RangeError.TOO_HIGH` — Google je od **2025-04-07** uveo tvrd max od **540 dana** za CRM-based (Customer Match) liste, stari "10000 = trajno" sentinel je ukinut. Fix: konstanta promenjena na `540`.
+  2. Posle tog fixa, sama lista se USPEŠNO kreirala u pravom nalogu (prazna, `AntasLine - Website Leads`), ali `OfflineUserDataJobService.create_offline_user_data_job()` je odbijen sa `CUSTOMER_NOT_ALLOWLISTED_FOR_THIS_FEATURE`: "Customer Match uploads aren't supported in the Google Ads API for the developer token of the request. Use the Data Manager API for Customer Match workflows." — Basic developer token access (odobren 2026-07-27 za izveštavanje) ne pokriva Customer Match; potreban je Standard access (ručno odobrenje, Ads UI → Tools & Settings → API Center) ili migracija na poseban Data Manager API.
+- **Pravilo:** developer token "access level" (Basic/Standard/Advanced) nije isto što i "token radi/ne radi" — token može uspešno raditi za READ operacije (izveštaji, `ads_report.py`) a istovremeno biti odbijen za specifične WRITE feature-e (Customer Match) koji traže viši nivo. Ne pretpostaviti da je jednom odobren token dovoljan za sve buduće write operacije.
+- Nusfekat koji treba znati: prazna user lista OSTAJE kreirana u live nalogu i posle neuspelog upload pokušaja (mutate_user_lists je uspeo, samo posledeći offline data job korak je pao) — nije automatski očišćena, nije štetna (0 članova, 0 troška), ali je stvarna izmena na produkciji koju treba pomenuti transparentno, ne samo "pokušaj nije uspeo".
+- #ceka-miroslav: zatražiti Standard developer token pristup u Ads UI API Center pre sledećeg pokušaja.
+
 ## Nova skripta pisana na osnovu STARE pretpostavke, ne provere žive baze — pošiljalac lead-mejlova (Customer Match, 2026-08-07)
 - `scan_leads.py` (dodat u konektor 2026-08-07) je hardkodovao `LEAD_SENDER = "wordpress@antasline.com"` — tačno vrednost koju bi budući WoodMart/CF7 build slao, ali NE ono što live sajt (i dalje stari Kallyas/Zion Builder) stvarno šalje. P1 nalaz iz 2026-07-30 audita mejlova je već utvrdio pravi pošiljalac (`no-reply@antasline.com`, potvrđeno na svih 49 formi), ali ta činjenica nije prenesena u skriptu napisanu nedelju+ dana kasnije.
 - Simptom je bio tih: `--dry-run` nije bacio grešku, samo je vratio "0 novih kontakata" na mailbox-u koji je stvarno imao 65 poruka/6 pravih leadova — lako se protumači kao "nema novih upita" umesto "filter je pogrešan".

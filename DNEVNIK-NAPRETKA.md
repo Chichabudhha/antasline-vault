@@ -14,6 +14,19 @@ Svih 5 upisano preko `$wpdb->update()` (3388 ima FAQPage `<script>` JSON-LD u `p
 **Verifikacija:** 5/5 HTTP 200, 1×H1, `.al-geo-intro` prisutan tačno 1× po stranici, FAQPage JSON-LD na 3388 i dalje valid (`json_decode` OK, 4 pitanja), regresija čista (homepage/industrijski-podovi/conquest 2542 i dalje 200).
 
 **Preostalo (van obima ove sesije):** batch 2 (prioriteti 6–11: 16615, 16613, 16612, 16616 ⚠️ ima <script>, 3398, 2641) i batch 3 (12–21, GSC 0-klik grupa) — osvežiti GSC brojke pre izvršenja ako je prošlo >2-3 nedelje od 07-30 zapisa. Detalji: [[migracija/w1-polish-red-cekanja]] Faza 4.
+## 2026-08-07 [cpanel-live] [W4/W6 Customer Match] Pravi --confirm upload pokušan — BLOKIRAN na developer token access level, ne na kodu 🔴
+
+**Nastavak iste sesije** — Miroslav potvrdio "pošalji upload sad, --confirm" pošto je prethodni dry-run prošao čisto.
+
+**Korak 1 — `google-ads` Python biblioteka nije bila instalirana na cPanel serveru** (ni `pip3` na PATH-u). Instalirano preko `python3 -m pip install --user -r requirements.txt` (ceo `antasline-konektor/requirements.txt`, 21 paket, u `~/.local/lib/python3.9/`) — bezbedno, `--user` scope, van sistemskog Python-a.
+
+**Korak 2 — 🔴 bug: `membership_life_span = 10000`** ("Google Ads konvencija: bez isteka", komentar u kodu) odbijeno sa `RangeError.TOO_HIGH`. Google je od 2025-04-07 uveo tvrd max od **540 dana** za CRM-based (Customer Match) liste — stari sentinel je ukinut (potvrđeno WebSearch: [ppc.land](https://ppc.land/google-sets-new-540-day-limit-for-customer-match-data-retention/), zvanični Google Ads API docs). Fix: konstanta `NO_EXPIRY_MEMBERSHIP_LIFE_SPAN=10000` → `MAX_MEMBERSHIP_LIFE_SPAN_DAYS=540` u `customer_match_upload.py`.
+
+**Korak 3 — 🔴🔴 pravi blokator, NIJE kod:** posle fixa, `mutate_user_lists` je USPEO — lista **"AntasLine - Website Leads" je stvarno kreirana u live nalogu 156-886-0314** (`customers/1568860314/userLists/9444454571`, prazna, 0 članova). Ali `OfflineUserDataJobService.create_offline_user_data_job()` (sledeći korak, stvarni upload hešovanih email-ova) je odbijen: `CUSTOMER_NOT_ALLOWLISTED_FOR_THIS_FEATURE` — "Customer Match uploads aren't supported in the Google Ads API for the developer token of the request. Use the Data Manager API for Customer Match workflows." Basic developer token access (odobren 2026-07-27, dovoljan za `ads_report.py` izveštavanje) NE pokriva Customer Match write operacije — treba Standard access (ručno Google odobrenje, Ads UI → Tools & Settings → API Center) ili migracija na poseban Data Manager API (veći posao, nov API/scope).
+
+**Odluka (Miroslav, upitan direktno):** pauzirati ovde, ne tražiti Standard token niti istraživati Data Manager API ovu sesiju. #ceka-miroslav: zatražiti Standard developer token access u Ads UI API Center kad bude spreman da nastavi.
+
+**Status ostavljen:** `leads.csv` (6 kontakata) i kredencijali i dalje na serveru, ništa markirano kao `uploaded` (job creation je pao pre tog koraka). Prazna audience lista ostaje u nalogu (bezopasna, 0 troška/članova) — nije brisana, može se ponovo iskoristiti kad token bude rešen. Detalji + lekcija: [[reference/naucene-lekcije]].
 
 ## 2026-08-07 [cpanel-live] [W4/W6 Customer Match] scan_leads.py bug fix + prvi batch pripremljen (6 kontakata), upload čeka M potvrdu ✅📋
 
