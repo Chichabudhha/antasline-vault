@@ -96,6 +96,12 @@ expansion `{a,b}` pravi literalne foldere; velike fajlove čitaj Read alatom.
 
 1. `[[DNEVNIK-NAPRETKA]]` — novi unos NA VRH: `## YYYY-MM-DD [claude-code]
    [OBLAST] — naslov ✅` sa: šta je urađeno, gotcha-i, backup fajl, skripte
+1b. Ako je sesija imala suštinski rad (ne trivijalna izmena) — napravi i
+   `dnevnik/YYYY-MM-DD-kratak-naslov.md` po formatu iz
+   `[[dnevnik/_TEMPLATE-sesija]]` (Šta je urađeno / Otvorene akcije /
+   Beleške-odluke / Veze). Ovo je odvojeno od ledger linije u
+   DNEVNIK-NAPRETKA — ledger ostaje kratak i jeftin za čitanje na svakom
+   otvaranju sesije, detaljan fajl se čita samo na zahtev.
 2. `[[PROGRESS]]` — red na vrh "Urađeno" tabele; ažuriraj "Sledeće"/"Blokeri"
    ako se promenilo
 3. `[[2026-07-06-MASTER-PLAN-V2]]` — štikliraj/označi zadatak (✅ + datum);
