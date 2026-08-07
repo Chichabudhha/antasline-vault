@@ -1,3 +1,15 @@
+## 2026-08-07 [claude-code] BLOK E — galerija batch 5: generičke sport-teren fotke (kancelarija ×3 + krovni teren ×2) — poslednji preostali red čekanja zatvoren ✅
+
+**Kontekst:** Nova sesija, `/antasline-sesija` otvaranje. Iz `foto-arhiva-inventar.md` je ostao samo jedan otvoren, niže-prioritetan red: 5 fotografija bez imena lokacije u fajlu (`teren u kancelariji.jpg`/`2`/`3`, `teren na krovu.jpg`/`2`) — 2 dodatne "u dvorištu" varijante iz istog reda su se ispostavile kao već ranije uvezene i iskorišćene na drugim stranicama (post 5061, post 5438), nije trebalo ništa dodatno.
+
+**Provera porekla pre uvoza (isti standard kao padel presedan):** vizuelni pregled je pokazao da "teren na krovu" ima arhitekturu u pozadini koja liči na južnoevropsku/iberijsku (ne srpsku) — rizik da je proizvođački/katalog materijal, ne prava AntasLine realizacija. Pitanje postavljeno M-u eksplicitno pre uvoza (uz putanje do fajlova za lični pregled). **M potvrdio: "ovo su sve radovi antasline. objavi slobodno."** — svih 5 uvezeno.
+
+**Izvršeno:** `/galerija/` (16674) grid "Tereni za basket" 33→38 kartica. 3 kartice "Teren u kancelariji" (indoor Bergo-tip pločice u pretvorenom lofta prostoru, različiti uglovi) + 2 kartice "Krovni teren" (multisport krovna instalacija, koš + mali fudbal/rukomet gol). Skripta `migracija/alati/job-16674-galerija-sportski-tereni-basket-batch5-generic.php` (isti obrazac kao batch 1-4). Backup: `antasline-backups/antasline_local_2026-08-07_pre-galerija-batch5-generic.sql`. Verifikovano: 200/1×H1/38 al-card/5×5 nove slike 200/0 grešaka, regresija (kosarkaske-konstrukcije, industrijski-podovi, odbojka) čista.
+
+**Ovim je `reference/foto-arhiva-inventar.md` red čekanja u potpunosti iscrpljen** — 0 preostalih stavki osim padel (svesno zatvoreno bez objave, v. red ispod).
+
+---
+
 ## 2026-08-07 [claude-code] BLOK E — padel fotke: poreklo potvrđeno, objava ODBIJENA — foto arhiva u potpunosti zatvorena
 
 **Kontekst:** Zatvaranje sesije. Poslednje otvoreno pitanje iz `reference/foto-arhiva-inventar.md` — poreklo 3 padel fotografije (`Padel-Club-Stockholm.jpg`, `padel tereni sa vestackom travom.webp`, `vestacka trava za padel terene notix safitex.jpg`). M potvrdio: "sa sajta proizvođača." Pre uvoza, provera EXIF podataka pokazala da jedna fotografija nosi `copyright: Matteo Zanga` (konkretan fotograf, ne generički proizvođački marketing) — drugačiji nivo od Geoplast/Ergomat presedana gde je M dao eksplicitnu dozvolu za javno korišćenje. Pitanje postavljeno M-u eksplicitno pre bilo kakve izmene baze; **M odgovorio da odgovor "sa sajta proizvođača" nije bio odobrenje za objavu** — ništa nije uvezeno, `/veštačka-trava-za-padel-terene/` (16670) ostaje nedirano.

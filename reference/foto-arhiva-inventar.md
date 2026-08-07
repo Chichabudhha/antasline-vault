@@ -144,7 +144,7 @@ bez provere).
 | ESD/antistatik | ~10 (3 iskorišćene) | Galerija na ESD/Ecotile proizvod-stranicama | ✅ ZATVORENO 2026-08-07 |
 | Geoplast (Geocross/Geoflor/Geogravel/Runfloor) | ~20 | Galerija na odgovarajućim proizvod-stranicama | ✅ **već gotovo iz ranije sesije** (16589, 9 fotki + FAQPage) — provereno 2026-08-07, ništa dodatno potrebno |
 | Ergomat (Isotrack/X-Mat/Mosolut) | ~8 (4 iskorišćene) | Galerija na odgovarajućim proizvod-stranicama | ✅ ZATVORENO 2026-08-07 |
-| Sport tereni (Bergo/3×3/tenis/pickleball/padel/odbojka) | ~100 | Raspoređeno po sportu na silo/kategorija stranice | ✅ **ZATVORENO 2026-08-07** — imenovane lokacije (4 batch-a, 24 fotke na `/galerija/` + 1 na odbojka stranici) |
+| Sport tereni (Bergo/3×3/tenis/pickleball/padel/odbojka) | ~100 | Raspoređeno po sportu na silo/kategorija stranice | ✅ **U POTPUNOSTI ZATVORENO 2026-08-07** — imenovane lokacije (4 batch-a, 24 fotke) + generičke bez lokacije (batch 5, 5 fotki) = 29 fotki na `/galerija/` + 1 na odbojka stranici |
 
 ### Sport tereni — izviđanje i batch 1, izvršeno 2026-08-07
 
@@ -160,7 +160,7 @@ bez provere).
 
 **Batch 4 (isti dan, poslednji) — RED ČEKANJA IMENOVANIH LOKACIJA ZATVOREN**: Vršac, Pula, Jajinci, Čačak-Knić. Grid "Tereni za basket" 26→30 kartica (33 ukupno na strani). **Ukupno preko 4 batch-a: 24 nove fotografije na `/galerija/` (9→33 kartice) + 1 na odbojka stranici (4318).**
 
-**Šta ostaje van obima (svesno, ne previd)**: generičke fotografije bez imena lokacije (npr. "teren u kancelariji" ×3, "teren na krovu" varijante, "teren za basket u dvorištu") — niže prioritetnosti jer su manje verodostojne/distinktivne kao "referenca" od imenovanih lokacija; mogu se razmotriti u budućoj sesiji ako zatreba još sadržaja na `/galerija/`.
+**Batch 5 (2026-08-07, nova sesija) — generičke fotke bez lokacije, RED ČEKANJA U POTPUNOSTI ISCRPLJEN**: "teren u kancelariji" ×3 (indoor Bergo-tip pločice u pretvorenom lofta prostoru) + "teren na krovu" ×2 (krovni multisport teren, koš + mali fudbal/rukomet gol) uvezene na `/galerija/`. "teren za basket u dvorištu" ×2 nisu bile deo ovog batch-a — provera pokazala da su već ranije uvezene i iskorišćene na drugim stranicama (post 5061, post 5438), ništa dodatno nije trebalo. Provera porekla pre uvoza (krovni teren imao stranu-arhitekturu signal u pozadini, isti standard opreza kao padel presedan) — M eksplicitno pitan uz putanje do fajlova za lični pregled, potvrdio "sve radovi antasline, objavi slobodno". Grid "Tereni za basket" 33→38 kartica. Skripta `migracija/alati/job-16674-galerija-sportski-tereni-basket-batch5-generic.php`, backup `antasline-backups/antasline_local_2026-08-07_pre-galerija-batch5-generic.sql`. Verifikovano 200/1×H1/38 al-card/5 nove slike 200/0 grešaka, regresija čista.
 
 **Padel fotke — ODLUČENO 2026-08-07, NE OBJAVLJIVATI.** M potvrdio poreklo (`Padel-Club-Stockholm.jpg`, `padel tereni sa vestackom travom.webp`, `vestacka trava za padel terene notix safitex.jpg` — sve tri sa proizvođačevog sajta, jedna ima EXIF `copyright: Matteo Zanga`, konkretan fotograf) ali eksplicitno odbio objavu: "odgovor 'sa sajta proizvođača' je bio informacija, ne odobrenje za objavu." Razlika od Geoplast/Ergomat presedana (gde je M dao eksplicitnu dozvolu za javno korišćenje) — ovde dozvola NIJE data. `/veštačka-trava-za-padel-terene/` (16670) ostaje nedirano, i dalje samo 1 postojeća generička proizvod-fotografija. Zatvoreno bez izmene baze.
 
