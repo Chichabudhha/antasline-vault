@@ -1,3 +1,19 @@
+## 2026-08-07 [claude-code] [W1 Polish Faza 3] Batch 6 — generički .al-cta-box na 22 posta bez GEO-intro/CTA teksta (M odluka: mehanički, bez novog teksta)
+
+**Kontekst:** Otvaranje sesije predložilo nastavak "W1 Polish Faza 3" (PROGRESS blokeri red 2026-07-30, item "post tipografska neujednačenost"). DB provera pokazala da je F7.24 retrofit (`.al-geo-intro`/`.al-cta-box` na POSTOJEĆI ad-hoc GEO-intro tekst) već zatvoren 2026-07-30 (batch 1-5, 30/30) — ali samo 8/31 posta je stvarno dobilo te klase (imali su tekst za prevesti), preostalih 23 nikad nije imalo GEO-intro/CTA obrazac pa ih batch 2-5 nisu dirali (samo link/tipfeler fixevi). Znači "30/31 bez al-section" nalaz je i dalje bio tačan.
+
+**M odluka (upitan direktno):** za tih ~23 posta ne izmišljati nov GEO-intro pasus (to bi bilo pisanje sadržaja, ne mehanička izmena) — samo dodati generički zatvarajući `.al-cta-box` na dno (telefon+email, isti generički tekst na svih).
+
+**Izvršeno:** 22/23 posta dobilo generički CTA (`Imate pitanje ili vam treba ponuda za pod? Pozovite 069 234 00 72 ili pišite na office@antasline.com.`) — isti tekst svuda, bez per-post izmišljanja. `17027` (Dimenzije fudbalskog terena) namerno izostavljen — već ima pravi `al-hero` CTA blok (F6 šablon), dupli CTA bi bio suvišan. Dva posta (`3388` podovi-za-stamparije, `16616` teren-za-pickleball) imaju FAQPage JSON-LD `<script>` u sadržaju — CTA ubačen PRE script taga (ne posle) preko `$wpdb->update()` direktno (F7.24 gotcha: `wp_update_post()` kvari eskejpovane navodnike u JSON-LD kad dirne bilo koji deo posta). Ostalih 20 preko `wp_update_post()` (bez script-a, bezbedno).
+
+**Verifikovano:** 22/22 HTTP 200, 1×H1, 1× al-cta-box render na svih 22 (curl+grep). Oba JSON-LD bloka na 3388/16616 i dalje `json_decode()`-valid (2 bloka svaki — sitewide Organization/LocalBusiness + post FAQPage), CTA potvrđeno TEKSTUALNO pre `<script>` u `post_content` (`LIKE '%al-cta-box%<script%'` = 1 na oba). Regresija: basket/fudbal-dimenzije/industrijski-podovi/kontakt i dalje 200/1×H1.
+
+Backup: `antasline-backups/antasline_local_2026-08-07_pre-w1-polish-faza3-batch6.sql`. Skripta: `migracija/alati/job-w1-polish-faza3-batch6-cta-box.php` (dry-run pa `apply`, isti obrazac kao batch 1-5).
+
+**Ovim je ceo W1 Polish Faza 3 (i original F7.24 retrofit i ova dopuna) zatvoren — svih 31/31 objavljenih postova sada ima bar jedan al-section-stil CTA element.** Preostalo van obima ove odluke: pravi GEO-intro "Kratak odgovor" pasus i dalje nedostaje na tih 22 (samo CTA dodat, ne i uvodni pasus) — ako se ikad odluči da vredi pisati taj sadržaj, to je nov, veći zadatak (copywriting, ne mehanička izmena).
+
+---
+
 ## 2026-08-07 [claude-code] W6/BLOK — Customer Match pipeline (scan_leads.py + customer_match_upload.py) NAPISAN, ne pokrenut
 
 **Kontekst:** Zatvara M5 pitanje iz W6 plana ("šta biva sa ~55 kontakata/mes") — email-ovi stižu kao CF7 lead-obaveštenja (forme 16593 "Kontakt", 16737 "Brzi upit") na `office@antasline.com`, cPanel-hostovan mailbox na istom serveru kao sajt.

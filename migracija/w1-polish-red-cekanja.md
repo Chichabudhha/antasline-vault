@@ -77,11 +77,17 @@ fake-review Product schema blokatora, čeka Miroslavljevu odluku (videti Blokeri
 | 4 | Top 5 po impresijama od preostalih 15 | 5276 podloge-za-krovove (181), 5181 podne-ploce-za-kontejnere (101), 2622 izbor-industrijskog-poda (93), 3388 podovi-za-stamparije (87), 16615 podovi-za-detailing-radionice (36) | ✅ 2026-07-30 — potvrđen trend: NIJEDAN nije imao GEO-intro/CTA-box pattern. 5276 dva tipfelera popravljena, 2622/3388 link-fix, 5181/16615 čisti bez izmena. |
 | 5 | Poslednji, svi 0 GSC klikova | 5411, 16614, 16608, 5163, 16610, 3257, 4813, 6824, 6874, 17021 | ✅ 2026-07-30 — dijagnostika potvrdila trend (nijedan GEO-intro/CTA-box), svih 10 imalo root-relativni link bag (12 linkova), 5411/3257 dodatno nbsp otpad. Verifikovano 200/1×H1/0 grešaka na svih 10, regresija čista. Backup: `antasline_local_2026-07-30_pre-w1-polish-faza3-batch5.sql`. |
 
-**FAZA 3 ZATVORENA U POTPUNOSTI 2026-07-30 (30/30 postova, batch 1-5).** Batch 1 = jedini sa
+**FAZA 3 (originalni obim, retrofit postojećeg teksta) ZATVORENA 2026-07-30 (30/30 postova, batch 1-5).** Batch 1 = jedini sa
 stvarnim GEO-intro/CTA-box retrofitom (5 postova); batch 2-5 = opšta QA/bugfix na preostalih 25
 (root-relativni linkovi, tipfeleri, nbsp, gola JSON-LD na 16616), sa nekoliko postova verifikovano
-čistih bez izmena (5181, 16615, 16613, 16612, 16609). Nijedan naknadni "Faza" nastavak nije planiran —
-sledeći W1 rad ide kroz novi zadatak ako se pojavi (npr. novi audit).
+čistih bez izmena (5181, 16615, 16613, 16612, 16609).
+
+| 6 | Dopuna 2026-08-07 — generički `.al-cta-box` (bez novog GEO-intro teksta, M odluka) na 22 posta koja nikad nisu imala GEO-intro/CTA obrazac (batch 2-5 su ih samo QA-fiksirali, ne dodavali sekcije) | 2622, 2641, 3257, 3318, 3388, 3398, 4813, 5163, 5181, 5276, 5411, 6824, 6874, 16608, 16609, 16610, 16612, 16613, 16614, 16615, 16616, 17021 | ✅ 2026-08-07 — svi 22 dobili isti generički CTA tekst (telefon+email), 3388/16616 (JSON-LD `<script>`) preko `$wpdb->update()` direktno, CTA ubačen pre script taga. 17027 izostavljen (već ima al-hero CTA). Verifikovano 200/1×H1/1×CTA na svih 22, JSON-LD i dalje valid. Backup: `antasline_local_2026-08-07_pre-w1-polish-faza3-batch6.sql`. |
+
+**FAZA 3 SADA U POTPUNOSTI ZATVORENA (31/31 postova ima bar jedan CTA element), uklj. dopunu 2026-08-07.**
+Preostalo van obima: pravi GEO-intro "Kratak odgovor" pasus na 22 posta iz batch-a 6 nije napisan
+(samo CTA) — to bi bio copywriting zadatak, ne mehanička izmena; nije planiran osim ako se posebno odluči.
+Nijedan naknadni "Faza" nastavak nije planiran — sledeći W1 rad ide kroz novi zadatak ako se pojavi.
 
 **Napomena:** `16616` (teren-za-pickleball) više NIJE blokiran (fake-review
 schema nalaz zatvoren 2026-07-28) — obrađen u batch 3.
