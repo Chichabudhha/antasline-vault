@@ -32,7 +32,9 @@ from auth import friendly_api_error, get_ads_client  # noqa: E402
 from scan_leads import leads_csv_path, load_leads, save_leads  # noqa: E402
 
 DEFAULT_LIST_NAME = "AntasLine - Website Leads"
-NO_EXPIRY_MEMBERSHIP_LIFE_SPAN = 10000  # Google Ads konvencija: 10000 = bez isteka
+# Google Ads od 2025-04-07 nameće tvrd max od 540 dana za CRM-based (Customer Match)
+# liste — stariji "10000 = bez isteka" sentinel je ukinut i API ga odbija (RangeError.TOO_HIGH).
+MAX_MEMBERSHIP_LIFE_SPAN_DAYS = 540
 
 
 def normalize_and_hash_email(email: str) -> str:
@@ -52,7 +54,7 @@ def get_or_create_user_list(client, customer_id: str, list_name: str) -> str:
     user_list = operation.create
     user_list.name = list_name
     user_list.description = "AntasLine kontakt forma (CF7) — leadovi iz office@antasline.com"
-    user_list.membership_life_span = NO_EXPIRY_MEMBERSHIP_LIFE_SPAN
+    user_list.membership_life_span = MAX_MEMBERSHIP_LIFE_SPAN_DAYS
     user_list.crm_based_user_list.upload_key_type = (
         client.enums.CustomerMatchUploadKeyTypeEnum.CONTACT_INFO
     )
