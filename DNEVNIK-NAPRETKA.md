@@ -20,11 +20,11 @@
 
 **M odluka (upitan direktno):** ostaviti UCSS uključen, M sam proverava odmah na telefonu/desktopu (mobilni meni, hamburger dugme, hover podmeniji, bilo koji slajder). Ako nešto vizuelno ne radi → javiti odmah za trenutni rollback (`litespeed.conf.optm-ucss` → prazno + purge, jednostavna komanda, već testirano da radi).
 
-**#ceka-miroslav:**
-- Vizuelni pregled menija/dropdown-a/slajdera na live sajtu (u toku, M proverava sam).
-- Ako sve radi: potvrditi da se ovaj gate može zatvoriti kao ✅ u CLAUDE.md §7.6.
-- Ako nešto ne radi: javiti šta tačno, spreman rollback.
-- Odvojeno pitanje (niži prioritet): da li NOVO generisanje UCSS/CCSS (za buduće nove/izmenjene stranice) i dalje prolazi kroz hosting firewall — nije verifikovano ovom sesijom, vredi ponovo proveriti za par dana kad neka stranica dobije izmenu sadržaja (invalidira njen keš) ili dodati eksplicitno u hosting tiket pored image optimizacije.
+✅ **M potvrdio (isti dan): "proverio, sve radi"** — meni/dropdown/slajderi vizuelno ispravni uz UCSS uključen. Sumnja na strip-ovan toggle/dropdown CSS (0 pogodaka u fajlu, v. gore) nije se materijalizovala kao vidljiv problem — ili su te klase pokrivene negde drugde (CCSS/base tema CSS), ili tema ne zavisi od tih tačnih naziva klasa. UCSS ostaje trajno uključen na produkciji.
+
+🟡 **Ostaje otvoreno (niži prioritet, ne blokira zatvaranje ove stavke):**
+- Numerička LCP potvrda (<2,5s) nije merena ovom sesijom — nema Lighthouse/CWV alat sa SSH terminala. Vizuelna ispravnost + uklonjen render-blocking `js_composer` su potvrđeni, ali sam brojčani gate iz CLAUDE.md §7.6 treba proveriti sledeći put kad je Lighthouse/PageSpeed dostupan (lokalno ili preko M-ovog browsera).
+- Da li NOVO generisanje UCSS/CCSS (za buduće nove/izmenjene stranice) prolazi kroz hosting firewall — nije verifikovano ovom sesijom (10-min monitor nije uhvatio nov QUIC.cloud poziv, ali ni jedna testirana stranica možda nije ni trebalo da regeneriše). Vredi ponovo proveriti kad neka stranica dobije izmenu sadržaja koja invalidira njen keš.
 ## 2026-08-07 [claude-code] [BLOK A] — GTM `mailto` event vraćen u život (trigger+tag preko Chrome automatizacije) — ZATVORENO ✅
 
 **Kontekst:** Poslednja otvorena stavka iz BLOK A čišćenja — `mailto` GA4 event je bio mrtav od 2026-06-27 (uzrok nađen 2026-07-27: pratio ga je MonsterInsights, ne GTM; gašenje MI-ja ga je oborilo na nulu dok su `generate_lead`/`tel` bili prevezani). Fix je čekao odobrenje za GTM Submit (`[[PROGRESS]]` Blokeri, redovi 300+306).
