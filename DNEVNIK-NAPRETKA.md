@@ -1,3 +1,33 @@
+## 2026-08-07 [cpanel-live] LCP blok — UCSS (Unique CSS) ponovo uključen na produkciji, otkriven tihi prekid od 2026-07-31 (UŽIVO)
+
+**Kontekst:** Nastavak CLAUDE.md §7.6 — LCP gate crveno, namerno odloženo na LiteSpeed Critical CSS/UCSS na produkciji (`js_composer.min.css` 437KB render-blocking). Ovo je prvi stvarni rad na toj stavci.
+
+**Gotcha #0 (novi, nezavisan od zadatka):** `wp` CLI na ovom LIVE nalogu (na `staging` ovo ne važi) baca fatal error na bilo koju komandu koja bootstrap-uje WP bez `--skip-themes` — Kallyas Zion Builder `hg-framework` (`class-znhgfw.php:43`) konstruiše putanju koja duplira ABSPATH (`.../wp-content/plugins/home/antasline/public_html/wp-content/themes/...`), fajl ne postoji → fatal. **Ne utiče na prave posetioce** (curl na `https://www.antasline.com/` vraća čist 200, nema fatal error teksta u odgovoru) — čisto CLI-bootstrap razlika (verovatno `$_SERVER['SCRIPT_FILENAME']`-zavisna putanja u temi koja se ponaša drugačije van web request konteksta). **Pravilo ubuduće za live (ne staging) `wp` pozive: uvek dodati `--skip-themes`.**
+
+**Nalaz:** `litespeed.conf.optm-ccss_gen`/`optm-css_async` (Critical CSS) su već uključeni i aktivni (199 CCSS fajlova, ~pokriva ceo sitemap od 196 URL-ova, crawler cron radi na 10 min intervalu). Ali `litespeed.conf.optm-ucss` (Unique/Unused CSS — ono što stvarno skida `js_composer` bloat sa render-blocking putanje) je bio **prazan (isključen)**. Provera fajl-timestamp-ova u `wp-content/litespeed/ucss/` pokazala da je UCSS **ranije bio aktivan i generisao fajlove sve do 2026-07-31 03:41** (205 fajlova), pa prestao — poklapa se sa danom kad je hosting odgovorio na LiteSpeed/QUIC.cloud tiket ("neće pustiti zbog bezbednosnih napada", v. unos 2026-07-30). Postojeći dnevnik unos od tog dana pominje samo **image optimization** kao ono što je hosting blokirao — nema eksplicitne odluke da se i UCSS gasi. Mogući tihi nusefekat te sesije (ili plugin je sam ugasio posle ponovljenih cloud grešaka) — nije bilo moguće utvrditi tačan uzrok unazad (samo današnji access log dostupan, raniji je rotiran).
+
+**Izvršeno:**
+1. Backup: `~/backups/pre-ucss-enable-20260807-1732.sql`
+2. `litespeed.conf.optm-ucss` → `1`, `litespeed.conf.optm-ucss_async` → `1` (async generacija — novi posetioci ne čekaju generisanje, dobijaju fallback dok se UCSS ne izgeneriše u pozadini)
+3. `wp litespeed-purge all`
+4. Ručno okinut `litespeed_task_ucss` + `litespeed_task_crawler` cron
+
+**Monitor rezultat (10 min prozor):** Nijedan nov `qcbot` poziv na `notify_ucss`/`notify_ccss`, nijedan nov fajl na disku — `last_request.ucss`/`last_request.ccss` u `litespeed.cloud._summary` ostali nepromenjeni na 2026-07-31 vremenima. Znači: **generisanje NOVOG UCSS-a (za stranice bez postojećeg keša ili posle promene sadržaja) ostaje neverifikovano** — moguće da je pogođen istim firewall blokom kao image optimizacija, moguće da prosto ni jedna testirana stranica nije zahtevala novu generaciju u tih 10 min.
+
+**Ali — direktna provera live HTML-a pokazala je da UCSS ODMAH radi za postojeći keš** (nije trebalo čekati novu generaciju): homepage/`/industrijski-podovi/`/`/kontakt/`/proizvod stranica sve sada učitavaju `<link rel="preload" ... as="style" onload="...rel='stylesheet'">` ka `wp-content/litespeed/ucss/<hash>.css` (async, non-render-blocking) — **`js_composer.min.css` (53KB) više se NE učitava kao direktan render-blocking `<link>` ni na jednoj od 4 testirane stranice.** Homepage UCSS fajl: 39.592 bajta, 443 CSS pravila, sadržaj validan (nije PHP/HTML greška).
+
+🔴 **Nalaz — rizik, nije samo teorijski:** grep homepage UCSS fajla za tipične interaktivne klase (`toggle`, `dropdown`, `hamburger`, `mobile-menu`, `slick`/`swiper`/`owl-` slajder klase) → **0 pogodaka.** Ovo je poznat LiteSpeed UCSS rizik (CSS za elemente koje JS naknadno prikazuje/menja se ne vidi u statičkom crawl-u, pa UCSS ga izbaci) — ovde ima konkretan trag da se možda desio, ne samo generička napomena. Nemam browser da vizuelno potvrdim sa SSH terminala.
+
+**M odluka (upitan direktno):** ostaviti UCSS uključen, M sam proverava odmah na telefonu/desktopu (mobilni meni, hamburger dugme, hover podmeniji, bilo koji slajder). Ako nešto vizuelno ne radi → javiti odmah za trenutni rollback (`litespeed.conf.optm-ucss` → prazno + purge, jednostavna komanda, već testirano da radi).
+
+**#ceka-miroslav:**
+- Vizuelni pregled menija/dropdown-a/slajdera na live sajtu (u toku, M proverava sam).
+- Ako sve radi: potvrditi da se ovaj gate može zatvoriti kao ✅ u CLAUDE.md §7.6.
+- Ako nešto ne radi: javiti šta tačno, spreman rollback.
+- Odvojeno pitanje (niži prioritet): da li NOVO generisanje UCSS/CCSS (za buduće nove/izmenjene stranice) i dalje prolazi kroz hosting firewall — nije verifikovano ovom sesijom, vredi ponovo proveriti za par dana kad neka stranica dobije izmenu sadržaja (invalidira njen keš) ili dodati eksplicitno u hosting tiket pored image optimizacije.
+
+---
+
 ## 2026-08-07 [cpanel-live] Staging V3 šira provera — forme/linkovi/mobilni: 3 bag-a nađena i popravljena (UŽIVO)
 
 **Kontekst:** Nastavak otvorene stavke iz [[PROGRESS]] 2026-08-06 (Staging V3 full setup) — #ceka-miroslav "šira provera (forme, linkovi, mobilni) ili eksplicitna potvrda pre konačnog zatvaranja". Miroslav prijavio "linkovi u meniju su pokvareni — imaju čudan nastavak" → istraga otkrila DVA odvojena nalaza, pa nastavljena puna šira provera na `staging.antasline.com`.
