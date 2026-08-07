@@ -211,10 +211,11 @@ ništa postavljeno — v. #ceka-M ispod.
 
 ## Šta čeka Miroslava
 
-- Foto arhiva (Downloads) — odluka o (1) poreklu/pravima za Geoplast i
-  Ergomat materijal, (2) kategorizaciji ~7 fotki bez jasne ključne reči u
-  imenu, (3) formatu upotrebe (referenca-galerija na proizvodima / posebna
-  "Reference" stranica / blog). Detalji: `reference/foto-arhiva-inventar.md`.
+- Foto arhiva (Downloads) — ✅ kategorizacija ~7 fotki bez jasne ključne reči
+  u imenu ZATVORENA 2026-08-07 (vizuelni pregled, svih 7 potvrđeno kao
+  sportski tereni). I dalje otvoreno: (1) poreklo/prava za Geoplast i
+  Ergomat materijal, (2) format upotrebe (referenca-galerija na proizvodima
+  / posebna "Reference" stranica / blog). Detalji: `reference/foto-arhiva-inventar.md`.
 
 ## Veze
 - `.claude/skills/gemini-vizuali/SKILL.md`

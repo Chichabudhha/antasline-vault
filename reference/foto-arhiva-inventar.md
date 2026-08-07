@@ -27,10 +27,16 @@ kvaliteta), ne generisanje.
 ## Kategorije (≈185 jedinstvenih fajlova, posle uklanjanja duplikata)
 
 ### 1. Sport tereni — Bergo / 3×3 košarka / pickleball / tenis / odbojka (~100)
-Najveći deo arhiva. Dve identične ZIP arhive "tereni za basket" (Google
-Drive export, 2026-01-29 i 2026-02-04 — isti sadržaj, 92 fajla, koristiti
-samo jednu) + ~10 dodatnih van zipa (Padel-Club-Stockholm, kosmaj-teren-za-tenis,
+Najveći deo arhiva. Dve ZIP arhive "tereni za basket" (Google Drive export,
+2026-01-29 i 2026-02-04, oba ~32,6 MB — verovatno isti sadržaj/92 fajla,
+koristiti samo jedan) + ~10 dodatnih van zipa (Padel-Club-Stockholm, kosmaj-teren-za-tenis,
 pickleball.jpg, teren za odbojku na pesku, bergo-flow-pickleball-1 do 8).
+⚠️ Provera 2026-08-07: veličine fajlova se razlikuju za ~9,6 KB (32.610.789
+vs 32.601.134 bajtova) — nije bajt-za-bajt identično kako je ranije
+pretpostavljeno, verovatno samo metadata/kompresija razlika iz dva odvojena
+Drive exporta, ali vredi otpakovati i uporediti sadržaj pre brisanja bilo
+kog od njih (nije rađeno ovu sesiju — nema vrednosti bez konkretnog razloga
+za brisanje).
 
 Lokacije koje se prepoznaju u imenima fajlova: Avala, Subotica, Zlatibor
 (kamp Pecarski), hotel Jugoslavija, Pionirski grad, Beograd (više terena),
@@ -41,13 +47,17 @@ firme/škole), Krk, Fruška gora, Kosmaj (pickleball), Barajevo, Graz (3×3
 cup), Švedska (federacija/3×3), Coca-Cola Dobanovci, "teren u kancelariji"
 ×3, "teren na krovu" ×2.
 
-Napomena: nekoliko fajlova van filtera imena ipak izgleda da su isti
-kontekst (sportski teren) ali bez ključne reči u nazivu — **treba
-Miroslavljeva potvrda pre kategorizacije**: `Bela-Crkva.jpg`,
-`Srebrenica-2018.jpg`, `Bajna-Basta2-2022.jpg`,
-`British-Internatinal-School-Belgrade.jpg`, `Spanoulis-Belgrade-7.jpg`,
-`OS-Jovan-Cvijic.jpg`, `Dom-Ucenika-Patrijarh-Pavle-2-Bergo-tenis.jpg`
-(ovaj poslednji ima "Bergo" u imenu, ostali ne).
+✅ **Kategorizacija potvrđena 2026-08-07** (vizuelni pregled, 7 fajlova bez
+ključne reči u imenu — svih 7 potvrđeno kao sportski tereni, ne mešaju se
+sa ESD/Geoplast/Ergomat grupama): `Bela-Crkva.jpg` (vazdušni snimak,
+košarkaški teren, natpis "BELA CRKVA") · `Srebrenica-2018.jpg` (vazdušni
+snimak, kombinovan teniski/rukometni + košarkaški teren) ·
+`Bajna-Basta2-2022.jpg` (otvoren 3×3 košarkaški teren, škola/institucija) ·
+`British-Internatinal-School-Belgrade.jpg` (plavi multi-sport teren,
+privatan posed) · `Spanoulis-Belgrade-7.jpg` (3×3 teren sa "Spanoulis"
+brendingom, izgleda kao priobalni event) · `OS-Jovan-Cvijic.jpg`
+(košarkaški teren, školsko dvorište) · `Dom-Ucenika-Patrijarh-Pavle-2-Bergo-tenis.jpg`
+(teniski teren, balon-hala u pozadini — ime već sadržalo "Bergo-tenis").
 
 Dva fajla su alati, ne fotografije: `planer-terena-basket3x3.png`,
 `planer-terena-tenis.png`, `planer-terena-custom.png` (screenshotovi
@@ -113,7 +123,9 @@ bez provere).
 1. Potvrda porekla/prava korišćenja za Geoplast i Isotrack/X-Mat/Mosolut
    materijal (proizvođački vs. sopstveni) — utiče na to da li ide javno na
    sajt bez napomene izvora.
-2. Kategorizacija ~7 fajlova bez jasne ključne reči u imenu (§1 gore).
+2. ✅ **Kategorizacija ~7 fajlova bez jasne ključne reči — ZATVORENO
+   2026-08-07** (vizuelni pregled, v. §1 gore — svih 7 potvrđeno kao sportski
+   tereni, ne ESD/Geoplast/Ergomat).
 3. Odluka o formatu korišćenja (odabrano ranije: **organizuj, ne postavljaj
    još** — sledeći korak kad Miroslav da OK: verovatno referenca-galerija na
    proizvod stranicama + eventualna posebna "Reference" portfolio stranica).

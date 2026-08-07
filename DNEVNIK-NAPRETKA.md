@@ -1,3 +1,13 @@
+## 2026-08-07 [claude-code] BLOK E — foto arhiva (Downloads): kategorizacija 7 nejasnih fajlova zatvorena vizuelnim pregledom
+
+**Kontekst:** [[reference/foto-arhiva-inventar.md]] (2026-08-05) je imao 3 otvorene #ceka-M stavke za ~185-fajlovni arhiv referentnih/instalacionih fotografija. Od tri, samo jedna je zahtevala stvaran Miroslavljev input koji Claude ne može sam utvrditi (poreklo/prava za Geoplast i Ergomat proizvođački materijal) i jedna čeka odluku o formatu korišćenja (portfolio stranica vs. proizvod-galerija) — ali kategorizacija 7 fajlova bez ključne reči u imenu je bila čisto vizuelno pitanje, rešivo direktnim pregledom slika.
+
+**Urađeno:** Read alat (podržava sliku) na svih 7 fajlova (`Bela-Crkva.jpg`, `Srebrenica-2018.jpg`, `Bajna-Basta2-2022.jpg`, `British-Internatinal-School-Belgrade.jpg`, `Spanoulis-Belgrade-7.jpg`, `OS-Jovan-Cvijic.jpg`, `Dom-Ucenika-Patrijarh-Pavle-2-Bergo-tenis.jpg`) — svih 7 potvrđeno kao sportski tereni (košarka/tenis/3×3), nijedan nije pogrešno kategorisan ESD/Geoplast/Ergomat materijal. `reference/foto-arhiva-inventar.md` ažuriran: kategorizacija upisana po fajlu, stavka 2 iz "šta čeka M" markirana zatvorenom.
+
+**Usput nalaz:** dve ZIP arhive "tereni za basket" (2026-01-29/2026-02-04) za koje je inventar tvrdio "isti sadržaj" nisu bajt-identične veličine (32.610.789 vs 32.601.134 bajtova, razlika ~9,6 KB) — verovatno bezazleno (metadata/kompresija iz dva odvojena Google Drive exporta), ali nije verifikovano otpakivanjem, pa **nije brisano ništa** (Downloads je Miroslavljev lični folder, brisanje duplikata bez pune potvrde nije rađeno). Napomena upisana u inventar.
+
+**Ostaje otvoreno (nepromenjeno):** (1) poreklo/prava Geoplast+Ergomat materijala, (2) format korišćenja arhive na sajtu. Detalji: [[reference/foto-arhiva-inventar.md]], [[blokovi/BLOK-E-ai-orkestracija]].
+
 ## 2026-08-07 [claude-code] Trava-u-boji/Radici — 6/13 NO_THUMBNAIL zatvoreno generičkim dobavljačkim fotografijama (M eksplicitno odobrio)
 
 **Kontekst:** Posle tržišno-konkurentske analize ([[reference/konkurencija-trziste-analiza]]) M pitao "zar nemamo veštačku travu?" — ispravka: niša postoji i radi (live, CTR 8,42%), samo je uzak set od "trava u boji"/Radici proizvoda čekao slike (ranije prijavljeno kao [[PROGRESS]] Blokeri "F2.9 rep" — namerno preskočeno jer dobavljački sajtovi (condor-group.eu, radicisport.it) nisu davali pouzdano model-specifično mapiranje, rizik od pogrešnog pripisivanja). M eksplicitno tražio: "dodaj te generičke sa sajta dobavljača, nema boljih, i objavi proizvode."
