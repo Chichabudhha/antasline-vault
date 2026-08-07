@@ -1,3 +1,25 @@
+## 2026-08-07 [claude-code] W6/BLOK — Customer Match pipeline (scan_leads.py + customer_match_upload.py) NAPISAN, ne pokrenut
+
+**Kontekst:** Zatvara M5 pitanje iz W6 plana ("šta biva sa ~55 kontakata/mes") — email-ovi stižu kao CF7 lead-obaveštenja (forme 16593 "Kontakt", 16737 "Brzi upit") na `office@antasline.com`, cPanel-hostovan mailbox na istom serveru kao sajt.
+
+**Izvršeno (prethodna sesija, pronađeno nekomitovano na otvaranju ove sesije):**
+1. `scan_leads.py` (već bio komitovan u autobackup-u) — čita Maildir sa cPanel diska (fallback `--imap`), izvlači email iz CF7 tela poruke, inkrementalno puni `leads.csv`/`scan-state.json` **van git stabla** (`ANTASLINE_CONNECTOR_HOME/customer-match/`). stdout ispisuje samo brojeve, nikad email adrese — privatnost po dizajnu.
+2. `customer_match_upload.py` (novo, ovaj put komitovano) — hešuje (SHA-256, lowercase+trim pre hash-a) i upload-uje `uploaded=False` kontakte u Google Ads Customer Match user listu ("AntasLine - Website Leads") preko `OfflineUserDataJobService`. **Dry-run podrazumevan**, `--confirm` neophodan za stvaran upload. Reuse-uje postojeći OAuth token (scope `adwords`).
+3. Dokumentacija dopunjena: `antasline-konektor/SKILL.md` (novi red u tabeli skripti + write-upozorenje), `reference/api-konektor-setup.md` (Korak E: kredencijali NA cPanel serveru, odvojena kopija `oauth-client.json`/`token.json`/`ads-config.json` u `~/antasline-connector/credentials/`), `w6-social/SKILL.md` (M5 checkbox otkačkan).
+
+**Pregled koda ove sesije:** oba fajla čitana u celosti — importi (`auth.get_ads_client`, `auth.friendly_api_error`, `auth.connector_home`, `auth.credentials_dir`, `auth.read_json`) se poklapaju sa stvarnim potpisima u `auth.py`. Logika ispravna (normalize→hash, get-or-create user lista, partial-failure upload, `uploaded`/`upload_date` upis posle uspešnog job kreiranja). **Nijedan poziv nije stvarno izvršen** (ni `--dry-run` scan, ni sam upload) — ne postoji dokaz da Maildir putanja na serveru radi, da IMAP fallback radi, ili da OAuth token ima dovoljan scope za `OfflineUserDataJobService` write.
+
+🔴 **Poznat, svesno prihvaćen rizik (upisano u SKILL.md 2026-08-07):** kontakt forma trenutno nema consent checkbox za marketing korišćenje email-a (postoji samo cookie/politika kolačića) — Google Ads Customer Match zahteva zakonit osnov za korišćenje podataka. Miroslav je odlučio da pipeline ipak krene bez čekanja na taj checkbox; W6 SKILL.md red za "saglasnost za email" ostaje otvoren kao preporuka, ne blokada.
+
+**#ceka-miroslav (novo, iz ove sesije):**
+1. Prvi stvaran `scan_leads.py --dry-run` na cPanel serveru (`[cpanel-live]` sesija) — treba potvrditi Maildir putanju/permisije pre bilo kakvog pravog scan-a.
+2. Kopiranje kredencijala na server (`~/antasline-connector/credentials/`) po `reference/api-konektor-setup.md` Korak E — nije potvrđeno da je urađeno.
+3. Eksplicitna odluka da li se `customer_match_upload.py --confirm` pušta u produkciju sada ili se čeka na consent checkbox popravku.
+
+Detalji koda: `.claude/skills/antasline-konektor/scripts/scan_leads.py`, `customer_match_upload.py`.
+
+---
+
 ## 2026-08-07 [cpanel-live] LCP blok — UCSS (Unique CSS) ponovo uključen na produkciji, otkriven tihi prekid od 2026-07-31 (UŽIVO)
 
 **Kontekst:** Nastavak CLAUDE.md §7.6 — LCP gate crveno, namerno odloženo na LiteSpeed Critical CSS/UCSS na produkciji (`js_composer.min.css` 437KB render-blocking). Ovo je prvi stvarni rad na toj stavci.
