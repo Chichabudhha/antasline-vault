@@ -1,3 +1,25 @@
+## 2026-08-07 [cpanel-live] Staging V3 šira provera — forme/linkovi/mobilni: 3 bag-a nađena i popravljena (UŽIVO)
+
+**Kontekst:** Nastavak otvorene stavke iz [[PROGRESS]] 2026-08-06 (Staging V3 full setup) — #ceka-miroslav "šira provera (forme, linkovi, mobilni) ili eksplicitna potvrda pre konačnog zatvaranja". Miroslav prijavio "linkovi u meniju su pokvareni — imaju čudan nastavak" → istraga otkrila DVA odvojena nalaza, pa nastavljena puna šira provera na `staging.antasline.com`.
+
+**Nalaz 1 — `/ergonomske-podloge-2/` slug kolizija (meni):** Stranica "Ergonomski podovi" (ID 16672) dobila `-2` sufiks jer je stara slika-prilog iz 2022 (ID 12489) već držala čist slug `ergonomske-podloge`. Fix: attachment preimenovan (`ergonomske-podloge-slika-2022`), stranici vraćen čist slug, `wp rewrite flush --hard`. 2 menu stavke koje linkuju po ID-u (16713, 17388) automatski su se ispravile. Backup: `~/backups/pre-menu-slug-fix-20260807-1653.sql`.
+
+**Nalaz 2 — `?_gl=...` na linkovima — NIJE bag:** Miroslav pokazao `staging.antasline.com/bergo/?_gl=1*...` kao primer. Objašnjeno: GA4/Ads "linker" URL passthrough parametar (`_up*MQ..` flag, `_ga_H8BRCZN8W4` = pravi GA4 stream ID) — normalno ponašanje kad GA4 property (konfigurisan za `antasline.com`) tretira poddomen `staging.antasline.com` kao potencijalni cross-domain prelaz. Živi u GTM/GA4 admin UI (Cross-Domain Linking / Configure your domains), ne u WP kodu — pretraženo i potvrđeno da nema hardkodovanog `linker` podešavanja ni u staging ni u live temi/mu-pluginovima. Nije popravljivo iz SSH sesije, van obima ove sesije (konektor je read-only za GTM/GA4 podešavanja).
+
+**Šira provera — Forme:** Kontakt forma (CF7 16593 na `/kontakt/`) testirana pravim REST submit-om (`status: mail_sent`). Ceo tok radi: standardni CF7 tipovi polja (nema Zion `zn_validate_*` ASCII-only bug-a sa live-a), `wpcf7mailsent` JS event redirect na `/hvala-za-poruku/` potvrđen — tačno mehanizam na koji se GA4 `generate_lead` model oslanja. 🔴 **Nalaz (nije popravljano, M odluka potrebna):** mu-plugin `al-local-mail-log.php` (komentar u kodu: "SAMO LOKALNO, OBRISATI PRE MIGRACIJE") slučajno prenet u V3 paket zajedno sa celim mu-plugins folderom — presreće `wp_mail()`, mejlovi se NIKAD stvarno ne šalju, samo loguju u `wp-content/mail-log.txt`. Test submit potvrđen u log fajlu. #ceka-miroslav: obrisati (za real-mail testiranje) ili ostaviti (da ne spamuje pravi inbox tokom staging testiranja).
+
+**Šira provera — Linkovi:** Sitemap (post+page+product, 196 URL-ova) — svih 196 vraća 200, paralelni `xargs -P 15` sken. Dodatnih 28 internih linkova izvučeno iz 12 reprezentativnih stranica (home, glavne kategorije, proizvod, kontakt, aktuelnosti, katalog, paginacija) i provereno — otkrivena 2 sitewide bag-a:
+- **Footer widget "Terase i dom"** (`widget_custom_html` instance 5, prikazan na SVAKOJ stranici preko sajta) linkovao `/spoljne-podne-obloge/` (bez "j") → 404, umesto tačnog `/spoljnje-podne-obloge/`. Fix preko `update_option()` (bezbedno za serijalizaciju, ne raw SQL REPLACE jer je dužina stringa različita).
+- **`/industrijski-podovi/` (post 16567)** — 2 hardkodovana href-a u sadržaju (cross-link kartica + FAQ odgovor) i dalje su gledala u stari `ergonomske-podloge-2` slug posle Nalaza 1 (ID-referenca u meniju se sama ispravila preko `_menu_item_object_id`, sirovi href-ovi u `post_content` nisu). Fix preko `wp_update_post()` str_replace.
+- 1 legitiman 301 (`sportska-podloga-za-odbojku` → `podloga-za-odbojkaske-terene`, cilj 200) — bez akcije.
+Backup: `~/backups/pre-footer-slug-fix-20260807-1713.sql`, `~/backups/pre-industrijski-podovi-link-fix-20260807-1713.sql`. Sva 3 fixa verifikovana uživo posle izmene (footer na drugoj stranici, industrijski-podovi sadržaj, oba nova sluga 200).
+
+**Šira provera — Mobilni:** Samo tehnički signali proverljivi sa SSH terminala (nema browser pristupa iz ove sesije) — viewport meta ispravan, WoodMart burger meni markup prisutan, server ne menja ponašanje na mobilni User-Agent (200). #ceka-miroslav: pravi vizuelni/dodirni test na telefonu ili sesija sa browser pristupom.
+
+**Zatvara** [[PROGRESS]] 2026-08-06 stavku "šira provera" delimično — forme+linkovi pokriveni i popravljeni, mobilni ostaje #ceka-miroslav (vizuelni deo) + 1 M-odluka (mail-log mu-plugin).
+
+---
+
 ## 2026-08-07 [claude-code] BLOK E — galerija batch 5: generičke sport-teren fotke (kancelarija ×3 + krovni teren ×2) — poslednji preostali red čekanja zatvoren ✅
 
 **Kontekst:** Nova sesija, `/antasline-sesija` otvaranje. Iz `foto-arhiva-inventar.md` je ostao samo jedan otvoren, niže-prioritetan red: 5 fotografija bez imena lokacije u fajlu (`teren u kancelariji.jpg`/`2`/`3`, `teren na krovu.jpg`/`2`) — 2 dodatne "u dvorištu" varijante iz istog reda su se ispostavile kao već ranije uvezene i iskorišćene na drugim stranicama (post 5061, post 5438), nije trebalo ništa dodatno.
