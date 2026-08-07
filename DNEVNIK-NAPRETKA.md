@@ -1,3 +1,17 @@
+## 2026-08-07 [claude-code] [W3 CWV] Brzina testirana na staging.antasline.com preko Chrome — potvrđen glavni sumnjani nalaz: LiteSpeed Critical CSS/UCSS NIJE aktivan
+
+**Kontekst:** Master Plan V2 W3 3.6 (CWV) ima LCP crveno, namerno odloženo na "LiteSpeed Critical CSS/UCSS na produkciji" jer se nije moglo testirati bez pravog LiteSpeed okruženja. Staging (`staging.antasline.com`, puna V3 kopija sa 2026-08-06) prvi put omogućava pravu proveru — isti hosting/LiteSpeed sloj kao buduća live produkcija. Miroslav zatražio test preko Chrome-a (kredencijali za Basic Auth već upamćeni u browseru, nisu deljeni sa Claude Code).
+
+**Metod:** `claude-in-chrome` navigacija na staging (auth prošao bez unosa), pa merenje preko `performance` API-ja u stranici (Navigation Timing, Resource Timing) na `/` i `/industrijski-podovi/`. Prava Lighthouse LCP metrika NIJE bila moguća — automatizovani tab se stranici uvek javlja kao `document.visibilityState === 'hidden'` (poznato Chromium ponašanje za pozadinske/neaktivne tabove), pa se `largest-contentful-paint` observer nikad ne okida bez obzira na screenshot/wait pokušaje. Nema CLI Lighthouse/PageSpeed Insights opcije jer je staging iza Basic Auth (PSI ne može proći auth, lokalni `npx lighthouse` bi tražio plaintext kredencijale koje Miroslav namerno nije podelio).
+
+**Nalazi (real, ne simulirano — desktop, neusporedivo direktno sa mobile-throttled Lighthouse baznim linijama):**
+- TTFB 650–2080ms (varijabilno između poseta), DOMContentLoaded 1,6–3,0s, load event 2,4–4,4s na oba testirana URL-a (`/`, `/industrijski-podovi/`)
+- Protokol `h3` (HTTP/3/QUIC) potvrđen na oba — QUIC.cloud/LiteSpeed CDN edge sloj RADI na transportnom nivou
+- 🔴 **`js_composer.min.css` i dalje 437KB sirov, neminifikovan/nekombinovan preko mreže** — identičan broj kao lokalni Lighthouse baseline od 2026-07-12 koji je ovo označio kao glavni preostali LCP krivac. Ukupno 26–29 pojedinačnih CSS fajlova po stranici (585KB), 6 markiranih `render-blocking` — nema dokaza kombinovanja/critical-CSS ekstrakcije
+- Zaključak: **LiteSpeed Cache plugin/QUIC.cloud Critical CSS + UCSS (unused CSS removal) NIJE uključen/podešen na staging okruženju** — ovo je bila prećutna pretpostavka plana ("čeka produkciju" = automatski će raditi), sada potvrđeno da NIJE default-on, nego zahteva eksplicitno podešavanje u LiteSpeed Cache admin panelu (ili QUIC.cloud dashboard-u) na dan/pre migracije, inače će live LCP nasleđivati isti problem kao lokal
+
+**#ceka-miroslav / sledeći korak:** pre ili na dan migracije, neko mora ući u LiteSpeed Cache podešavanja (cPanel LiteSpeed plugin ili QUIC.cloud nalog) i eksplicitno uključiti Critical CSS + UCSS generisanje — trenutno nema potvrde da je ova opcija ikad bila aktivirana na ovom hosting nalogu. Ako Miroslav ima pristup QUIC.cloud/LSCache admin-u, vredi proveriti status pre W3 3.10 checklist-a. Nema izmena koda/baze ove sesije (samo read-only browser merenje).
+
 ## 2026-08-06 [cpanel-live] [W3 migracija] Staging puno postavljanje V3 IZVRŠENO — svih 11 koraka, verifikacija čista (0 slomljenih slika od 292 proverenih)
 
 **Kontekst:** Izvršenje odobrenog prompta [[migracija/2026-08-06-prompt-staging-full-restore]] na cPanel terminalu (potvrđeno `hostname`=`wp1.oblak.host`), nastavak posle prethodnog poništenog pokušaja istog dana.

@@ -598,6 +598,7 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 - `[[reference/claude-skilovi]]` — Pregled Claude Code skilova (/antasline-sesija, /obogati-proizvod, /w6-social, /nedeljni-izvestaj)
 - `[[reference/drustvene-mreze]]` — Popis social profila (W6 Faza 0, Miroslav popunjava)
 - `[[reference/cenovnik]]` — Jedinstveni cenovnik (M10, Miroslav popunjava jednom, Claude vuče odatle)
+- `[[reference/konkurencija-trziste-analiza]]` — Tržište i konkurencija po niši (2026-08-07): ko su konkurenti, gde smo šuplji/jači, preporuka fokusa
 - `[[reference/token-tracking]]` — Token usage tracking konvencija (Token Logs/.token_log.jsonl)
 
 ### 📚 DOKUMENTACIJA
