@@ -89,6 +89,35 @@ Preostalo van obima: pravi GEO-intro "Kratak odgovor" pasus na 22 posta iz batch
 (samo CTA) — to bi bio copywriting zadatak, ne mehanička izmena; nije planiran osim ako se posebno odluči.
 Nijedan naknadni "Faza" nastavak nije planiran — sledeći W1 rad ide kroz novi zadatak ako se pojavi.
 
+## 🅳️ FAZA 4 — postovi: pravi GEO-intro "Kratak odgovor" pasus (22 posta, PLANIRANO 2026-08-07)
+
+> Otvorena na M zahtev 2026-08-07 ("stavi to u plan") — nastavak Faze 3 dopune.
+> Batch 6 (v. tabelu iznad) je dodao samo generički zatvarajući CTA na ovih 22
+> posta; nijedan od njih nema pravi `.al-geo-intro` "Kratak odgovor" pasus na
+> vrhu (GEO pravilo iz CLAUDE.md §10: prvi pasus = direktan odgovor). Ovo JESTE
+> copywriting — svaki pasus mora se izvesti iz stvarnog sadržaja posta, ništa
+> izmišljeno — pa je sporiji od Faze 3 (mehaničke izmene). Isti F7.24
+> obrazac/CSS (`.al-geo-intro`, mist pozadina + crveni levi border).
+
+**Predložen redosled (GSC 90d klikovi/impresije iz batch 2-5 zapisa, osvežiti pre izvršenja jer su brojke od 07-30):**
+
+| Prioritet | ID | Slug | GSC signal (07-30) |
+|---|---|---|---|
+| 1 | 3318 | zasto-vam-je-potreban-esd-pod | 0kl / 247 impr (najviše impresija od 0-klik grupe) |
+| 2 | 5276 | podloge-za-krovove-i-terase | 181 impr |
+| 3 | 5181 | podne-ploce-podovi-za-kontejnere-i-montazne-objekte | 101 impr |
+| 4 | 2622 | izbor-industrijskog-poda-tri-najcesca-pitanja | 93 impr |
+| 5 | 3388 | podovi-za-stamparije | 87 impr (⚠️ ima JSON-LD `<script>`, upis preko `$wpdb->update()`) |
+| 6 | 16615 | podovi-za-detailing-radionice-i-servise | 36 impr |
+| 7 | 16613 | sta-postaviti-preko-starog-parketa-ili-plocica | 6 klikova |
+| 8 | 16612 | ftalati-stetnost-i-uticaj-na-ljudsko-zdravlje | 5 klikova |
+| 9 | 16616 | teren-za-pickleball | 3 klika (⚠️ ima JSON-LD `<script>`, isti oprez) |
+| 10 | 3398 | montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi | 2 klika |
+| 11 | 2641 | pvc-podne-ploce-ili-gumeni-podovi | 15kl (07-30 podatak — proveriti, čini se visok za "0-klik" grupu, osvežiti pre izvršenja) |
+| — | 5411, 16614, 16608, 5163, 16610, 3257, 4813, 6824, 6874, 17021 | (redosled 12-21, svi bili 0 GSC klikova u batch 5) | osvežiti GSC pre izvršenja |
+
+**Napomena o obimu:** ne raditi mehanički u jednom prolazu kao Faza 3 — svaki post treba pročitati i izvesti tačan, ne-izmišljen odgovor (isti standard kao originalni batch 1, gde je "Kratak odgovor" izveden iz stvarnog sadržaja svakog posta). Realno tempo: slično Fazi 2 (~30-45 min po postu uz čitanje), raditi u batch-evima od 5, GSC brojke osvežiti neposredno pre izvršenja (ne koristiti zastarele 07-30 brojke za redosled ako je prošlo >2-3 nedelje). Nije #ceka-miroslav niti blokirano — čeka samo da bude izabrano kao glavni zadatak sesije.
+
 **Napomena:** `16616` (teren-za-pickleball) više NIJE blokiran (fake-review
 schema nalaz zatvoren 2026-07-28) — obrađen u batch 3.
 
