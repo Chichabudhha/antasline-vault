@@ -1,3 +1,20 @@
+## 2026-08-07 [cpanel-live] [W4/W6 Customer Match] scan_leads.py bug fix + prvi batch pripremljen (6 kontakata), upload čeka M potvrdu ✅📋
+
+**Kontekst:** Miroslav tražio "mejlove i google ads da radimo" — poklopilo se sa novim `scan_leads.py`/`customer_match_upload.py` skriptama (stigle git pull-om ovu sesiju), koje spajaju office@antasline.com mailbox sa Google Ads Customer Match audience-om.
+
+**🔴 Bug nađen i popravljen:** `scan_leads.py` je hardkodovao `LEAD_SENDER = "wordpress@antasline.com"` (buduća WoodMart/CF7 pretpostavka) umesto stvarnog pošiljaoca live sajta, `no-reply@antasline.com` (potvrđeno P1 nalazom 2026-07-30, ali nije preneto u skriptu). Prvi `--dry-run` je tiho vratio "0 novih kontakata" na mailbox-u sa 65 poruka — izgledalo je kao "nema upita", zapravo je filter bio pogrešan. Fix + lekcija: [[reference/naucene-lekcije]].
+
+**Izvršeno:**
+- `scan_leads.py` LEAD_SENDER/INTERNAL_ADDRESSES ispravljeni, testirano `--dry-run` (6/6 nađeno posle fixa) pa pravi prolaz — `leads.csv` napravljen (`~/antasline-connector/customer-match/`, van git-a), 6 novih kontakata upisano (samo brojevi u dnevniku, ne adrese — privacy pravilo skripte/naloga)
+- Miroslav prekopirao `oauth-client.json`/`token.json`/`ads-config.json` sa Windows mašine — prvi pokušaj u pogrešan folder (`~/antasline-connector/` umesto `.../credentials/`), premešteno na tačnu putanju
+- `customer_match_upload.py` (bez `--confirm`) dry-run test: kredencijali ispravno prepoznati, 6 kandidata spremno za upload u listu "AntasLine - Website Leads" (nalog 156-886-0314)
+
+**NIJE izvršeno (namerno):** stvaran `--confirm` upload — Miroslav eksplicitno odlučio da sačeka ("samo pripremi — ne šalji još"). #ceka-miroslav: kad odluči, upload je jedan poziv (`customer_match_upload.py --confirm`), kredencijali i leads.csv već stoje na serveru.
+
+**Napomena:** poznat rizik iz `.claude/skills/antasline-konektor/SKILL.md` (kontakt forma nema marketing-consent checkbox, samo cookie policy) — Miroslavljeva svesna odluka od 2026-08-07 da se ipak nastavi, nije ponovo otvarano ovu sesiju.
+
+Detalji: [[.claude/skills/antasline-konektor/SKILL.md]], [[reference/naucene-lekcije]]. Fajl izmenjen u vault-u: `scan_leads.py` (commit+push na kraju sesije, `[cpanel-live]` workflow).
+
 ## 2026-08-07 [claude-code] [W1 Polish Faza 3] Batch 6 — generički .al-cta-box na 22 posta bez GEO-intro/CTA teksta (M odluka: mehanički, bez novog teksta)
 
 **Kontekst:** Otvaranje sesije predložilo nastavak "W1 Polish Faza 3" (PROGRESS blokeri red 2026-07-30, item "post tipografska neujednačenost"). DB provera pokazala da je F7.24 retrofit (`.al-geo-intro`/`.al-cta-box` na POSTOJEĆI ad-hoc GEO-intro tekst) već zatvoren 2026-07-30 (batch 1-5, 30/30) — ali samo 8/31 posta je stvarno dobilo te klase (imali su tekst za prevesti), preostalih 23 nikad nije imalo GEO-intro/CTA obrazac pa ih batch 2-5 nisu dirali (samo link/tipfeler fixevi). Znači "30/31 bez al-section" nalaz je i dalje bio tačan.

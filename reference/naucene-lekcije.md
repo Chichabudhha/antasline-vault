@@ -5,6 +5,12 @@ azurirano: 2026-08-07
 
 # Naučene lekcije (tehnički gotchas)
 
+## Nova skripta pisana na osnovu STARE pretpostavke, ne provere žive baze — pošiljalac lead-mejlova (Customer Match, 2026-08-07)
+- `scan_leads.py` (dodat u konektor 2026-08-07) je hardkodovao `LEAD_SENDER = "wordpress@antasline.com"` — tačno vrednost koju bi budući WoodMart/CF7 build slao, ali NE ono što live sajt (i dalje stari Kallyas/Zion Builder) stvarno šalje. P1 nalaz iz 2026-07-30 audita mejlova je već utvrdio pravi pošiljalac (`no-reply@antasline.com`, potvrđeno na svih 49 formi), ali ta činjenica nije prenesena u skriptu napisanu nedelju+ dana kasnije.
+- Simptom je bio tih: `--dry-run` nije bacio grešku, samo je vratio "0 novih kontakata" na mailbox-u koji je stvarno imao 65 poruka/6 pravih leadova — lako se protumači kao "nema novih upita" umesto "filter je pogrešan".
+- **Pravilo:** kad skripta filtrira po pošiljaocu/formatu koji potiče sa live produkcije (ne sa lokalnog build-a), pre prvog pokretanja proveriti PRAVU vrednost direktno iz mailbox-a/baze (`python3 -c "import mailbox; ..."` na par poruka), ne preuzimati vrednost iz ranijeg plana/dokumentacije bez re-verifikacije — pogotovo ako je ta dokumentacija pisana za drugačiji (budući) sistem.
+- Usput: `credentials/` folder na cPanel serveru (`~/antasline-connector/credentials/`) mora biti pravi poddirektorijum — fajlovi prekopirani direktno u `~/antasline-connector/` (bez `credentials/` nivoa) ne rade, `auth.py`/`credentials_dir()` ih ne vidi bez jasne greške dok se ne pokuša pristup.
+
 ## Chrome browser automatizacija (Claude-in-Chrome): klik+type na neke web-app inpute ne registruje unos — proveriti pre Submit-a (GTM mailto tag, 2026-08-07)
 - Prilikom popunjavanja GTM "Submit Changes" panela (Version Name/Description) preko `computer` tool-a, `left_click`+`type` je prijavljivao uspeh, ali `document.activeElement` je i dalje bio prazan `<div tabindex="-1">` i input vrednosti su ostajale prazne — simptom se poklopio sa Chrome extension prozorom koji je vraćao sumnjivo mali viewport (837×61) na screenshot-ima uprkos `resize_window` pozivu (verovatno privremen desinhronizovan render state u ekstenziji, ne bag ciljne web app).
 - **Rešeno preko `javascript_tool`**: native setter (`Object.getOwnPropertyDescriptor(el.__proto__,'value').set`) da se React/Angular kontrola stvarno registruje kao promenjena, plus ručni `dispatchEvent(new Event('input'/'change', {bubbles:true}))` — bez toga framework ne vidi promenu iako je DOM `value` atribut fizički postavljen.

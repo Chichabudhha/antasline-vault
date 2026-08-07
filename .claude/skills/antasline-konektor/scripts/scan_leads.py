@@ -42,8 +42,8 @@ from typing import Optional
 sys.path.insert(0, str(Path(__file__).parent))
 from auth import connector_home  # noqa: E402
 
-LEAD_SENDER = "wordpress@antasline.com"
-INTERNAL_ADDRESSES = {"office@antasline.com", "wordpress@antasline.com", "admin@antasline.com"}
+LEAD_SENDER = "no-reply@antasline.com"
+INTERNAL_ADDRESSES = {"office@antasline.com", "no-reply@antasline.com", "wordpress@antasline.com", "admin@antasline.com"}
 EMAIL_RE = re.compile(r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}")
 DEFAULT_MAILDIR_GUESSES = [
     Path.home() / "mail" / "antasline.com" / "office",
