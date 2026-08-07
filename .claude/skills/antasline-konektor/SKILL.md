@@ -36,6 +36,8 @@ ne trebaju ovaj korak, rade preko service account-a odmah).
 | `gmb_report.py --from --to [--location]` | GMB (Windsor pokrivenost je i onako bila ograničena) | `metrics` (impresije desktop/mobile maps/search, pozivi, klikovi na sajt, direkcije) |
 | `ai_report.py --from --to` | (nema Windsor pandana) | AI-asistent saobraćaj: `ai_sessions_total`, `ga4_channel_ai_assistant`, `podbacaj_kanala`, `po_izvoru`, `top_landing`, `eventi` |
 | `gtm_mailto_tag.py [--dry-run]` | (nema Windsor pandana — **write**, ne read) | kreira `mailto` trigger + GA4 Event tag u GTM **workspace-u**; ne objavljuje |
+| `scan_leads.py [--dry-run] [--maildir PATH] [--imap]` | (nema Windsor pandana — **write** na leads.csv, ne Google API) | skenira CF7 lead-mejlove sa `office@antasline.com` (Maildir na disku, ili `--imap` fallback), puni `leads.csv` (van git-a) za Customer Match. **Pokreće se SAMO na cPanel serveru** (`[cpanel-live]` sesija) — mailbox je tamo, ne lokalno. |
+| `customer_match_upload.py [--confirm]` | (nema Windsor pandana — **write**, ne read) | hešuje (SHA-256) i upload-uje nove kontakte iz `leads.csv` u Google Ads Customer Match user listu preko `OfflineUserDataJobService`. **Pokreće se SAMO na cPanel serveru**, posle `scan_leads.py`. Dry-run podrazumevano. |
 
 ⚠️ **`ai_report.py` postoji zato što GA4-ov ugrađeni kanal „AI Assistant" potcenjuje
 stvarni AI saobraćaj ~3×** — `medium=ai-assistant` klasifikacija je proradila tek u
@@ -43,11 +45,24 @@ junu 2026, sve pre toga je razbacano po referral/organic/(not set)/gmb. Skripta
 agregira po hostname-u izvora, pa hvata sve varijante. (Mereno 2026-07-27: 98 stvarnih
 sesija vs 33 u GA4 kanalu.)
 
-⚠️ **`gtm_mailto_tag.py` je jedina skripta koja PIŠE.** Traži dva jednokratna koraka
-koja radi Miroslav: (1) uključiti „Tag Manager API" u istom Cloud projektu,
-(2) pokrenuti `authorize_oauth.py` ponovo (scope `tagmanager.edit.containers` je
-dodat 2026-07-27, postojeći `token.json` ga nema). Nikad ne objavljuje sam — Submit/Publish
-u GTM UI ostaje Miroslavljeva odluka.
+⚠️ **`gtm_mailto_tag.py`, `scan_leads.py` i `customer_match_upload.py` PIŠU.**
+`gtm_mailto_tag.py` traži dva jednokratna koraka koja radi Miroslav: (1)
+uključiti „Tag Manager API" u istom Cloud projektu, (2) pokrenuti
+`authorize_oauth.py` ponovo (scope `tagmanager.edit.containers` je dodat
+2026-07-27, postojeći `token.json` ga nema). Nikad ne objavljuje sam —
+Submit/Publish u GTM UI ostaje Miroslavljeva odluka.
+
+`scan_leads.py`/`customer_match_upload.py` su drugačiji obrazac: **ne
+pokreću se lokalno** (kredencijali i mailbox žive na cPanel serveru, ne na
+Windows mašini) — pokreću se u `[cpanel-live]` sesiji preko SSH-a, po
+`CLAUDE-CODE-instrukcija-CPANEL.md`. Zahtevaju kopiju `oauth-client.json`/
+`token.json`/`ads-config.json` u `~/antasline-connector/credentials/` na
+samom serveru (v. `reference/api-konektor-setup.md`). `customer_match_
+upload.py` je dry-run podrazumevano, `--confirm` neophodan za stvaran
+upload u Google Ads. **Poznat rizik**: kontakt forma trenutno nema consent
+checkbox za marketing korišćenje email-a (samo cookie policy) — svesna
+Miroslavljeva odluka od 2026-08-07 da se ipak nastavi, v.
+`.claude/skills/w6-social/SKILL.md` Faza 0.
 
 Svaka skripta traži **eksplicitne** `--from`/`--to` (YYYY-MM-DD) — nikad
 presets, ista disciplina kao kod Windsor rada (izbegava dvosmislenost oko

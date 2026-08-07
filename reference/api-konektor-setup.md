@@ -123,6 +123,34 @@ naloga, ne protiv pravog 156-886-0314.
 
 </details>
 
+## Korak E — Kredencijali NA SERVERU (cPanel), za `scan_leads.py`/`customer_match_upload.py`
+
+Ova dva skripta (email → Google Ads Customer Match) se pokreću **na
+cPanel serveru** (`[cpanel-live]` sesija preko SSH-a), ne lokalno — mailbox
+`office@antasline.com` fizički živi tamo. Server ima svoju odvojenu
+kopiju konektor foldera, van git-a, po istom principu:
+
+1. Na serveru napravi `~/antasline-connector/credentials/` (analogno
+   lokalnom `C:\Users\Miroslav\antasline-connector\credentials\`).
+2. Prekopiraj (scp/SFTP/cPanel File Manager) sa Windows mašine na server:
+   - `oauth-client.json`
+   - `token.json`
+   - `ads-config.json`
+
+   Ovo je isti Google Ads nalog (156-886-0314) — refresh token u
+   `token.json` je prenosiv fajl, ne treba ponovni OAuth "Allow" korak na
+   serveru (koji ionako nema interaktivni browser).
+3. Ako `scan_leads.py --imap` fallback zatreba (Maildir čitanje sa diska
+   ne uspe): dodaj `~/antasline-connector/credentials/mail-imap.json` sa
+   `{"password": "..."}` (lozinka za `office@antasline.com` mailbox).
+4. Proveri da `python3`/`pip` rade u cPanel Python App okruženju i
+   instaliraj isti `requirements.txt` (`google-ads` biblioteka).
+
+`leads.csv` i `scan-state.json` će se sami napraviti u
+`~/antasline-connector/customer-match/` pri prvom pokretanju
+`scan_leads.py` — `leads.csv` je obična čitljiva tabela, dostupna bilo kad
+preko cPanel File Manager-a/SFTP-a/SSH-a.
+
 ## Kad javiti da je gotovo
 
 GA4/GSC/Ads već rade — mogu odmah da ih koristim za izveštaje. Preostaje

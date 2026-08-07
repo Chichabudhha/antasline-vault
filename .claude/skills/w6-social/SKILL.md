@@ -21,12 +21,23 @@ Nijedan social/email zadatak nije postojao u planu do W6.
   (a) UTM + link-in-bio + CTA na postojeći FB/IG ritam — odmah, jeftino;
   (b) LinkedIn oživljavanje = najveći B2B potencijal (Quectel case study);
   (c) YouTube: promeniti handle u @antasline, video montaže od septembra.
-- [ ] **M5 odgovor** #ceka-miroslav: šta biva sa ~55 kontakata/mes — gde stoje
-  email-ovi (inbox? tabela?). Ovo je sirovina za Customer Match i newsletter.
+- [x] **M5 odgovor** ✅ 2026-08-07: email-ovi stižu kao CF7 lead-obaveštenja
+  (forme 16593/16737) na `office@antasline.com`, cPanel-hostovan mailbox na
+  istom serveru kao sajt (lokalno, ne eksterni Gmail). Sirovina za Customer
+  Match je sad automatizovana: `scan_leads.py` +
+  `customer_match_upload.py` u `.claude/skills/antasline-konektor/scripts/`
+  (pokreću se na cPanel serveru, `[cpanel-live]` sesija) — čitaju Maildir,
+  pune `leads.csv` van git-a, hešuju (SHA-256) i upload-uju u Google Ads
+  Customer Match user listu ("AntasLine - Website Leads").
 - [ ] **GMB paket** (već u planu kao 5.2/5.3): UTM fix, kategorije, recenzije
   6→20+, mesečni post
 - [ ] Saglasnost za email: checkbox na kontakt formi + dopuna politike
-  privatnosti (postoji samo politika kolačića) — pripremi tekst, Miroslav odobrava
+  privatnosti (postoji samo politika kolačića) — pripremi tekst, Miroslav odobrava.
+  ⚠️ **Napomena 2026-08-07**: Customer Match pipeline (gore) je pušten u rad
+  PRE ovog koraka — Miroslavljeva eksplicitna odluka da se ne čeka na
+  consent checkbox, svestan da to nosi pravni/politika rizik (Google Ads
+  Customer Match zahteva zakonit osnov za korišćenje podataka). Ovaj red
+  ostaje otvoren kao preporuka, ne kao blokada.
 - [ ] `sameAs` u Organization JSON-LD (GEO paket 2.8) popuniti profilima iz popisa
 
 ## Faza 1 — Ritam objava (od 2026-09-01)
