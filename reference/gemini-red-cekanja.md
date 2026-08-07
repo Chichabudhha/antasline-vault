@@ -135,9 +135,26 @@ fotografije), v. postojeći nalaz u [[PROGRESS]] Blokeri ("F2.9 rep").
 
 ## Van reda — NO_THUMBNAIL (13, ne diraj sa Gemini, čeka pravi izvor)
 
-16893 (Condor shock-pad) · 16899/16900/16901/16902/16906 (5× Radici bez
-pouzdanog model-mapiranja) · 16919 (EXPONA Living Clic) · 16990/16991
-(tribina/stolica) · 16998/17001/17002/17003 (generička sportska oprema).
+~~16893 (Condor shock-pad) · 16899/16900/16901/16902/16906 (5× Radici bez
+pouzdanog model-mapiranja)~~ — **6/13 zatvoreno 2026-08-07** (M eksplicitno
+odobrio generičke fotografije sa dobavljačkih sajtova, bez čekanja na
+tačan model-mapiranje):
+- `16893` Condor shock-pad ← condor-group.eu infill/shockpad presek (attach 17681)
+- `16899/16900/16901/16902` (rugbi/golf/hokej/Multisport MX) ← **ista** radicisport.it
+  generička "Sport" kategorija fotografija (attach 17682–17685) — radicisport.it je
+  JS-renderovan, filter po sportu (Rugby/Golf/Hockey/Multisport) na `sport-en/`
+  ne vraća pojedinačne proizvode ni kroz WebFetch ni kroz DOM (prazan grid),
+  samo jedna generička kategorija-slika postoji za sve sportove zajedno
+- `16906` pejzažne površine ← radicisport.it generička "Landscape" kategorija (attach 17686)
+
+⚠️ **Nije Gemini `--mode enhance`/standardizovano** — sirove dobavljačke slike,
+scene-fotografije (teren/vrt), ne izolovan proizvod na beloj pozadini kao
+`reference/standard-slika-proizvoda.md` traži. Kandidat za kasniji Gemini
+enhance prolaz ako se odluči da vredi ulagati dalje u ovih 6.
+
+16919 (EXPONA Living Clic) · 16990/16991
+(tribina/stolica) · 16998/17001/17002/17003 (generička sportska oprema) —
+**preostalih 7/13, i dalje čeka pravi izvor.**
 Isti spisak i razlog kao [[PROGRESS]] Blokeri "F2.9 rep".
 
 ## Veze
