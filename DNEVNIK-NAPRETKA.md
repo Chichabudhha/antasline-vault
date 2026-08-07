@@ -1,3 +1,20 @@
+## 2026-08-07 [claude-code] [W1 Polish Faza 4, batch 1] Pravi GEO-intro "Kratak odgovor" pasus na 5 posta (3318/5276/5181/2622/3388) ✅
+
+**Kontekst:** Faza 3 (2026-07-30/08-07) je pokrila SAV objavljen sadržaj generičkim `.al-cta-box` zatvarajućim CTA-om, ali 22 posta nikad nisu imala pravi `.al-geo-intro` "Kratak odgovor" pasus na vrhu (CLAUDE.md §10 GEO pravilo: prvi pasus = direktan odgovor). To je copywriting zadatak — Faza 4, otvorena na M zahtev 2026-08-07, izvodi se u batch-evima od 5, ništa izmišljeno.
+
+**Izvršeno (batch 1, prioriteti 1–5 po GSC signalu iz 07-30 zapisa):**
+- 3318 (zašto-vam-je-potreban-esd-pod) — pasus izveden iz postojećih brojki (25–50V oštećenje, 10.000V trenje o neprovodni pod, otpor 3,4×10⁴–5×10⁶ Ω/m², BS EN 61340-5-1/IEC 61340)
+- 5276 (podloge-za-krovove-i-terase) — Bergo PVC, 2,6 kg/m², tri modela (XL/Unique/Elite)
+- 5181 (podne-ploce-podovi-za-kontejnere) — tri varijante (Ecotile vinil 5-10mm / LVT Expona Clic / Bergo PVC)
+- 2622 (izbor-industrijskog-poda-tri-najcesca-pitanja) — tri pitanja iz naslova (namena/brzina/vrednost)
+- 3388 (podovi-za-stamparije) — hemijska otpornost + ESD verzija + montaža bez lepka
+
+Svih 5 upisano preko `$wpdb->update()` (3388 ima FAQPage `<script>` JSON-LD u `post_content` — F7.24 gotcha zahteva zaobilaženje `wp_update_post()`/`wp_unslash()`; ostala 4 preko istog puta radi konzistentnosti). Dry-run pa apply, oba čista. Backup: `antasline-backups/antasline_local_2026-08-07_pre-w1-polish-faza4-batch1.sql`. Skripta: `migracija/alati/job-w1-polish-faza4-batch1.php`.
+
+**Verifikacija:** 5/5 HTTP 200, 1×H1, `.al-geo-intro` prisutan tačno 1× po stranici, FAQPage JSON-LD na 3388 i dalje valid (`json_decode` OK, 4 pitanja), regresija čista (homepage/industrijski-podovi/conquest 2542 i dalje 200).
+
+**Preostalo (van obima ove sesije):** batch 2 (prioriteti 6–11: 16615, 16613, 16612, 16616 ⚠️ ima <script>, 3398, 2641) i batch 3 (12–21, GSC 0-klik grupa) — osvežiti GSC brojke pre izvršenja ako je prošlo >2-3 nedelje od 07-30 zapisa. Detalji: [[migracija/w1-polish-red-cekanja]] Faza 4.
+
 ## 2026-08-07 [cpanel-live] [W4/W6 Customer Match] scan_leads.py bug fix + prvi batch pripremljen (6 kontakata), upload čeka M potvrdu ✅📋
 
 **Kontekst:** Miroslav tražio "mejlove i google ads da radimo" — poklopilo se sa novim `scan_leads.py`/`customer_match_upload.py` skriptama (stigle git pull-om ovu sesiju), koje spajaju office@antasline.com mailbox sa Google Ads Customer Match audience-om.

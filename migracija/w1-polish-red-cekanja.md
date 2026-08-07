@@ -118,6 +118,8 @@ Nijedan naknadni "Faza" nastavak nije planiran — sledeći W1 rad ide kroz novi
 
 **Napomena o obimu:** ne raditi mehanički u jednom prolazu kao Faza 3 — svaki post treba pročitati i izvesti tačan, ne-izmišljen odgovor (isti standard kao originalni batch 1, gde je "Kratak odgovor" izveden iz stvarnog sadržaja svakog posta). Realno tempo: slično Fazi 2 (~30-45 min po postu uz čitanje), raditi u batch-evima od 5, GSC brojke osvežiti neposredno pre izvršenja (ne koristiti zastarele 07-30 brojke za redosled ako je prošlo >2-3 nedelje). Nije #ceka-miroslav niti blokirano — čeka samo da bude izabrano kao glavni zadatak sesije.
 
+**Batch 1 (prioriteti 1–5) — ✅ ZATVOREN 2026-08-07.** 3318 (ESD pod), 5276 (krovovi), 5181 (kontejneri/montažni objekti), 2622 (tri pitanja izbora poda), 3388 (štamparije) — svih 5 dobilo pravi `.al-geo-intro` "Kratak odgovor" pasus na vrhu (pre svega ostalog u `post_content`), izveden isključivo iz postojećeg teksta svakog posta. 3388 (ima FAQPage `<script>` JSON-LD) upisan preko `$wpdb->update()` (F7.24 gotcha), ostala 4 takođe preko `$wpdb->update()` radi konzistentnosti. Verifikovano: 5/5 HTTP 200, 1×H1, `.al-geo-intro` prisutan tačno 1×, JSON-LD na 3388 i dalje valid (FAQPage, 4 pitanja). Backup: `antasline-backups/antasline_local_2026-08-07_pre-w1-polish-faza4-batch1.sql`. Skripta: `migracija/alati/job-w1-polish-faza4-batch1.php`. Preostalo: batch 2 (prioriteti 6–11: 16615, 16613, 16612, 16616, 3398, 2641) i batch 3 (12–21, GSC 0-klik grupa) — osvežiti GSC brojke pre izvršenja.
+
 **Napomena:** `16616` (teren-za-pickleball) više NIJE blokiran (fake-review
 schema nalaz zatvoren 2026-07-28) — obrađen u batch 3.
 
