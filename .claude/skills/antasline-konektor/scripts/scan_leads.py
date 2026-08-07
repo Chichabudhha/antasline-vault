@@ -156,7 +156,7 @@ def message_date(msg: Message) -> str:
         return datetime.now(timezone.utc).date().isoformat()
 
 
-def find_maildir(explicit: str | None) -> Path:
+def find_maildir(explicit: Optional[str]) -> Path:
     if explicit:
         p = Path(explicit)
         if not p.exists():
