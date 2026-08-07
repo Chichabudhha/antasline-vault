@@ -1,6 +1,6 @@
 ---
 tip: referenca
-azurirano: 2026-08-05
+azurirano: 2026-08-07
 namena: Inventar pravih referentnih/instalacionih fotografija nađenih u C:\Users\Miroslav\Downloads — odvojeno od Gemini proizvod-foto reda (reference/gemini-red-cekanja.md)
 ---
 
@@ -118,20 +118,114 @@ izgleda kao drugi katalog/posao, ne AntasLine), `ChatGPT Image *.png` i
 `dreamstime_*.jpg` (stock foto biblioteka, licenca nepoznata — ne koristiti
 bez provere).
 
-## Šta čeka Miroslavljevu odluku
+## Odluke — SVE TRI ZATVORENE 2026-08-07
 
-1. Potvrda porekla/prava korišćenja za Geoplast i Isotrack/X-Mat/Mosolut
-   materijal (proizvođački vs. sopstveni) — utiče na to da li ide javno na
-   sajt bez napomene izvora.
-2. ✅ **Kategorizacija ~7 fajlova bez jasne ključne reči — ZATVORENO
-   2026-08-07** (vizuelni pregled, v. §1 gore — svih 7 potvrđeno kao sportski
-   tereni, ne ESD/Geoplast/Ergomat).
-3. Odluka o formatu korišćenja (odabrano ranije: **organizuj, ne postavljaj
-   još** — sledeći korak kad Miroslav da OK: verovatno referenca-galerija na
-   proizvod stranicama + eventualna posebna "Reference" portfolio stranica).
+1. ✅ **Poreklo/prava Geoplast + Isotrack/X-Mat/Mosolut materijala —
+   POTVRĐENO.** M: "ovo je sve od proizvođača i imamo dozvolu za korišćenje."
+   Materijal se sme koristiti javno na sajtu.
+2. ✅ **Kategorizacija ~7 fajlova bez jasne ključne reči — ZATVORENO**
+   (vizuelni pregled, v. §1 gore — svih 7 potvrđeno kao sportski tereni, ne
+   ESD/Geoplast/Ergomat).
+3. ✅ **Format korišćenja — ODLUČENO, po grupi (M):**
+   - ESD/antistatik (~10) i Geoplast/Ergomat (~28) → **galerija po proizvodu**
+     (jasno mapiranje na konkretne proizvode/linije u katalogu)
+   - Sport tereni (~100) → **kategorija/silo stranice** (`/sportske-podloge/`
+     i konkretne sport-stranice po tipu sporta), NE po proizvodu — nijedan
+     fajl ne identifikuje tačan Bergo model, pa galerija-po-proizvodu
+     tehnički nije izvodljiva za ovu grupu
 4. Gemini `--mode enhance` po potrebi — primenjuje se selektivno tek kad se
    izabere konkretan set za sajt, ne na ceo arhiv unapred (izbeći trošenje
    kvote na fotke koje se možda neće ni koristiti).
+
+## Plan izvršenja (red čekanja, otvoren 2026-08-07)
+
+| Grupa | Fotki | Cilj | Status |
+|---|---|---|---|
+| ESD/antistatik | ~10 (3 iskorišćene) | Galerija na ESD/Ecotile proizvod-stranicama | ✅ ZATVORENO 2026-08-07 |
+| Geoplast (Geocross/Geoflor/Geogravel/Runfloor) | ~20 | Galerija na odgovarajućim proizvod-stranicama | ✅ **već gotovo iz ranije sesije** (16589, 9 fotki + FAQPage) — provereno 2026-08-07, ništa dodatno potrebno |
+| Ergomat (Isotrack/X-Mat/Mosolut) | ~8 (4 iskorišćene) | Galerija na odgovarajućim proizvod-stranicama | ✅ ZATVORENO 2026-08-07 |
+| Sport tereni (Bergo/3×3/tenis/pickleball/padel/odbojka) | ~100 | Raspoređeno po sportu na silo/kategorija stranice | ✅ **ZATVORENO 2026-08-07** — imenovane lokacije (4 batch-a, 24 fotke na `/galerija/` + 1 na odbojka stranici) |
+
+### Sport tereni — izviđanje i batch 1, izvršeno 2026-08-07
+
+**Nalaz koji menja obim preostalog posla:** provera glavnih sport-stranica (kosarkaske-konstrukcije 16657, kosarka-3x3-tereni 16584, sportski-podovi-za-teniske-terene 17028, podloga-za-odbojkaske-terene 4318, sportska-podloga-za-pickleball 16680, teren-za-pickleball 16616, padel-tereni 16670, galerija 16674) je pokazala da **skoro sve već imaju referentne fotografije sa imenovanim lokacijama** — stariji upload datumi (2020/11, 2021/03, 2022/03) potvrđuju da je ovo rad iz ranijih W1/W2 sesija, ne iz ove BLOK E arhive. Ranija procena "~100 fotki čeka raspoređivanje" je bila zastarela — pravi otvoren prostor je znatno manji.
+
+**Jedina prava praznina nađena**: `/galerija/` (16674, live "Galerija - sportski tereni" stranica, upravo cilj M silo-odluke) — dopunjena sa 6 novih terena iz "tereni za basket" ZIP arhive: Despotovac, Valjevo, Bezdan, Krk, Sremčica (3x3), Fruška gora. Svi imaju OnePlus telefon GPS EXIF podatke (potvrđuje AntasLine terensko poreklo, ne stock/proizvođački materijal). Grid "Tereni za basket" 6→12 kartica, 3x3 grid nedirano (već dobar, 3 kartice).
+
+**Padel (16670) namerno preskočen**: jedina dostupna proizvod-fotografija je već iskorišćena (padel-tenis.jpg); Downloads alternative (`Padel-Club-Stockholm.jpg`, generički Safitex kadar) nemaju potvrđeno AntasLine poreklo (Stockholm klub zvuči kao tuđi teren, ne naša realizacija) — nije korišćeno da se ne izmisli veza koja ne postoji. #ceka-miroslav ako želi da potvrdi/objasni poreklo tih fotki.
+
+**Batch 2 (isti dan)**: još 6 lokacija dodato na `/galerija/` — Vrčin, Kanjiža, Barajevo, Bajina Bašta, Irig, Coca-Cola Dobanovci (grid "Tereni za basket" 12→18, 21 kartica ukupno na strani). Usput i odbojka stranica (`podloga-za-odbojkaske-terene`, 4318) dobila `Teren za odbojku CG.jpg` (dron snimak, Crna Gora) — zatvara tu sitnu stavku iz reda čekanja.
+
+**Batch 3 (isti dan)**: još 8 lokacija dodato na `/galerija/`, mešavina iz ZIP arhive i top-level Downloads fajlova van zipa — Obrenovac, Pelješac, Užička (Beograd), kamp Pecarski (Zlatibor), Pionirski grad, Graz (3x3 cup), Švedska federacija, Avala. Grid "Tereni za basket" 18→26 kartica (29 ukupno na strani). Namerno preskočena druga "Spanoulis"-imenovana fotografija (hotel Jugoslavija) — izbegnuto ponovljeno pominjanje imena igrača.
+
+**Batch 4 (isti dan, poslednji) — RED ČEKANJA IMENOVANIH LOKACIJA ZATVOREN**: Vršac, Pula, Jajinci, Čačak-Knić. Grid "Tereni za basket" 26→30 kartica (33 ukupno na strani). **Ukupno preko 4 batch-a: 24 nove fotografije na `/galerija/` (9→33 kartice) + 1 na odbojka stranici (4318).**
+
+**Šta ostaje van obima (svesno, ne previd)**: generičke fotografije bez imena lokacije (npr. "teren u kancelariji" ×3, "teren na krovu" varijante, "teren za basket u dvorištu") — niže prioritetnosti jer su manje verodostojne/distinktivne kao "referenca" od imenovanih lokacija; mogu se razmotriti u budućoj sesiji ako zatreba još sadržaja na `/galerija/`.
+
+**Padel fotke — ODLUČENO 2026-08-07, NE OBJAVLJIVATI.** M potvrdio poreklo (`Padel-Club-Stockholm.jpg`, `padel tereni sa vestackom travom.webp`, `vestacka trava za padel terene notix safitex.jpg` — sve tri sa proizvođačevog sajta, jedna ima EXIF `copyright: Matteo Zanga`, konkretan fotograf) ali eksplicitno odbio objavu: "odgovor 'sa sajta proizvođača' je bio informacija, ne odobrenje za objavu." Razlika od Geoplast/Ergomat presedana (gde je M dao eksplicitnu dozvolu za javno korišćenje) — ovde dozvola NIJE data. `/veštačka-trava-za-padel-terene/` (16670) ostaje nedirano, i dalje samo 1 postojeća generička proizvod-fotografija. Zatvoreno bez izmene baze.
+
+Skripte: `migracija/alati/job-16674-galerija-sportski-tereni-basket-batch1.php`, `...batch2.php`, `...batch3.php`, `...batch4.php`, `job-4318-odbojka-teren-cg.php`. Backup: `antasline-backups/antasline_local_2026-08-07_pre-galerija-sportski-tereni-basket-batch1.sql`, `...pre-galerija-batch2-odbojka.sql`, `...pre-galerija-batch3.sql`, `...pre-galerija-batch4.sql`. Verifikovano: svi 200/1×H1/0 PHP grešaka, regresija (kosarkaske-konstrukcije, kosarka-3x3, industrijski-podovi, podloga-za-odbojkaske-terene) čista.
+
+### Ergomat — izvršeno 2026-08-07
+
+**Isotrack** (`/privremene-podloge-isotrack/`, 16111): nova "Reference" sekcija
+(`al-section--paper`, isti obrazac kao 16567 ESD pilot) dodata pre kontakt
+CTA-a, 3 kartice — Isotrack L na događaju (dizalice na podlozi), Isotrack X
+na peščanom terenu (teški kamion), Isotrack X na blatnjavom gradilištu
+(dizalica). `isotrack-l-2.jpg` (anotiran tehnički render, ne prava
+fotografija) i `isotrack-l-series.jpg` (skoro identičan kadar kao
+iskorišćena Isotrack L slika, isti event) namerno preskočeni — render nije
+"referenca sa terena", duplikat ne dodaje vrednost. `x-mat-f-3.jpg` bez
+ijedne odgovarajuće stranice u katalogu (X-Mat nije zaseban proizvod niti
+pomenut u sadržaju bilo koje stranice) — ostaje neiskorišćen dok se ne
+utvrdi gde pripada.
+
+**Mosolut Heavy** (proizvod `mosolut-heavy`, 16530): jedina dostupna
+fotografija (`mosolut heavy 123.webp` — paletarka na Mosolut podu u
+skladištu) ubačena kao "Iz prakse" figura pre "Cena na upit" pasusa (WC
+proizvod-opis je gola HTML struktura bez `al-section`/Layout Builder
+obrazaca, pa je korišćen jednostavniji `<figure>` blok umesto grid-a).
+
+Skripta: `migracija/alati/job-16111-16530-ergomat-reference-galerija.php`.
+Backup: `antasline-backups/antasline_local_2026-08-07_pre-ergomat-reference-galerija.sql`.
+Verifikovano: oba 200, 1×H1, 4/4 slike 200, 0 grešaka.
+
+**Napomena o Geoplast-u**: provera pre rada pokazala da `/podloge-za-parkiraliste-i-staze/`
+(16589) VEĆ ima 9 pravih terenskih fotografija (Runfloor/Geocross/Geogravel
+u primeni) + FAQPage schema, uvezenih u ranijoj W2 sesiji (2026-07,
+nezavisno od ovog arhiva) — Downloads arhiv fotke za Geoplast (Geocross/
+Geoflor-instrukcije, Runfloor projekti) su sad suvišne/redundantne
+(kvalitet nije poređen ni sa jednom), nema potrebe za dodatnim radom.
+
+### ESD pilot — izvršeno 2026-08-07
+
+`/industrijski-podovi/` (16567) je već imao gotovu "Reference" sekciju
+(`.al-card` grid, 3 kartice: Hankook, Amicus, generički 2018 stock "Ecotile
+industrijski pod") + `.al-ref-row` sa 2 tekstualna linka (HTEC, Quectel) ka
+postojećim blog-postovima o tim instalacijama. Umesto da se gradi nova
+sekcija, dopunjena je postojeća:
+- Stari 2018 stock kadar (3. kartica) zamenjen pravom fotografijom
+  proizvodne hale (`industrijski podovi postavljeni u proizvodnji ecotile.webp`)
+- 2 nove kartice dodate: HTEC Niš (`Antistatik-pod-HTEC-Nis.jpg`, 800×600) i
+  Šimanovci (`PR-DC-Simanovci-ESD-pod.jpg`, 1600×720) — grid sad ima 5
+  kartica umesto 3, `.al-card__media { aspect-ratio: 4/3; object-fit:cover }`
+  radi bez izmene CSS-a bez obzira na izvorni format slika
+- Quectel fotke preskočene — jedine dostupne su stare `370×166` thumbnail
+  isečci (prenisko za hero karticu), postojeći `.al-ref-row` tekstualni link
+  ka Quectel priči ostaje netaknut kao jedina referenca dok ne stigne
+  fotografija u boljoj rezoluciji
+- Preostale 4 ESD fotke iz arhiva (`Antistatik-pod-Beograd.jpg`,
+  `Macola-ESD-podloga.jpg`, `antistatik pod u kancelariji.webp`,
+  `esd podovi u primeni.webp`) nisu iskorišćene ovom sesijom — kandidati za
+  dopunu `/antistatik-i-elektroprovodljivi-podovi/` stranice u narednoj sesiji
+
+Skripta: `migracija/alati/job-16567-esd-reference-galerija.php` (uvoz preko
+`wp_insert_attachment` + `$wpdb->update()` na `post_content`, isti F7.24
+obrazac — ne `wp_update_post()`). WP je uvezene slike automatski
+konvertovao u WebP. F7.21 `the_content` filter je automatski primenio
+lightbox+srcset na nove slike (nije trebalo ništa dodatno). Backup:
+`antasline-backups/antasline_local_2026-08-07_pre-esd-reference-galerija.sql`.
+Verifikovano: 200, 1×H1, 5/5 slika 200, 0 PHP grešaka/warninga u izlazu.
 
 ## Veze
 - `reference/gemini-red-cekanja.md` — zatvoren proizvod-foto red (odvojeno od ovoga)

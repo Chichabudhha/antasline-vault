@@ -200,22 +200,30 @@ pozive), što je bila eksperimentalna, ne stvarna potreba — rizik/setup
 (API ključevi, config, prošli pad) ne vredi za to. Routing predlog iznad
 u fajlu ostaje kao istorijska referenca, ne kao aktivan plan.
 
-## Foto arhiva (Downloads) — inventar 2026-08-05, čeka M odluku
+## Foto arhiva (Downloads) — U POTPUNOSTI ZATVORENO 2026-08-07
 
-Van postojećeg proizvod-foto reda: `C:\Users\Miroslav\Downloads` sadrži
+Van postojećeg proizvod-foto reda: `C:\Users\Miroslav\Downloads` sadržao
 ~185 pravih referentnih/instalacionih fotografija (sport tereni Bergo/3×3/
 pickleball/tenis ~100, ESD/antistatik montaže ~10, Geoplast/Runfloor ~20,
-Ergomat Isotrack/X-Mat/Mosolut ~8) koje nikad nisu ušle u sajt. Pun inventar
-i kategorizacija: `reference/foto-arhiva-inventar.md`. Samo organizovano,
-ništa postavljeno — v. #ceka-M ispod.
+Ergomat Isotrack/X-Mat/Mosolut ~8). Sve grupe obrađene: ESD/Geoplast/Ergomat
+galerije-po-proizvodu, sport tereni (4 batch-a, 24 imenovane lokacije na
+`/galerija/` + 1 odbojka fotka) na silo/kategorija stranice. Padel fotke
+namerno NEOBJAVLJENE — M potvrdio poreklo (proizvođačev sajt) ali eksplicitno
+odbio dozvolu za javnu objavu. Pun tok: `reference/foto-arhiva-inventar.md`.
 
-## Šta čeka Miroslava
+## Šta je čekalo Miroslava — sve zatvoreno 2026-08-07
 
-- Foto arhiva (Downloads) — ✅ kategorizacija ~7 fotki bez jasne ključne reči
-  u imenu ZATVORENA 2026-08-07 (vizuelni pregled, svih 7 potvrđeno kao
-  sportski tereni). I dalje otvoreno: (1) poreklo/prava za Geoplast i
-  Ergomat materijal, (2) format upotrebe (referenca-galerija na proizvodima
-  / posebna "Reference" stranica / blog). Detalji: `reference/foto-arhiva-inventar.md`.
+- ✅ Kategorizacija ~7 fotki bez jasne ključne reči — vizuelni pregled,
+  svih 7 potvrđeno kao sportski tereni.
+- ✅ Poreklo/prava Geoplast + Ergomat materijala — potvrđeno, proizvođački
+  materijal sa dozvolom za javno korišćenje.
+- ✅ Format upotrebe — odlučeno po grupi: ESD/Geoplast/Ergomat kao
+  galerija-po-proizvodu, sport tereni kao silo/kategorija stranice.
+- ✅ Padel poreklo — potvrđeno kao proizvođački sajt, ali dozvola za objavu
+  eksplicitno ODBIJENA — ništa nije uvezeno.
+
+Nema više otvorenih #ceka-M stavki na ovoj temi. Van obima (svesno, buduća
+sesija ako zatreba): generičke sport-teren fotografije bez imena lokacije.
 
 ## Veze
 - `.claude/skills/gemini-vizuali/SKILL.md`

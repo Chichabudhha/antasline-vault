@@ -1,3 +1,65 @@
+## 2026-08-07 [claude-code] BLOK E — padel fotke: poreklo potvrđeno, objava ODBIJENA — foto arhiva u potpunosti zatvorena
+
+**Kontekst:** Zatvaranje sesije. Poslednje otvoreno pitanje iz `reference/foto-arhiva-inventar.md` — poreklo 3 padel fotografije (`Padel-Club-Stockholm.jpg`, `padel tereni sa vestackom travom.webp`, `vestacka trava za padel terene notix safitex.jpg`). M potvrdio: "sa sajta proizvođača." Pre uvoza, provera EXIF podataka pokazala da jedna fotografija nosi `copyright: Matteo Zanga` (konkretan fotograf, ne generički proizvođački marketing) — drugačiji nivo od Geoplast/Ergomat presedana gde je M dao eksplicitnu dozvolu za javno korišćenje. Pitanje postavljeno M-u eksplicitno pre bilo kakve izmene baze; **M odgovorio da odgovor "sa sajta proizvođača" nije bio odobrenje za objavu** — ništa nije uvezeno, `/veštačka-trava-za-padel-terene/` (16670) ostaje nedirano.
+
+**Ovim je BLOK E foto arhiva (Downloads inventar, otvorena 2026-08-05) u potpunosti zatvorena** — sve grupe obrađene (ESD, Geoplast, Ergomat, sport tereni-imenovane lokacije, odbojka) ili svesno zatvorene bez izmene (padel — dozvola odbijena; generičke fotografije bez lokacije — van obima, niža prioritetnost). Detalji: [[reference/foto-arhiva-inventar.md]].
+
+## 2026-08-07 [claude-code] BLOK E — sport tereni: batch 4 (poslednji, imenovane lokacije) — RED ČEKANJA ZATVOREN
+
+**Kontekst:** Nastavak iste sesije, M rekao "Završi". Poslednji batch imenovanih lokacija: Vršac, Pula, Jajinci, Čačak-Knić. Grid "Tereni za basket" 26→30 kartica (33 ukupno na strani sa 3x3 gridom).
+
+Skripta: `migracija/alati/job-16674-galerija-sportski-tereni-basket-batch4.php`. Backup: `antasline-backups/antasline_local_2026-08-07_pre-galerija-batch4.sql`. Verifikovano: 200/1×H1/33 al-card/4 nove slike 200/0 grešaka, regresija (kosarkaske-konstrukcije, kosarka-3x3, podloga-za-odbojkaske-terene) čista.
+
+**Ovim je red čekanja imenovanih lokacija za `/galerija/` zatvoren** — ukupno 4 batch-a isti dan, 24 nove fotografije na `/galerija/` (9→33 kartice) + 1 na odbojka stranici (4318). Preostaje samo generički materijal bez imena lokacije (teren u kancelariji, teren na krovu, teren u dvorištu varijante — niža prioritetnost, manje verodostojne kao "referenca", nije rađeno ovu sesiju) i padel poreklo #ceka-miroslav. **BLOK E foto arhiva (Downloads inventar) sada u potpunosti zatvoren** osim ta dva preostala niska-prioritetna otvorena pitanja.
+
+## 2026-08-07 [claude-code] BLOK E — sport tereni: batch 3 na Galerija (16674), 8 dodatnih lokacija
+
+**Kontekst:** Nastavak iste sesije, M rekao "Nastavi". Batch 3: 8 dodatnih terena, mešavina iz ZIP arhive i top-level Downloads fajlova (koji nisu bili u ranije analiziranom zipu) — Obrenovac, Pelješac, Užička (Beograd), kamp Pecarski (Zlatibor), Pionirski grad, Graz (3x3 cup), Švedska federacija, Avala. Grid "Tereni za basket" 18→26 kartica (29 ukupno na strani sa 3x3 gridom). Namerno preskočeno: "Bergo Multisport - Spanoulis teren - hotel jugoslavija.jpg" — iako druga fotografija/lokacija, isto ime igrača (Spanoulis) već jednom iskorišćeno kao hero slika stranice; drugi navrat bi mogao delovati kao preuveličana asocijacija sa igračem, preskočeno iz opreza.
+
+Jedan kvalitetni nalaz: `3x3-Svedska-federacija.jpg` je niže rezolucije (400×225) od ostalih (700-4608px) — i dalje prihvatljivo za grid thumbnail, ali zabeleženo kao najslabija slika u ovom batch-u.
+
+Skripta: `migracija/alati/job-16674-galerija-sportski-tereni-basket-batch3.php`. Backup: `antasline-backups/antasline_local_2026-08-07_pre-galerija-batch3.sql`. Verifikovano: 200/1×H1/29 al-card/8 nove slike 200/0 grešaka, regresija (kosarkaske-konstrukcije, podloga-za-odbojkaske-terene) čista.
+
+**Preostalo u redu čekanja**: manji broj preostalih jedinstvenih imenovanih lokacija (Vršac, Pula, Jajinci, Čačak-Knić) + generičke bez imena lokacije (teren u kancelariji, teren na krovu varijante — niža prioritetnost, manje verodostojne kao "reference"). Padel poreklo i dalje #ceka-miroslav.
+
+## 2026-08-07 [claude-code] BLOK E — sport tereni: batch 2 na Galerija (16674) + odbojka fotografija (4318)
+
+**Kontekst:** Nastavak iste sesije, M rekao "idemo dalje". Batch 2 na `/galerija/`: 6 dodatnih imenovanih lokacija iz "tereni za basket" ZIP arhive — Vrčin, Kanjiža, Barajevo, Bajina Bašta (Drinska bajka), Irig, Coca-Cola Dobanovci. Grid "Tereni za basket" 12→18 kartica (ukupno na strani 21 sa 3x3 gridom). Sve fotke proverene pre uvoza (EXIF/kvalitet) — OnePlus telefon GPS podaci na Vrcin/Irig/Kanjiza potvrđuju terensko poreklo, Coca-Cola Dobanovci i Barajevo bez EXIF-a ali dovoljne rezolucije (720×960, 800×600).
+
+Usput zatvorena i manja stavka iz reda čekanja: `podloga-za-odbojkaske-terene` (4318) dobila 1 novu fotografiju — teren za odbojku, dron snimak, Crna Gora (`Teren za odbojku CG.jpg`, DJI EXIF potvrđuje dron poreklo) — umetnuta posle postojeće poslednje fotke, pre FAQ sekcije.
+
+Skripte: `migracija/alati/job-16674-galerija-sportski-tereni-basket-batch2.php`, `migracija/alati/job-4318-odbojka-teren-cg.php`. Backup: `antasline-backups/antasline_local_2026-08-07_pre-galerija-batch2-odbojka.sql`. Verifikovano: oba 200/1×H1, 6+1 novih slika 200, `/galerija/` 21 al-card ukupno, regresija (kosarkaske-konstrukcije, kosarka-3x3) čista.
+
+**Preostalo u redu čekanja** (dodatne kandidat-lokacije iz ZIP arhive, ~15+ preostalih jedinstvenih): Užička Beograd, Graz 3x3 cup, Švedska federacija, Kanjiža (drugi kadar), Čačak-Knić, Pionirski grad, hotel Jugoslavija, Zlatibor kamp Pecarski, Jajinci, Pula, Obrenovac, Vršac. Padel poreklo i dalje #ceka-miroslav.
+
+## 2026-08-07 [claude-code] BLOK E — sport tereni: izviđanje otkrilo da je većina već pokrivena iz ranijih sesija, prvi batch dopune na Galerija (16674)
+
+**Kontekst:** Nastavak reda čekanja "sport tereni (~100 fotki) raspoređivanje po silo stranicama". Pre uvoza bilo koje slike, provereno svih glavnih sport-stranica (`kosarkaske-konstrukcije` 16657, `kosarka-3x3-tereni` 16584, `sportski-podovi-za-teniske-terene` 17028, `podloga-za-odbojkaske-terene` 4318, `sportska-podloga-za-pickleball` 16680, `teren-za-pickleball` 16616, `padel-tereni` 16670, `galerija` 16674) — **glavni nalaz: skoro sve već imaju referentne fotografije sa imenovanim lokacijama, iz ranijih W1/W2 sesija (2020/11 i 2021/03 upload datumi — dakle stariji od ove BLOK E arhive, ne novi rad)**. Kosarkaske-konstrukcije ima 9 kartica, kosarka-3x3 3 kartice, tenis 3 sistema sa fotkama (akril/veštačka trava/Bergo, sve imenovane lokacije: Opština UB, TK Slice Valjevo, Dom učenika Patrijarh Pavle), odbojka 5+ slika (dimenzije, mreža, pesak, sala, spolja), pickleball dve stranice sa 5 fotki ukupno. Padel (16670) ima samo 1 generičku proizvođačku fotografiju — ali dostupne Downloads alternative (Padel-Club-Stockholm, generički Safitex kadar) nisu pouzdano AntasLine-ove reference (nepoznato poreklo/klijent) — namerno preskočeno da se ne izmišlja veza koja ne postoji, ostaje #ceka-miroslav ako želi da potvrdi poreklo.
+
+**Pravi otvoren prostor:** `/galerija/` (16674, "Galerija - sportski tereni", live stranica na koju cilja i M odluka "sport tereni idu na silo/kategorija stranice") — postojećih 9 kartica (3× 3x3, 6× basket) dopunjeno sa **6 novih, ranije nekorišćenih terena** iz "tereni za basket" ZIP arhive: Despotovac, Valjevo, Bezdan, Krk, Sremčica (3x3), Fruška gora — svi realni tereni sa OnePlus telefon-GPS EXIF podacima (potvrđuje da su AntasLine terenske fotografije, ne stock/proizvođački materijal). Grid "Tereni za basket" sad ima 12 kartica (bilo 6), 3x3 grid ostaje na 3 (nedirano).
+
+Skripta: `migracija/alati/job-16674-galerija-sportski-tereni-basket-batch1.php`. Backup: `antasline-backups/antasline_local_2026-08-07_pre-galerija-sportski-tereni-basket-batch1.sql`. Verifikovano: 200/1×H1/15×15 al-card/6×6 nove slike 200/0 PHP grešaka, regresija (kosarkaske-konstrukcije, kosarka-3x3, industrijski-podovi) čista.
+
+**Preostalo u redu čekanja** (ZIP arhiva ima ~94 fajla ukupno, iskorišćeno je sad ~21 jedinstvenih preko svih stranica): dodatne imenovane lokacije za buduće batch-eve na istoj `/galerija/` stranici — Obrenovac, Krk (drugi kadar), Vrčin, Peljesac, Užička Beograd, Graz 3x3 cup, Švedska federacija, Coca-Cola Dobanovci, Kanjiža, Čačak-Knić, Pionirski grad, hotel Jugoslavija, Zlatibor kamp Pecarski, Mali Požarevac (dodatni kadrovi), Vršac, Irig, Bajina Bašta, Pula. Odbojka: `Teren za odbojku CG.jpg` (Crna Gora) neiskorišćen, kandidat za dopunu `podloga-za-odbojkaske-terene` (4318) u narednoj sesiji. Padel: poreklo Downloads fotki ostaje #ceka-miroslav.
+
+## 2026-08-07 [claude-code] BLOK E — Ergomat reference galerije (Isotrack + Mosolut Heavy), Geoplast provereno kao već gotovo
+
+**Kontekst:** Nastavak istog dana, na M zahtev "nastavi sa Geoplast i Ergomat galerijama". Provera pre rada: `/podloge-za-parkiraliste-i-staze/` (16589, Geoplast hub) VEĆ ima 9 pravih terenskih fotografija + FAQPage schema iz ranije W2 sesije (2026-07) — nije uopšte iz ovog arhiva, ali funkcionalno pokriva istu potrebu. Zaključak: Geoplast ne treba dodatan rad, Downloads arhiv fotke za tu grupu su suvišne.
+
+**Ergomat izvršeno:** Isotrack stranica (`/privremene-podloge-isotrack/`, 16111) dobila novu "Reference" sekciju (isti `al-section--paper`/`al-card` obrazac kao ESD pilot) sa 3 prave fotografije (Isotrack L na događaju, Isotrack X na peščanom terenu, Isotrack X na blatnjavom gradilištu) — umetnuta pre kontakt CTA sekcije. Mosolut Heavy proizvod (16530) dobio jednu referentnu fotografiju ("Iz prakse" figura pre "Cena na upit" pasusa — proizvod-opis je gola HTML struktura, nema Layout Builder sekcije, pa je iskorišćen jednostavniji format). Preskočeno: anotiran tehnički render (nije prava fotografija), skoro-duplikat kadar (isti event kao iskorišćena Isotrack L slika), `x-mat-f-3.jpg` (nema odgovarajuću stranicu u katalogu — X-Mat nije poseban proizvod).
+
+Skripta: `migracija/alati/job-16111-16530-ergomat-reference-galerija.php`. Backup: `antasline-backups/antasline_local_2026-08-07_pre-ergomat-reference-galerija.sql`. Verifikovano: oba 200, 1×H1, 4/4 slike 200, 0 grešaka.
+
+**BLOK E foto arhiva sada praktično zatvoren osim sport terena (~100 fotki, red čekanja za narednu sesiju).** Detalji: [[reference/foto-arhiva-inventar.md]].
+
+## 2026-08-07 [claude-code] BLOK E — foto arhiva: sve 3 M-odluke zatvorene + ESD pilot galerija izvršena na /industrijski-podovi/
+
+**Kontekst:** Nastavak iste sesije. Miroslav odgovorio na preostala 2 pitanja: (1) Geoplast+Ergomat materijal je "sve od proizvođača, imamo dozvolu za korišćenje" — sme se objaviti javno. (2) Format: ESD/Geoplast/Ergomat (jasno mapiranje na proizvode) → galerija po proizvodu; sport tereni (~100 fotki, nijedan fajl ne identifikuje tačan Bergo model) → kategorija/silo stranice po sportu, ne po proizvodu (M odluka posle predloga).
+
+**ESD pilot izvršen:** `/industrijski-podovi/` (16567) je već imao gotovu "Reference" sekciju sa 3 kartice (Hankook, Amicus, 2018-stock generička Ecotile fotka) + tekstualne linkove (HTEC/Quectel) — nije građena nova sekcija, dopunjena postojeća. Stari 2018 stock kadar zamenjen pravom fotografijom proizvodne hale; dodate 2 nove kartice (HTEC Niš, Šimanovci) sa pravim terenskim fotografijama iz arhiva. Quectel fotke preskočene (jedine dostupne su 370×166 thumbnail isečci, prenisko za hero karticu) — postojeći tekstualni link ostaje. Skripta: `migracija/alati/job-16567-esd-reference-galerija.php`. Backup: `antasline-backups/antasline_local_2026-08-07_pre-esd-reference-galerija.sql`. Verifikovano: 200/1×H1/5×5 slika 200/0 grešaka, F7.21 `the_content` filter automatski primenio lightbox+srcset na nove slike bez dodatnog rada.
+
+**Ostaje u redu čekanja** (van obima ove sesije, prevelik za jednu turu): Geoplast (~20) i Ergomat (~8) galerije po proizvodu, sport tereni (~100) raspoređivanje po silo/kategorija stranicama. Detalji + pun plan: [[reference/foto-arhiva-inventar.md]].
+
 ## 2026-08-07 [claude-code] BLOK E — foto arhiva (Downloads): kategorizacija 7 nejasnih fajlova zatvorena vizuelnim pregledom
 
 **Kontekst:** [[reference/foto-arhiva-inventar.md]] (2026-08-05) je imao 3 otvorene #ceka-M stavke za ~185-fajlovni arhiv referentnih/instalacionih fotografija. Od tri, samo jedna je zahtevala stvaran Miroslavljev input koji Claude ne može sam utvrditi (poreklo/prava za Geoplast i Ergomat proizvođački materijal) i jedna čeka odluku o formatu korišćenja (portfolio stranica vs. proizvod-galerija) — ali kategorizacija 7 fajlova bez ključne reči u imenu je bila čisto vizuelno pitanje, rešivo direktnim pregledom slika.

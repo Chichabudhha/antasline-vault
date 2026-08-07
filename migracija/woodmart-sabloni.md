@@ -1025,6 +1025,24 @@ sadržaj postojećeg attachment fajla (npr. menjanje SVG ikonice u meniju),
 obavezno hard-refresh (Ctrl+Shift+R) pri proveri — običan refresh može
 pokazati staru verziju i navesti na lažan zaključak da izmena "nije stigla".**
 
+## F7.25 — Pre građenja nove "Reference"/galerija sekcije, prvo proveriti da li stranica već ima jednu (2026-08-07)
+
+**Kontekst:** BLOK E foto arhiva sesija — dopuna `/industrijski-podovi/` (16567)
+i Isotrack (16111) pravim terenskim fotografijama. Na 16567 se ispostavilo da
+`.al-card`/`.al-grid` "Reference" sekcija (3 kartice + `.al-ref-row` tekstualni
+linkovi) već postoji od ranije, jedna od 3 kartice generički 2018 stock kadar.
+
+**Pravilo:** pre pisanja novog `[vc_row el_class="al-section al-section--paper"]`
+bloka za referentnu galeriju, `grep` postojeći `post_content` na `al-card`/
+`al-grid`/`Reference` — ako sekcija već postoji, dopuniti je (zameniti slabije
+kartice, dodati nove) umesto graditi duplikat ispod/iznad. Rezultat je
+konzistentniji (jedna sekcija, ne dve sa istim naslovom) i brži (nema potrebe
+za novim `[vc_row]` omotom, CSS klasama, diagonalnim rezovima F7.20).
+
+**Ista provera je pokazala da Geoplast hub (`/podloge-za-parkiraliste-i-staze/`,
+16589) već ima 9 pravih fotografija + FAQPage iz ranije W2 sesije** — ušteđen
+ceo posao za tu grupu jednim `grep -c al-card` pre nego što se počelo.
+
 ## Otvoreno
 - [ ] ⏳ Kuriranje fotografija — pun prolaz kroz sve stranice (v. F7.21). Urađeno: 16657. Ostaje ~28 stranica bez slika + dopuna postojećih.
 - [x] ✅ 2026-07-10 — Mobilni viewport vizuelna provera (W1 1.6): 15 stranica smoke čist, toolbar/filteri/spec-tabele/futer OK; metod gore (F7.12)
