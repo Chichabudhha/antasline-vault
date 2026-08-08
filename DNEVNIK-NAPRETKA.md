@@ -1,3 +1,17 @@
+## 2026-08-08 [claude-code] [Konkurencija — trava u boji] Provera brenda "trava u boji" — live sajt koristi Edel Grass, ne Condor 🔴📋
+
+**Kontekst:** M zamolio da se slike sa live sekcije "Veštačka trava u boji" (`/vestacka-trava/`) prebace na lokalne Condor Schools/Playgrass proizvode (16877/16885), verujući da su te slike od holandskog proizvođača Condor Grass.
+
+**Nalaz (dvostruko proveren, ne izmišljeno):**
+- Live galerija (6 slika) ima filename prefiks `EG-Colourful-*` (Turquoise/Silver/Pink/New-Lilac/Lime/Anthracite) — **EG = Edel Grass**, ne Condor. Nema teksta na stranici koji pominje brend uz te slike.
+- Lokalni Condor proizvodi (16877 "Condor Schools trava u boji", 16885 "Condor Playgrass") imaju **7 varijacija**: Crvena/Žuta/Plava/Bela/Roze/Zelena/Braon — samo se Plava/Zelena/Roze delimično poklapaju sa Edel Grass setom, ostatak ne.
+- Proverio condor-group.eu/en/group/members (10 članica: Condor Carpets, VEBE, Condor Cartex, Betap, **Condor Grass**, Timzo, Edel Carpets, Edel Yarns, Condor Techtex, Intercarpet) — **Edel Grass nije na listi** (postoje "Edel Carpets"/"Edel Yarns", vizuelno slično ime, druga firma).
+- Web pretraga potvrđuje: **Edel Grass B.V.** (Genemuiden, osnovan 1989) je u vlasništvu Oranjewoud grupe, nepovezano sa Condor Group-om. Izvori: sapca.org.uk/members/condor-grass, crunchbase.com/organization/edel-grass-b-v, edelgrass.com/about-us.
+
+**Odluka (M, 2026-08-08):** ne dirati lokalne proizvode (ostaju kako jesu, generičke slike od 08-05) — **live sajt ostaje kako jeste** (ne diramo live, pravilo §8 CLAUDE.md). M treba da proveri kod pravog dobavljača ko je zapravo isporučio tu obojenu travu koja je fotografisana za `/vestacka-trava/` na live-u — moguće da je Edel Grass stvarni dobavljač te konkretne partije/fotografija, ili da je AntasLine samo koristio dobavljačke stock-fotke bez tačne veze sa Condor imenom u tekstu.
+
+**#ceka-miroslav:** poreklo/dobavljač obojene trave sa live `/vestacka-trava/` slika (Edel Grass vs. neko treći) — dok se ne razjasni, ne kačiti te slike ni na jedan lokalni proizvod (rizik pogrešnog brendiranja/boja, isti oprez kao ranija 07-29 AI-mapiranje odluka).
+
 ## 2026-08-07 [claude-code] [W1 Polish Faza 4, batch 1] Pravi GEO-intro "Kratak odgovor" pasus na 5 posta (3318/5276/5181/2622/3388) ✅
 
 **Kontekst:** Faza 3 (2026-07-30/08-07) je pokrila SAV objavljen sadržaj generičkim `.al-cta-box` zatvarajućim CTA-om, ali 22 posta nikad nisu imala pravi `.al-geo-intro` "Kratak odgovor" pasus na vrhu (CLAUDE.md §10 GEO pravilo: prvi pasus = direktan odgovor). To je copywriting zadatak — Faza 4, otvorena na M zahtev 2026-08-07, izvodi se u batch-evima od 5, ništa izmišljeno.
