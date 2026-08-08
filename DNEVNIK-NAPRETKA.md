@@ -1,3 +1,13 @@
+## 2026-08-08 [claude-code] [Condor Schools/Playgrass] Variation-slike po boji dodate (14 varijacija, 2 proizvoda) ✅
+
+**Kontekst:** M zamolio da svaka color-varijacija Condor Schools (16877) i Condor Playgrass (16885) dobije SVOJU sliku (standardno WooCommerce variation-image ponašanje — slika se menja kad kupac izabere boju), umesto da sve varijacije dele istu parent sliku. Odvojeno pitanje od prethodnog "trava u boji" nalaza ispod (koje ostaje otvoreno #ceka-miroslav) — ovo je čisto UX/tehnički zadatak na proizvodima koji su već `publish`.
+
+**Izvršeno:** Gemini `--mode enhance` (isti obrazac kao 2026-08-05 parent slike), input = postojeći parent attachment (17562 plava za Schools, 17563 zelena za Playgrass), prompt menja SAMO boju teksture (isti ugao/oblik/beli background/senka). 12 novih swatch-eva generisano (6 boja × 2 proizvoda — Plava/Schools i Zelena/Playgrass reuse-uju postojeći parent jer se već poklapaju). Kvota: 12/500 dnevno.
+
+🔴 **Gotcha**: prvi pokušaj (1 PHP skripta, 12 slika u nizu preko `wp_generate_attachment_metadata()`) je pukao na WP `max_execution_time` 300s (kumulativni trošak bootstrap+12× resize u jednom request-u) — `wp_die()` "kritična greška" stranica umesto pravog PHP fatal-a, uzrok nađen u `debug.log`. Rešeno deljenjem na 12 pojedinačnih `php` procesa (isti `import-gemini-photo.php` skript kao 08-05, jedan poziv = jedan proizvod/varijacija, svaki dobija sopstveni 300s budžet) + 2 direktna `set_post_thumbnail()` poziva za reuse slučajeve.
+
+**Verifikacija:** svih 14 varijacija (16878-16884, 16886-16892) ima `_thumbnail_id` popunjen (DB provera), oba proizvod-stranice HTTP 200/1×H1, `data-product_variations` JSON na obe stranice sadrži tačne per-boja URL-ove (npr. `condor-schools-trava-u-boji-crvena-600x600.webp`) — frontend variation-swap potvrđen na nivou markup-a (WooCommerce native ponašanje, nije custom JS). Backup: `antasline-backups/antasline_local_2026-08-08_pre-condor-variation-slike.sql`.
+
 ## 2026-08-08 [claude-code] [Konkurencija — trava u boji] Provera brenda "trava u boji" — live sajt koristi Edel Grass, ne Condor 🔴📋
 
 **Kontekst:** M zamolio da se slike sa live sekcije "Veštačka trava u boji" (`/vestacka-trava/`) prebace na lokalne Condor Schools/Playgrass proizvode (16877/16885), verujući da su te slike od holandskog proizvođača Condor Grass.

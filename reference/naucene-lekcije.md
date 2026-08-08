@@ -1,9 +1,18 @@
 ---
 tip: reference
-azurirano: 2026-08-07
+azurirano: 2026-08-08
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Bulk WP attachment import (12+ Gemini slika u JEDNOM PHP procesu) puca na 300s execution limit — deliti na pojedinačne pozive (2026-08-08)
+- Pokušaj da se 12 novogenerisanih color-swatch slika (Condor Schools/Playgrass variation-slike) uveze u jednoj PHP skripti (petlja preko `wp_insert_attachment()`+`wp_generate_attachment_metadata()`) je pukao na `PHP Fatal error: Maximum execution time of 300 seconds exceeded` — WP je to prikazao kao generičku `wp_die()` "kritična greška" stranicu na stdout-u (exit 255), bez ijedne linije stvarnog izlaza skripte, pravi uzrok vidljiv jedino u `wp-content/debug.log`.
+- **Pravilo ubuduće:** kad treba uvesti VIŠE od par slika kao WP attachment (svaka nosi `wp_generate_attachment_metadata()` resize trošak + WP bootstrap overhead), pokretati **jedan PHP proces po slici** (kao već testiran `import-gemini-photo.php <post_id> <src> <dest>` obrazac iz 2026-08-05), ne petljati sve u jednom skriptu — svaki poziv dobija sopstveni 300s budžet umesto da se troši kumulativno. Prvo proveriti `debug.log` kad `wp-load.php` skripta pukne bez izlaza (WP guta pravi PHP fatal iza "kritična greška" stranice).
+- Bash/Windows gotcha usput: `"$VAR\\$file"` (backslash pred `$` u double-quoted stringu) se ne escape-uje kako se očekuje u Git Bash — koristiti forward-slash MSYS putanje (`/c/Users/...`) dosledno kroz ceo poziv, PHP na Windows-u ih prihvata bez problema.
+
+## Sličan brend-naziv ≠ ista firma — proveriti member-listu holding grupe pre pretpostavke o poreklu slike (2026-08-08)
+- M je pretpostavio da su "trava u boji" slike na `/vestacka-trava/` (live) od holandskog Condor Grass-a (dobavljača lokalnih Condor Schools/Playgrass proizvoda) jer se ime "Condor Group" pojavljuje u istom kontekstu holding-a koji ima i "Edel Carpets"/"Edel Yarns" članice. Filename prefiks na slikama (`EG-Colourful-*`) je zapravo od **Edel Grass B.V.** — posve odvojene firme (u vlasništvu Oranjewoud grupe), koja slučajno ima slično ime kao "Edel Carpets"/"Edel Yarns" (koje JESU Condor Group članice) ali sama nije na `condor-group.eu/en/group/members` listi.
+- **Pravilo ubuduće:** kad se pretpostavlja da je neka slika/proizvod od dobavljača X jer "ime zvuči povezano" ili je pomenuto u istom pasusu — proveriti zvaničnu member/brand listu holding grupe (ako postoji) PRE kačenja slike na proizvod. Vizuelno/zvučno slično ime (Edel Grass vs Edel Carpets/Yarns) je čest izvor lažne veze, pogotovo u multi-brand holding strukturama (Condor Group ima 10 članica). Boje/varijante iz dva izvora koje se ne poklapaju 1:1 (ovde: lokalni Condor set od 7 boja vs. live Edel Grass set od 6, samo delimično preklapanje) su dodatni signal da su u pitanju dva različita proizvoda, ne isti.
 
 ## Customer Match upload zahteva Standard developer token (Basic access ne radi) + membership_life_span max je 540 dana, ne 10000 (2026-08-07)
 - Prvi stvaran `customer_match_upload.py --confirm` pokušaj (posle scan_leads.py fix-a) pao je u dva koraka:
