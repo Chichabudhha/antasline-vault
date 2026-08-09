@@ -5,6 +5,19 @@ azurirano: 2026-08-09
 
 # Naučene lekcije (tehnički gotchas)
 
+## Brend font za video natpise: Google Fonts woff2 podskupovi + varijabilni font — tri zamke u nizu (ffmpeg drawtext, 2026-08-10)
+- Child tema drži brend fontove **samo kao `.woff2`** (`woodmart-child/fonts/`), a ffmpeg `drawtext` traži TTF/OTF. Konverzija je moguća bez instalacije: `fontTools.ttLib.TTFont(x.woff2)` → `font.flavor=None` → `save(x.ttf)`.
+- 🔴 **Zamka 1 — podskupovi.** Google Fonts deli font na `latin` i `latin-ext`. **`latin-ext` sadrži SAMO dijakritiku** (č/ć/š/ž/đ), bez osnovnih slova. Ako se uzme samo taj fajl, ffmpeg iscrta **kutiju bez teksta** (ili samo jedno slovo) — a `box=1` i dalje radi, pa na prvi pogled izgleda kao da je problem u boji/alfi. **Uvek spojiti oba podskupa** (`fontTools.merge.Merger`).
+- 🔴 **Zamka 2 — provera koja laže.** Provera „ima li font dijakritiku" prolazi i na golom `latin-ext` fajlu jer dijakritika tamo POSTOJI. **Proveravati ceo tekst koji se stvarno crta**, ne samo dijakritiku: `missing=[c for c in probe if ord(c) not in cmap]`.
+- 🔴 **Zamka 3 — varijabilni font.** Inter woff2 je varijabilan; `Merger().merge()` puca sa `AttributeError: type object 'VarStore' has no attribute 'mergeMap'`. Lek: prvo `instancer.instantiateVariableFont()` pa merge. **Podrazumevana vrednost `wght` ose je 400 iako se fajl zove `inter-700`** — ako se ne zada `{"wght":700}` eksplicitno, dobija se tanak font pod imenom bold.
+- **Uvek vizuelno proveriti rezultat** (`ffmpeg -ss T -frames:v 1` pa pogledati kadar) — tekstualni izlaz ffmpeg-a je „OK" i kad se ne iscrta nijedno slovo.
+- ffmpeg 9.0 usput: **`-filter_complex_script` više ne postoji**, zamenjeno opštim `-/filter_complex fajl.txt` oblikom (čita vrednost opcije iz fajla) — nezamenljivo kad filter lanac ima navodnike i zareze koje shell inače izmrcvari.
+
+## Google Flow — dnevni krediti se NE resetuju po lokalnoj ponoći (2026-08-10)
+- U 00:34 po lokalnom vremenu (CEST, 22:34 UTC) nalog je i dalje pokazivao **0 kredita** iako je „datum" prešao u novi dan. Reset ide po Google-ovoj zoni (pacifička ponoć ≈ 09–10h ujutru po lokalnom), ne po korisnikovoj.
+- **Praktično:** ne planirati „uveče potrošim, u ponoć nastavim". Dnevni budžet od 50 kredita je stvarno jedan po kalendarskom danu **pacifičke** zone.
+- Usput: otvaranje starog Flow projekta ume da vrati `Application error: a client-side exception has occurred` (bela/crna stranica). Lek: otići na `labs.google/fx/tools/flow` (spisak projekata), ne direktno na `/project/<id>` URL.
+
 ## Google Flow (Veo 3.1) — agent se zaglavljuje, model se bira u promptu, Lite = Fast na sporim kadrovima (2026-08-09)
 - **Agent se zaglavljuje**: dvaput je najavio render („I'm going to animate your photo…") i **nikad nije prikazao dugme za odobrenje** — sesija ostane mrtva, kredit se ne potroši ali ni video ne nastane. **Lek: otvoriti novu sesiju** (ikona olovke u panelu), ne nastavljati staru i ne guraje dodatnim porukama.
 - **Agent settings → „Save" ne hvata izbor modela.** Prebacivanje na Veo 3.1 Lite kroz podešavanja dvaput nije ostalo sačuvano (agent je i dalje najavljivao Fast). Pouzdano je tražiti model **u samom tekstu prompta**: `Using the Veo 3.1 - Lite model, animate this exact photo…`.

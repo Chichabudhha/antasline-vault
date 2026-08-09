@@ -1,0 +1,10 @@
+[0:v][1:v]xfade=transition=fade:duration=0.5:offset=7.5[v01];
+[v01][2:v]xfade=transition=fade:duration=0.5:offset=15.0[v02];
+[v02][3:v]xfade=transition=fade:duration=0.5:offset=22.5[v03];
+[v03]fade=t=in:st=0:d=0.6,fade=t=out:st=29.9:d=0.6[vb];
+[vb]drawtext=fontfile=fonts/inter-bold.ttf:text='Teren za basket 3×3':fontcolor=white:fontsize=46:box=1:boxcolor=black@0.5:boxborderw=20:x=64:y=h-190:enable='between(t,1.0,6.6)':alpha='if(lt(t,1.4),(t-1.0)/0.4,if(gt(t,6.2),(6.6-t)/0.4,1))'[t1a];
+[t1a]drawtext=fontfile=fonts/inter-bold.ttf:text='15 × 14 m':fontcolor=white:fontsize=30:box=1:boxcolor=black@0.5:boxborderw=16:x=64:y=h-118:enable='between(t,1.0,6.6)':alpha='if(lt(t,1.4),(t-1.0)/0.4,if(gt(t,6.2),(6.6-t)/0.4,1))'[t1];
+[t1]drawtext=fontfile=fonts/inter-bold.ttf:text='Podloga\: beton, asfalt ili tucanik':fontcolor=white:fontsize=40:box=1:boxcolor=black@0.5:boxborderw=20:x=64:y=h-150:enable='between(t,9.0,14.3)':alpha='if(lt(t,9.4),(t-9.0)/0.4,if(gt(t,13.9),(14.3-t)/0.4,1))'[t2];
+[t2]drawtext=fontfile=fonts/inter-bold.ttf:text='Bergo ploče — klik sistem':fontcolor=white:fontsize=42:box=1:boxcolor=black@0.5:boxborderw=20:x=64:y=h-150:enable='between(t,16.6,21.9)':alpha='if(lt(t,17.0),(t-16.6)/0.4,if(gt(t,21.5),(21.9-t)/0.4,1))'[t3];
+[t3]drawtext=fontfile=fonts/inter-bold.ttf:text='Oblik i boje po meri':fontcolor=white:fontsize=42:box=1:boxcolor=black@0.5:boxborderw=20:x=64:y=h-150:enable='between(t,23.8,27.1)':alpha='if(lt(t,24.2),(t-23.8)/0.4,if(gt(t,26.7),(27.1-t)/0.4,1))'[t4];
+[t4]drawtext=fontfile=fonts/inter-bold.ttf:text='AntasLine · 069 234 00 72':fontcolor=white:fontsize=44:box=1:boxcolor=black@0.62:boxborderw=22:x=(w-tw)/2:y=(h-th)/2:enable='between(t,27.7,30.4)':alpha='if(lt(t,28.1),(t-27.7)/0.4,1)',format=yuv420p[v]
