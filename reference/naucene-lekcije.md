@@ -1,9 +1,21 @@
 ---
 tip: reference
-azurirano: 2026-08-08
+azurirano: 2026-08-09
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Google Flow (Veo 3.1) — agent se zaglavljuje, model se bira u promptu, Lite = Fast na sporim kadrovima (2026-08-09)
+- **Agent se zaglavljuje**: dvaput je najavio render („I'm going to animate your photo…") i **nikad nije prikazao dugme za odobrenje** — sesija ostane mrtva, kredit se ne potroši ali ni video ne nastane. **Lek: otvoriti novu sesiju** (ikona olovke u panelu), ne nastavljati staru i ne guraje dodatnim porukama.
+- **Agent settings → „Save" ne hvata izbor modela.** Prebacivanje na Veo 3.1 Lite kroz podešavanja dvaput nije ostalo sačuvano (agent je i dalje najavljivao Fast). Pouzdano je tražiti model **u samom tekstu prompta**: `Using the Veo 3.1 - Lite model, animate this exact photo…`.
+- **Cene (izmereno, ne pretpostavka)**: 50 besplatnih kredita dnevno · **Lite 10** · **Fast 20** po klipu od 8s. Na sporim pokretima kamere nad statičnim objektom (teren, pod) **razlika u kvalitetu se ne vidi** → podrazumevano Lite, Fast samo za hero kadar. To je 5 klipova dnevno umesto 2.
+- **Prompt pravilo koje čuva autentičnost fotke**: traži **samo pokret kamere i ambijent** (vetar, oblaci, svetlo) + eksplicitno „keep the surface, colours and markings exactly as in the photo" i „do not add any new objects, people or basketballs". Čim se zatraži radnja (igrač, lopta), Veo počne da izmišlja i podloga prestaje da bude naša realizacija.
+- Ulaznu sliku **iskropovati na ciljani odnos (16:9) pre uploada** — Veo inače sam odlučuje šta da odseče.
+
+## Gemini web UI nema `input[type=file]` u DOM-u — upload slike je zatvoren za browser automatizaciju (2026-08-09)
+- Dopuna ranije lekcije „Gemini Veo nema free API tier — samo web UI" (2026-08-04): **ni web UI nije upotrebljiv za automatizovan image-to-video**. `document.querySelectorAll('input[type=file]')` na `gemini.google.com` vraća **prazan niz** — dugme „Отпреми фајлове" otvara **sistemski dijalog** koji automatizacija ne vidi ni ne može da popuni.
+- Praktično: za image-to-video ide **Flow** (ima pravi file input, `file_upload` radi). Gemini ostaje korisna **odvojena besplatna Veo kvota** samo za tekst→video, gde izmišljen kadar nije problem.
+- Šire pravilo: pre nego što se obeća „uradiću to kroz browser", proveriti da li stranica uopšte izlaže file input u DOM-u — nema smisla trošiti runde na klikanje po meniju koji vodi u nativni dijalog.
 
 ## Bulk WP attachment import (12+ Gemini slika u JEDNOM PHP procesu) puca na 300s execution limit — deliti na pojedinačne pozive (2026-08-08)
 - Pokušaj da se 12 novogenerisanih color-swatch slika (Condor Schools/Playgrass variation-slike) uveze u jednoj PHP skripti (petlja preko `wp_insert_attachment()`+`wp_generate_attachment_metadata()`) je pukao na `PHP Fatal error: Maximum execution time of 300 seconds exceeded` — WP je to prikazao kao generičku `wp_die()` "kritična greška" stranicu na stdout-u (exit 255), bez ijedne linije stvarnog izlaza skripte, pravi uzrok vidljiv jedino u `wp-content/debug.log`.

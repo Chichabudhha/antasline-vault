@@ -1,3 +1,31 @@
+## 2026-08-09 [claude-code] [W2/W6 video] Google Flow (Veo 3.1) uveden kao stalni alat — 4 klipa + izmontiran video od 30,5s za basket stranicu ✅
+
+**Kontekst:** M pitao „google flow je besplatan, umeš li da ga koristiš?", pa tražio video za `/kako-napraviti-teren-za-basket-ili-kosarkaski-teren/`. Posle prvog uspešnog klipa doneo odluku da ovo uđe u stalni tok: **jedan video dnevno za stranice koje prave novac.**
+
+**Odabran pristup (M izbor od 3 ponuđena):** image-to-video iz **naših pravih fotografija** izvedenih terena, ne AI generisanje od nule. Odbijena varijanta „instruktivna montaža" — Veo ne zna kako Bergo klik sistem izgleda i izmislio bi pogrešan mehanizam na stranici koju ljudi čitaju baš zbog tačnosti.
+
+**Izvršeno:** 5 fotki izabrano iz arhive (~100 basket fotki, potvrđeno AntasLine poreklo preko EXIF/GPS i poznatih lokacija), iskropovano na 16:9 preko PIL skripte. **4 klipa izrenderovana** — Pelješac (Fast), Tara / Bajina Bašta / Ledine (Lite). Sve preuzeto kao MP4 i **izmontirano preko ffmpeg-a u jedan video: 30,5s, 1280×720, 24 fps, prelazi 0,5s, fade in/out, bez zvuka** (`AntasLine-teren-za-basket-32s.mp4`). Kadar 5 (hero, koš + nebo) ostaje za sutra — krediti potrošeni.
+
+**Ključno pravilo prompta (razlog zašto podloga ostaje naša):** traži se **samo pokret kamere i ambijent** (vetar, oblaci, svetlo) + eksplicitno „keep the court surface, colours and markings exactly as in the photo / do not add any new objects, people or basketballs". Čim se zatraži radnja (igrač, lopta kroz obruč), Veo počne da izmišlja.
+
+**Cene potvrđene merenjem (ne pretpostavka):** 50 besplatnih kredita dnevno, obnavljaju se. **Veo 3.1 Lite = 10 kredita, Fast = 20** po klipu od 8s. Na sporim pokretima kamere nad statičnim terenom razlika Lite/Fast se **ne vidi** → podrazumevano Lite, što menja kapacitet sa 2 na **5 klipova dnevno**. Prvi klip je nepotrebno pušten na Fast pre nego što je cena Lite-a bila poznata.
+
+🔴 **Gotcha 1 — Flow-ov agent se zaglavljuje.** Dvaput najavio render („I'm going to animate…") i **nikad nije prikazao dugme za odobrenje**; sesija ostane mrtva. Lek: otvoriti **novu sesiju** (ikona olovke), ne nastavljati staru.
+
+🔴 **Gotcha 2 — Agent settings „Save" ne hvata model.** Izbor Veo 3.1 Lite kroz Agent settings dvaput nije ostao sačuvan (agent je i dalje najavljivao Fast). Pouzdano je tražiti model **u samom tekstu prompta** („Using the Veo 3.1 - Lite model, …").
+
+🔴 **Gotcha 3 — Gemini upload je zatvoren za browser automatizaciju.** `gemini.google.com` **nema `input[type=file]` u DOM-u** (provereno JS upitom, vraća prazan niz) — „Отпреми фајлове" otvara sistemski dijalog koji automatizacija ne vidi. Image-to-video preko Gemini-ja zato nije izvodljiv ovim putem. Nezavisno od toga, **i da radi ne bi trebalo koristiti ga za ove kadrove**: bez naše fotografije Gemini generiše izmišljen teren, što ruši ceo smisao materijala. Gemini ostaje korisna **odvojena besplatna Veo kvota** za slučajeve gde izmišljen kadar nije problem.
+
+**Strateški nalaz (razlog zašto video uopšte vredi):** iz [[seo/2026-07-27-content-klasteri]] se vidi isti obrazac kroz skoro sve klastere — **rangiramo na poziciji 1–3 i ne dobijamo klik** jer Google odgovara direktno u rezultatima (`visina koša` 1.089 impr / 9 kl · `dimenzije fudbalskog terena` 2.409 / 7 · `šljaka` 1.739 / 2 · `dimenzije teniskog terena` 1.465 / 2 · epoksid ~800 / **0**). Još teksta to ne popravlja. Video + `VideoObject` schema menja **izgled samog rezultata** (sličica uz link) — to je hipoteza sa dobrim osnovom, ne garancija; merenje je GSC CTR 28d pre/posle, stop posle 3 stranice ako nema pomaka.
+
+**Alati:** `ffmpeg 9.0` instaliran (`winget install Gyan.FFmpeg`, nije ga bilo). Skripte: `scratchpad/montaza.sh` (xfade lanac), PIL krop skripta. Plan sa redom čekanja stranica, budžetom i ostalim Google Labs alatima (NotebookLM kao najveći sledeći dobitak, Flow Music, Opal): [[seo/2026-08-09-video-obogacivanje-plan]] · shot lista i tačni promptovi: [[seo/2026-08-09-flow-promptovi-basket]].
+
+**Usput nađeno:** `C:\Miroslav\Antas Line priprema za sajt\kosarkaski teren\` sadrži **originalna uputstva za montažu iz 2018** (`okretanje ploca.png`, `postavljanje kosarkaskog terena HI.png`, `uputstvo za postavljanje…`) — tačan prikaz Bergo klik sistema, bolji materijal za sekciju „Kako se postavljaju Bergo podloge" nego bilo koji AI klip.
+
+**YouTube — rešeno:** kanal postoji (`youtube.com/@antasline5676`), status „mrtav" po [[reference/drustvene-mreze]]. Odluka: **objavljivati javno, ne unlisted** (materijal je ionako javan na sajtu; unlisted se ne pojavljuje u YouTube pretrazi, čime gubimo drugu površinu; oživljen kanal je preduslov za YouTube/Demand Gen oglase).
+
+**#ceka-miroslav:** (1) promeniti YouTube handle `@antasline5676` → `@antasline` **pre prve objave** (posle toga ulazi u embed URL-ove i schema-u); traži pristup Google nalogu koji je vlasnik kanala. (2) Pre embed-a rešiti lazy „facade" (poster + iframe na klik) — LCP je već crven, YouTube iframe bi ga dodatno oborio. (3) Proveriti da li Rank Math besplatan ima Video sitemap modul; ako nema, `VideoObject` JSON-LD ide ručno kroz child temu.
+
 ## 2026-08-09 [claude-code] [W4 4.7] Enhanced Conversions — lokalni deo implementiran i verifikovan, GTM+Ads deo specificiran za dan migracije ✅
 
 **Kontekst:** Izabrano po M zahtevu ("gmb api kvota pa 4.7"). Planirano za N6, ništa ne blokira. Uvodni GMB retest: **i dalje 429** (`mybusinessaccountmanagement.googleapis.com`, Requests per minute) — četvrti put bez promene od 07-30, Google Basic API Access revizija još traje, nema akcije na našoj strani.
