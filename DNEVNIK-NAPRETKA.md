@@ -1,3 +1,25 @@
+## 2026-08-09 [claude-code] [W4 4.7] Enhanced Conversions — lokalni deo implementiran i verifikovan, GTM+Ads deo specificiran za dan migracije ✅
+
+**Kontekst:** Izabrano po M zahtevu ("gmb api kvota pa 4.7"). Planirano za N6, ništa ne blokira. Uvodni GMB retest: **i dalje 429** (`mybusinessaccountmanagement.googleapis.com`, Requests per minute) — četvrti put bez promene od 07-30, Google Basic API Access revizija još traje, nema akcije na našoj strani.
+
+**Problem koji 4.7 mora da reši:** konverzija je pregled `/hvala-za-poruku/` (BLOK A model), ne submit forme — do tog trenutka je odrađen redirect i vrednosti forme više ne postoje na stranici, pa Enhanced Conversions nema šta da hešira. Rešenje: prenos email/telefona kroz `sessionStorage`.
+
+**Izvršeno (lokal):** `woodmart-child/functions.php`, uz postojeći `wpcf7mailsent` redirect handler (backup `functions.php.bak-2026-08-09-pre-enhanced-conversions`). Obe forme — 16593 (kontakt) i 16737 (Brzi upit) — imaju identična imena polja (`form-email`/`form-telefon`), pa ih jedna implementacija pokriva. Piše 5 ključeva: `al_lead_em` (trim+lowercase), `al_lead_ph` (E.164 `+381…`), `al_lead_ts` (za TTL), plus `al_am_em`/`al_am_ph` za Meta. Podaci se šalju kao **čist tekst — Ads sam heširа SHA-256**, unapred heširano bi bilo dvostruko heširano.
+
+🔴 **Nalaz koji je promenio dizajn:** prva ideja (iskoristiti postojeće Meta ključeve `al_am_*`) je **izmerena kao neizvodljiva** — GTM tag `Meta Pixel - Base Code` okida na All Pages i posle čitanja odmah **briše** te ključeve (`removeItem`). Posle test-submita na `/hvala-za-poruku/` ostali su samo `al_lead_*`; `al_am_*` su već bili pojedeni. Da EC deli ključeve sa Metom, tiho bi slao konverzije bez EC podataka. Odvojen prostor imena je neophodan, ne stvar ukusa.
+
+🟢 **Usput popravljeno (Meta):** stari GTM „Capture Lead Data" tag je pisao telefon kao gole cifre **bez pozivnog broja** (`0692340072`) — Meta traži pozivni, pa je taj deo match-a verovatno oduvek propadao. Lokalni kod piše `381692340072`. Očekivan bolji Event Match Quality posle migracije.
+
+**Verifikacija (Chrome, pravi submit-ovi):** obe forme → svih 5 ključeva tačno → redirect → `al_lead_*` prisutni na odredištu. Normalizacija telefona testirana na 12 graničnih slučajeva (`069 234 00 72`, `(069) 234-0072`, `+381 69…`, `00381…`, bez vodeće nule, `0601234567` → svi tačni; `12`/`abc`/`""`/17 cifara → odbačeni, granica 9–15 cifara). **Bez regresije:** na `/hvala-za-poruku/` okinuli GA4 `g/collect` (`generate_lead`), Ads `pagead/conversion/966742304/` + `ccm/conversion/`, Meta `facebook.com/tr/`. GTM-TRDT8K9 potvrđen na localhost, PHP lint čist, 4 stranice HTTP 200.
+
+**Stanje živog kontejnera (potvrđeno iz `gtm.js`):** oba `__awct` taga (`ae_gCKL-3sAcEKCi_cwD` = lead, `QQCBCNDQ_sUcEKCi_cwD` = tel) imaju `enableEnhancedConversionsCheckbox: false` — EC nigde nije bio uključen.
+
+**Namerno NIJE rađeno sada:** GTM izmene. Live i dalje koristi Zion formu koja ne piše ove ključeve, pa bi tagovi bili prazan hod — neproveren pokretni deo u živom kontejneru bez ijedne koristi do 31.08. Pun spec (2 Custom JS promenljive sa TTL 10 min, User-Provided Data promenljiva, izmena SAMO lead taga — ne tel taga) → [[migracija/2026-08-09-enhanced-conversions-4.7]].
+
+🟢 **Bonus — gate stavka olakšana:** pošto sajt sad sam piše `al_am_*`, migraciona stavka „Meta Pixel Manual Advanced Matching prepravka" (master plan §3) svodi se sa „prepiši sve selektore za CF7" na „obriši tag `Meta Pixel - Capture Lead Data` + trigger `Klik na Posalji (Zion forma)`"; `Meta Pixel - Base Code` ostaje nepromenjen.
+
+**#ceka-miroslav:** Google Ads UI → konverzija „Lead - forma (GTM)" → Settings → Enhanced conversions → uključiti, metod **Google Tag Manager**, prihvatiti customer data terms. Bez toga GTM šalje a Ads ignoriše. Bezopasno, može bilo kad pre 31.08.
+
 ## 2026-08-08 [claude-code] [Condor Schools/Playgrass] Variation-slike po boji dodate (14 varijacija, 2 proizvoda) ✅
 
 **Kontekst:** M zamolio da svaka color-varijacija Condor Schools (16877) i Condor Playgrass (16885) dobije SVOJU sliku (standardno WooCommerce variation-image ponašanje — slika se menja kad kupac izabere boju), umesto da sve varijacije dele istu parent sliku. Odvojeno pitanje od prethodnog "trava u boji" nalaza ispod (koje ostaje otvoreno #ceka-miroslav) — ovo je čisto UX/tehnički zadatak na proizvodima koji su već `publish`.
