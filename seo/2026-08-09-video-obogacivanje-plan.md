@@ -62,11 +62,29 @@ dodatnog snimanja, i YouTube kanal kao druga površina pretrage (W6).
 | | |
 |---|---|
 | Besplatni krediti | **50 dnevno**, obnavljaju se |
-| Veo 3.1 – Fast | **20 kredita** / 8s klip (potvrđeno) |
-| Veo 3.1 – Lite / Omni Flash | jeftinije, cena još nije potvrđena |
+| Veo 3.1 – Fast | **20 kredita** / 8s klip (potvrđeno 2026-08-09) |
+| Veo 3.1 – Lite | **10 kredita** / 8s klip (potvrđeno 2026-08-09) |
+| Omni Flash | jeftinije, nije mereno |
 | Veo 3.1 – Quality | znatno skuplje, ne koristiti za ovo |
 
-**Znači: 2 klipa dnevno na Fast.**
+**Znači: 5 klipova dnevno na Lite, ili 2 na Fast.** Lite je u praksi (test
+2026-08-09, kadrovi 2–4) sasvim dovoljan za spore pokrete kamere nad statičnim
+terenom — razlika prema Fast-u se ne vidi na ovakvom materijalu. **Podrazumevano
+koristiti Lite**, Fast čuvati za hero kadar stranice.
+
+### Druga besplatna kvota — Gemini
+
+Gemini (gemini.google.com, kroz Chrome) takođe generiše video preko Veo-a, i to
+je **odvojena besplatna kvota od Flow-ovih 50 kredita**. Praktično: dnevni
+kapacitet je zbir to dvoje, ne 50.
+
+⚠️ Ali za spajanje klipova Gemini **nije** rešenje — on generiše, ne montira.
+Za sklapanje 3–5 klipova u jedan video postoje dva puta:
+- **Flow-ov sopstveni timeline** (u editoru klipa, `+` pored trake) — besplatno,
+  bez instalacije, ali grubo.
+- **ffmpeg lokalno** — precizno, skriptabilno, radi i tekst preko i fade
+  prelaze. **Nije instaliran** (provereno 2026-08-09) — treba `winget install
+  ffmpeg` pre prve montaže.
 
 Iz toga slede dve realne opcije:
 
