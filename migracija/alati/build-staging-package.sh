@@ -54,6 +54,17 @@ CODE_TAR="antasline-wp-code-${DATE_TAG}.tar.gz"
 # (add-blocks-*.php, fix-*.php, import-*.php, restore-and-fix.php, "kopija"
 # fajlovi itd. — ostaci lokalnog rada, nemaju posla na serveru, bezbednosni
 # rizik ako ostanu javno dostupni).
+#
+# 🔴 W3 3.10 (2026-08-10) — dva exclude pravila dodata posle stvarnih nalaza:
+#  1. `mu-plugins/al-local-mail-log.php` — lokalni mail logger PRESREĆE sve
+#     mejlove. Otišao je na staging u V3 paketu 2026-08-07 i forme tamo nisu
+#     stvarno slale ništa. Ostaje na lokalu (tamo je i dalje potreban), samo
+#     više ne može da uđe u paket.
+#  2. `*.bak-*` / `*.orig` / `*.old` / `*~` — izmereno 2026-08-10: 27 takvih
+#     fajlova u `wp-content`, a Apache ih servira kao ČIST TEKST
+#     (`functions.php.bak-…` → HTTP 200, 53KB PHP izvornog koda). Nema
+#     kredencijala u njima, ali otkrivaju logiku court-builder tokena,
+#     honeypota i rate-limita. Nemaju šta da traže na produkciji.
 ROOT_WHITELIST=(index.php wp-activate.php wp-blog-header.php wp-comments-post.php
   wp-cron.php wp-links-opml.php wp-load.php wp-login.php wp-mail.php
   wp-settings.php wp-signup.php wp-trackback.php xmlrpc.php
@@ -67,6 +78,12 @@ tar -czf "$CODE_TAR" \
   --exclude='wp-content/uploads' \
   --exclude='wp-content/cache' \
   --exclude='wp-content/mail-log.txt' \
+  --exclude='wp-content/mu-plugins/al-local-mail-log.php' \
+  --exclude='*.bak' \
+  --exclude='*.bak-*' \
+  --exclude='*.orig' \
+  --exclude='*.old' \
+  --exclude='*~' \
   --exclude='al-harness.html' \
   --exclude='.git' \
   --exclude='.claude' \

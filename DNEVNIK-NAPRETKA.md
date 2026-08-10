@@ -1,3 +1,31 @@
+## 2026-08-10 [claude-code] [W3 3.10] Full regression — 195 stranica, 4 bag-a nađena i popravljena, build čist ✅
+
+**Zadatak (M):** „w3 3.10" — treća stavka istog dana.
+
+Napisan `migracija/alati/regression-sweep.php` (read-only): sitemap → svaka stranica (status, H1, JSON-LD, title/meta) → HEAD nad svakom slikom i internim linkom. Baseline snimljen u `analiza/2026-08-10-regression-baseline-pages.csv`; **namerno je napravljen da se isti sweep pusti protiv produkcije posle migracije** i uporedi (stavka B6 checkliste).
+
+🔴 **Nalaz 1 — `/spoljne-podne-obloge/` (bez j) 404 na SVIH 195 stranica.** Isti tip bug-a koji je 07.08 nađen na staging-u. **Dva** widget-a su nosila stari slug, ne jedan: `widget_text` („Navigacija") i `widget_custom_html` („Podovi" → „Terase i dom"). Prva popravka je gledala samo prvi i provera je i dalje javljala 404 — otud drugi krug. Pouka: kod footer linkova proći kroz SVE `widget_*` opcije.
+
+🟢 **Nalaz 2 — 5 slika 404, rešeno bez izmene sadržaja.** Sve postoje na live-u → originali povučeni na tačne putanje u `uploads`. Alternativa (prepis `<img src>` na `-1` varijante koje postoje lokalno, artefakt F3 reimporta) odbačena — razišla bi lokalni sadržaj od live-a bez potrebe.
+
+**Nalaz 3:** 3 interna linka išla kroz 301 na stari slug (2699, 5438, 17026) → prevezana na finalni cilj, svi provereni 200 pre izmene.
+
+🔴 **Nalaz 4 — 27 `*.bak-*` fajlova u `wp-content` se serviraju kao IZVORNI KOD.** Izmereno, ne pretpostavka: `functions.php.bak-…` → HTTP 200, 53 KB PHP izvora (Apache ne izvršava `.bak-*`). Kredencijala nema (proverio), ali otkriva logiku court-builder tokena, honeypota, rate-limita. **Paket-skripta ih je do danas sve pakovala.**
+
+**`build-staging-package.sh` — dva exclude pravila dodata:** `mu-plugins/al-local-mail-log.php` (🔴 već jednom udarilo — otišao na staging 07.08 i forme tamo nisu stvarno slale mejlove; komentar u fajlu tvrdi „mu-plugins se ne prenose", što je netačno i bio je uzrok) i `*.bak-*`/`*.orig`/`*.old`/`*~`. Oba ostaju na lokalu gde su potrebni.
+
+**Napravljena [[migracija/2026-08-10-pre-migration-checklist]]** — A: do 21.08 · B: dan migracije po redosledu. Uključuje neprovereno mesto: **court builder mejl klijentu nikad nije poslat pravim SMTP-om** (lokalno uvek kroz mail-log presretač).
+
+**Verifikacija (pun ponovni prolaz):** 195 stranica — 0 non-200 · 0 bez H1 · 0 sa 2×H1 · 0 nevalidan JSON-LD · **0/1.182 slomljenih slika** · **0/1.145 internih 404** · 6 bez meta opisa. Van sweep-a: GTM+consent na 5 tipova stranice, CF7 forme rade, EC kod sitewide.
+
+⚠️ **Dva bug-a u prvoj verziji sweep alata** (popravljena, upisana u lekcije): `strip_tags()` ZADRŽAVA sadržaj `<script>` → provera „sirov JSON-LD u vidljivom tekstu" davala lažni pozitiv na svih 195 stranica; regex delimiter `#` uz `#` u klasi → „Unknown modifier". Oba su bila u mom alatu, ne u sajtu.
+
+🟡 **#ceka-miroslav: 6 stranica bez meta opisa, uključujući POČETNU (16550)** — `rank_math_description` prazan, nema ni fallback. Copywriting, ne mehanička izmena → nije rađeno bez odluke. Rok: content freeze 16.08.
+
+Backup: `antasline-backups/antasline_local_2026-08-10_pre-w3-310-regression-fix.sql`. Skripte: `job-w3-310-regression-fix.php` (idempotentna, `--dry-run`), `regression-sweep.php`. Detalji: [[dnevnik/2026-08-10-w3-310-full-regression]].
+
+---
+
 ## 2026-08-10 [claude-code] [PLAN] GO-LIVE POMEREN NEDELJU RANIJE: 31.08 → PON 24.08 🔴
 
 **Odluka (M), na otvaranju sesije:** „Pomeramo launch za sedmicu ranije. Prilagodi plan." Nijedan izvršni zadatak nije rađen — samo prepravka planskih dokumenata.

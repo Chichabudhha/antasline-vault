@@ -1,0 +1,20 @@
+{
+    "bad_images": [],
+    "bad_links": [
+        {
+            "url": "http://localhost/antasline",
+            "code": 301,
+            "redir": "http://localhost/antasline/",
+            "na": [
+                "http://localhost/antasline/katalog/",
+                "http://localhost/antasline/proizvod/zglobni-obruc-za-kos/",
+                "http://localhost/antasline/proizvod/bergo-xl-ploca/",
+                "http://localhost/antasline/proizvod/bergo-elite-ploca/",
+                "http://localhost/antasline/proizvod/ecotile-e500-t-joint-rampa/"
+            ],
+            "broj": 95
+        }
+    ],
+    "total_images": 1182,
+    "total_links": 1145
+}

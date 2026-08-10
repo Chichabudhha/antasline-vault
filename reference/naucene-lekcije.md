@@ -5,6 +5,29 @@ azurirano: 2026-08-10
 
 # Naučene lekcije (tehnički gotchas)
 
+## mu-plugins SE prenose sa `wp-content` — komentar u fajlu koji tvrdi suprotno je bio uzrok pravog kvara (W3 3.10, 2026-08-10)
+- `al-local-mail-log.php` presreće **svaki** `wp_mail` poziv i vraća „uspeh" (XAMPP nema SMTP). U svojoj glavi nosi komentar: *„OBRISATI PRE MIGRACIJE — mu-plugins se ne prenose, ali za svaki slučaj…"*.
+- Ta tvrdnja je netačna: `mu-plugins` je pod-folder `wp-content`, i putuje sa svakim `wp-content` paketom. Tako je 2026-08-07 otišao na staging V3, gde su forme prikazivale uspeh a **nijedan mejl nije stvarno poslat** — otkriveno tek ručnim testom.
+- **Pravilo:** ne oslanjati se na komentar u fajlu ni na „obrisaću pre migracije" (na dan migracije se ne pamti). Zaštita mora biti u alatu: `build-staging-package.sh` od 10.08 ima exclude za ovaj mu-plugin i za `mail-log.txt`.
+- Šire: **lokalni presretači koji lažu o uspehu su najopasnija klasa** — ne ruše ništa vidljivo, samo tiho gutaju. Posle svake migracije forma se mora testirati pravim submit-om i proverom inbox-a, ne gledanjem „hvala" stranice.
+
+## `*.bak-*` fajlovi u `wp-content` se serviraju kao ČIST IZVORNI KOD (W3 3.10, 2026-08-10)
+- Izmereno, ne pretpostavka: `GET /wp-content/themes/woodmart-child/functions.php.bak-2026-08-10-…` → **HTTP 200, 53 KB PHP izvora**. Apache izvršava samo `.php`; `.bak-…` završetak znači „nepoznat tip" → servira se kao tekst.
+- Naša konvencija „backup pre svake izmene" je do 10.08 proizvela **27 takvih fajlova** u `wp-content` (child tema, mu-plugins, CSS). Paket-skripta ih je sve pakovala za produkciju.
+- U ovom slučaju nije bilo kredencijala unutra (provereno), ali sadržaj otkriva logiku court-builder tokena, honeypota i rate-limita.
+- **Pravilo:** `.bak` kopije su alat za lokalni rad i ne smeju u paket. `build-staging-package.sh` od 10.08 ima exclude za `*.bak-*`/`*.orig`/`*.old`/`*~`. Ako se ikad pakuje ručno — proveriti `find wp-content -name "*.bak*"` pre slanja.
+
+## Isti pokvaren link ume da živi u VIŠE `widget_*` opcija — popraviti jednu nije dovoljno (W3 3.10, 2026-08-10)
+- `/spoljne-podne-obloge/` (bez j) → 404 na **svih 195 stranica**. Prva popravka je gledala `widget_text` („Navigacija"), upisala 1 zamenu — i provera je i dalje javljala 404, jer je drugi pogodak bio u `widget_custom_html` (kolona „Podovi", tekst linka „Terase i dom").
+- Isti tip bug-a je 2026-08-07 nađen na staging-u i tada je popravljen samo taj jedan pogodak.
+- **Pravilo:** za footer/sidebar linkove proći kroz sve `widget_*` opcije (`widget_text`, `widget_custom_html`, `widget_block`, `widget_nav_menu`), pa TEK ONDA verifikovati HTTP-om. I obavezno verifikovati posle popravke — brojač zamena „1" ne znači da je link nestao sa stranice.
+
+## `strip_tags()` ZADRŽAVA sadržaj `<script>` — provera „sirov JSON-LD u tekstu" daje lažni pozitiv (W3 3.10, 2026-08-10)
+- Provera za F7.15 obrazac (kses pojeo `<script>` omotač pa se JSON vidi kao tekst) pisana je kao `preg_match('#"@context"…#', strip_tags($html))` → prijavila je problem na **svih 195 stranica**, tj. na svakoj koja uopšte ima schema-u.
+- `strip_tags()` uklanja tagove ali ostavlja njihov tekstualni sadržaj, uključujući telo `<script>`.
+- **Pravilo:** prvo `preg_replace('#<(script|style)\b[^>]*>.*?</\1>#is', '', $html)`, pa onda `strip_tags()`.
+- Uz to, u istom alatu: regex delimiter `#` sa znakom `#` unutar klase (`'#^(mailto:|tel:|#)#i'`) → „Unknown modifier ')'", filter tiho pada. Koristiti `~` kao delimiter.
+
 ## Pre nego što nešto upišeš u plan kao blokator — pretraži `woodmart-sabloni` (2026-08-10)
 - Plan od 09.08 je vodio „lazy facade embed" kao 🔴 tehnički blokator za kačenje videa. Rešenje je stajalo u [[migracija/woodmart-sabloni]] pod **F7.3 od 2026-07-07** — CSS + globalni JS, radi na 9 stranica. Izgubljen ceo jedan zapis u planu i deo sesije na proveru nečega što je odavno gotovo.
 - **Pravilo:** F-numerisane stavke u `woodmart-sabloni` pokrivaju više nego što se pamti (F7.1–F7.21+). Pre upisa „treba napraviti X" u bilo koji plan: `grep -i X migracija/woodmart-sabloni.md`.
