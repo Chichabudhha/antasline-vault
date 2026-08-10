@@ -1,6 +1,6 @@
 ---
 name: antasline-sesija
-description: Master radni tok za AntasLine projekat (redizajn + SEO + Ads do live-a 2026-08-31). Koristi na početku svake radne sesije, kad Miroslav kaže "nastavljamo", "gde smo stali", "sledeći zadatak", "nastavi W1/W2/W3/W4/W5", ili imenuje bilo koji zadatak iz Master plana V2.
+description: Master radni tok za AntasLine projekat (redizajn + SEO + Ads do live-a 2026-08-24). Koristi na početku svake radne sesije, kad Miroslav kaže "nastavljamo", "gde smo stali", "sledeći zadatak", "nastavi W1/W2/W3/W4/W5", ili imenuje bilo koji zadatak iz Master plana V2.
 ---
 
 # AntasLine — protokol radne sesije
@@ -13,14 +13,16 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
 
 1. Pročitaj `[[PROGRESS]]` — poslednje urađeno + "Sledeće" + blokeri
 2. Pročitaj `[[2026-07-06-MASTER-PLAN-V2]]` sekciju 2 (N-raspored) — uporedi
-   današnji datum sa nedeljom (N1=07–13.07 … N8=25–30.08) i vidi šta je
-   planirano za tekuću nedelju
+   današnji datum sa nedeljom (N1=07–13.07 … N5=04–10.08, pa **prepravljeno
+   2026-08-10**: N6'=11–16.08, freeze od 16.08, N7'=17–21.08, gate PET 21.08,
+   **migracija PON 24.08**) i vidi šta je planirano za tekuću nedelju
 3. Proveri zavisnosti (sekcija 4 plana): zadatak blokiran na #ceka-miroslav
    se ne bira; ako rok zavisnosti prolazi — podseti Miroslava i ponudi fallback
 3b. **Ako je danas ponedeljak:** pre izbora zadatka, brzi pregled cele
    sekcije 4 (zavisnosti) naglas — rok/status/fallback po stavci, ne samo
    ono što direktno blokira ovu sesiju. Cilj: da kašnjenje isplivava odmah,
-   ne u N8 gužvi.
+   ne u gužvi pred gate (21.08). Rokovi su od 2026-08-10 nedelju kraći —
+   videti tabelu M odluka u [[2026-07-06-MASTER-PLAN-V2]] §4.
 4. Predloži 1 glavni zadatak (+ eventualno 1 quick-win ≤15 min) i sačekaj
    potvrdu ako izbor nije očigledan iz Miroslavljeve poruke
 

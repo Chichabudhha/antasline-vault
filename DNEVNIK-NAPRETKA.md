@@ -1,3 +1,30 @@
+## 2026-08-10 [claude-code] [PLAN] GO-LIVE POMEREN NEDELJU RANIJE: 31.08 → PON 24.08 🔴
+
+**Odluka (M), na otvaranju sesije:** „Pomeramo launch za sedmicu ranije. Prilagodi plan." Nijedan izvršni zadatak nije rađen — samo prepravka planskih dokumenata.
+
+**Nov raspored (zamenjuje N6/N7/N8):**
+
+```
+N6' 11–16.08  poslednji sadržajni prozor — glavno: W3 3.10 full regression
+    NED 16.08 ⛔ CONTENT FREEZE (bilo 18.08)
+N7' 17–21.08  freeze · .htaccess/301 finalna provera · svež live backup (cPanel) · GSC priprema
+    PET 21.08 🚦 GATE PREGLED → GO/NO-GO. Rok za SVE M odluke.
+    22–23.08  vikend = jedina rezerva
+→   PON 24.08 MIGRACIJA → post-live 25.08+
+```
+
+🔴 **Cena pomeranja:** seče se cela N8 buffer nedelja — rezerva pada sa 5 radnih dana na 2 dana vikenda. Ako gate 21.08 padne na nečemu što se ne popravi za vikend, migracija se vraća na 31.08; pravilo „bilo koji gate crven → pomera se, ne gura na silu" ostaje netaknuto. Tri gate stavke su i dalje otvorene (LCP — spoljno hosting ograničenje, verovatno ide kao svestan rizik · svež live backup na 2 lokacije · rollback plan, 3 pitanja od 27.07).
+
+⚠️ **Nalaz koji je pomeranje samo stvorilo — zadatak 4.8:** prag za Maximize Conversions je dostignut 06.08 (24 plaćene konverzije), ali Smart Bidding uči ~14 dana. Uključeno danas → period učenja se završava **tačno na dan migracije**, kad se menjaju URL-ovi oglasa: dva izvora šuma se preklapaju i ni jedan efekat se ne može pripisati uzroku. **Preporuka upisana u plan: odložiti 4.8 na ~01.09**, ne uključivati sada. To je promena preporuke u odnosu na 06.08, kad je datum live-a bio 5 dana kasnije.
+
+**Šta se seče prvo ako tempo padne:** Tier4 i preostali nice-to-have content · video objava (ionako blokirana na YouTube handle) · W4 4.11/4.12 Meta/LinkedIn (blokirani na M13/M14) — sve posle live-a. **Ne seče se:** full regression, .htaccess/301, live backup, gate pregled, parity.
+
+**Rokovi M odluka posle pomeranja** (tabela u [[2026-07-06-MASTER-PLAN-V2]] §4): 15.08 rollback plan · 16.08 sve što menja sadržaj (trava-u-boji, F2.8, 14 fotki, meni 67, P3 metadesc, Gemini žig, YouTube handle) · 21.08 Enhanced Conversions toggle, ECOTILE budžet, odobrenje za live kontakt-forma fix.
+
+**Izmenjeni fajlovi:** [[2026-07-06-MASTER-PLAN-V2]] (frontmatter, §2 raspored, §3 gate, §4 tabela rokova, §7 ritam, §8) · [[CLAUDE]] §8/§12/§15 · [[PROGRESS]] (zaglavlje + nov bloker na vrhu + red u Urađeno) · [[migracija/rollback-plan]] · [[migracija/2026-08-09-enhanced-conversions-4.7]] · skill `/antasline-sesija` (N-raspored koji se čita na svakom otvaranju) · skill `/w6-social`. Istorijski dnevnički/prompt fajlovi sa datumom 31.08 namerno nisu dirani — oni beleže šta se znalo tog dana.
+
+---
+
 ## 2026-08-10 [claude-code] [W2/W6 video] Video embed preduslovi ZATVORENI — lazy facade je već postojao, `VideoObject` napisan i pušten na 9 stranica ✅
 
 **Zadatak (M):** „lazy facade" — druga stavka istog dana, oba preduslova iz [[seo/2026-08-09-video-obogacivanje-plan]] §4 za kačenje videa na stranicu.

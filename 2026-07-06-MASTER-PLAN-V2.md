@@ -1,19 +1,25 @@
 ---
 tip: plan
 naziv: MASTER PLAN V2 — redizajn + SEO + Ads + tracking do live-a
-datum-plan: 2026-07-06 do 2026-09-02
+datum-plan: 2026-07-06 do 2026-08-26
 prioritet: Tehnička → SEO → Ads
-go-live: 2026-08-31
+go-live: 2026-08-24
+go-live-raniji: 2026-08-31 (pomereno nedelju ranije, M odluka 2026-08-10)
 status: aktivan
 zamenjuje: "[[2026-07-02-MASTER-PLAN-DO-LIVE]]"
-azurirano: 2026-07-06
+azurirano: 2026-08-10
 ---
 
-# 🚀 MASTER PLAN V2 — do live-a 2026-08-31
+# 🚀 MASTER PLAN V2 — do live-a 2026-08-24
+
+> 🔴 **2026-08-10 — GO-LIVE POMEREN NEDELJU RANIJE: 31.08 → PON 24.08** (M odluka).
+> Seče se **N8 buffer nedelja** (25–30.08) — jedina rezerva u planu. Nova rezerva je
+> samo vikend **22–23.08**. Posledice u §2 (novi raspored), §3 (gate rokovi) i §4
+> (svi „pre 31.08" rokovi → **pre 21.08**).
 
 **Jedini izvor istine za plan projekta.** Zamenjuje [[2026-07-02-MASTER-PLAN-DO-LIVE]] (pisan pre Porto→WoodMart prelaska). Dnevno stanje: [[PROGRESS]] · istorija: [[DNEVNIK-NAPRETKA]].
 
-**Cilj:** redizajnirani sajt live 2026-08-31, bez gubitka organskog saobraćaja, sa Ads nalogom spremnim za Smart Bidding i čistim merenjem (GA4/GSC/Ads). Budžet Ads: 40k RSD/mes (ne diže se dok se ne optimizuje).
+**Cilj:** redizajnirani sajt live 2026-08-24, bez gubitka organskog saobraćaja, sa Ads nalogom spremnim za Smart Bidding i čistim merenjem (GA4/GSC/Ads). Budžet Ads: 40k RSD/mes (ne diže se dok se ne optimizuje).
 
 **Pravila koja važe kroz ceo plan** ([[CLAUDE]]): lokalni build = staging, live se ne dira (osim eksplicitnih `[cpanel-live]` zadataka) · Yoast ostaje (ne RankMath) · epoksid samo conquest · Maximize Clicks do praga 20–30 plaćenih konverzija · jun 2026 = mesec-nula za sve serije konverzija.
 
@@ -97,8 +103,8 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 | 3.8 | ✅ ZATVORENO 2026-07-21 — N/A u izvornom obliku: catalog_mode (M9) je uklonio cart/checkout/my-account stranice u potpunosti (ID-evi u opcijama ne postoje u bazi) — pravi tok je "Zatražite ponudu"→`/kontakt/?form-naslov=`→submit→`/hvala-za-poruku/`, testiran end-to-end (prefill potvrđen). F2 permalink regresija: 6 nasumičnih proizvoda + 4 kategorije pod `/proizvod/`/`/kategorija-proizvoda/` sve 200, Product schema 1× bez dupliranja | CC | — |
 | 3.9 | ✅ POTVRĐENO 2026-07-21 — `htaccess-301-DRAFT.txt` je već postojao (generisan 2026-07-07/09), reverifikovano 2026-07-21: svih 7 ciljnih URL-ova vraća 200 na lokalu, i dalje se poklapa sa redirect-mapa-FINAL.csv 1:1 | CC | aktivira se TEK na dan migracije |
 | 3.10 | Pre-migration checklist + full regression (forme, GTM, linkovi, slike) + 🔴 obrisati `al-harness.html` iz docroot-a (alat za vizuelnu proveru na 1500/390px, W7 F3 2026-07-29 — koristan lokalno, ne sme na produkciju) + 🔴 obrisati `mu-plugins/al-local-mail-log.php` i `wp-content/mail-log.txt` (lokalni mail logger presreće SVE mejlove — na produkciji forme ne bi slale ništa) + verifikovati stvarno slanje mejla na produkciji + 🆕 **GTM paket za dan migracije** (Enhanced Conversions promenljive/tag + brisanje mrtvih Meta Zion objekata) po [[migracija/2026-08-09-enhanced-conversions-4.7]] | CC | N7 — 🔄 **rani start 2026-07-22**: GTM/Consent kritičan nalaz+fix, forma end-to-end (kontakt→hvala-za-poruku→generate_lead potvrđen preko network requesta), sitewide 214-URL sweep (0 pokvarenih, 7×2H1 fix, 13×putanja fix) — sve gotovo osim: WooCommerce checkout (N/A, catalog_mode uklonio), mail-log.php brisanje (namerno čeka do dana migracije, lokalno testiranje ga i dalje treba), finalni URL audit oglasa (čeka aktivne kampanje) |
-| 3.11 | **MIGRACIJA 2026-08-31** (1 dan): backup live → db+wp-content prebacivanje → URL zamena → 301 aktivacija → verifikacija | CC+M | SSH/hosting info #ceka-miroslav |
-| 3.12 | Post-live (do 2026-09-02+): GSC sitemap resubmit, crawl errors, GA4/GTM verify, CWV field data + UptimeRobot (besplatan) + dnevni 404 log pregled prvih 14 dana (umesto ad-hoc) | CC+CP | — |
+| 3.11 | **MIGRACIJA 2026-08-24** (1 dan, pomereno sa 31.08): backup live → db+wp-content prebacivanje → URL zamena → 301 aktivacija → verifikacija | CC+M | SSH/hosting info #ceka-miroslav |
+| 3.12 | Post-live (od 2026-08-25): GSC sitemap resubmit, crawl errors, GA4/GTM verify, CWV field data + UptimeRobot (besplatan) + dnevni 404 log pregled prvih 14 dana (umesto ad-hoc) | CC+CP | — |
 | 3.13 | ✅ ZATVORENO — ⚠️ reotvoreno i ponovo zatvoreno 2026-07-09: scheduled task NIKAD nije stvarno radio (odbijan — baterija uslov + bez catch-up-a; popravljeno `Set-ScheduledTask`). Nova politika (M): destinacija **eksterni HDD G: "Maxtor" kad je prikačen** → OneDrive → lokalno; propušteni backup izvršen na G: 2026-07-09. Proveriti `LastTaskResult=0` posle sledeće noći | CC | OneDrive više nije blokator (G: je druga lokacija) |
 | 3.14 | ✅ ZATVORENO 2026-07-21 — proba migracije na `staging.antasline.com` kompletirana: wp-config kreiran (DB lozinka dobijena od M), 118-tabelni import, URL rewrite 11.451 zamena, rewrite flush, Basic Auth aktivan (`stagingtest`, kredencijali u `~/staging-htaccess-creds.txt` na serveru, van vault-a), arhiva/sql sklonjeni iz docroot-a. Verifikovano: 401 bez auth / 200 sa auth na homepage i `/industrijski-podovi/`, ispravan naslov "Početna \| Antas Line". 🟡 Nusnalaz: import je stvorio 9 "duh" tabela sa starim `wp_` prefiksom (mnogo manje redova od pravih `wpgs_` tabela — npr. 1964 vs 7992 posts) — verovatno artefakt generisanja dump-a na lokalu, ne brisano (nije korišćeno od WP-a, niska prioritetna čistka za kasnije) | CC+M | — |
 | 3.15 | ✅ ZATVORENO 2026-07-21 — top 20 GSC upita (klikovi, 28d) + rizik-grupa 6 upita (visoke impresije/slaba pozicija) snimljeni kao baseline; live SERP spot-check za kontekst konkurenata (napomena: browser nije RS-geolociran, GSC pozicija merodavna) → [[analiza/2026-07-21-serp-snapshot-pre-migracija]] | CC | bez ovoga ne znamo da li post-migracija pad je naš (301) ili konkurent skočio |
@@ -121,7 +127,7 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 | 4.11 | 🆕 2026-08-04 — **Meta (FB) Pixel** preko GTM-a (isti kontejner, isti Consent Mode gate): `PageView` svuda + `Lead` na `/hvala-za-poruku/` (isti trigger kao `generate_lead`) + `Contact` na tel/mailto — ista taksonomija kao GA4, gradi audience/Lookalike podatke i pre nego što krenu pravi Meta Ads budžeti. Pokriva i Instagram (isti Meta Business Manager/Pixel, nema poseban rad). Faza B (Conversions API, server-side) odložena do stvarnog Meta Ads budžeta — traži Business Manager + verifikovan domen + bezbedno čuvan access token | M+CC | zaobilazi iOS/ad-blocker gubitak (Faza B), gradi retargeting bazu ranije (Faza A) |
 | 4.12 | 🆕 2026-08-04 — **LinkedIn Insight Tag** preko GTM-a (isti kontejner, isti Consent Mode gate) — gradi matched audience/retargeting bazu za B2B segment (ESD/industrijski podovi, poslovni prostori), gde LinkedIn targeting (industrija/veličina firme/pozicija) bolje pogađa nego Meta/Google demografija. Sadi se sad, koristi se kad krene pravi LinkedIn Ads budžet — CPC znatno skuplji od Google/Meta, pa plaćene kampanje čekaju posebnu M odluku | M+CC | retargeting baza spremna unapred za B2B; ne pokreće trošak sam po sebi |
 | 4.13 | 🆕 2026-08-04 — **Display remarketing (Google Ads)**, NE cold-prospecting. Uslov za start: (a) 4.8 zatvoreno (Maximize Conversions dostignuto) I (b) bar jedna GA4 publika pređe prag serviranja (100 za Display/YouTube — trenutno sve 4 ispod praga). Cilja postojeće publike (Form Abandoners, High-Intent B2B Bidders) — CPM, ne konkuriše Search budžetu | M+CC | jeftin, visoko-kvalifikovan dodatni kanal, tek posle preduslova |
-| 4.14 | 🆕 2026-08-04 — **Video/YouTube oglasi** — čeka i budžet i pravi video materijal (court builder demo, montaža terena, pre/posle transformacija poda); generički/stock video za nišni B2B proizvod (ESD/industrijski podovi) obično ne opravdava CPM. Ne pokretati bez konkretne kreative | M+CC | potencijalno jak kanal za demo-proizvod, ali samo uz pravu produkciju |<br>🟢 **2026-08-09 — polovina blokade skinuta: kreativa se sada pravi.** Google Flow (Veo 3.1) daje 8s klipove iz naših pravih fotografija terena, besplatno (50 kredita/dan, Lite 10 / Fast 20). Prvi materijal postoji: 4 klipa + izmontiran video 30,5s za basket. **I dalje NE pokretati** — (a) budžet nije odobren, (b) Ads ostaje na Maximize Clicks dok 4.8 ne prođe, (c) GA4 publike su ispod praga serviranja 100 za YouTube. Vertikalni 9:16 rez je poseban render, ne besplatan krop. v. [[seo/2026-08-09-video-obogacivanje-plan]] §5 |
+| 4.14 | 🆕 2026-08-04 — **Video/YouTube oglasi** — čeka i budžet i pravi video materijal (court builder demo, montaža terena, pre/posle transformacija poda); generički/stock video za nišni B2B proizvod (ESD/industrijski podovi) obično ne opravdava CPM. Ne pokretati bez konkretne kreative | M+CC | potencijalno jak kanal za demo-proizvod, ali samo uz pravu produkciju |<br>🟢 **2026-08-09 — polovina blokade skinuta: kreativa se sada pravi.** Google Flow (Veo 3.1) daje 8s klipove iz naših pravih fotografija terena, besplatno (50 kredita/dan, Lite 10 / Fast 20). Prvi materijal postoji: 4 klipa + izmontiran video 30,5s za basket. **I dalje NE pokretati** — (a) budžet nije odobren, (b) Ads ostaje na Maximize Clicks dok 4.8 ne prođe, (c) GA4 publike su ispod praga serviranja 100 za YouTube. Vertikalni 9:16 rez je poseban render, ne besplatan krop. v. [[seo/2026-08-09-video-obogacivanje-plan]] §5<br>🟢 **2026-08-10 — prvi video KOMPLETAN** (5 kadrova, 40s, sa tekstom i CTA `069 234 00 72`), a **sajt je tehnički spreman da ga primi**: lazy facade (F7.3) + `VideoObject` schema (F7.3a) verifikovani na 9 stranica. Objava i dalje čeka YouTube handle i odluku o Gemini vodenom žigu na kadru 5 (v. [[PROGRESS]] Blokeri). Ads pokretanje **i dalje ne** — uslovi (a) budžet, (b) 4.8 Maximize Conversions, (c) publike ispod praga 100 — nepromenjeni. |
 
 ### W5 — TRACKING / MERENJE (GA4 + GSC + GMB)
 | # | Zadatak | Vlasnik | Napomena |
@@ -138,25 +144,48 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 
 ---
 
-## 2. VREMENSKI PLAN — 8 nedelja unazad od 2026-08-31
+## 2. VREMENSKI PLAN — 7 nedelja unazad od 2026-08-24
+
+> 🔄 **Prepravljeno 2026-08-10** (go-live 31.08 → 24.08). N1–N5 su istorija i ostaju
+> kako su odrađene. Menjaju se **samo poslednje dve nedelje**: stari N6/N7/N8 se
+> sabijaju u **N6' i N7'**, buffer nedelja nestaje.
 
 ```
 N1  07–13.07  W2: Tier1 (čim stignu cene) + 2.3 title/meta ×4 · W1: silo rebuild + 1.9 tel audit · W4: 4.1 negativne ✅ + 4.3 RSA · W3: 3.5 Lighthouse baseline + 🔴3.13 backup automation + 🔴3.14 SSH test
 N2  14–20.07  W2: Tier2 (odbojka/tenis/šljaka/padel) · W4: 4.4 ad grupe · W1: blog import · W3: 3.4 Woo slugovi
 N3  21–27.07  W1: preostale pages (top GSC prioritet) · W2: 2.7 Product schema + 2.8 GEO paket · W3: 3.3 blog slug
 N4  28.07–03.08  W2: Tier3 vertikali · W3: 3.1–3.2 C1 finalna verifikacija + konstrukcije odluka · W5: 5.2–5.3 GMB paket
-N5  04–10.08  W3: 3.6 CWV optimizacija · W1: footer/meni/mobile QA ✅ rani start 2026-07-29 (0 bugova, v. DNEVNIK) · W3: 3.8 checkout test
-N6  11–17.08  W2: Tier4 · W4: 4.7 Enhanced Conversions priprema · W3: full regression start + 3.14 proba migracije na subdomen + 3.15 SERP snapshot
-N7  18–24.08  CONTENT FREEZE · W3: 3.9 .htaccess + 3.10 checklist + backupi · GSC priprema
-N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
-→   PON 31.08  MIGRACIJA (1 dan) → post-live monitoring 01–02.09+ (3.12, 5.7, 4.10)
+N5  04–10.08  W3: 3.6 CWV optimizacija · W1: footer/meni/mobile QA ✅ rani start 2026-07-29 · W3: 3.8 checkout test ✅
+─────────── ↓ ODAVDE PREPRAVLJENO (2026-08-10) ↓ ───────────
+N6' 11–16.08  POSLEDNJI SADRŽAJNI PROZOR. W3: **3.10 full regression** (glavno) · W4: 4.7 EC Ads UI toggle (M) · W5: nedeljni izveštaj + jul snapshot (kasne) · 🔴 gate: rollback plan zatvoriti do **15.08** (bilo „pre N7") · Tier4/nice-to-have samo ako regression prođe čisto
+    NED 16.08  ⛔ CONTENT FREEZE počinje (bilo 18.08)
+N7' 17–21.08  FREEZE. W3: 3.9 .htaccess finalna provera + 3.10 checklist do kraja + 🔴 svež live backup (cPanel) · GSC priprema · W4: 4.10 priprema URL audita
+    PET 21.08  🚦 GATE PREGLED (sekcija 3) → GO/NO-GO. Rok za SVE M odluke.
+    22–23.08   Vikend = jedina rezerva (bila cela N8 nedelja). Ništa se ne planira ovde — samo prelivanje ako gate padne.
+→   PON 24.08  MIGRACIJA (1 dan) → post-live monitoring 25.08+ (3.12, 5.7, 4.10)
 ```
 
-**Kapacitet-realnost:** ~40 min–1h po C3 stranici, 30–90 min po rebuild stranici. Ako N-tempo padne, seče se: Tier4 → posle live-a, Tier3 delimično → posle live-a. **Ne seče se:** C1 verifikacija, CWV, Tier1, parity, regression.
+**Šta je izgubljeno pomeranjem:** cela N8 buffer nedelja (5 radnih dana). To je bila
+rezerva za „gate padne u petak, popravljamo ponedeljak–sreda, migriramo naredni
+ponedeljak". Sada je ta rezerva **2 dana vikenda**. Praktično: ako gate 21.08 padne
+na nečemu što nije popravivo za vikend, migracija se pomera na **PON 31.08** —
+tj. vraćamo se na originalni datum, ne guramo na silu (pravilo iz §3 ostaje).
+
+**Kapacitet-realnost:** ~40 min–1h po C3 stranici, 30–90 min po rebuild stranici.
+Sa jednom nedeljom manje, **seče se prvo:** Tier4 i svaki preostali nice-to-have
+content → posle live-a; video objava (čeka YouTube handle ionako) → posle live-a;
+W4 4.11/4.12 (Meta/LinkedIn, blokirani na M13/M14) → posle live-a.
+**Ne seče se:** full regression, .htaccess/301, live backup, gate pregled, parity.
 
 ---
 
-## 3. GATE KRITERIJUMI — go/no-go za migraciju (pregled u N8)
+## 3. GATE KRITERIJUMI — go/no-go za migraciju (pregled **PET 21.08**, bilo N8)
+
+> 🔴 **2026-08-10:** pomeranjem na 24.08 gate pregled se seli sa 25–30.08 na
+> **petak 21.08**. Tri stavke su i dalje otvorene i sada imaju **11 dana**, ne 18:
+> LCP (spoljno ograničenje — hosting, verovatno ostaje crveno i ide kao svestan
+> rizik) · svež live backup na 2 lokacije (traži `[cpanel-live]` sesiju) ·
+> rollback plan (3 pitanja čekaju M od 27.07 — **rok sada 15.08**, pre freeze-a).
 
 - [x] ✅ (2026-07-21, reosveženo posle F1 baseline-a 2026-07-07) `parity-inventar.csv` kompletan (svaki live URL ima status) + minimalna redirect mapa (F4) potvrđena + .htaccess generisan i testiran na lokalu — v. [[migracija/PARITY-PLAN]] §2.1
 - [ ] CWV lokal: 🔴 LCP <2,5s mobile (blokirano, čeka LiteSpeed na produkciji) · ✅ CLS <0,1 (2026-07-12) · ✅ INP/TBT proxy <200ms na home+kategorija (2026-07-22, proizvod stranice i dalje formalno crvene ali niska šteta — v. 3.6)
@@ -178,6 +207,27 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 ---
 
 ## 4. ZAVISNOSTI — šta čeka Miroslava (sa fallback-om)
+
+> 🔴 **2026-08-10 — SVI ROKOVI POMERENI NEDELJU RANIJE.** Svako „pre 31.08" u
+> ovom planu i u [[PROGRESS]] sada znači **pre PET 21.08** (gate pregled). Odluke
+> koje utiču na sadržaj sajta moraju stići **pre NED 16.08** (content freeze).
+>
+> **Kritičan raspored M odluka posle pomeranja:**
+>
+> | Do kada | Šta | Zašto taj rok |
+> |---|---|---|
+> | **15.08** | Rollback plan — 3 pitanja (WHM auto-backup, CDN/edge keš, ko izvršava ako M nije dostupan) | gate stavka, mora pre freeze-a |
+> | **16.08** | Sve što menja sadržaj: trava-u-boji poreklo, F2.8 mapiranje trave, 14 fotki proizvoda, meni 67 brisanje, P3 metadesc | posle ovog datuma build je zamrznut |
+> | **16.08** | Gemini žig kadar 5 + tablica kombija · YouTube handle | ako ne stigne → video objava ide **posle** live-a (nije blokator migracije) |
+> | **21.08** | Enhanced Conversions Ads UI toggle · ECOTILE budžet · live kontakt-forma fix odobrenje | poslednji dan pre migracije |
+> | **odmah ili nikad** | 4.8 Maximize Conversions — v. napomena ispod | Smart Bidding uči ~14 dana |
+>
+> ⚠️ **4.8 je pomeranjem postao odluka sa rokom „danas".** Smart Bidding učenje traje
+> ~2 nedelje. Uključeno danas (10.08) → period učenja se završava **tačno na dan
+> migracije**, kad se menjaju URL-ovi oglasa — najgori mogući preklop. **Preporuka:
+> odložiti 4.8 na posle live-a** (npr. 01.09, kad se 301 slegnu i konverzije se
+> vrate na normalu), a ne uključivati sada. Ako se ipak uključuje sada, mora se
+> računati sa dvostrukim šumom u brojkama krajem avgusta.
 
 | # | Odluka/input | Blokira | Rok | Fallback ako kasni |
 |---|---|---|---|---|
@@ -240,11 +290,11 @@ N8  25–30.08  Buffer + zamrzavanje builda · GATE PREGLED (sekcija 3)
 - **Po sesiji:** jedan glavni zadatak iz jedne trake · backup pre destruktivnog · verifikacija (200, 1×H1, JSON-LD, linkovi) · unos u [[DNEVNIK-NAPRETKA]] + update [[PROGRESS]] + štiklirati ovde/u [[seo/plan-novih-stranica]]
 - **Nedeljno:** mini-izveštaj 7d vs 7d (format [[CLAUDE]] §10) + pregled tempa vs sekcija 2
 - **Mesečno:** puni snapshot ([[analiza/_TEMPLATE-snapshot]]) + AI test + KPI tabla update
-- **N8:** gate pregled (sekcija 3) → GO/NO-GO odluka sa Miroslavom
+- **PET 21.08:** gate pregled (sekcija 3) → GO/NO-GO odluka sa Miroslavom (bilo N8)
 
 ---
 
-## 8. W6/W7 — POSLE LIVE-A (2026-09-02+)
+## 8. W6/W7 — POSLE LIVE-A (2026-08-25+, bilo 09-02)
 
 Detaljan social/email tok: skill `/w6-social`. Ovde samo ono što se planira
 UNAPRED da se ne dočeka nespremno.

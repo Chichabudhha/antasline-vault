@@ -333,7 +333,7 @@ Detalji: `[[dnevnik/PERFORMANCE-AUDIT]]`.
 
 ## 8. 🔴 KRITIČNO — LOKALNI BUILD JE STAGING, LIVE SE NE DIRA!
 
-**PRAVILO:** Svi rad se radi na **LOKALNOM BUILD-u** (`http://localhost/antasline/`) dok se sajt potpuno ne redizajnira. **Live sajt se NE dira** dok se lokalni build ne završi (migracija 2026-08-31, vidi [[2026-07-06-MASTER-PLAN-V2]] — zamenjuje raniji datum 2026-09-02 iz superseded plana).
+**PRAVILO:** Svi rad se radi na **LOKALNOM BUILD-u** (`http://localhost/antasline/`) dok se sajt potpuno ne redizajnira. **Live sajt se NE dira** dok se lokalni build ne završi (migracija **2026-08-24**, vidi [[2026-07-06-MASTER-PLAN-V2]] — M pomerio nedelju ranije 2026-08-10; raniji datumi 2026-08-31 i 2026-09-02 su zastareli). Content freeze od **2026-08-16**, gate pregled **2026-08-21**.
 
 ```
 LOKALNI BUILD (http://localhost/antasline)
@@ -343,7 +343,7 @@ LOKALNI BUILD (http://localhost/antasline)
 
 LIVE SAJT (antasline.com)
   = PRODUCTION — ČEKANJE
-  = Tek posle 2026-08-31 migracija (1 dan!)
+  = Tek posle 2026-08-24 migracija (1 dan!)
   = NE diram bazu, fajlove, domenе, DNS, SSL
 
 VAULT (~/antasline-vault na hosting)
@@ -356,7 +356,7 @@ VAULT (~/antasline-vault na hosting)
 - ⚠️ SSH/cPanel pristup za live je potvrđen od 2026-07-21 (M6) — koristi se ISKLJUČIVO za eksplicitne `[cpanel-live]` zadatke (npr. bezbednosni incidenti, staging proba migracije), ne za redovan redizajn rad
 - ❌ Nema live promene dok nije sve gotovo, osim eksplicitnih `[cpanel-live]` zadataka
 - ❌ WooCommerce migracija je samo na lokalu (test)
-- ✅ Posle 2026-08-31: Prebacujemo SVE kao bulk operacija
+- ✅ Posle 2026-08-24: Prebacujemo SVE kao bulk operacija
 
 ---
 
@@ -558,7 +558,7 @@ sopstvenim konektorom preko `.claude/skills/antasline-konektor/`, videti
 
 Ovaj fajl nosi *pravila ponašanja i istorijski kontekst* — ne menja se često.
 Za **"gde smo stali danas"** uvek prvo pogledaj:
-1. `[[2026-07-06-MASTER-PLAN-V2]]` — master plan do live-a (5 workstream-ova, N1–N8 raspored, gate kriterijumi; go-live 2026-08-31)
+1. `[[2026-07-06-MASTER-PLAN-V2]]` — master plan do live-a (5 workstream-ova, N1–N7' raspored, gate kriterijumi; **go-live 2026-08-24**, pomereno 2026-08-10)
 2. `[[PROGRESS]]` u vault-u — snapshot trenutnog stanja
 3. `[[DNEVNIK-NAPRETKA]]` (append-only ledger, poslednji unosi)
 4. Migracija/parity: `[[migracija/PARITY-PLAN]]` + status faza F1–F7 u `[[migracija/promptovi/_README]]`
@@ -572,7 +572,7 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 - `[[00-INDEX]]` — Dashboard (Dataview tabele)
 - `[[CLAUDE]]` — Ovo (instrukcije + kontekst)
 - `[[PROGRESS]]` — Trenutno stanje
-- `[[2026-07-06-MASTER-PLAN-V2]]` — Master plan do live-a (2026-08-31) — **aktivan**
+- `[[2026-07-06-MASTER-PLAN-V2]]` — Master plan do live-a (2026-08-24) — **aktivan**
 - `[[2026-07-02-MASTER-PLAN-DO-LIVE]]` — Stari plan (⛔ superseded, istorijski snapshot)
 
 ### 📖 HRONOLOGIJA — Šta je urađeno po datumima
@@ -637,6 +637,6 @@ Kada otvorim CLAUDE.md sledeći put, znaću:
 5. ✅ **Šta je blokirano** — sve #ceka-miroslav stavke iz sekcije 4 ovog master plana (npr. Ads reaktivacija posle godišnjeg, cenovnik M10, live GEO fix preko cPanel)
 6. ✅ **Gde su fajlovi** — Sve su linked-ovane kroz wikilinks
 7. ✅ **Prioritet** — Tehnička → SEO → Ads
-8. ✅ **Timeline** — go-live **2026-08-31** (vidi [[2026-07-06-MASTER-PLAN-V2]])
+8. ✅ **Timeline** — go-live **2026-08-24** · content freeze 16.08 · gate pregled 21.08 (vidi [[2026-07-06-MASTER-PLAN-V2]] §2)
 9. ✅ **Šta trebam od Miroslava** — vidi [[2026-07-06-MASTER-PLAN-V2]] §4 (zavisnosti)
-10. ✅ **Šta radim sad** — [[PROGRESS]] (dnevni snapshot) + [[2026-07-06-MASTER-PLAN-V2]] (workstream-ovi W1–W5, nedelje N1–N8)
+10. ✅ **Šta radim sad** — [[PROGRESS]] (dnevni snapshot) + [[2026-07-06-MASTER-PLAN-V2]] (workstream-ovi W1–W5, nedelje N1–N7')

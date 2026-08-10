@@ -2,7 +2,7 @@
 tip: spec
 naziv: W4 4.7 — Enhanced Conversions (Google Ads)
 datum: 2026-08-09
-status: lokalni deo ZATVOREN · GTM+Ads deo čeka dan migracije (2026-08-31)
+status: lokalni deo ZATVOREN · GTM+Ads deo čeka dan migracije (**2026-08-24**, pomereno sa 31.08 dana 2026-08-10)
 vlasnik: CC (GTM) + M (Ads UI)
 veze: "[[2026-07-06-MASTER-PLAN-V2]] W4 4.7 · [[CLAUDE]] §4.1"
 ---
@@ -88,11 +88,11 @@ Očekivan nusefekat: bolji Event Match Quality posle migracije.
 
 ---
 
-## 2. GTM deo — ČEKA DAN MIGRACIJE (2026-08-31)
+## 2. GTM deo — ČEKA DAN MIGRACIJE (**2026-08-24**)
 
 **Zašto se ne radi sada:** live sajt još koristi Zion Builder formu koja ne
 piše `al_lead_*` ključeve, pa bi tagovi bili prazni hod — neproveren pokretni
-deo u živom kontejneru pre migracije, bez ijedne koristi do 31.08.
+deo u živom kontejneru pre migracije, bez ijedne koristi do 24.08.
 
 ### 2.1 Dve Custom JavaScript promenljive
 
@@ -151,7 +151,7 @@ Settings → **Enhanced conversions**:
 3. prihvatiti „customer data terms" (Google traži jednokratnu saglasnost)
 
 Bez ovog koraka GTM šalje podatke, a Ads ih ignoriše. Korak je bezopasan i
-može se uraditi bilo kad pre 31.08 — ne menja ništa dok GTM deo ne proradi.
+može se uraditi bilo kad **pre 21.08** (rok pomeren sa 31.08) — ne menja ništa dok GTM deo ne proradi.
 
 ---
 

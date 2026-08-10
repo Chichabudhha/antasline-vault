@@ -5,6 +5,18 @@ azurirano: 2026-08-10
 
 # Naučene lekcije (tehnički gotchas)
 
+## Pre nego što nešto upišeš u plan kao blokator — pretraži `woodmart-sabloni` (2026-08-10)
+- Plan od 09.08 je vodio „lazy facade embed" kao 🔴 tehnički blokator za kačenje videa. Rešenje je stajalo u [[migracija/woodmart-sabloni]] pod **F7.3 od 2026-07-07** — CSS + globalni JS, radi na 9 stranica. Izgubljen ceo jedan zapis u planu i deo sesije na proveru nečega što je odavno gotovo.
+- **Pravilo:** F-numerisane stavke u `woodmart-sabloni` pokrivaju više nego što se pamti (F7.1–F7.21+). Pre upisa „treba napraviti X" u bilo koji plan: `grep -i X migracija/woodmart-sabloni.md`.
+- Isti obrazac se već ponavljao (v. „Refresh-evi od 2026-07-08", „4 duplikat-stranice", „`15580`→`16589`") — **plan koji nije proveren protiv stvarnog stanja stvara lažne blokatore**, i oni onda blokiraju stvarno.
+
+## Rank Math besplatan (1.0.275) NEMA Video modul — `VideoObject` ide ručno (2026-08-10)
+- Provereno na dva mesta, ne po sećanju: opcija `rank_math_modules` i `seo-by-rank-math/includes/modules/` na disku — 23 modula, `video` nije među njima.
+- Rešenje koje se pokazalo boljim od ručnog upisa po stranici: **schema se izvodi iz markupa koji već stoji u sadržaju** (`woodmart-child/inc/al-video-schema.php` skenira `data-yt-id` na `wp_footer`). Nula izmena u bazi → zaobiđeni i kses (F7.15) i `wpautop` (F7.20c) i potreba za backup-om.
+- **Prenosivo pravilo:** kad schema treba na N postojećih stranica, prvo pitati može li se izvesti iz postojećeg markupa umesto da se upisuje u `post_content`. Izmena koda je reverzibilna, izmena baze nije.
+- `uploadDate` za YouTube video se ne dobija preko oEmbed-a (ne postoji u odgovoru) — dolazi sa javne `watch` stranice iz `ytInitialPlayerResponse` → `microformat.playerMicroformatRenderer.publishDate`. `duration` iz `videoDetails.lengthSeconds` (pretvoriti u ISO 8601). Bez API ključa.
+- `maxresdefault.jpg` **ne postoji za svaki video** (2/8 u našem slučaju) — proveriti HTTP kodom pre nego što uđe u `thumbnailUrl`, i uvek navesti `hqdefault` kao rezervu.
+
 ## Gemini/Flow: `input[type=file]` postoji, ali tek POSLE otvaranja menija — plus Gemini žigoše klipove (2026-08-10)
 - 🟢 **Ispravka ranije beleške.** Tvrdnja „Gemini nema `input[type=file]` u DOM-u (provereno JS-om), pa je image-to-video zatvoren za automatizaciju" je **netačna**. Input se **kreira dinamički tek kad se otvori odgovarajući meni**: `+` → „Направи видео" → ikonica slike ispod prompt polja. Tek tada `document.querySelectorAll('input[type=file]')` vraća pogodak i `file_upload` MCP alat radi normalno (5 MB JPG prošao bez problema). Isti obrazac u Flow-u: `+` → „Upload media".
 - **Pravilo:** provera DOM-a na *zatvorenom* UI-ju daje **lažno negativan** rezultat. Nikad ne zaključivati „nema file input-a" iz jednog `querySelectorAll` pre nego što se meni otvori. Isto važi za `accept` atribut — prvi input koji se nađe (npr. Gemini „Отпреми фајлове" za dokumente) ima `accept` bez slika, što dodatno navodi na pogrešan zaključak.

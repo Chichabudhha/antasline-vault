@@ -1,6 +1,6 @@
 ---
 name: w6-social
-description: W6 workstream — društvene mreže, email i GMB za AntasLine (startuje punim tempom posle live-a 2026-08-31, jeftini koraci i ranije). Koristi kad Miroslav kaže "social", "društvene mreže", "Instagram/Facebook/LinkedIn/YouTube post", "newsletter", "email marketing", "Customer Match" ili "W6".
+description: W6 workstream — društvene mreže, email i GMB za AntasLine (startuje punim tempom posle live-a 2026-08-24, jeftini koraci i ranije). Koristi kad Miroslav kaže "social", "društvene mreže", "Instagram/Facebook/LinkedIn/YouTube post", "newsletter", "email marketing", "Customer Match" ili "W6".
 ---
 
 # W6 — Social / Email / GMB
@@ -9,7 +9,7 @@ Nastao iz audita 2026-07-06: Organic Social = 70 korisnika/90d (0,5%
 saobraćaja) ali 81% engagement — publika je kvalitetna, kanala nema.
 Nijedan social/email zadatak nije postojao u planu do W6.
 
-**Pravilo tempa:** do migracije (2026-08-31) rade se SAMO Faza 0 koraci
+**Pravilo tempa:** do migracije (**2026-08-24**, pomereno 2026-08-10) rade se SAMO Faza 0 koraci
 (jeftini, ne jedu kapacitet W1–W5). Pun ritam od septembra.
 
 ## Faza 0 — Preduslovi (pre live-a, ukupno ~2h)

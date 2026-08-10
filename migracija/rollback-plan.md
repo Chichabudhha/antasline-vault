@@ -1,8 +1,9 @@
 ---
 tip: plan
-naziv: Rollback plan — migracija 2026-08-31
+naziv: Rollback plan — migracija 2026-08-24
 datum: 2026-07-27
-status: draft — čeka Miroslavljevu potvrdu detalja pre N7 content freeze-a
+azurirano: 2026-08-10 (datum migracije pomeren 31.08 → 24.08)
+status: draft — čeka Miroslavljevu potvrdu 3 detalja, **rok 2026-08-15** (pre content freeze-a 16.08)
 ---
 
 # 🔙 Rollback plan — ako migracija pukne
@@ -81,7 +82,7 @@ CC sesija otkrije trigger-uslov iz §1 tokom post-live monitoringa (3.12), javlj
 odmah i predlaže rollback, ali ne izvršava bez njegove eksplicitne potvrde —
 isto pravilo kao svaka druga nepovratna akcija.
 
-## 5. Otvoreno (čeka Miroslava pre N7 content freeze-a)
+## 5. Otvoreno (čeka Miroslava — **rok 2026-08-15**, pre content freeze-a 16.08)
 
 - [ ] Potvrditi da li hosting (WHM) ima sopstveni automatski backup/snapshot
   (M6 otvoreno pitanje) — ako da, dodaje dodatnu sigurnosnu mrežu

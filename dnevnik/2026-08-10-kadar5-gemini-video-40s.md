@@ -6,7 +6,10 @@ blok: "W2/W6 video"
 status: zatvorena
 ---
 
-# Sesija — kadar 5 (Gemini) + video 40s + GSC baseline
+# Sesija — kadar 5 (Gemini) + video 40s + GSC baseline + video embed preduslovi
+
+> Dva zadatka istog dana: (1) kadar 5 i montaža, (2) „lazy facade" →
+> ispalo `VideoObject`. Drugi je opisan u §„Zadatak 2" na dnu.
 
 ## Šta je urađeno
 
@@ -113,8 +116,65 @@ preko videa ne može proslediti u komandnoj liniji (Claude Code bash ograničenj
 Gemini vraća **10-sekundne** klipove (i sa audio stream-om, koji se ionako
 odbacuje `-an`), Flow 8-sekundne. Zato je finalni video 40,0s a ne 38,5s.
 
+---
+
+## Zadatak 2 — „lazy facade" (M) → oba video-embed preduslova zatvorena
+
+### Šta je urađeno
+- **Preduslov 1 (lazy facade) je bio lažno otvoren.** Fasada postoji od
+  2026-07-07 (`woodmart-sabloni` F7.3) i radi na 9 stranica. Ništa nije
+  trebalo graditi.
+- **Preduslov 2 (`VideoObject`) stvarno je nedostajao** — napisan
+  `woodmart-child/inc/al-video-schema.php` (require iz `functions.php`).
+- Backup: `functions.php.bak-2026-08-10-pre-video-schema`.
+
+### Zašto je Rank Math ispao iz igre
+`rank_math_modules` + `includes/modules/` na disku: **23 modula, Video nije
+među njima** (verzija 1.0.275, besplatna). Pretpostavka iz plana potvrđena —
+schema mora ručno.
+
+### Dizajn: schema se izvodi iz fasade, ne upisuje u bazu
+F7.3 je prvobitno predviđao ručni base64/`vc_raw_html` upis po stranici.
+Umesto toga, filter na `wp_footer` skenira `post_content` za `data-yt-id`,
+dedupe-uje i emituje `VideoObject` iz mape potvrđenih metapodataka.
+
+Dobitak: **nula izmena u bazi** → nema kses (F7.15), nema `wpautop` artefakata
+(F7.20c), nema backup rizika; 9 stranica pokriveno jednim fajlom; svaka buduća
+fasada radi čim joj se ID doda u mapu.
+
+### Tvrda pravila ugrađena u kod
+- ID koji nije u mapi **se preskače** — bez schema-e je bolje nego sa izmišljenom.
+- `uploadDate` / `duration` **isključivo** sa javne `youtube.com/watch` stranice
+  (`ytInitialPlayerResponse` → `videoDetails` + `microformat.publishDate`).
+  Svih 8 videa provereno: status OK (nijedan nije obrisan/privatan), datumi
+  2014–2022.
+- 3 videa nemaju YouTube opis → opis izveden **samo iz naslova i kanala**
+  („Uputstvo proizvođača Bergo za ugradnju Bergo XL modularnih podnih ploča."),
+  bez ijedne tvrdnje o onome što se u videu vidi.
+- `maxresdefault.jpg` naveden samo gde stvarno postoji (HTTP provera: 6/8 ima,
+  2 imaju samo `hqdefault`).
+
+### Verifikacija
+| Provera | Rezultat |
+|---|---|
+| 9 stranica sa fasadom | 200 · 1×H1 · tačno 1×`VideoObject` · JSON validan · tačan `uploadDate` |
+| Regresija (kontakt, conquest 2542, dimenzije-kosarkaskog-terena) | 0×VideoObject; Article/FAQPage/BreadcrumbList/LocalBusiness netaknuti |
+| Chrome uživo (16658) | iframe tek na klik · `youtube-nocookie.com` · `is-playing` radi · 2 ld+json bloka, bez dupliranja |
+| `php -l` | oba fajla čista |
+
+### ⚠️ Gotcha pri verifikaciji
+4 od 9 stranica sa fasadom su **child stranice** (`/spoljnje-podne-obloge/bergo-*`).
+Na flat slugu vraćaju **301**, pa je prvi prolaz lažno prijavio „nema schema-e"
+na njima. Uvek `get_permalink()`, ne slug.
+
+### Pouka
+Stavka je 09.08 upisana u plan kao 🔴 blokator **bez provere `woodmart-sabloni`**
+— a rešenje je tamo stajalo pod F7.3 više od mesec dana. Pre nego što nešto uđe
+u plan kao blokator, pretražiti šablone.
+
 ## Veze
 - Plan: [[seo/2026-08-09-video-obogacivanje-plan]]
+- Šabloni: [[migracija/woodmart-sabloni]] F7.3 + **F7.3a**
 - Shot lista + promptovi: [[seo/2026-08-09-flow-promptovi-basket]]
 - Prethodna sesija: [[dnevnik/2026-08-09-google-flow-video-basket]]
 - Lekcije: [[reference/naucene-lekcije]]
