@@ -1,3 +1,25 @@
+## 2026-08-10 [claude-code] [W2/W6 video] Video embed preduslovi ZATVORENI — lazy facade je već postojao, `VideoObject` napisan i pušten na 9 stranica ✅
+
+**Zadatak (M):** „lazy facade" — druga stavka istog dana, oba preduslova iz [[seo/2026-08-09-video-obogacivanje-plan]] §4 za kačenje videa na stranicu.
+
+🟢 **Preduslov 1 (lazy facade) je bio LAŽNO otvoren.** Jučerašnji plan ga je vodio kao 🔴 blokator, a infrastruktura postoji od **2026-07-07 (F7.3)** i radi na 9 stranica: `.al-video-facade` CSS u `antas-design.css` + globalni `woodmart-child/js/al-video-facade.js` (event delegation, klik/Enter/Space, `youtube-nocookie.com`, iframe se pravi tek na klik). Ništa nije trebalo graditi. **Pouka: pre nego što se nešto upiše u plan kao blokator, proveriti `woodmart-sabloni` — F-numerisane stavke pokrivaju više nego što se pamti.**
+
+✅ **Preduslov 2 (`VideoObject`) stvarno je nedostajao i sada je gotov.** Potvrđeno prvo da **Rank Math besplatan (1.0.275) NEMA Video modul** (ni u `rank_math_modules` ni na disku — 23 modula, video nije među njima), pa schema mora ručno. Napisan `woodmart-child/inc/al-video-schema.php` (require iz `functions.php`): na `wp_footer` skenira `post_content` za `data-yt-id`, dedupe-uje i emituje `VideoObject` iz mape potvrđenih metapodataka; jedan video → objekat, više → `@graph`.
+
+**Dizajn odluka:** schema se **izvodi iz markupa fasade**, ne upisuje u bazu po stranici (kako je F7.3 prvobitno predviđao preko base64/`vc_raw_html`). Nula izmena u bazi → nema kses rizika (F7.15), nema `wpautop` artefakata (F7.20c), nema backup rizika; svih 9 stranica pokriveno jednim fajlom, buduće fasade rade čim im se ID doda u mapu.
+
+🔴 **Tvrdo pravilo ugrađeno u kod:** ID koji nije u mapi se **preskače**. `uploadDate`/`duration` isključivo sa javne `youtube.com/watch` stranice (`ytInitialPlayerResponse`), nikad iz procene — svih 8 videa provereno, svi aktivni (status OK), datumi 2014–2022. Za 3 videa bez YouTube opisa napisan opis izveden **samo iz naslova i kanala** („Uputstvo proizvođača Bergo za ugradnju Bergo XL modularnih podnih ploča.") — bez ijedne tvrdnje o sadržaju koji nisam gledao. `maxresdefault.jpg` naveden samo gde stvarno postoji (provereno HTTP kodom: 6/8 ima, 2 imaju samo `hqdefault`).
+
+**Verifikovano 9/9:** HTTP 200 · 1×H1 · tačno 1×`VideoObject` · JSON validan · tačan `uploadDate` po stranici. Regresija na 3 stranice bez videa: 0×VideoObject, ostala schema (Article/FAQPage/BreadcrumbList/LocalBusiness) netaknuta. **Uživo u Chrome-u:** iframe se i dalje kreira tek na klik (0 youtube zahteva pre klika), `youtube-nocookie.com` domen, `is-playing` klasa radi, na strani tačno 2 ld+json bloka (Rank Math `@graph` + naš) — bez dupliranja.
+
+⚠️ **Gotcha pri verifikaciji:** 4 od 9 stranica sa fasadom su **child stranice** (`/spoljnje-podne-obloge/bergo-*`) — na flat slugu vraćaju 301, pa je prvi prolaz lažno prijavio „nema schema-e" na njima. Uvek `get_permalink()`, ne slug.
+
+**Backup:** `functions.php.bak-2026-08-10-pre-video-schema`. Skripte: scratchpad `yt-meta.py` (povlačenje metapodataka), `gen-video-map.py`, `verify-video.sh`. Detalji: [[migracija/woodmart-sabloni]] F7.3a.
+
+**Ostaje za objavu basket videa:** YouTube handle (#ceka-miroslav) + odluka o Gemini vodenom žigu (v. unos ispod). Tehnički je stranica spremna da primi video.
+
+---
+
 ## 2026-08-10 [claude-code] [W2/W6 video] Kadar 5 (hero) napravljen u Gemini-ju — video remontiran na 40s; 2 pretpostavke iz jučerašnjeg plana oborene ✅🔴
 
 **Zadatak (M izbor):** „završiti kadar 5 u gemini kroz chrome" + quick-win GSC baseline.

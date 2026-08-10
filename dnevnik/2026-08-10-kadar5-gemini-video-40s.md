@@ -49,8 +49,8 @@ Merenje efekta: isti upit-set, 28 dana posle objave videa, isti izvor.
 - [ ] Odluka o Gemini vodenom žigu na kadru 5 (v. dole) #ceka-miroslav
 - [ ] Odluka o registarskoj tablici na kadru 4 (Ledine) pre javne objave #ceka-miroslav
 - [ ] Promeniti YouTube handle `@antasline5676` → `@antasline` #ceka-miroslav
-- [ ] Lazy „facade" embed (poster + iframe na klik) pre kačenja na stranicu #claude-code
-- [ ] Provera da li Rank Math besplatan ima Video sitemap; ako ne — ručni `VideoObject` JSON-LD #claude-code
+- [x] ✅ Lazy „facade" embed — **već postojao** (F7.3, od 2026-07-07), ništa nije trebalo graditi
+- [x] ✅ `VideoObject` JSON-LD — Rank Math nema Video modul, napisan `inc/al-video-schema.php`, 9/9 stranica verifikovano (v. [[migracija/woodmart-sabloni]] F7.3a)
 
 ## Beleške / odluke
 

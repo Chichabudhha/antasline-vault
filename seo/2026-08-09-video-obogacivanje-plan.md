@@ -154,16 +154,22 @@ Redosled je izveden iz GSC brojeva gore, ne iz utiska.
    `uploadDate`, `contentUrl`/`embedUrl`).
 7. **Upis u dnevnik** + zabeležiti GSC CTR na ciljanim upitima kao baseline.
 
-### Dve tehničke prepreke koje treba rešiti pre stranice #1
+### ✅ Dve tehničke prepreke — OBE ZATVORENE 2026-08-10
 
-- 🔴 **Core Web Vitals.** LCP je već crven (CLAUDE §7.6, blokiran na
-  render-blocking CSS). Ubačen YouTube iframe bi ga dodatno oborio.
-  **Obavezno lazy „facade"** — statična poster slika, iframe se učitava tek na
-  klik. Bez ovoga video pravi više štete nego koristi.
-- 🟡 **VideoObject schema.** Rank Math u besplatnoj verziji nema Video sitemap
-  modul (nije provereno da li je promenjeno) — verovatno treba ručni JSON-LD
-  kroz child theme, sličan obrascu koji je već korišćen za FAQPage. Proveriti
-  pre nego što se obeća.
+- ✅ **Core Web Vitals / lazy „facade"** — **nije ni bila otvorena stavka.**
+  Fasada postoji od 2026-07-07 (`woodmart-sabloni` F7.3): `.al-video-facade`
+  CSS + globalni `al-video-facade.js`, iframe se pravi **tek na klik**, domen
+  `youtube-nocookie.com`. Radi na 9 stranica, provereno uživo 10.08 (0 youtube
+  zahteva pre klika). Ovaj red je 09.08 upisan bez provere šablona.
+- ✅ **VideoObject schema** — potvrđeno da Rank Math besplatan (1.0.275)
+  **nema Video modul**, pa je napisan `woodmart-child/inc/al-video-schema.php`:
+  schema se **izvodi iz markupa fasade** na `wp_footer`, bez ijedne izmene u
+  bazi. 9/9 stranica verifikovano (200 / 1×H1 / 1×VideoObject / validan JSON /
+  potvrđen `uploadDate`). Detalji i pravila: `woodmart-sabloni` **F7.3a**.
+
+**Praktično za sledeći video:** kad basket video ode na YouTube, dovoljno je
+(1) ubaciti standardni markup fasade u sadržaj stranice i (2) dodati njegov ID
+u mapu u `al-video-schema.php`. Schema se emituje sama.
 
 ---
 

@@ -201,6 +201,42 @@ posta 3318 je npr. sad "Forbidden" na oEmbed-u — ne koristiti ga ponovo dok se
 Pilot: `/antistatik-i-elektroprovodljivi-podovi/` (ID 16658) — zvanično Ecotile "ESD Flooring -
 How to install" (kanal ecotile-Germany, potvrđeno oEmbed-om).
 
+### F7.3a — `VideoObject` JSON-LD se IZVODI iz fasade, ne upisuje po stranici (2026-08-10)
+
+Rank Math (besplatan, 1.0.275) **nema Video modul** — provereno i u
+`rank_math_modules` i na disku (`includes/modules/`, 23 modula, video nije među
+njima). Schema mora ručno.
+
+**Rešenje:** `woodmart-child/inc/al-video-schema.php` (require iz `functions.php`).
+Na `wp_footer` (prio 5, samo `is_singular()`) skenira `post_content` za
+`data-yt-id="…"`, dedupe-uje ID-eve i emituje `VideoObject` iz mape potvrđenih
+metapodataka. Jedan video → objekat, više → `@graph`.
+
+**Zašto ovako, a ne base64/`vc_raw_html` po stranici** (kako je F7.3 prvobitno
+predviđao): nula izmena u bazi — dakle nema kses (F7.15), nema `wpautop`
+artefakata (F7.20c), nema backup rizika; svih 9 postojećih stranica pokriveno
+jednim fajlom, a svaka buduća fasada radi čim joj se ID doda u mapu.
+
+🔴 **Tvrdo pravilo ugrađeno u kod:** ID koji nije u mapi **se preskače**.
+`uploadDate` i `duration` dolaze isključivo sa javne `youtube.com/watch`
+stranice (`ytInitialPlayerResponse` → `videoDetails` + `microformat.publishDate`),
+nikad iz procene. Ako video nema opis na YouTube-u, opis se izvodi **samo iz
+naslova i kanala** (npr. „Uputstvo proizvođača Bergo za ugradnju…") — nikad
+tvrdnja o onome što se u videu vidi.
+
+- `thumbnailUrl`: `maxresdefault.jpg` (1280×720) samo ako stvarno postoji —
+  provereno HTTP kodom po ID-u (6/8 ima, 2 imaju samo `hqdefault`); `hqdefault`
+  se uvek navodi kao drugi element niza.
+- `embedUrl` koristi `youtube-nocookie.com`, isti domen kao `al-video-facade.js`.
+- Provereno uživo: iframe se i dalje kreira **tek na klik** (0 youtube zahteva
+  pre klika), `is-playing` klasa radi, na strani su tačno 2 ld+json bloka
+  (Rank Math `@graph` + naš `VideoObject`) — bez dupliranja.
+
+⚠️ **Gotcha pri verifikaciji:** 4 od 9 stranica sa fasadom su **child stranice**
+(`/spoljnje-podne-obloge/bergo-*`) — na flat slugu vraćaju 301 i provera lažno
+prijavi „nema schema-e". Uvek uzeti `get_permalink()`, ne slug (isto pravilo
+kao `post_parent` provera pre linkovanja).
+
 ## F7.4 — "antas-skica" stil (2026-07-07)
 
 Standard za tehničke ilustracije (presek slojeva, dimenzije, koraci montaže):
