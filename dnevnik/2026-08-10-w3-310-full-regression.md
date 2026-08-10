@@ -1,7 +1,9 @@
 ---
 tip: sesija
+alat: claude-code
 datum: 2026-08-10
-tag: claude-code
+blok: "-"
+status: zavrseno
 oblast: W3 3.10
 naslov: Full regression nad celim buildom — 195 stranica, 4 bag-a nađena i popravljena
 ---
@@ -110,13 +112,16 @@ je artefakt instalacije u pod-folderu.
 
 ## Otvorene akcije
 
-- 🟡 **#ceka-miroslav — 6 stranica bez meta opisa, uključujući početnu (16550).**
-  `rank_math_description` je prazan; Rank Math nema ni fallback za njih.
-  Ostale: `/vestacka-trava/`, `/vestacka-trava-za-fudbal/`,
-  `/sportske-podloge/bergo-ultimate/`, `/aktuelnosti/`, `/ftalati-…/`.
-  Copywriting, ne mehanička izmena → nije rađeno bez odluke. **Rok: content
-  freeze 16.08.**
-- Preostali deo 3.10 (dan migracije) je u checklisti, ne u ovoj sesiji.
+- [ ] 🟡 **6 stranica bez meta opisa, uključujući početnu (16550)** #ceka-miroslav
+      `rank_math_description` je prazan i Rank Math nema fallback za njih.
+      Ostale: `/vestacka-trava/`, `/vestacka-trava-za-fudbal/`,
+      `/sportske-podloge/bergo-ultimate/`, `/aktuelnosti/`, `/ftalati-…/`.
+      Copywriting, ne mehanička izmena → nije rađeno bez odluke.
+      **Rok: content freeze 16.08.** Odgovor koji tražim: „napiši ih" ili „ostavi".
+- [ ] Preostali deo 3.10 (dan migracije) #claude-code — izvršava se 24.08 po
+      [[migracija/2026-08-10-pre-migration-checklist]], ne u ovoj sesiji.
+- [ ] Ponoviti isti sweep protiv produkcije posle migracije #claude-code
+      (stavka B6 checkliste) i uporediti sa baseline-om od danas.
 
 ## Backup i skripte
 

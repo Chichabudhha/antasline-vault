@@ -1,3 +1,4 @@
 {"timestamp": "2026-07-29T20:50:00", "action": "Postavljanje token tracking sistema", "input_tokens": 77787, "output_tokens": 411, "total_session_tokens": 78198}
 {"timestamp": "2026-07-29T20:58:00", "action": "Otvaranje sesije (antasline-sesija) + izbor zadatka", "input_tokens": 131631, "output_tokens": 2060, "total_session_tokens": 133691}
 {"timestamp": "2026-07-29T21:15:00", "action": "15580->16589 provera + zatvaranje blokera (dnevnik+progress)", "input_tokens": 167327, "output_tokens": 75, "total_session_tokens": 167402}
+{"timestamp": "2026-08-10T08:35:00", "action": "W3 3.10 full regression + pomeranje go-live datuma na 24.08", "input_tokens": 243897, "output_tokens": 372, "total_session_tokens": 244269}
