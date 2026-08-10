@@ -59,9 +59,21 @@ dodatnog snimanja, i YouTube kanal kao druga površina pretrage (W6).
 
 ## 2. Realan budžet — koliko videa stvarno možemo
 
+> 🟡 **DOPUNA 2026-08-10:** cene po klipu (Lite 10 / Fast 20) potvrđene, ali
+> „50 dnevno" traži zvezdicu: **reset ide po pacifičkoj ponoći ≈ 09–10h po
+> našem vremenu**, ne po lokalnoj (v. [[reference/naucene-lekcije]]). Render
+> pokušan u 06:45 pao je na „You need more AI credits" — prerano, ne kraj kvote.
+> **Ne planirati „uveče potrošim, ujutru nastavim" pre ~10h.**
+>
+> 🔴 **Druga besplatna kvota — Gemini — nije ekvivalent Flow-u:** Gemini
+> klipovi nose **vidljiv „sparkle" vodeni žig** u donjem desnom uglu kroz ceo
+> klip, Flow klipovi ne nose ništa. Za materijal koji ide na sajt/Ads/YouTube
+> **Flow je izvor, Gemini rezerva**. Usput: Gemini vraća **10s** klipove, Flow 8s.
+> v. [[dnevnik/2026-08-10-kadar5-gemini-video-40s]].
+
 | | |
 |---|---|
-| Besplatni krediti | **50 dnevno**, obnavljaju se |
+| Besplatni krediti | **50 dnevno**, reset ≈09–10h po lokalnom (pacifička ponoć) |
 | Veo 3.1 – Fast | **20 kredita** / 8s klip (potvrđeno 2026-08-09) |
 | Veo 3.1 – Lite | **10 kredita** / 8s klip (potvrđeno 2026-08-09) |
 | Omni Flash | jeftinije, nije mereno |
@@ -207,10 +219,14 @@ moja, na osnovu naših stvarnih rupa.
 
 ## 7. Sledeći korak
 
-1. Dovršiti video za stranicu #1 (basket) — preostala 4 kadra, ~2 dana kredita.
-2. Promeniti YouTube handle `@antasline5676` → `@antasline` (§8).
-3. **Pre objave** rešiti lazy-facade embed i `VideoObject` JSON-LD (§4).
-4. Zabeležiti GSC CTR baseline za ciljane upite te stranice.
+1. ✅ **2026-08-10 — video za stranicu #1 (basket) je gotov**: svih 5 kadrova,
+   `AntasLine-teren-za-basket-40s{,-tekst}.mp4` (40,0s). Kadar 5 napravljen u
+   Gemini-ju (Flow ostao bez kredita) → nosi Gemini vodeni žig, **odluka M**.
+2. Promeniti YouTube handle `@antasline5676` → `@antasline` (§8). #ceka-miroslav
+3. **Pre objave** rešiti lazy-facade embed i `VideoObject` JSON-LD (§4). #claude-code
+4. ✅ **2026-08-10 — GSC CTR baseline snimljen**: 4.019 prikaza / 114 klikova /
+   CTR 2,84% (11.07–07.08, 30 upita) →
+   `analiza/2026-08-10-gsc-baseline-basket-pre-videa.json`
 5. Tek posle merenja na prve 3 stranice odlučiti da li se red čekanja nastavlja.
 
 ## 8. YouTube — rešeno 2026-08-09

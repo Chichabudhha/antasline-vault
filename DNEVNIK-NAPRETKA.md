@@ -1,3 +1,27 @@
+## 2026-08-10 [claude-code] [W2/W6 video] Kadar 5 (hero) napravljen u Gemini-ju — video remontiran na 40s; 2 pretpostavke iz jučerašnjeg plana oborene ✅🔴
+
+**Zadatak (M izbor):** „završiti kadar 5 u gemini kroz chrome" + quick-win GSC baseline.
+
+**Izvršeno:** kadar 5 (`05-dvoriste.jpg`, tilt-up sa plavo-crvenog terena ka košu i nebu) izrenderovan **u Gemini-ju kroz Chrome automatizaciju** — 10s, 1280×720, 24 fps (Gemini daje 10s, Flow 8s). Podloga, boje i linije netaknute, nema izmišljenih ljudi/lopti (provereno na 4 frejma). Video remontiran na **5 kadrova / 40,0s**: `AntasLine-teren-za-basket-40s.mp4` (bez teksta) + `AntasLine-teren-za-basket-40s-tekst.mp4` (tekst po sekcijama članka, CTA `069 234 00 72` u centru na kadru 5, 32,0–39,8s). Stara 30,5s verzija ostaje netaknuta.
+
+🟢 **Nalaz koji obara stari gotcha — Gemini upload JESTE automatizovan.** Jučerašnja beleška „Gemini nema `input[type=file]` u DOM-u pa je image-to-video zatvoren za automatizaciju" je **netačna**: input postoji, samo se kreira **tek pošto se otvori odgovarajući meni** (`+` → „Направи видео" → ikonica slike). Tada `file_upload` MCP alat radi normalno. Isti obrazac važi i za Flow („Upload media" u asset pickeru). **Provera DOM-a pre otvaranja menija daje lažno negativan rezultat.**
+
+🔴 **Nalaz 1 — Gemini klipovi nose vidljiv Gemini „sparkle" vodeni žig** u donjem desnom uglu, kroz ceo klip. Flow klipovi ga **nemaju** (provereno na 2 klipa od juče, isti kadar-uglovi). Znači: tuđ brend na našem materijalu ako ide na sajt/Ads. Ne diram ga — uklanjanje vidljivog watermarka je odluka M-a, ne moja. **#ceka-miroslav.**
+
+🟡 **Nalaz 2 — Flow u 06:45 lokalno i dalje bez kredita.** Pokušaj da se isti kadar renderuje i u Flow-u (čist, bez watermarka) pao je na „You need more AI credits to complete this request". **To NIJE dokaz da besplatni nalog nema dnevne kredite** — postojeća lekcija od 00:34 noćas kaže da reset ide po **pacifičkoj** ponoći, ≈09–10h po lokalnom vremenu. U 06:45 je jednostavno bilo prerano. Baner „Daily Bonus: **Paid plans** enjoy 50 extra credits (Resets daily)" govori o *dodatnih* 50 za plaćene planove i ne isključuje osnovnu besplatnu kvotu. **Praktična posledica: čist kadar 5 bez vodenog žiga verovatno je dostupan danas posle ~09–10h za 10 kredita** — to je najjeftinije rešenje nalaza 1, pre bilo kakve odluke o žigu.
+
+🟢 **Potvrđeno:** gotcha 1 (agent se zaglavi bez dugmeta za odobrenje) i njegov lek (**nova sesija**, ikona olovke) — reprodukovano tačno, nova sesija odmah pokazala „1 video generation, costing 10 credits". Gotcha 2 (model se traži **u tekstu prompta**, ne kroz Agent settings) — takođe potvrđen, agent odgovorio „using the Veo 3.1 - Lite model".
+
+**Quick-win — GSC baseline pre objave videa** (plan §7 korak 4): `/kako-napraviti-teren-za-basket-ili-kosarkaski-teren/`, 28 dana (11.07–07.08, prozor pomeren za kašnjenje GSC podataka): **4.019 prikaza / 114 klikova / CTR 2,84%**. 30 upita snimljeno u `analiza/2026-08-10-gsc-baseline-basket-pre-videa.json`. Bez ovoga se efekat videa kasnije ne može izmeriti. Obrazac curenja potvrđen: `dimenzije fudbalskog terena` 762 prikaza / **3 klika** / poz. 1,1 · `fudbalski teren dimenzije` 220 / **0** / poz. 1,1 · `visina koša` varijante 127+79+69 prikaza / **0 klikova**.
+
+🟡 **Usput primećeno (nije nova stvar, bilo i u jučerašnjoj verziji):** na kadru 4 (Ledine) čita se registarska tablica parkiranog kombija. Ako video ide javno na YouTube, vredi odluka — zamutiti ili ostaviti.
+
+**Fajlovi:** `AntasLine-teren-za-basket-40s{,-tekst}.mp4` + `Cinematic_slow_tilt_up_from_a.mp4` (sirov kadar 5) u `Downloads`. Skripte: scratchpad `montaza5.sh`, `filter5.txt`. ⚠️ ffmpeg 9.0 je uklonio `-filter_complex_script` — nova sintaksa je `-/filter_complex fajl.txt`.
+
+**Detalji:** [[dnevnik/2026-08-10-kadar5-gemini-video-40s]] · [[seo/2026-08-09-video-obogacivanje-plan]]
+
+---
+
 ## 2026-08-09 [claude-code] [W2/W6 video] Google Flow (Veo 3.1) uveden kao stalni alat — 4 klipa + izmontiran video od 30,5s za basket stranicu ✅
 
 **Kontekst:** M pitao „google flow je besplatan, umeš li da ga koristiš?", pa tražio video za `/kako-napraviti-teren-za-basket-ili-kosarkaski-teren/`. Posle prvog uspešnog klipa doneo odluku da ovo uđe u stalni tok: **jedan video dnevno za stranice koje prave novac.**

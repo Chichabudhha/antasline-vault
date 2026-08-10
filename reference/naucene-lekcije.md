@@ -1,9 +1,16 @@
 ---
 tip: reference
-azurirano: 2026-08-09
+azurirano: 2026-08-10
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Gemini/Flow: `input[type=file]` postoji, ali tek POSLE otvaranja menija — plus Gemini žigoše klipove (2026-08-10)
+- 🟢 **Ispravka ranije beleške.** Tvrdnja „Gemini nema `input[type=file]` u DOM-u (provereno JS-om), pa je image-to-video zatvoren za automatizaciju" je **netačna**. Input se **kreira dinamički tek kad se otvori odgovarajući meni**: `+` → „Направи видео" → ikonica slike ispod prompt polja. Tek tada `document.querySelectorAll('input[type=file]')` vraća pogodak i `file_upload` MCP alat radi normalno (5 MB JPG prošao bez problema). Isti obrazac u Flow-u: `+` → „Upload media".
+- **Pravilo:** provera DOM-a na *zatvorenom* UI-ju daje **lažno negativan** rezultat. Nikad ne zaključivati „nema file input-a" iz jednog `querySelectorAll` pre nego što se meni otvori. Isto važi za `accept` atribut — prvi input koji se nađe (npr. Gemini „Отпреми фајлове" za dokumente) ima `accept` bez slika, što dodatno navodi na pogrešan zaključak.
+- 🔴 **Gemini klipovi nose vidljiv „sparkle" vodeni žig** u donjem desnom uglu, kroz ceo klip. **Flow klipovi ga nemaju** (provereno poređenjem istog ugla kadra na 2 Flow klipa). Za materijal koji ide na sajt/Ads/YouTube: **Flow je izvor, Gemini rezerva.**
+- **Trajanje se razlikuje:** Gemini vraća **10s** klipove (sa audio stream-om, koji se ionako odbacuje `-an`), Flow **8s**. Bitno pri računanju `xfade` offset-a u montaži.
+- ⚠️ Kad Flow javi „You need more AI credits", **prvo proveriti koliko je sati** — reset je po pacifičkoj ponoći (v. lekcija ispod), a ne kraj kvote. Zaključak „besplatni nalog nema dnevne kredite" je izveden i **oboren u istoj sesiji**.
 
 ## Brend font za video natpise: Google Fonts woff2 podskupovi + varijabilni font — tri zamke u nizu (ffmpeg drawtext, 2026-08-10)
 - Child tema drži brend fontove **samo kao `.woff2`** (`woodmart-child/fonts/`), a ffmpeg `drawtext` traži TTF/OTF. Konverzija je moguća bez instalacije: `fontTools.ttLib.TTFont(x.woff2)` → `font.flavor=None` → `save(x.ttf)`.
