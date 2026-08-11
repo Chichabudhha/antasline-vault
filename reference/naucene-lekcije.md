@@ -55,6 +55,15 @@ azurirano: 2026-08-11
 - Zakrpa: `authorize_oauth.py` (browser, 1 min). **Trajno rešenje: Cloud Console → OAuth consent screen → Publish app** (*In production*) — refresh token tada ne ističe po vremenu, u skriptama se ne menja ništa.
 - 🔴 **Planska posledica:** proveriti token **na dan migracije pre početka** (stavka B1 checkliste) — 4.10 i verifikacija konverzija zavise od njega, a to je najgori trenutak za browser-consent.
 - Usput: `token.json` nosi samo scope-ove za koje je poslednji put autorizovan (trenutno samo `adwords`; `tagmanager.edit.containers` iz 27.07 nije u njemu).
+- **Dopuna 2026-08-11:** ista *Testing*-status posledica ima i drugu formu — pri ponovnoj autorizaciji Google prvo pokaže ekran **„App not verified"** (jer je `adwords` scope "sensitive"), ne direktno "Allow". Rešenje nije puna Google verifikacija (nepotrebna za app sa jednim korisnikom) nego: potvrditi da je nalog u **Test users** listi (OAuth consent screen → Audience) i kliknuti **Advanced → Go to [app] (unsafe)**. v. [[reference/api-konektor-setup.md]] Korak F.
+
+## Google Ads Customer Match preko starog Ads API-ja je blokiran za developer tokene bez istorije — obavezan Data Manager API (2026-08-11)
+- Simptom: `customer_match_upload.py --confirm` (uz **važeći** OAuth token) pada na `GoogleAdsException` sa `CUSTOMER_NOT_ALLOWLISTED_FOR_THIS_FEATURE`: "Customer Match uploads aren't supported in the Google Ads API for the developer token of the request. Use the Data Manager API for Customer Match workflows."
+- Isti error kod se prvi put pojavio 2026-08-07 i bio protumačen kao „Basic developer token, treba Standard access u Ads API Center" — ta pretpostavka **nije potvrđena** kao ispravna.
+- Google-ova zvanična dokumentacija (Data Manager API GA dec. 2025, obavezno od **2026-04-01**): developer tokeni koji **nikad ranije nisu slali Customer Match zahtev** preko starog `OfflineUserDataJobService`-a su blokirani **bez obzira na tier** (Basic ili Standard) — moraju na nov, poseban **Data Manager API** (`datamanager.googleapis.com`, paket `google-ads-datamanager`, klijent `IngestionServiceClient.ingest_audience_members()`). Ne treba developer token uopšte — čist OAuth 2.0.
+- ⚠️ **Nusefekat na živi nalog:** `OfflineUserDataJobService` stigne da kreira **praznu user listu** u Ads UI-ju (Audience manager → Segments) pre nego što padne poziv za dodavanje članova — bezopasno, ali ostaje vidljivo dok se ručno ne obriše.
+- **Pravilo:** pre nego što se pretpostavi da developer token tier (Basic/Standard) rešava neki Ads API blokator, proveriti da li je konkretan endpoint/feature u međuvremenu migriran na poseban API (Google redovno izdvaja funkcionalnost iz glavnog Ads API-ja u satelitske API-je — Data Manager je jedan primer).
+- Setup plan za migraciju: [[reference/api-konektor-setup.md]] Korak G.
 
 ## `RedirectMatch` ČUVA query string — `?gclid=` preživljava 301 (2026-08-11)
 - Bitno jer bi suprotno značilo da svaki preusmeren klik iz oglasa gubi `gclid` → konverzija se ne pripisuje Ads-u, a to bi se otkrilo tek posle migracije.

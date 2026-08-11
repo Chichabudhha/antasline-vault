@@ -1,3 +1,23 @@
+## 2026-08-11 [cpanel-live] [W6 / 4.9] Customer Match upload pokušan uživo — blokiran na Data Manager API migraciji, koriguje raniju pretpostavku (Standard access) ✅🔴
+
+> Deveta stavka istog dana, jedina u pravoj `[cpanel-live]` sesiji (`wp1.oblak.host`) — nastavak `categorize_leads.py`/`customer_match_upload.py --split-by-category` rada napisanog u prethodnoj sesiji (commit `4067cd2`, još nije bio testiran uživo).
+
+> `scan_leads.py --dry-run`: 0 novih kontakata, `leads.csv` na serveru već ima 9 (iz prethodne sesije) — 5 `nepoznato` · 3 `sportski-tereni` · 1 `terase-spoljne-podloge`, svih 9 `uploaded=False` cele sesije (nijedan upload nije uspeo).
+>
+> **Prvi `--confirm` pokušaj: `invalid_grant`** — token osvežen 07.08, mrtav 11.08 (4 dana), potvrđuje postojeću lekciju o *Testing* statusu. M re-autorizovao lokalno preko `authorize_oauth.py`, naišao na **novi ekran „App not verified"** (ista *Testing*-status posledica, nova varijanta) — rešeno „Advanced → Go to mcp-za-claude (unsafe)" (app je naša sopstvena, upozorenje je samo neprovereno stanje kod Google-a, ne stvarna opasnost); dokumentovano kao Korak F u [[reference/api-konektor-setup.md]]. Novi `token.json` prekopiran na server (19:17).
+>
+> 🔴 **Drugi `--confirm` pokušaj: auth prošao, ali `CUSTOMER_NOT_ALLOWLISTED_FOR_THIS_FEATURE`** — Google Ads API eksplicitno vraća „Customer Match uploads aren't supported... Use the Data Manager API". Nusefekat na **živom nalogu**: prazna user lista `AntasLine - Website Leads` (`customers/1568860314/userLists/9444454571`) je stigla da se kreira pre nego što je pao poziv za dodavanje članova — **M ručno obrisao u Ads UI-ju** (Audience manager → Segments), potvrđeno.
+>
+> 🔴 **Koriguje raniju pretpostavku iz [[2026-07-06-MASTER-PLAN-V2]] 4.9 (2026-08-07):** tada je isti error kod protumačen kao „Basic developer token, treba Standard access u API Center". Istraživanje danas (WebSearch/WebFetch nad zvaničnom Google dokumentacijom + migration guide-om) pokazuje drugačiji, dokumentovan uzrok: od GA Data Manager API-ja (dec. 2025) / obavezno od **01.04.2026**, developer tokeni koji **nikad ranije nisu slali Customer Match zahtev** preko starog `OfflineUserDataJobService`-a su blokirani **bez obzira na tier** — moraju na novi, poseban **Data Manager API**. Standard access zahtev možda uopšte nije potreban za ovo konkretno ograničenje (nije testirano, samo dokumentacija ukazuje).
+>
+> **Šta bi trebalo za migraciju** (nije urađeno ove sesije, samo istraženo): (1) uključiti `datamanager.googleapis.com` u `mcp-za-claude`, (2) verovatno nov OAuth scope → ponovna autorizacija, (3) `pip install google-ads-datamanager` lokalno i na serveru, (4) prepisati upload deo `customer_match_upload.py` — `IngestionServiceClient.ingest_audience_members()` zamenjuje `OfflineUserDataJobService` job-flow; kategorizacija (`categorize_leads.py`) i SHA-256 hešovanje ostaju nepromenjeni. Dokumentovano kao Korak G u [[reference/api-konektor-setup.md]].
+>
+> **Bez izmena u kodu ove sesije** (samo istraživanje + dokumentacija), `leads.csv` netaknut. Ranija sesija (isti dan, van cPanel-a): potvrđen i pushovan commit `4067cd2` (`categorize_leads.py` + `--split-by-category`).
+>
+> Detalji: [[dnevnik/2026-08-11-customer-match-data-manager-api]]
+
+---
+
 ## 2026-08-11 [claude-code] [W5 5.4] Nedeljni izveštaj (04–10.08) — merenje „pravih konverzija" je naduvano ~3× ✅🔴
 
 > Osma stavka istog dana. Izveštaj je kasnio 2 nedelje (poslednji 30.07 za 23–29.07), N6' ga izričito vodi kao „kasne". Format [[CLAUDE]] §10, izvor: sopstveni konektor.

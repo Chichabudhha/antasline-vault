@@ -151,6 +151,34 @@ kopiju konektor foldera, van git-a, po istom principu:
 `scan_leads.py` — `leads.csv` je obična čitljiva tabela, dostupna bilo kad
 preko cPanel File Manager-a/SFTP-a/SSH-a.
 
+## Korak F — Google traži verifikaciju aplikacije (otvoreno, 2026-08-11)
+
+Pri ponovnoj autorizaciji (`authorize_oauth.py`, token istekao/opozvan)
+Google je pokazao ekran **"App not verified"** umesto direktnog "Allow" —
+OAuth consent screen za `mcp-za-claude` je i dalje u statusu **Testing**
+(v. Korak C, tačka 2), a `adwords` scope je Google-ova "sensitive/restricted"
+kategorija koja to okida.
+
+**Brzi put (dovoljan za nas — jedan korisnik, ne javna app):**
+1. [console.cloud.google.com](https://console.cloud.google.com) → projekat
+   `mcp-za-claude` → **APIs & Services → OAuth consent screen** → **Audience**
+   (ili "Test users" sekcija)
+2. Proveri da je nalog kojim se logujemo (isti koji upravlja Ads
+   156-886-0314) dodat u **Test users** listu
+3. Na samom "App not verified" ekranu klikni **Advanced / Napredno** →
+   **Go to mcp-za-claude (unsafe)** — bezbedno je, app je naša sopstvena,
+   upozorenje je samo zato što nije prošla Google-ovu punu review proceduru
+4. Nastavi normalan "Allow" flow posle toga
+
+**Puna verifikacija (NIJE potrebna za nas)**: Google-ova review procedura
+(sedmice, treba demo video + privacy policy URL) postoji samo za javne app
+sa >100 korisnika. Test users limit (do 100 email-a) je više nego dovoljan
+za jednu osobu — ne pokretati punu verifikaciju.
+
+**#ceka-miroslav**: potvrditi da je nalog u Test users listi (korak 2) i
+proći kroz "Advanced → unsafe" klik da se dobije novi `token.json`, pa ga
+prekopirati na server (Korak E).
+
 ## Kad javiti da je gotovo
 
 GA4/GSC/Ads već rade — mogu odmah da ih koristim za izveštaje. Preostaje
