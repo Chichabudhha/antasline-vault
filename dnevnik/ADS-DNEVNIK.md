@@ -108,6 +108,26 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
 
+### 2026-08-11 [claude-code] — W5 5.4 nedeljni presek: ECOTILE CPC 101 RSD (treći presek zaredom naviše), Terase pauzirana, plaćene kumulativ 26
+
+**Period 04–10.08 vs 28.07–03.08** (izvor: sopstveni konektor, `ads_report.py`).
+
+| Kampanja | Potrošnja RSD | Klikovi | CTR | CPC | Konv. |
+|---|---|---|---|---|---|
+| ECOTILE INDUSTRIJSKI PODOVI | 4.247,67 *(3.457,95)* | 42 *(54)* | 20,69% *(19,29%)* | **101,13** *(64,04)* | 2 *(2)* |
+| Podloge za terase i bazene | 2.642,94 *(6.992,60)* | 158 *(366)* | 17,19% *(21,00%)* | 16,73 *(19,11)* | 3 *(4)* |
+| **Ukupno** | **6.890,61** *(10.450,55)* | **200** *(420)* | — | — | **5** *(6)* |
+
+**ECOTILE CPC serija se nastavlja naviše:** 52,20 (23–29.07) → 76,56 (30.07–05.08) → 78,98 (01–05.08 podskup) → **101,13 (04–10.08)**. Nije šum. Unutar nedelje: 08–10.08 potrošeno **2.357 RSD na 24 klika sa 0 konverzija** (CPC ~98). Uzrok dijagnostikovan još 06.08 i nepromenjen — dnevni budžet 1.300 RSD gubi ~50% prikaza na spike-danima. **#ceka-miroslav: 1.800–2.000 RSD ili svesno prihvatiti gubitak.**
+
+⏸️ **„Podloge za terase i bazene" je PAUZIRANA** (zatečeno današnjim 4.10 auditom). Potrošnja je pala **−62%** *pre* pauze (6.992 → 2.643 RSD), klikovi 366 → 158, ali je kampanja trošila sve do 10.08. CPC joj je **16,73 RSD** — šestostruko jeftiniji od ECOTILE. **#ceka-miroslav: je li pauza namerna?** Ako nije, gubi se ~158 klikova nedeljno na najjeftinijem saobraćaju u nalogu.
+
+**Plaćene konverzije kumulativ (od 01.06): 26** (bilo 24 na 06.08) — prag 20–30 pređen. **Preporuka za 4.8 se NE menja: odložiti Maximize Conversions na ~01.09**, jer bi period učenja (~14 dana) pao tačno na dan migracije kad se menjaju URL-ovi oglasa.
+
+🔴 **Ograda na GA4 stranu izveštaja:** GA4 brojači konverzija su naduvani ~3× po sesiji (10 sesija na `/hvala-za-poruku/` → 39 `generate_lead`). **Ads-ova strana broji svoje (5) i nije naduvana isto** — ne izvoditi zaključke o Ads performansama iz GA4 brojača dok se uzrok ne nađe. v. [[dnevnik/2026-08-11-w5-nedeljni-izvestaj]].
+
+---
+
 ### 2026-08-06 [claude-code] — W4 4.2 ECOTILE potvrda: CPC trend NIJE stao na 76,56, popeo se na 78,98 — drugi throttling potpis potvrđen + W4 4.6 overlap pravilo re-verifikovano
 
 **4.2 — ECOTILE prikazi/CPC posle odblokiranja (2026-07-04): NIJE se vratilo na normalu.**

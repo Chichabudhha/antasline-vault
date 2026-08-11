@@ -1,3 +1,27 @@
+## 2026-08-11 [claude-code] [W5 5.4] Nedeljni izveštaj (04–10.08) — merenje „pravih konverzija" je naduvano ~3× ✅🔴
+
+> Osma stavka istog dana. Izveštaj je kasnio 2 nedelje (poslednji 30.07 za 23–29.07), N6' ga izričito vodi kao „kasne". Format [[CLAUDE]] §10, izvor: sopstveni konektor.
+>
+> **Brojke (live-only, 04–10.08 vs 28.07–03.08):** korisnici 633 (802) · sesije 730 (906) · `tel` 9 (19) · `mailto` 2 (0) · hvala-proxy **26 pregleda / 10 sesija** (6 / 3). Ads: ukupno **6.890,61 RSD** (10.450,55) / 200 klikova (420) / **5 konverzija** (6). ECOTILE 4.247,67 RSD / 42 klika / **CPC 101,13** (64,04, **+58%**) / 2 konv · Terase 2.642,94 RSD / 158 klikova / CPC 16,73 / 3 konv.
+>
+> 🔴 **Glavni nalaz — brojka kojom merimo uspeh ceo projekat broji preglede, ne lidove.** Na live-u je ove nedelje **10 sesija / 8 korisnika** stiglo na `/hvala-za-poruku/`, a GA4 beleži **26 pregleda i 39 `generate_lead`** evenata (≈2,6 pregleda i ≈3,9 evenata po sesiji). Obrazac je **deterministički od jula**: svakog dana `generate_lead = 1,5 × broj pregleda`, a svi dnevni pregledi su parni brojevi — dakle nije nasumično osvežavanje stranice od strane korisnika. Kumulativ od 01.06: **119 pregleda = 51 sesija / 43 korisnika**. Uzrok NIJE dijagnostikovan ove sesije (kandidat: dupli `page_view` + GTM Page View trigger koji okida 3×) — ništa nije dirano.
+>
+> ⚠️ **Zašto je hitno pred migraciju:** (1) na dan migracije se pušta GTM paket Enhanced Conversions-a koji visi na istom `generate_lead` tagu; (2) svako post-live poređenje („da li su 301 oborile konverzije?") meri se baš ovom serijom; (3) baseline „~55/mes" i gate KPI su isto pregledima mereni. Ads-ova strana broji svoje (5 konverzija) i nije naduvana u istoj meri — ne izvoditi zaključak o Ads performansama iz GA4 brojača.
+>
+> 🔴 **Drugi nalaz — konektorovi totali nisu live brojke.** `ga4_report.py` vraća `activeUsers`/`sessions` **bez ijednog filtera**, a lokalni build od 22.07 nosi pravi GTM kontejner i šalje u istu property. Prethodna nedelja: **1.068 pregleda sa `localhost`** vs 1.504 sa live-a (42% ukupnog!), ova nedelja 213. Sirovi izlaz skripte je zato pokazivao 810→667 korisnika, a stvarni live pad je 802→633. Kontaminacija ključnih evenata je mala ali ne nula (2 `generate_lead` sa localhost-a, 2 `tel` sa staging-a).
+>
+> **Ads napomene:** ECOTILE CPC +58% uz manje klikova; 08–10.08 potrošio 2.357 RSD na 24 klika sa **0 konverzija** (budžet odluka od 06.08 i dalje čeka M). Terase su potrošnju prepolovile (−62%) pre nego što su pauzirane — pauza potvrđena današnjim 4.10 auditom, **nije potvrđeno da je namerna** (#ceka-miroslav). **Plaćene konverzije kumulativ: 26** (bilo 24 na 06.08) — prag 20–30 pređen, ali preporuka za 4.8 ostaje nepromenjena: **odložiti na ~01.09**, jer bi period učenja Smart Bidding-a pao tačno na dan migracije.
+>
+> **GSC 28d (12.07–08.08), pozicije 5–15 sa niskim CTR:** epoksidni podovi cena po m2 (361 pr. / poz. 9,6 / 0,83%) · podovi za terase (269 / 9,7 / 2,23%) · industrijski podovi (164 / **12,4** / 1,22%) · piklbol (134 / 14,2 / **0%**) · epoksidni podovi (125 / 9,9 / 0,80%). Dva od pet su epoksid-conquest upiti (post 2542).
+>
+> **Skripte (scratchpad, ad-hoc — nisu upisane u konektor):** `ga4_hostname_check.py` (eventi + pregledi po `hostName` i po danu), `ga4_live_only.py` (totali filtrirani na live + dnevna serija), `ga4_hvala_paths.py` (hvala po tačnoj putanji + sessions/users vs eventCount). Ako se `hostName` filter usvoji trajno, ide u `ga4_report.py` — nije menjano bez odluke.
+>
+> **Bez izmena na buildu i bez izmena u bazi** — read-only sesija, nema backup fajla.
+>
+> Detalji: [[dnevnik/2026-08-11-w5-nedeljni-izvestaj]]
+
+---
+
 ## 2026-08-11 [claude-code] [W3 / checklist §A] GSC priprema — build je emitovao 3 sitemap-a gde live emituje 7 ✅🔴
 
 > Sedma stavka istog dana. Poslednja neštriklirana CC stavka iz [[migracija/2026-08-10-pre-migration-checklist]] §A. Delovala je administrativno („sitemap URL spreman za resubmit, alerti uključeni") — ispala stvarna rupa.

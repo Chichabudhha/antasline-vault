@@ -5,6 +5,22 @@ azurirano: 2026-08-11
 
 # Naučene lekcije (tehnički gotchas)
 
+## GA4 totali iz konektora UKLJUČUJU `localhost` i `staging` — bez `hostName` filtera brojke su tuđe (nedeljni izveštaj, 2026-08-11)
+- `ga4_report.py` vraća `activeUsers`/`sessions` bez ijednog filtera, a lokalni build od 2026-07-22 nosi **pravi** GTM-TRDT8K9 kontejner (mu-plugin `al-tracking-gtm-consent.php`) i šalje u istu GA4 property.
+- Izmereno: nedelja 28.07–03.08 imala je **1.068 pregleda sa `localhost`** na 1.504 sa live-a — skoro 42% ukupnih pregleda je bio naš rad. Nedelja 04–10.08: 213 lokalnih.
+- Posledica: neko poređenje 7d vs 7d može pokazati „pad saobraćaja" koji je zapravo samo **manje našeg lokalnog testiranja** te nedelje.
+- Ključni eventi su manje pogođeni (2 `generate_lead` sa localhost-a od 41 u nedelji 04–10.08), ali nisu nula — `staging.antasline.com` je dao i 2 `tel` eventa.
+- **Pravilo:** svaki GA4 izveštaj koji ide Miroslavu filtrira se na `hostName == www.antasline.com`. Kad ta razlika postoji, ona se i navede u napomenama.
+- Trajno rešenje (nije urađeno, kandidat posle live-a): GA4 filter za interni saobraćaj ili odvojen Measurement ID za lokalni build.
+
+## `generate_lead` i hvala-proxy broje PREGLEDE, ne lidove — inflacija ~3× po sesiji (nedeljni izveštaj, 2026-08-11)
+- Nedelja 04–10.08 na live-u: `/hvala-za-poruku/` ima **10 sesija / 8 korisnika**, ali **26 pregleda** i **39 `generate_lead`** evenata. Prethodna nedelja isto: 3 sesije → 6 pregleda → 9 evenata.
+- Obrazac je **deterministički od jula**: svakog dana važi `generate_lead = 1,5 × broj pregleda`, a svi dnevni pregledi su parni brojevi. To ne liči na osvežavanje stranice od strane korisnika.
+- Znači da je cela KPI serija „prave konverzije" (baseline „~55/mes", kumulativ 119 od 01.06) merena **pregledima** — po sesijama je to 51.
+- ⚠️ Ne meša se sa junskim istorijskim šumom: `generate_lead` je u junu okidao i na `/kontakt/` (staro pravilo, [[CLAUDE]] §4), pa kumulativ evenata (220) ima i taj rep — obrazac 1,5× važi tek od jula.
+- ⚠️ Ads-ova strana broji svoje (5 konverzija te nedelje) i **nije** naduvana u istoj meri — ne izvoditi zaključak o Ads performansama iz GA4 brojača.
+- Uzrok nije dijagnostikovan (kandidat: dupli `page_view` na hvala stranici + GTM Page View trigger koji okida 3×). **Dijagnoza pre migracije** — inače ulazi u Enhanced Conversions i u post-live poređenja.
+
 ## Yoast→Rank Math importer NE prenosi taksonomijske sitemap-e (GSC priprema, 2026-08-11)
 - Posle migracije SEO plugina (05.08) svih 12 `tax_*_sitemap` ključeva u `rank-math-options-sitemap` je bilo `off`, dok je Yoast na live-u imao uključene `category`/`product_cat`/`product_tag`/`product_brand`.
 - Rezultat: build je emitovao **3 child sitemap-a tamo gde live emituje 7**. Pogađalo je 27 URL-ova sa izmerenih **79 klikova / 2.583 prikaza** (GSC, 3 meseca).
