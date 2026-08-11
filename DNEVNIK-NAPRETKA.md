@@ -1,3 +1,27 @@
+## 2026-08-11 [cpanel-live] Live backup (DB+wp-content) na 2 lokacije + robots.txt AI-crawler pravila aktivirana i ispravljena ✅
+
+> Nastavak iste `[cpanel-live]` sesije (LiteSpeed nalaz ispod). Zatvara 2 od 3 preostale
+> gate stavke iz [[2026-07-06-MASTER-PLAN-V2]] §3.
+>
+> **Backup**: ručan DB dump (`wp db export`, 17,3MB) + `wp-content` tar.gz (1,29GB,
+> 38.475 fajlova, `tar tzf` integritet potvrđen), MD5 checksume za oba. Miroslav skinuo
+> na `C:\Miroslav\Antas line\Backup` i `G:\AntasLine-Backups` (2 lokacije potvrđeno) —
+> kopije zatim obrisane sa servera (kvota bila tesna, 3,15GB od 12GB slobodno).
+>
+> **robots.txt**: Miroslav dodao 9 AI-crawler pravila (GPTBot, ChatGPT-User, ClaudeBot,
+> Claude-Web, anthropic-ai, PerplexityBot, Perplexity-User, Google-Extended, CCBot, svi
+> `Allow: /`). Provera otkrila 2 sitna problema: (1) dupliran `User-agent: *` blok — nije
+> fatalno (Google unija duplikate), Miroslav sam spojio u jedan; (2) mojibake u komentaru
+> (`â€”` umesto crtice) — isti poznat charset-bag kao `llms.txt`
+> ([[reference/naucene-lekcije]] 2026-07-23), `.htaccess` fix (`^llms(-full)?\.txt$`)
+> nije pokrivao `robots.txt`. Fix: proširen regex na `^(llms(-full)?|robots)\.txt$` —
+> potvrđeno `Content-Type: text/plain; charset=utf-8` na oba fajla, sajt živ (200).
+>
+> **Bez izmena na sadržaju/bazi** — samo `.htaccess` charset dodatak (bezopasan,
+> ne dira postojeći `llms.txt` blok) i privremeni backup fajlovi (obrisani).
+
+---
+
 ## 2026-08-11 [cpanel-live] LiteSpeed Redis/Web Cache Manager — nove cPanel opcije istražene, NE rešavaju stari QUIC.cloud problem, Redis odložen ✅
 
 > Miroslav primetio dve nove stavke u cPanel-u ("LiteSpeed Redis Cache Manager", "LiteSpeed Web
@@ -32,6 +56,47 @@
 >
 > **Bez izmena na buildu/bazi/live sajtu** — read-only pregled servera + jedan probni, blokiran
 > (dakle bezefektni) uapi poziv. Detalji: [[dnevnik/2026-08-11-litespeed-redis-web-cache-manager]].
+## 2026-08-11 [claude-code] [W1] Ergomat DuraStripe trake — slike po bojama + simple → variable ✅
+
+> Dvanaesta stavka istog dana. M donео nove fotografije u `C:\Miroslav\Antas line\Proizvodo\Ergomat trake\` sa instrukcijom „dodaj ih; ako nisu varijabilni proizvodi — neka budu".
+>
+> **Ulaz:** 11 fajlova, od kojih su `Zuta.webp` i `Žuta.webp` **bajt-identični duplikat** (isti SHA-256) → 10 jedinstvenih. Svi već **800×800 WebP 1:1** — po specifikaciji, bez konverzije. Dve linije: **Xtreme** = pune boje (6), **Supreme V** = dvobojne hazard rolne sa dijagonalnim prugama (4). Mapiranje potvrđeno vizuelnim pregledom slika, ne samo iz imena fajlova.
+>
+> **Izvršeno:** oba proizvoda su bila `simple` → prebačena na `variable` sa `pa_boja` kao atributom varijacije, po obrascu koji na buildu već koristi PermaStripe (16922). **#16518 Xtreme**: 11 varijacija, 6 sa slikom. **#16520 Supreme V**: 11 varijacija, 4 sa slikom. Za Supreme V napravljena **3 nova `pa_boja` termina** — `Crno-bela`, `Crveno-bela`, `Zeleno-bela` (`Crno-žuta` je već postojala); hazard varijante su odvojene od punih boja koje je proizvod već imao.
+>
+> **Odluka u toku rada:** boje koje proizvođač nudi a za koje nemamo fotku (Braon, Ljubičasta, Svetlo plava…) **dobile su varijaciju bez sopstvene slike** (fallback na glavnu sliku) umesto da budu izbačene iz ponude — ne briše se tačna informacija zbog toga što fali fotografija.
+>
+> **Gotcha-i koji su se aktivirali:** (1) `wc_product_attributes_lookup` postaje stale posle programskog `wp_set_object_terms()` — regenerisana preko `LookupDataStore::create_data_for_product()` + obrisani `_transient_wc_layered_nav_counts_*`, inače filteri po boji broje pogrešno (`woodmart-theme` §8). (2) Dijakritika upisana isključivo preko PHP-a uz `wp-load.php`, nikad `mysql -e` (§10) — provereno `HEX`-om u bazi: `Žuta`=`C5BD…`, `Ljubičasta`=`…C48D…`.
+>
+> **Verifikovano:** obe stranice 200 · tačno 1×H1 · **1× Product schema** (nema dupliranja uprkos promeni tipa proizvoda) · `variations_form` prisutan · birač boje testiran u pregledaču (`Plava` → `durastripe-xtreme-plava.webp`, `Crno-bela` → `durastripe-supreme-v-crno-bela.webp`) · 0 slomljenih slika · bez horizontalnog overflow-a. Regresija čista: PermaStripe, Mean Lean, `/kategorija-proizvoda/industrijski-podovi/`.
+>
+> 🟡 **Svesno ostavljeno (M: „ostavi tako"):** boje se prikazuju kao **padajući meni**, ne kao swatch kvadratići — `pa_boja` je u bazi `attribute_type=select`. Isto važi i za PermaStripe, dakle nije regresija; prebacivanje na `color` bi pogodilo sve proizvode koji koriste boju.
+>
+> **Backup:** `antasline-backups/antasline_local_2026-08-11_pre-ergomat-trake-varijacije.sql` (36,6 MB) · **skripta:** `migracija/alati/job-ergomat-trake-varijacije.php` (izmeštena iz docroot-a)
+
+---
+
+## 2026-08-11 [claude-code] [W5] Inflacija `generate_lead` DIJAGNOSTIKOVANA — dva različita baga, jedan preživljava migraciju ✅🔴
+
+> Jedanaesta stavka istog dana, nastavak iste sesije. Zatvara 🔴 bloker otvoren jutros („uzrok nije dijagnostikovan, kandidat: dupli page_view / trigger koji okida 3×"). Metod: čitanje objavljenog `gtm.js` kontejnera (bez slanja ijednog hita) + merenje stvarnih `analytics.google.com/g/collect` zahteva po `en=`/`_s=` u pregledaču, na live-u **i** na lokalnom buildu kao kontrolnoj grupi.
+>
+> **Kontejner, pravilo za hvala stranicu:** `IF [event=gtm.js AND putanja sadrži /hvala-za-poruku]` okida **četiri** taga — `generate_lead` (id 17) · `page_view` (id 18) · Ads konverzija `__awct` (id 20) · `fbq('track','Lead')` (id 38). Nezavisno od toga, Google tag `G-H8BRCZN8W4` (id 11, okidač `gtm.init`) šalje **svoj automatski `page_view`** na svakoj stranici.
+>
+> 🔴 **Bag A — suvišan `page_view` tag (id 18). Postoji i na buildu → PREŽIVLJAVA migraciju.** Jedno učitavanje daje `_s=1 page_view` (Google tag) + `_s=2 generate_lead` + `_s=3 page_view` (tag 18). Identično live i lokal. **Zato je hvala-proxy tačno 2× stvaran broj dolazaka**, i zato su svi dnevni brojevi parni — obrazac koji je jutros primećen ali nije objašnjen. Popravka je brisanje jednog taga; **nije izvršeno** (GTM izmena na produkciji = M odluka).
+>
+> 🔴 **Bag B — trostruki `generate_lead`. Samo live → NE prenosi se.** Live Kallyas stranica nosi **dva odvojena GTM embeda** istog kontejnera (jedan iz teme sa `data-cfasync="false"`, drugi kroz `litespeed/javascript`) + noscript iframe; `dataLayer` sadrži `gtm.js` **dvaput**. Izmereno: live 1 učitavanje = 2× `page_view` + **3×** `generate_lead` (poklapa se sa GA4 agregatom 26 pv / 39 gl). Lokalni WoodMart build ima **jedan** embed → **1×** `generate_lead`.
+>
+> ⚠️ **Najvažnija posledica — za prvi post-live izveštaj:** posle 24.08 obe brojke padaju same od sebe (`generate_lead` na ~⅓; hvala-proxy na ~½ ako se bag A ne popravi, ukupno ~⅙ ako se popravi). **To nije pad konverzija.** Baseline „~55/mes" i gate KPI su mereni naduvanom serijom.
+>
+> **Metodološka napomena:** naknadna reprodukcija drugog embeda **ne radi** — ni ubacivanje drugog `gtm.js` skript-taga posle učitavanja, ni drugi `gtm.js` push u `dataLayer` ne okidaju ništa (GTM čuva `google_tag_manager[id]`). Mora biti u početnom HTML-u. Zato je live merenje bilo neophodno.
+>
+> **Neprovereno (ne tvrditi bez merenja):** da li se Ads konverzija i `fbq Lead` isto multipliciraju — isto pravilo ih okida, ali Ads deduplicira po kliku.
+>
+> **Bez izmena na buildu, u bazi, u GTM-u i na live-u.** Live je samo učitan u pregledaču (2 učitavanja) — dodaje jednu sesiju u GA4 statistiku 11.08. Skripte (scratchpad, ad-hoc): `ga4_hvala_diag.py`, `parse_gtm.py`.
+>
+> **#ceka-miroslav:** obrisati GTM tag id 18 — preporuka **na dan migracije**, u isti paket sa Enhanced Conversions i Meta Pixel čišćenjem.
+>
+> Detalji: [[dnevnik/2026-08-11-generate-lead-inflacija-dijagnoza]]
 
 ---
 
