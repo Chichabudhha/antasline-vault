@@ -46,8 +46,11 @@ prethodni: "[[analiza/2026-07-04-snapshot-full]]"
 5. 🔴 **ECOTILE CPC eskalira treći mesec zaredom: 31 → 54 → 90 RSD.**
    Terase stabilne na 17–19 RSD. Uzrok (budžet gubi 50% prikaza na spike-danima)
    dijagnostikovan 06.08, odluka o budžetu i dalje čeka.
-6. 🟡 **`mailto` event je bio mrtav 6 nedelja** (26.06 → 06.08, nula događaja),
-   pa se sam vratio 07.08. Jul = 0 `mailto`. Nije statistička slučajnost.
+6. ⚪ **`mailto` = 0 u julu je artefakt, ne pad** — event je bio mrtav 27.06→06.08
+   jer ga je pratio MonsterInsights (gašenje MI-ja u BLOK A ga je oborilo), a
+   popravljen je **07.08** (GTM Version 14). Merenje po danu to potvrđuje: prvi
+   događaj posle popravke 07.08, stopa se vratila na ~0,5/dan.
+   → [[dnevnik/2026-08-07-gtm-mailto-tag]]
 7. 🟢 **AI saobraćaj raste**: jul 28 sesija (baseline jul 2026 u planu: 9/90d).
    ChatGPT nosi 26 od 28.
 
@@ -236,6 +239,15 @@ Organic nosi **skoro tri četvrtine** saobraćaja — potvrđuje prioritet
 | 2026-05 | 159 | 81 | 9 |
 | 2026-06 | 124 | 69 | **16** |
 | **2026-07** | **54** | **59** | **0** |
+
+⚪ **`mailto` = 0 u julu je artefakt prekida, ne pad.** Event je pratio
+MonsterInsights; gašenje MI-ja (BLOK A) ga je oborilo **27.06**, a GTM zamena
+(nov trigger + tag, **Version 14**) objavljena je **07.08** →
+[[dnevnik/2026-08-07-gtm-mailto-tag]]. Merenje po danu (live-only) potvrđuje
+popravku: poslednji događaj pre prekida **26.06**, prvi posle **07.08**, pa
+09.08 — **2 događaja / 4 dana ≈ 0,5/dan, ista stopa kao u junu** (16/mes).
+🔴 **Ne porediti jul sa junom ni avgustom na ovoj metrici** — meri se prekid,
+ne ponašanje korisnika.
 
 ⚠️ `generate_lead` pre jula sadrži i istorijski rep (event je nekad okidao na
 `/kontakt/`) — brojevi do juna nisu uporedivi sa julskim ni posle korekcije.
@@ -492,7 +504,8 @@ Blokirano na Google kvoti. Jedina neblokirana stavka ostaje 5.3 (recenzije
 ### 6.4 Tracking
 1. Obrisati GA4 tag **id 18** (dupli `page_view`) — kandidat za dan migracije
 2. Ispraviti KPI tablu u planu na **sesije** umesto pregleda (§2.3b)
-3. Proveriti `mailto` tag — 6 nedelja tišine (26.06 → 06.08) nije slučajnost
+3. ✅ `mailto` — nema šta da se proverava, popravljen 07.08 (GTM v14) i
+   merenje potvrđuje povratak na normalnu stopu; jul = 0 je artefakt prekida
 4. Odluka o trajnom `hostName` filteru (danas dodat kao `--live-only` flag)
 
 ---

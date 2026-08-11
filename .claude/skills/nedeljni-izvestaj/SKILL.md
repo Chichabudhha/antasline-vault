@@ -84,6 +84,34 @@ eksplicitni `--from`/`--to`. Detalji pokretanja/kredencijala:
 - Ako kampanja vrati 0/prazno ALI skripta radi: proveri spend+impressions
   pre nego što pretpostaviš grešku (throttling istorija — [[reference/naucene-lekcije]])
 
+### AI kanal — `ai_report.py --from --to` (🔴 obavezno, svake nedelje)
+- Dodato 2026-08-11 jer se AI deo *stalno zaboravljao* (mesečni test 5.5 je
+  preskočen ceo jul→avgust ciklus). Sada je deo standardnog povlačenja, ne
+  poseban zadatak.
+- Poziva se DVA puta kao i ostalo (tekućih 7d + prethodnih 7d). Vraća
+  `ai_sessions_total`, `po_izvoru`, `top_landing`, `eventi`.
+- ⚠️ **Brojke su male (jednocifrene po nedelji) — nedeljni Δ je skoro uvek
+  šum.** Zato se u izveštaju prikazuje **31d rolling** prozor (tekućih 31 vs
+  prethodnih 31), ne 7d. Jedina 7d stvar vredna pomena: pojava **novog izvora**
+  (Claude, Copilot, Perplexity) ili nula sesija dve nedelje zaredom.
+- Kanal „AI Assistant" u GA4 potcenjuje stvarno ~3× — koristi
+  `ai_sessions_total` iz skripte, ne GA4 kanal.
+
+### 🔴 Mesečni AI test 5.5 — provera roka (svake nedelje, 30 sekundi)
+Pogledaj datum poslednjeg fajla `analiza/*-ai-test-*.md`.
+
+| Prošlo od poslednjeg testa | Šta uraditi |
+|---|---|
+| < 30 dana | ništa, ne pominjati u izveštaju |
+| 30–37 dana | jedan red u napomenama: „AI test dospeva za N dana" |
+| **> 37 dana** | 🔴 **„Akcija nedelje" je AI test** — ne predlagati ništa drugo dok se ne odradi |
+
+Metod i 5 fiksnih promptova: `[[seo/geo-ai-plan]]` §5, poslednji rezultat
+`[[analiza/2026-07-22-ai-test-baseline]]`. Promptove **ne menjati** (uporedivost
+trenda); jedini dozvoljeni dodatak je 6. prompt o „bez lepljenja" iz baseline
+preporuke. Izvršava se u ChatGPT-u, **Incognito bez naloga**, svaki prompt u
+novom razgovoru.
+
 ### GSC — `gsc_report.py --from --to`
 - Vraća već filtrirane `opportunities` (pozicija 5–15, sortirano po
   prikazima) — top upiti sa niskim CTR-om
@@ -101,8 +129,11 @@ eksplicitni `--from`/`--to`. Detalji pokretanja/kredencijala:
    prag za Smart Bidding je 20–30 plaćenih)
 4. **SEO (GSC 28d)**: top 5 upita po prikazima na pozicijama 5–15 sa niskim
    CTR — tabela: upit · prikazi · pozicija · CTR · predlog
-5. Kratke napomene (2–4 bullet-a max): šta je uzrok većih promena
-6. Poslednja rečenica: **"Akcija nedelje: [jedan konkretan predlog]"**
+5. **AI kanal (31d rolling)**: tabela — period · AI sesije · po izvoru ·
+   top landing. Ispod: status mesečnog testa 5.5 (datum poslednjeg + „dospeva
+   za N dana", ako je prošlo ≥30 dana)
+6. Kratke napomene (2–4 bullet-a max): šta je uzrok većih promena
+7. Poslednja rečenica: **"Akcija nedelje: [jedan konkretan predlog]"**
 
 ## 4. Pravila interpretacije (ne kršiti)
 

@@ -53,16 +53,29 @@
 > `podne obloge za terasu`: **4.223 RSD, 237 klikova, 0 konverzija** — relevantan
 > upit iz ponude, dakle problem landinga, ne targetiranja.
 >
-> 🟡 **`mailto` je bio mrtav 6 nedelja** — nula događaja 26.06→06.08, vratio se sam
-> 07.08 (jul = 0). Pri prethodnoj stopi (~0,5/dan) 40 dana tišine nije slučajnost.
-> Uzrok nije dijagnostikovan.
+> ⚪ **`mailto` = 0 u julu — ispravljeno u toku sesije (M):** snapshot je to prvo
+> prijavio kao „6 nedelja tišine, uzrok nedijagnostikovan", što je **netačno**.
+> Uzrok je nađen 27.07 (event je pratio **MonsterInsights**, ne GTM — gašenje MI-ja
+> u BLOK A ga je oborilo 27.06), a popravka izvršena **07.08** (nov trigger + tag,
+> **GTM Version 14**) → [[dnevnik/2026-08-07-gtm-mailto-tag]]. Merenje po danu se
+> poklapa u dan i **potvrđuje popravku**: prvi događaj posle nje 07.08, pa 09.08 —
+> ~0,5/dan, ista stopa kao pre prekida (jun 16/mes). Time se zatvara i otvorena
+> stavka iz te sesije („proveriti za par dana da count raste"). **Jul = 0 je
+> artefakt prekida, ne pad** — ne porediti jul sa junom/avgustom na ovoj metrici.
+> 🔵 **Zašto je promaklo:** kad je stavka zatvorena 07.08, redovi su iz [[PROGRESS]]
+> Blokera **obrisani**, pa u fajlu koji se čita na otvaranju sesije nije ostao trag;
+> dnevnik fajl jeste postojao, ali se on po protokolu čita samo na zahtev.
 >
 > 🟢 AI saobraćaj jul: **28 sesija** (ChatGPT 26) vs baseline 9/90d. ⚠️ Mesečni AI
 > test (5 promptova, 5.5) **nije ponovljen** — ostaje zaseban zadatak.
 > ⚪ GMB: **429 quota**, peti neuspeli retest, nepromenjeno od 30.07.
 >
 > **Bez izmena na buildu, bazi i live sajtu.** Izmenjeni fajlovi: `ga4_report.py`,
-> 2 × `SKILL.md`, nov `analiza/2026-08-11-snapshot-jul.md`.
+> 2 × `SKILL.md`, nov `analiza/2026-08-11-snapshot-jul.md`. Nema DB backup-a
+> (nijedna izmena nije dirala WordPress/SQL). Skripte (scratchpad, namerno nisu
+> upisane u konektor): `snap_ga4.py`, `snap_gsc.py`, `snap_ads.py`,
+> `snap_ads_convcheck.py`, `mailto_check.py`.
+> Detalji: [[dnevnik/2026-08-11-mesecni-snapshot-jul]] · [[analiza/2026-08-11-snapshot-jul]].
 
 ## 2026-08-11 [cpanel-live] LiteSpeed CCSS/UCSS/LQIP/VPI status provera — UCSS oživeo posle 11 dana, LQIP nov lokalni bug nađen (fix odbijen) ✅
 

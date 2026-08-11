@@ -19,7 +19,7 @@ status: zavrseno
 
 ## Otvorene akcije
 - [x] Trigger + tag kreirani, testirani, objavljeni #claude-code
-- [ ] Za par dana proveriti GA4 real-time/Events da `mailto` count raste (očekivano ~10–16/mes) #ceka-miroslav
+- [x] ✅ **POTVRĐENO 2026-08-11** — `mailto` count raste. Mereno po danu (GA4, live-only): poslednji događaj pre prekida **26.06**, prvi posle popravke **07.08**, pa **09.08** → 2 događaja / 4 dana ≈ **0,5/dan**, ista stopa kao pre prekida (jun: 16/mes). Tag radi kako je projektovano. Usput: jul = **0** je artefakt prekida, ne pad — ne koristiti ga kao podatak u poređenjima. v. [[analiza/2026-08-11-snapshot-jul]] §2.3
 - [ ] Meta Business Manager domain verifikacija, Event Match Quality, Conversions API — traže pristup Miroslavljevom Meta nalogu, van dosega Claude Code-a #ceka-miroslav
 
 ## Beleške / odluke

@@ -5,6 +5,13 @@ azurirano: 2026-08-11
 
 # Naučene lekcije (tehnički gotchas)
 
+## Popravljen tracking bag ostavlja rupu u podacima — zatvaranje stavke mora ostaviti ✅ trag u [[PROGRESS]], ne biti obrisano (2026-08-11)
+- `mailto` je bio mrtav **27.06–06.08** (pratio ga MonsterInsights, gašenje MI-ja u BLOK A ga oborilo), dijagnostikovan 27.07, popravljen 07.08 (GTM Version 14). Sve uredno u [[dnevnik/2026-08-07-gtm-mailto-tag]].
+- Ali kad je stavka zatvorena, redovi su iz **PROGRESS Blokera obrisani**. Mesečni snapshot (11.08) je istu rupu ponovo otkrio u podacima i prijavio kao **nov, nedijagnostikovan nalaz** — dvaput istraženo, jednom pogrešno prijavljeno Miroslavu.
+- Zašto dnevnik fajl nije pomogao: po protokolu (`/antasline-sesija` §1) na otvaranju se čitaju PROGRESS + master plan + ledger; pojedinačni `dnevnik/*.md` se čita **samo na zahtev**. Ako trag nije u ta tri fajla, praktično ne postoji.
+- **Pravilo: bag koji je ostavio rupu u istorijskim podacima se ne briše iz Blokera — prepiše se u ✅ red sa TAČNIM datumskim opsegom rupe.** Analiza koja te datume ne zna nužno ih otkriva iznova i tumači kao ponašanje korisnika (npr. „`mailto` pao na nulu") umesto kao prekid merenja.
+- Isti obrazac preti i drugim serijama sa poznatim prekidom: `generate_lead` (istorijski rep na `/kontakt/` do BLOK A), Windsor `conversions` kontaminacija 17–22.06, hvala-proxy pre migracije (÷2).
+
 ## „Konverzije" u Google Ads-u nisu ono što misliš dok ne pogledaš `conversion_action` podešavanja (2026-08-11)
 - Kolona **„Conversions"** (i signal koji Smart Bidding uči) sadrži **samo** akcije sa `include_in_conversions_metric = True`. Kolona „All conversions" sadrži sve. Ime akcije ne govori ništa o tome u kojoj je koloni — `Clicks to call` (Google-hosted) je bila *van* kolone, a `Klik na telefon (web)` (naša, WEBPAGE) *unutra*.
 - Posledica koja je stvarno nastala: pravilo iz [[CLAUDE]] §4 („ne uvoziti GA4 `tel` kao Ads konverziju") je **verovano na reč** mesecima, a u nalogu je `tel` sve vreme bio primarna konverzija — 17 od „26 plaćenih konverzija" (01.06–10.08). Ceo prag za 4.8 (Maximize Conversions) je meren pogrešnim brojačem.
