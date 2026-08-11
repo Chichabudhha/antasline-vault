@@ -34,8 +34,8 @@ Redosled je izveden iz GSC curenja (pozicija 1–3, skoro nula klikova), ne iz u
 
 | # | Dan | Stranica | GSC | Foto materijal (potvrđen na disku) | Status |
 |---|---|---|---|---|---|
-| 1 | 09–10.08 | `/kako-napraviti-teren-za-basket…/` | 9.500 impr / 397 kl | 5 kadrova (Pelješac, Tara, Bajina Bašta, Ledine, dvorište) | ✅ 40s gotov, kadar 5 se rerenderuje |
-| 2 | 11.08 | **rerender kadra 5 u Flow-u** (skidanje Gemini žiga) | — | `flow-in/05-dvoriste.jpg` (4608×2592) | 🔄 u toku |
+| 1 | 09–10.08 | `/kako-napraviti-teren-za-basket…/` | 9.500 impr / 397 kl | 5 kadrova (Pelješac, Tara, Bajina Bašta, Ledine, dvorište) | ✅ **finalno: 38,0s, 5×Flow, bez žiga** |
+| 2 | 11.08 | **rerender kadra 5 u Flow-u** (skidanje Gemini žiga) | — | `flow-in/05-dvoriste.jpg` (4608×2592) | ✅ 10 kredita, video remontiran na **38,0s** |
 | 3 | | `/sportske-podloge/kosarkaske-konstrukcije/` | 478 kl, ima cene = komercijalna | `Antas line/Proizvodo/kosarkaske kosevi/` — MicroShot 125, MiniShot 225, LiteShot 325, sklopljene/rasklopljene | ⏳ |
 | 4 | | Košarkaški koš / „visina koša" (16586) | 1.089 impr / **9 kl**, poz 1–2 | isti folder + `teren za basket u dvoristu.jpg` (koš u kadru) | ⏳ |
 | 5 | | `/podloga-za-teniske-terene/` (šljaka) | 1.739 impr / **2 kl**, poz 4,4 | `novi sajt/Teniski tereni/` — TK Slice Valjevo, TK Đukić Beograd, Dom učenika Patrijarh Pavle | ⏳ |
