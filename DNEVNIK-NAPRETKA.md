@@ -1,3 +1,23 @@
+## 2026-08-11 [claude-code] [W5] Inflacija `generate_lead` DIJAGNOSTIKOVANA — dva različita baga, jedan preživljava migraciju ✅🔴
+
+> Jedanaesta stavka istog dana, nastavak iste sesije. Zatvara 🔴 bloker otvoren jutros („uzrok nije dijagnostikovan, kandidat: dupli page_view / trigger koji okida 3×"). Metod: čitanje objavljenog `gtm.js` kontejnera (bez slanja ijednog hita) + merenje stvarnih `analytics.google.com/g/collect` zahteva po `en=`/`_s=` u pregledaču, na live-u **i** na lokalnom buildu kao kontrolnoj grupi.
+>
+> **Kontejner, pravilo za hvala stranicu:** `IF [event=gtm.js AND putanja sadrži /hvala-za-poruku]` okida **četiri** taga — `generate_lead` (id 17) · `page_view` (id 18) · Ads konverzija `__awct` (id 20) · `fbq('track','Lead')` (id 38). Nezavisno od toga, Google tag `G-H8BRCZN8W4` (id 11, okidač `gtm.init`) šalje **svoj automatski `page_view`** na svakoj stranici.
+>
+> 🔴 **Bag A — suvišan `page_view` tag (id 18). Postoji i na buildu → PREŽIVLJAVA migraciju.** Jedno učitavanje daje `_s=1 page_view` (Google tag) + `_s=2 generate_lead` + `_s=3 page_view` (tag 18). Identično live i lokal. **Zato je hvala-proxy tačno 2× stvaran broj dolazaka**, i zato su svi dnevni brojevi parni — obrazac koji je jutros primećen ali nije objašnjen. Popravka je brisanje jednog taga; **nije izvršeno** (GTM izmena na produkciji = M odluka).
+>
+> 🔴 **Bag B — trostruki `generate_lead`. Samo live → NE prenosi se.** Live Kallyas stranica nosi **dva odvojena GTM embeda** istog kontejnera (jedan iz teme sa `data-cfasync="false"`, drugi kroz `litespeed/javascript`) + noscript iframe; `dataLayer` sadrži `gtm.js` **dvaput**. Izmereno: live 1 učitavanje = 2× `page_view` + **3×** `generate_lead` (poklapa se sa GA4 agregatom 26 pv / 39 gl). Lokalni WoodMart build ima **jedan** embed → **1×** `generate_lead`.
+>
+> ⚠️ **Najvažnija posledica — za prvi post-live izveštaj:** posle 24.08 obe brojke padaju same od sebe (`generate_lead` na ~⅓; hvala-proxy na ~½ ako se bag A ne popravi, ukupno ~⅙ ako se popravi). **To nije pad konverzija.** Baseline „~55/mes" i gate KPI su mereni naduvanom serijom.
+>
+> **Metodološka napomena:** naknadna reprodukcija drugog embeda **ne radi** — ni ubacivanje drugog `gtm.js` skript-taga posle učitavanja, ni drugi `gtm.js` push u `dataLayer` ne okidaju ništa (GTM čuva `google_tag_manager[id]`). Mora biti u početnom HTML-u. Zato je live merenje bilo neophodno.
+>
+> **Neprovereno (ne tvrditi bez merenja):** da li se Ads konverzija i `fbq Lead` isto multipliciraju — isto pravilo ih okida, ali Ads deduplicira po kliku.
+>
+> **Bez izmena na buildu, u bazi, u GTM-u i na live-u.** Live je samo učitan u pregledaču (2 učitavanja) — dodaje jednu sesiju u GA4 statistiku 11.08. Skripte (scratchpad, ad-hoc): `ga4_hvala_diag.py`, `parse_gtm.py`.
+
+---
+
 ## 2026-08-11 [claude-code] [W5 5.4] Ponovljen nedeljni izveštaj sirovim konektorom — obe današnje lekcije pregažene istog dana ⚠️
 
 > Deseta stavka istog dana. Sesija je pokrenuta `/antasline-konektor` pa `/nedeljni-izvestaj` **bez čitanja [[PROGRESS]]/[[DNEVNIK-NAPRETKA]] prvo** — izveštaj za isti period (04–10.08) je već bio urađen ranije danas (stavka „Nedeljni izveštaj (04–10.08)"), pažljivije.
