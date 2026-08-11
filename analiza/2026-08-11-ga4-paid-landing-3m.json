@@ -1,0 +1,399 @@
+{
+  "period": {
+    "from": "2026-05-11",
+    "to": "2026-08-10"
+  },
+  "napomena": "sessionMedium=cpc; landing page je URL POSLE eventualnog redirekta",
+  "rows": [
+    {
+      "landing_page": "/spoljnje-podne-obloge/",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 1411
+    },
+    {
+      "landing_page": "/industrijski-podovi/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 460
+    },
+    {
+      "landing_page": "/industrijski-podovi/",
+      "campaign": "Ecotile - Antas line",
+      "sessions": 103
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/bergo-xl/",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 47
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/bergo-unique/",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 30
+    },
+    {
+      "landing_page": "/industrijski-podovi/industrijski-pod/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 12
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/podovi-za-bazene/",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 12
+    },
+    {
+      "landing_page": "/industrijski-podovi/",
+      "campaign": "(not set)",
+      "sessions": 10
+    },
+    {
+      "landing_page": "(not set)",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 9
+    },
+    {
+      "landing_page": "/antistatik-i-elektroprovodljivi-podovi/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 9
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/bergo-elite/",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 9
+    },
+    {
+      "landing_page": "/",
+      "campaign": "(not set)",
+      "sessions": 7
+    },
+    {
+      "landing_page": "(not set)",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 6
+    },
+    {
+      "landing_page": "/industrijski-podovi/industrijski-pod/",
+      "campaign": "Ecotile - Antas line",
+      "sessions": 6
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/vestacka-trava-za-terase/",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 6
+    },
+    {
+      "landing_page": "/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 5
+    },
+    {
+      "landing_page": "/aktuelnosti/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 5
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 5
+    },
+    {
+      "landing_page": "/antistatik-i-elektroprovodljivi-podovi/",
+      "campaign": "Ecotile - Antas line",
+      "sessions": 4
+    },
+    {
+      "landing_page": "/industrijski-podovi/podne-ploce-ecotile-50010/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 4
+    },
+    {
+      "landing_page": "/kontakt/",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 4
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/",
+      "campaign": "(organic)",
+      "sessions": 4
+    },
+    {
+      "landing_page": "/industrijski-podovi/ecotile-5005-podne-ploce/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 3
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/bergo-easy/",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 3
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/podovi-za-bazene/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 3
+    },
+    {
+      "landing_page": "/industrijski-podovi/",
+      "campaign": "(organic)",
+      "sessions": 2
+    },
+    {
+      "landing_page": "/industrijski-podovi/garaze-i-autoservisi/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 2
+    },
+    {
+      "landing_page": "/kontakt/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 2
+    },
+    {
+      "landing_page": "/proizvod/ecotile-e500-7-industrijska-interlocking-ploca-500x500-mm/",
+      "campaign": "Ecotile - Antas line",
+      "sessions": 2
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/",
+      "campaign": "(not set)",
+      "sessions": 2
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/bergo-xl/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 2
+    },
+    {
+      "landing_page": "/sportske-podloge/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 2
+    },
+    {
+      "landing_page": "(not set)",
+      "campaign": "(not set)",
+      "sessions": 1
+    },
+    {
+      "landing_page": "(not set)",
+      "campaign": "(organic)",
+      "sessions": 1
+    },
+    {
+      "landing_page": "(not set)",
+      "campaign": "Ecotile - Antas line",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/404.html?page=/industrijski-podovi/trakezaobelezavanje/?gad_source=1&from=https://www.google.com/?gad_source=1",
+      "campaign": "Ecotile - Antas line",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/category/industrijski-podovi/",
+      "campaign": "Ecotile - Antas line",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/industrijski-podovi/ecotile-5005-podne-ploce/",
+      "campaign": "Ecotile - Antas line",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/industrijski-podovi/industrijski-pod/",
+      "campaign": "(not set)",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/industrijski-podovi/podovi-za-maloprodajne-objekte/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/koji-pod-postaviti-u-garazu/",
+      "campaign": "Ecotile - Antas line",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/o-nama/",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/podovi-za-radionice/",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/podovi-za-radnje-i-maloprodajne-objekte/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/podovi-za-stale/",
+      "campaign": "Podloge za terase i bazene",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/prednosti-r-tile-design-podova-u-supermarketima-u-odnosu-na-klasicne-plocice/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/proizvod/ecotile-e500-7-industrijska-interlocking-ploca-500x500-mm/",
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/",
+      "campaign": "Ecotile - Antas line",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/spoljnje-podne-obloge/bergo-unique/",
+      "campaign": "(not set)",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/vestacka-trava/",
+      "campaign": "(organic)",
+      "sessions": 1
+    },
+    {
+      "landing_page": "/zasto-vam-je-potreban-esd-pod/",
+      "campaign": "Ecotile - Antas line",
+      "sessions": 1
+    }
+  ],
+  "unique_paths": [
+    {
+      "path": "/spoljnje-podne-obloge/",
+      "sessions": 1423
+    },
+    {
+      "path": "/industrijski-podovi/",
+      "sessions": 575
+    },
+    {
+      "path": "/spoljnje-podne-obloge/bergo-xl/",
+      "sessions": 49
+    },
+    {
+      "path": "/spoljnje-podne-obloge/bergo-unique/",
+      "sessions": 31
+    },
+    {
+      "path": "/industrijski-podovi/industrijski-pod/",
+      "sessions": 19
+    },
+    {
+      "path": "(not set)",
+      "sessions": 18
+    },
+    {
+      "path": "/spoljnje-podne-obloge/podovi-za-bazene/",
+      "sessions": 15
+    },
+    {
+      "path": "/antistatik-i-elektroprovodljivi-podovi/",
+      "sessions": 13
+    },
+    {
+      "path": "/",
+      "sessions": 12
+    },
+    {
+      "path": "/spoljnje-podne-obloge/bergo-elite/",
+      "sessions": 9
+    },
+    {
+      "path": "/spoljnje-podne-obloge/vestacka-trava-za-terase/",
+      "sessions": 6
+    },
+    {
+      "path": "/kontakt/",
+      "sessions": 6
+    },
+    {
+      "path": "/aktuelnosti/",
+      "sessions": 5
+    },
+    {
+      "path": "/industrijski-podovi/podne-ploce-ecotile-50010/",
+      "sessions": 4
+    },
+    {
+      "path": "/industrijski-podovi/ecotile-5005-podne-ploce/",
+      "sessions": 4
+    },
+    {
+      "path": "/spoljnje-podne-obloge/bergo-easy/",
+      "sessions": 3
+    },
+    {
+      "path": "/proizvod/ecotile-e500-7-industrijska-interlocking-ploca-500x500-mm/",
+      "sessions": 3
+    },
+    {
+      "path": "/industrijski-podovi/garaze-i-autoservisi/",
+      "sessions": 2
+    },
+    {
+      "path": "/sportske-podloge/",
+      "sessions": 2
+    },
+    {
+      "path": "/404.html",
+      "sessions": 1
+    },
+    {
+      "path": "/category/industrijski-podovi/",
+      "sessions": 1
+    },
+    {
+      "path": "/industrijski-podovi/podovi-za-maloprodajne-objekte/",
+      "sessions": 1
+    },
+    {
+      "path": "/koji-pod-postaviti-u-garazu/",
+      "sessions": 1
+    },
+    {
+      "path": "/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/",
+      "sessions": 1
+    },
+    {
+      "path": "/o-nama/",
+      "sessions": 1
+    },
+    {
+      "path": "/podovi-za-radionice/",
+      "sessions": 1
+    },
+    {
+      "path": "/podovi-za-radnje-i-maloprodajne-objekte/",
+      "sessions": 1
+    },
+    {
+      "path": "/podovi-za-stale/",
+      "sessions": 1
+    },
+    {
+      "path": "/prednosti-r-tile-design-podova-u-supermarketima-u-odnosu-na-klasicne-plocice/",
+      "sessions": 1
+    },
+    {
+      "path": "/vestacka-trava/",
+      "sessions": 1
+    },
+    {
+      "path": "/zasto-vam-je-potreban-esd-pod/",
+      "sessions": 1
+    }
+  ],
+  "brojevi": {
+    "rows": 52,
+    "unique_paths": 31
+  }
+}

@@ -1,3 +1,189 @@
+## 2026-08-11 [claude-code] [W3 / checklist §A] GSC priprema — build je emitovao 3 sitemap-a gde live emituje 7 ✅🔴
+
+> Sedma stavka istog dana. Poslednja neštriklirana CC stavka iz [[migracija/2026-08-10-pre-migration-checklist]] §A. Delovala je administrativno („sitemap URL spreman za resubmit, alerti uključeni") — ispala stvarna rupa.
+>
+> 🟢 **Dobra vest prvo:** URL za resubmit je **nepromenjen** (`https://www.antasline.com/sitemap_index.xml`), a child sitemap-i na buildu nose **identična imena fajlova** kao Yoast na live-u → nijedan submit-ovan URL ne puca migracijom.
+>
+> 🔴 **Nalaz: svih 12 `tax_*_sitemap` ključeva u `rank-math-options-sitemap` je bilo `off`.** Yoast→Rank Math importer (05.08) prenosi naslove/opise i opšta podešavanja, ali **ne** i koje taksonomije idu u sitemap — a Yoast ih je na live-u imao uključene. Live 7 child-ova / 145 URL, build 3 / 196.
+>
+> **Izmereno šta se gubilo** (GSC dimenzija `page`, 11.05–08.08): 27 URL-ova van sitemap-a nosi **79 klikova / 2.583 prikaza** — `/category/` 56 kl. (najjači `/category/industrijski-podovi/`: 44 kl. / 1.487 pr. / poz. 12,3), `/kategorija-proizvoda/` 21 kl., `/oznaka-proizvoda/` 2, `/бренд/` 0.
+>
+> ⚠️ **Ograda:** izostanak iz sitemap-a **nije `noindex`** — svih 27 URL-ova na buildu vraća `index, follow`. Gubilo se otkrivanje, ne indeksabilnost. Ali migracija je najgori mogući trenutak za to, jer se ceo URL skup tad ponovo pušta kroz crawl.
+>
+> 🔴 **Zašto nijedna dosadašnja provera ovo nije uhvatila:** i regression sweep (10.08) i dijakritika sweep (11.08) idu **kroz** sitemap. Ono čega u sitemap-u nema, sweep ne vidi — ista slepa tačka koja je 11.08 sakrila 2 slike 404 na `noindex` postu 16613.
+>
+> **Urađeno:** uključeni `tax_category` + `tax_product_cat` + `tax_product_tag` → **196 → 236 URL-ova** (6 child-ova). Svih **42** novih taksonomijskih URL-ova verifikovano: **200 / tačno 1×H1 / `index, follow`**, 0 problematičnih signala; svaka arhiva ima stvaran sadržaj (3–12 proizvoda / 3–10 postova).
+>
+> 🔴 **`tax_product_brand_sitemap` uključen pa ODMAH vraćen na `off`** — brend arhive su **prazne**: `/brend/ecotile/` renderuje „nema proizvoda" i 0 linkova ka proizvodima, dok live `/бренд/ecotile/` listira 3. Zamka u brojačima: `term_taxonomy.count` kaže Ergomat 25 / Ecotile 3, a stvarnih veza ima **0 proizvoda** (samo 7 **priloga**) — brojači zaostali iz Porto ere, nikad prebrojani.
+>
+> 🔴 **Posledica na 301 mapu (nalaz van prvobitnog obima):** draft linije 25–26 (`/бренд/ecotile/`→`/brend/ecotile/`, isto ergomat) **vode na prazne stranice**. `htaccess-301-generate.php` to nije uhvatio jer proverava samo da cilj vraća **200** — prazna Woo arhiva jeste 200. Gore od toga: `/бренд/ecotile/` je jedno od **5 pravila iz B3 spot-check liste** za dan migracije, pa bi spot-check uredno prošao („301 na tačan Location") uz beskorisno odredište. 30 prikaza / 0 klikova za 3 mes. → **ne blokira**, ništa nije menjano, **#ceka-miroslav** (3 opcije u [[PROGRESS]] Blokeri).
+>
+> **Nov alat:** `.claude/skills/antasline-konektor/scripts/gsc_sitemaps.py` — Sitemaps API, read-only; servisni nalog ima samo `webmasters.readonly` scope, pa skripta fizički **ne može** submit-ovati ni obrisati sitemap. Njime otkriveno da su u GSC-u **dva** submit-ovana sitemap-a: `http://` (submit **2018-04-09**, Google ga i dalje povlači — poslednji put 10.08, 3 upozorenja) i `https://` (2024-12-25, 4 upozorenja). Brisanje `http://` unosa, pregled upozorenja i provera email alerta idu u GSC UI → **#ceka-miroslav**.
+>
+> **Odluka koja je namerno NIJE doneta:** 18 `product_tag` arhiva (10 od njih novih `namena-*` iz W1 1.11) je tanko sa klasične SEO strane, ali su već `index, follow` i live ih ima u sitemap-u. Na migraciju ide **parity, ne optimizacija** — prored tag arhiva je zaseban zadatak posle live-a (upisan u checklist B7).
+>
+> ⚠️ **Nove gotcha-e:** (1) Yoast→Rank Math importer ne prenosi taksonomijske sitemap-e — proveriti `tax_*_sitemap` posle svake migracije SEO plugina; (2) **Rank Math kešira sitemap-e u fajlove** — izmena opcije direktno u bazi ne obara keš, treba obrisati opciju `rank_math_sitemap_cache_files` **i** `wp-content/uploads/rank-math/rank_math_*.xml`; (3) `wp_term_taxonomy.count` nije dokaz da termin ima sadržaj; (4) `301 → 200` nije dovoljna provera cilja redirekta; (5) sweep kroz sitemap ne može naći ono čega u sitemap-u nema; (6) `wp-load.php` bootstrap u `php -r` prešao 120s na ovom buildu — za jednu opciju brže direktno preko `mysql` + `unserialize()`.
+>
+> **Verifikacija:** 42/42 novih URL-ova čisto · `post`/`page`/`product` sitemap brojevi nedirnuti (31/70/95) · regresija `/`, `/industrijski-podovi/`, `/kontakt/`, `/kategorija-proizvoda/industrijski-podovi/` → 200/1×H1 · `robots.txt` već pokazuje na produkcijski sitemap URL, nedirnut.
+>
+> **Backup:** `antasline-backups/rank-math-options-sitemap_2026-08-11_pre-tax-sitemaps.sql` (gotov `UPDATE` sa originalnom vrednošću).
+>
+> Detalji: [[dnevnik/2026-08-11-gsc-priprema-sitemap]]
+
+## 2026-08-11 [claude-code] [W4 4.10] Final URL audit oglasa — ZATVOREN: aktivna kampanja čista, 2 URL-a vode na tuđi domen ✅🔴
+
+> Dopuna istog dana, posle M-ove re-autorizacije: Ads export je izvršen i audit je kompletan.
+>
+> **Konačan rezultat (41 URL):** `OK` 32 · `PREPISATI` 6 · **`EKSTERNI-DOMEN` 2** · `PUKAO` 1 (`/404.html`, artefakt live 404 stranice) · `REDIRECT-BUILD` 0. Spisak: `analiza/2026-08-11-ads-url-audit.csv`.
+>
+> 🟢 **Aktivni saobraćaj je čist — na dan migracije se ne dira ništa.** Od **14 kampanja samo je jedna ENABLED** („ECOTILE INDUSTRIJSKI PODOVI"): 1 RSA + 6 sitelinkova, svih 7 URL-ova 200 na buildu. ⚠️ Usput ispravka činjenice: **„Podloge za terase i bazene" je PAUSED** — [[CLAUDE]] §6 i master plan na više mesta govore o „obe aktivne kampanje", to više ne važi.
+>
+> 🔴 **2 URL-a vode na TUĐI domen:** `http://www.ekopodneploce.rs/` (3 oglasa u pauziranoj „Ecotile kampanja") i `.../proizvodi/E%20500-7/E500-7.html` (sitelinkovi „Industrijski podovi" + „Podovi za magacine"). Ne troši ništa danas, ali **301 mapa tu ne pomaže** — nije naš domen; reaktivacija te kampanje = plaćen klik koji odlazi sa antasline.com. Ništa nije dirano, **#ceka-miroslav**.
+>
+> **6 × PREPISATI** (sve pauzirano, 301 ih pokriva): `/home/industrijski-podovi/` (8 oglasa + 1 sitelink) · `/sportski-podovi/` (2+3) · `ecotile-5005-podne-ploce` · `ecotile-5007` · `trakezaobelezavanje` · `/ergonomski-podovi/`. Blokira reaktivaciju tih kampanja (uklj. W4 4.4), ne migraciju.
+>
+> **Provereno da NEMA** (ne pretpostavljeno): 0 keyword-level final URL-ova · 0 `tracking_url_template`/`final_url_suffix` na svih 14 kampanja · 0 `final_mobile_urls`.
+>
+> 🔴 **GA4 presek se pokazao nedovoljnim, crno na belo:** nije uhvatio **nijedan** od 8 problematičnih URL-ova (svi u pauziranim kampanjama i sitelinkovima bez klikova). Jutrošnja ograda „presek nije zamena za export" nije bila teorijska.
+>
+> ⚠️ 3 buga u sopstvenom kodu uhvaćena prvim pokretanjem: GAQL traži `campaign.status` u `SELECT` kad se po njemu filtrira · `print` puca na `UnicodeEncodeError` čim ćirilični izlaz ide u fajl na Windows-u · audit alat je normalizovao **eksterni domen u putanju** (dao bi lažan `PUKAO`) → dodata klasa `EKSTERNI-DOMEN`.
+>
+> **OAuth:** token je bio mrtav (v. ispod), M ga re-autorizovao; uzrok je sistemski (*Testing* status → 7 dana), pa je u checklistu dodata stavka **B1 — provera tokena pre svega ostalog na dan migracije**.
+
+---
+
+### Prvi deo iste sesije (pre re-autorizacije)
+
+**Zadatak:** stavka „Final URL audit oglasa — priprema" iz [[migracija/2026-08-10-pre-migration-checklist]] §A (izvršenje je 4.10 na dan migracije). Šesta stavka istog dana.
+
+**Napisane 3 nove alatke** (sve read-only): `scripts/ads_final_urls.py` (Google Ads API — final + mobile URL svakog oglasa, keyword-level URL-ovi, sitelink/asset URL-ovi na sva tri nivoa, tracking template; konektor ovo nije imao), `scripts/ga4_paid_landing.py` (GA4 landing stranice za `sessionMedium=cpc`, servisni nalog → radi bez OAuth-a) i `migracija/alati/ads-url-audit.php` (poredi bilo koji spisak URL-ova sa lokalnim buildom **i** sa 73 pravila iz `htaccess-301-DRAFT.txt` → `OK` / `PREPISATI` / `REDIRECT-BUILD` / `PUKAO` + CSV; prima `--json`, `--ga4`, `--txt`).
+
+**Rezultat GA4 dela** (11.05–10.08): 31 jedinstvena landing putanja plaćenog saobraćaja → **29 `OK`, 0 `PREPISATI`, 0 `PUKAO`**; jedini „pad" je `/404.html` (artefakt live 404 stranice, 1 sesija, nije URL oglasa). Najprometnije odredište `/spoljnje-podne-obloge/` (1.423 sesije) i `/industrijski-podovi/` (575) — obe 200 na buildu. Detektor propušten kroz kontrolni spisak poznato-loših URL-ova (pravilo od jutros): tačna podela `PREPISATI` ×3 uklj. ćirilično `/бренд/ecotile/`, `PUKAO` ×2, `OK` ×1.
+
+🟢 **`?gclid=` preživljava 301 — izmereno, ne pretpostavljeno.** Da `.htaccess` odseca query string, svaki preusmeren klik iz oglasa izgubio bi `gclid` i konverzija se ne bi pripisala Ads-u. Test u izolovanom `htdocs/redirtest2/` (obrisan posle merenja): `?gclid=…&utm_source=google` stiže netaknut u `Location`, i na običnom i na ćiriličnom pravilu — `mod_alias` sam dodaje originalni query kad cilj nema svoj. Draft se ne menja.
+
+🔴 **Ads export nije izvršen — `invalid_grant`, token istekao/opozvan.** `token.json` osvežen 06.08, mrtav 11.08 = 5 dana; verovatan uzrok je OAuth consent screen u statusu *Testing* (Google gasi refresh token posle 7 dana). GA4/GSC to ne osećaju jer idu preko servisnog naloga. 🔴 **Isti problem udara i 24.08**, kad se radi 4.10 i verifikacija konverzija — mrtav token tada troši vreme u najgorem trenutku. Trajno rešenje: Cloud Console → OAuth consent screen → **Publish app** (*In production*), 2 min. Zakrpa: `authorize_oauth.py` ponovo + obavezno još jednom ujutru 24.08. ⚠️ Usput: `token.json` nosi samo scope `adwords`, `tagmanager.edit.containers` (dodat 27.07) nije u njemu.
+
+⚠️ **GA4 presek NIJE zamena za Ads export** i audit se ne zatvara na njemu: ne vidi oglase/sitelinkove bez klikova (baš oni nose zaboravljene URL-ove), ni keyword-level URL-ove, ni tracking template, i beleži odredište **posle** redirekta — URL koji danas prolazi kroz Redirection plugin izgleda ispravno, a posle migracije živi samo ako je među 73 pravila.
+
+**#ceka-miroslav:** re-autorizacija (komanda u dokumentu), pa se audit dovršava sa dve komande. Baseline sačuvan: `analiza/2026-08-11-ga4-paid-landing-3m.json` + `analiza/2026-08-11-ads-url-audit-ga4-deo.csv`. Detalji: [[migracija/2026-08-11-ads-final-url-audit]] · [[dnevnik/2026-08-11-ads-final-url-audit]].
+
+## 2026-08-11 [claude-code] [W3 3.9] .htaccess 301 reverifikacija — draft je bio 8 pravila, treba 73; petlja i 2 pregažene stranice uhvaćene ✅🔴
+
+**Zadatak:** stavka „`.htaccess` 301 poslednja reverifikacija" iz [[migracija/2026-08-10-pre-migration-checklist]] §A. Signal koji ju je izvukao: draft je od **27.07**, a `redirect-mapa-FINAL.csv` menjana **30.07** — draft je bio stariji od svog izvora.
+
+**Napisana 2 alata** (read-only prema bazi i prema živom `.htaccess`-u): `migracija/alati/redirect-verify.php` (duplikati / petlje / lanci / prefiks-kolizije / HTTP status svakog cilja **i svakog izvora**) i `migracija/alati/htaccess-301-generate.php` (generiše draft iz obe mape, **odbija upis ako ijedan cilj nije 200**). Draft se od sada ne piše ručno — mape su izvor istine.
+
+**Rezultat: 8 → 73 pravila.** Backup stare verzije: `htaccess-301-DRAFT.txt.bak-2026-08-11`.
+
+**Nalazi:**
+1. 🔴 **62 istorijska pravila uopšte nisu bila u draftu.** Ona danas žive u **Redirection pluginu na live-u, dakle u bazi** — a migracija zamenjuje živu bazu lokalnom, pa nestaju sa plugin-om. Bez ovog bloka bi na dan migracije ~46.000 zabeleženih GSC pogodaka (`/sportski-podovi/` 7.800, `/izgrdanja-sportskig-terena/` 6.043, `/podovi-za-baste-splavove-bazene/` 5.740 …) tiho palo na 404. Analiza tih pravila postoji od 21.07 ([[migracija/2026-07-21-analiza-65-redirection-pravila]]), samo nikad nije preneta u draft.
+2. 🔴 **Petlja između dve mape:** FINAL red 2 vodi `/na-kojoj-podlozi-se-igraju-turniri-u-3x3/` → `/bergo-ultimate…/`, istorijski red 47 vodi **tačno obrnuto**. Zajedno = beskonačna petlja na oba URL-a. Razrešeno merenjem: članak živi na `/bergo-ultimate…/` (post 4813, 200), `/na-kojoj-podlozi…/` je 404 → FINAL smer tačan, istorijsko pravilo se ne prenosi.
+3. 🔴 **Dva istorijska pravila bi ubila stranice koje smo izgradili** — nađeno tek zato što se proveravaju i **izvorni** URL-ovi, ne samo ciljevi: `/lvt-…/vinil-podovi-za-restorane-hotele-kafice…/` (588 GSC) je danas prava stranica **16686** (W2 2.5), `/podovi-za-garaze/` (182 GSC) je **16875** (W2 Tier1). Oba pravila su iz vremena pre nego što su te stranice postojale; mehanički prepis bi ih pregazio. Ne prenose se.
+4. 🔴 **`Redirect` je prefiks-match → 15 kolizija.** `Redirect /podovi-za-terase/` guta 4 specifičnija pravila i lepi ostatak putanje na cilj; `/home/industrijski-podovi/` guta 8. Ceo draft prebačen na sidreni **`RedirectMatch 301 "^/putanja/?$"`** — kolizije nestaju i **redosled linija postaje nebitan**.
+5. 🟡 **Pogrešan cilj u FINAL mapi:** red 14 je ciljao `/spoljne-podne-obloge/bergo-easy/` (bez „j") → 301 umesto 200; ostatak M odluke od 30.07. Ispravljeno u mapi.
+6. 🟢 **Ćirilica radi — stara ograda skinuta.** Draft od 27.07 je tražio staging-test i `RewriteRule \x` fallback za `бренд/ecotile`; testirano pod Apache-om, `RedirectMatch` sa doslovnim UTF-8 putem daje ispravan 301.
+7. ⚪ `/sta-postaviti-preko-starog-parketa-ili-plocica/` vraća 200 na lokalu iako ga pravilo preusmerava — **namerno** (M 30.07: 16613 ostaje noindex kao rezerva, 301 tek na produkciji). Nije bug.
+
+**Verifikacija:** `redirect-verify.php` posle popravki → 0 duplikata / 0 petlji / 0 lanaca / 0 ciljeva ≠200 (44 jedinstvena cilja). **Funkcionalni test pod Apache-om:** draft prepisan u izolovan `htdocs/redirtest/` sa prefiksiranim putanjama → **8/8 tačan 301 i tačan `Location`** (prefiks-zamka na 3 nivoa, ćirilica, bez kose crte, `/home/` grupa), negativna kontrola 3/3 bez lažnog 301; folder obrisan posle merenja.
+
+**Ostaje:** draft se NE aktivira do 24.08. Ako se do tada promeni ijedan slug — pustiti oba skripta ponovo (generator sam pukne ako cilj nije 200). Detalji: [[dnevnik/2026-08-11-htaccess-301-reverifikacija]].
+
+**Dodatak iste sesije (M pitanje): `.htaccess` vs Rank Math Redirections — poređenje.** Provereno u kodu/bazi, ne iz sećanja: modul postoji u besplatnoj verziji ali je **isključen** (`rank_math_modules` nema ni `redirections` ni `404-monitor`) · izvršava se na **`add_action('wp', …, 11)`, dakle pun WP boot pre 301** · **ume da izveze u Apache format** (`class-export.php` → `RewriteRule … [R=301,L]`), pa nije „ili-ili" · nijedno od naših 73 pravila ne koristi query string, pa nam bogatije poklapanje ne treba. **Zaključak: podela po populaciji redirekta, ne po alatu** — migracioni skup (73, poznat, ~46.000 pogodaka, **mora raditi i ako WP padne**) ostaje u `.htaccess`; post-live ad-hoc 404-ovi idu u Rank Math jer ih Miroslav rešava sam kroz UI, a `404-monitor` pravi pravilo iz zabeleženog 404-a. 🔴 **Tvrdo pravilo protiv dvostrukog sloja:** isti URL nikad na oba mesta — `.htaccess` se izvršava prvi i tiho pobeđuje, pa bi pravilo u UI-ju izgledalo „ne radi" bez ijedne poruke. ⚠️ Ne uključivati modul pre migracije (nov modul + nove DB tabele 5 dana pred freeze = rizik bez dobitka). **#ceka-miroslav:** odobrenje da se tačke „uključiti `redirections`+`404-monitor` posle live-a" i tvrdo pravilo upišu u checklistu §B7 i master plan 3.12 — analiza je gotova, upis nije izvršen bez odluke.
+
+---
+
+## 2026-08-11 [claude-code] [W3 CWV] Dijeta asseta — proizvod stranice lakše za 46%, postovi 51%, blog arhiva 65% ✅🔴
+
+**Zadatak (M):** „pregledaj temu i da li pokreće neke stvari koje se ne koriste, da i to isključimo da se ne učitava bez potrebe."
+
+**Merenje (zbir stvarnih veličina svih JS+CSS fajlova po tipu stranice, pre/posle, reproducibilno u dva prolaza):** proizvod **1.117→606 KB (−511)** · post **924→456 KB (−468)** · blog arhiva **772→269 KB (−503)** · /katalog/ **1.061→552 KB (−509)** · kategorija −54 · početna −50 · silo/kontakt −14. Efekat je najveći baš na money stranicama.
+
+**Šta je isključeno** (novi `woodmart-child/inc/al-asset-diet.php`):
+1. 🔴 **WPBakery CSS 437 KB + JS 17 KB tamo gde nema nijednog `vc_` elementa.** WPBakery **sam ima** ispravnu proveru (`Vc_Base::enqueueStyle()` traži `[vc_row`), ali je **WoodMart pregazi** — `inc/enqueue.php:616` enqueue-uje bezuslovno. Izmereno u `<body>`: 94 proizvoda → 0 pojava, `/katalog/` i `/aktuelnosti/` → 0, 30/31 posta → 0, 67/71 stranice → ima (ostaju na punom). Arhive kategorija **namerno ne diram** (deo njih vuče WPBakery iz `cms_block` sloja koji se ne vidi iz `post_content`).
+2. **WooCommerce Blocks CSS 13,7 KB sa svake stranice** — 0/196 stranica koristi `wp:woocommerce/*` blok.
+3. **CF7 25,3 KB JS tamo gde forme nema** (proizvodi, kategorije, katalog, arhive). Detekcija čita **isti** `al_quick_form_excluded_slugs` filter kao i sama injekcija „Brzog upita", da se liste ne raziđu.
+4. **4 mrtve WoodMart skripte preko native `scripts_not_use` opcije** (`add-to-cart-all-types`, `action-after-add-to-cart`, `quick-shop`, `woocommerce-quantity`) — mrtve jer je `catalog_mode`=true i `product_quantity`=false. Korišćen theme-ov mehanizam umesto dequeue hakova; `advanced_js` nije diran (provereno da je samo UI gate).
+
+🔴 **Namerno NIJE isključeno — dequeue je bio izveden pa POVUČEN:** `wc-add-to-cart-variation` + `blockUI` + `underscore` + `wp-util` (~43,7 KB). Izgledalo je mrtvo (katalog režim, 0 `<form class="cart">` na sajtu) i radilo je, ali provera je pokazala da **20 varijabilnih proizvoda i dalje renderuje `variations_form`**, a `swatchesVariations.min.js` zavisi od `wc_add_to_cart_variation_params` iz baš te skripte. **Katalog režim skida DUGME, ne varijacijsku formu.** Potvrđeno uživo: izbor boje na Ecotile E500/7 menja sliku — da je dequeue ostao, funkcija od 08.08 (Condor/Tournament/Multisport) bi tiho crkla.
+
+🔵 **Otvorena odluka za M — preostalih 404 KB/stranici:** WoodMart opcija `light_wpb_css` menja pun `js_composer.min.css` (437 KB) theme-ovim `light-wpbakery.css` (**33 KB**). Nije uključena jer lagana verzija **ne nosi 24 klase koje koristimo** — najvažnije `wpb_row` (447×) i `wpb_text_column` (442×), tj. donje margine svakog tekstualnog bloka na svim stranicama, plus `vc_btn3*` dugmad i `vc_masonry_grid`/`vc_media_grid`. Izvodljivo uz prepis ~10 pravila u `antas-design.css` + vizuelni prolaz (1–2h, realan rizik po izgled). **Preporuka: posle live-a**, osim ako M ne odluči drugačije.
+
+🟢 **Usput popravljeno:** 2 slike 404 na postu 16613 (pre-postojeće, post izmenjen 07.08). Promakle su 10.08 jer je 16613 `noindex` a tadašnji sweep ide kroz sitemap — **tačno ona slepa tačka opisana istog dana**. Povučeni originali sa live-a na tačne putanje, bez prepisivanja `src` (isti postupak kao 10.08).
+
+⚠️ **3 nove gotcha-e:** (1) dequeue **stilova** na `wp_enqueue_scripts` nema efekta — WoodMart kači na prioritetu **10000/10001**, naš prolaz mora na **10002** (prvi pokušaj na 100 je tiho prošao bez ijedne promene); (2) `wc-blocks-style` se ne može dequeue-ovati na `wp_enqueue_scripts` uopšte — WooCommerce ga stavlja u red na **`wp_head` 10**; (3) `curl -o fajl` u ovom git bash okruženju upisuje **0 bajtova** (dok `-o /dev/null -w '%{http_code}'` radi) → za analizu HTML-a koristiti PHP.
+
+**Verifikovano:** `al_verify.php`+slike → 212 URL-ova, HTTP≠200: 0, ≠1×H1: 0, PHP greške: 0, slike≠200: 0. Chrome uživo: proizvod (galerija/PhotoSwipe/9 tabova/varijacije), post (GEO-intro, „Brzi upit" forma), blog arhiva (masonry), /katalog/ (mreža, filteri), /kontakt/ (CF7, 5 polja, submit), mega meni — **0 grešaka u konzoli**. Backup: `antasline_local_2026-08-11_pre-asset-diet.sql` + `functions.php.bak-2026-08-11-pre-asset-diet`. Detalji: [[dnevnik/2026-08-11-dijeta-asseta-tema]].
+
+## 2026-08-11 [claude-code] [W3] Legacy CPT-ovi obrisani iz builda i baze + 5 zamenjenih stranica u draft ✅
+
+**Zadatak (M):** „koristio sam custom post types pre tebe — proveri da li se to još koristi; duplirane i zamenjene stranice stavi u draft; ako nema potrebe za njima i pluginom, očisti to sa sajta i iz baze."
+
+**Nalaz: 5 mrtvih CPT-ova iz Porto ere, plugin CPT UI 1.19.2 aktivan, 41 zapis — svi draft/pending, 0 objavljenih.** `vestacka-trava` (16) · `spoljne-podne-obloge` (10) · `industrija-podovi` (8) · `podovi-posl-prostor` (5) · `sportski-podovi2` (2). Nula stavki u menijima, nula u redirect mapi, i **svi slugovi 404 na live-u** (curl provera) → nema šta da se spasava.
+
+🔴 **Nisu bili samo mrtvi nego i opasni:** to je isti mehanizam koji je 29.07 (W7 F2.9) oborio 6 pod-stranica na 404 — rewrite pravilo mrtvog CPT-a stoji ispred generičkog page pravila. Tada je zamka samo neutralisana filterom u child temi; sada je uklonjen uzrok.
+
+**Urađeno:** sadržaj svih 41 zapisa arhiviran u [[migracija/arhiva/2026-08-11-legacy-cpt-sadrzaj]] (329 KB — ne zbog SEO-a nego zato što su ti draftovi bili **izvorni tekst** za nove stranice, npr. Naxos Evolution → `/sportski-podovi-za-sale-i-balone/` 378 klikova) · **211 priloga odvezano** (`post_parent`→0) pre brisanja da `wp_delete_post()` ne dodirne slike u aktivnoj upotrebi na Bergo stranicama (7.764 priloga pre = posle) · 41 zapis obrisan, 0 zaostalih redova (bilo 743 postmeta + 50 term_rel) · plugin deinstaliran + 3 `cptui_*` opcije obrisane (uklj. `cptui_post_types` 12,3 KB **autoload=yes**) · `rewrite flush` → 0 pravila sa mrtvim CPT-ovima.
+
+**5 zamenjenih stranica `publish`+`noindex` → draft:** 5512 `/podovi-za-poslovni-prostor/` → 16667 · 5754 `/izgradnja-terena-za-tenis/` → 17028 · 5769 `/podne-obloge-za-promocije-i-sajmove/` → 16665 · 15580 `/podloge-za-parking/` → 16589 · 16171 `/galerija-sportskih-terena/` → 16674. Za svaku provereno: `LOKAL-NOVO` (ne postoji na live-u), 0 GSC klikova, 0 dolaznih linkova, nije u meniju, 301 cilj već u redirect mapi. 🔵 Ovo **menja jutrošnju odluku iste sesije** („ostaju noindex") — po M-ovoj novoj izričitoj instrukciji; noindex je bio tih signal, draft ih eksplicitno priprema za brisanje posle live-a. 301 redovi rade nezavisno od statusa (Apache pre WP-a).
+
+🔴 **Namerno NIJE dirano: 16613** `/sta-postaviti-preko-starog-parketa-ili-plocica/` — jedini duplikat koji **postoji na live-u** (84 klika/1.667 impr.); odluka M od 30.07 stoji (noindex + 301 na 6588 na dan migracije), draft bi uklonio rezervu ako 301 zakaže. Isto i `/ergonomske-podloge-2/` (16672) — `-2` sufiks je pravi live URL, ne artefakt.
+
+⚪ Filter `register_post_type_args` u child temi **zadržan** iako je sad no-op: bekapi pre 11.08 nose `cptui_post_types`, pa bi restore bez njega vratio i 404 zamku. Komentar u kodu dopunjen.
+
+**Verifikovano:** `al_verify.php` 212 URL-ova → HTTP≠200: 0 · ≠1×H1: 0 · PHP greške: 0 · slike bez fajla: 0. Stari 404 bug i dalje popravljen (`/spoljnje-podne-obloge/` + svih 6 dece 200). 5 draft stranica → 404 kako je i cilj. **Backup:** `antasline_local_2026-08-11_pre-cpt-cleanup.sql` (36 MB). Detalji: [[dnevnik/2026-08-11-legacy-cpt-ciscenje]].
+
+## 2026-08-11 [claude-code] [W3] Rollback plan ZATVOREN (gate stavka, 4 dana pre roka) + sitewide provera dijakritike čista ✅
+
+**Zadatak (M):** „proveri sve titles sa ć, š, đ, ž i onda nastavi sa rollback planom" — druga i treća stavka iste sesije.
+
+### Dijakritika — 0 nalaza na oba nivoa
+
+**Baza:** `rank_math_title`, `rank_math_description`, `post_title` svih objavljenih page/post/product/product_variation → 0 mojibake, 0 znakova zamene, 0 `?` usred reči. Kontrolno: 112 title + 163 desc + 181 post_title stvarno nose dijakritiku i ispravni su.
+
+**Renderovani izlaz:** sweep kroz svih 195 URL-ova iz sitemap-a (`<title>` + meta description) → **0/195 nalaza**. Ovaj nivo je rađen namerno odvojeno jer je 30.07 izvor kvara bila keš tabela, ne postmeta — baza čista ne znači izlaz čist.
+
+🔴 **Gotcha koja je zamalo dala lažan alarm:** prvi prolaz prijavio ~385 „mojibake" redova. Sve lažni pozitivi — kolone su `utf8mb4_unicode_520_ci`, a ta kolacija je **akcent- i case-neosetljiva**, pa `LIKE '%Ä%'` uredno pogađa obično `a` (i `LIKE '%ć%'` broji svako `c`). Za forenziku enkodinga mora `LIKE BINARY`/`COLLATE utf8mb4_bin`. → [[reference/naucene-lekcije]]
+
+🟢 Detektor posle nule proveren kontrolnim testom na namerno pokvarenim primerima — hvata ih. **Pouka: kad provera vrati 0, propustiti kroz nju bar jedan poznat-loš primer** (10.08 su dva „nalaza" bila bagovi u alatu, ne u sajtu).
+
+**Dodatak — 4 „noindex" stranice: provereno pre izvršenja, ODLUKA PROMENJENA → ostaju noindex.** M je na nalaz iz prve stavke rekao „nije namerno, stavi index yes", ali provera pre izmene pokazala je da **svaka od 4 ima noviji, već indeksiran parnjak iz WoodMart rebuild-a**: 5512 → 16669 `/kancelarije-i-poslovni-prostori/` + 16667 + 16686 · 5754 → 17028 `/sportski-podovi-za-teniske-terene/` + 16688 + 2699 · 5769 → 16665 `/bergo-easy/` · 16171 → 16674 `/galerija/`. ID obrazac (5xxx stari lokalni build vs 166xx/170xx rebuild koji ih je zamenio) + **nijedna ne postoji na live-u** (nema ih u `live-inventar-2026-07-05.csv`) potvrđuju da je noindex bio nameran; 16171 uz to nema ni `<h1>`, samo 3 galerije bez teksta. Index bi 5 dana pre freeze-a napravio 4 duplikat-para prema stranicama koje smo namerno gradili — direktno protiv anti-kanibalizacione provere. **Ništa nije dirano** (M potvrdio: ostaviti noindex, pitanje zatvoreno). 🔵 Opciono posle live-a, ne blokira migraciju: 301 sa te 4 na parnjake. Nova lekcija: „nema meta opis + van sitemap-a" može biti tačan opis namerno penzionisane stranice — pre popravke potražiti noviji parnjak u istom klasteru (viši ID, isti pojmovi u slug-u).
+
+### Rollback plan — sva 3 pitanja zatvorena, gate stavka ispunjena
+
+1. ✅ **Hosting auto-backup — odgovor je već postojao 2 nedelje.** JetBackup 5, dnevni, off-site, 90 dana retencije; M proverio u cPanel-u 27.07 i upisao u M6 red master plana, ali nikad nije preneto u rollback plan. Ostaje **treća** linija odbrane, ne zamena za ručni backup (dnevna granularnost = do 24h gubitka).
+2. ✅ **CDN/edge keš — NE POSTOJI.** Read-only provera live-a: DNS direktno na `138.201.234.168` (Hetzner, `ns1–ns4.oblak.host`), bez CNAME na CDN; zaglavlja `Server: LiteSpeed` + `X-LiteSpeed-Cache: hit`, **bez** `cf-ray`/`via`/`age`/`x-qc-cache`. Korak „očisti keš" se svodi na LSCWP Purge All. Upozorenje u planu: ako se QUIC.cloud uključi pre migracije, korak se menja.
+3. ✅ **Ko izvršava ako M nije dostupan — M ODLUČIO: „migracija samo kad sam tu."** Od 3 ponuđene opcije izabrana treća; nema rezervne osobe niti dogovora sa hostingom unapred. 🔴 **Posledica koja ide u checklistu dana migracije:** ne pokretati 3.11 ako M nema ~6h slobodnih — kasno popodne/veče 24.08 nije prihvatljiv start, a ako tog dana nema prozora migracija se **pomera**. Prihvaćen rizik, eksplicitno zapisan: ako postane nedostupan usred incidenta, ostaje samo improvizovan poziv oblak.host podršci (SLA namerno neproveren).
+
+**Gate posle ove sesije:** od 3 crvene stavke ostaju **2** — LCP (spoljno ograničenje, čeka produkciju) i svež live backup na 2 lokacije (`[cpanel-live]`).
+
+**Ažurirano:** [[migracija/rollback-plan]] (status → zatvoren), [[migracija/2026-08-10-pre-migration-checklist]] (nova B1 stavka „Dostupnost" + JetBackup provera), [[2026-07-06-MASTER-PLAN-V2]] §3/§4, [[PROGRESS]], [[reference/naucene-lekcije]] (2 nove). Detalji: [[dnevnik/2026-08-11-rollback-plan-i-dijakritika]].
+
+## 2026-08-11 [claude-code] [W2/SEO] 6 stranica bez meta opisa — napisani i objavljeni ✅
+
+**Zadatak (M):** izbor sa otvaranja sesije — bloker od 10.08 („6 stranica bez meta opisa, uključujući početnu"), rok content freeze 16.08.
+
+Napisan `rank_math_description` za svih 6, svaki izveden **isključivo iz teksta same stranice** (nijedan podatak nije izmišljen), dužine 151–157 znakova:
+
+| ID | URL | Iz čega je izveden |
+|---|---|---|
+| 16550 | `/` (početna) | hero: Ecotile 25 god. garancije · FIBA · „ugradnja bez zatvaranja pogona" |
+| 5455 | `/vestacka-trava/` | modeli Nature/Highlands/Springgrass + „bez zalivanja i šišanja, zelena preko zime" |
+| 5119 | `/vestacka-trava-za-fudbal/` | „radi se po projektu, po dimenzijama terena" · lepljene linije bela/crvena/plava · FIFA/ITF/IRB |
+| 15480 | `/sportske-podloge/bergo-ultimate/` | FIBA/ITF sertifikat · preko 10 boja · 15 god. garancije |
+| 21 | `/aktuelnosti/` | blog arhiva (sadržaj stranice je prazan) → izveden iz stvarnih naslova postova u arhivi |
+| 16612 | `/ftalati.../` | postojeći GEO-intro pasus (omekšivači, endokrini/disajni sistem, zabranjene grupe u EU/Srbiji) |
+
+🔴 **Gotcha (nova, ide u [[reference/naucene-lekcije]]): UTF-8 ne sme kroz `mysql -e "..."` na ovom Windows shell-u.** Dva opisa upisana tim putem stigla su u bazu sa `?` umesto ć/š/ž (konzolni codepage jede dijakritike) — a `SELECT` u istoj konzoli to **ne otkriva**, jer i ispis prolazi kroz isti codepage, pa izgleda kao kozmetički problem prikaza. Otkriveno tek `curl`-om nad `<head>`. Ispravno: uvek `.sql` fajl sa `SET NAMES utf8mb4;` pa `mysql < fajl.sql`. Ista 4 opisa pisana iz fajla bila su ispravna iz prve.
+
+⚠️ **Nalaz uz put — bloker je nabrajao 6, a bez `rank_math_description` je ukupno 11 objavljenih stranica.** Preostalih 5: `/katalog/` (ima opis preko Rank Math fallback-a, OK) i 4 stranice koje su **`noindex` i nisu u sitemap-u** — `/podovi-za-poslovni-prostor/`, `/izgradnja-terena-za-tenis/`, `/podne-obloge-za-promocije-i-sajmove/`, `/galerija-sportskih-terena/`. Zato ih regression sweep (koji ide kroz sitemap) nije ni prijavio. Nijedna od te 4 ne postoji na live-u (nema ih u `live-inventar-2026-07-05.csv`) → LOKAL-NOVO, noindex deluje namerno. **Ne diram ih; ako je noindex slučajan, to je zasebna M odluka pre freeze-a.**
+
+**Verifikovano:** 6/6 HTTP 200 · 1×H1 · tačan opis u `<head>` sa ispravnom dijakritikom · regresija čista na `/industrijski-podovi/` i `/kontakt/` (opisi nepromenjeni).
+
+**Usput:** Apache nije radio na početku sesije (curl exit 7) — pokrenut ručno; MySQL je radio.
+
+**Backup:** `antasline-backups/antasline_local_2026-08-11_pre-metadesc-6-stranica.sql`
+
 ## 2026-08-10 [claude-code] [W3 3.10] Full regression — 195 stranica, 4 bag-a nađena i popravljena, build čist ✅
 
 **Zadatak (M):** „w3 3.10" — treća stavka istog dana.

@@ -1,9 +1,168 @@
 ---
 tip: reference
-azurirano: 2026-08-10
+azurirano: 2026-08-11
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Yoast→Rank Math importer NE prenosi taksonomijske sitemap-e (GSC priprema, 2026-08-11)
+- Posle migracije SEO plugina (05.08) svih 12 `tax_*_sitemap` ključeva u `rank-math-options-sitemap` je bilo `off`, dok je Yoast na live-u imao uključene `category`/`product_cat`/`product_tag`/`product_brand`.
+- Rezultat: build je emitovao **3 child sitemap-a tamo gde live emituje 7**. Pogađalo je 27 URL-ova sa izmerenih **79 klikova / 2.583 prikaza** (GSC, 3 meseca).
+- Importer prenosi naslove/opise i opšta podešavanja i **ne javlja** da sitemap deo nije pokriven.
+- ⚠️ Nije `noindex` — te stranice su i dalje `index, follow`; gubi se **otkrivanje**, ne indeksabilnost. Ali na migraciji, kad ceo URL skup ide ponovo kroz crawl, to je najgori trenutak.
+- **Pravilo:** posle svake migracije SEO plugina eksplicitno pročitati `tax_*_sitemap` i `pt_*_sitemap` ključeve i uporediti sa brojem child-ova u starom sitemap indexu.
+
+## Rank Math kešira sitemap-e u FAJLOVE — izmena opcije mimo admin UI ne obara keš (2026-08-11)
+- Posle direktnog `UPDATE` nad `rank-math-options-sitemap`, `sitemap_index.xml` je i dalje vraćao stara 3 child-a. Invalidacija se okida tek na snimanje kroz admin UI.
+- Keš je na **dva** mesta i moraju oba: opcija `rank_math_sitemap_cache_files` (mapa hash→tip) + fajlovi `wp-content/uploads/rank-math/rank_math_*.xml`.
+- Isto važi za dan migracije: ako posle prebacivanja sitemap index pokaže manje child-ova nego što treba, prvo osumnjičiti keš, ne podešavanja.
+
+## `wp_term_taxonomy.count` nije dokaz da termin ima sadržaj (2026-08-11)
+- `product_brand` je pokazivao `Ergomat 25` / `Ecotile 3`, pa su termini delovali popunjeno. Stvarne veze u `term_relationships`: **0 proizvoda**, samo 7 **priloga** (`attachment`).
+- Brojači su zaostali iz starog (Porto) builda i nikad nisu prebrojani — `wp term recount` se ne izvršava sam pri SQL importu.
+- **Pravilo:** kad se odlučuje sudbina arhive (sitemap, redirect cilj, brisanje), brojati kroz `term_relationships` + `posts` sa filterom na `post_type`/`post_status` — ili, najpouzdanije, otvoriti stranicu i pogledati.
+
+## `301 → 200` nije dovoljna provera cilja redirekta — prazna arhiva je takođe 200 (2026-08-11)
+- `htaccess-301-generate.php` odbija upis ako cilj nije 200. `/бренд/ecotile/` → `/brend/ecotile/` je prošlo: cilj **jeste** 200, ali je prazna WooCommerce arhiva („nema proizvoda", 0 linkova ka proizvodima).
+- Gore: `/бренд/ecotile/` je jedno od 5 pravila u B3 spot-check listi za dan migracije — spot-check bi prijavio uspeh („301 na tačan `Location`") uz beskorisno odredište.
+- **Pravilo:** za redirect ciljeve koji su **arhive** (kategorija/tag/brend), pored statusa proveriti i da listing nije prazan. Statusni kod ne razlikuje „stranica radi" od „stranica je prazna".
+
+## Sweep kroz sitemap ne može naći ono čega u sitemap-u nema (2026-08-11)
+- Ni regression sweep (10.08) ni dijakritika sweep (11.08) nisu prijavili da 27 URL-ova nedostaje — oba uzimaju listu URL-ova **iz** sitemap-a.
+- Ista slepa tačka je istog dana sakrila 2 slike 404 na `noindex` postu 16613.
+- **Pravilo:** za pitanja **pokrivenosti** (a ne ispravnosti) uzeti nezavisan izvor URL-ova: live sitemap, GSC `page` dimenzija, ili `wp post list` — nikad sopstveni sitemap.
+
+## Google OAuth u statusu *Testing* gasi refresh token posle 7 dana — konektor Ads/GMB tiho umire (2026-08-11)
+- Simptom: `invalid_grant: Token has been expired or revoked` iz `ads_report.py` / `gmb_report.py` / `ads_final_urls.py`, dok GA4/GSC skripte rade savršeno.
+- Razlog za tu asimetriju: GA4/GSC idu preko **servisnog naloga** (ne ističe), Ads/GMB preko **OAuth Desktop klijenta**.
+- Izmereno: `token.json` osvežen 06.08, mrtav 11.08 = 5 dana. Nije jednokratni kvar, ponoviće se.
+- Zakrpa: `authorize_oauth.py` (browser, 1 min). **Trajno rešenje: Cloud Console → OAuth consent screen → Publish app** (*In production*) — refresh token tada ne ističe po vremenu, u skriptama se ne menja ništa.
+- 🔴 **Planska posledica:** proveriti token **na dan migracije pre početka** (stavka B1 checkliste) — 4.10 i verifikacija konverzija zavise od njega, a to je najgori trenutak za browser-consent.
+- Usput: `token.json` nosi samo scope-ove za koje je poslednji put autorizovan (trenutno samo `adwords`; `tagmanager.edit.containers` iz 27.07 nije u njemu).
+
+## `RedirectMatch` ČUVA query string — `?gclid=` preživljava 301 (2026-08-11)
+- Bitno jer bi suprotno značilo da svaki preusmeren klik iz oglasa gubi `gclid` → konverzija se ne pripisuje Ads-u, a to bi se otkrilo tek posle migracije.
+- Izmereno u izolovanom Apache folderu: `/sportski-podovi/?gclid=X&utm_source=google` → `Location: /sportske-podloge/?gclid=X&utm_source=google`. Važi i za ćirilična pravila.
+- `mod_alias` dodaje originalni query samo kad **cilj nema svoj** query — ako se ikad napiše pravilo sa `?` u cilju, originalni parametri se **gube**.
+
+## GA4 landing stranice nisu zamena za Ads final URL export — dokazano istog dana (2026-08-11)
+- GA4 vidi samo ono što **ima klikove**, i beleži URL **posle** redirekta — pa oglas koji danas prolazi kroz Redirection plugin izgleda savršeno ispravno.
+- Ne vidi: oglase/sitelinkove bez klikova (baš oni nose zaboravljene stare URL-ove), keyword-level final URL-ove, `tracking_url_template` / `final_url_suffix`, pauzirane kampanje.
+- 🔴 **Izmereno, ne teorijski:** GA4 presek je dao 29/29 čisto, a Ads export je na istom nalogu našao **8 problematičnih URL-ova** — uključujući 2 koja vode na **tuđi domen**. GA4 nije uhvatio nijedan.
+- Koristan kao presek najprometnijih odredišta i kao baseline, nikad kao razlog da se audit zatvori.
+
+## Oglasni URL može voditi na TUĐI domen — 301 mapa tu ne pomaže (2026-08-11)
+- Nađeno u pauziranoj kampanji: 3 oglasa i 2 sitelinka pokazuju na `ekopodneploce.rs`, ne na antasline.com.
+- Nijedna redirect mapa, parity provera ni regression sweep to ne hvata — svi rade nad **našim** domenom. Vidi se isključivo iz Ads export-a.
+- 🔴 Posledica za alate: **ne normalizovati URL u putanju pre provere hosta.** Prvi prolaz `ads-url-audit.php` je `ekopodneploce.rs/proizvodi/…` proverio kao putanju na našem sajtu i prijavio lažan `PUKAO`. Dodata zasebna klasa `EKSTERNI-DOMEN`.
+
+## Google Ads API (GAQL): polje po kom se filtrira mora biti i u `SELECT` (2026-08-11)
+- `WHERE campaign.status != 'REMOVED'` bez `campaign.status` u `SELECT` puca sa „The following field must be present in SELECT clause".
+- Nije opšte SQL ponašanje — specifično za GAQL, i pogađa svaki upit nad `ad_group_criterion` / `campaign_asset` / `ad_group_asset`.
+
+## Python `print` na Windows-u puca čim ćirilični izlaz ode u fajl (2026-08-11)
+- Konzola je cp1250; dok se gleda na ekranu radi, ali `> fajl.json` daje `UnicodeEncodeError` i **prazan fajl uz exit 1**.
+- Lek na vrhu skripte: `sys.stdout.reconfigure(encoding="utf-8")`. Obavezno u svakoj konektor skripti koja može vratiti ćirilične nazive (Ads ad grupe su „Огласна група 1").
+
+## Rank Math Redirections: pun WP boot po redirektu, ali ume da izveze u Apache — nije „ili-ili" (2026-08-11)
+- Modul postoji u **besplatnoj** verziji; na ovom buildu je **isključen** (`rank_math_modules` nema ni `redirections` ni `404-monitor`).
+- Izvršava se na **`add_action('wp', 'do_redirection', 11)`** — dakle pun WP bootstrap + parsiranje upita **pre** nego što se izda 301. Najskuplji mogući način da se vrati 301, i **pada zajedno sa WP-om**.
+- `class-export.php` izvozi u Apache (`RewriteRule … [R=301,L]`) ili nginx `.conf` → pravila se mogu **autorisati u UI-ju, a isporučiti u `.htaccess`**. Poređenje „plugin ili `.htaccess`" je lažna dilema.
+- Podela koja stvarno radi je **po populaciji redirekta, ne po alatu**: poznat zamrznut skup sa velikim saobraćajem (migracija) → `.htaccess`, jer mora raditi i kad WP padne; nepredvidivi post-live 404-ovi → plugin, jer ih vlasnik sajta rešava sam kroz UI i `404-monitor` pravi pravilo iz zabeleženog 404-a.
+- 🔴 **Isti URL nikad na oba sloja.** `.htaccess` se izvršava prvi i tiho pobeđuje — pravilo u UI-ju tada izgleda „ne radi" bez ijedne poruke o grešci.
+- ⚠️ Opcija `disable_auto_redirect` gasi WP-ov core `wp_old_slug_redirect` (uslovno, ne automatski).
+
+## Redirect pravila koja žive u BAZI (Redirection plugin) nestaju sa migracijom — moraju u `.htaccess` (W3 3.9, 2026-08-11)
+- Migracija zamenjuje živu bazu lokalnom. Sve što Redirection plugin drži u tabelama odlazi sa njom — **62 pravila sa ~46.000 zabeleženih GSC pogodaka** bi tiho palo na 404.
+- Analiza tih pravila je postojala od 21.07, ali nikad nije preneta u `htaccess-301-DRAFT.txt`. **Analiza ≠ implementacija** — dok pravilo nije u fajlu koji se aktivira, ono ne postoji.
+- Opštije: pred migraciju napraviti popis **svega što živi u bazi a ponaša se kao konfiguracija** (redirekti, plugin opcije, cron unosi), jer se to ne vidi ni u jednoj proveri fajlova.
+
+## Dve redirect mape zajedno mogu napraviti PETLJU — proveriti A→B / B→A pre spajanja (W3 3.9, 2026-08-11)
+- `redirect-mapa-FINAL` je vodila `/na-kojoj-podlozi…/` → `/bergo-ultimate…/`, a istorijska mapa **tačno obrnuto**. Svaka mapa je sama po sebi bila tačna u trenutku pisanja.
+- Rezultat spajanja: beskonačna petlja na oba URL-a. Ni jedna ni druga mapa se ne bi otkrila proverom „da li cilj vraća 200".
+- Razrešava se merenjem na buildu, ne rasuđivanjem: koji od dva URL-a je danas 200, taj je kanonski.
+
+## Proveravati i IZVORNE URL-ove redirekta, ne samo ciljeve (W3 3.9, 2026-08-11)
+- Standardna provera („svaki cilj vraća 200") je propuštala **2 pravila koja bi ubila stranice koje smo u međuvremenu izgradili**: `/lvt-…/vinil-podovi-za-restorane…/` (588 GSC) je sada stranica 16686, `/podovi-za-garaze/` (182 GSC) je 16875.
+- Pravila su bila starija od tih stranica. Mehanički prepis starih redirekta u novi build **pregazi sopstveni rad** — a HTTP provera ciljeva to ne vidi jer su ciljevi ispravni.
+- Pravilo: izvor koji na novom buildu vraća 200 = pravilo se preispituje, ne prepisuje.
+
+## mod_alias `Redirect` je PREFIKS-match — koristiti sidreni `RedirectMatch "^/put/?$"` (W3 3.9, 2026-08-11)
+- `Redirect 301 /podovi-za-terase/ /spoljnje-podne-obloge/` hvata i `/podovi-za-terase/bilo-sta/` i **lepi ostatak putanje na cilj** → `/spoljnje-podne-obloge/bilo-sta/` (404). Na punoj listi: **15 kolizija**, najgore u `/home/industrijski-podovi/` grupi (8 pravila) i `/podovi-za-terase/` grupi (4).
+- Sa `Redirect` redosled linija postaje kritičan (specifičnija pravila moraju iznad). Sa sidrenim `RedirectMatch "^/put/?$"` **redosled prestaje da bude bitan** — jedan izvor grešaka manje na dan migracije. `/?$` pokriva i varijantu bez kose crte.
+- U generatoru escape-ovati samo prave metakaraktere (`addcslashes`, ne `preg_quote`) — `preg_quote` pretvara svaku crticu u `\-` i fajl postaje nečitljiv baš onda kad se čita pod pritiskom.
+- Ćirilične putanje rade doslovno (`RedirectMatch "^/бренд/ecotile/?$"`) — stara ograda o `RewriteRule` sa `\x` escape-om nije potrebna, testirano pod Apache-om.
+
+## Draft koji se piše ručno tiho zastari — generisati ga iz izvora istine (W3 3.9, 2026-08-11)
+- `htaccess-301-DRAFT.txt` je bio od 27.07, a njegov izvor `redirect-mapa-FINAL.csv` menjan 30.07. Datum fajla je bio jedini signal — sadržaj je izgledao uredno.
+- Lek: `migracija/alati/htaccess-301-generate.php` generiše draft iz obe mape i **odbija upis ako ijedan cilj nije 200**. Nemoguće je dobiti draft koji je stariji od mapa ili koji cilja na 404.
+- Test bez staging-a: prepisati pravila u izolovan `htdocs/<test>/` folder sa prefiksiranim putanjama i pustiti curl. Testira stvarni Apache (sintaksa, sidrenje, ćirilica) bez diranja živog `.htaccess`-a — plus **negativna kontrola** (URL-ovi koji NE smeju dati 301).
+
+## WoodMart kači stilove na prioritetu 10000 — dequeue na „normalnom" prioritetu tiho ne radi ništa (2026-08-11)
+- `woodmart_enqueue_base_styles` → **`wp_enqueue_scripts` prioritet 10000** (tu ide i `js_composer_front`), `woodmart_force_enqueue_styles` → **10001**. Naš prolaz mora na **10002**.
+- Prvi pokušaj na prioritetu 100 je prošao **bez ijedne greške i bez ijedne promene** — merenje asseta je jedini način da se to primeti.
+- `wc-blocks-style` je poseban slučaj: WooCommerce ga stavlja u red iz `Blocks/Domain/Services/Notices.php` na **`wp_head` prioritet 10**, dakle posle celog `wp_enqueue_scripts` ciklusa — nijedan prioritet tamo ga ne hvata, hook mora biti `wp_head` 11.
+- Dijagnostički trik: hook na `wp_head` 999 i ispis `in_array($h, $wp_styles->queue)` vs `->done` pokazuje da li je stavka još u redu i da li je već odštampana.
+
+## Katalog režim skida DUGME, ne varijacijsku formu — `wc-add-to-cart-variation` nije mrtav (2026-08-11)
+- Sve je delovalo mrtvo: `catalog_mode`=true, **0** `<form class="cart">` na celom sajtu. Dequeue je izveden i „radio".
+- Ali 20 varijabilnih proizvoda i dalje renderuje `variations_form`, a WoodMart `swatchesVariations.min.js` zavisi od `wc_add_to_cart_variation_params` iz baš te skripte → izbor boje prestaje da menja sliku. Vraćeno.
+- Pravilo: odsustvo add-to-cart forme **ne dokazuje** da je varijacijski JS nepotreban. Pre gašenja bilo koje WooCommerce skripte — pravi klik u pregledaču na varijabilnom proizvodu.
+
+## Meriti `vc_` markup isključivo u `<body>` — `<head>` daje lažni pozitiv (2026-08-11)
+- Inline CSS u `<head>` sadrži `vc_row`/`vc_column` **selektore**, pa brojanje po celom dokumentu javlja „ima WPBakery" i na stranicama koje nemaju nijedan element.
+- Ista zamka važi za svaku „koristi li se X" proveru koja gleda sirov HTML: prvo odseći `<head>`.
+- Usput: WPBakery **sam** ima ispravnu proveru (`Vc_Base::enqueueStyle()` traži `[vc_row` u sadržaju) — WoodMart je pregazi bezuslovnim enqueue-om. Vredi proveriti da li tema gazi plugin pre nego što se piše sopstvena logika.
+
+## `curl -o fajl` u ovom git bash okruženju upisuje 0 bajtova (2026-08-11)
+- `curl -s -o /dev/null -w '%{http_code}'` radi normalno (status kodovi tačni), ali `-o neki/fajl.html` da prazan fajl — i u `/tmp` i u job folderu.
+- Posledica: `curl ... | grep` analiza HTML-a tiho vraća 0 pogodaka i deluje kao da traženog obrasca nema.
+- Za analizu HTML-a koristiti PHP (`file_get_contents`, `curl_multi`), ne bash curl.
+
+## Mrtav CPT nije neutralan — brisati postove je nedovoljno, plugin i `cptui_*` opcije nose zamku dalje (2026-08-11)
+- Legacy CPT sa **0 objavljenih postova** i dalje registruje rewrite pravilo koje stoji **ispred** generičkog page pravila → svaka dvosegmentna putanja pod istim slugom tiho postaje 404 (tako je 29.07 oboreno 6 pod-stranica).
+- Pravilo živi u keširanoj `rewrite_rules` opciji i pojavljuje se **tek na flush** — kvar isplivava sesiju-dve kasnije, naizgled bez uzroka.
+- Potpuno čišćenje = obrisati postove **+ deinstalirati plugin + obrisati `cptui_post_types`/`cptui_taxonomies`/`cptui_new_install`** (prva je bila 12,3 KB sa `autoload=yes`, dakle na svakom zahtevu) **+ `rewrite flush`** pa provera `get_post_types()`.
+- Filter koji gasi `public`/`rewrite` je dobra privremena mera, ali ga zadržati i posle brisanja: stari bekapi baze i dalje nose `cptui_*`, pa bi restore bez njega vratio zamku.
+
+## Pre brisanja postova sa prilozima: odvezati priloge (`post_parent`→0), ne oslanjati se na WP ponašanje (2026-08-11)
+- 41 CPT zapis je držao **211 priloga** kao decu; mnoge od tih slika su u aktivnoj upotrebi na *novim* stranicama (Bergo galerije).
+- Eksplicitan `UPDATE post_parent=0` pre `wp_delete_post(force)` uklanja svako nagađanje o tome šta core radi sa decom-prilozima. Kontrola posle: broj priloga pre = posle (7.764 = 7.764).
+
+## Mrtav draft nije nužno smeće — može biti izvorni tekst novih stranica (2026-08-11)
+- Legacy CPT draftovi su ranije korišćeni kao **izvor sadržaja** za WoodMart rebuild (Naxos Evolution → `/sportski-podovi-za-sale-i-balone/`, 378 GSC klikova).
+- Zato izvoz sadržaja u vault (`.md` + `.json`) pre brisanja, nezavisno od toga što je SEO vrednost nula. SQL bekap je za rollback, arhiva je za čitanje.
+
+## XAMPP: `wp db export` puca na „mysqldump is not recognized", `wp db query` tiho vraća prazno (2026-08-11)
+- `mysqldump` nije na PATH-u → pre poziva `export PATH="$PATH:/c/xampp/mysql/bin"`.
+- `wp db query` je vratio **0 redova** za upit nad `wpGs_options` iako redovi postoje, bez greške. Za dijagnostiku koristiti `eval-file` sa `$wpdb->get_results()`, ne `db query`.
+
+## „Nema meta opis + van sitemap-a" nije nužno bag — može biti tačan opis penzionisane stranice (2026-08-11)
+- 4 lokalne stranice (`podovi-za-poslovni-prostor`, `izgradnja-terena-za-tenis`, `podne-obloge-za-promocije-i-sajmove`, `galerija-sportskih-terena`) izgledale su kao propust: `noindex`, bez meta opisa, nevidljive regression sweep-u.
+- Provera pre popravke: **svaka ima noviji, već indeksiran parnjak iz WoodMart rebuild-a** (ID obrazac 5xxx = stari build vs 166xx/170xx = rebuild), i nijedna ne postoji na live-u. Noindex je bio nameran.
+- Uključivanje indeksa bi napravilo 4 duplikat-para pred migraciju — suprotno anti-kanibalizacionom pravilu.
+- Pravilo: pre „popravke" SEO propusta na staroj stranici, potraži ima li novijeg parnjaka u istom klasteru (viši ID, isti pojmovi u slug-u). Ako ga ima, propust je verovatno odluka.
+
+## Provera koja vrati „0 nalaza" mora prvo dokazati da ume da nađe nalaz (2026-08-11)
+- „Čisto" i „alat ne radi" izgledaju identično u izlazu. Ovo je već udarilo 10.08 dvaput u regression sweep-u (`strip_tags` lažni pozitiv, pogrešan regex delimiter) — tada u suprotnom smeru.
+- Praksa: pre nego što se nula upiše kao rezultat, propustiti kroz istu proveru **bar jedan namerno pokvaren primer** (npr. `PodloÅ¾ni Ä‡ilim` za mojibake, `ko?arku` za izgubljenu dijakritiku). Ako ih ne uhvati, nula ne znači ništa.
+- Košta 30 sekundi i jedina je razlika između „provereno" i „izgleda kao da je provereno".
+
+## `LIKE '%Ä%'` u WP bazi lovi i obično `a` — kolacija je akcent-neosetljiva (provera dijakritike, 2026-08-11)
+- Kolone `wpGs_posts.post_title` i `wpGs_postmeta.meta_value` su `utf8mb4_unicode_520_ci` — **akcent- i case-neosetljiva** kolacija. Zato `LIKE '%Ä%'` uredno pogađa `a`/`A`, a `LIKE '%ć%'` broji i svako `c`.
+- Praktična posledica: prva provera „ima li mojibake u naslovima" prijavila je ~385 lažnih pozitiva i izgledala kao veliki incident. Ponovljena sa `LIKE BINARY` → **0 nalaza**.
+- Pravilo: kad se traži **oblik zapisa** (mojibake, dijakritika, znak zamene), uvek `LIKE BINARY` ili `COLLATE utf8mb4_bin`. Obično `LIKE` je za značenje/pretragu, ne za forenziku enkodinga.
+
+## UTF-8 ne sme kroz `mysql -e "..."` na ovom Windows shell-u — a `SELECT` to NE otkriva (meta opisi, 2026-08-11)
+- Srpski tekst prosleđen kao `mysql -u root baza -e "UPDATE ... SET meta_value='… ć š ž …'"` stiže **u bazu** sa `?` umesto dijakritika — konzolni codepage ga pojede pre nego što stigne do klijenta.
+- Podmuklo: provera `SELECT`-om u istoj konzoli pokazuje iste `?`, pa izgleda kao kozmetički problem **prikaza**, ne kao stvarno oštećenje podatka. Zaključak „samo konzola ne ume da prikaže" je pogrešan i propušta bag.
+- Ispravno: napisati `.sql` fajl (Write alat) koji počinje sa `SET NAMES utf8mb4;` pa `mysql --default-character-set=utf8mb4 -u root baza < fajl.sql`. Tako pisani upisi su bili tačni iz prve.
+- Jedina pouzdana provera je **van baze**: `curl` nad renderovanom stranicom i pogled u `<head>`.
+
+## Sitemap-based regression sweep ne vidi `noindex` stranice — po definiciji (meta opisi, 2026-08-11)
+- `migracija/alati/regression-sweep.php` obilazi sitemap. Stranice sa `robots: noindex` nikad nisu u sitemap-u, pa ne postoje ni u izveštaju.
+- Konkretno: sweep je prijavio 6 stranica bez meta opisa, a stvarno ih je 11 (6 + 4 `noindex` + 1 sa Rank Math fallback-om).
+- Za pre-migracioni audit bar jednom uporediti **sitemap skup vs. `post_status='publish'` iz baze** — razlika su stranice koje niko ne proverava.
 
 ## mu-plugins SE prenose sa `wp-content` — komentar u fajlu koji tvrdi suprotno je bio uzrok pravog kvara (W3 3.10, 2026-08-10)
 - `al-local-mail-log.php` presreće **svaki** `wp_mail` poziv i vraća „uspeh" (XAMPP nema SMTP). U svojoj glavi nosi komentar: *„OBRISATI PRE MIGRACIJE — mu-plugins se ne prenose, ali za svaki slučaj…"*.

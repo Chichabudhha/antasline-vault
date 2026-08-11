@@ -26,26 +26,73 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 - [ ] **Backup finalnog lokalnog builda** na 2 lokacije — 🔴 poznato ograničenje:
       `nocni-backup.ps1` piše na SAMO JEDNU destinaciju (prioritet G:→OneDrive→lokalno).
       Za „2 lokacije" treba ručna druga kopija na dan zamrzavanja builda.
-- [ ] **Rollback plan zatvoren** — 3 pitanja za M, rok **15.08**: WHM auto-backup ·
-      CDN/edge keš sloj · ko izvršava ako M nije dostupan → [[migracija/rollback-plan]]
+- [x] ✅ **Rollback plan ZATVOREN 2026-08-11** (pre roka 15.08) — sva 3 pitanja:
+      JetBackup 5 dnevni/off-site/90 dana · **nema CDN/edge sloja** (samo LiteSpeed,
+      pa je „očisti keš" = LSCWP Purge All i ništa više) · M odluka **„migracija
+      samo kad sam tu"** → [[migracija/rollback-plan]]
+      🔴 **Nosi nov preduslov u B1 ispod** — v. „Dostupnost" stavka.
 - [ ] **Enhanced Conversions — Ads UI** (M, 5 min): Goals → Conversions →
       „Lead - forma (GTM)" → Settings → Enhanced conversions → uključiti, metod
       **Google Tag Manager**, prihvatiti customer data terms.
-- [ ] **Final URL audit oglasa — priprema**: izvezi sve final URL-ove iz obe
-      kampanje i uporedi sa novim slugovima. Popravka ide na dan migracije (4.10),
-      ali **spisak se pravi ranije**.
-- [ ] **`.htaccess` 301 — poslednja reverifikacija** (`htaccess-301-DRAFT.txt` vs
-      `redirect-mapa-FINAL.csv` + `redirect-mapa-HISTORIJSKI-65-FLAT.csv`).
+- [x] ✅ **Final URL audit oglasa — ZATVOREN 2026-08-11.** 41 URL (Ads API + GA4):
+      `OK` 32 · `PREPISATI` 6 · `EKSTERNI-DOMEN` 2 · `PUKAO` 1 (artefakt) ·
+      `REDIRECT-BUILD` 0. Spisak: `analiza/2026-08-11-ads-url-audit.csv`.
+      🟢 **Za dan migracije nema posla:** jedina ENABLED kampanja („ECOTILE
+      INDUSTRIJSKI PODOVI", 1 RSA + 6 sitelinkova) ima svih 7 URL-ova na 200.
+      🔴 **Pre reaktivacije pauziranih kampanja** (uklj. W4 4.4): 6 URL-ova za
+      prepis + 2 koja vode na tuđi domen `ekopodneploce.rs` (v. Blokeri u
+      [[PROGRESS]]). 🟢 Izmereno da `?gclid=` **preživljava** 301.
+      → [[migracija/2026-08-11-ads-final-url-audit]]
+- [x] ✅ **`.htaccess` 301 — reverifikovan i REGENERISAN 2026-08-11.** Draft je bio
+      **8 pravila, sada 73** (14 FINAL + 59 istorijskih). 🔴 62 istorijska pravila
+      (Redirection plugin, ~46.000 GSC pogodaka) nisu bila u draftu, a nestaju sa
+      bazom pri migraciji · razrešena petlja između dve mape · 2 pravila koja bi
+      ubila stranice 16686/16875 izbačena · `Redirect` (prefiks-match, 15 kolizija)
+      zamenjen sidrenim `RedirectMatch "^/put/?$"`. Draft se **generiše skriptom**
+      `migracija/alati/htaccess-301-generate.php` (odbija upis ako ijedan cilj nije
+      200) — ne pisati ga ručno. → [[dnevnik/2026-08-11-htaccess-301-reverifikacija]]
       🔴 NE aktivirati pre dana migracije.
-- [ ] **GSC priprema**: sitemap URL spreman za resubmit, alerti uključeni.
+      ⚠️ **Ako se do 24.08 promeni ijedan slug** — pustiti `redirect-verify.php` pa
+      `htaccess-301-generate.php` ponovo.
+- [x] ✅ **GSC priprema — ZATVORENA 2026-08-11 (CC deo).** 🟢 **URL za resubmit je
+      nepromenjen**: `https://www.antasline.com/sitemap_index.xml`, i child-ovi
+      nose identična imena fajlova kao Yoast na live-u → nijedan submit-ovan URL
+      ne puca migracijom. 🔴 Usput nađena rupa: build je emitovao **3 sitemap-a
+      gde live emituje 7** — Yoast→Rank Math import (05.08) nije preneo
+      taksonomijska podešavanja, svih 12 `tax_*_sitemap` ključeva je bilo `off`.
+      Pogađalo je 27 URL-ova sa **79 klikova / 2.583 prikaza** (GSC, 3 mes.),
+      najjači `/category/industrijski-podovi/` (44 kl.). Uključeno `category` +
+      `product_cat` + `product_tag` → sitemap 196 → **236 URL-ova**, svih 42
+      novih verifikovano 200/1×H1/`index`. Brend sitemap namerno **ostaje off**
+      (arhive prazne — v. B3 napomenu ispod). Nov read-only alat:
+      `scripts/gsc_sitemaps.py`. → [[dnevnik/2026-08-11-gsc-priprema-sitemap]]
+      **#ceka-miroslav (3 koraka u GSC UI, nijedan ne blokira migraciju):**
+      - [ ] obrisati zastareo **`http://`** sitemap unos (submit-ovan 2018-04-09,
+            Google ga i dalje povlači — poslednji put 2026-08-10)
+      - [ ] pogledati **3+4 upozorenja** na oba sitemap-a (API vraća samo brojač)
+      - [ ] potvrditi **email alerte**: profilni meni → *Search Console
+            preferences* → notifikacije uključene. Na dan migracije je alert o
+            skoku indexing grešaka prvi signal da 301 blok nije proradio.
 
 ---
 
 ## B. DAN MIGRACIJE (24.08) — redosled izvršenja
 
 ### B1. Pre prebacivanja
+- [ ] 🔴 **DOSTUPNOST (prva stavka dana, M odluka 2026-08-11): ne pokretati
+      migraciju ako Miroslav nema ~6h slobodnih ispred sebe.** Rollback plan
+      nema rezervnog izvršioca — samo on ima cPanel/SSH i samo on donosi
+      go/no-go. Rollback budžet je 35–50 min, ali tek posle dijagnostike i
+      odluke. Kasno popodne/veče nije prihvatljiv start; ako tog dana nema
+      prozora, **migracija se pomera** (isto pravilo kao gate).
+- [ ] Provera u cPanel → JetBackup da poslednji automatski snapshot **nije
+      stariji od 24h** — besplatan drugi primerak pored ručnog backup-a.
 - [ ] Backup live sajta ponovo, neposredno pre dodira (db + wp-content), datiran.
 - [ ] Potvrditi da je lokalni build **zamrznut** (nema izmena posle 16.08 freeze-a).
+- [ ] 🔴 **Provera da je konektor OAuth token živ** (`ads_report.py --from … --to …`
+      mora vratiti JSON, ne `invalid_grant`). Token pada za ~7 dana dok je consent
+      screen u *Testing* statusu — bez njega ne rade ni 4.10 ni verifikacija
+      konverzija u B6. Ako pukne: `authorize_oauth.py` (browser, 1 min).
 - [ ] Napraviti paket: `migracija/alati/build-staging-package.sh full`
       🟢 Skripta od 2026-08-10 sama izbacuje lokalne artefakte (v. B2) — ne
       oslanjati se na ručno brisanje.
@@ -76,7 +123,20 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 - [ ] URL zamena (`wp search-replace`), prefiks 🔴 **`wpgs_` malim slovom** — ne
       `wpGs_` kako dokumentacija na više mesta piše (potvrđeno 06.08 u dump-u)
 - [ ] `wp rewrite flush --hard`
-- [ ] Aktivirati `.htaccess` 301 blok
+- [ ] Aktivirati `.htaccess` 301 blok — sadržaj `htaccess-301-DRAFT.txt`, **iznad
+      `# BEGIN WordPress` bloka**. `RewriteBase` nije potreban (mod_alias, ne
+      mod_rewrite). Posle aktivacije: spot-check 5 pravila sa najviše GSC pogodaka
+      (`/sportski-podovi/`, `/izgrdanja-sportskig-terena/`,
+      `/podovi-za-baste-splavove-bazene/`, `/home/industrijski-podovi/ecotile-5007/`,
+      `/бренд/ecotile/`) — svako mora dati 301 na tačan `Location`.
+      ⚠️ **2026-08-11: `/бренд/ecotile/` će proći ovaj spot-check a svejedno
+      završiti na PRAZNOJ stranici** — `/brend/ecotile/` je 200 ali nema nijedan
+      proizvod (nijedan proizvod na buildu nema `product_brand` termin; brojači
+      25/3 su zaostali iz Porto ere). Isto i `/brend/ergomat/`. Saobraćaj:
+      30 prikaza / 0 klikova za 3 mes. → ne blokira, ali **cilj je pogrešan**;
+      odluka čeka M (v. [[PROGRESS]] Blokeri). Pouka za generator:
+      `htaccess-301-generate.php` proverava samo da cilj vraća 200 — prazna
+      WooCommerce arhiva to zadovoljava.
 - [ ] `wp litespeed-purge all` + regenerisati Critical CSS/UCSS
 
 ### B4. SMTP / forme — 🔴 prvo posle prebacivanja
@@ -105,7 +165,15 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 - [ ] 4.10 — ispraviti final URL-ove oglasa po spisku iz A
 
 ### B7. Post-live (25.08+)
-- [ ] GSC sitemap resubmit
+- [ ] GSC sitemap resubmit — URL **`https://www.antasline.com/sitemap_index.xml`**
+      (nepromenjen, v. §A). Pre resubmit-a proveriti da index vraća **6**
+      child-ova (`post`/`page`/`product`/`category`/`product_cat`/`product_tag`)
+      i ~236 URL-ova ukupno. 🔴 Ako ih je samo 3 → Rank Math keš sitemap-a nije
+      obrisan pri prebacivanju: obrisati opciju `rank_math_sitemap_cache_files`
+      + fajlove `wp-content/uploads/rank-math/rank_math_*.xml`.
+- [ ] Prored `product_tag` arhiva (18 kom., od toga 10 `namena-*`) — zaseban
+      SEO zadatak, namerno odložen posle live-a; na migraciju je išao **parity**,
+      ne promena indeksne politike. v. [[dnevnik/2026-08-11-gsc-priprema-sitemap]]
 - [ ] UptimeRobot
 - [ ] Dnevni 404 log pregled, prvih 14 dana
 - [ ] 4.8 Maximize Conversions — **~01.09**, namerno posle slegnjivanja 301

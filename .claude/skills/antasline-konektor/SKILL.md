@@ -31,8 +31,11 @@ ne trebaju ovaj korak, rade preko service account-a odmah).
 |---|---|---|
 | `ga4_report.py --from --to` | `googleanalytics4` | `users`, `sessions`, `events.{generate_lead,tel,mailto}`, `hvala_proxy_pageviews` |
 | `gsc_report.py --from --to [--limit]` | `searchconsole` | lista `opportunities` (upit/prikazi/klikovi/CTR/pozicija) za poziciju 5–15 |
+| `gsc_sitemaps.py [--json]` | (nema Windsor pandana) | **submit-ovani sitemap-i** za `sc-domain:antasline.com`: putanja, tip, `is_index`, poslednji submit/download, broj grešaka i upozorenja, `contents` po tipu (web/image). Za pripremu i verifikaciju resubmit-a oko migracije. ⚠️ Servisni nalog ima samo `webmasters.readonly` — skripta **ne može** submit-ovati ni obrisati sitemap; to ostaje ručni korak u GSC UI. Ne vraća **tekst** upozorenja (API izlaže samo brojač) |
 | `gsc_page_queries.py --from --to --page URL [--page URL …]` | (nema Windsor pandana) | upiti po KONKRETNOJ stranici — `total_impressions`, `total_clicks`, `queries[]`. Za odluku rebuild vs 301, dijagnozu kanibalizacije, „koja stranica drži koji upit" |
 | `ads_report.py --from --to` | `google_ads` | `campaigns[]` (spend_rsd/clicks/impressions/ctr_pct/avg_cpc_rsd/conversions) + `totals` |
+| `ads_final_urls.py [--include-removed]` | (nema Windsor pandana) | **odredišni (final) URL-ovi**: svaki oglas (final + mobile), keyword-level URL-ovi, sitelink/asset URL-ovi na sva 3 nivoa, `tracking_url_template`/`final_url_suffix` + `unique_final_urls`. Za W4 4.10 audit pred migraciju — spaja se sa `migracija/alati/ads-url-audit.php` |
+| `ga4_paid_landing.py --from --to` | (nema Windsor pandana) | landing stranice `sessionMedium=cpc` po kampanji + agregat po putanji. Servisni nalog → radi i kad je OAuth token mrtav. ⚠️ vidi URL **posle** redirekta i samo ono što ima klikove — nije zamena za `ads_final_urls.py` |
 | `gmb_report.py --from --to [--location]` | GMB (Windsor pokrivenost je i onako bila ograničena) | `metrics` (impresije desktop/mobile maps/search, pozivi, klikovi na sajt, direkcije) |
 | `ai_report.py --from --to` | (nema Windsor pandana) | AI-asistent saobraćaj: `ai_sessions_total`, `ga4_channel_ai_assistant`, `podbacaj_kanala`, `po_izvoru`, `top_landing`, `eventi` |
 | `gtm_mailto_tag.py [--dry-run]` | (nema Windsor pandana — **write**, ne read) | kreira `mailto` trigger + GA4 Event tag u GTM **workspace-u**; ne objavljuje |
@@ -88,6 +91,12 @@ korak `reference/api-konektor-setup.md` da se vratiš. Najčešće:
 - `Nedostaje OAuth client fajl` / `Nedostaje token.json` → Ads/GMB, korak 3
 - `Nedostaje ads-config.json` → Ads developer token, korak 4 (čeka Google
   odobrenje, obično 1–3 radna dana — ne pokušavati ponovo instant)
+- 🔴 `invalid_grant: Token has been expired or revoked` → **OAuth token je
+  pao** (Ads/GMB; GA4/GSC nastavljaju da rade, idu preko servisnog naloga).
+  Dok je OAuth consent screen u statusu *Testing*, Google gasi refresh token
+  posle **7 dana** — izmereno 2026-08-11. Zakrpa: `authorize_oauth.py`.
+  Trajno: Cloud Console → OAuth consent screen → **Publish app**.
+  v. [[reference/naucene-lekcije]]
 
 ## Veze
 - `reference/api-konektor-setup.md` — Miroslavljev jednokratni setup checklist

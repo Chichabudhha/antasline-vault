@@ -1,0 +1,1038 @@
+{
+  "customer_id": "1568860314",
+  "campaigns": [
+    {
+      "campaign": "Antas line 2018",
+      "status": "PAUSED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "status": "ENABLED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "Ecotile - Antas line",
+      "status": "PAUSED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "Ecotile kampanja",
+      "status": "PAUSED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "Industrijski podovi-STARO",
+      "status": "PAUSED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "Podloge za terase i bazene",
+      "status": "PAUSED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "Podovi za supermarkete",
+      "status": "PAUSED",
+      "channel": "PERFORMANCE_MAX",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "Search INDUSTRIJSKI Podovi",
+      "status": "PAUSED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "Sportski podovi - Bergo flooring",
+      "status": "PAUSED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "Sportski podovi - novembar",
+      "status": "PAUSED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "Website traffic-Performance Max-Industrijski podovi",
+      "status": "PAUSED",
+      "channel": "PERFORMANCE_MAX",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "expona click",
+      "status": "PAUSED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "podovi za baste",
+      "status": "PAUSED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    },
+    {
+      "campaign": "podovi za javne objekte",
+      "status": "PAUSED",
+      "channel": "SEARCH",
+      "tracking_url_template": null,
+      "final_url_suffix": null
+    }
+  ],
+  "ads": [
+    {
+      "campaign": "Antas line 2018",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 292432989048,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/home/industrijski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI",
+      "campaign_status": "ENABLED",
+      "ad_group": "Ad group 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 811598156128,
+      "ad_type": "RESPONSIVE_SEARCH_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Ecotile - Antas line",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 277447773107,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "PAUSED",
+      "final_urls": [
+        "https://www.antasline.com/home/industrijski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Ecotile - Antas line",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 277447773110,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "PAUSED",
+      "final_urls": [
+        "http://www.antasline.com/home/industrijski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Ecotile - Antas line",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 277447773113,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "PAUSED",
+      "final_urls": [
+        "http://www.antasline.com/home/industrijski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Ecotile - Antas line",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 350265691880,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/home/industrijski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Ecotile - Antas line",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 630675839667,
+      "ad_type": "RESPONSIVE_SEARCH_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/home/industrijski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Ecotile - Antas line",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 723693109893,
+      "ad_type": "RESPONSIVE_SEARCH_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/home/industrijski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Ecotile kampanja",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 261742252319,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "PAUSED",
+      "final_urls": [
+        "http://www.ekopodneploce.rs/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Ecotile kampanja",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 268106630875,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "PAUSED",
+      "final_urls": [
+        "http://www.ekopodneploce.rs/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Ecotile kampanja",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 272379061618,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "PAUSED",
+      "final_urls": [
+        "http://www.ekopodneploce.rs/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Industrijski podovi-STARO",
+      "campaign_status": "PAUSED",
+      "ad_group": "Ad group 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 630751941316,
+      "ad_type": "RESPONSIVE_SEARCH_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/home/industrijski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Podloge za terase i bazene",
+      "campaign_status": "PAUSED",
+      "ad_group": "Ad group 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 811564687830,
+      "ad_type": "RESPONSIVE_SEARCH_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/spoljnje-podne-obloge/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Search INDUSTRIJSKI Podovi",
+      "campaign_status": "PAUSED",
+      "ad_group": "Industrijski podovi grupa",
+      "ad_group_status": "ENABLED",
+      "ad_id": 725780179595,
+      "ad_type": "RESPONSIVE_SEARCH_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Sportski podovi - Bergo flooring",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 336069755422,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/sportski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Sportski podovi - Bergo flooring",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 350210266045,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "PAUSED",
+      "final_urls": [
+        "https://www.antasline.com/sportski-podovi/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "Sportski podovi - novembar",
+      "campaign_status": "PAUSED",
+      "ad_group": "Ad group 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 634245768924,
+      "ad_type": "RESPONSIVE_SEARCH_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "expona click",
+      "campaign_status": "PAUSED",
+      "ad_group": "Ad group 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 630683069913,
+      "ad_type": "RESPONSIVE_SEARCH_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "podovi za baste",
+      "campaign_status": "PAUSED",
+      "ad_group": "bergo podloge za terase",
+      "ad_group_status": "ENABLED",
+      "ad_id": 193483993138,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "PAUSED",
+      "final_urls": [
+        "https://www.antasline.com/spoljnje-podne-obloge/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "podovi za baste",
+      "campaign_status": "PAUSED",
+      "ad_group": "bergo podloge za terase",
+      "ad_group_status": "ENABLED",
+      "ad_id": 262436062254,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "PAUSED",
+      "final_urls": [
+        "https://www.antasline.com/spoljnje-podne-obloge/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "podovi za baste",
+      "campaign_status": "PAUSED",
+      "ad_group": "bergo podloge za terase",
+      "ad_group_status": "ENABLED",
+      "ad_id": 525919676060,
+      "ad_type": "RESPONSIVE_SEARCH_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/spoljnje-podne-obloge/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    },
+    {
+      "campaign": "podovi za javne objekte",
+      "campaign_status": "PAUSED",
+      "ad_group": "Огласна група бр. 1",
+      "ad_group_status": "ENABLED",
+      "ad_id": 411592811924,
+      "ad_type": "EXPANDED_TEXT_AD",
+      "ad_status": "ENABLED",
+      "final_urls": [
+        "https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/"
+      ],
+      "final_mobile_urls": [],
+      "tracking_url_template": null,
+      "path1": null,
+      "path2": null
+    }
+  ],
+  "keywords_with_own_url": [],
+  "assets": [
+    {
+      "level": "campaign",
+      "asset_id": 15728870499,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za hale i magacine",
+      "final_urls": [
+        "https://www.antasline.com/home/industrijski-podovi/ecotile-5007/"
+      ],
+      "campaign": "Antas line 2018"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 15728870517,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za javne objekte",
+      "final_urls": [
+        "https://www.antasline.com/home/industrijski-podovi/ecotile-5005-podne-ploce/"
+      ],
+      "campaign": "Antas line 2018"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 15728870523,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Industrijski podovi",
+      "final_urls": [
+        "http://www.ekopodneploce.rs/proizvodi/E%20500-7/E500-7.html"
+      ],
+      "campaign": "Ecotile kampanja"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 15728870529,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za magacine",
+      "final_urls": [
+        "http://www.ekopodneploce.rs/proizvodi/E%20500-7/E500-7.html"
+      ],
+      "campaign": "Ecotile kampanja"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 15728870535,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Antistatik i ESD podovi",
+      "final_urls": [
+        "https://www.antasline.com/home/industrijski-podovi/ecotile-5005-podne-ploce/"
+      ],
+      "campaign": "Antas line 2018"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 15728870538,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Industrijski podovi",
+      "final_urls": [
+        "https://www.antasline.com/home/industrijski-podovi/"
+      ],
+      "campaign": "Antas line 2018"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 15814681946,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za bazene",
+      "final_urls": [
+        "https://www.antasline.com/spoljnje-podne-obloge/podovi-za-bazene/"
+      ],
+      "campaign": "podovi za baste"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 15814681949,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za baste i terase",
+      "final_urls": [
+        "https://www.antasline.com/spoljnje-podne-obloge/"
+      ],
+      "campaign": "podovi za baste"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 37023772575,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Sportske podloge za sale",
+      "final_urls": [
+        "https://www.antasline.com/sportski-podovi-za-sale-i-balone/"
+      ],
+      "campaign": "Sportski podovi - novembar"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 37023772578,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Tereni na otvorenom",
+      "final_urls": [
+        "https://www.antasline.com/sportski-podovi/"
+      ],
+      "campaign": "Sportski podovi - novembar"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 186876286410,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Antistatik podovi",
+      "final_urls": [
+        "https://www.antasline.com/antistatik-i-elektroprovodljivi-podovi/"
+      ],
+      "campaign": "Ecotile - Antas line"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 186876286413,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podne ploce za magacine",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/industrijski-pod/"
+      ],
+      "campaign": "Ecotile - Antas line"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 186876286416,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za javne objekte",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/ecotile-5005-podne-ploce/"
+      ],
+      "campaign": "Ecotile - Antas line"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 186876286419,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Obležavanje podova",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/trakezaobelezavanje/"
+      ],
+      "campaign": "Ecotile - Antas line"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 189888950039,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za magacine",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/industrijski-pod/"
+      ],
+      "campaign": "Website traffic-Performance Max-Industrijski podovi"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 189889503623,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Antistatik i ESD podovi",
+      "final_urls": [
+        "https://www.antasline.com/antistatik-i-elektroprovodljivi-podovi/"
+      ],
+      "campaign": "Website traffic-Performance Max-Industrijski podovi"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 189889793084,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Ergonomski podovi",
+      "final_urls": [
+        "https://www.antasline.com/ergonomski-podovi/"
+      ],
+      "campaign": "Website traffic-Performance Max-Industrijski podovi"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 189925343527,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Za garaže i autoservise",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/garaze-i-autoservisi/"
+      ],
+      "campaign": "Website traffic-Performance Max-Industrijski podovi"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 324277621262,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za magacine",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/"
+      ],
+      "campaign": "Podovi za supermarkete"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 324277948880,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Obeležavanje podova",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/trake-za-obelezavanje/"
+      ],
+      "campaign": "Podovi za supermarkete"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 324404563530,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za supermarkete",
+      "final_urls": [
+        "https://www.antasline.com/podovi-za-radnje-i-maloprodajne-objekte/"
+      ],
+      "campaign": "Podovi za supermarkete"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 368133951925,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Švedske podloge za terase",
+      "final_urls": [
+        "https://www.antasline.com/spoljnje-podne-obloge/bergo-unique/"
+      ],
+      "campaign": "podovi za baste"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 368732954279,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podloge oko bazena",
+      "final_urls": [
+        "https://www.antasline.com/spoljnje-podne-obloge/podovi-za-bazene/"
+      ],
+      "campaign": "Podloge za terase i bazene"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 368733365855,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Zatražite ponudu",
+      "final_urls": [
+        "https://www.antasline.com/spoljnje-podne-obloge/bergo-unique/"
+      ],
+      "campaign": "Podloge za terase i bazene"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 368733643451,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za terase XL",
+      "final_urls": [
+        "https://www.antasline.com/spoljnje-podne-obloge/bergo-xl/"
+      ],
+      "campaign": "Podloge za terase i bazene"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 368758408094,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi Za Magacine",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/industrijski-pod/"
+      ],
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 368851766347,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Antistatik podovi",
+      "final_urls": [
+        "https://www.antasline.com/antistatik-i-elektroprovodljivi-podovi/"
+      ],
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 368900942313,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za terase Unique",
+      "final_urls": [
+        "https://www.antasline.com/spoljnje-podne-obloge/bergo-unique/"
+      ],
+      "campaign": "Podloge za terase i bazene"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 368928584355,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Pod za velika opterećenja",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/podne-ploce-ecotile-50010/"
+      ],
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 368929775544,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Obeležavanje podova",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/trake-za-obelezavanje/"
+      ],
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 383208984775,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podovi za hale",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/industrijski-pod/"
+      ],
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI"
+    },
+    {
+      "level": "campaign",
+      "asset_id": 383281141908,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Bumperi za regale",
+      "final_urls": [
+        "https://www.antasline.com/industrijski-podovi/bumperi-zastita-za-police-regale-i-zidove/"
+      ],
+      "campaign": "ECOTILE INDUSTRIJSKI PODOVI"
+    },
+    {
+      "level": "ad_group",
+      "asset_id": 37023772572,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Podloge za basket",
+      "final_urls": [
+        "https://www.antasline.com/sportski-podovi/"
+      ],
+      "campaign": "Sportski podovi - Bergo flooring",
+      "ad_group": "Sportski podovi - Bergo flooring – динамичка огласна група"
+    },
+    {
+      "level": "ad_group",
+      "asset_id": 37023772575,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Sportske podloge za sale",
+      "final_urls": [
+        "https://www.antasline.com/sportski-podovi-za-sale-i-balone/"
+      ],
+      "campaign": "Sportski podovi - Bergo flooring",
+      "ad_group": "Sportski podovi - Bergo flooring – динамичка огласна група"
+    },
+    {
+      "level": "ad_group",
+      "asset_id": 37023772578,
+      "asset_type": "SITELINK",
+      "asset_name": null,
+      "link_text": "Tereni na otvorenom",
+      "final_urls": [
+        "https://www.antasline.com/sportski-podovi/"
+      ],
+      "campaign": "Sportski podovi - Bergo flooring",
+      "ad_group": "Sportski podovi - Bergo flooring – динамичка огласна група"
+    }
+  ],
+  "unique_final_urls": [
+    {
+      "url": "http://www.antasline.com/home/industrijski-podovi/",
+      "koriste": [
+        "oglas 277447773110 (Ecotile - Antas line / Огласна група 1)",
+        "oglas 277447773113 (Ecotile - Antas line / Огласна група 1)"
+      ]
+    },
+    {
+      "url": "http://www.ekopodneploce.rs/",
+      "koriste": [
+        "oglas 261742252319 (Ecotile kampanja / Огласна група 1)",
+        "oglas 268106630875 (Ecotile kampanja / Огласна група 1)",
+        "oglas 272379061618 (Ecotile kampanja / Огласна група 1)"
+      ]
+    },
+    {
+      "url": "http://www.ekopodneploce.rs/proizvodi/E%20500-7/E500-7.html",
+      "koriste": [
+        "asset 15728870523 [Industrijski podovi] (campaign)",
+        "asset 15728870529 [Podovi za magacine] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/",
+      "koriste": [
+        "oglas 634245768924 (Sportski podovi - novembar / Ad group 1)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/antistatik-i-elektroprovodljivi-podovi/",
+      "koriste": [
+        "asset 186876286410 [Antistatik podovi] (campaign)",
+        "asset 189889503623 [Antistatik i ESD podovi] (campaign)",
+        "asset 368851766347 [Antistatik podovi] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/ergonomski-podovi/",
+      "koriste": [
+        "asset 189889793084 [Ergonomski podovi] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/home/industrijski-podovi/",
+      "koriste": [
+        "oglas 292432989048 (Antas line 2018 / Огласна група 1)",
+        "oglas 277447773107 (Ecotile - Antas line / Огласна група 1)",
+        "oglas 350265691880 (Ecotile - Antas line / Огласна група 1)",
+        "oglas 630675839667 (Ecotile - Antas line / Огласна група 1)",
+        "oglas 723693109893 (Ecotile - Antas line / Огласна група 1)",
+        "oglas 630751941316 (Industrijski podovi-STARO / Ad group 1)",
+        "asset 15728870538 [Industrijski podovi] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/home/industrijski-podovi/ecotile-5005-podne-ploce/",
+      "koriste": [
+        "asset 15728870517 [Podovi za javne objekte] (campaign)",
+        "asset 15728870535 [Antistatik i ESD podovi] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/home/industrijski-podovi/ecotile-5007/",
+      "koriste": [
+        "asset 15728870499 [Podovi za hale i magacine] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/industrijski-podovi/",
+      "koriste": [
+        "oglas 811598156128 (ECOTILE INDUSTRIJSKI PODOVI / Ad group 1)",
+        "oglas 725780179595 (Search INDUSTRIJSKI Podovi / Industrijski podovi grupa)",
+        "asset 324277621262 [Podovi za magacine] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/industrijski-podovi/bumperi-zastita-za-police-regale-i-zidove/",
+      "koriste": [
+        "asset 383281141908 [Bumperi za regale] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/industrijski-podovi/ecotile-5005-podne-ploce/",
+      "koriste": [
+        "asset 186876286416 [Podovi za javne objekte] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/industrijski-podovi/garaze-i-autoservisi/",
+      "koriste": [
+        "asset 189925343527 [Za garaže i autoservise] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/industrijski-podovi/industrijski-pod/",
+      "koriste": [
+        "asset 186876286413 [Podne ploce za magacine] (campaign)",
+        "asset 189888950039 [Podovi za magacine] (campaign)",
+        "asset 368758408094 [Podovi Za Magacine] (campaign)",
+        "asset 383208984775 [Podovi za hale] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/industrijski-podovi/podne-ploce-ecotile-50010/",
+      "koriste": [
+        "asset 368928584355 [Pod za velika opterećenja] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/industrijski-podovi/trake-za-obelezavanje/",
+      "koriste": [
+        "asset 324277948880 [Obeležavanje podova] (campaign)",
+        "asset 368929775544 [Obeležavanje podova] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/industrijski-podovi/trakezaobelezavanje/",
+      "koriste": [
+        "asset 186876286419 [Obležavanje podova] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/",
+      "koriste": [
+        "oglas 630683069913 (expona click / Ad group 1)",
+        "oglas 411592811924 (podovi za javne objekte / Огласна група бр. 1)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/podovi-za-radnje-i-maloprodajne-objekte/",
+      "koriste": [
+        "asset 324404563530 [Podovi za supermarkete] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/spoljnje-podne-obloge/",
+      "koriste": [
+        "oglas 811564687830 (Podloge za terase i bazene / Ad group 1)",
+        "oglas 193483993138 (podovi za baste / bergo podloge za terase)",
+        "oglas 262436062254 (podovi za baste / bergo podloge za terase)",
+        "oglas 525919676060 (podovi za baste / bergo podloge za terase)",
+        "asset 15814681949 [Podovi za baste i terase] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/spoljnje-podne-obloge/bergo-unique/",
+      "koriste": [
+        "asset 368133951925 [Švedske podloge za terase] (campaign)",
+        "asset 368733365855 [Zatražite ponudu] (campaign)",
+        "asset 368900942313 [Podovi za terase Unique] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/spoljnje-podne-obloge/bergo-xl/",
+      "koriste": [
+        "asset 368733643451 [Podovi za terase XL] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/spoljnje-podne-obloge/podovi-za-bazene/",
+      "koriste": [
+        "asset 15814681946 [Podovi za bazene] (campaign)",
+        "asset 368732954279 [Podloge oko bazena] (campaign)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/sportski-podovi-za-sale-i-balone/",
+      "koriste": [
+        "asset 37023772575 [Sportske podloge za sale] (campaign)",
+        "asset 37023772575 [Sportske podloge za sale] (ad_group)"
+      ]
+    },
+    {
+      "url": "https://www.antasline.com/sportski-podovi/",
+      "koriste": [
+        "oglas 336069755422 (Sportski podovi - Bergo flooring / Огласна група 1)",
+        "oglas 350210266045 (Sportski podovi - Bergo flooring / Огласна група 1)",
+        "asset 37023772578 [Tereni na otvorenom] (campaign)",
+        "asset 37023772572 [Podloge za basket] (ad_group)",
+        "asset 37023772578 [Tereni na otvorenom] (ad_group)"
+      ]
+    }
+  ],
+  "brojevi": {
+    "ads": 22,
+    "keywords_with_own_url": 0,
+    "assets_with_url": 35,
+    "unique_urls": 25
+  }
+}

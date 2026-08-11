@@ -1,37 +1,107 @@
 # ⛔ NE AKTIVIRATI DIREKTNO — ovo je DRAFT, ne deo živog .htaccess-a.
-# Aktivira se TEK na dan migracije (MASTER-PLAN V2 zadaci 3.9/3.11), posle
-# finalne provere cele mape. Generisano iz migracija/redirect-mapa-FINAL.csv (F4, 2026-07-07).
+# Aktivira se TEK na dan migracije (MASTER-PLAN V2, 3.9/3.11), iznad `# BEGIN WordPress` bloka.
 #
-# Napomena: URL-ovi ispod su primeri za PRODUKCIJU (antasline.com root), ne za
-# lokalni /antasline/ subfolder — prilagoditi RewriteBase pri aktivaciji.
+# GENERISANO: 2026-08-11 skriptom migracija/alati/htaccess-301-generate.php
+# Izvori: redirect-mapa-FINAL.csv (14 pravila) +
+#         redirect-mapa-HISTORIJSKI-65-FLAT.csv (59 pravila).
+# Svi ciljevi provereni HTTP 200 na lokalnom buildu na dan generisanja.
+#
+# 🔴 ZAŠTO RedirectMatch, a ne Redirect:
+#    mod_alias `Redirect` radi PREFIKS-match i lepi ostatak putanje na cilj.
+#    Npr. `Redirect /podovi-za-terase/` bi progutao /podovi-za-terase/bergo-multisport/
+#    i poslao ga na pogrešan URL. Sidreni `^...\/?$` to sprečava i čini redosled
+#    linija nebitnim. Isti razlog i za /home/industrijski-podovi/ grupu (8 pravila).
+#
+# 🔴 NAPOMENA: putanje su za PRODUKCIJU (antasline.com root), ne za lokalni
+#    /antasline/ podfolder.
 
-<IfModule mod_rewrite.c>
-RewriteEngine On
+<IfModule mod_alias.c>
 
-# --- Verifikovani redirekti (testirano 200 na lokalu, 2026-07-07) ---
-Redirect 301 /na-kojoj-podlozi-se-igraju-turniri-u-3x3/ /bergo-ultimate-i-ultimate-plus-nova-generacija-sportskih-podova/
-Redirect 301 /proizvod/lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija/ /proizvod/lite-shot-325-profesionalna-pokretna-kosarkaska-konstrukcija/
-Redirect 301 /kategorija-proizvoda/sigurnosni-senzori-signalni-sistemi/ /kategorija-proizvoda/sigurnosni-senzori-i-signalni-sistemi/
+# ================= A. PARITY ODLUKE (redirect-mapa-FINAL.csv) =================
+RedirectMatch 301 "^/na-kojoj-podlozi-se-igraju-turniri-u-3x3/?$" /bergo-ultimate-i-ultimate-plus-nova-generacija-sportskih-podova/
+RedirectMatch 301 "^/proizvod/lite-shot-795-profesionalna-pokretna-kosarkaska-konstrukcija/?$" /proizvod/lite-shot-325-profesionalna-pokretna-kosarkaska-konstrukcija/
+RedirectMatch 301 "^/kategorija-proizvoda/sigurnosni-senzori-signalni-sistemi/?$" /kategorija-proizvoda/sigurnosni-senzori-i-signalni-sistemi/
+RedirectMatch 301 "^/industrijski-podovi/elektroprovodni-podovi/?$" /antistatik-i-elektroprovodljivi-podovi/
+RedirectMatch 301 "^/бренд/ecotile/?$" /brend/ecotile/
+RedirectMatch 301 "^/бренд/ergomat/?$" /brend/ergomat/
+RedirectMatch 301 "^/moj-nalog/?$" /kontakt/
+RedirectMatch 301 "^/podloge-za-parking/?$" /podloge-za-parkiraliste-i-staze/
+RedirectMatch 301 "^/izgradnja-terena-za-tenis/?$" /sportske-podloge/sportski-podovi-za-teniske-terene/
+RedirectMatch 301 "^/podne-obloge-za-promocije-i-sajmove/?$" /spoljnje-podne-obloge/bergo-easy/
+RedirectMatch 301 "^/podovi-za-poslovni-prostor/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/
+RedirectMatch 301 "^/galerija-sportskih-terena/?$" /galerija/
+RedirectMatch 301 "^/izbor-industrijskog-poda-tri-najcesca-pitanja-2/?$" /izbor-industrijskog-poda-tri-najcesca-pitanja/
+RedirectMatch 301 "^/sta-postaviti-preko-starog-parketa-ili-plocica/?$" /sta-postaviti-preko-starog-parketa-ili-plocica-2/
 
-# --- Verifikovan redirekt (Kategorija E konsolidacija, testirano 200 na lokalu, 2026-07-08) ---
-Redirect 301 /industrijski-podovi/elektroprovodni-podovi/ /antistatik-i-elektroprovodljivi-podovi/
+# ====== B. ISTORIJSKA PRAVILA — preuzeta iz Redirection plugina sa live-a ======
+# 🔴 Bez ovog bloka se GUBE: migracija zamenjuje živu bazu lokalnom, a sa njom
+#    nestaju i pravila Redirection plugina. Sortirano po zabeleženim GSC pogocima.
+RedirectMatch 301 "^/sportski-podovi/?$" /sportske-podloge/   # 7800
+RedirectMatch 301 "^/izgrdanja-sportskig-terena/?$" /sportske-podloge/   # 6043
+RedirectMatch 301 "^/podovi-za-baste-splavove-bazene/?$" /spoljnje-podne-obloge/   # 5740
+RedirectMatch 301 "^/home/industrijski-podovi/ecotile-5007/?$" /industrijski-podovi/industrijski-pod/   # 3759
+RedirectMatch 301 "^/home/industrijski-podovi/?$" /industrijski-podovi/   # 2659
+RedirectMatch 301 "^/bergo-multisport/?$" /sportske-podloge/   # 2239
+RedirectMatch 301 "^/podovi-za-terase/?$" /spoljnje-podne-obloge/   # 1776
+RedirectMatch 301 "^/home/industrijski-podovi/esd-i-antistatik-podovi-ecotile/?$" /antistatik-i-elektroprovodljivi-podovi/   # 1756
+RedirectMatch 301 "^/podovi-za-terase-podovi-za-baste-podovi-za-splavove-podovi-za-bazene/?$" /spoljnje-podne-obloge/   # 1623
+RedirectMatch 301 "^/home/industrijski-podovi/industrijski-pod/?$" /industrijski-podovi/industrijski-pod/   # 1477
+RedirectMatch 301 "^/sportski-podovi-podovi-za-3x3-podovi-za-rukomet-podovi-za-futsal/?$" /sportske-podloge/   # 1457
+RedirectMatch 301 "^/sportska-podloga-za-odbojku/?$" /podloga-za-odbojkaske-terene/   # 1422
+RedirectMatch 301 "^/home/industrijski-podovi/podne-ploce-ecotile-50010/?$" /industrijski-podovi/podne-ploce-ecotile-50010/   # 1052
+RedirectMatch 301 "^/podovi-za-terase/bergo-multisport/?$" /sportske-podloge/   # 1049
+RedirectMatch 301 "^/home/industrijski-podovi/ecotile-5005-podne-ploce/?$" /industrijski-podovi/ecotile-5005-podne-ploce/   # 975
+RedirectMatch 301 "^/padel-tenis/?$" /pop-tenis/   # 963
+RedirectMatch 301 "^/sportski-podovi-za-hale/?$" /sportski-podovi-za-sale-i-balone/   # 954
+RedirectMatch 301 "^/sportski-tereni/?$" /sportske-podloge/   # 870
+RedirectMatch 301 "^/kuca-i-dvoriste/?$" /spoljnje-podne-obloge/   # 780
+RedirectMatch 301 "^/lvt-podovi-za-komercijalne-i-javne-prostore/expona-commercial/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/   # 670
+RedirectMatch 301 "^/lvt-podovi-za-komercijalne-i-javne-prostore/podovi-za-kancelarije-i-radnje-vinil-podovi-podovi-za-komercijalne-objekte/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/   # 664
+RedirectMatch 301 "^/lvt-podovi-za-komercijalne-i-javne-prostore/podovi-za-poslovni-prostor-i-radnje-vinil-podovi-podovi-za-komercijalne-objekte/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/   # 631
+RedirectMatch 301 "^/home/industrijski-podovi-najcesca-pitanja/?$" /industrijski-podovi-najcesca-pitanja/   # 615
+RedirectMatch 301 "^/lvt-podovi-za-komercijalne-i-javne-prostore/podovi-za-kancelarije-i-radnje/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/   # 581
+RedirectMatch 301 "^/vinil-podovi-za-komercijalne-i-javne-prostore/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/   # 493
+RedirectMatch 301 "^/sportske-podloge/kosarkaskekonstrukcije/?$" /sportske-podloge/kosarkaske-konstrukcije/   # 382
+RedirectMatch 301 "^/podovi-za-terase/za-vlazne-prostore-bergo-soft/?$" /spoljnje-podne-obloge/podovi-za-bazene/   # 362
+RedirectMatch 301 "^/podovi-za-baste-podovi-za-splavove-podovi-za-bazene/?$" /spoljnje-podne-obloge/   # 326
+RedirectMatch 301 "^/home/industrijski-podovi/garaze-i-autoservisi/?$" /industrijski-podovi/garaze-i-autoservisi/   # 314
+RedirectMatch 301 "^/industrijski-podovi/trakezaobelezavanje/?$" /industrijski-podovi/trake-za-obelezavanje/   # 308
+RedirectMatch 301 "^/sportski-podovi-za-skole-i-sportske-sale/?$" /zamena-parketa-u-sportskim-salama/   # 281
+RedirectMatch 301 "^/podovi-za-garaze-i-servise/?$" /koji-pod-postaviti-u-garazu/   # 276
+RedirectMatch 301 "^/home/industrijski-podovi/podovi-za-radnje-i-prodavnice/?$" /industrijski-podovi/podovi-za-maloprodajne-objekte/   # 268
+RedirectMatch 301 "^/home/industrijski-podovi/pod-za-magacine/?$" /industrijski-podovi/industrijski-pod/   # 263
+RedirectMatch 301 "^/home/o-nama-2/?$" /o-nama/   # 222
+RedirectMatch 301 "^/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-objectflor-expona-commercial/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/   # 216
+RedirectMatch 301 "^/lako-montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi/?$" /montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi/   # 202
+RedirectMatch 301 "^/kako-izabrati-pravi-industrijski-pod/?$" /osteceni-industrijski-pod/   # 166
+RedirectMatch 301 "^/industrijski-podovi-kako-izabrati-industrijski-pod-koji-odgovara-vasim-zahtevima/?$" /osteceni-industrijski-pod/   # 162
+RedirectMatch 301 "^/kako-izabrati-pravi-industrijski-pod-koji-odgovara-vasim-poterbama/?$" /osteceni-industrijski-pod/   # 161
+RedirectMatch 301 "^/ergonomski-podovi/?$" /ergonomske-podloge-2/   # 160
+RedirectMatch 301 "^/podovi-za-kretanje-teskih-vozila-preko-zemlje-trave-peska/?$" /montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi/   # 157
+RedirectMatch 301 "^/podovi-za-terase-podovi-za-baste-podovi-za-splavove-podovi-za-bazene/za-vlazne-prostore-bergo-soft/?$" /spoljnje-podne-obloge/   # 154
+RedirectMatch 301 "^/home/industrijski-podovi-montaza-preko-ostecenog-epoksida/?$" /industrijski-podovi-montaza-preko-ostecenog-epoksida/   # 106
+RedirectMatch 301 "^/naslovna/industrijski-podovi/ecotile-5006-podne-ploce/?$" /industrijski-podovi/ecotile-5005-podne-ploce/   # 97
+RedirectMatch 301 "^/category/industrijski-podovi/pod-za-garaze/?$" /category/industrijski-podovi/garazni-podovi/   # 96
+RedirectMatch 301 "^/kafici-i-restorani/?$" /spoljnje-podne-obloge/   # 93
+RedirectMatch 301 "^/o-nama-2/?$" /o-nama/   # 81
+RedirectMatch 301 "^/o-cemu-treba-voditi-racuna-prilikom-ugradnje-industrijskog-poda/?$" /ugradnje-industrijskog-poda/   # 58
+RedirectMatch 301 "^/podovi-za-terase/bergo-easy/podloge-za-sajmove-i-promocije/?$" /spoljnje-podne-obloge/bergo-easy/   # 54
+RedirectMatch 301 "^/vinil-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-objectflor-expona-commercial/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/   # 43
+RedirectMatch 301 "^/naslovna/industrijski-podovi/podovi-za-radnje-i-prodavnice/?$" /industrijski-podovi/podovi-za-maloprodajne-objekte/   # 43
+RedirectMatch 301 "^/sportski-teren-za-decu/?$" /sportska-igralista/   # 28
+RedirectMatch 301 "^/naslovna/industrijski-podovi/ecotile-5007/?$" /industrijski-podovi/industrijski-pod/   # 17
+RedirectMatch 301 "^/naslovna/industrijski-podovi/garaze-i-autoservisi/?$" /industrijski-podovi/garaze-i-autoservisi/   # 2
+RedirectMatch 301 "^/pvc-podne-ploce-ili-gumeni-podovi-za-garazu/?$" /pvc-podne-ploce-ili-gumeni-podovi/   # 0
+RedirectMatch 301 "^/gumeni-podovi/?$" /industrijski-podovi/podovi-za-teretane-i-fitnes-centre/   # 0
+RedirectMatch 301 "^/podovi-za-terase/bergo-multisport/ispunjava-fiba-standard/?$" /sportske-podloge/   # 0
+RedirectMatch 301 "^/podne-obloge-podovi-za-kontejnere-i-montazne-objekte/?$" /podne-ploce-podovi-za-kontejnere-i-montazne-objekte/   # 0
 
-# --- Parity provera 2026-07-09 (ciljevi testirani 200 na lokalu) ---
-# Brand arhive: live baza je ćirilična (бренд), lokalna Woo product_brand baza je latinična (brend).
-# ⚠️ Ćirilični path — Redirect direktiva radi na percent-dekodiranom UTF-8 putu; OBAVEZNO
-# testirati na subdomen probi (N6, zadatak 3.14) pre aktivacije; fallback je RewriteRule sa \x escape.
-Redirect 301 /бренд/ecotile/ /brend/ecotile/
-Redirect 301 /бренд/ergomat/ /brend/ergomat/
-# Woo nalog stranica: novi sajt je katalog režim (B2B, bez naloga/korpe)
-Redirect 301 /moj-nalog/ /kontakt/
-
-# --- Kategorija E: FAQ trostruki duplikat konsolidovan (2026-07-27) ---
-# 3274 draftovan lokalno (slabiji duplikat, pos 26.1/CTR 0.64%), 2622 ostaje kanonski (pos 16.5/CTR 3.96%)
-# Treca varijanta /industrijski-podovi-najcesca-pitanja/ (najbolji ucinak) rekreirana na identicnom slugu (ID 17025) - NE treba redirect
-Redirect 301 /izbor-industrijskog-poda-tri-najcesca-pitanja-2/ /izbor-industrijskog-poda-tri-najcesca-pitanja/
-
-# --- ✅ REŠENO 2026-07-08 — F5 rebuild završen na IDENTIČNOM URL-u, redirect NIJE potreban ---
-# /sportske-podloge/kosarkaske-konstrukcije/  -> gradjena na istom slugu (ID 16657)
-# /sportske-podloge/padel-tereni/             -> gradjena na istom slugu (ID 16670)
-# /sportski-podovi-za-sale-i-balone/          -> gradjena na istom slugu (ID 16661)
 </IfModule>
+
+# --- NE DODAVATI (dokumentovano da se ne bi vratilo greškom) ---
+# 3 istorijska pravila su namerno izostavljena — v. kolonu `odluka_2026-08-11`
+# u redirect-mapa-HISTORIJSKI-65-FLAT.csv (2 bi ubila postojeće stranice,
+# 1 pravi petlju sa FINAL mapom).
+# 3 reda iz FINAL mape nemaju pravilo jer stranica živi na IDENTIČNOM URL-u
+# (/sportske-podloge/kosarkaske-konstrukcije/, /sportske-podloge/padel-tereni/,
+#  /sportski-podovi-za-sale-i-balone/).
