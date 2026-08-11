@@ -15,6 +15,10 @@
 > **Neprovereno (ne tvrditi bez merenja):** da li se Ads konverzija i `fbq Lead` isto multipliciraju — isto pravilo ih okida, ali Ads deduplicira po kliku.
 >
 > **Bez izmena na buildu, u bazi, u GTM-u i na live-u.** Live je samo učitan u pregledaču (2 učitavanja) — dodaje jednu sesiju u GA4 statistiku 11.08. Skripte (scratchpad, ad-hoc): `ga4_hvala_diag.py`, `parse_gtm.py`.
+>
+> **#ceka-miroslav:** obrisati GTM tag id 18 — preporuka **na dan migracije**, u isti paket sa Enhanced Conversions i Meta Pixel čišćenjem.
+>
+> Detalji: [[dnevnik/2026-08-11-generate-lead-inflacija-dijagnoza]]
 
 ---
 
