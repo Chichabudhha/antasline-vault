@@ -1,3 +1,23 @@
+## 2026-08-11 [claude-code] [W1] Ergomat DuraStripe trake — slike po bojama + simple → variable ✅
+
+> Dvanaesta stavka istog dana. M donео nove fotografije u `C:\Miroslav\Antas line\Proizvodo\Ergomat trake\` sa instrukcijom „dodaj ih; ako nisu varijabilni proizvodi — neka budu".
+>
+> **Ulaz:** 11 fajlova, od kojih su `Zuta.webp` i `Žuta.webp` **bajt-identični duplikat** (isti SHA-256) → 10 jedinstvenih. Svi već **800×800 WebP 1:1** — po specifikaciji, bez konverzije. Dve linije: **Xtreme** = pune boje (6), **Supreme V** = dvobojne hazard rolne sa dijagonalnim prugama (4). Mapiranje potvrđeno vizuelnim pregledom slika, ne samo iz imena fajlova.
+>
+> **Izvršeno:** oba proizvoda su bila `simple` → prebačena na `variable` sa `pa_boja` kao atributom varijacije, po obrascu koji na buildu već koristi PermaStripe (16922). **#16518 Xtreme**: 11 varijacija, 6 sa slikom. **#16520 Supreme V**: 11 varijacija, 4 sa slikom. Za Supreme V napravljena **3 nova `pa_boja` termina** — `Crno-bela`, `Crveno-bela`, `Zeleno-bela` (`Crno-žuta` je već postojala); hazard varijante su odvojene od punih boja koje je proizvod već imao.
+>
+> **Odluka u toku rada:** boje koje proizvođač nudi a za koje nemamo fotku (Braon, Ljubičasta, Svetlo plava…) **dobile su varijaciju bez sopstvene slike** (fallback na glavnu sliku) umesto da budu izbačene iz ponude — ne briše se tačna informacija zbog toga što fali fotografija.
+>
+> **Gotcha-i koji su se aktivirali:** (1) `wc_product_attributes_lookup` postaje stale posle programskog `wp_set_object_terms()` — regenerisana preko `LookupDataStore::create_data_for_product()` + obrisani `_transient_wc_layered_nav_counts_*`, inače filteri po boji broje pogrešno (`woodmart-theme` §8). (2) Dijakritika upisana isključivo preko PHP-a uz `wp-load.php`, nikad `mysql -e` (§10) — provereno `HEX`-om u bazi: `Žuta`=`C5BD…`, `Ljubičasta`=`…C48D…`.
+>
+> **Verifikovano:** obe stranice 200 · tačno 1×H1 · **1× Product schema** (nema dupliranja uprkos promeni tipa proizvoda) · `variations_form` prisutan · birač boje testiran u pregledaču (`Plava` → `durastripe-xtreme-plava.webp`, `Crno-bela` → `durastripe-supreme-v-crno-bela.webp`) · 0 slomljenih slika · bez horizontalnog overflow-a. Regresija čista: PermaStripe, Mean Lean, `/kategorija-proizvoda/industrijski-podovi/`.
+>
+> 🟡 **Svesno ostavljeno (M: „ostavi tako"):** boje se prikazuju kao **padajući meni**, ne kao swatch kvadratići — `pa_boja` je u bazi `attribute_type=select`. Isto važi i za PermaStripe, dakle nije regresija; prebacivanje na `color` bi pogodilo sve proizvode koji koriste boju.
+>
+> **Backup:** `antasline-backups/antasline_local_2026-08-11_pre-ergomat-trake-varijacije.sql` (36,6 MB) · **skripta:** `migracija/alati/job-ergomat-trake-varijacije.php` (izmeštena iz docroot-a)
+
+---
+
 ## 2026-08-11 [claude-code] [W5] Inflacija `generate_lead` DIJAGNOSTIKOVANA — dva različita baga, jedan preživljava migraciju ✅🔴
 
 > Jedanaesta stavka istog dana, nastavak iste sesije. Zatvara 🔴 bloker otvoren jutros („uzrok nije dijagnostikovan, kandidat: dupli page_view / trigger koji okida 3×"). Metod: čitanje objavljenog `gtm.js` kontejnera (bez slanja ijednog hita) + merenje stvarnih `analytics.google.com/g/collect` zahteva po `en=`/`_s=` u pregledaču, na live-u **i** na lokalnom buildu kao kontrolnoj grupi.
