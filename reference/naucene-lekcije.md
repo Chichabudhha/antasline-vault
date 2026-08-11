@@ -12,6 +12,7 @@ azurirano: 2026-08-11
 - Ključni eventi su manje pogođeni (2 `generate_lead` sa localhost-a od 41 u nedelji 04–10.08), ali nisu nula — `staging.antasline.com` je dao i 2 `tel` eventa.
 - **Pravilo:** svaki GA4 izveštaj koji ide Miroslavu filtrira se na `hostName == www.antasline.com`. Kad ta razlika postoji, ona se i navede u napomenama.
 - Trajno rešenje (nije urađeno, kandidat posle live-a): GA4 filter za interni saobraćaj ili odvojen Measurement ID za lokalni build.
+- 🔴 **Dopuna istog dana (2026-08-11, uveče): ova lekcija je pregažena nekoliko sati posle nego što je zapisana.** Nova sesija je pokrenula `/nedeljni-izvestaj` bez čitanja [[PROGRESS]] i poslala Miroslavu sirove brojke (667/810 korisnika, kumulativ 127 umesto 119). Zapis u vault-u očigledno **nije dovoljna odbrana** dok je filter stvar pamćenja: `ga4_report.py` i dalje vraća nefiltrirane totale, a `/nedeljni-izvestaj` skill nigde ne pominje `hostName`. Zakrpa koja stvarno drži: filter (ili `--live-only` flag) ugrađen u samu skriptu + jedan red u skill-u. **Čeka odluku #ceka-miroslav.**
 
 ## `generate_lead` i hvala-proxy broje PREGLEDE, ne lidove — inflacija ~3× po sesiji (nedeljni izveštaj, 2026-08-11)
 - Nedelja 04–10.08 na live-u: `/hvala-za-poruku/` ima **10 sesija / 8 korisnika**, ali **26 pregleda** i **39 `generate_lead`** evenata. Prethodna nedelja isto: 3 sesije → 6 pregleda → 9 evenata.

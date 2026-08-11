@@ -1,3 +1,19 @@
+## 2026-08-11 [claude-code] [W5 5.4] Ponovljen nedeljni izveštaj sirovim konektorom — obe današnje lekcije pregažene istog dana ⚠️
+
+> Deseta stavka istog dana. Sesija je pokrenuta `/antasline-konektor` pa `/nedeljni-izvestaj` **bez čitanja [[PROGRESS]]/[[DNEVNIK-NAPRETKA]] prvo** — izveštaj za isti period (04–10.08) je već bio urađen ranije danas (stavka „Nedeljni izveštaj (04–10.08)"), pažljivije.
+>
+> **Provera konektora (jedini nesporan rezultat):** venv + svih 7 kredencijala na mestu, `token.json` osvežen 11.08 u 17:12 (posle `[cpanel-live]` re-autorizacije). **Ads i GMB pozivi ponovo prolaze** — `invalid_grant` iz cPanel sesije je zatvoren, `ads_report.py` je vratio pune podatke.
+>
+> ⚠️ **Izveštaj poslat Miroslavu nosi sirove, nefiltrirane GA4 brojke** — 667/810 korisnika i 785/935 sesija umesto live-only 633/802 i 730/906; kumulativ hvala-proxy prijavljen kao **127 umesto 119** (live). Lekcija „GA4 totali iz konektora uključuju `localhost`" je bila upisana u [[reference/naucene-lekcije]] **istog dana, nekoliko sati ranije** — i svejedno je pregažena, jer `ga4_report.py` i dalje vraća nefiltrirane totale, a `/nedeljni-izvestaj` skill nigde ne pominje `hostName` filter.
+>
+> ⚠️ **Isti obrazac i sa drugom lekcijom:** nesklad `generate_lead` 41 vs 30 pregleda je u izveštaju predstavljen kao **nov nalaz** i stavljen u „Akciju nedelje" („proveri dupli Page View triger"), iako je ranije danas već izmeren dublje i tačnije (inflacija ~3×: 26 pregleda / 10 sesija / 39 evenata na live-u, deterministički odnos 1,5×). Zaključak se ne menja — dijagnoza pre migracije ostaje — ali je „otkriće" bilo ponovno otkrivanje.
+>
+> **Zaključak za način rada:** obe zamke su procesne, ne tehničke — brane se čitanjem [[PROGRESS]] pre svakog zadatka ([[CLAUDE]] §12), što ova sesija nije uradila. Trajna zakrpa je da filter prestane da bude stvar pamćenja: `hostName == www.antasline.com` ugraditi u `ga4_report.py` (ili bar kao `--live-only` flag) + jedan red u `/nedeljni-izvestaj` skill. **Nije urađeno — čeka odluku (#ceka-miroslav).**
+>
+> **Bez izmena na buildu, u bazi i u skriptama** — read-only sesija, nema backup fajla.
+
+---
+
 ## 2026-08-11 [cpanel-live] [W6 / 4.9] Customer Match upload pokušan uživo — blokiran na Data Manager API migraciji, koriguje raniju pretpostavku (Standard access) ✅🔴
 
 > Deveta stavka istog dana, jedina u pravoj `[cpanel-live]` sesiji (`wp1.oblak.host`) — nastavak `categorize_leads.py`/`customer_match_upload.py --split-by-category` rada napisanog u prethodnoj sesiji (commit `4067cd2`, još nije bio testiran uživo).
