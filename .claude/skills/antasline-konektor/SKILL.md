@@ -29,7 +29,7 @@ ne trebaju ovaj korak, rade preko service account-a odmah).
 
 | Skripta | Zamenjuje Windsor konektor | Izlaz (kompaktan JSON) |
 |---|---|---|
-| `ga4_report.py --from --to` | `googleanalytics4` | `users`, `sessions`, `events.{generate_lead,tel,mailto}`, `hvala_proxy_pageviews` |
+| `ga4_report.py --from --to [--live-only]` | `googleanalytics4` | `users`, `sessions`, `events.{generate_lead,tel,mailto}`, `hvala_proxy_pageviews`, `hosts` (raspodela po hostname-u), `korekcija_merenja` (faktori ÷2 / ÷3 + `hvala_proxy_sessions`). 🔴 **`--live-only` je obavezan za svaki izveštaj** — bez njega totali uključuju `localhost` (jul: 15% pregleda, nedelja 28.07–03.08: **42%**). Bez flag-a ponašanje je nepromenjeno (trajni filter čeka M odluku) |
 | `gsc_report.py --from --to [--limit]` | `searchconsole` | lista `opportunities` (upit/prikazi/klikovi/CTR/pozicija) za poziciju 5–15 |
 | `gsc_sitemaps.py [--json]` | (nema Windsor pandana) | **submit-ovani sitemap-i** za `sc-domain:antasline.com`: putanja, tip, `is_index`, poslednji submit/download, broj grešaka i upozorenja, `contents` po tipu (web/image). Za pripremu i verifikaciju resubmit-a oko migracije. ⚠️ Servisni nalog ima samo `webmasters.readonly` — skripta **ne može** submit-ovati ni obrisati sitemap; to ostaje ručni korak u GSC UI. Ne vraća **tekst** upozorenja (API izlaže samo brojač) |
 | `gsc_page_queries.py --from --to --page URL [--page URL …]` | (nema Windsor pandana) | upiti po KONKRETNOJ stranici — `total_impressions`, `total_clicks`, `queries[]`. Za odluku rebuild vs 301, dijagnozu kanibalizacije, „koja stranica drži koji upit" |
@@ -41,6 +41,13 @@ ne trebaju ovaj korak, rade preko service account-a odmah).
 | `gtm_mailto_tag.py [--dry-run]` | (nema Windsor pandana — **write**, ne read) | kreira `mailto` trigger + GA4 Event tag u GTM **workspace-u**; ne objavljuje |
 | `scan_leads.py [--dry-run] [--maildir PATH] [--imap]` | (nema Windsor pandana — **write** na leads.csv, ne Google API) | skenira CF7 lead-mejlove sa `office@antasline.com` (Maildir na disku, ili `--imap` fallback), puni `leads.csv` (van git-a) za Customer Match. **Pokreće se SAMO na cPanel serveru** (`[cpanel-live]` sesija) — mailbox je tamo, ne lokalno. |
 | `customer_match_upload.py [--confirm]` | (nema Windsor pandana — **write**, ne read) | hešuje (SHA-256) i upload-uje nove kontakte iz `leads.csv` u Google Ads Customer Match user listu preko `OfflineUserDataJobService`. **Pokreće se SAMO na cPanel serveru**, posle `scan_leads.py`. Dry-run podrazumevano. |
+
+🔴 **GA4 brojevi su naduvani dok live Kallyas stoji (dijagnoza 2026-08-11):**
+hvala-proxy **÷2** (suvišan `page_view` tag id 18 — postoji i na buildu, pa
+preživljava migraciju) · `generate_lead` **÷3** (live ima dva GTM embeda —
+nestaje samo od sebe posle 24.08). Skripta faktore **izlaže, ne primenjuje** —
+sirovi brojevi ostaju sirovi, korekcija je posao izveštaja. Ads strana nije
+naduvana istim faktorom. v. [[dnevnik/2026-08-11-generate-lead-inflacija-dijagnoza]]
 
 ⚠️ **`ai_report.py` postoji zato što GA4-ov ugrađeni kanal „AI Assistant" potcenjuje
 stvarni AI saobraćaj ~3×** — `medium=ai-assistant` klasifikacija je proradila tek u

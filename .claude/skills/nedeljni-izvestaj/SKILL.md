@@ -11,6 +11,46 @@ direktno na GA4/GSC/Ads API-je, bez trećih učesnika. Windsor.ai je istekao
 snapshot je POSEBAN posao (`[[analiza/_TEMPLATE-snapshot]]`) — ovo je mini
 verzija, ~15 min.
 
+## 0. 🔴 DVA TVRDA PRAVILA — pročitati pre svakog povlačenja podataka
+
+Oba su izmerena 2026-08-11 i oba su **već jednom pregažena isti dan** (izveštaj
+poslat Miroslavu sa nefiltriranim totalima). Ne preskakati.
+
+### 0.1 GA4 se UVEK poziva sa `--live-only`
+Bez toga totali uključuju `localhost` (lokalni build od 22.07 nosi pravi
+GTM-TRDT8K9 kontejner, pa šalje prave hitove u GA4). Izmereno:
+
+| Period | Udeo `localhost` u pregledima |
+|---|---|
+| 28.07–03.08 | **42%** (1.068 od 2.572) |
+| jul 2026 (ceo) | 15% (1.075 od 7.043) |
+
+Korisnici/sesije trpe malo (par osoba), ali **pregledi, eventi i hvala-proxy
+znatno** — a to je baš KPI serija. Izlaz uvek nosi `hosts` raspodelu; pogledaj
+je i kad ti brojevi izgledaju normalno. Trajan filter (bez flag-a) čeka M
+odluku — v. [[PROGRESS]] Blokeri.
+
+### 0.2 Sirovi GA4 brojevi su naduvani — dva poznata baga
+Dijagnostikovano 2026-08-11 mrežnim merenjem (`g/collect` po `en=`), nije
+pretpostavka → [[dnevnik/2026-08-11-generate-lead-inflacija-dijagnoza]].
+
+| Metrika | Faktor | Uzrok | Posle migracije 24.08 |
+|---|---|---|---|
+| hvala-proxy (pregledi) | **÷2** | suvišan GA4 `page_view` tag **id 18** na hvala pravilu | **ostaje** dok se tag 18 ne obriše (postoji i na buildu) |
+| `generate_lead` | **÷3** | live Kallyas ima **dva GTM embeda** istog kontejnera | **nestaje sam** (build ima jedan embed → 1×) |
+
+Praktično u izveštaju:
+- „Prave konverzije" = **hvala-proxy ÷ 2**, ili tačnije `hvala_proxy_sessions`
+  iz izlaza skripte (sesije, ne pregledi). Sirov broj pregleda se ne sme
+  prikazati kao broj lidova.
+- `generate_lead` se prikazuje kao **direkcioni** signal, uz napomenu o ÷3 —
+  ne kao broj lidova.
+- Ads-ova strana (uvezene konverzije) **nije** naduvana istim faktorom — broji
+  svoje, ne deliti je.
+- 🔴 **Prvi post-live izveštaj (posle 24.08):** `generate_lead` pada na ~⅓,
+  hvala-proxy na ~½. **To nije pad konverzija** — obavezno napisati tu rečenicu
+  u izveštaju, inače izgleda kao katastrofa.
+
 ## 1. Periodi
 
 - Tekući: poslednjih 7 završenih dana (NE uključuj današnji delimičan dan)
@@ -24,13 +64,17 @@ Svaka skripta se poziva DVA puta (tekući period + prethodni), uvek
 eksplicitni `--from`/`--to`. Detalji pokretanja/kredencijala:
 `[[.claude/skills/antasline-konektor]]`.
 
-### GA4 — `ga4_report.py --from --to`
+### GA4 — `ga4_report.py --from --to --live-only` 🔴 (flag obavezan, v. §0.1)
 - Korisnici, sesije (totals za oba perioda)
 - Eventi: skripta već povlači SVE evente nefiltrirano i agregira ih
   interno (rešava staru Windsor "in-filter nepouzdan" zamku) → vraća
   gotove `generate_lead`, `tel`, `mailto` brojeve
 - Hvala-proxy (prava konverzija): `hvala_proxy_pageviews` polje u izlazu
-  (već filtrirano na `pagePath contains "hvala"`)
+  (već filtrirano na `pagePath contains "hvala"`) — 🔴 **podeliti sa 2**, ili
+  koristiti `korekcija_merenja.hvala_proxy_sessions` (sesije, ne pregledi)
+- `hosts` — raspodela po hostname-u; uvek pogledati (§0.1)
+- `korekcija_merenja` — faktori i estimacija; skripta ih ne primenjuje sama
+  na `events`/`hvala_proxy_pageviews`, sirovi brojevi ostaju sirovi
 
 ### Google Ads — `ads_report.py --from --to`
 - Potrošnja (RSD), klikovi, CTR, CPC, konverzije — po kampanji + `totals`
@@ -72,6 +116,9 @@ eksplicitni `--from`/`--to`. Detalji pokretanja/kredencijala:
 - Bez uvoda i zaključka — odmah tabele
 - Jul 2026+: proveri da li se GA4 `conversions` vratio na normalu (~60–160/mes)
   — zadatak 5.1 plana; jedna rečenica u napomenama dok se ne potvrdi
+- 🔴 **Pre povlačenja podataka pročitaj [[PROGRESS]] (Urađeno vrh + Blokeri).**
+  2026-08-11 je isti period obrađen dvaput jer to nije urađeno — drugi izveštaj
+  je pregazio obe lekcije iz §0 i otišao Miroslavu sa naduvanim brojevima.
 
 ## 5. Posle izveštaja
 
