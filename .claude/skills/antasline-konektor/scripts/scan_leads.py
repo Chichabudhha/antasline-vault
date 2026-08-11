@@ -86,7 +86,7 @@ def load_leads() -> dict:
 
 
 def save_leads(leads: dict) -> None:
-    fieldnames = ["email", "first_seen_date", "source_form", "uploaded", "upload_date"]
+    fieldnames = ["email", "first_seen_date", "source_form", "uploaded", "upload_date", "interest_category"]
     with leads_csv_path().open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -257,6 +257,7 @@ def main():
             "source_form": source_form_from_subject(subject),
             "uploaded": "False",
             "upload_date": "",
+            "interest_category": "",
         }
         new_count += 1
 
