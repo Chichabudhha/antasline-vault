@@ -1,3 +1,40 @@
+## 2026-08-11 [cpanel-live] LiteSpeed Redis/Web Cache Manager — nove cPanel opcije istražene, NE rešavaju stari QUIC.cloud problem, Redis odložen ✅
+
+> Miroslav primetio dve nove stavke u cPanel-u ("LiteSpeed Redis Cache Manager", "LiteSpeed Web
+> Cache Manager") i pitao da li rešavaju stari poznati problem (QUIC.cloud `notify_img`/UCSS
+> blokiran hosting firewall-om, v. 2026-07-10/07-30 unosi ispod).
+>
+> **Nalaz 1:** pravi izvorni kod oba modula pročitan direktno na serveru
+> (`/usr/local/cpanel/base/frontend/jupiter/ls_web_cache_manager/`, zvaničan LiteSpeed
+> Technologies plugin v2.4.9.1, instaliran na hostu 2026-08-07 — otud "nove opcije"). Web Cache
+> Manager upravlja LSCache page-cache-om i SSL-om za QUIC.cloud CDN feature — grep celog `core/`
+> stabla za `notify_img`/`imageoptm`/`ucss`/`ccss` daje **0 pogodaka**, ne dodiruje stari problem.
+> Redis Cache Manager je potpuno odvojena funkcija (object cache za DB/PHP upite), nezavisna od
+> render-blocking CSS ili image optimizacije.
+>
+> **Nalaz 2 — pokušaj uključivanja Redis-a:** isti uapi poziv koji UI dugme šalje
+> (`uapi lsws redisAble action=enablesvc user=antasline size=64`) vraćen sa "Parent check method:
+> /usr/local/cpanel/cpanel, caller: /usr/local/cpanel/uapi is not allowed" — `REDIS_ABLE` i
+> `PACKAGE_USER_SIZE` su privilegovani `lswsAdminBin` pozivi, cPanel ih prihvata samo iz prave
+> `cpsrvd` browser-sesije, ne sa terminala (namerna zaštita, nije zaobiđena). Dodatno: nigde na
+> disku ne postoji `redis.size` fajl — nalog nema dodeljenu Redis kvotu na paketu; UI kod ima
+> tačno poruku za taj slučaj ("Redis must be configured for you by your administrator"), pa bi i
+> pravo dugme u browseru verovatno pokazalo isto.
+>
+> **Odluka: Redis se NE traži od hostinga pre 24.08.** Object cache ne rešava LCP gate
+> (render-blocking CSS je krivac, TTFB je mali deo per [[dnevnik/PERFORMANCE-AUDIT]]
+> `lcp-breakdown-insight`); katalog mod (M9) je uklonio cart/checkout pa je skoro sav saobraćaj
+> anoniman i već pokriven LSCache page-cache-om bez PHP/DB izvršavanja — Redis tu nema šta da
+> ubrza. Isti hosting je prošli QUIC.cloud firewall tiket držao otvoren 3 nedelje — nema margine
+> pred content freeze (16.08)/gate (21.08)/go-live (24.08) da se čeka eksterna podrška za nešto
+> što ionako ne dira poznati crveni gate item. Revizitovati posle live-a ako brojčana LCP potvrda
+> pokaže spor TTFB i na keširanim stranicama, ili ako se doda dinamički sadržaj.
+>
+> **Bez izmena na buildu/bazi/live sajtu** — read-only pregled servera + jedan probni, blokiran
+> (dakle bezefektni) uapi poziv. Detalji: [[dnevnik/2026-08-11-litespeed-redis-web-cache-manager]].
+
+---
+
 ## 2026-08-11 [claude-code] [W5 5.4] Ponovljen nedeljni izveštaj sirovim konektorom — obe današnje lekcije pregažene istog dana ⚠️
 
 > Deseta stavka istog dana. Sesija je pokrenuta `/antasline-konektor` pa `/nedeljni-izvestaj` **bez čitanja [[PROGRESS]]/[[DNEVNIK-NAPRETKA]] prvo** — izveštaj za isti period (04–10.08) je već bio urađen ranije danas (stavka „Nedeljni izveštaj (04–10.08)"), pažljivije.
