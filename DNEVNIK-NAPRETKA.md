@@ -1,3 +1,32 @@
+## 2026-08-11 [cpanel-live] LiteSpeed CCSS/UCSS/LQIP/VPI status provera — UCSS oživeo posle 11 dana, LQIP nov lokalni bug nađen (fix odbijen) ✅
+
+> Nastavak iste `[cpanel-live]` sesije. Miroslav primetio aktivnost na QUIC.cloud dashboardu
+> i pitao da li LQIP i Page Optimization (CCSS/UCSS/VPI) rade — provereno kroz DB tabele
+> plugina, fajlove na disku i izvorni kod, ne kroz UI.
+>
+> **CCSS**: ✅ radi aktivno (novi fajlovi danas 11:23/11:40/11:56/17:57). **UCSS**: 🟡 bilo
+> mrtvo 11 dana (31.07→11.08, poznat nalaz iz 08-07 unosa), danas u 17:57 prvi put oživelo —
+> verovatno baš ono što je Miroslav video na dashboardu. **VPI**: ⚪ namerno isključen u
+> konfiguraciji, nije pokvaren, nikad ozbiljno korišćen. **Image Optimization** (stari
+> problem): 🔴 nepromenjeno — identično julskom tiketu (1.157 RAW / 200 REQUESTED).
+>
+> 🔴 **LQIP — nov nalaz, drugačiji od starog problema**: tiho zaglavljeno od 25.07 (17 dana),
+> uprkos novim proizvod-slikama dodatim 06–07.08. Uzrok u kodu (`placeholder.cls.php`):
+> lokalna `File::is_404()` provera se radi PRE cloud poziva — ako padne, slika ide trajno u
+> exclude listu i cloud se nikad ne kontaktira (zato cloud `last_request.lqip` ostaje
+> zamrznut na 25.07 iako se lokalno nešto stalno odbija). Exclude lista ima slike sa
+> datumima posle 25.07 (2026/01, 2026/03) — dokaz da je ovo aktivan, ne istorijski problem.
+> **Ovo NIJE isti kanal kao stari QUIC.cloud firewall blok** — lokalni bug u proveri
+> postojanja slike, ne cloud konekcija.
+>
+> **M odluka: LQIP fix se NE radi** — nije gate stavka, LQIP je kozmetički blur-up efekat
+> bez merljivog uticaja na LCP. Nalaz ostaje dokumentovan za buduću referencu.
+>
+> Bez izmena na buildu/bazi/kodu — čisto read-only istraživanje. Detalji:
+> [[dnevnik/2026-08-11-litespeed-ccss-ucss-lqip-vpi-status]].
+
+---
+
 ## 2026-08-11 [cpanel-live] Live backup (DB+wp-content) na 2 lokacije + robots.txt AI-crawler pravila aktivirana i ispravljena ✅
 
 > Nastavak iste `[cpanel-live]` sesije (LiteSpeed nalaz ispod). Zatvara 2 od 3 preostale

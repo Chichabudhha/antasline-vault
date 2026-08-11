@@ -5,6 +5,18 @@ azurirano: 2026-08-11
 
 # Naučene lekcije (tehnički gotchas)
 
+## LiteSpeed LQIP može izgledati "mrtvo" na cloud strani a stvarno padati lokalno (2026-08-11)
+- `placeholder.cls.php` (`_generate_placeholder()`) radi `File::is_404($url)` proveru **lokalno, PRE** bilo kakvog QUIC.cloud poziva. Ako padne, slika ide odmah trajno u `media-lqip_exc` (exclude listu) i cloud se **nikad ne kontaktira** — `curr_request`/`last_request.lqip` timestamp u `litespeed.cloud._summary` se ažurira tek POSLE tog 404-checka, pa ostaje zamrznut dok se lokalni problem ne reši.
+- Posledica: gledanje samo cloud usage brojača/`last_request` timestampa daje lažan utisak "ništa se ne dešava" iako se lokalno stalno nešto pokušava i odbija — obrnuto od starog poznatog QUIC.cloud/firewall obrasca (gde je problem bio na cloud/mrežnoj strani, ne lokalnoj).
+- **Provera koja ovo hvata**: uporediti `wp-content/litespeed/{ccss,ucss,lqip,vpi}/*.css`/slika mtime na disku (stvarna generisana aktivnost) sa `litespeed.cloud._summary` timestampovima (šta cloud misli da se dešava) — razlika između njih je signal da problem nije mrežni/cloud nego lokalni. Rastuća `media-lqip_exc` lista sa datumima NOVIJIM od poslednjeg uspešnog `last_request` je dokaz aktivnog, ne istorijskog problema.
+- Vezano: [[dnevnik/2026-08-11-litespeed-ccss-ucss-lqip-vpi-status]].
+
+## cPanel privilegovani uapi pozivi (`lswsAdminBin`) se izvršavaju SAMO iz prave cpsrvd browser-sesije, ne sa terminala (2026-08-11)
+- `uapi lsws redisAble` i `uapi lsws packageUserSize` (koje "LiteSpeed Redis Cache Manager" UI dugme zove) vraćaju grešku `Parent check method: /usr/local/cpanel/cpanel, caller: /usr/local/cpanel/uapi is not allowed` kad se pozovu direktno preko SSH/terminal `uapi` CLI-ja, čak i kao vlasnik naloga.
+- Ovo je namerna cPanel bezbednosna zaštita (privilegovani `lswsAdminBin` pozivi), ne bag i ne nešto što treba zaobilaziti — na deljenom hostingu terminal ima manje ovlašćenja od prave UI sesije za određene admin funkcije.
+- **Praktična posledica za buduće `[cpanel-live]` sesije**: ako neka cPanel funkcija (dugme u panelu) ne radi kad se pokuša automatizovati preko terminala istim uapi pozivom, prvo proveriti da li greška pominje "Parent check method"/"is not allowed" — ako da, to je znak da ta akcija zahteva da je Miroslav sam klikne u browseru, ne dalje debug-ovanje poziva.
+- Vezano: [[dnevnik/2026-08-11-litespeed-redis-web-cache-manager]].
+
 ## GA4 totali iz konektora UKLJUČUJU `localhost` i `staging` — bez `hostName` filtera brojke su tuđe (nedeljni izveštaj, 2026-08-11)
 - `ga4_report.py` vraća `activeUsers`/`sessions` bez ijednog filtera, a lokalni build od 2026-07-22 nosi **pravi** GTM-TRDT8K9 kontejner (mu-plugin `al-tracking-gtm-consent.php`) i šalje u istu GA4 property.
 - Izmereno: nedelja 28.07–03.08 imala je **1.068 pregleda sa `localhost`** na 1.504 sa live-a — skoro 42% ukupnih pregleda je bio naš rad. Nedelja 04–10.08: 213 lokalnih.

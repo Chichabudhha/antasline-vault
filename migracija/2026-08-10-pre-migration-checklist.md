@@ -19,10 +19,11 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 
 ## A. DO PET 21.08 (gate pregled) — može ranije, ne mora čekati
 
-- [ ] **Svež backup live sajta** (db + wp-content) na 2 lokacije — `[cpanel-live]`
-      sesija. 🔴 gate stavka. JetBackup 5 radi dnevno kod provajdera (potvrđeno
-      27.07), ali za migraciju treba **ručan, datiran backup neposredno pre**,
-      ne oslanjanje na noćni.
+- [x] ✅ **Svež backup live sajta (db + wp-content) na 2 lokacije — ZATVORENO
+      `[cpanel-live]` 2026-08-11.** Ručan DB dump + `wp-content` tar.gz, MD5
+      provereno, skinuto na `C:\Miroslav\Antas line\Backup` + `G:\AntasLine-Backups`,
+      server-kopije obrisane. Gate stavka zadovoljena — **B1 ispod i dalje traži
+      NOVI backup na sam dan migracije** (24.08), ovaj ne zamenjuje taj korak.
 - [ ] **Backup finalnog lokalnog builda** na 2 lokacije — 🔴 poznato ograničenje:
       `nocni-backup.ps1` piše na SAMO JEDNU destinaciju (prioritet G:→OneDrive→lokalno).
       Za „2 lokacije" treba ručna druga kopija na dan zamrzavanja builda.
