@@ -1,3 +1,69 @@
+## 2026-08-11 [claude-code] W5 5.4 — korekcioni faktori upisani u skillove + mesečni snapshot za jul ✅🔴
+
+> Dvanaesta stavka istog dana. Dva dela, oba read-only prema sajtu/bazi.
+>
+> **(1) Faktori upisani — lekcije od danas postale izvršne, ne samo zapisane.**
+> `ga4_report.py` dobio opcioni **`--live-only`** flag (isključuje
+> `localhost`/`127.0.0.1`/`staging.`/`test.`/`dev.`); **bez flag-a izlaz je
+> bajt-identičan ranijem**, pa odluka o *trajnom* filteru ostaje Miroslavu.
+> Izlaz sad uvek nosi i `hosts` raspodelu (kontaminacija vidljiva bez traženja)
+> i `korekcija_merenja` blok (faktori ÷2 / ÷3 + `hvala_proxy_sessions`) — skripta
+> faktore **izlaže, ne primenjuje**, sirovi brojevi ostaju sirovi. Testirano na
+> julu: 40→36 hvala-proxy, 56→54 `generate_lead`. Ista pravila upisana u
+> `.claude/skills/nedeljni-izvestaj/SKILL.md` (nova §0 sa dva tvrda pravila +
+> obaveza čitanja PROGRESS-a pre povlačenja podataka) i u
+> `.claude/skills/antasline-konektor/SKILL.md`.
+> 🆕 Usput: `hosts` je otkrio i **`old.antasline.com`** (1 korisnik / 2 pregleda
+> 01.06–10.08) — filter ga NE hvata (nije na prefiks listi), zanemarljivo ali
+> zabeleženo.
+>
+> **(2) Mesečni snapshot za jul** (kasnio 11 dana) → **[[analiza/2026-08-11-snapshot-jul]]**.
+> GA4/GSC/Ads povučeni sopstvenim konektorom + 4 ad-hoc read-only skripte u
+> scratchpad-u (`snap_ga4.py`, `snap_gsc.py`, `snap_ads.py`, `snap_ads_convcheck.py`)
+> — namerno **nisu** upisane u konektor.
+>
+> 🔴 **Glavni nalaz — „26 plaćenih konverzija" nisu lidovi.** Konverziona akcija
+> **„Klik na telefon (web)"** ima `include_in_conversions_metric=True` i
+> `primary_for_goal=True`, dakle **ulazi u „Conversions" kolonu i u Smart Bidding** —
+> direktno kršenje pravila iz [[CLAUDE]] §4 („ne uvoziti GA4 `tel` kao Ads
+> konverziju"). Od 01.06 do 10.08: **17 tel + 9 forma = 26**. **Prag 20–30 za
+> zadatak 4.8 nije ni dostignut — pravih plaćenih lidova ima 9.** Postoje i **dve**
+> aktivne telefonske akcije (druga, `CLICK_TO_CALL`, trenutno 0 — ako proradi,
+> telefon se broji dvaput). #ceka-miroslav: prebaciti akciju u *Secondary*.
+>
+> 🔴 **Drugi nalaz — KPI baseline je pogrešna jedinica.** Plan kaže „prave
+> konverzije 55/mes (jun)"; to su **pregledi**. Jun = **24 sesije**, jul = **16**,
+> avgust (1–10) = **11**, kumulativ 01.06–10.08 = **119 pregleda / 51 sesija**.
+> Cela KPI tabla ([[2026-07-06-MASTER-PLAN-V2]] §5) meri pregled-brojku, pa su
+> ciljevi „≥55" i „70+/mes" postavljeni na ~2× naduvan baseline.
+>
+> 🟢 **Treći nalaz — organski pad je SERP, ne mi.** Jul YoY: pozicija **8,2→6,0**,
+> prikazi **+22%**, ali CTR **6,76%→4,52%** i klikovi **−18%**. Upiti na poziciji
+> 1,0–1,9 imaju CTR 2,3–8,3% (`dimenzije košarkaškog terena`: poz 1,9 / 732
+> prikaza / CTR 2,3%) — odgovor se čita u SERP-u. GA4 to potvrđuje iz drugog ugla:
+> engagement rate **62,1%, najviši u celoj 16-mesečnoj seriji**. Korisnici −32% MoM
+> ali **+5% YoY** (jul 2025: 2.694 → 2026: 2.833) = sezona, ne regresija.
+>
+> 🔴 **Ads:** ~10.300 RSD/90d potrošeno na **6 BROAD ključnih reči sa 0 konverzija**
+> (plan kaže „broad tek uz Smart Bidding" — u praksi radi *sada*, na Maximize Clicks).
+> `industrijski podovi` (phrase) i dalje najjeftinija konverzija (903 RSD). Pauzirana
+> kampanja **Terase je efikasnija od jedine aktivne ECOTILE** (13 konv za 34.318 RSD
+> uz CPC 18,3 vs 13 za 24.148 uz 41,9) — pojačava jutrošnje pitanje o pauzi.
+> Izgubljeni prikazi zbog **ranga 52–55%** na obe (budžet samo 13–19%) → QS problem.
+> `podne obloge za terasu`: **4.223 RSD, 237 klikova, 0 konverzija** — relevantan
+> upit iz ponude, dakle problem landinga, ne targetiranja.
+>
+> 🟡 **`mailto` je bio mrtav 6 nedelja** — nula događaja 26.06→06.08, vratio se sam
+> 07.08 (jul = 0). Pri prethodnoj stopi (~0,5/dan) 40 dana tišine nije slučajnost.
+> Uzrok nije dijagnostikovan.
+>
+> 🟢 AI saobraćaj jul: **28 sesija** (ChatGPT 26) vs baseline 9/90d. ⚠️ Mesečni AI
+> test (5 promptova, 5.5) **nije ponovljen** — ostaje zaseban zadatak.
+> ⚪ GMB: **429 quota**, peti neuspeli retest, nepromenjeno od 30.07.
+>
+> **Bez izmena na buildu, bazi i live sajtu.** Izmenjeni fajlovi: `ga4_report.py`,
+> 2 × `SKILL.md`, nov `analiza/2026-08-11-snapshot-jul.md`.
+
 ## 2026-08-11 [cpanel-live] LiteSpeed CCSS/UCSS/LQIP/VPI status provera — UCSS oživeo posle 11 dana, LQIP nov lokalni bug nađen (fix odbijen) ✅
 
 > Nastavak iste `[cpanel-live]` sesije. Miroslav primetio aktivnost na QUIC.cloud dashboardu

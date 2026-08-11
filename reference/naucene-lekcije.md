@@ -5,6 +5,33 @@ azurirano: 2026-08-11
 
 # Naučene lekcije (tehnički gotchas)
 
+## „Konverzije" u Google Ads-u nisu ono što misliš dok ne pogledaš `conversion_action` podešavanja (2026-08-11)
+- Kolona **„Conversions"** (i signal koji Smart Bidding uči) sadrži **samo** akcije sa `include_in_conversions_metric = True`. Kolona „All conversions" sadrži sve. Ime akcije ne govori ništa o tome u kojoj je koloni — `Clicks to call` (Google-hosted) je bila *van* kolone, a `Klik na telefon (web)` (naša, WEBPAGE) *unutra*.
+- Posledica koja je stvarno nastala: pravilo iz [[CLAUDE]] §4 („ne uvoziti GA4 `tel` kao Ads konverziju") je **verovano na reč** mesecima, a u nalogu je `tel` sve vreme bio primarna konverzija — 17 od „26 plaćenih konverzija" (01.06–10.08). Ceo prag za 4.8 (Maximize Conversions) je meren pogrešnim brojačem.
+- **Provera koja ovo hvata** (~30 sekundi, GAQL):
+  ```
+  SELECT conversion_action.name, conversion_action.type, conversion_action.category,
+         conversion_action.primary_for_goal, conversion_action.include_in_conversions_metric,
+         conversion_action.counting_type
+  FROM conversion_action WHERE conversion_action.status = 'ENABLED'
+  ```
+  plus segmentacija `SELECT segments.conversion_action_name, metrics.conversions FROM customer` — bez segmentacije agregat izgleda kao jedan broj.
+- ⚠️ **Segmentacija po akciji vraća samo akcije sa bar jednom konverzijom u periodu** (poznato od ranije) — akcija sa 0 konverzija postoji i može proraditi sutra; zato uvek gledati i `conversion_action` tabelu, ne samo segmentaciju. Konkretno: postoje **dve** telefonske akcije u „Conversions", druga trenutno na 0.
+- **Pravilo: pre svake tvrdnje „imamo N plaćenih konverzija" — segmentiraj po akciji.** Agregat je zbir stvari koje ne merimo istom svrhom.
+- Vezano: [[analiza/2026-08-11-snapshot-jul]] §3.6.
+
+## Metrika u KPI tabli mora nositi jedinicu — „55 konverzija" je bilo 55 *pregleda* (2026-08-11)
+- Hvala-proxy je definisan kao `screenPageViews` na `/hvala-za-poruku/`. To je bila razumna aproksimacija dok se ne pojavi razlog da ne bude — a razlog je postojao od početka: **jedan dolazak = 2 pregleda** (dupli GA4 `page_view` tag). Jun „55" = **24 sesije**.
+- Greška nije u merenju nego u imenovanju: red u KPI tabli je pisao „Prave konverzije", pa je 15 meseci niko nije preispitivao. Da je pisalo „pregledi hvala stranice", nesklad sa brojem mejlova u inboxu (11 lead-mejlova za 16–30.07, M5) bi iskočio odmah.
+- **Pravilo: KPI red nosi jedinicu u imenu** (`sesije`, `pregledi`, `mejlovi`), a gde postoji nezavisan izvor iste veličine (inbox, Ads konverzije) — bar jednom ih uporediti. Dve metrike koje mere „isto" a razlikuju se 2× su dijagnoza, ne šum.
+- Vezano: [[analiza/2026-08-11-snapshot-jul]] §2.3b · [[dnevnik/2026-08-11-generate-lead-inflacija-dijagnoza]].
+
+## Pad organskih klikova uz RAST pozicije nije regresija sajta — proveri CTR pre nego što tražiš krivca (2026-08-11)
+- Jul 2026 vs jul 2025: pozicija **8,2 → 6,0** (bolje), prikazi **+22%**, a klikovi **−18%**, jer je CTR pao 6,76% → 4,52%. Isti obrazac na nivou pojedinačnog upita: `dimenzije košarkaškog terena` je na poziciji **1,9** sa CTR-om **2,3%** (732 prikaza, 17 klikova) — na prvoj poziciji CTR bi trebalo da bude 25–35%.
+- To je SERP koji troši klik (AI Overviews, snippet, PAA), ne naš rad. Najizloženiji su tačno informativni upiti (dimenzije, „kako se pravi") — a to su naše najjače stranice po prikazima.
+- **Pravilo: pre nego što se pad klikova pripiše izmeni na sajtu, razložiti ga na pozicija × prikazi × CTR.** Ako pozicija raste a CTR pada, uzrok je van sajta i akcija je drugačija (razlog za klik — cena, kalkulator, galerija — a ne „više sadržaja").
+- Vezano: [[analiza/2026-08-11-snapshot-jul]] §1.1b/§1.2.
+
 ## LiteSpeed LQIP može izgledati "mrtvo" na cloud strani a stvarno padati lokalno (2026-08-11)
 - `placeholder.cls.php` (`_generate_placeholder()`) radi `File::is_404($url)` proveru **lokalno, PRE** bilo kakvog QUIC.cloud poziva. Ako padne, slika ide odmah trajno u `media-lqip_exc` (exclude listu) i cloud se **nikad ne kontaktira** — `curr_request`/`last_request.lqip` timestamp u `litespeed.cloud._summary` se ažurira tek POSLE tog 404-checka, pa ostaje zamrznut dok se lokalni problem ne reši.
 - Posledica: gledanje samo cloud usage brojača/`last_request` timestampa daje lažan utisak "ništa se ne dešava" iako se lokalno stalno nešto pokušava i odbija — obrnuto od starog poznatog QUIC.cloud/firewall obrasca (gde je problem bio na cloud/mrežnoj strani, ne lokalnoj).
