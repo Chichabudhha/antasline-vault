@@ -1,3 +1,65 @@
+## 2026-08-12 [claude-code] ALATI — Chrome dokumentacija ugrađena u skilove + novi `/antasline-ads` playbook ✅
+
+> Druga sesija istog dana, **read-only prema sajtu i bazi** — nijedna izmena na
+> buildu, nijedan SQL upis, nema backup fajla jer nije bilo destruktivnog rada.
+>
+> **DevTools 151** (instaliran Chrome je 151.0.7922.110, sve odmah dostupno) →
+> `/woodmart-theme`: specificity tooltip u §7 (razlaganje `(a,b,c)` na hover =
+> najbrži dokaz `:is()` zamke sa `base.css`), safe-area preseti u §11, nova §13
+> sa tabelom zadatak→alat (lazy rendering Styles taba za elemente >200 CSS
+> property-ja — WPBakery to redovno prelazi, Soft FCP markeri, source maps po
+> defaultu, `Copy as cURL --url`). `/antasline-sesija` W3: **Lighthouse 13.4.0**
+> — upisati verziju uz svaki baseline, inače julska poređenja ne važe.
+>
+> **Modern Web Guidance** (`developer.chrome.com/docs/modern-web-guidance`) nije
+> članak nego **paket skilova** — instaliran u `~/.claude/skills/`, ~140 vodiča
+> sa Baseline podacima. Zvanični `npx … install` zaobiđen (delegira na
+> interaktivni instalater koji visi u CC shellu) → `npm pack` + ručni copy.
+> Povezan iz `/woodmart-theme` §14 i `/antasline-sesija` W1/W3.
+>
+> **Novo: `[[reference/chrome-web-platform-2026]]`** — Chrome 148–151 kao filter,
+> ne prepričavanje: 12 stavki upotrebljivih uz fallback, sekcija merenja,
+> ⚠️ prerender, čekaj-Baseline, ignoriši, deprecations provereni na buildu
+> (`new FontFaceSet()` — čisto).
+>
+> **Prompt API / Gemini Nano: NE** (odluka u [[odluke/_pregled-odluka]]) —
+> srpskog nema među podržanim jezicima, samo desktop Chrome (a ~46/50 klikova na
+> telefon je sa mobilnog), hardver traži >4 GB VRAM / 16 GB RAM (izmereno na
+> radnoj mašini: **2 GB / 15,7 GB**), i nije Baseline.
+>
+> **Novi skill `/antasline-ads`** (W4): redosled dijagnostike isporuke,
+> licitiranje, srpska morfologija u negativnim rečima, RSA, migracija-checklist
+> za oglase, podela CC/M odgovornosti. `[[reference/claude-skilovi]]` dopunjen
+> (7 skilova je falilo) + dve zastarele Windsor reference ispravljene.
+>
+> 🔴 **Gotcha koji je sesija otkrila o sebi:** prva verzija `/antasline-ads` je
+> iz `[[dnevnik/ADS-DNEVNIK]]` preuzela „kumulativ 26, prag pređen" — a
+> [[PROGRESS]] Blokeri (11.08) to demantuju: 17 od 26 su **klikovi na telefon**
+> (`include_in_conversions_metric=True`), pravih plaćenih lidova ima **9**.
+> Skill ispravljen pre zatvaranja. **ADS-DNEVNIK i PROGRESS su se razišli** —
+> skill građen iz jednog izvora nasleđuje njegovu grešku.
+>
+> **Dodatak iste sesije — Google Search Central (4 dokumenta):** 🔴 [AI
+> optimization guide](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)
+> kaže izričito da **Google Search ne koristi `llms.txt`** („niti štete niti
+> pomažu") — a mi smo `llms.txt`+`llms-full.txt` deployovali na live 23.07
+> (zadatak 2.8). Naše merenje je to već pokazalo: [[analiza/BOT-CRAWLER-LOG]]
+> beleži **0 organskih hitova** kroz dva preseka. **Odluka: fajlovi ostaju**
+> (statični, bez održavanja, mogu koristiti ne-Google asistentima), ali se ne
+> proširuju i **ne prate više kao GEO poluga** — stavka „ponoviti presek zbog
+> llms.txt" iz [[seo/geo-ai-plan]] §5 zatvorena. Isti dokument obara i
+> „seckanje sadržaja za AI", „pisanje posebno za AI" i structured data kao
+> uslov za AI vidljivost — sve tri smo srećom ionako izbegavali.
+> 🆕 **Generative AI performance report u Search Console** = jedini legitiman
+> izvor za AI vidljivost, ide u mesečni snapshot. 🆕 **Platform properties**
+> (globalno od 29.07) → `/w6-social`: Instagram odmah posle live-a, YouTube kad
+> Faza 1 oživi kanal; vrednost su **upiti**, ne vanity metrika; meri samo Google
+> pretragu, ne preglede na platformi. 🆕 `/gemini-vizuali`: IPTC
+> `DigitalSourceType=TrainedAlgorithmicMedia` za AI slike **ako se ikad krene sa
+> Merchant Center-om**. [[seo/geo-ai-plan]] dobio novu §0.
+>
+> Detalji: [[dnevnik/2026-08-12-chrome-docs-ads-skill]]
+
 ## 2026-08-12 [claude-code] W3/BLOK C — `product_brand` arhive napunjene (Ecotile 7, Ergomat 27), 301 cilj više nije prazna stranica ✅
 
 > Poslednji sadržajni prozor pre freeze-a 16.08. M odabrao opciju **(a)** iz

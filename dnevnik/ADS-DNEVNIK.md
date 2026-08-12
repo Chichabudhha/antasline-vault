@@ -8,7 +8,8 @@ kampanje:
   - Podloge za terase i bazene
   - ECOTILE INDUSTRIJSKI PODOVI
 prag-maximize-conversions: 20-30
-azurirano: 2026-08-06
+azurirano: 2026-08-12
+skill: antasline-ads
 sinhronizovano-sa: [[DNEVNIK-NAPRETKA]], [[PROGRESS]]
 ---
 
@@ -107,6 +108,32 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 ## 🗒️ Log
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
+
+### 2026-08-12 [claude-code] — 🔴 ISPRAVKA: „kumulativ 26 / prag pređen" iz unosa 11.08 NE VAŽI — pravih plaćenih lidova ima 9
+
+Unos od 11.08 (i svi raniji koji su brojali ka pragu 20–30) računa kao
+konverzije i **klikove na telefon**. Mesečni snapshot istog dana je našao da
+akcija `Klik na telefon (web)` ima `include_in_conversions_metric=True` +
+`primary_for_goal=True`, dakle ulazi u „Conversions" kolonu **i u Smart
+Bidding** — protiv pravila iz [[CLAUDE]] §4. Od 01.06 do 10.08:
+**17 tel + 9 forma**.
+
+- **Prag 20–30 NIJE dostignut.** Odluka 4.8 (Maximize Conversions) ostaje
+  zatvorena dok se ne isključe **dve** aktivne telefonske akcije iz konverzija
+  i dok se ne nakupi 20–30 lidova **iz forme**.
+- Nalaz je bio upisan u [[PROGRESS]] Blokere 11.08, ali ne i ovde — pa je ovaj
+  hub pet dana tvrdio suprotno. Otud ova ispravka; lekcija o razilaženju
+  izvora: [[reference/naucene-lekcije]] (2026-08-12).
+- Isto važi za GA4 stranu: hvala-proxy je **2× naduvan** suvišnim `page_view`
+  tagom (id 18) koji preživljava migraciju. Za brojanje lidova koristiti
+  **sesije** na `/hvala-za-poruku/`, ne preglede.
+
+Novi skill **/antasline-ads** nosi ovu ispravku i pravilo: pri radu sa
+konverzijama uvek proveriti `include_in_conversions_metric` /
+`primary_for_goal` po akciji, ne verovati imenu akcije ni „Conversions" koloni.
+
+**Sledeći korak:** #ceka-miroslav — isključiti obe telefonske akcije iz
+„Conversions" u Ads UI.
 
 ### 2026-08-11 [claude-code] — W5 5.4 nedeljni presek: ECOTILE CPC 101 RSD (treći presek zaredom naviše), Terase pauzirana, plaćene kumulativ 26
 

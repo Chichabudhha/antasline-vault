@@ -86,6 +86,32 @@ prodaja epoksida ne.
   veličina email liste, GMB pozivi/recenzije
 - Ne izmišljati brojeve; promene <5% = stabilno
 
+### 🆕 Search Console *platform properties* (globalno dostupno od 2026-07-29)
+
+Nov tip GSC property-ja koji pokazuje kako **naši profili na Instagramu,
+TikTok-u, X-u i YouTube-u** performiraju **u Google pretrazi, Discover-u i
+News-u** — klikovi, prikazi, CTR, pozicija, top sadržaj i **upiti** po kojima
+ljudi nalaze te objave.
+
+Za nas primenjivo na **Instagram** (`@antas_line`, aktivan) i **YouTube**
+(`@antasline5676`, mrtav — ima smisla tek kad Faza 1 oživi kanal video
+materijalom iz `/dnevni-video`). TikTok i X nemamo.
+
+- Setup: svaki nalog se dodaje kao **zasebna property**, uz autorizaciju kroz
+  prijavu na tu platformu. Vlasništvo se periodično proverava — ako spoljna
+  sesija istekne, property se **pauzira do ponovne verifikacije** (isti obrazac
+  problema kao OAuth token konektora, v. [[PROGRESS]] Blokeri)
+- Podaci se pojavljuju tek nekoliko dana posle povezivanja
+- ⚠️ Meri **samo** učinak u Google pretrazi, **ne** preglede na samoj
+  platformi — ne zamenjuje Instagram/YouTube analitiku
+- ⚠️ Dokumentacija govori o „kreatorima i izdavačima"; da li brend nalog firme
+  prolazi verifikaciju nije potvrđeno — proveriti pri prvom pokušaju, ne
+  planirati oko toga
+- **Kad:** posle live-a (24.08), zajedno sa Fazom 1. Pre toga nema šta da meri
+
+Vrednost za nas nije vanity metrika nego **upiti**: koje pretrage vode ka našim
+objavama je isti tip signala kao GSC upiti za sajt, i hrani W2 content plan.
+
 ## Zatvaranje sesije
 
 Kao u `/antasline-sesija` §5: DNEVNIK-NAPRETKA + PROGRESS + štikliranje ovde

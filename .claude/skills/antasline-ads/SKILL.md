@@ -57,9 +57,16 @@ Kad padnu prikazi ili skoči CPC, ne nagađaj uzrok — proveri ovim redom:
 ## 4. Licitiranje — gde smo i kad se menja
 
 - Trenutno: **Maximize Clicks**, namerno
-- Prag za Maximize Conversions: **20–30 pravih plaćenih konverzija**. Kumulativ
-  od 01.06 je prešao prag (26 na 11.08)
-- 🔴 **Ali prelazak je odložen na ~01.09**, i to je i dalje važeća preporuka:
+- Prag za Maximize Conversions: **20–30 pravih plaćenih konverzija**
+- 🔴🔴 **Prag NIJE dostignut — „26" je bila pogrešna brojka.** Snapshot od
+  11.08 je našao da akcija `Klik na telefon (web)` ima
+  `include_in_conversions_metric=True` + `primary_for_goal=True`, dakle ulazi u
+  „Conversions" kolonu i u Smart Bidding — direktno protiv pravila iz
+  [[CLAUDE]] §4. Od 01.06 do 10.08: **17 tel + 9 forma**. **Pravih plaćenih
+  lidova ima 9**, ne 26. Svi izveštaji pre 11.08 su na ovome grešili.
+  Prvo isključiti telefonske akcije iz konverzija (postoje **dve** aktivne),
+  pa tek onda brojati ka pragu — v. [[PROGRESS]] Blokeri
+- 🔴 **I nezavisno od praga, prelazak je odložen na ~01.09:**
   learning period traje do **2 nedelje za manje, do ~3 nedelje / 1–2
   konverziona ciklusa za veće promene**, a svaka značajna izmena ga restartuje.
   Migracija 24.08 menja finalne URL-ove svih oglasa — to je značajna izmena.
@@ -109,6 +116,15 @@ realno javljaju u upitima, ne samo osnovni oblik. Proveri protiv stvarnog
 - **Prava konverzija = page view na `/hvala-za-poruku/`**, uvezena iz GA4
 - `tel` i `mailto` = observacija, **ne uvoziti** (double-counting sa GTM
   click-to-call)
+- 🔴 **Pravilo je prekršeno u nalogu i to još nije ispravljeno**: `Klik na
+  telefon (web)` se broji kao konverzija (17 od „26"). Pri svakom radu sa
+  konverzijama **prvo proveri `include_in_conversions_metric` i
+  `primary_for_goal` po akciji**, ne oslanjaj se na ime akcije — brojka u
+  „Conversions" koloni ne znači da su to lidovi iz forme
+- 🔴 **Hvala-proxy je 2× naduvan** suvišnim `page_view` GA4 tagom (id 18) —
+  preživljava migraciju. Live dodatno ima dva GTM embeda → `generate_lead` 3×,
+  ali taj deo nestaje migracijom. Za brojanje lidova koristi **sesije** na
+  `/hvala-za-poruku/`, ne preglede
 - `lead_form_start`, `epoxy_conquest_engagement` = samo publike/observacija
 - 🔴 **Otvoreno od 11.08: GA4 brojač `generate_lead` je naduvan ~3×** (10
   sesija na hvala stranici → 39 eventa). Ads-ova strana broji svoje i nije
@@ -181,6 +197,15 @@ realno javljaju u upitima, ne samo osnovni oblik. Proveri protiv stvarnog
 
 ## 12. Otvoreno (`#ceka-miroslav`, stanje 2026-08-12)
 
+- 🔴 Isključiti **dve** telefonske konverzijske akcije iz „Conversions"
+  (`include_in_conversions_metric`) — dok se to ne uradi, Smart Bidding bi učio
+  na klikovima na telefon umesto na formama
+- 🟡 6 BROAD ključnih reči potrošilo ~10.300 RSD/90d bez ijedne konverzije
+  (`podovi za terase`, `industrijski podovi`, `podne obloge za terase`,
+  `pvc podne ploče`, `podovi za hale`, `podovi za radionice cena`) — pauzirati;
+  phrase parnjaci konvertuju
+- 🔴 2 oglasna URL-a vode na tuđi domen `ekopodneploce.rs` (pauzirana „Ecotile
+  kampanja" + sitelinkovi na nivou kampanje) — 301 mapa tu ne pomaže
 - ECOTILE dnevni budžet **1.300 → 1.800–2.000 RSD** (ili svesno prihvatiti
   ~50% gubitka prikaza na spike danima)
 - Da li je pauza kampanje „Podloge za terase i bazene" namerna — ako nije,

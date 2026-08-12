@@ -114,6 +114,16 @@ danas) | reset za HH:MM PT` posle svakog poziva.
   testiran 2026-08-05). Sam fajl na disku se neće pojaviti kao proizvod
   slika bez `wp_insert_attachment()`/`set_post_thumbnail()`.
 
+- 🆕 **Označavanje AI-generisanih slika (Google politika, pročitano 2026-08-12).**
+  Za običnu organsku pretragu nema obaveznog markupa. 🔴 **Ali Merchant Center
+  traži** da AI-generisana slika nosi IPTC `DigitalSourceType` =
+  `TrainedAlgorithmicMedia`, a AI-generisani podaci o proizvodu se posebno
+  označavaju. Naši `--mode enhance` izlazi su izmenjene prave fotografije, ne
+  čista sinteza, ali granica nije oštra — **ako projekat ikad krene sa
+  Merchant Center feed-om, prvo proveriti koji od već objavljenih vizuala traži
+  oznaku**, pre nego što feed ode. Do tada nema akcije. v.
+  [[seo/geo-ai-plan]] §0.
+
 ## Veze
 - `~/.claude/skills/ai-vizuali/` — generički Gemini image sloj (cross-project)
 - `reference/gemini-vizuali-setup.md` — jednokratni setup checklist

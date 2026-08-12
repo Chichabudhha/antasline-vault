@@ -3,12 +3,58 @@ tip: strategija
 datum: 2026-07-04
 naziv: GEO / AI vidljivost — da AI preporučuje Antasline
 status: aktivan
-azurirano: 2026-07-27
+azurirano: 2026-08-12
 ---
 
 # 🤖 GEO plan — kako da AI (ChatGPT, Gemini, Perplexity…) preporučuje Antasline
 
 **Dokaz da se već dešava:** GA4 kanal "AI Assistant" — chatgpt.com referrali, 9 korisnika/90d, engagement 100% ([[analiza/2026-07-04-snapshot-full]] §2.2). Za nišni srpski B2B ovo je asimetrična prilika: AI odgovori na srpskom se oslanjaju na malo dostupnih izvora — ko je najbolje strukturiran izvor u niši, dobija nesrazmerno mnogo preporuka.
+
+## 0. Google-ova zvanična uputstva (pročitano 2026-08-12) — šta potvrđuju, šta obaraju
+
+Google je objavio [AI optimization guide](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide).
+Poruka je izričita: **generativne funkcije se oslanjaju na iste ranking sisteme
+kao Search**, pa „AEO/GEO taktike" kao zaseban posao nisu potrebne.
+
+**Potvrđuje ono što već radimo** (sekcije 2–4 ovog plana): jedinstven sadržaj sa
+stvarnim stavom umesto prepričavanja · jasna struktura sa opisnim naslovima ·
+kvalitetne slike/video uz tekst · stranica mora biti indeksirana i **eligible za
+snippet**.
+
+🔴 **Obara (ili bar degradira) ove pretpostavke:**
+
+| Pretpostavka | Google kaže |
+|---|---|
+| `llms.txt` / `llms-full.txt` pomažu AI vidljivosti | **„Google Search ih ne koristi"** — niti štete niti pomažu |
+| Sadržaj treba „iseckati" u sitne delove radi AI parsiranja | Nije potrebno |
+| Treba pisati posebno za AI | Ne — nema posebnog stila ni markupa |
+| Structured data je poluga za AI vidljivost | Opciono; korisno za rich results, **nije uslov** za AI |
+| Ciljati svaku varijantu ključne reči | To pravi commodity sadržaj i pada pod **scaled content abuse** |
+
+**Šta to znači za nas konkretno:** naš `llms.txt`/`llms-full.txt`
+(deployovan 23.07) i naše sopstveno merenje se poklapaju —
+[[analiza/BOT-CRAWLER-LOG]] beleži **0 organskih hitova** na oba fajla kroz dva
+preseka. **Odluka: fajlovi ostaju** (statični, bez održavanja, mogu koristiti
+ne-Google asistentima koji nisu pokriveni ovim dokumentom), ali se **ne
+proširuju i ne prate više kao GEO poluga**. Stavku iz sekcije 5 ovog plana
+(„prati da li AI botovi povlače llms.txt") time zatvaramo — pitanje je
+odgovoreno, ne treba više preseka radi njega.
+
+🆕 **Novo merenje:** Search Console ima **Generative AI performance report**.
+To je jedini legitiman izvor za vidljivost u AI odgovorima — treći alati koji
+tvrde da imaju „pristup Google-ovim internim metrikama" se ignorišu. Dodati u
+mesečni snapshot uz „AI Assistant" GA4 kanal (sekcija 5) i uz mesečni ChatGPT
+test promptova, koji ostaje jer meri **ne-Google** asistente.
+
+### Sadržaj pisan uz pomoć AI-ja — [gen-AI politika](https://developers.google.com/search/docs/fundamentals/using-gen-ai-content)
+- AI kao alat je **dozvoljen**; problem je *scaled content abuse* — mnogo
+  stranica bez dodate vrednosti. Naš W2 model (20 stranica, svaka sa svojim
+  klasterom, cenama i FAQ-om) nije to, ali „generiši 50 varijanti za svaki grad"
+  bi bilo — ne raditi.
+- Preporučena transparentnost o načinu nastanka sadržaja.
+- 🔴 **Ako se ikad krene sa Merchant Center-om**: AI-generisane slike moraju
+  nositi IPTC `DigitalSourceType` = `TrainedAlgorithmicMedia`, a AI-generisani
+  podaci o proizvodu se posebno označavaju. Tiče se `/gemini-vizuali` izlaza.
 
 ## Kako AI bira koga preporučuje
 
@@ -49,7 +95,8 @@ AI za "najbolji X u Srbiji" agregira tuđe liste, portale, forume:
 
 ### 5. Merenje ⭐⭐ (u snapshot rutini)
 - [ ] GA4: pratiti "AI Assistant" kanal mesečno — baseline **9 korisnika/90d** — nije poseban zadatak, ide u sledeći puni mesečni snapshot (početak avgusta, [[PROGRESS]] W5 5.4)
-- [x] ✅ NOVO 2026-07-23 — `[[analiza/BOT-CRAWLER-LOG]]` pokrenut: access log analiza svih bot/crawler hitova (AI asistenti/search/SEO-alati), baseline presek + prati da li AI botovi uopšte povlače `llms.txt`/`llms-full.txt` (0 organskih hitova u prvom preseku, prerano za zaključak). Ponoviti presek za ~1 nedelju.
+- [x] ✅ NOVO 2026-07-23 — `[[analiza/BOT-CRAWLER-LOG]]` pokrenut: access log analiza svih bot/crawler hitova (AI asistenti/search/SEO-alati), baseline presek. ✅ **Pod-pitanje „da li botovi povlače `llms.txt`" ZATVORENO 2026-08-12** — 0 organskih hitova kroz 2 preseka, a Google je u međuvremenu napismeno potvrdio da Search te fajlove ne koristi (v. §0). Ne ponavljati presek radi ovoga; bot log ostaje koristan za ostale crawlere.
+- [ ] 🆕 **Generative AI performance report** (Search Console) u mesečni snapshot — proveriti da li ga GSC API izlaže ili je UI-only #claude-code
 - [x] ✅ PRVI PUT IZVRŠENO 2026-07-22 — Mesečni AI test: 5 fiksnih promptova u ChatGPT (pravi Incognito, bez naloga). Rezultat: **2/5 pominjanja** (prompt 1 "industrijski PVC podovi" bez URL citata, prompt 5 "ko postavlja sportske terene" SA citatom na antasline.com). 🔴 2 gap-a otkrivena: prompt 3 (epoksid alternativa) AI ne pominje modularni PVC/Ecotile kategoriju uopšte; prompt 4 (terase bez lepljenja) AI misli samo na WPC deking, ne Bergo klik-sisteme. Detalji + puni odgovori: [[analiza/2026-07-22-ai-test-baseline]]. Ponoviti sledeći mesec istim promptovima za trend.
 
 **Fiksni test promptovi:**

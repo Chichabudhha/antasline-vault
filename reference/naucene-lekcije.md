@@ -1,9 +1,29 @@
 ---
 tip: reference
-azurirano: 2026-08-11
+azurirano: 2026-08-12
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Konvencija koju niko zvanično nije potvrdio ≠ standard — `llms.txt` je bio nagađanje industrije (2026-08-12)
+- `llms.txt` + `llms-full.txt` su napravljeni i deployovani na live (23.07) kao deo „GEO paketa", uz ogradu u [[seo/geo-ai-plan]] da adoptacija „nije zvanično potvrđena".
+- **Naše sopstveno merenje je odgovorilo pre dokumentacije:** [[analiza/BOT-CRAWLER-LOG]] je kroz dva preseka pokazao **0 organskih hitova** — nijedan AI bot nije zatražio fajlove, iako su svi aktivno crawlovali sajt u istim prozorima.
+- Tri nedelje kasnije Google to i napismeno potvrđuje: *„Google Search doesn't use them"* — niti štete niti pomažu.
+- **Pravilo: kad se uvodi konvencija koju nijedan proizvođač nije zvanično podržao, uz nju ide merenje koje može da je opovrgne, i unapred definisan trenutak odluke.** Ovde je to slučajno urađeno kako treba (bot log je pokrenut dan posle deploy-a) — otud je zatvaranje stavke koštalo jedno čitanje, ne ponovnu raspravu.
+- Trošak greške je bio nizak jer je fajl statičan. Ista logika ne važi za konvencije koje traže izmene šablona, schema-e ili build procesa — tamo se čeka potvrda izvora.
+
+## Skill građen iz JEDNOG izvora nasleđuje njegovu grešku — hub i [[PROGRESS]] se razilaze (2026-08-12)
+- Novi `/antasline-ads` je pisan iz [[dnevnik/ADS-DNEVNIK]] (251 red istorije, deluje kao autoritativan izvor za Ads) i preuzeo je iz njega „kumulativ 26 plaćenih konverzija, prag 20–30 pređen".
+- [[PROGRESS]] Blokeri od **11.08** to demantuju: `Klik na telefon (web)` ima `include_in_conversions_metric=True`, pa je **17 od 26** klik na telefon — pravih plaćenih lidova ima **9**. Ispravka je stigla u Blokere, ali **ne i u ADS-DNEVNIK**, čiji poslednji Log unos (11.08) i dalje tvrdi „prag pređen".
+- Uhvaćeno tek pri zatvaranju sesije, kad je protokol naložio čitanje PROGRESS-a. Da nije, skill bi tu brojku ponavljao svaki put kad se pozove — trajno, i sa autoritetom „to piše u skillu".
+- **Pravilo: pre nego što se brojka ili zaključak upiše u skill (koji se čita svaki put), ukrstiti izvor sa [[PROGRESS]] Blokerima.** Tematski hub beleži šta je tada izmereno; Blokeri beleže šta je u međuvremenu opovrgnuto. Kad se raziđu, Blokeri su noviji.
+- Šire: svaki `#ceka-miroslav` nalaz koji menja raniji zaključak treba **istovremeno** upisati i u tematski hub, ne samo u Blokere.
+
+## Prerender/prefetch okida thank-you stranicu bez posetioca — konverzija se naduva (2026-08-12)
+- Chrome 151 uvodi Speculation Rules `form_submission` (prerender odredišta submit-a forme); isto rade i prefetch opcije optimizacionih plugina (LiteSpeed, WP Rocket, Perfmatters).
+- Kad se konverzija meri kao **page view na thank-you stranici** — a to je i naš setup i najčešći WooCommerce/CF7 setup — prerender izvrši tu stranicu **pre** nego što posetilac stigne, i tag okine na posetu koja se možda nikad ne dogodi.
+- **Redosled je obavezan: prvo GTM trigger gate-ovan na `document.prerendering === false` (ili odložen na `prerenderingchange`), pa tek onda prerender.** Nikad obrnuto.
+- Proveriti i pri prelasku na hosting/plugin sa agresivnim prefetch default-om — uključi se bez pitanja i tiho promeni brojke.
 
 ## Popravljen tracking bag ostavlja rupu u podacima — zatvaranje stavke mora ostaviti ✅ trag u [[PROGRESS]], ne biti obrisano (2026-08-11)
 - `mailto` je bio mrtav **27.06–06.08** (pratio ga MonsterInsights, gašenje MI-ja u BLOK A ga oborilo), dijagnostikovan 27.07, popravljen 07.08 (GTM Version 14). Sve uredno u [[dnevnik/2026-08-07-gtm-mailto-tag]].
