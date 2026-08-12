@@ -600,6 +600,7 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 - `[[reference/cenovnik]]` — Jedinstveni cenovnik (M10, Miroslav popunjava jednom, Claude vuče odatle)
 - `[[reference/konkurencija-trziste-analiza]]` — Tržište i konkurencija po niši (2026-08-07): ko su konkurenti, gde smo šuplji/jači, preporuka fokusa
 - `[[reference/token-tracking]]` — Token usage tracking konvencija (Token Logs/.token_log.jsonl)
+- `[[reference/chrome-web-platform-2026]]` — Chrome 148–151 + DevTools 151: šta je upotrebljivo uz fallback, šta se meri, 🔴 prerender vs. konverzija
 
 ### 📚 DOKUMENTACIJA
 - `[[briefs/_README]]` — (ako postoji brief za kampanje)

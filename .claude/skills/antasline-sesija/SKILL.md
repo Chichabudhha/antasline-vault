@@ -30,6 +30,13 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
 
 ### W1 — Dizajn/rebuild stranica
 - OBAVEZNO prvo: `[[migracija/woodmart-sabloni]]` (šablon + svi gotcha-i)
+- Pre pisanja novog CSS/HTML/JS obrasca (modal, tooltip, akordeon, tabovi,
+  kartice, galerija, scroll efekat): skill **/modern-web-guidance** →
+  `search "<šta gradiš>"` pa `retrieve "<id>"`. Cilj: native `<dialog>`/
+  Popover API/container queries umesto novog JS-a i nove zavisnosti.
+  Policy: **Baseline Widely available** (v. napomene u tom skillu)
+- Šta je od novog u Chrome-u realno upotrebljivo kod nas (sa fallback-om) i
+  šta je zamka: `[[reference/chrome-web-platform-2026]]`
 - Content parity izvor: `migracija/live-export-2026-07-05/` (pages XML +
   inventar CSV sa Yoast metama)
 - Za proizvode: pozovi skill **/obogati-proizvod** (ima svoj kompletan tok)
@@ -51,19 +58,38 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
   AUTO-PREDLOG redovi se NE implementiraju dok C2 ne završi
 - Kritična rupa: `/sportske-podloge/kosarkaske-konstrukcije/` (478 GSC klikova)
 - CWV: prvo Lighthouse baseline u `dnevnik/PERFORMANCE-AUDIT.md`, pa optimizacija
+  - Chrome 151 nosi Lighthouse **13.4.0** — uz svaki novi baseline upiši verziju
+    Lighthouse-a, inače poređenje sa julskim snimcima nije validno
+  - Performance panel ima **Soft FCP markere** (uz Soft LCP) — koristi za
+    layered-nav/AJAX filtere gde nema pune navigacije
+  - Pre optimizacije: **/modern-web-guidance** `search` za konkretan simptom
+    (LCP slika, long task/INP, offscreen render, preload na hover) — kategorija
+    `performance` ima 24 vodiča sa gotovim obrascima
+  - LCP je blokiran na render-blocking CSS i namerno odložen na LiteSpeed CCSS/
+    UCSS na produkciji — lokalni Performance snimak služi za relativno
+    poređenje pre/posle, ne kao apsolutan broj (nema CDN/keš sloja)
 - `.htaccess` 301 se generiše ali aktivira TEK na dan migracije
 
 ### W4 — Ads
+- **Pozovi skill /antasline-ads** (ima ceo playbook: dijagnostika isporuke,
+  licitiranje, negativne, RSA, migracija-checklist, podela CC/M odgovornosti)
 - Hub: `[[dnevnik/ADS-DNEVNIK]]` (fazni plan, RSA banka, log — najnoviji unos gore)
-- Windsor.ai = read za dijagnostiku (connector `google_ads`, account
-  `['156-886-0314']`); write akcije samo pause/enable/budžet i SAMO uz
-  eksplicitnu potvrdu Miroslava; sve ostalo su koraci za Ads UI koje radi on
+- Podaci: sopstveni konektor (`ads_report.py`), **read-only** — Windsor istekao
+  2026-07-27. Sve write akcije (RSA upis, budžet, pauza, strategija) radi
+  Miroslav u Ads UI; CC priprema tekst i brojke
 - Maximize Clicks dok nema 20–30 plaćenih konverzija; broad tek uz Smart Bidding
 - Pad merenih brojeva posle tracking čišćenja = tačnije merenje, ne reagovati budžetom
 
 ### W5 — Tracking/merenje
 - Ključni eventi: samo `generate_lead` (hvala-za-poruku) · `tel` · `mailto`;
   `tel` se NE uvozi u Ads
+- 🔴 **Prerender/prefetch je opasan za našu konverziju**: `/hvala-za-poruku/`
+  page view = jedini pravi lid. Speculation rules (`form_submission`, Chrome
+  151) ili prefetch iz optimizacionog plugina mogu okinuti `generate_lead` na
+  posetu koja se nije desila. Uslov pre bilo kakvog uvođenja: GTM trigger
+  gate-ovan na `document.prerendering === false`. Detalji:
+  `[[reference/chrome-web-platform-2026]]` §3 — proveriti i LiteSpeed
+  podešavanja pre migracije 24.08
 - Windsor gotchas: `[[reference/naucene-lekcije]]` (in-filter nepouzdan →
   povuci sve pa agregiraj; eksplicitni date_from/date_to za poređenja;
   hvala-proxy = `[["page_path","contains","hvala"]]` na `screen_page_views`)
@@ -93,6 +119,13 @@ expansion `{a,b}` pravi literalne foldere; velike fajlove čitaj Read alatom.
 - [ ] Yoast title/metadesc u `<head>`
 - [ ] wpautop nije razbio markup (HTML u jednoj liniji unutar grid blokova)
 - [ ] Regression: 1–2 ranije stranice i dalje ispravne
+
+Kad izmena dira CSS/layout (ne samo sadržaj) — DevTools 151 prečice:
+- Specificity tooltip u Styles tabu (hover nad selektorom) pre nego što se
+  poseže za `!important` — dokazuje `:is()` sudar sa `base.css`
+- Mobilni test preko osveženih iPhone/Pixel preseta (verifikovani safe-area
+  inseti), ne preko ručno ukucane širine
+- Detalji i puna tabela: skill **/woodmart-theme** §13
 
 ## 5. Zatvaranje sesije (uvek, redom)
 
