@@ -1,3 +1,31 @@
+## 2026-08-12 [cpanel-live] — `~/staging/` obrisan (3,4 GB), prostor oslobođen (UŽIVO) ✅
+
+> Nastavak iste `[cpanel-live]` sesije, na M zahtev direktno posle pre-flight nalaza
+> ispod. **Jedina izmena ove pod-sesije, van docroot-a `public_html`** — `staging.antasline.com`
+> je leftover od probne migracije 06–07.08 (vizuelno već potvrđen tada), nije aktivan
+> deo redovnog toka.
+>
+> **Izvršeno:** `rm -rf ~/staging` → `mkdir ~/staging` + `chmod 755` (prazan direktorijum
+> ostaje, subdomen mapiranje netaknuto, samo sadržaj obrisan). Baza `antasline_staging`
+> (**~58 MB**, zanemarljivo) **namerno ostavljena netaknuta** — nije tražena, van obima
+> "disk prostor" nalaza. Kredencijali (`~/staging-htaccess-creds.txt`,
+> `~/staging-db-credentials.txt`) takođe ostavljeni — sitni fajlovi, nisu deo prostor-nalaza.
+>
+> **Verifikacija:** `du -sh ~/staging` pre **3,4 GB** → posle **4,0K**; `du -sh ~`
+> (ceo home) pre bilo koje operacije ~10,1 GB (staging+mail+public_html+vault+ostalo)
+> → posle **6,2 GB**. 🟡 **`uapi Quota get_quota_info` i dalje prijavljuje identičan
+> stari broj** (9.752,35 MB iskorišćeno / 2.487,65 MB slobodno) i posle ponovnog
+> pollovanja par sekundi kasnije — cPanel-ov kvota-keš očigledno se ne osvežava
+> real-time, nema root/WHM pristup da se to forsira. **Fajlsistemski dokaz (`du`)
+> potvrđuje brisanje; zvanični kvota-brojač će se osvežiti sa kašnjenjem** (nepoznat
+> interval, nije nešto što mogu izmeriti sa ovog naloga) — proveriti ponovo u sledećoj
+> `[cpanel-live]` sesiji da potvrdi novi broj pre 24.08.
+>
+> Rešava 🔴 nalaz iz pre-flight-a ispod: prostor za istovremen backup+novi paket (~2,6 GB)
+> sad ima veliku rezervu (bilo 2,43 GB slobodno pre brisanja, staging sam nosio 3,4 GB).
+
+---
+
 ## 2026-08-12 [cpanel-live] — pre-flight infrastruktura (UŽIVO, read-only) — disk prostor rizik nađen, JetBackup nedostupan iz shell-a ✅
 
 > Osma sesija istog dana, `[cpanel-live]` (`wp1.oblak.host`, `~/public_html` = live).
