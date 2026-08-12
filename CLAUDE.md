@@ -37,8 +37,18 @@ koji prodaje epoksid.
 | **Lokalni WP build (redizajn)** | `C:\xampp\htdocs\antasline\` → `http://localhost/antasline` — *postoji, ali Claude Code ovde po pravilu ne radi direktno; ako zadatak to zahteva, Miroslav će eksplicitno tražiti rad u tom folderu* |
 | Sitemap lokalnog builda | `http://localhost/antasline/sitemap_index.xml` |
 | Uživo sajt | antasline.com (tema Kallyas) |
-| DB (lokalno) | MariaDB 10.4, prefiks `wpGs_`, 106 tabela, uvezena iz `smartas_smartas_rs.sql` (46.6 MB), kolacija `utf8mb4_unicode_ci` |
+| DB (lokalno) | MariaDB 10.4, prefiks **`wpgs_` (sve malim slovima)**, 78 tabela, uvezena iz `smartas_smartas_rs.sql` (46.6 MB), kolacija `utf8mb4_unicode_ci` |
 | Stack (lokalno) | PHP 8.2.12, XAMPP, WoodMart 8.5.4 tema + child (design sistem `antas-design.css`, self-hosted Inter+Bebas) — napušten raniji Porto+WPBakery pristup |
+
+> 🔴 **PREFIKS BAZE — `wpgs_`, ne `wpGs_` (ispravljeno 2026-08-12, provereno protiv baze).**
+> `SHOW TABLES` na lokalu vraća `wpgs_posts`; isto stoji i u live/staging dump-ovima.
+> Lokalni `wp-config.php` **ipak nosi `$table_prefix = 'wpGs_'`** i radi — ali samo zato
+> što je MariaDB na Windows-u `lower_case_table_names=1` (provereno), pa ne razlikuje
+> velika i mala slova. **Na Linux hostingu (cPanel/staging) razlikuje** — to je tačan
+> uzrok „site not installed" greške pri probi migracije 2026-07-21.
+> **Pravilo:** svaka skripta, `sed`, `wp search-replace` i `wp-config` za server piše
+> **`wpgs_`**. Pogrešan case ne prijavi grešku — tiho preskoči zamenu ili uveze u
+> pogrešne tabele.
 
 Claude Code radi u vault-u; Obsidian Git tamo auto-sinhronizuje na ~10 min.
 Kad se nešto radi direktno na produkciji (cPanel), taj rad se taguje
@@ -316,7 +326,7 @@ aktivno preko `rank_math_registration_skip`.
 ### 7.5 Content parity (lokalni build vs. live)
 - Live sajt je autoritativan — ima znatno više proizvoda, blog postova i
   silo stranica od staging-a
-- WooCommerce migracija: SQL dump metod, `wp_` → `wpGs_` prefix rewrite,
+- WooCommerce migracija: SQL dump metod, `wp_` → `wpgs_` prefix rewrite (malim slovima — v. §2),
   flat `/proizvod/` permalink struktura
 - Slike proizvoda se rade posebno preko rsync `wp-content/uploads/`
 - Otvoreno: 5 staging-only proizvoda (durastripe varijante, mosolut-heavy)

@@ -7,7 +7,7 @@ description: Obogaćivanje WooCommerce proizvoda na lokalnom AntasLine buildu po
 
 Radni tok za dovođenje Woo proizvoda na "obogaćen" standard. Jedan batch
 (3–5 proizvoda iste linije) po sesiji. Radi se ISKLJUČIVO na lokalnom
-buildu (`C:\xampp\htdocs\antasline`, DB `antasline_local`, prefiks `wpGs_`),
+buildu (`C:\xampp\htdocs\antasline`, DB `antasline_local`, prefiks `wpgs_`),
 nikad na live sajtu.
 
 ## Preduslovi (uvek, redom)
@@ -78,7 +78,7 @@ nikad na live sajtu.
    vidi W1 zadatak 1.8). Ovaj šablon i ta odluka su usklađeni po defaultu.
 3. **Galerija**: 3–6 slika u `_product_image_gallery` (attachment ID-jevi,
    zarezom odvojeni). Slike biraj iz postojećih uploads (115 importovanih) —
-   pretraži `wpGs_posts` `post_type=attachment` po imenu proizvoda/linije.
+   pretraži `wpgs_posts` `post_type=attachment` po imenu proizvoda/linije.
    **Glavna slika proizvoda prati standard `[[reference/standard-slika-proizvoda]]`**
    (M odluka 2026-07-09): 1080×1080, čista bela pozadina, ~15% margine, AI
    prompt šablon u tom fajlu. Ako standardizovana slika još ne postoji →
