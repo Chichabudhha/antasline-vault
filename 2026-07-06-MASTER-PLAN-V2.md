@@ -73,6 +73,20 @@ azurirano: 2026-08-10
 | 1.11 | 🆕 2026-07-11 — **Novi proizvodi (7 dobavljača) + generička oprema**: Condor trave u boji, Radici Sport trava, Geoplast parking, Expona LVT (podno grejanje 27°C!), R-Tile, Hoop n Court koševi, Ecotile rampe + generička oprema (tribine/stolice/golovi/mreže, "na upit"). ~46 proizvoda, ~78 varijacija, sesije S1–S8 → **[[migracija/w1-novi-proizvodi-court-builder]]** | CC | ✅ **S1 taksonomija ZATVOREN 2026-07-11** (4 kategorije 369–372 + 2 atributa id 20/21 + nosivost/roze termini) — gate za S2–S8 otključan. **S8 mora pre CB2 (1.12)**. Ne prekida Fazu 2 postova — sesije se ubacuju naizmenično |
 | 1.12 | ✅ ZATVORENO 2026-07-11 (+ CB2-fix 2026-07-12) — **Court builder 2D** (`/planer-terena/`, samo Bergo Ultimate 16770 + FLOW 16801): SVG dizajner sa sport šablonima, obračun ploča/rampi/opreme, zaključan dizajn u WP adminu, mejl klijentu PNG+PDF (bez edit linka), token-link za novu verziju, cene → automatski predračun. CB1+CB2+CB3 sve zatvorene, testirano end-to-end kroz Chrome (3 puna ciklusa + bezbednosni testovi: honeypot/rate-limit/PNG+grid validacija). **CB2-fix (2026-07-12)**: klik-na-boju farba ceo teren odjednom + trajni checkbox za detaljno farbanje + fix bug-a (promena boje linija terena brisala obojene ploče) + auto-zadržavanje boje pri resize — **RP2 sada u potpunosti zatvoren, nema više otvorenih CB stavki.** Faze → **[[migracija/w1-novi-proizvodi-court-builder]]** | CC | ⚠️ Preostaje: SMTP konfiguracija na live pre javnog puštanja (lokalno mail-log.php presreće slanje, mora se ukloniti na produkciji — u 3.10 checklisti). 3D varijanta EKSPLICITNO posle live-a (W6+ era, van V2 obima) |
 
+> 🟢 **W1 ZAKLJUČEN — 2026-08-12.** Provereno stavku po stavku: red čekanja A **33/33**
+> ([[migracija/w1-red-cekanja]]) · Polish **Faze 1–4** ✅ (poslednja, GEO-intro na 22
+> posta, 2026-08-07) · novi proizvodi **S1–S8 8/8** · Court builder **CB1–CB3 + CB2-fix** ✅.
+> **Nema poznatog otvorenog posla u W1.** Dva statusa u ovoj tabeli bila su zastarela
+> mesec dana (1.2 „12/33") i ispravljena su tog dana.
+>
+> Poslednji dodatak van reda čekanja: ✅ **alt tekst na slikama proizvoda (2026-08-12)** —
+> 66 priloga (6 glavnih + 63 galerijske) popunjeno, **159 dekorativnih SVG ikonica
+> namerno ostavljeno na `alt=""`** (ispravno po WCAG, popunjavanje bi bilo regresija).
+> Zatvara poslednju otvorenu stavku iz [[migracija/2026-07-30-lighthouse-a11y-plan]].
+> 🔵 Jedini preostali a11y nalaz — `heading-order` + `target-size` na product karticama
+> (WoodMart core layout) — **svesno odložen na posle live-a**, veći zahvat nego što
+> vredi 4 dana pred gate. → [[dnevnik/2026-08-12-alt-tekst-slike-proizvoda]]
+
 ### W2 — SEO CONTENT (C3 + GEO)
 Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po stranici: Yoast >80, FAQ + FAQPage/Product schema, cena od–do gde ima smisla, CTA 072 + forma, interni link ka `/industrijski-podovi/`, prvi pasus = direktan odgovor (GEO pravilo).
 

@@ -270,6 +270,39 @@
 | 2026-06-25 | /industrijski-podovi/ | On-page: Yoast title (69 znakova), meta opis — optimizovano za search |
 | 2026-06-23 | /pop-tenis/ | On-page: Yoast title, H2 entry-title, dodat "piklbol" u uvod |
 
+## Sledeće
+
+> Prepisano 2026-08-12. Prethodno je ovo bila nenaslovljena gomila od ~15 stavki sa
+> numeracijom `00000/0000/000/00/0a/0/1/1/2/2/2`, uglavnom zatvorenih, u kojoj su dva
+> reda tvrdila da je W1 1.2 otvoren („31 stranica") mesec dana pošto je zatvoren —
+> i to je 12.08 stvarno dovelo do pogrešnog izbora zadatka. **Aktuelno stanje je
+> isključivo ovaj blok; sve ispod „Istorijske stavke" je arhiva, ne red čekanja.**
+
+**Do content freeze-a (NED 16.08) — poslednji prozor za izmene sadržaja:**
+- Ništa nije obavezno otvoreno. W1 (red A 33/33, Polish 1–4, S1–S8, Court builder,
+  alt tekst ✅ 12.08) i W2 (20/20 content plan) su iscrpljeni.
+- 🔵 Opciono, ako se ukaže sesija: `heading-order` + `target-size` na product karticama
+  (WoodMart core layout, veći zahvat — **preporuka: posle live-a**, ne 4 dana pred gate).
+
+**N7' (17–21.08), freeze — samo migraciona priprema:**
+- W3 **3.10** — pre-migration checklist §A do kraja → [[migracija/2026-08-10-pre-migration-checklist]]
+- 🔴 **PET 21.08 — gate pregled.** Od 11 stavki otvorena je još samo **LCP**
+  (blokirano na produkciju, ide kao svestan rizik).
+
+**PON 24.08 — migracija (3.11):** koraci u checklisti §B. Uslov za pokretanje:
+Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam tu").
+
+**Posle live-a (25.08+):** 3.12 post-live monitoring · 5.7 verifikacija merenja ·
+4.10 final URL audit · zatim W6 (social), Meta/LinkedIn tagovi, Display remarketing.
+
+**Čeka Miroslava** — puna lista u sekciji Blokeri; pred gate su bitni:
+`Klik na telefon (web)` → Secondary · pauziranje 6 BROAD reči · OAuth *Publish app*
+(inače token pada baš 24.08) · brisanje GTM taga id 18 · Enhanced Conversions toggle.
+
+---
+
+### Istorijske stavke (arhiva — zatvoreno, čuva se zbog gotcha-a)
+
 00000. ✅ **W3 3.15 — SERP snapshot pre migracije — ZATVORENO 2026-07-21** (v. Urađeno tabela vrh) → [[analiza/2026-07-21-serp-snapshot-pre-migracija]] — top 20 GSC upita + rizik-grupa snimljeni kao baseline za post-live poređenje (3.12). Preostalo u W3: 3.10 (pre-migration checklist, tek pred kraj), 3.14 (SSH nastavak, čeka M način rada — jedina zavisnost bez fallback-a, rok 2026-08-20).
 
 0000. ✅ **W3 3.1 (F1 potvrda) + 3.9 (.htaccess potvrda) — ZATVORENO 2026-07-21** (v. Urađeno tabela vrh) — migracioni gate kriterijum "parity-inventar + F4 + .htaccess" sada ✅ otkačkan. Preostalo u W3: 3.10 (pre-migration checklist, tek pred kraj), 3.14 (SSH nastavak, čeka M način rada — jedina zavisnost bez fallback-a, rok 2026-08-20). Jedini otvoreni W2/parity red je `/industrijski-podovi-najcesca-pitanja/` FAQ konsolidacija (15 kl., namerno na čekanju za M, ne blokira).
@@ -281,9 +314,8 @@
 1. ✅ **F7 audit popravke — U POTPUNOSTI ZATVOREN 2026-07-08** (P1 schema, P2 standardi-linkovi, P3 skice, P4 video) → [[migracija/f7-audit-i-popravke]].
 2. **W1 1.2 red čekanja** — ✅ **U POTPUNOSTI ZATVOREN** (Kategorija A 33/33, Kategorija F 8/8, Kategorija E 3/3 ✅ 2026-07-27 FAQ konsolidacija) → [[migracija/w1-red-cekanja]]. W1 (1.1–1.12) i W2 (20/20 content plan) sada oba iscrpljena — preostalo je isključivo blokirano na Miroslavu (piklbol fake-review, PR/direktorijumi, GMB recenzije, Hankook/Amicus detalji) ili čeka GSC signal (tržni centri). 🔴 **#ceka-odluku**: fake recenzije (Product schema, `/teren-za-pickleball/`) — videti Blokeri sekciju.
 
-2. **W1 rebuild po w1-red-cekanja.md** — ⭐⭐⭐ PRIORITET
+2. ✅ **W1 rebuild po w1-red-cekanja.md — ZATVOREN 33/33 (2026-07-08).** ⚠️ Ovaj red je do 2026-08-12 tvrdio da je otvoren („31 stranica", sa top listom bergo-xl/Ecotile 500/7/sale-i-baloni) — sve tri su zatvorene 2026-07-08. Ispravljeno.
    - F1–F7 ✅ SVI ZATVORENI 2026-07-07 → [[migracija/promptovi/_README]] (parity faze gotove, content standard definisan)
-   - **`migracija/w1-red-cekanja.md`** je izvor istine za preostali W1 1.2 (31 stranica) — top: bergo-xl (978), Ecotile 500/7 info (625), sportski-podovi-za-sale-i-balone (378, PAGE tip!). (antistatik i kosarkaske-konstrukcije ✅ gotovo 2026-07-07.)
    - Svaka nova namenska landing stranica prati F6 troslojni obrazac + F7 content standard (ikonice/skica/video/standardi-sa-linkovima) → [[migracija/woodmart-sabloni]]
    - Blokirač za go-live
 
@@ -293,9 +325,7 @@
    - Nove namenske stranice grade se po F6 troslojnom modelu (rešenje hub + auto grid)
    - Vreme: ~40 min–1h po stranici
 
-3. **WooCommerce testiranje — Checkout**
-   - Testirati da li je checkout funkcionalan (posle F2 permalink izmene!)
-   - Testirati slike na product page
+3. ✅ **WooCommerce testiranje — Checkout: N/A, ZATVORENO 2026-07-21 (W3 3.8).** Katalog režim (M9) je uklonio cart/checkout/my-account u potpunosti; pravi tok „Zatražite ponudu" → `/kontakt/?form-naslov=` → `/hvala-za-poruku/` testiran end-to-end. Slike na product stranicama pokrivene kroz polish Fazu 1 i alt-tekst zadatak (2026-08-12).
 
 4. ✅ **SEO quick-win: title/meta prepis 4 stranice — ZATVORENO 2026-07-08** (W2 2.3) — pop-tenis, podloga-za-odbojkaske-terene, spoljnje-podne-obloge, conquest 2542. Očekivano: +500–700 klikova/90d, prati se u narednim GSC izveštajima.
 
