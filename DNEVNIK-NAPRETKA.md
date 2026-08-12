@@ -1,3 +1,67 @@
+## 2026-08-12 [cpanel-live] — pre-flight infrastruktura (UŽIVO, read-only) — disk prostor rizik nađen, JetBackup nedostupan iz shell-a ✅
+
+> Osma sesija istog dana, `[cpanel-live]` (`wp1.oblak.host`, `~/public_html` = live).
+> **Read-only pre-flight provera pred migraciju 24.08 — ništa nije menjano:** nijedan
+> fajl/`.htaccess`/tema/plugin/baza nije dirana, keš nije čišćen, `wp search-replace`
+> nije pokretan, Redis nije diran, 301 blok nije pisan. Sedam merenja, svako sa
+> 🟢/🟡/🔴/⚪ ocenom.
+>
+> **🔴 Prostor — glavni nalaz.** cPanel kvota (`uapi Quota get_quota_info`): limit
+> **12.240 MB**, iskorišćeno **9.752,35 MB (79,7%)**, slobodno **2.487,65 MB (~2,43 GB)**.
+> Inode limit **0 = neograničeno** (183.943 iskorišćeno) — nije usko grlo. Migracija
+> treba istovremeno ~1,3 GB novi wp-content paket + ~1,3 GB svež backup (DB+wp-content)
+> ≈ **2,6 GB — ne staje** u trenutnih 2,43 GB slobodno. `du -sh` po top-level folderima
+> otkrio uzrok: **`~/staging/` 3,4 GB** (leftover od probne migracije 06–07.08, najviše
+> `wp-content` 3,3 GB) i **`~/antasline-vault/antasline-backups/` 539 MB** (SQL dump-ovi
+> lokalnog build-a sinhronizovani u vault). Brisanje `staging/` samo rešava prostor sa
+> velikom rezervom — **nije obrisano ove sesije**, samo izmereno i predloženo.
+>
+> **🟢 Put prenosa paketa** (Miroslav nema SSH, FTP push već pukao na 3,18 GB —
+> rizik #5 u pre-flight checklisti): `curl`/`wget`/`rsync`/`tar`/`unzip`/`zip`/`split`/
+> `md5sum`/`sha256sum` svi prisutni; odlazni HTTPS radi (`curl -sI https://github.com`
+> → `HTTP/2 200`). **Preporuka: pull sa servera (server inicira `curl`/`wget`/`rsync`/
+> `scp` ka izvoru) kao primarni put 24.08, File Manager kao rezerva.**
+>
+> **⚪ JetBackup — Nema podataka.** `uapi Backup list_backups` → nalog nema feature
+> "backup"; `JetBackup5::wrapper` traži nedokumentovan format funkcije (3 varijante
+> pokušane, sve puknu na "Invalid or missing function"); `~/.jbm/downloads` prazan;
+> nema drugih lokalnih log/artifact fajlova. Poslednji snapshot/retencija/off-site
+> status zahteva WHM/cPanel UI pristup koji ne postoji sa ovog naloga — nije nagađano.
+>
+> **🟢 Speculative Loading:** WP core **7.0.4**; 11 aktivnih plugina (antasline-consent,
+> wp-call-to-order, classic-editor, google-tag-manager, **litespeed-cache 7.8.1**, worker,
+> redirection, svg-support, woo-variation-swatches, woocommerce, wordpress-seo) — nijedan
+> sa "specul"/"prefetch"/"instant" u imenu, potvrđuje spoljni nalaz (prefetch/conservative).
+>
+> **🟡 LiteSpeed CCSS/UCSS:** oba uključena i aktivna (`litespeed.conf.optm-ccss_gen=1`,
+> `optm-ucss=1`), poslednji cloud request identičan za oba — **2026-08-11 15:57 UTC**
+> (`litespeed.css._summary`/`litespeed.ucss._summary`, epoch 1786463853/1786463852) —
+> potvrđuje 08-11 nalaz da je UCSS "oživeo". LQIP i dalje zamrznut od **25.07** (poznato,
+> M odluka da se ne dira, nije gate stavka). 🆕 **Instant Click uključen**
+> (`litespeed.conf.util-instant_click=1`) — LiteSpeed hover-prefetch (dohvata HTML u
+> pozadini na hover, ne izvršava JS/GTM dok se stvarno ne klikne) — niži rizik od prave
+> Speculation Rules prerenderacije, ali vredi znati da radi. Fizički CCSS/UCSS fajlovi
+> nisu na disku (`wp-content/cache/litespeed/` ne postoji) — server-level LSCache, izvan
+> PHP-korisnika, potvrđeno isključivo preko DB opcija, ne fajlsistema.
+>
+> **🟢 Higijena docroot-a:** `find ~/public_html -maxdepth 3` za `*.bak*`/`*.orig`/
+> `*.old`/`mail-log.txt`/`al-harness.html` → **0 pogodaka**.
+>
+> **🟢 Verzije/limiti:** PHP **8.2.31** (CLI; web vhost `ea-php82`, `php_fpm:0` → deli isti
+> config; `staging.antasline.com` je na `ea-php74`, nevažno za produkciju) · WP-CLI
+> **2.12.0** · DB `antasline_novabaza` **33 MB** · `memory_limit` **1024M** ·
+> `max_execution_time` **0** (CLI vrednost, web SAPI nije odvojeno potvrđen) ·
+> `upload_max_filesize`/`post_max_size` **512M**.
+>
+> **Najveći rizik za 24.08: disk prostor** — 2,43 GB slobodno naspram ~2,6 GB potrebnog
+> za istovremen backup+novi paket, sa lako uklonjivim uzrokom (`~/staging/`, 3,4 GB).
+> #ceka-miroslav: odluka da li se `~/staging/` briše pre 24.08 (predlog: da, izgleda
+> kao leftover probne migracije, vizuelno već potvrđeno 06.08) i da li JetBackup
+> snapshot status treba proveriti kroz cPanel UI (WHM Backup Wizard/JetBackup stranica)
+> pošto shell/API ne daju odgovor.
+
+---
+
 ## 2026-08-12 [claude-code] W3 — `live-export.sh` gubio galerijske slike + prefiks baze ispravljen ✅
 
 > Sedma sesija istog dana. Zatvara **dva 🔴 blokera od jutros** (oba iz `agy` pre-flight
