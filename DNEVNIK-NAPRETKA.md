@@ -1,3 +1,45 @@
+## 2026-08-12 [claude-code] W3/BLOK C — `product_brand` arhive napunjene (Ecotile 7, Ergomat 27), 301 cilj više nije prazna stranica ✅
+
+> Poslednji sadržajni prozor pre freeze-a 16.08. M odabrao opciju **(a)** iz
+> blokera od 11.08 (dodeliti brend termine), ne prepravku 301 cilja.
+>
+> **Nalaz potvrđen merenjem:** taksonomija `product_brand` je uredno registrovana
+> (`public`, `rewrite=brend`, samo `product`), ali **nijedan od 94 objavljena
+> proizvoda** nije nosio termin — brojači „Ergomat 25 / Ecotile 3" dolazili su
+> od **7 priloga iz Porto ere** (`Hollywood-Monster-*`). Obe arhive su renderovale
+> praznu Woo petlju, a `.htaccess` 301 draft (linije 25–26) vodi live
+> `/бренд/ecotile/` i `/бренд/ergomat/` baš tamo.
+>
+> **Urađeno:** Ecotile → **7 proizvoda** (16538/16540/16542 + 4 T-Joint/X-Joint
+> rampe), Ergomat → **27** (16476–16528). Kriterijum je brend u naslovu ili u
+> `post_content`; `16530` (Mosolut) i `16922` (PermaStripe/Heskins) namerno
+> izostavljeni — Ecotile pominju samo u poredbenom tekstu. 7 priloga skinuto sa
+> termina, brojači prebrojani (`wp_update_term_count_now`).
+>
+> Pošto su arhive time postale **indeksabilne** (`noindex_empty_taxonomies` ih
+> više ne hvata) i cilj su 301 pravila, nisu ostavljene na generičkom Rank Math
+> šablonu „%term% Arhive": upisan `rank_math_title`/`rank_math_description` po
+> terminu (CTA `069 234 00 72`) + uvodni pasus u `term_description` koji nabraja
+> stvarnu liniju proizvoda (GEO pravilo, ništa izmišljeno).
+> `tax_product_brand_sitemap` `off`→**`on`** — sitemap index **6→7 child-ova**
+> (isto koliko live emituje), **236→238 URL-ova**.
+>
+> **Verifikovano:** obe arhive 200 / 1×H1 / `index, follow` / 7 odn. 12 kartica /
+> 2 validna JSON-LD bloka (`CollectionPage`+`BreadcrumbList`, bez dupliranja);
+> `/brend/ergomat/page/2/` 200; regression na 2 proizvoda + kategoriji + `/katalog/`
+> čist (1× `Product`). Backup: `antasline_local_2026-08-12_pre-product-brand.sql`.
+>
+> 🟢 **`.htaccess` draft se NE regeneriše** — ciljevi nepromenjeni, samo više nisu
+> prazni; ograda u [[migracija/2026-08-10-pre-migration-checklist]] §B3 postala
+> zastarela i uklonjena.
+>
+> 🆕 **Gotcha:** brisanje `rank_math_sitemap_cache_files` + pražnjenje tabele
+> `rank_math_sitemap_cache` **nije dovoljno** — child sitemap se servira, ali
+> `sitemap_index.xml` i dalje nabraja stari spisak dok se ne pozove
+> `\RankMath\Sitemap\Cache::invalidate_storage()`. Važi i za korak B7 checkliste.
+>
+> Detalji: [[dnevnik/2026-08-12-product-brand-arhive]]
+
 ## 2026-08-11 [claude-code] W5 5.4 — korekcioni faktori upisani u skillove + mesečni snapshot za jul ✅🔴
 
 > Dvanaesta stavka istog dana. Dva dela, oba read-only prema sajtu/bazi.

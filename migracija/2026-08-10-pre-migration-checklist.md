@@ -130,14 +130,13 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
       (`/sportski-podovi/`, `/izgrdanja-sportskig-terena/`,
       `/podovi-za-baste-splavove-bazene/`, `/home/industrijski-podovi/ecotile-5007/`,
       `/бренд/ecotile/`) — svako mora dati 301 na tačan `Location`.
-      ⚠️ **2026-08-11: `/бренд/ecotile/` će proći ovaj spot-check a svejedno
-      završiti na PRAZNOJ stranici** — `/brend/ecotile/` je 200 ali nema nijedan
-      proizvod (nijedan proizvod na buildu nema `product_brand` termin; brojači
-      25/3 su zaostali iz Porto ere). Isto i `/brend/ergomat/`. Saobraćaj:
-      30 prikaza / 0 klikova za 3 mes. → ne blokira, ali **cilj je pogrešan**;
-      odluka čeka M (v. [[PROGRESS]] Blokeri). Pouka za generator:
-      `htaccess-301-generate.php` proverava samo da cilj vraća 200 — prazna
-      WooCommerce arhiva to zadovoljava.
+      🟢 **2026-08-12: `/бренд/*` ciljevi REŠENI (M odluka, opcija a)** — Ecotile
+      arhiva ima 7, Ergomat 27 proizvoda, obe 200 / 1×H1 / `index, follow` sa
+      pravim title/meta. Ranije upozorenje („spot-check prolazi a stranica je
+      prazna") više ne važi. Draft se **ne regeneriše** — ciljevi su nepromenjeni.
+      🔴 Pouka za generator ostaje: `htaccess-301-generate.php` proverava samo da
+      cilj vraća 200 — prazna WooCommerce arhiva to zadovoljava, pa 200 nije dokaz
+      da je cilj koristan. v. [[dnevnik/2026-08-12-product-brand-arhive]]
 - [ ] `wp litespeed-purge all` + regenerisati Critical CSS/UCSS
 
 ### B4. SMTP / forme — 🔴 prvo posle prebacivanja
@@ -167,11 +166,15 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 
 ### B7. Post-live (25.08+)
 - [ ] GSC sitemap resubmit — URL **`https://www.antasline.com/sitemap_index.xml`**
-      (nepromenjen, v. §A). Pre resubmit-a proveriti da index vraća **6**
-      child-ova (`post`/`page`/`product`/`category`/`product_cat`/`product_tag`)
-      i ~236 URL-ova ukupno. 🔴 Ako ih je samo 3 → Rank Math keš sitemap-a nije
-      obrisan pri prebacivanju: obrisati opciju `rank_math_sitemap_cache_files`
-      + fajlove `wp-content/uploads/rank-math/rank_math_*.xml`.
+      (nepromenjen, v. §A). Pre resubmit-a proveriti da index vraća **7**
+      child-ova (`post`/`page`/`product`/`category`/`product_brand`/`product_cat`/
+      `product_tag`) i ~**238** URL-ova ukupno (ažurirano 2026-08-12 — brend
+      sitemap uključen kad su arhive napunjene). 🔴 Ako ih je manje → Rank Math
+      keš sitemap-a nije obrisan pri prebacivanju: obrisati opciju
+      `rank_math_sitemap_cache_files` + fajlove
+      `wp-content/uploads/rank-math/rank_math_*.xml`, **pa obavezno pozvati
+      `\RankMath\Sitemap\Cache::invalidate_storage()`** — bez toga se child fajl
+      servira ali ga index ne nabraja (izmereno 2026-08-12).
 - [ ] Prored `product_tag` arhiva (18 kom., od toga 10 `namena-*`) — zaseban
       SEO zadatak, namerno odložen posle live-a; na migraciju je išao **parity**,
       ne promena indeksne politike. v. [[dnevnik/2026-08-11-gsc-priprema-sitemap]]

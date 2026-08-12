@@ -84,6 +84,7 @@ azurirano: 2026-08-11
 - Posle direktnog `UPDATE` nad `rank-math-options-sitemap`, `sitemap_index.xml` je i dalje vraćao stara 3 child-a. Invalidacija se okida tek na snimanje kroz admin UI.
 - Keš je na **dva** mesta i moraju oba: opcija `rank_math_sitemap_cache_files` (mapa hash→tip) + fajlovi `wp-content/uploads/rank-math/rank_math_*.xml`.
 - Isto važi za dan migracije: ako posle prebacivanja sitemap index pokaže manje child-ova nego što treba, prvo osumnjičiti keš, ne podešavanja.
+- 🆕 **Dopuna 2026-08-12: ni ta dva mesta nisu dovoljna.** Posle uključivanja `tax_product_brand_sitemap` + brisanja opcije **i** pražnjenja tabele `rank_math_sitemap_cache`, `product_brand-sitemap.xml` se **servirao ispravno** (2 URL-a) ali ga `sitemap_index.xml` i dalje **nije nabrajao** — index se generiše iz zasebnog keša. Rešava tek poziv **`\RankMath\Sitemap\Cache::invalidate_storage()`** (pa `flush_rewrite_rules`). Simptom je podmukao jer child fajl radi, pa deluje da je sve u redu dok se ne otvori sam index.
 
 ## `wp_term_taxonomy.count` nije dokaz da termin ima sadržaj (2026-08-11)
 - `product_brand` je pokazivao `Ergomat 25` / `Ecotile 3`, pa su termini delovali popunjeno. Stvarne veze u `term_relationships`: **0 proizvoda**, samo 7 **priloga** (`attachment`).
@@ -94,6 +95,7 @@ azurirano: 2026-08-11
 - `htaccess-301-generate.php` odbija upis ako cilj nije 200. `/бренд/ecotile/` → `/brend/ecotile/` je prošlo: cilj **jeste** 200, ali je prazna WooCommerce arhiva („nema proizvoda", 0 linkova ka proizvodima).
 - Gore: `/бренд/ecotile/` je jedno od 5 pravila u B3 spot-check listi za dan migracije — spot-check bi prijavio uspeh („301 na tačan `Location`") uz beskorisno odredište.
 - **Pravilo:** za redirect ciljeve koji su **arhive** (kategorija/tag/brend), pored statusa proveriti i da listing nije prazan. Statusni kod ne razlikuje „stranica radi" od „stranica je prazna".
+- ✅ **Konkretan slučaj rešen 2026-08-12** (obe arhive napunjene, 7+27 proizvoda) — ali pravilo i ograničenje generatora ostaju: `htaccess-301-generate.php` i dalje proverava samo status.
 
 ## Sweep kroz sitemap ne može naći ono čega u sitemap-u nema (2026-08-11)
 - Ni regression sweep (10.08) ni dijakritika sweep (11.08) nisu prijavili da 27 URL-ova nedostaje — oba uzimaju listu URL-ova **iz** sitemap-a.
