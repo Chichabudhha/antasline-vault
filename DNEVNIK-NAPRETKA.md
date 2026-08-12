@@ -5265,3 +5265,33 @@ Miroslav objavio `/sportske-podloge/sportski-podovi-za-teniske-terene/` i `/gume
 **Privatnost:** nijedno ime klijenta, email adresa ili sadržaj poruke nije upisano u ovaj unos ili bilo koji vault fajl — samo agregatni brojevi (v. `[[migracija/2026-07-30-cpanel-sesija-plan-mejlovi]]` §Privatnost).
 
 Detalji radnog naloga: `[[migracija/2026-07-30-cpanel-sesija-plan-mejlovi]]`
+
+## 2026-08-13 [claude-code] — FAZA 1: Visual, Assets & Media Cleanup (lokalni build)
+
+Backup pre rada: `antasline-backups/antasline_local_2026-08-12_pre-faza1-visual.sql`; drugi pre brisanja varijacija: `..._pre-bergo-varijacije.sql`.
+
+**Slike i hero:**
+- Stoni tenis (16583): hero zamenjen novom slikom iz `Slike/` (`dreamstime_l_12820288`) → `podovi-za-stoni-tenis-sala.webp` 1920×1080, 62 KB. Stari hero je bio 800×480 close-up sa vidljivim konkurentskim brendom (Sponeta). Postavljen i featured image.
+- Kategorija Košarkaške konstrukcije (term 251): `kosarkaska-konstrukcija-sa-tablom-i-obrucem.webp` 1200×800, 35 KB (izvor `dreamstime_l_33377627` — prikazuje konstrukciju, ne igru). Prva kategorija uopšte sa slikom.
+- R-Tile Urban (16920): loša AI feature slika (mutna, crni artefakti) zamenjena zvaničnim studijskim snimkom proizvođača **R-Tek Manufacturing** (`r-tekmanufacturingltd.com`), 1000×1000.
+- Bergo Solid (16843): nedostajala slika same ploče — dodat zvanični render šestougaone HDPE ploče sa bergoflooring.com; raniji „featured" (montirana staza) prebačen u galeriju.
+
+**Bergo blok:**
+- 🔴 **7 feature slika bilo AI-generisano i netačno** (npr. XL rotiran u romb). Zamenjene zvaničnim renderima proizvođača: Unique, Ultimate, Ultimate PLUS, Ultimate FLOW, XL, Elite, Nova. AI fajlovi ostaju u medijateci (rollback).
+- **Boje:** 68 varijacija boje, samo 2 imale sopstvenu fotografiju → dropdown je za sve ostale prikazivao istu ploču. Odluka M: varijabilni proizvodi pretvoreni u **proste**, `pa_boja` ostaje kao vidljiv (ne-varijacioni) atribut + rečenica u opisu („Dostupno u N boja: … pošaljite upit"). Cena/SKU preneti sa varijacija (bili identični).
+- **Brend:** kreiran termin `product_brand` = **Bergo**, dodeljen svih 11 Bergo proizvoda (ranije nijedan nije imao brend; postojali samo Ecotile i Ergomat).
+
+**Stranice:**
+- Industrijski podovi (16567): dodata **Quectel Beograd** referentna kartica sa pravom fotografijom iz arhive (HTEC je već imao ispravnu). Reference sada 6 kartica.
+- Spoljne podne obloge (16590): **Bergo Easy uklonjen** (diskontinuiran; link je i bio mrtav — ta stranica ne postoji nigde u bazi), „četiri modela" → „tri modela", lista modela pretvorena u vizuelne kartice sa renderima ploča.
+- Parkiralište i staze (16589): Runfloor / Geocross / Geogravel / Geoflor dobili sliku pravog proizvoda + link ka proizvodu (ranije samo tekst).
+- LVT komercijalni (16667): sekcija „Primena" iz gole liste u 4 kartice sa **pravim fotografijama iz objekata** (vinarija, kancelarija, maloprodaja, recepcija) iz `lvt podovi/` arhive.
+- LVT ugostiteljstvo (16686): statički swatch-evi dezena zamenjeni karticama stvarnih proizvoda (Expona Commercial / Clic 19dB / Simplay 19dB / Flow) + link na katalog.
+- Kancelarije (16669): 3 nepovezana swatch-a → 4 kartice proizvoda sa linkovima + link na kategoriju LVT.
+- Isotrack (16111): **nije postojao nijedan Isotrack proizvod**. Kreirani `isotrack-l` (#17836) i `isotrack-x` (#17837) isključivo iz specifikacija sa same stranice (dimenzije, težina, nosivost, montaža), slike već bile u medijateci; stranica sada ima sekciju „Isotrack modeli u ponudi".
+
+**Verifikacija:** svih 11 dirnutih stranica + 10 Bergo proizvoda vraćaju HTTP 200, tačno 1×H1, nula WooCommerce placeholder slika, nula preostalih variation dropdown-ova.
+
+**Tehnički gotcha (novo, vredi zapamtiti):** `get_post_field('post_content', $id)` podrazumevano radi u `display` kontekstu i provlači sadržaj kroz `the_content` filtere — wptexturize iskrivi apostrofe unutar WPBakery `css=""` atributa, pa `str_replace` tiho promaši. Za programske izmene sadržaja čitati **raw** (`$wpdb`) i pisati direktno preko `$wpdb->update` + `clean_post_cache()`, jer `wp_update_post()` bez ulogovanog korisnika pušta kses koji čisti inline stilove iz builder markup-a.
+
+#ceka-miroslav: hero stranice 16686 (ugostiteljstvo) je i dalje flat swatch dezena (`French-Vanilla-Oak-4058.jpg`) — predlog: zameniti pravom fotografijom vinarije (att. 17832), ali nije dirano jer nije bilo u zadatku.
