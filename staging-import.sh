@@ -5,7 +5,7 @@
 #
 # 1) Backup (ponovo, za svaki slucaj)
 # 2) Brise zaostale staging proizvode/varijacije/attachmente
-# 3) Prefiks rewrite wp_ -> wpGs_ u dumpu
+# 3) Prefiks rewrite wp_ -> wpgs_ u dumpu (MALIM slovima — v. CLAUDE.md §2)
 # 4) Import
 # 5) Flat /proizvod/ permalink + regen lookup + flush
 #
@@ -14,9 +14,18 @@
 set -euo pipefail
 
 SRC="woo-export.sql"
-REWRITTEN="woo-export-wpGs.sql"
+REWRITTEN="woo-export-wpgs.sql"
 LIVE_PFX="wp_"
-STG_PFX="wpGs_"
+# 🔴 MALIM slovima. Tabele u bazi i u svakom dump-u stvarno se zovu `wpgs_*`
+# (provereno `SHOW TABLES` 2026-08-12). Na Windows-u je `wpGs_` prolazilo samo
+# zato sto je MariaDB tamo `lower_case_table_names=1`; na Linux serveru isti
+# zapis pravi POGRESNE tabele bez ijedne poruke o gresci.
+STG_PFX="wpgs_"
+
+# Isti omotac kao u live-export.sh — v. tamosnji komentar (CRLF, prazan red,
+# i pravilo da SQL mora biti u JEDNOJ liniji jer visellinijski upit vraca
+# prazan rezultat sa exit kodom 0).
+q() { wp db query "$1" --skip-column-names | sed 's/\r$//; /^[[:space:]]*$/d'; }
 
 if [ ! -f "$SRC" ]; then
   echo "!! Nema $SRC u ovom folderu. Prekidam."
@@ -28,12 +37,7 @@ wp db export "backup-pre-woo-import-$(date +%Y%m%d-%H%M).sql"
 
 echo "==> [2/6] Brisem zaostale staging proizvode i njihove attachmente..."
 # attachmenti vezani za proizvode
-STALE_ATTACH=$(wp db query "
-  SELECT DISTINCT p.ID FROM ${STG_PFX}posts p
-  WHERE p.post_type='attachment'
-    AND p.post_parent IN (
-      SELECT ID FROM (SELECT ID FROM ${STG_PFX}posts WHERE post_type IN ('product','product_variation')) t
-    );" --skip-column-names | paste -sd, - || true)
+STALE_ATTACH=$(q "SELECT DISTINCT p.ID FROM ${STG_PFX}posts p WHERE p.post_type='attachment' AND p.post_parent IN (SELECT ID FROM (SELECT ID FROM ${STG_PFX}posts WHERE post_type IN ('product','product_variation')) t);" | paste -sd, - || true)
 
 # obrisi proizvode/varijacije (postmeta i term_relationships ciscenje posle)
 wp db query "DELETE FROM ${STG_PFX}posts WHERE post_type IN ('product','product_variation');"

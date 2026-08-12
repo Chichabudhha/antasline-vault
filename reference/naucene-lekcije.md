@@ -5,6 +5,30 @@ azurirano: 2026-08-12
 
 # Naučene lekcije (tehnički gotchas)
 
+## Skripta koja se pokreće samo na dan migracije mora imati način da se testira ranije (2026-08-12)
+- `live-export.sh` je do 12.08 gubio **145 od 170** galerijskih slika (čitao `post_parent` + `_thumbnail_id`, nikad `_product_image_gallery`). Bag je preživeo mesecima jer se skripta pokreće **jednom, na dan migracije** — dakle prvi put bi se izvršila baš kad je cena greške najveća.
+- Fix koji vredi više od samog baga: `PFX`/`OUT` se sada mogu pregaziti iz okruženja (`PFX=wpgs_ OUT=/tmp/t.sql bash live-export.sh`), pa se skripta vrti nad lokalnim buildom. **Tek to pokretanje je otkrilo tri dodatna baga** (ispod) koje čitanje koda nije videlo.
+- Uz to: tvrda provera pred dump (`exit 1` ako ijedan galerijski ID nije ušao u export) — bolje da pukne glasno nego da se otkrije posle migracije.
+
+## `wp db query` sa višelinijskim SQL-om vraća PRAZNO sa exit kodom 0 (2026-08-12)
+- Najgora vrsta promašaja: nema poruke, `set -euo pipefail` ne reaguje, liste ID-eva samo ispadnu prazne i export nastavi da radi „uspešno". Isti upit u **jednoj liniji** radi.
+- Pravilo: svaki SQL koji ide kroz `wp db query` piše se u jednoj liniji, bez obzira koliko je ružan.
+- Srodno: `VAR=$(wp db query ... | paste ...)` maskira izlazni kod — status je od poslednje komande u pipe-u, pa `set -e` ne pomaže ni kad `wp` stvarno pukne.
+
+## WP-CLI 2.12 mangla `--no-create-info` u `create-info=` (2026-08-12)
+- `wp db export - --no-create-info` → `mysqldump: unknown variable 'create-info='` i export pukne na pisanju dump-a. WP-CLI tretira `--no-<flag>` kao negaciju pa prosledi prazan `create-info=`.
+- Radi kao **`--no-create-info=true`** (provereno: 0 `CREATE TABLE`, `INSERT` prisutan).
+
+## Prefiks baze je `wpgs_`, malim slovima — `wpGs_` prolazi samo na Windows-u (2026-08-12)
+- `SHOW TABLES` → `wpgs_posts`; `@@lower_case_table_names` = **1** na XAMPP/Windows, pa case ne igra ulogu lokalno. Na Linux hostingu igra — to je tačan uzrok „site not installed" greške pri probi migracije 21.07.
+- Lokalni `wp-config.php` i dalje nosi `wpGs_` i radi; `wp-config` **za server** mora `wpgs_`.
+- 🔴 Opasan oblik nije u dokumentaciji nego u kodu: `staging-import.sh` je imao `STG_PFX="wpGs_"` — promenljivu kojom `sed` prepisuje imena tabela u dump-u pre importa. Pogrešan case tu ne prijavi grešku, samo napravi pogrešne tabele.
+
+## Windows CRLF u izlazu CLI alata pravi prazne liste i završne zareze (2026-08-12)
+- `wp db query --skip-column-names` na Windows-u vraća `
+` i završni prazan red. Posledice: `grep -E '^[0-9]+$'` ne pogodi **ništa** (sve liste ID-eva prazne), a `paste -sd, -` pretvori prazan red u završni zarez pa `IN (1,2,)` pukne sa „syntax error near ')'".
+- Omotač koji rešava oboje: `q() { wp db query "$1" --skip-column-names | sed 's/$//; /^[[:space:]]*$/d'; }`. Bezopasno na Linux-u.
+
 ## Ušteda tokena dolazi od AGREGACIJE, ne od lokalnog modela — pravila su pobedila qwen3 za 1300× (2026-08-12)
 - Cilj je bio da lokalni Ollama model razvrstava GSC/Ads/GA4 podatke umesto mene. Izmereno na pravom izvozu (400 upita, 37 KB): **regex pravila razvrstala 93,6% prikaza za 0,2 s**, `qwen3:4b` dodao +2% za **475 s** uz ~50% grešaka na spornim upitima (`table za kos` → vinil, `tartan kocke` → veštačka trava).
 - 🔴 Stvarna ušteda je bila u **sažimanju**: 37 KB sirovog JSON-a (~12k tokena) → 3,5 KB izveštaja (~700 tokena). To radi obična Python agregacija, bez ijednog poziva modela.

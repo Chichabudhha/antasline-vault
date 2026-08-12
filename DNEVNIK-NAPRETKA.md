@@ -1,3 +1,76 @@
+## 2026-08-12 [claude-code] W3 — `live-export.sh` gubio galerijske slike + prefiks baze ispravljen ✅
+
+> Sedma sesija istog dana. Zatvara **dva 🔴 blokera od jutros** (oba iz `agy` pre-flight
+> nalaza). Bez izmena na buildu i bazi — izmenjene su samo migracione skripte i
+> dokumentacija; jedini upis u bazu je nula, test export je pisao u scratchpad.
+
+### Quick-win — prefiks baze je `wpgs_`, ne `wpGs_` (provereno protiv baze)
+
+`SHOW TABLES` na lokalu vraća **`wpgs_posts`**; isto stoji u live/staging dump-ovima.
+Lokalni `wp-config.php` ipak nosi `$table_prefix = 'wpGs_'` **i radi** — samo zato što
+je MariaDB na Windows-u `lower_case_table_names=1` (provereno, vrednost `1`). Na Linux
+hostingu razlikuje velika i mala slova — to je tačan uzrok „site not installed" greške
+pri probi migracije 2026-07-21.
+
+Ispravljeno: `CLAUDE.md` §2 (+ nova 🔴 ograda ispod tabele) i §7.5 · `/antasline-sesija`
+§3 · `/obogati-proizvod` (2 mesta). Usput ispravljen i broj tabela u §2: **106 → 78**
+(zaostalo od pre čišćenja 33 osirotele plugin-tabele).
+
+🔴 **Isti bag nađen i u kodu, ne samo u dokumentaciji:** `staging-import.sh:19` je imao
+`STG_PFX="wpGs_"`, a to je promenljiva kojom `sed` prepisuje imena tabela u dump-u —
+dakle upravo ono „tiho uveze u pogrešne tabele" iz blokera, samo maskirano činjenicom
+da se do sada pokretalo na Windows-u. Ispravljeno na `wpgs_`.
+
+### W3 — `live-export.sh` (glavni zadatak)
+
+**Izmereno pre popravke** (na lokalnoj bazi, ista struktura kao live):
+
+| | |
+|---|---|
+| proizvodi + varijacije | 245 |
+| attachmenti koje skripta hvata (`post_parent` + `_thumbnail_id`) | **196** |
+| galerijskih slika ukupno | **170** |
+| **od toga bi tiho nestalo iz exporta** | **145** |
+| slike kategorija (`termmeta.thumbnail_id`) | 0 na lokalu (kod ipak dodat, live ih može imati) |
+
+Bloker je opisivao rizik; brojka je **145 od 170**, dakle 85% galerijskih slika.
+Uzrok tačno kako je prijavljeno: linije 24–36 skupljaju attachmente preko `post_parent`
+i `_thumbnail_id`, komentar tvrdi „thumbnail + galerija", a `_product_image_gallery`
+se nigde ne čita — galerijske slike bez `post_parent` veze ispadaju bez ijedne greške.
+
+**Popravljeno:**
+- (3) `GAL_IDS` — `_product_image_gallery` je zarezom razdvojena lista, splituje se u shell-u
+- (4) `CAT_THUMB_IDS` — slike `product_cat` kategorija (isti razred baga, `termmeta.thumbnail_id` nema `post_parent`)
+- **tvrda provera pred dump**: svaki galerijski ID mora biti u `ALL_ATTACH`, inače `exit 1`
+- `PFX`/`OUT` se mogu pregaziti iz okruženja → skripta se **može testirati na lokalu**, što do sada nije bilo moguće
+
+**Test uživo** (lokalni build, `PFX=wpgs_`, izlaz u scratchpad — baza nije dirana):
+245 proizvoda · **341 attachment** (196 → 341, tačno +145) · 170 galerijskih.
+Spot-check tri slike koje su ranije ispadale (2515 `bergo-unique-ploca-2`,
+2681 `privatni-teren-cacak-multisport-bergo-2`, 2798 `bergo-kanjiza2`) — sve tri
+sada u dump-u. `bash -n` čist na obe skripte.
+
+### 🔴 Tri gotcha-a koje je otkrilo tek stvarno pokretanje (skripta do danas nikad nije testirana)
+
+1. **Višelinijski SQL kroz `wp db query` vraća prazan rezultat sa exit kodom 0.**
+   Najgora vrsta promašaja — nema greške, `set -e` ne reaguje, liste ID-eva samo
+   ispadnu prazne. Isti upit u jednoj liniji radi. **Svi upiti spljošteni u jednu liniju.**
+2. **`--no-create-info` WP-CLI 2.12 pretvara u `create-info=`** → `mysqldump: unknown
+   variable 'create-info='`, export puca na samom pisanju dump-a. Radi kao
+   **`--no-create-info=true`** (provereno: 0 `CREATE TABLE`, `INSERT` prisutan).
+3. **Windows CRLF + prazan završni red.** `wp db query` na Windows-u vraća `\r\n` i
+   završni prazan red; `grep '^[0-9]+$'` tada ne pogodi ništa (sve liste prazne), a
+   `paste -sd, -` napravi završni zarez pa `IN (1,2,)` pukne. Rešeno omotačem
+   `q()` (`sed 's/\r$//; /^[[:space:]]*$/d'`) u obe skripte.
+
+Sve tri su bezopasne na Linux-u, ali su do danas činile da se skripta **ne može
+proveriti** pre dana migracije — a upravo je to jedini dan kad se pokreće.
+
+**Nije dirano:** baza, build, live. `migracija/alati/job-plugin-cleanup-cron.php` i dalje
+piše `wpGs_options` — jednokratna već izvršena skripta, ostavljena kako jeste.
+
+---
+
 ## 2026-08-12 [claude-code] ALATI — Antigravity (`agy`) kao delegat + pre-flight checklist za 24.08 ✅
 
 > Šesta sesija istog dana. Krenulo kao pitanje „može li Gemini/GPT za SEO/GA4/Ads
