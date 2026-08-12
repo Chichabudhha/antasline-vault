@@ -5,6 +5,14 @@ azurirano: 2026-08-12
 
 # Naučene lekcije (tehnički gotchas)
 
+## Alt tekst se broji po KANALU RENDEROVANJA, ne po medijateci — razlika je 66 vs 6.638 (2026-08-12)
+- Medijateka ima **7.725 slika, 6.638 bez alta**. Zvuči kao nedeljni posao. Stvarnih slika koje se **renderuju** a nemaju alt bilo je **66**.
+- Razlog: WordPress registruje svaku generisanu veličinu kao zaseban prilog (Porto-era artefakt), plus godinama nagomilani neupotrebljeni uploadi. Nijedno od toga korisnik nikad ne vidi.
+- **Metod: broji se po kanalu kroz koji slika stiže na stranicu** — `_thumbnail_id` proizvoda · `_product_image_gallery` · `<img>` u `post_content`. Sve ostalo u medijateci je šum.
+- 🟢 **Prazan alt je često TAČAN odgovor, ne bag.** Od 225 nalaza, **159 su bile dekorativne SVG ikonice** (`montaza.svg`, `odrzavanje.svg`, `izdrzljivost.svg`…) uz tekst koji ih već imenuje — `alt=""` je za njih ispravno po WCAG. Popunjavanje bi bilo **regresija** pristupačnosti (v. lekciju od 2026-08-05). Uvek prvo grupisati nalaze **po imenu fajla**: ponavljanje istog `.svg` 25–28 puta je najbrži signal da je reč o ikonici, ne o fotografiji.
+- 🔴 **Jedan prilog = jedan alt, bez obzira na broj galerija u kojima stoji.** Dva priloga su bila u 2 odn. 3 galerije — njima alt **ne sme** biti naslov jednog proizvoda, mora biti neutralan opis onoga što se vidi. Skripta zato ima tvrdu proveru: deljeni prilog bez neutralnog opisa = prekid bez upisa, ne tiho pisanje pogrešnog teksta.
+- Brojke iz starijeg plana (07-30: „67/81 proizvoda") bile su **zastarele za 13 dana** — obogaćivanje proizvoda ih je usput popunilo. **Obim se meri neposredno pre izvršenja, nikad ne prepisuje iz plana.**
+
 ## „Sledeće" liste truli tiše od „Urađeno" — zatvaranje zadatka mora ažurirati OBA mesta (2026-08-12)
 - Predložen je (i prihvaćen) zadatak „W1 Polish Faza 4 — GEO-intro na 22 posta", koji je **bio zatvoren 5 dana ranije (2026-08-07, 22/22)**. Isto i master plan 1.2: stajao je na „12/33, sledeći kancelarije/padel" dok je red čekanja bio **33/33 od 2026-07-08** — zastareo mesec dana.
 - Uzrok obrasca: sesija se zatvara upisom u **Urađeno** tabelu i u fajl reda čekanja, a red u **„Sledeće"** i statusna ćelija u master planu ostanu kako su bili. Urađeno raste i vidi se; „Sledeće" niko ne čita dok ne zatreba — a tada je pogrešno.

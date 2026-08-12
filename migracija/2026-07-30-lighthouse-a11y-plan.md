@@ -173,8 +173,21 @@ veće dugme ne lomi layout; CLS re-check na Home.
 
 ## Van obima ove ture (M odluka)
 
-- Alt tekst za slike (67/81 proizvoda, 180/684 slika u sadržaju) — poseban budući zadatak
-  (mehanički skript za proizvode + ručna procena za sadržaj slike).
+- ✅ ~~Alt tekst za slike (67/81 proizvoda, 180/684 slika u sadržaju) — poseban budući zadatak
+  (mehanički skript za proizvode + ručna procena za sadržaj slike).~~ **ZATVORENO
+  2026-08-12.** Ispalo je i manje i drugačije nego što je ovaj red pretpostavljao:
+  - **Brojke su bile zastarele** — do 12.08 je obogaćivanje proizvoda popunilo najveći
+    deo; stvarno je nedostajalo **6** glavnih slika + **63** galerijskih (66 jedinstvenih
+    priloga), ne 67/81.
+  - **„180/684 slika u sadržaju" nije bio posao nego ispravno stanje** — od 159
+    preostalih praznih alt-ova u `post_content`, **svi** su dekorativne SVG ikonice
+    (`montaza.svg`, `odrzavanje.svg`, `izdrzljivost.svg`…) uz tekst koji ih već imenuje.
+    `alt=""` je tu ispravno po WCAG; popunjavanje bi bilo **regresija** pristupačnosti.
+  - **Ni „mehanički skript" nije bio dovoljan** — 10 slika je vizuelno pregledano pre
+    pisanja opisa, a 2 deljena priloga (u više galerija istovremeno) morala su dobiti
+    neutralan, ne-proizvodni opis.
+  - Skripta: `migracija/alati/job-alt-tekst-galerije.php` · detalji:
+    [[dnevnik/2026-08-12-alt-tekst-slike-proizvoda]]
 - CF7 form labeli (Kontakt #16593, Brzi upit #16737) — dobra praksa, ne garantovan
   Lighthouse gubitak boda — niska prednost.
 - Puna ARIA `role="grid"` semantika na court builder-u — nice-to-have.

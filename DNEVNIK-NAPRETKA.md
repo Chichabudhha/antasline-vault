@@ -1,3 +1,69 @@
+## 2026-08-12 [claude-code] W1 — Alt tekst na slikama proizvoda: 66 priloga popunjeno, 159 dekorativnih ikonica namerno ostavljeno prazno ✅
+
+> Red čekanja iz 07-30 a11y plana („alt tekst — poseban budući zadatak"), uzet pred
+> content freeze uz M odobrenje. Backup:
+> `antasline_local_2026-08-12_pre-alt-tekst-galerije.sql` · skripta:
+> `migracija/alati/job-alt-tekst-galerije.php`.
+>
+> **Obim izmeren, ne prepisan iz plana.** „67/81 proizvoda" iz 07-30 je zastarelo —
+> obogaćivanje proizvoda je u međuvremenu popunilo najveći deo. Audit gleda **kanale
+> renderovanja**, ne medijateku (medijateka: 7.725 slika, 6.638 bez alta — uglavnom
+> Porto-era veličine i neupotrebljeni prilozi):
+>
+> | Kanal | Bez alta | Odluka |
+> |---|---|---|
+> | `_thumbnail_id` proizvoda | 6 | ✅ popunjeno |
+> | `_product_image_gallery` | 63 (66 uniq. priloga) | ✅ popunjeno |
+> | `<img>` u sadržaju, sa `wp-image-ID` | 0 | — |
+> | `<img>` u sadržaju, bez ID-a | 159 | 🟢 **namerno prazno** |
+>
+> 🟢 **159 „nedostajućih" su dekorativne SVG ikonice** (`montaza.svg` 28×,
+> `odrzavanje.svg` 27×, `izdrzljivost.svg` 25×, `izgled.svg`, `protivklizna.svg`,
+> `fleksibilna.svg`, `sertifikat.svg`, `namena-*.svg`) uz tekst koji ih već imenuje →
+> `alt=""` je ISPRAVNO po WCAG (lekcija 2026-08-05). Popunjavanje bi bilo regresija
+> pristupačnosti. **Audit po kanalu svodi posao sa 6.638 na 66.**
+>
+> **Izvor teksta — tri nivoa, ništa izmišljeno:** **override, vizuelno pregledano (10)**
+> — slika otvorena pre pisanja opisa (konj na perforiranoj podlozi ispred štale ·
+> magacinski prolaz sa Ecotile pločama i pešačkim zonama · hala sa viljuškarom · ESD
+> radionica · vinarija · kancelarija · kantina · EXPONA Flow sa tri žute vaze + 2
+> deljena priloga) · **oznaka dezena iz imena fajla (4)** (Eden Ash, Rice Wine Oak
+> 9028, Treehouse Oak 9036, Commercial 12523 — imenuje se oznaka, ne opisuje izgled) ·
+> **naslov proizvoda (29)** + **„— fotografija N" (23)**.
+>
+> 🔴 **Deljeni prilozi:** jedan prilog = jedan alt bez obzira na broj galerija. `12503`
+> stoji u **3** galerije (16520/16522/16524), `16861` u **2** (16514/16516) — oba
+> dobila **neutralan, ne-proizvodni** opis. Skripta puca i ne upisuje ništa ako neki
+> deljeni prilog nije pokriven override mapom.
+>
+> **Verifikovano:** audit ponovljen → thumb **0**, galerija **0**, 159 ikonica
+> netaknuto. 6 proizvod stranica: 200 · 1×H1 · **0 slika iz `uploads` sa `alt=""`**.
+> Regresija (home, `/industrijski-podovi/`, `/katalog/`, kategorija) 200/1×H1;
+> JSON-LD čist (1× Product / 1× BreadcrumbList / 1× Organization).
+>
+> Detalji: [[dnevnik/2026-08-12-alt-tekst-slike-proizvoda]].
+
+---
+
+## 2026-08-12 [claude-code] W1 — red čekanja zatečen prazan, dva zastarela statusa ispravljena ⚠️
+
+> Predložen (i prihvaćen) zadatak „Polish Faza 4 — GEO-intro na 22 posta" **bio je
+> zatvoren 2026-08-07 (22/22)**. Master plan 1.2 stajao na „12/33, sledeći
+> kancelarije/padel" dok je red čekanja **33/33 od 2026-07-08** — zastarelo mesec dana.
+> Oba reda ispravljena; Faza 4 verifikovana **na buildu** (`.al-geo-intro` 1× na
+> 3388/16616/6824/16612), ne samo u dokumentaciji.
+>
+> **Stanje W1 posle provere:** red A **33/33** · Polish Faze **1–4** ✅ · novi
+> proizvodi **S1–S8 8/8** · Court builder CB1–CB3 + CB2-fix ✅ → **nema poznatog
+> otvorenog posla u W1.** Preostali kandidati dolaze iz nalaza, ne iz reda čekanja:
+> alt tekst (uzet ove sesije) i `heading-order`/`target-size` na product karticama
+> (WoodMart core layout, kandidat za posle live-a).
+>
+> Lekcija upisana: „Sledeće" liste trule tiše od „Urađeno" — zatvaranje zadatka mora
+> ažurirati i red u „Sledeće" i statusnu ćeliju u master planu.
+
+---
+
 ## 2026-08-12 [claude-code] W1 quick-win — Chrome 149 `border-color` na tabelama: bloker zatvoren, build nije pogođen ✅
 
 > Bloker otvoren isti dan (Chrome 149 izbacio `border-color: gray` iz UA stila za
