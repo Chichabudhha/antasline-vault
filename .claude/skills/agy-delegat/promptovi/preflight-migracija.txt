@@ -1,0 +1,41 @@
+Pročitaj SVE .md fajlove u TAČNO ova dva foldera:
+  C:\Projekti\antasline-vault\dnevnik\        (50 fajlova)
+  C:\Projekti\antasline-vault\migracija\      (37 fajlova, uključujući podfoldere)
+
+NE pretražuj nijedan drugi folder. NE pretražuj C:\Users\Miroslav.
+Putanje su gore date u celosti — idi direktno na njih, bez traženja.
+Ne preskači nijedan fajl, ne pretpostavljaj sadržaj iz naziva.
+
+CILJ: napraviti PRE-FLIGHT CHECKLIST za migraciju lokalnog WordPress builda na
+produkciju, zakazanu za 2026-08-24. Migracija se radi u jednom danu i mora
+proći iz prvog pokušaja.
+
+ŠTA TRAŽIŠ — svaki zapis o nečemu što je JEDNOM VEĆ PUKLO ili zamalo puklo:
+- propali staging deploy-evi i tačan uzrok svakog
+- gotcha-i pri radu sa bazom (prefiksi tabela, kolacije, dump/import)
+- gotcha-i sa temom, pluginima, permalinkovima, sitemapovima
+- greške sa kredencijalima, konfiguracijom, kvotama, pristupima
+- stvari koje "moraju da se urade ručno na dan migracije" ili se lako zaborave
+- svaki fix koji je opisan rečima tipa: gotcha, greška, puklo, propalo,
+  nije uspelo, zaboravljeno, iznenađenje, ispostavilo se, pažnja, napomena
+
+PRAVILA:
+- Svaka stavka MORA imati izvor: naziv fajla + datum. Bez izvora ne upisuj.
+- Ako su dva fajla u protivrečnosti, upiši OBA i označi kao KONFLIKT.
+- Ne izmišljaj. Ako nešto nije zapisano, ne postoji.
+- Ne piši uvod ni zaključak.
+- Ne menjaj nijedan fajl. Samo čitaj i ispiši rezultat.
+
+FORMAT IZLAZA — markdown tabela, sortirana po riziku (najviši prvo):
+
+| # | Rizik | Šta je puklo / šta se lako zaboravi | Kako se sprečava | Izvor (fajl, datum) |
+
+Posle tabele dodaj dve sekcije:
+
+## Ručne radnje NA DAN migracije
+(numerisan spisak — samo ono što se ne može uraditi unapred)
+
+## Konflikti u dokumentaciji
+(gde dva fajla tvrde različito — sa oba izvora)
+
+Jezik: srpski, ekavica.

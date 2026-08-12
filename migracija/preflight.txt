@@ -1,0 +1,416 @@
+
+
+   # │ Rizik       │ Šta je puklo / šta se lako … │ Kako se sprečava             │ Izvor (fajl, datum)
+  ───┼─────────────┼──────────────────────────────┼──────────────────────────────┼───────────────────────────────
+   1 │ 🔴 Kritičan │ Skripta al-local-mail-       │ Proveriti wp-content/mu-     │ migracija/2026-08-10-pre-
+     │             │ log.php se prenosi u wp-     │ plugins/ pre pakovanja i     │ migration-checklist.md (2026-
+     │             │ content/mu-plugins/ i        │ ukloniti al-local-mail-      │ 08-10)
+     │             │ blokira sve forme — skripta  │ log.php i mail-log.txt;      │
+     │             │ presreće sve wp_mail pozive  │ build-staging-package.sh ovo │
+     │             │ i vraća uspeh bez slanja     │ automatski izbacuje.         │
+     │             │ mejlova. Već je jednom       │                              │
+     │             │ (07.08 na staging V3)        │                              │
+     │             │ prenesena, pa su forme       │                              │
+     │             │ naizgled radile a niko nije  │                              │
+     │             │ primao mejlove. Komentar u   │                              │
+     │             │ fajlu da se mu-plugins ne    │                              │
+     │             │ prenosi je netačan.          │                              │
+   2 │ 🔴 Kritičan │ Sintaksna greška u .htaccess │ Generisati .htaccess pravila │ dnevnik/2026-08-11-htaccess-
+     │             │ obara CEO sajt (HTTP 500) —  │ isključivo skriptom          │ 301-reverifikacija.md (2026-
+     │             │ .htaccess se izvršava pre    │ htaccess-301-generate.php,   │ 08-11)
+     │             │ WP-a. Najmanja greška daje   │ koristiti sidreni            │
+     │             │ 500 na ceo sajt. Pored toga, │ RedirectMatch 301            │
+     │             │ stari Redirect sa prefiks-   │ "^/put/?$", postaviti iznad  │
+     │             │ match pravio je kolizije na  │ # BEGIN WordPress bloka i    │
+     │             │ 15 pravila.                  │ testirati izolovanom         │
+     │             │                              │ komandom pre objave.         │
+   3 │ 🔴 Kritičan │ 62 istorijska 301 pravila iz │ Sva 62 istorijska pravila su │ dnevnik/2026-08-11-htaccess-
+     │             │ Redirection plugina nestaju  │ objedinjena sa novim 14      │ 301-reverifikacija.md (2026-
+     │             │ zamenom baze — 62 pravila    │ FINAL pravila i generisana   │ 08-11), migracija/2026-07-21-
+     │             │ (sa preko 46.000 GSC         │ direktno u .htaccess 301     │ analiza-65-redirection-
+     │             │ pogodaka) živela su u bazi   │ draft (ukupno 73 pravila).   │ pravila.md (2026-07-21)
+     │             │ produkcije unutar            │                              │
+     │             │ Redirection plugina. Uvozom  │                              │
+     │             │ lokalne baze ova pravila se  │                              │
+     │             │ gube, što bi oborilo top     │                              │
+     │             │ saobraćajna preusmeravanja   │                              │
+     │             │ na 404.                      │                              │
+   4 │ 🔴 Kritičan │ Backup fajlovi (*.bak-*,     │ Pokrenuti find wp-content -  │ migracija/2026-08-10-pre-
+     │             │ *.old, *.orig) u wp-content  │ name "*.bak*" -o -name       │ migration-checklist.md (2026-
+     │             │ izlažu izvorni PHP kod —     │ "mail-log.txt" i ukloniti    │ 08-10)
+     │             │ Uočeno 27 rezervnih fajlova  │ sve backup/old fajlove pre   │
+     │             │ u wp-content. Apache ih      │ slanja na produkciju.        │
+     │             │ servira kao čist tekst (npr. │                              │
+     │             │ functions.php.bak-... → HTTP │                              │
+     │             │ 200, 53 KB izvor),           │                              │
+     │             │ otkrivajući logiku tokena,   │                              │
+     │             │ honeypot-a i rate-limita.    │                              │
+   5 │ 🔴 Kritičan │ FTP upload velikog paketa od │ Ne slati gigantske arhive    │ migracija/2026-08-06-prompt-
+     │             │ 3.18 GB je pukao usred       │ preko FTP-a; slati pakete    │ staging-refresh.md (2026-08-
+     │             │ prenosa — Pokušaj slanja     │ presekane u manje celine ili │ 06)
+     │             │ arhive slika i sajta od 3.18 │ preko SSH/rsync/cPanel File  │
+     │             │ GB preko FTP-a (ftp-upload-  │ Manager-a.                   │
+     │             │ chunks.sh) je prekinut i     │                              │
+     │             │ nije uspeo.                  │                              │
+   6 │ 🔴 Kritičan │ mysql -e komanda na Windows  │ Izmene u bazi vršiti         │ dnevnik/2026-08-11-metadesc-
+     │             │ shell-u uništava UTF-8       │ isključivo kroz PHP skripte  │ 6-stranica.md (2026-08-11),
+     │             │ dijakritiku i ćirilicu u     │ ili WP-CLI sa eksplicitnim   │ dnevnik/2026-08-11-rollback-
+     │             │ bazi — Pokretanje SQL upita  │ UTF-8 kontekstom, nikada     │ plan-i-dijakritika.md (2026-
+     │             │ preko mysql -e "UPDATE..."   │ preko sirove mysql -e        │ 08-11)
+     │             │ iz Windows cmd/powershell-a  │ komande na Windows-u.        │
+     │             │ pretvara dijakritiku i       │                              │
+     │             │ ćirilicu u                   │                              │
+     │             │ mojibake/upitnike.           │                              │
+   7 │ 🔴 Kritičan │ GOLI vidljiv FAQ JSON-LD     │ Unos <script> tagova u       │ migracija/w1-novi-proizvodi-
+     │             │ tekst na stranici zbog       │ post_content vršiti          │ court-builder.md (2026-07-
+     │             │ wp_insert_post() u CLI       │ ISKLJUČIVO preko $wpdb-      │ 11), migracija/woodmart-
+     │             │ kontekstu — Na /planer-      │ >update(), nikada preko      │ sabloni.md (2026-07-05)
+     │             │ terena/, FAQ JSON-LD se      │ wp_insert_post() iz CLI      │
+     │             │ prikazao kao vidljiv tekst   │ konteksta.                   │
+     │             │ umesto skripte jer je        │                              │
+      │             │ wp_insert_post() bez         │                              │
+      │             │ ulogovanog korisnika pustio  │                              │
+      │             │ sadržaj kroz kses i obrisao  │                              │
+      │             │ <script> tagove.             │                              │
+   8  │ 🔴 Kritičan │ Trostruko dupliranje         │ Obavestiti sve aktere        │ dnevnik/2026-08-11-generate-
+      │             │ generate_lead i pad          │ unapred da "pad" konverzija  │ lead-inflacija-dijagnoza.md
+      │             │ zabeleženih konverzija za    │ sa ~40 na ~12 nije pad       │ (2026-08-11), dnevnik/2026-
+      │             │ ~70% nakon migracije — Live  │ prodaje već uklanjanje       │ 08-11-w5-nedeljni-
+      │             │ Kallyas ima dva GTM embed-a  │ trostrukog dupliranja i      │ izvestaj.md (2026-08-11)
+      │             │ koji šalju 3.9 generate_lead │ lažnih telefonskih klikova.  │
+      │             │ evenata po sesiji. Prelaskom │                              │
+      │             │ na WoodMart dupli embed      │                              │
+      │             │ nestaje i broj novih GA4     │                              │
+      │             │ konverzija naglo pada.       │                              │
+   9  │ 🟠 Visok    │ Prefiks staging baze je      │ Pri wp search-replace i      │ migracija/2026-08-10-pre-
+      │             │ malim slovima wpgs_ (a ne    │ importu uvek koristiti tačna │ migration-checklist.md
+      │             │ wpGs_) — Dokumentacija na    │ mala slova wpgs_.            │ (2026-08-10),
+      │             │ više mesta piše wpGs_, ali u │                              │ migracija/2026-08-06-prompt-
+      │             │ bazi i SQL dump-u stoji      │                              │ staging-full-restore.md
+      │             │ wpgs_ (sve malim slovima).   │                              │ (2026-08-06)
+      │             │ Pogrešan case sprečava       │                              │
+      │             │ zamenu prefiksa.             │                              │
+   10 │ 🟠 Visok    │ **sed zamena prefiksa zavisi │                              │
+      │             │ od backticks-a (``) oko      │                              │
+      │             │ imena tabela** — Pravilo sed │                              │
+      │             │ -E "s/`                      │                              │
+
+    LIVE FX...`/`
+        P
+
+  {STG_PFX}...`/g"traži bek-tikove. Ako export generiše SQL bez njih,sedtiho preskače zamenu i import uvozi u
+  pogrešne tabele. | Pre pokretanjased-a pročitati prve linije SQL dump-a i proveriti da li tabele imaju bek-
+  tikove. | migracija/2026-08-06-prompt-staging-full-restore.md(2026-08-06) |
+  | 11 | 🟠 Visok | **Rank Math sitemap index ne prikazuje nove taksonomije bez invalida keša** — Brisanje opcije
+  i fajlova sa diska nije dovoljna; Rank Math zahteva eksplicitan PHP poziv. U suprotnom sitemap index ne izlaže
+  nove child fajlove. | Izvršiti\RankMath\Sitemap\Cache::invalidate_storage()preko WP-CLI ili PHP skripte odmah
+  nakon prebacivanja baze. |dnevnik/2026-08-12-product-brand-arhive.md(2026-08-12),dnevnik/2026-08-11-gsc-
+  priprema-sitemap.md (2026-08-11) |
+  | 12 | 🟠 Visok | **Google API OAuth Refresh Token pada svakih 7 dana u statusu *Testing*** — Konektor za
+  Ads/GA4 gubi autorizaciju (invalid_grant) svakih 5–7 dana jer je GCP aplikacija u statusu *Testing*,
+  blokirajući automatske audite. | Pokrenuti ads_report.pyujutru na dan migracije; po potrebi
+  pokrenutiauthorize_oauth.pypreko pregledača i prihvatiti "Advanced → unsafe". |dnevnik/2026-08-11-ads-final-
+  url-audit.md(2026-08-11),migracija/2026-08-11-ads-final-url-audit.md(2026-08-11) |
+  | 13 | 🟠 Visok | **Oglasi u pauziranim kampanjama vode na nepostojeće URL-ove i tuđi domen** — Audit Ads URL-
+  ova je otkrio 6 URL-ova za prepis i 2 oglasa saFinal URL na eksterni domen (ekopodneploce.rs). | Ne
+  reaktivirati pauzirane kampanje pre nego što se izmene reklamne veze po spisku iz analiza/2026-08-11-ads-url-
+  audit.csv. | migracija/2026-08-11-ads-final-url-audit.md(2026-08-11),dnevnik/2026-08-11-ads-final-url-audit.md
+  (2026-08-11) |
+  | 14 | 🟠 Visok | **Dupliranje Product JSON-LD pri unosu cene na proizvod** — Unos realne cene (_price) na
+  proizvod aktivirao je i Yoast i globalni W2 2.7 hook, praveći 2× Product JSON-LD u zaglavlju. | Sanirano u
+  functions.php(proverava postojeću cenu pre dodavanja fallback-a); proveriti schema izlaz posle migracije.
+  |migracija/w1-novi-proizvodi-court-builder.md(2026-07-11) |
+  | 15 | 🟡 Srednji | **WoodMart tema bezuslovno učitava 437 KB WPBakery CSS-a i pravi 2× H1** — WoodMart pregazi
+  WPBakery uslovno učitavanje i uvek ubacuje 437 KB CSS-a, apost_titlerenderuje kao H1 pa uneti H1 pravi
+  duplikat. | Koristitial-asset-diet.phpza dequeue netaknutih skripti i proveriti da li
+  postmeta_woodmart_title_off=onstoji na stranicama sa sopstvenim H1. |dnevnik/2026-08-11-dijeta-asseta-
+  tema.md(2026-08-11),migracija/woodmart-sabloni.md(2026-07-05) |
+  | 16 | 🟡 Srednji | **Prazanpost_contentna starim ZionBuilder stranicama (npr. post 6588)** — Stranica 6588 je
+  imelaCHAR_LENGTH(post_content)=0jer je stari builder sadržaj držao uzn_page_builder_elspostmeta ključu. | Pre
+  izmena na postovima uvek proveriti da li jeCHAR_LENGTH(post_content)=0i obnoviti tekst ako jeste.
+  |migracija/w1-polish-red-cekanja.md(2026-07-11) |
+  | 17 | 🟡 Srednji | **Slomljene slike sa sufiksom-1na reimportovanim postovima** — Porto/Kallyas prilozi u bazi
+  imali su dodate sufikse (npr.-1024x678prešlo u-1-1024x678), dovodeći do 404 grešaka za slike. | Slike proveriti
+  i sanirati pomoćnim skriptama al_fix_missing_sizes.phpial_scan_lost_originals.php. | migracija/w1-polish-red-
+  cekanja.md(2026-07-12) |
+  | 18 | 🟡 Srednji | **cPanellsws redisAblepoziv blokiran zaštitom hostinga** — UAPI poziv za aktivaciju Redis
+  object-cache servisa iz terminala je odbijen porukom "Parent check method... is not allowed". | Ne pokušavati
+  aktivaciju Redis-a iz terminala; anonimne posete su već pokrivene LiteSpeed page-cache-om. |dnevnik/2026-08-11-
+  litespeed-redis-web-cache-manager.md(2026-08-11) |
+  | 19 | 🟡 Srednji | **Customer Match upload pao na Data Manager API zahtevu** — API poziv je pao
+  saCUSTOMER_NOT_ALLOWLISTED_FOR_THIS_FEATUREjer noviji nalozi moraju ići preko Data Manager API-ja. | Ne tražiti
+  Standard access i ne koristiti stariOfflineUserDataJobService; preći na Data Manager API kad zatreba upload. |
+  dnevnik/2026-08-11-customer-match-data-manager-api.md` (2026-08-11) |
+  ──────
+  ## Ručne radnje NA DAN migracije
+
+  1. Potvrda dostupnosti Miroslava (go/no-go uslov): Proveriti da Miroslav ima najmanje 6h slobodnog vremena bez
+  prekida. Rollback plan zavisi isključivo od njega i bez njegovog prisustva migracija se ne započinje.
+  2. Provera i uzimanje svežeg backup-a produkcije: Otvoriti cPanel → JetBackup 5 i uveriti se da automatski
+  snapshot nije stariji od 24h, a zatim ručno napraviti nov DB dump i arhivu wp-content foldera neposredno pre
+  izmena.
+  3. Provera OAuth tokena za Google API konektor: Pokrenuti ads_report.py iz terminala. Ako vrati invalid_grant,
+  pokrenuti authorize_oauth.py kroz pregledač pre bilo kakvog rada na oglasima.
+  4. Formiranje staging paketa bez lokalnih dev fajlova: Izvršiti build-staging-package.sh full i proveriti
+  arhivu da fajlovi al-local-mail-log.php, mail-log.txt i *.bak-* nisu dospeli u paket.
+  5. Uvoz baze i zamena domen URL-ova: Uvesti bazu i pokrenuti wp search-replace pazeći na stvarni prefiks wpgs_
+  (isključivo malim slovima).
+  6. Aktivacija .htaccess 301 bloka: Kopirati pravila iz htaccess-301-DRAFT.txt na sam vrh .htaccess fajla (iznad
+  # BEGIN WordPress), a zatim testirati 5 top GSC URL-ova (/sportski-podovi/, /izgrdanja-sportskig-terena/,
+  /podovi-za-baste-splavove-bazene/, /home/industrijski-podovi/ecotile-5007/, /бренд/ecotile/).
+  7. Čišćenje LSCWP keša i regeneracija UCSS-a: Pokrenuti wp litespeed-purge all i inicirati regeneraciju
+  Critical CSS / UCSS fajlova.
+  8. Testiranje slanja mejlova (SMTP): Izvršiti stvarne submit-e na kontakt formi (16593) i "Brzom upitu" (16737)
+  i potvrditi da poruke stižu u office@antasline.com sanduče.
+  9. Konfiguracija GTM-a i Enhanced Conversions: U GTM-u podesiti CJS i User-Provided Data promenljive, omogućiti
+  customer data na tagu 20 (Lead - forma (GTM)), ukloniti stari Zion tag/trigger, pa izvršiti Submit, Publish i
+  Preview na produkciji.
+  10. Popravka Final URL-ova u Google Ads (4.10): Zameniti nevažeće odredišne URL-ove u oglasima prema tabeli iz
+  analiza/2026-08-11-ads-url-audit.csv.
+  11. Regression Sweep verifikacija: Pokrenuti scratchpad/regression-sweep.php prema produkcijskom URL-u i
+  uporediti rezultate sa baseline-om od 10.08.
+  ──────
+  ## Konflikti u dokumentaciji
+
+  1. SEO Plugin (Yoast vs. Rank Math)
+      • Izvor A: migracija/2026-07-28-W7-sanacija-builda.md (2026-07-28) i odluke/_pregled-odluka.md (2026-06-28)
+      navode da je zvanični i jedini SEO plugin Yoast (_yoast_wpseo_title) i da se Rank Math ne sme koristiti.
+      • Izvor B: dnevnik/2026-08-11-gsc-priprema-sitemap.md (2026-08-11) i dnevnik/2026-08-12-product-brand-
+      arhive.md (2026-08-12) dokumentuju da je 05.08.2026. uspešno sprovedena migracija na Rank Math
+      (rank_math_title, rank-math-options-sitemap) i da je Yoast deaktiviran.
+  2. Datum Go-Live migracije (31.08 vs 24.08)
+      • Izvor A: migracija/w1-novi-proizvodi-court-builder.md (2026-07-11) navodi planirani datum migracije 31.
+      08.2026.
+      • Izvor B: migracija/2026-08-10-pre-migration-checklist.md (2026-08-10) navodi da je datum pomeren nedelju
+      dana ranije — na 24.08.2026 (Content freeze: 16.08, Gate review: 21.08).
+  3. Velika vs. mala slova u prefiksu baze (wpGs_ vs wpgs_)
+      • Izvor A: migracija/2026-07-05-live-export-prompt.md (2026-07-05) i migracija/PARITY-PLAN.md označavaju
+      prefiks staging baze kao wpGs_ (sa velikim G i S).
+      • Izvor B: migracija/2026-08-10-pre-migration-checklist.md (2026-08-10) i migracija/2026-08-06-prompt-
+      staging-full-restore.md (2026-08-06) izričito upozoravaju da je stvarni prefiks u bazi i SQL dump-u wpgs_
+      (sve malim slovima).
+  4. Sloj za 301 redirekcije (Redirection Plugin vs .htaccess)
+      • Izvor A: migracija/2026-07-21-analiza-65-redirection-pravila.md (2026-07-21) navodi da 62 istorijska
+      preusmeravanja žive unutar Redirection WP plugina u bazi.
+      • Izvor B: dnevnik/2026-08-11-htaccess-301-reverifikacija.md (2026-08-11) dokumentuje da su sva pravila
+      prebačena direktno u .htaccess kako bi radila i u slučaju pada WordPress-a ili baze.
+  5. Prenos mu-plugins foldera pri migraciji
+      • Izvor A: Komentar u fajlu al-local-mail-log.php navodi da se mu-plugins folder ne prenosi na produkciju.
+      • Izvor B: migracija/2026-08-10-pre-migration-checklist.md (2026-08-10) navodi da je ta tvrdnja netačna i
+      da se mu-plugins prenosi zajedno sa wp-content, što je 07.08 na staging V3 već dovelo do blokiranja slanja
+      mejlova.
+  6. Zbir plaćenih konverzija za Smart Bidding (26 vs 9 lidova)
+      • Izvor A: dnevnik/ADS-DNEVNIK.md navodi da je ostvareno 26 plaćenih konverzija i da se napreduje ka pragu
+      za Maximize Conversions (20–30).
+      • Izvor B: dnevnik/2026-08-11-snapshot-jul.md (2026-08-11) i dnevnik/2026-08-11-w5-nedeljni-izvestaj.md
+      (2026-08-11) dokazuju da je 17 od 26 konverzija bio klik na telefon (tel), a samo 9 su bile prave forme sa
+      /hvala-za-poruku/, pa prag 20–30 zapravo nije pređen.`**
+
+
+   # │ Rizik       │ Šta je puklo / šta se lako … │ Kako se sprečava             │ Izvor (fajl, datum)
+  ───┼─────────────┼──────────────────────────────┼──────────────────────────────┼───────────────────────────────
+   1 │ 🔴 Kritičan │ Skripta al-local-mail-       │ Proveriti wp-content/mu-     │ migracija/2026-08-10-pre-
+     │             │ log.php se prenosi u wp-     │ plugins/ pre pakovanja i     │ migration-checklist.md (2026-
+     │             │ content/mu-plugins/ i        │ ukloniti al-local-mail-      │ 08-10)
+     │             │ blokira sve forme — skripta  │ log.php i mail-log.txt;      │
+     │             │ presreće sve wp_mail pozive  │ build-staging-package.sh ovo │
+     │             │ i vraća uspeh bez slanja     │ automatski izbacuje.         │
+     │             │ mejlova. Već je jednom       │                              │
+     │             │ (07.08 na staging V3)        │                              │
+     │             │ prenesena, pa su forme       │                              │
+     │             │ naizgled radile a niko nije  │                              │
+     │             │ primao mejlove. Komentar u   │                              │
+     │             │ fajlu da se mu-plugins ne    │                              │
+     │             │ prenosi je netačan.          │                              │
+   2 │ 🔴 Kritičan │ Sintaksna greška u .htaccess │ Generisati .htaccess pravila │ dnevnik/2026-08-11-htaccess-
+     │             │ obara CEO sajt (HTTP 500) —  │ isključivo skriptom          │ 301-reverifikacija.md (2026-
+     │             │ .htaccess se izvršava pre    │ htaccess-301-generate.php,   │ 08-11)
+     │             │ WP-a. Najmanja greška daje   │ koristiti sidreni            │
+     │             │ 500 na ceo sajt. Pored toga, │ RedirectMatch 301            │
+     │             │ stari Redirect sa prefiks-   │ "^/put/?$", postaviti iznad  │
+     │             │ match pravio je kolizije na  │ # BEGIN WordPress bloka i    │
+     │             │ 15 pravila.                  │ testirati izolovanom         │
+     │             │                              │ komandom pre objave.         │
+   3 │ 🔴 Kritičan │ 62 istorijska 301 pravila iz │ Sva 62 istorijska pravila su │ dnevnik/2026-08-11-htaccess-
+     │             │ Redirection plugina nestaju  │ objedinjena sa novim 14      │ 301-reverifikacija.md (2026-
+     │             │ zamenom baze — 62 pravila    │ FINAL pravila i generisana   │ 08-11), migracija/2026-07-21-
+     │             │ (sa preko 46.000 GSC         │ direktno u .htaccess 301     │ analiza-65-redirection-
+     │             │ pogodaka) živela su u bazi   │ draft (ukupno 73 pravila).   │ pravila.md (2026-07-21)
+     │             │ produkcije unutar            │                              │
+     │             │ Redirection plugina. Uvozom  │                              │
+     │             │ lokalne baze ova pravila se  │                              │
+     │             │ gube, što bi oborilo top     │                              │
+     │             │ saobraćajna preusmeravanja   │                              │
+     │             │ na 404.                      │                              │
+   4 │ 🔴 Kritičan │ Backup fajlovi (*.bak-*,     │ Pokrenuti find wp-content -  │ migracija/2026-08-10-pre-
+     │             │ *.old, *.orig) u wp-content  │ name "*.bak*" -o -name       │ migration-checklist.md (2026-
+     │             │ izlažu izvorni PHP kod —     │ "mail-log.txt" i ukloniti    │ 08-10)
+     │             │ Uočeno 27 rezervnih fajlova  │ sve backup/old fajlove pre   │
+     │             │ u wp-content. Apache ih      │ slanja na produkciju.        │
+     │             │ servira kao čist tekst (npr. │                              │
+     │             │ functions.php.bak-... → HTTP │                              │
+     │             │ 200, 53 KB izvor),           │                              │
+     │             │ otkrivajući logiku tokena,   │                              │
+     │             │ honeypot-a i rate-limita.    │                              │
+   5 │ 🔴 Kritičan │ FTP upload velikog paketa od │ Ne slati gigantske arhive    │ migracija/2026-08-06-prompt-
+     │             │ 3.18 GB je pukao usred       │ preko FTP-a; slati pakete    │ staging-refresh.md (2026-08-
+     │             │ prenosa — Pokušaj slanja     │ presekane u manje celine ili │ 06)
+     │             │ arhive slika i sajta od 3.18 │ preko SSH/rsync/cPanel File  │
+     │             │ GB preko FTP-a (ftp-upload-  │ Manager-a.                   │
+     │             │ chunks.sh) je prekinut i     │                              │
+     │             │ nije uspeo. FTP nalog        │                              │
+     │             │ staging@ je bio suspendovan  │                              │
+     │             │ ili pogrešno podešen.        │                              │
+   6 │ 🔴 Kritičan │ mysql -e komanda na Windows  │ Izmene u bazi vršiti         │ dnevnik/2026-08-11-metadesc-
+     │             │ shell-u uništava UTF-8       │ isključivo kroz PHP skripte  │ 6-stranica.md (2026-08-11),
+     │             │ dijakritiku i ćirilicu u     │ ili WP-CLI sa eksplicitnim   │ dnevnik/2026-08-11-rollback-
+     │             │ bazi — Pokretanje SQL upita  │ UTF-8 kontekstom, nikada     │ plan-i-dijakritika.md (2026-
+     │             │ preko mysql -e "UPDATE..."   │ preko sirove mysql -e        │ 08-11)
+     │             │ iz Windows cmd/powershell-a  │ komande na Windows-u.        │
+     │             │ pretvara dijakritiku i       │                              │
+     │             │ ćirilicu u                   │                              │
+     │             │ mojibake/upitnike.           │                              │
+   7 │ 🔴 Kritičan │ GOLI vidljiv FAQ JSON-LD     │ Unos <script> tagova u       │ migracija/w1-novi-proizvodi-
+     │             │ tekst na stranici zbog       │ post_content vršiti          │ court-builder.md (2026-07-
+     │             │ wp_insert_post() u CLI       │ ISKLJUČIVO preko $wpdb-      │ 11), migracija/woodmart-
+     │             │ kontekstu — Na /planer-      │ >update(), nikada preko      │ sabloni.md (2026-07-05)
+     │             │ terena/, FAQ JSON-LD se      │ wp_insert_post() iz CLI      │
+     │             │ prikazao kao vidljiv tekst   │ konteksta.                   │
+      │             │ umesto skripte jer je        │                              │
+      │             │ wp_insert_post() bez         │                              │
+      │             │ ulogovanog korisnika pustio  │                              │
+      │             │ sadržaj kroz kses i obrisao  │                              │
+      │             │ <script> tagove.             │                              │
+   8  │ 🔴 Kritičan │ Trostruko dupliranje         │ Obavestiti sve aktere        │ dnevnik/2026-08-11-generate-
+      │             │ generate_lead i pad          │ unapred da "pad" konverzija  │ lead-inflacija-dijagnoza.md
+      │             │ zabeleženih konverzija za    │ sa ~40 na ~12 nije pad       │ (2026-08-11), dnevnik/2026-
+      │             │ ~70% nakon migracije — Live  │ prodaje već uklanjanje       │ 08-11-w5-nedeljni-
+      │             │ Kallyas ima dva GTM embed-a  │ trostrukog dupliranja i      │ izvestaj.md (2026-08-11)
+      │             │ koji šalju 3.9 generate_lead │ lažnih telefonskih klikova.  │
+      │             │ evenata po sesiji. Prelaskom │                              │
+      │             │ na WoodMart dupli embed      │                              │
+      │             │ nestaje i broj novih GA4     │                              │
+      │             │ konverzija naglo pada.       │                              │
+   9  │ 🟠 Visok    │ Prefiks staging baze je      │ Pri wp search-replace i      │ migracija/2026-08-10-pre-
+      │             │ malim slovima wpgs_ (a ne    │ importu uvek koristiti tačna │ migration-checklist.md
+      │             │ wpGs_) — Dokumentacija na    │ mala slova wpgs_.            │ (2026-08-10),
+      │             │ više mesta piše wpGs_, ali u │                              │ migracija/2026-08-06-prompt-
+      │             │ bazi i SQL dump-u stoji      │                              │ staging-full-restore.md
+      │             │ wpgs_ (sve malim slovima).   │                              │ (2026-08-06)
+      │             │ Pogrešan case sprečava       │                              │
+      │             │ zamenu prefiksa.             │                              │
+   10 │ 🟠 Visok    │ **sed zamena prefiksa zavisi │                              │
+      │             │ od backticks-a (``) oko      │                              │
+      │             │ imena tabela** — Pravilo sed │                              │
+      │             │ -E "s/`                      │                              │
+
+    LIVE FX...`/`
+        P
+
+  {STG_PFX}...`/g"traži bek-tikove. Ako export generiše SQL bez njih,sedtiho preskače zamenu i import uvozi u
+  pogrešne tabele. | Pre pokretanjased-a pročitati prve linije SQL dump-a i proveriti da li tabele imaju bek-
+  tikove. | migracija/2026-08-06-prompt-staging-full-restore.md(2026-08-06) |
+  | 11 | 🟠 Visok | **Rank Math sitemap index ne prikazuje nove taksonomije bez invalida keša** — Brisanje opcije
+  i fajlova sa diska nije dovoljna; Rank Math zahteva eksplicitan PHP poziv. U suprotnom sitemap index ne izlaže
+  nove child fajlove. | Izvršiti\RankMath\Sitemap\Cache::invalidate_storage()preko WP-CLI ili PHP skripte odmah
+  nakon prebacivanja baze. |dnevnik/2026-08-12-product-brand-arhive.md(2026-08-12),dnevnik/2026-08-11-gsc-
+  priprema-sitemap.md (2026-08-11) |
+  | 12 | 🟠 Visok | **Google API OAuth Refresh Token pada svakih 7 dana u statusu *Testing*** — Konektor za
+  Ads/GA4 gubi autorizaciju (invalid_grant) svakih 5–7 dana jer je GCP aplikacija u statusu *Testing*,
+  blokirajući automatske audite. | Pokrenuti ads_report.pyujutru na dan migracije; po potrebi
+  pokrenutiauthorize_oauth.pypreko pregledača i prihvatiti "Advanced → unsafe". |dnevnik/2026-08-11-ads-final-
+  url-audit.md(2026-08-11),migracija/2026-08-11-ads-final-url-audit.md(2026-08-11) |
+  | 13 | 🟠 Visok | **Oglasi u pauziranim kampanjama vode na nepostojeće URL-ove i tuđi domen** — Audit Ads URL-
+  ova je otkrio 6 URL-ova za prepis i 2 oglasa saFinal URL na eksterni domen (ekopodneploce.rs). | Ne
+  reaktivirati pauzirane kampanje pre nego što se izmene reklamne veze po spisku iz analiza/2026-08-11-ads-url-
+  audit.csv. | migracija/2026-08-11-ads-final-url-audit.md(2026-08-11),dnevnik/2026-08-11-ads-final-url-audit.md
+  (2026-08-11) |
+  | 14 | 🟠 Visok | **Dupliranje Product JSON-LD pri unosu cene na proizvod** — Unos realne cene (_price) na
+  proizvod aktivirao je i Yoast i globalni W2 2.7 hook, praveći 2× Product JSON-LD u zaglavlju. | Sanirano u
+  functions.php(proverava postojeću cenu pre dodavanja fallback-a); proveriti schema izlaz posle migracije.
+  |migracija/w1-novi-proizvodi-court-builder.md(2026-07-11) |
+  | 15 | 🟡 Srednji | **WoodMart tema bezuslovno učitava 437 KB WPBakery CSS-a i pravi 2× H1** — WoodMart pregazi
+  WPBakery uslovno učitavanje i uvek ubacuje 437 KB CSS-a, apost_titlerenderuje kao H1 pa uneti H1 pravi
+  duplikat. | Koristitial-asset-diet.phpza dequeue netaknutih skripti i proveriti da li
+  postmeta_woodmart_title_off=onstoji na stranicama sa sopstvenim H1. |dnevnik/2026-08-11-dijeta-asseta-
+  tema.md(2026-08-11),migracija/woodmart-sabloni.md(2026-07-05) |
+  | 16 | 🟡 Srednji | **Prazanpost_contentna starim ZionBuilder stranicama (npr. post 6588)** — Stranica 6588 je
+  imelaCHAR_LENGTH(post_content)=0jer je stari builder sadržaj držao uzn_page_builder_elspostmeta ključu. | Pre
+  izmena na postovima uvek proveriti da li jeCHAR_LENGTH(post_content)=0i obnoviti tekst ako jeste.
+  |migracija/w1-polish-red-cekanja.md(2026-07-11) |
+  | 17 | 🟡 Srednji | **Slomljene slike sa sufiksom-1na reimportovanim postovima** — Porto/Kallyas prilozi u bazi
+  imali su dodate sufikse (npr.-1024x678prešlo u-1-1024x678), dovodeći do 404 grešaka za slike. | Slike proveriti
+  i sanirati pomoćnim skriptama al_fix_missing_sizes.phpial_scan_lost_originals.php. | migracija/w1-polish-red-
+  cekanja.md(2026-07-12) |
+  | 18 | 🟡 Srednji | **cPanellsws redisAblepoziv blokiran zaštitom hostinga** — UAPI poziv za aktivaciju Redis
+  object-cache servisa iz terminala je odbijen porukom "Parent check method... is not allowed". | Ne pokušavati
+  aktivaciju Redis-a iz terminala; anonimne posete su već pokrivene LiteSpeed page-cache-om. |dnevnik/2026-08-11-
+  litespeed-redis-web-cache-manager.md(2026-08-11) |
+  | 19 | 🟡 Srednji | **Customer Match upload pao na Data Manager API zahtevu** — API poziv je pao
+  saCUSTOMER_NOT_ALLOWLISTED_FOR_THIS_FEATUREjer noviji nalozi moraju ići preko Data Manager API-ja. | Ne tražiti
+  Standard access i ne koristiti stariOfflineUserDataJobService; preći na Data Manager API kad zatreba upload. |
+  dnevnik/2026-08-11-customer-match-data-manager-api.md` (2026-08-11) |
+  ──────
+  ## Ručne radnje NA DAN migracije
+
+  1. Potvrda dostupnosti Miroslava (go/no-go uslov): Proveriti da Miroslav ima najmanje 6h slobodnog vremena bez
+  prekida. Rollback plan zavisi isključivo od njega i bez njegovog prisustva migracija se ne započinje.
+  2. Provera i uzimanje svežeg backup-a produkcije: Otvoriti cPanel → JetBackup 5 i uveriti se da automatski
+  snapshot nije stariji od 24h, a zatim ručno napraviti nov DB dump i arhivu wp-content foldera neposredno pre
+  izmena.
+  3. Provera OAuth tokena za Google API konektor: Pokrenuti ads_report.py iz terminala. Ako vrati invalid_grant,
+  pokrenuti authorize_oauth.py kroz pregledač pre bilo kakvog rada na oglasima.
+  4. Formiranje staging paketa bez lokalnih dev fajlova: Izvršiti build-staging-package.sh full i proveriti
+  arhivu da fajlovi al-local-mail-log.php, mail-log.txt i *.bak-* nisu dospeli u paket.
+  5. Uvoz baze i zamena domen URL-ova: Uvesti bazu i pokrenuti wp search-replace pazeći na stvarni prefiks wpgs_
+  (isključivo malim slovima).
+  6. Aktivacija .htaccess 301 bloka: Kopirati pravila iz htaccess-301-DRAFT.txt na sam vrh .htaccess fajla (iznad
+  # BEGIN WordPress), a zatim testirati 5 top GSC URL-ova (/sportski-podovi/, /izgrdanja-sportskig-terena/,
+  /podovi-za-baste-splavove-bazene/, /home/industrijski-podovi/ecotile-5007/, /бренд/ecotile/).
+  7. Čišćenje LSCWP keša i regeneracija UCSS-a: Pokrenuti wp litespeed-purge all i inicirati regeneraciju
+  Critical CSS / UCSS fajlova.
+  8. Testiranje slanja mejlova (SMTP): Izvršiti stvarne submit-e na kontakt formi (16593) i "Brzom upitu" (16737)
+  i potvrditi da poruke stižu u office@antasline.com sanduče.
+  9. Konfiguracija GTM-a i Enhanced Conversions: U GTM-u podesiti CJS i User-Provided Data promenljive, omogućiti
+  customer data na tagu 20 (Lead - forma (GTM)), ukloniti stari Zion tag/trigger, pa izvršiti Submit, Publish i
+  Preview na produkciji.
+  10. Popravka Final URL-ova u Google Ads (4.10): Zameniti nevažeće odredišne URL-ove u oglasima prema tabeli iz
+  analiza/2026-08-11-ads-url-audit.csv.
+  11. Regression Sweep verifikacija: Pokrenuti scratchpad/regression-sweep.php prema produkcijskom URL-u i
+  uporediti rezultate sa baseline-om od 10.08.
+  ──────
+  ## Konflikti u dokumentaciji
+
+  1. SEO Plugin (Yoast vs. Rank Math)
+      • Izvor A: migracija/2026-07-28-W7-sanacija-builda.md (2026-07-28) i odluke/_pregled-odluka.md (2026-06-28)
+      navode da je zvanični i jedini SEO plugin Yoast (_yoast_wpseo_title) i da se Rank Math ne sme koristiti.
+      • Izvor B: dnevnik/2026-08-11-gsc-priprema-sitemap.md (2026-08-11) i dnevnik/2026-08-12-product-brand-
+      arhive.md (2026-08-12) dokumentuju da je 05.08.2026. uspešno sprovedena migracija na Rank Math
+      (rank_math_title, rank-math-options-sitemap) i da je Yoast deaktiviran.
+  2. Datum Go-Live migracije (31.08 vs 24.08)
+      • Izvor A: migracija/w1-novi-proizvodi-court-builder.md (2026-07-11) navodi planirani datum migracije 31.
+      08.2026.
+      • Izvor B: migracija/2026-08-10-pre-migration-checklist.md (2026-08-10) navodi da je datum pomeren nedelju
+      dana ranije — na 24.08.2026 (Content freeze: 16.08, Gate review: 21.08).
+  3. Velika vs. mala slova u prefiksu baze (wpGs_ vs wpgs_)
+      • Izvor A: migracija/2026-07-05-live-export-prompt.md (2026-07-05) i migracija/PARITY-PLAN.md označavaju
+      prefiks staging baze kao wpGs_ (sa velikim G i S).
+      • Izvor B: migracija/2026-08-10-pre-migration-checklist.md (2026-08-10) i migracija/2026-08-06-prompt-
+      staging-full-restore.md (2026-08-06) izričito upozoravaju da je stvarni prefiks u bazi i SQL dump-u wpgs_
+      (sve malim slovima).
+  4. Sloj za 301 redirekcije (Redirection Plugin vs .htaccess)
+      • Izvor A: migracija/2026-07-21-analiza-65-redirection-pravila.md (2026-07-21) navodi da 62 istorijska
+      preusmeravanja žive unutar Redirection WP plugina u bazi.
+      • Izvor B: dnevnik/2026-08-11-htaccess-301-reverifikacija.md (2026-08-11) dokumentuje da su sva pravila
+      prebačena direktno u .htaccess kako bi radila i u slučaju pada WordPress-a ili baze.
+  5. Prenos mu-plugins foldera pri migraciji
+      • Izvor A: Komentar u fajlu al-local-mail-log.php navodi da se mu-plugins folder ne prenosi na produkciju.
+      • Izvor B: migracija/2026-08-10-pre-migration-checklist.md (2026-08-10) navodi da je ta tvrdnja netačna i
+      da se mu-plugins prenosi zajedno sa wp-content, što je 07.08 na staging V3 već dovelo do blokiranja slanja
+      mejlova.
+  6. Zbir plaćenih konverzija za Smart Bidding (26 vs 9 lidova)
+      • Izvor A: dnevnik/ADS-DNEVNIK.md navodi da je ostvareno 26 plaćenih konverzija i da se napreduje ka pragu
+      za Maximize Conversions (20–30).
+      • Izvor B: dnevnik/2026-08-11-snapshot-jul.md (2026-08-11) i dnevnik/2026-08-11-w5-nedeljni-izvestaj.md
+      (2026-08-11) dokazuju da je 17 od 26 konverzija bio klik na telefon (tel), a samo 9 su bile prave forme sa
+      /hvala-za-poruku/, pa prag 20–30 zapravo nije pređen.`**

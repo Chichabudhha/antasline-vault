@@ -5,6 +5,32 @@ azurirano: 2026-08-12
 
 # Naučene lekcije (tehnički gotchas)
 
+## Delegirani agent (`agy`) bez apsolutnih putanja krene da pretražuje ceo `C:\Users\` — kvota ode na lutanje (2026-08-12)
+- Prompt je rekao „foldere `dnevnik/` i `migracija/` ovog vault-a". `agy` je pokrenuo `Get-ChildItem -Path C:\Users\Miroslav -Directory -Filter "dnevnik" -Recurse -Depth 4` — dakle **tražio je folder umesto da ode na njega**. Potvrđeno u `~/.gemini/antigravity-cli/log/`.
+- 🔴 Delegirani agent **ne nasleđuje tvoj radni direktorijum kao kontekst** ni kad je pokrenut iz njega. Prompt mora dati **pune apsolutne putanje + broj fajlova** i **izričito zabraniti** pretragu van njih („NE pretražuj C:\Users\Miroslav").
+- Isto pravilo važi za bilo koji spoljni agent/CLI, ne samo `agy`.
+
+## Headless agent koji ne može da pita za dozvolu — sam sebi odbije alat i vrati prazan izlaz (2026-08-12)
+- `agy -p` (print mode) je vratio `no output produced — a tool required the "command" permission that headless mode cannot prompt for`. Izlazni fajl **0 bajtova**, exit bez greške — lako se pročita kao „model nije uspeo", a zapravo nikad nije ni pokušao.
+- Dijagnoza je **isključivo u logu**: `~/.gemini/antigravity-cli/log/cli-*.log` → `permission check failed for command "..."`. Log pokaže i **tačnu komandu** koja je odbijena, što odmah otkriva i lutanje iz prethodne lekcije.
+- Rešenje: `permissions.allow` u `~/.gemini/antigravity-cli/settings.json`. **Sintaksa `command(Get-ChildItem)` je potvrđeno ispravna** — posle nje je odbijanje prešlo na sledeći alat (`read_file`), što je dokaz da je prva kapija prošla.
+- 🔴 `--dangerously-skip-permissions` **ne koristiti** (i Claude Code harness ga blokira): to je „odobri sve" nad vault-om pred migraciju. Fallback koji uvek radi: **TUI**, gde agent pita a čovek odobri.
+
+## Isti model kroz TUI ispiše rezultat dvaput, a „lepa" tabela se raspadne posle ~10 redova (2026-08-12)
+- Izlaz od 404 linije izgledao je kao da je posao pukao na pola („quota reached"). Nije: **TUI redraw ispiše ceo rezultat dvaput**, a obe kopije se završavaju istom stavkom. Provera potpunosti = uporediti poslednju stavku obe polovine, ne gledati dužinu.
+- 🟡 **Druga kopija ume biti potpunija** od prve (imala je rečenicu o suspendovanom FTP nalogu koje u prvoj nema) — čistiti od druge, ne od prve.
+- ASCII-uokvirena tabela se **prelomi posle ~10 redova** u sirov markdown sa polepljenim rečima (`pokrenutiauthorize_oauth.py`, `Izvršiti\RankMath\Sitemap\Cache::invalidate_storage()preko`). Sadržaj ostaje čitljiv, formatiranje ne. **Tražiti običnu markdown pipe-tabelu**, izričito zabraniti „lepu" tabelu.
+
+## Audit koji „nalazi" probleme može samo da re-otkriva ono što već stoji u `naucene-lekcije` (2026-08-12)
+- `agy` pre-flight checklist je izgledao kao serija novih otkrića (mu-plugins blokira mejlove, `*.bak-*` servira izvorni kod, 62 Redirection pravila nestaju sa bazom, OAuth pada na 7 dana, `wpgs_` vs `wpGs_`). **Svih pet su već bile zapisane lekcije** (2026-08-06 do 2026-08-11).
+- 🔴 Pre nego što se nalaz spoljnog alata proglasi otkrićem — **grep-ovati `reference/naucene-lekcije` i `PROGRESS`**. Precenjen alat vodi ka pogrešnoj podeli posla.
+- 🟢 Stvarna vrednost je bila realna, samo drugačija: **konsolidacija razbacanih lekcija u jedan izvršiv dan-migracije checklist + izvlačenje konflikata između fajlova**. To je posao koji niko nije uradio jer je dosadan i obiman, ne zato što je težak.
+
+## Lekcija zapisana u `naucene-lekcije` ne znači da je `CLAUDE.md` ispravljen — prefiks baze je preživeo 6 dana (2026-08-12)
+- Lekcija „prefiks je `wpgs_`, ne `wpGs_`" postoji od **2026-08-06**. `CLAUDE.md` §2 i §7.5 i dalje tvrde **`wpGs_`** — a `CLAUDE.md` je fajl koji svaki agent učitava kao autoritet, dok `naucene-lekcije` čita samo kad ga neko pošalje.
+- 🔴 **Zapisati lekciju nije isto što i zatvoriti je.** Ako lekcija protivreči `CLAUDE.md`, `PROGRESS`-u ili nekom skillu, ispravka tih fajlova je **deo lekcije**, ne poseban zadatak. Inače greška živi dalje kroz svaku novu skriptu koja se piše „po dokumentaciji".
+- Isti obrazac je već zabeležen za „Sledeće" liste (2026-08-12) i za skill građen iz jednog izvora (2026-08-12) — tri pojave istog problema u istom danu.
+
 ## `<a class="al-card">` ne sme da nosi blok sadržaj — wpautop raspadne karticu, a izvor izgleda ispravno (2026-08-12)
 - Proizvod-kartica je napisana kao `<a class="al-card">` sa `<div class="al-card__body">` unutra (naslov u telu tamnom bojom — bela verzala preko studijske fotke na beloj pozadini je nečitljiva). **wpautop ubaci prazan `<p></p>` pre tog `<div>`-a**, parser zatvori anchor, i telo kartice ispadne iz grid ćelije: slike ostanu u redu od 2, a tela se nasložu ispod preko cele širine.
 - 🔴 **U `post_content`-u sve izgleda tačno.** Vidi se samo u renderovanom DOM-u (`document.querySelector('.al-grid--2').outerHTML`) — otud pravilo: **posle svakog ubacivanja kartica sa telom, pogledati grid u browseru, ne samo `curl`-ovati HTML i brojati klase.**

@@ -1,3 +1,61 @@
+## 2026-08-12 [claude-code] ALATI — Antigravity (`agy`) kao delegat + pre-flight checklist za 24.08 ✅
+
+> Šesta sesija istog dana. Krenulo kao pitanje „može li Gemini/GPT za SEO/GA4/Ads
+> analizu", završilo kao stalna infrastruktura + isporučen checklist za migraciju.
+> Bez izmena na buildu i bazi — sve read-only.
+>
+> **Inventar provereno, ne pretpostavljeno:** `gemini`/`openai`/`codex` CLI ne
+> postoje; Ollama radi (`qwen3:30b`, `qwen2.5-coder`, `llama3.2:3b`, `gemma3:1b`).
+> Antigravity nađen tek iz M-ove putanje — **`C:\Users\Miroslav\AppData\Local\agy\bin\agy.exe`**
+> (178 MB, ažuriran isti dan); `%LOCALAPPDATA%\Antigravity\staging` je prazan mamac,
+> registry nema unos.
+>
+> **`agy` nije samo IDE nego headless CLI** — `-p`, `--json-schema`, `--sandbox`,
+> `--mode plan`, `--model`. Test print-mode **4,8 s**, autentifikovan. Modeli:
+> Gemini 3.6/3.5 Flash, 3.1 Pro, Claude Sonnet/Opus 4.6, GPT-OSS 120B — **svi na
+> istoj Google kvoti**. Time pada prvobitna zamerka „Gemini nema kontekst, ne vidi
+> vault" — ona važi za goli Gemini API, ne za Antigravity.
+>
+> **Isporuka:** `agy` (Flash Medium) pročitao **87 .md fajlova** (`dnevnik/` 50 +
+> `migracija/` 37, ~1 MB ≈ 250k tokena) → **19 rizika · 11 ručnih radnji na dan
+> migracije · 6 konflikata**, svaki sa izvorom. Sirov izlaz `migracija/preflight.txt`,
+> očišćeno u **[[migracija/2026-08-12-preflight-checklist-24-08]]**.
+>
+> **Napravljen skill `/agy-delegat`** (`SKILL.md` + `promptovi/_SABLON.txt` +
+> `promptovi/preflight-migracija.txt`), upisan u [[reference/claude-skilovi]].
+> Podela: `agy` = masovno+plitko+proverivo; Claude = odluke, Ads/GTM, baza, dan
+> migracije. 🔴 **Nikad Claude modeli unutar `agy`** — Opus već imamo, to je čist
+> gubitak Google kvote.
+>
+> 🔴 **Gotcha — headless `agy` sam sebi odbije alat** (`no output produced`).
+> Sintaksa `permissions.allow` u `~/.gemini/antigravity-cli/settings.json`;
+> `command(...)` **potvrđeno da radi** (dodato), alati za čitanje nisu — Claude Code
+> harness blokira i `--dangerously-skip-permissions` i dalje širenje dozvola.
+> Fallback: TUI, M nalepi prompt i odobri.
+> 🔴 **Bez punih apsolutnih putanja `agy` pretražuje `C:\Users\Miroslav` rekurzivno**
+> (potvrđeno u logu) — čisto trošenje kvote.
+> 🟡 **TUI ispiše rezultat dvaput** (redraw) — izgleda kao da je pukao; druga kopija
+> ume biti potpunija. 🟡 **ASCII tabela se raspada posle ~10 redova** → tražiti običnu
+> pipe-tabelu. 🟡 `settings.json` default model je **3.1 Pro (Low)** — bez `--model`
+> skup posao ode na Pro.
+>
+> ⚠️ **Ispravka sopstvene tvrdnje:** rekao sam da je `agy` „našao ono što nijedan
+> audit nije imao". Nije bilo u **dva audita**, ali **jeste u [[reference/naucene-lekcije]]**
+> (mu-plugins 08-10, `*.bak-*` 08-10, Redirection u bazi 08-11, OAuth *Testing* 08-11,
+> `wpgs_` 08-06). Stvarni doprinos je **konsolidacija u dan-migracije checklist i
+> izvlačenje konflikata**, ne novo otkriće.
+>
+> **Verifikovano protiv koda:** `live-export.sh:24-36` skuplja attachmente preko
+> `post_parent` i `_thumbnail_id`, ali **nikad ne čita `_product_image_gallery`** —
+> komentar na liniji 25 kaže „thumbnail + galerija", kod galeriju ne dodiruje.
+> Galerijske slike bez `post_parent` veze tiho nestaju pri exportu.
+>
+> 🔴 **Konflikt koji pogađa `CLAUDE.md`:** §2 i §7.5 tvrde prefiks `wpGs_`; lekcija
+> 08-06 i pre-migration checklist kažu **`wpgs_` malim slovima**. `CLAUDE.md` je
+> autoritet koji čita svaki agent → mina pred 24.08.
+> 🔴 **Maximize Conversions otpada** — od 26 „konverzija" **17 su bili `tel` klikovi**,
+> pravih formi **9**. Prag 20–30 nije pređen. Detalji: [[dnevnik/2026-08-12-agy-antigravity-delegat]].
+
 ## 2026-08-12 [claude-code] BLOK C — Vizuali referenci i ikonice kartica (homepage, O nama, padel, maloprodaja) ✅
 
 > Peta sesija istog dana. Ad-hoc polish po nalazima Miroslava dok gleda build — nije

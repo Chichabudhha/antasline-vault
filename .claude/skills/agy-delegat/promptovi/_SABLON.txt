@@ -1,0 +1,38 @@
+Pročitaj SVE .md fajlove u TAČNO ova {N} foldera:
+  {PUNA\APSOLUTNA\PUTANJA\1}      ({broj} fajlova)
+  {PUNA\APSOLUTNA\PUTANJA\2}      ({broj} fajlova, uključujući podfoldere)
+
+NE pretražuj nijedan drugi folder. NE pretražuj C:\Users\Miroslav.
+Putanje su gore date u celosti — idi direktno na njih, bez traženja.
+Ne preskači nijedan fajl, ne pretpostavljaj sadržaj iz naziva.
+
+CILJ: {jedna rečenica — šta se pravi i zašto, sa rokom ako ga ima}
+
+ŠTA TRAŽIŠ:
+- {kriterijum 1}
+- {kriterijum 2}
+- {kriterijum 3}
+- svaki zapis opisan rečima tipa: {ključne reči za grep — npr. gotcha,
+  greška, puklo, propalo, nije uspelo, zaboravljeno, pažnja, napomena}
+
+PRAVILA:
+- Svaka stavka MORA imati izvor: naziv fajla + datum. Bez izvora ne upisuj.
+- Ako su dva fajla u protivrečnosti, upiši OBA i označi kao KONFLIKT.
+- Ne izmišljaj. Ako nešto nije zapisano, ne postoji.
+- Ne piši uvod ni zaključak.
+- Ne menjaj nijedan fajl. Samo čitaj i ispiši rezultat.
+
+FORMAT IZLAZA — OBIČNA markdown pipe-tabela (NE ASCII okvir, NE "lepa"
+tabela — okvir se raspada posle ~10 redova), sortirana po {kriterijum}:
+
+| # | {kolona} | {kolona} | {kolona} | Izvor (fajl, datum) |
+
+Posle tabele dodaj sekcije:
+
+## {Sekcija 1}
+{opis}
+
+## {Sekcija 2}
+{opis}
+
+Jezik: srpski, ekavica.
