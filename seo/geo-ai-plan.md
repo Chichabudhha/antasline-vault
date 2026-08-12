@@ -46,6 +46,44 @@ tvrde da imaju „pristup Google-ovim internim metrikama" se ignorišu. Dodati u
 mesečni snapshot uz „AI Assistant" GA4 kanal (sekcija 5) i uz mesečni ChatGPT
 test promptova, koji ostaje jer meri **ne-Google** asistente.
 
+### 0.1 Generative AI performance report — šta stvarno daje (dokumentacija, 2026-08-12)
+
+Najavljen u junu 2026, [dokumentacija za Search](https://support.google.com/webmasters/answer/16984139)
+(postoji i zasebna verzija za Discover).
+
+| | |
+|---|---|
+| **Pokriva** | AI Overviews i **AI Mode**. Search Labs eksperimenti su izričito isključeni |
+| **Metrika** | 🔴 **Samo prikazi (impressions)** — koliko puta je link ka nama prikazan u AI funkciji. **Nema klikova, CTR-a ni pozicije** |
+| **Dimenzije** | stranice · zemlje · uređaji · datumi (Pacific Time) |
+| **Odnos prema glavnom izveštaju** | Nije odvojen skup: **uključuje podatke iz `Web` tipa** glavnog Performance izveštaja. Dakle naši dosadašnji GSC brojevi **već sadrže** AI prikaze — ovaj izveštaj ih samo izdvaja |
+| **API** | ❌ Nije pomenut u dokumentaciji — praktično **UI-only**. Naš `gsc_report.py` (Search Analytics API, `dimensions: ["query"]`) ga ne može povući |
+| **Ograničenja** | Rollout je delimičan (nemaju sve property-je) · traži dovoljan broj prikaza da se uopšte pojavi · standardno ograničenje 1.000 redova · najnoviji podaci su preliminarni |
+
+**Šta to znači za nas praktično:** ovo je **ručno očitavanje iz UI-ja jednom
+mesečno**, ne nešto što konektor može da automatizuje. Vrednost je u
+**stranicama** — koje naše stranice AI uopšte citira — jer se to poredi sa
+mesečnim ChatGPT testom i pokazuje da li isti sadržaj prolazi kod oba tipa
+asistenta. Bez klikova, ovo **nije kanal za konverzije**, nego signal
+vidljivosti; ne graditi očekivanja o saobraćaju na njemu.
+
+### 0.2 🔴 Provera koja se lako previdi — *Search generative AI control*
+
+U Search Console-u postoji podešavanje **Settings → Search generative AI**
+([direktan link](https://search.google.com/search-console/settings/search-gen-ai))
+koje određuje da li naš sadržaj sme da se pojavi u AI Overviews / AI Mode /
+Discover AI funkcijama.
+
+- Opcije: **Include** (podrazumevano) · Exclude · Inherit from parent
+- Isključivanje **ne utiče** na obično rangiranje ni indeksiranje — kontrola se
+  ne koristi kao ranking signal
+- 🔴 **Vredi jednom potvrditi da stoji na „Include"** za `sc-domain:antasline.com`
+  — ceo ovaj plan pretpostavlja da smemo da se pojavimo u AI odgovorima. Ako je
+  neko (ili neki alat) to ikad prebacio, sav GEO rad je bez efekta na Google
+  strani, a nigde drugde se to ne bi videlo
+- Ide u isti prolaz kroz GSC UI kao 3 već otvorene stavke (zastareo sitemap
+  unos, upozorenja, email alerti) — v. [[PROGRESS]] Blokeri
+
 ### Sadržaj pisan uz pomoć AI-ja — [gen-AI politika](https://developers.google.com/search/docs/fundamentals/using-gen-ai-content)
 - AI kao alat je **dozvoljen**; problem je *scaled content abuse* — mnogo
   stranica bez dodate vrednosti. Naš W2 model (20 stranica, svaka sa svojim
@@ -96,7 +134,8 @@ AI za "najbolji X u Srbiji" agregira tuđe liste, portale, forume:
 ### 5. Merenje ⭐⭐ (u snapshot rutini)
 - [ ] GA4: pratiti "AI Assistant" kanal mesečno — baseline **9 korisnika/90d** — nije poseban zadatak, ide u sledeći puni mesečni snapshot (početak avgusta, [[PROGRESS]] W5 5.4)
 - [x] ✅ NOVO 2026-07-23 — `[[analiza/BOT-CRAWLER-LOG]]` pokrenut: access log analiza svih bot/crawler hitova (AI asistenti/search/SEO-alati), baseline presek. ✅ **Pod-pitanje „da li botovi povlače `llms.txt`" ZATVORENO 2026-08-12** — 0 organskih hitova kroz 2 preseka, a Google je u međuvremenu napismeno potvrdio da Search te fajlove ne koristi (v. §0). Ne ponavljati presek radi ovoga; bot log ostaje koristan za ostale crawlere.
-- [ ] 🆕 **Generative AI performance report** (Search Console) u mesečni snapshot — proveriti da li ga GSC API izlaže ili je UI-only #claude-code
+- [ ] 🆕 **Generative AI performance report** (Search Console) u mesečni snapshot — **UI-only, API ga ne izlaže** (v. §0.1), dakle ručno očitavanje: prikazi po stranicama, poređenje sa mesečnim ChatGPT testom. Prvo proveriti da li je uopšte dostupan za našu property (rollout je delimičan) #ceka-miroslav (traži GSC UI)
+- [ ] 🔴 Potvrditi da **Settings → Search generative AI** stoji na „Include" (v. §0.2) — jednokratno, ide u isti prolaz kroz GSC UI kao ostale 3 čekajuće stavke #ceka-miroslav
 - [x] ✅ PRVI PUT IZVRŠENO 2026-07-22 — Mesečni AI test: 5 fiksnih promptova u ChatGPT (pravi Incognito, bez naloga). Rezultat: **2/5 pominjanja** (prompt 1 "industrijski PVC podovi" bez URL citata, prompt 5 "ko postavlja sportske terene" SA citatom na antasline.com). 🔴 2 gap-a otkrivena: prompt 3 (epoksid alternativa) AI ne pominje modularni PVC/Ecotile kategoriju uopšte; prompt 4 (terase bez lepljenja) AI misli samo na WPC deking, ne Bergo klik-sisteme. Detalji + puni odgovori: [[analiza/2026-07-22-ai-test-baseline]]. Ponoviti sledeći mesec istim promptovima za trend.
 
 **Fiksni test promptovi:**

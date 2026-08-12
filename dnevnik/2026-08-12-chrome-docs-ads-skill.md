@@ -80,6 +80,23 @@ posta o *platform properties*.
 - `/gemini-vizuali` — IPTC `DigitalSourceType=TrainedAlgorithmicMedia` za
   AI-generisane slike **ako se ikad krene sa Merchant Center-om**.
 
+### 7. Generative AI performance report — pročitana dokumentacija
+`[[seo/geo-ai-plan]]` dobio **§0.1** (šta izveštaj stvarno daje) i **§0.2**
+(kontrola za uključivanje u AI funkcije).
+- Pokriva **AI Overviews + AI Mode** (Labs eksperimenti isključeni); metrika je
+  🔴 **samo prikazi** — nema klikova, CTR-a ni pozicije
+- **Nije odvojen skup podataka**: uključuje `Web` tip glavnog Performance
+  izveštaja, dakle naši dosadašnji GSC brojevi **već sadrže** AI prikaze, samo
+  neizdvojene
+- ❌ **Nije u API-ju** — `gsc_report.py` ga ne može povući; ostaje ručno
+  mesečno očitavanje iz UI-ja. Vrednost je u **stranicama** (koje naše stranice
+  AI citira), za poređenje sa mesečnim ChatGPT testom
+- 🔴 Nađena kontrola koja se lako previdi: **Settings → Search generative AI**
+  (Include / Exclude / Inherit, podrazumevano *Include*). Ako je ikad prebačena
+  na *Exclude*, ceo GEO rad nema efekta na Google strani — a to se **nigde
+  drugde ne bi videlo**, jer isključivanje ne utiče na rangiranje ni
+  indeksiranje. Otud jednokratna provera
+
 ## Otvorene akcije
 
 - [ ] Proveriti LiteSpeed prefetch/prerender podešavanja pre migracije 24.08 —
@@ -91,9 +108,11 @@ posta o *platform properties*.
       — v. Beleške #1 #ceka-miroslav
 - [ ] Posle svakog update-a `modern-web-guidance` paketa vratiti sekciju
       „LOKALNE NAPOMENE" u njegov SKILL.md #claude-code
-- [ ] **Generative AI performance report** u Search Console — dodati u mesečni
-      snapshot (W5); proveriti da li ga GSC API uopšte izlaže ili je UI-only
-      #claude-code
+- [ ] **Generative AI performance report** — ✅ provereno: **UI-only**, API ga
+      ne izlaže; ostaje ručno mesečno očitavanje. Prvo proveriti da li je
+      dostupan za našu property (rollout delimičan) #ceka-miroslav
+- [ ] 🔴 Potvrditi da **Settings → Search generative AI** stoji na „Include"
+      #ceka-miroslav
 - [ ] Posle live-a: povezati **Instagram** kao GSC platform property (YouTube
       tek kad Faza 1 oživi kanal) — proveriti prolazi li brend nalog
       verifikaciju #ceka-miroslav (traži prijavu na Instagram nalog)

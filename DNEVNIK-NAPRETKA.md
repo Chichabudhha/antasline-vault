@@ -58,6 +58,17 @@
 > `DigitalSourceType=TrainedAlgorithmicMedia` za AI slike **ako se ikad krene sa
 > Merchant Center-om**. [[seo/geo-ai-plan]] dobio novu §0.
 >
+> 🆕 **Generative AI performance report** (dokumentacija pročitana): pokriva AI
+> Overviews + AI Mode, ali daje 🔴 **samo prikaze** — bez klikova/CTR/pozicije;
+> **nije odvojen skup** (uključuje `Web` tip, dakle naši GSC brojevi već sadrže
+> AI prikaze, samo neizdvojene); ❌ **nije u API-ju** → ručno mesečno očitavanje,
+> `gsc_report.py` ga ne može povući. 🔴 Usput nađena kontrola koja se lako
+> previdi: **Settings → Search generative AI** (Include/Exclude/Inherit,
+> podrazumevano *Include*) — ako je ikad prebačena na *Exclude*, ceo GEO rad
+> nema efekta na Google strani, a nigde drugde se to ne bi videlo (isključivanje
+> ne dira rangiranje ni indeksiranje). Obe stavke → GSC UI, #ceka-miroslav.
+> [[seo/geo-ai-plan]] §0.1/§0.2.
+>
 > Detalji: [[dnevnik/2026-08-12-chrome-docs-ads-skill]]
 
 ## 2026-08-12 [claude-code] W3/BLOK C — `product_brand` arhive napunjene (Ecotile 7, Ergomat 27), 301 cilj više nije prazna stranica ✅
