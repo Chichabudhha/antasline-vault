@@ -82,6 +82,16 @@ azurirano: 2026-08-10
 > Poslednji dodatak van reda čekanja: ✅ **alt tekst na slikama proizvoda (2026-08-12)** —
 > 66 priloga (6 glavnih + 63 galerijske) popunjeno, **159 dekorativnih SVG ikonica
 > namerno ostavljeno na `alt=""`** (ispravno po WCAG, popunjavanje bi bilo regresija).
+>
+> ✅ **Vizuali referenci i ikonice kartica (2026-08-12, ad-hoc po nalazima M)** — gole
+> tekstualne trake referenci (`.al-ref-row`) zamenjene foto-karticama na **homepage-u**
+> (6 referenci) i **„O nama"** (11 kartica, logo traka premeštena u Industrija); ikonice
+> dopunjene na **padel** (16670, 4 kartice) i **maloprodaji** (16142, 3 kartice), set
+> ikonica **23 → 27**; maloprodaja dobila sekciju **„R-Tile ploče iz ponude"** (nije
+> imala nijedan link ka `/proizvod/`). 🟡 Ostaje da čeka M: **4 reference bez ikakvog
+> materijala** (Beobasket, BG liga 3x3, Hotel Prag, Restoran Sidro) i **definicija
+> „starog formata"** za 5119/15793 — oboje u [[PROGRESS]] Blokeri.
+> Detalji: [[dnevnik/2026-08-12-vizuali-reference-ikonice]].
 > Zatvara poslednju otvorenu stavku iz [[migracija/2026-07-30-lighthouse-a11y-plan]].
 > 🔵 Jedini preostali a11y nalaz — `heading-order` + `target-size` na product karticama
 > (WoodMart core layout) — **svesno odložen na posle live-a**, veći zahvat nego što

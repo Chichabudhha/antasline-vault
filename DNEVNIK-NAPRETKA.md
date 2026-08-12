@@ -1,3 +1,70 @@
+## 2026-08-12 [claude-code] BLOK C — Vizuali referenci i ikonice kartica (homepage, O nama, padel, maloprodaja) ✅
+
+> Peta sesija istog dana. Ad-hoc polish po nalazima Miroslava dok gleda build — nije
+> stavka iz reda čekanja, W1 ostaje zaključen. Backupi:
+> `_pre-veruju-nam-slike.sql` · `_pre-onama-reference-slike.sql` ·
+> `_pre-padel-ikonice.sql` · `_pre-maloprodaja-ikonice-proizvodi.sql` ·
+> `antas-design.css.bak-2026-08-12-card-title-link`.
+>
+> **Gole tekstualne trake referenci (`.al-ref-row`) zamenjene foto-karticama.**
+> Homepage „Veruju nam": HTEC / Quectel / Dunk Shop dobili kartice → **6 referenci**.
+> O nama: tri liste (Industrija 10 · Sport 6 · Ugostiteljstvo 4 imena) → **11 kartica**
+> sa fotkama naših izvedenih radova. Logo traka (Bosch, Vinča, Adient, Philip Morris,
+> AMSS) **premeštena** iz uvoda u sekciju Industrija; **Orion izvađen iz nje** jer je
+> dobio foto-karticu (inače bi bio dvaput u istoj sekciji). Posle ove sesije
+> `.al-ref-row` se **nigde ne koristi** (CSS pravilo ostavljeno u fajlu).
+>
+> 🔴 **Dunk Shop fotka nije postojala na lokalu** — 0 pogodaka u `uploads`, DB
+> (`post_content`/`post_title`/`guid`/`postmeta`/`options`) i foto-arhivi. Nađena kao
+> serijalizovana **live** putanja u starijem vault SQL backup-u → skinuta sa
+> antasline.com i uvezena (**17808**). Dve fotke kafića uvezene iz arhive
+> `slike 12-22/bergo baste/` (**17810** Metropolis, **17811** Arabika).
+>
+> **Ikonice — set narastao 23 → 27.** Padel (16670): blok od 4 kartice nije imao
+> **nijednu** ikonicu → 🆕 `brzina.svg` + 🆕 `odbijanje.svg`, plus postojeće
+> `odrzavanje`/`ergonomija`. Maloprodaja (16142): 3 od 7 kartica bez ikonice →
+> 🆕 `bez-pripreme.svg` + 🆕 `vatrootpornost.svg`, plus `fleksibilna`. Sve četiri
+> crtane **ručno** po specifikaciji seta (24×24, `stroke #F04D22`, `stroke-width 1.7`,
+> round) — generator iz `design` skila namerno preskočen, ne pogađa house stil.
+> `vatrootpornost` ima unutrašnji plamen da se ne meša sa `odrzavanje.svg` (ista silueta).
+>
+> **Maloprodaja: dodata sekcija „R-Tile ploče iz ponude"** — stranica nije imala
+> **nijedan** link ka `/proizvod/`. Dve kartice (16920 Urban, 16921 Design), opisi
+> izvučeni iz `post_content` proizvoda, ništa izmišljeno. Pozadine tri sekcije ispod
+> pomerene (`mist`→`paper`→`mist`→`paper`) da ritam i dijagonale ostanu netaknuti.
+>
+> 🔴 **Gotcha — `<a class="al-card">` ne sme da nosi blok sadržaj.** Kartica sa
+> `<div class="al-card__body">` unutar anchora: **wpautop ubaci prazan `<p></p>` pre
+> `div`-a**, parser zatvori anchor, telo ispadne iz grid ćelije — slike ostanu u redu
+> od 2, tela se nasložu ispod preko cele širine. Vidi se **samo u browseru**, izvor
+> izgleda ispravno. Rešenje: kartica je `<div>`, link na `.al-card__media` i u naslovu.
+> Postojeće `a.al-card` kartice (homepage, padel) su bezbedne — imaju samo `<span>` decu.
+>
+> 🔴 **Gotcha — `:not(.klasa)` broji kao klasa.** Naslov-link je dobijao plavo
+> podvlačenje od `.entry-content a:not(.al-btn):not(.al-card)` (`antas-design.css:1477`),
+> specifičnost **(0,3,1)**; naivno `.al-card__title a` je (0,1,1) i tiho gubi. Izuzetak
+> upisan uz postojeći za `.wd-post-title`/`.wd-entities-title`, istog oblika.
+>
+> 🟡 **Ikonice traže 5 iteracija i oko, ne kod.** `brzina` je prvo čitala kao
+> **pola-popunjen krug**, `odbijanje` redom kao **kuka/laso**, **brda sa suncem**,
+> **kvačica**. Renderovane na 46 px i 120 px pored postojećih iz seta pre prihvatanja
+> (privremeni `icon-preview-tmp.html`, obrisan).
+>
+> ⛔ **`/vestacka-trava-za-fudbal/` (5119) i `/zastitne-podloge-za-travu-i-plocnike/`
+> (15793) — PREKINUTO na zahtev M („Prekini"), 0 izmena.** Prijavljeno „stari format",
+> **nije reprodukovano**: obe koriste aktuelan `al-*` sistem i imaju **identične `body`
+> klase** kao rebuild-ovane stranice. Audit svih **53 objavljene stranice**: jedini pravi
+> legacy markup u buildu je `productColors-block`/`color-square` (Porto/Kallyas) **samo
+> na 15793** — swatch „Silk Black" se renderuje kao prazan prostor. Tu i: spec kao `<ul>`
+> umesto `al-table`, **dve galerije** na istoj stranici, `<h2>` bez `al-label`, nula
+> `al-card`. Na 5119 nijedan legacy marker. ⚠️ Zastavica `porto` u auditu je **lažni
+> pozitiv** — poklapa se unutar reči „s**porto**va".
+>
+> **Verifikovano:** homepage 6 kartica / 0 `al-ref-row` · O nama 11 kartica / 0
+> `al-ref-row` / 1×H1 / 11 slika 200 · padel 4 `al-icon` · maloprodaja 9 `al-icon`,
+> kartice proizvoda jednake visine (599 px), naslovi bez podvlačenja, obe `/proizvod/`
+> putanje 200. Detalji: [[dnevnik/2026-08-12-vizuali-reference-ikonice]].
+
 ## 2026-08-12 [claude-code] W1 — Alt tekst na slikama proizvoda: 66 priloga popunjeno, 159 dekorativnih ikonica namerno ostavljeno prazno ✅
 
 > Red čekanja iz 07-30 a11y plana („alt tekst — poseban budući zadatak"), uzet pred

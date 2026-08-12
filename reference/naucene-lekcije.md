@@ -5,6 +5,29 @@ azurirano: 2026-08-12
 
 # Naučene lekcije (tehnički gotchas)
 
+## `<a class="al-card">` ne sme da nosi blok sadržaj — wpautop raspadne karticu, a izvor izgleda ispravno (2026-08-12)
+- Proizvod-kartica je napisana kao `<a class="al-card">` sa `<div class="al-card__body">` unutra (naslov u telu tamnom bojom — bela verzala preko studijske fotke na beloj pozadini je nečitljiva). **wpautop ubaci prazan `<p></p>` pre tog `<div>`-a**, parser zatvori anchor, i telo kartice ispadne iz grid ćelije: slike ostanu u redu od 2, a tela se nasložu ispod preko cele širine.
+- 🔴 **U `post_content`-u sve izgleda tačno.** Vidi se samo u renderovanom DOM-u (`document.querySelector('.al-grid--2').outerHTML`) — otud pravilo: **posle svakog ubacivanja kartica sa telom, pogledati grid u browseru, ne samo `curl`-ovati HTML i brojati klase.**
+- **Rešenje:** kartica je `<div class="al-card">`, a link stoji na `.al-card__media` i unutar `.al-card__title`. Ceo blok time nije klikljiv, što je prihvatljivo i poklapa se sa obrascem koji već koriste reference-kartice na „O nama".
+- 🟢 Postojeće `a.al-card` kartice (homepage „Šta radimo", padel modeli) su **bezbedne** — imaju samo `<span>` decu, pa wpautop nema gde da ubaci `<p>`. Pravilo važi samo za kombinaciju anchor + blok dete.
+
+## `:not(.klasa)` broji kao klasa — pravilo za linkove u sadržaju je (0,3,1) i tiho gazi naivan override (2026-08-12)
+- Naslov-link u `.al-card__title` je dobijao plavo podvlačenje od `.entry-content a:not(.al-btn):not(.al-card)` (`antas-design.css:1477`). Specifičnost tog selektora je **(0,3,1)** — jedna klasa plus **dva `:not()` koja svako broje kao klasa**.
+- Naivni override `.al-card__title a` je **(0,1,1)** i gubi bez ijedne poruke; `getComputedStyle` pokaže `textDecorationLine: underline` iako je pravilo naizgled specifičnije jer je „bliže" elementu.
+- **Metod za dijagnozu:** proći kroz `document.styleSheets`, filtrirati pravila koja postavljaju `text-decoration`, pa `element.matches(r.selectorText)` — dobija se tačan spisak pravila koja se takmiče, poređan po kaskadi. Brže i pouzdanije od čitanja CSS fajla.
+- **Rešenje:** izuzetak se piše **istog oblika kao pravilo koje gazi** (`.entry-content .al-card__title a:not(.al-btn):not(.al-card)`), uz postojeće izuzetke za `.wd-post-title`/`.wd-entities-title`. Srodno F7.20 pravilu o `:is()` zamkama iz `base.css`.
+
+## Ikonica se ne prihvata iz koda — mora se renderovati na obe veličine pored postojećeg seta (2026-08-12)
+- Četiri nove SVG ikonice (`brzina`, `odbijanje`, `bez-pripreme`, `vatrootpornost`) tražile su **5 iteracija**. Redom su, iako je putanja u kodu bila „logična": `brzina` sa unutrašnjim šavom čitala kao **pola-popunjen krug**; `odbijanje` kao **kuka/laso**, pa kao **brda sa suncem**, pa kao **kvačica**.
+- **Metod:** privremen HTML u root-u builda koji prikazuje nove ikonice na **46 px (stvarna veličina u kartici) i 120 px (za detalj)**, uvek **pored 2–3 postojeće iz seta** — poređenje težine linije i „gustine" je ono što otkriva grešku, ne gledanje same ikonice. Fajl se briše na kraju sesije.
+- 🔴 **Semantički sudar se ne vidi u kodu:** `vatrootpornost` (plamen) i `odrzavanje` (kap) imaju **istu siluetu** na 46 px. Rešeno unutrašnjim plamenom. Uvek proveriti da nova ikonica nema blizanca u setu.
+- Generator iz `design` skila (Gemini 3.1 Pro → SVG) je namerno preskočen: kad set ima čvrstu specifikaciju (24×24 viewBox, `stroke #F04D22`, `stroke-width 1.7`, round caps/joins, bez fill-a), ručno crtanje pogađa stil iz prve, a AI izlaz traži prepravku svejedno.
+
+## Slika koje nema na lokalu može postojati u starom vault SQL backup-u kao live putanja (2026-08-12)
+- Fotka „Dunk Shop" nije postojala nigde na lokalu: 0 pogodaka u `wp-content/uploads`, u DB (`post_content`, `post_title`, `guid`, `postmeta`, `options`) i u foto-arhivi `C:\Miroslav\Antas line\`.
+- Nađena je `grep`-om kroz **starije SQL backup-e u vault-u** (`antasline-backups/*.sql`) — kao **serijalizovana apsolutna live putanja** (`s:73:"https://www.antasline.com/wp-content/uploads/2026/07/teren-dunk-shop.jpeg"`) zaostala u meta podacima iz nekog ranijeg uvoza sa live-a.
+- **Pravilo: pre nego što se zaključi „te slike nemamo", grep-uj backup-e po imenu pojma**, pa skini original sa live-a i uvezi kroz `wp media import` (ne ručnim `cp` u `uploads` — inače nema priloga, ni alt teksta, ni generisanih veličina).
+
 ## Alt tekst se broji po KANALU RENDEROVANJA, ne po medijateci — razlika je 66 vs 6.638 (2026-08-12)
 - Medijateka ima **7.725 slika, 6.638 bez alta**. Zvuči kao nedeljni posao. Stvarnih slika koje se **renderuju** a nemaju alt bilo je **66**.
 - Razlog: WordPress registruje svaku generisanu veličinu kao zaseban prilog (Porto-era artefakt), plus godinama nagomilani neupotrebljeni uploadi. Nijedno od toga korisnik nikad ne vidi.
