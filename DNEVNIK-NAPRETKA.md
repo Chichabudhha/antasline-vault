@@ -1,3 +1,44 @@
+## 2026-08-12 [claude-code] W1 quick-win — Chrome 149 `border-color` na tabelama: bloker zatvoren, build nije pogođen ✅
+
+> Bloker otvoren isti dan (Chrome 149 izbacio `border-color: gray` iz UA stila za
+> tabele) — vizuelno/računski proveren, **nema posla**. Read-only: 0 izmena na
+> buildu, bazi i CSS-u, nema backup fajla.
+>
+> **Zašto nas ne dodiruje — dva nezavisna razloga:**
+> 1. **Nijedna objavljena stranica ne koristi HTML atribut `border=`** (SQL provera
+>    nad `wpGs_posts`, `post_status='publish'`) — a to je jedini slučaj koji je
+>    stvarno zavisio od UA pravila `border-color: gray`.
+> 2. **Svaka ivica ima eksplicitnu boju u autorskom CSS-u.** WoodMart reset postavi
+>    `border:0` na `table/th/td`, pa `table th/td` vrati `border-bottom` sa
+>    `var(--brdcolor-gray-200/300)`; `.al-table` deklariše svoju
+>    `rgba(22,40,60,0.12)` (`antas-design.css:582`). Ni stacked mobilna varijanta
+>    (`:has(thead th:nth-child(4))`) ne ostavlja boju nedeklarisanu.
+>
+> **Izmereno u Chrome 151** (nosi izmenu iz 149), `getComputedStyle` nad svakim
+> `table/th/td`, filter „boja ivice == `color` (tj. `currentColor`)":
+>
+> | Stranica | Tip tabele | Boja ivice ćelije | Sumnjivih |
+> |---|---|---|---|
+> | `/industrijski-podovi/` (16567) | bare `<table>` | `rgba(0,0,0,0.106)` | 0 |
+> | `/ftalati…/` (16612) | legacy `id=tabele width=95%` | `rgba(0,0,0,0.106)` | 0 |
+> | `/prednosti-r-tile…/` (6824) | legacy `width="872"`, 39 elemenata | `rgba(0,0,0,0.106)` | 0 |
+> | `/proizvod/konusni-stitnik-za-i-profil/` | `.al-table` spec | `rgba(22,40,60,0.12)` | 0 |
+>
+> Sam `<table>` element svuda ima `border-style: none` (WoodMart reset), pa je
+> njegova `border-color` (koja jeste `currentColor`) bez ikakvog efekta — što je i
+> razlog zašto izmena prolazi nezapaženo.
+>
+> 🆕 **Gotcha (okruženje, ne tema):** XAMPP Apache nije bio pokrenut, a prvi zahtev
+> posle hladnog starta traje **134s** (opcache prazan) — CDP `Runtime.evaluate`
+> pukne na 45s timeout-u i izgleda kao „renderer je zamrznut". Drugi zahtev 11,7s,
+> treći 6,4s. Pre bilo kakvog Chrome merenja na lokalu: prvo `curl` da se opcache
+> zagreje, pa tek onda pregledač.
+>
+> Zatvara 🟡 bloker iz [[PROGRESS]] (2026-08-12). Ostaje kao pravilo: nove tabele
+> uvek sa eksplicitnom bojom ivice, nikad `border: 1px solid` bez boje.
+
+---
+
 ## 2026-08-12 [claude-code] W5/GEO — GenAI baseline snimljen pre migracije: 17K prikaza, 2 stranice nose 54% ✅
 
 > Prvo očitavanje Search Console **Generative AI features** izveštaja. Read-only,

@@ -5,6 +5,19 @@ azurirano: 2026-08-12
 
 # Naučene lekcije (tehnički gotchas)
 
+## Hladan start XAMPP-a: prvi zahtev 134s, a CDP timeout izgleda kao pokvaren pregledač (2026-08-12)
+- Chrome merenje na lokalu palo je sa `CDP sendCommand "Runtime.evaluate" timed out after 45000ms` + „The renderer may be frozen or unresponsive". Renderer nije bio zamrznut — Apache je bio ugašen, pa je posle pokretanja prvi zahtev sa **praznim opcache-om trajao 134s**. Drugi 11,7s, treći 6,4s.
+- 🔴 Zamka je u poruci: govori o pregledaču, a uzrok je na serveru. Lako vodi u pogrešnu dijagnostiku (restart ekstenzije, drugi tab, „CDP je nepouzdan").
+- **Pravilo: pre bilo kakvog Chrome merenja na lokalnom buildu prvo `curl -o /dev/null -w "%{http_code} %{time_total}s"` na ciljni URL** — dokazuje da Apache radi i zagreva opcache. Tek kad `curl` vrati razuman broj, otvarati pregledač.
+- Povezano: XAMPP opcache je uključen 2026-07-09 baš zbog TTFB-a (v. `## XAMPP / lokalno okruženje`) — ali opcache je **per-proces**, pa svako gašenje Apache-a vraća punu cenu prvog zahteva.
+
+## Deprecation u pregledaču se proverava `getComputedStyle`-om, ne čitanjem CSS-a (Chrome 149 tabele, 2026-08-12)
+- Chrome 149 je izbacio `border-color: gray` iz UA stila za tabele. Zvučalo je kao rizik za sve spec tabele na proizvodima; stvarni odgovor je bio **0 pogođenih ivica**.
+- Metod koji je to dokazao za ~20 min, umesto vizuelnog pregledanja stranica: `getComputedStyle` nad svakim `table/th/td`, pa filter **„boja ivice == `color` elementa"** (tj. pala je na `currentColor`). Nula pogodaka = nema oslanjanja na UA default. Isti obrazac radi za svaku buduću UA deprecation — traži se **posledica**, ne pravilo.
+- Dva razloga zašto nas nije dodirnulo, oba vredna kao pravilo: (1) **nijedna objavljena stranica ne koristi HTML atribut `border=`** — a samo je taj slučaj zavisio od UA boje; (2) i WoodMart (`var(--brdcolor-gray-200/300)`) i `.al-table` (`rgba(22,40,60,0.12)`) deklarišu boju eksplicitno.
+- 🟢 Usput potvrđeno zašto izmena prolazi nezapaženo i tamo gde bi „trebalo" da se vidi: WoodMart reset postavlja `border:0` na `table/th/td`, pa sam `<table>` ima `border-style: none` — njegova `border-color` (koja jeste `currentColor`) nema šta da oboji.
+- **Pravilo za nov markup: nikad `border: 1px solid` bez boje.** Boja ivice se deklariše uvek, i u temi i u sadržaju.
+
 ## Browser automatizacija nad Google alatima: prvo proveri KOJI je nalog aktivan (2026-08-12)
 - Otvaranje GSC-a preko Chrome automatizacije vratilo je „Упс, немате приступ овом производу" — Chrome je bio prijavljen na **`cpgujam@gmail.com`**, a property je pod `miroslav.markovic109@gmail.com`.
 - 🔴 Opasnost je u pogrešnom zaključku: ta poruka lako se pročita kao „izveštaj/property nije dostupan" i završi u dnevniku kao nalaz, umesto kao pogrešan nalog. Isti obrazac važi za GA4, Ads i GMB UI.
