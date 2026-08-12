@@ -40,3 +40,12 @@ F5 može odmah posle F1, paralelno sa F2/F3.
    ažuriraj [[PROGRESS]], i ako prompt kaže — ažuriraj [[migracija/PARITY-PLAN]].
 5. Ako nešto ne može da se završi — dokumentuj tačno gde je stalo u dnevniku
    i označi fazu sa ⏳ umesto štikliranja.
+
+---
+
+## Van F-serije — `[cpanel-live]` promptovi
+
+- [[migracija/promptovi/2026-08-12-cpanel-preflight-infrastruktura]] — read-only
+  provera infrastrukture na produkciji pred 24.08 (disk/inodes, put prenosa
+  paketa, JetBackup, speculative loading, LiteSpeed, higijena docroot-a).
+  Nalepiti u cPanel Claude Code posle `/antasline-sesija`. **Ne menja ništa.**
