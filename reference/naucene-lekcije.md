@@ -5,6 +5,12 @@ azurirano: 2026-08-12
 
 # Naučene lekcije (tehnički gotchas)
 
+## Podešavanje koje tiho gasi ceo kanal, a ne ostavlja nikakav trag u podacima (2026-08-12)
+- Search Console ima **Settings → Search generative AI** (Include / Exclude / Inherit, podrazumevano *Include*) — određuje da li sadržaj sme u AI Overviews / AI Mode / Discover AI.
+- Opasnost nije u podešavanju nego u njegovoj **nevidljivosti**: isključivanje **ne dira ni rangiranje ni indeksiranje**, pa se u GSC izveštajima, GA4-u i rankingu ne bi videlo ništa. Sav GEO rad bi bio bez efekta na Google strani, a dijagnostika bi tražila uzrok u sadržaju.
+- Provereno 2026-08-12: kod nas stoji na „Include". Trošak provere — jedan klik.
+- **Pravilo: kad kanal zavisi od on/off prekidača kod trećeg lica, prekidač se verifikuje pre nego što se u kanal uloži rad, i upisuje se u dokumentaciju sa datumom provere.** Isti obrazac već postoji u ovom projektu: `noindex` na stranici, `include_in_conversions_metric` na Ads akciji, `tax_*_sitemap` ključevi posle Rank Math importa — sve „tihi prekidači" koji su nas već koštali vremena.
+
 ## Konvencija koju niko zvanično nije potvrdio ≠ standard — `llms.txt` je bio nagađanje industrije (2026-08-12)
 - `llms.txt` + `llms-full.txt` su napravljeni i deployovani na live (23.07) kao deo „GEO paketa", uz ogradu u [[seo/geo-ai-plan]] da adoptacija „nije zvanično potvrđena".
 - **Naše sopstveno merenje je odgovorilo pre dokumentacije:** [[analiza/BOT-CRAWLER-LOG]] je kroz dva preseka pokazao **0 organskih hitova** — nijedan AI bot nije zatražio fajlove, iako su svi aktivno crawlovali sajt u istim prozorima.

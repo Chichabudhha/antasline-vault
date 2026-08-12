@@ -32,6 +32,12 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
       pa je „očisti keš" = LSCWP Purge All i ništa više) · M odluka **„migracija
       samo kad sam tu"** → [[migracija/rollback-plan]]
       🔴 **Nosi nov preduslov u B1 ispod** — v. „Dostupnost" stavka.
+- [ ] 🆕 **Baseline: Generative AI performance report (GSC)** — očitati prikaze
+      **po stranicama** pre migracije i snimiti u `analiza/`. Razlog: izveštaj
+      je vezan za URL-ove, a migracija ih menja; bez baseline-a se posle live-a
+      ne može odgovoriti „da li smo izgubili AI vidljivost". UI-only (API ga ne
+      izlaže) → CC preko browsera ili M ručno. Kontrola *Search generative AI*
+      je potvrđeno na „Include" (2026-08-12). v. [[seo/geo-ai-plan]] §0.1
 - [ ] **Enhanced Conversions — Ads UI** (M, 5 min): Goals → Conversions →
       „Lead - forma (GTM)" → Settings → Enhanced conversions → uključiti, metod
       **Google Tag Manager**, prihvatiti customer data terms.
