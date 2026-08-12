@@ -5,6 +5,29 @@ azurirano: 2026-08-12
 
 # Naučene lekcije (tehnički gotchas)
 
+## Ušteda tokena dolazi od AGREGACIJE, ne od lokalnog modela — pravila su pobedila qwen3 za 1300× (2026-08-12)
+- Cilj je bio da lokalni Ollama model razvrstava GSC/Ads/GA4 podatke umesto mene. Izmereno na pravom izvozu (400 upita, 37 KB): **regex pravila razvrstala 93,6% prikaza za 0,2 s**, `qwen3:4b` dodao +2% za **475 s** uz ~50% grešaka na spornim upitima (`table za kos` → vinil, `tartan kocke` → veštačka trava).
+- 🔴 Stvarna ušteda je bila u **sažimanju**: 37 KB sirovog JSON-a (~12k tokena) → 3,5 KB izveštaja (~700 tokena). To radi obična Python agregacija, bez ijednog poziva modela.
+- Prava uloga malog lokalnog modela je **rudarenje pravila jednom**, ne klasifikacija svaki put — predlog korena reči se upiše u kod i od tada je besplatan zauvek. Skill: `[[ollama-lokalni]]`.
+- Pouka šire: pre nego što se na problem baci model, proveriti da li je problem uopšte semantički. Ovaj nije bio.
+
+## Ollama 0.18 sam bira `num_ctx` iz maksimuma modela — model od 3B traži 15 GiB i „ne staje u RAM" (2026-08-12)
+- `llama3.2:3b` (2 GB) je pukao sa `model requires more system memory (15.3 GiB) than is available`. Izgleda kao premali RAM — nije. Ollama je uzeo modelov maksimalni kontekst (qwen3 = 262k) kao podrazumevani.
+- Fix: **uvek eksplicitno slati `options.num_ctx`** (kod nas 8192). Sa tim isti model radi na ~15 tok/s.
+- Druga polovina iste zamke: `num_predict` prekratak → odsečen izlaz → neispravan JSON → ceo poziv (minuti CPU vremena) bačen. `qwen3:4b` probije 2048 tokena već na 60 upita.
+- Hardver ove mašine (i5-11320H, 15,7 GB RAM, MX450 2 GB): `qwen3:4b` je jedini praktično upotrebljiv, `qwen3:8b` >10 min po pozivu, **`qwen3:30b` (18 GB) uopšte ne staje u RAM**.
+
+## `python skripta.py | Out-File -Encoding utf8` u PowerShell-u duplo enkoduje — ćirilica postane `ĐşĐľŃĐ°Ń€` (2026-08-12)
+- PowerShell dekodira Python-ov UTF-8 izlaz kao cp1252, pa ga ponovo enkoduje kao UTF-8. GSC vraća i ćirilične upite („кошаркашки терен"), koji tako postanu smeće — a JSON ostane sintaksno validan, pa ništa ne pukne.
+- Fix pre svakog pokretanja: `$env:PYTHONIOENCODING="utf-8"` + `[Console]::OutputEncoding=[System.Text.Encoding]::UTF8`, i `Set-Content -Encoding utf8` umesto `Out-File`.
+- Srodno sa ranijom lekcijom „Python `print` na Windows-u puca čim ćirilični izlaz ode u fajl (2026-08-11)" — ista klasa, drugi ishod: tamo pukne, ovde **tiho pokvari podatke**.
+
+## Klasifikacija srpskih upita: koren reči koji zvuči očigledno ume da pojede tuđu kategoriju (2026-08-12)
+- `odbojn` hvata i **odbojku** (sport) i **odbojnike za zid** (industrija) — rešeno sa `odbojnic` za industriju uz `odbojk` za sport.
+- `odbojnik` ne hvata množinu `odbojnici` (58 prikaza je tiho padalo u „ostalo"). Isto: `industriski` bez `j`, `bastu` vs `basten`, `epox` vs `epoksid`.
+- Ćirilicu treba **transliterisati pre poređenja**, inače latinična pravila ne vide ništa.
+- Kad `ostalo` pređe ~10% prikaza, to je signal da **fale pravila**, ne da treba jači model.
+
 ## Delegirani agent (`agy`) bez apsolutnih putanja krene da pretražuje ceo `C:\Users\` — kvota ode na lutanje (2026-08-12)
 - Prompt je rekao „foldere `dnevnik/` i `migracija/` ovog vault-a". `agy` je pokrenuo `Get-ChildItem -Path C:\Users\Miroslav -Directory -Filter "dnevnik" -Recurse -Depth 4` — dakle **tražio je folder umesto da ode na njega**. Potvrđeno u `~/.gemini/antigravity-cli/log/`.
 - 🔴 Delegirani agent **ne nasleđuje tvoj radni direktorijum kao kontekst** ni kad je pokrenut iz njega. Prompt mora dati **pune apsolutne putanje + broj fajlova** i **izričito zabraniti** pretragu van njih („NE pretražuj C:\Users\Miroslav").
