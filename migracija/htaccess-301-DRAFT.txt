@@ -95,6 +95,7 @@ RedirectMatch 301 "^/pvc-podne-ploce-ili-gumeni-podovi-za-garazu/?$" /pvc-podne-
 RedirectMatch 301 "^/gumeni-podovi/?$" /industrijski-podovi/podovi-za-teretane-i-fitnes-centre/   # 0
 RedirectMatch 301 "^/podovi-za-terase/bergo-multisport/ispunjava-fiba-standard/?$" /sportske-podloge/   # 0
 RedirectMatch 301 "^/podne-obloge-podovi-za-kontejnere-i-montazne-objekte/?$" /podne-ploce-podovi-za-kontejnere-i-montazne-objekte/   # 0
+RedirectMatch 301 "^/vestacka-trava/?$" /spoljnje-podne-obloge/vestacka-trava-za-terase/   # 0 — konsolidacija duplikata 2026-08-12 (5455 draftovan, 16673 kanonski)
 
 </IfModule>
 
