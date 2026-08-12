@@ -1,3 +1,37 @@
+## 2026-08-12 [claude-code] W5/GEO — GenAI baseline snimljen pre migracije: 17K prikaza, 2 stranice nose 54% ✅
+
+> Prvo očitavanje Search Console **Generative AI features** izveštaja. Read-only,
+> preko browsera (izveštaj je UI-only, nema ga u Search Analytics API-ju), bez
+> izmena na sajtu i bazi.
+>
+> **~17.000 prikaza / 112 stranica** za 3 meseca (≈18.05–09.08) = **~13%** od
+> ukupnih 129K Web prikaza. 🔴 Nije dodatan saobraćaj — AI prikazi su **podskup**
+> `Web` tipa, već uračunati; ne sabirati.
+>
+> **Koncentracija ekstremna:** `/kako-napraviti-teren-za-basket…/` **6.901** +
+> `/pop-tenis/` **2.250** = **54% svih AI prikaza**; prvih 10 stranica ~80%.
+> AI vidljivost ovog sajta je **sportski sadržaj**, ne industrijski podovi —
+> obrnuto od komercijalnog prioriteta.
+>
+> 🔴 **`/sportske-podloge/kosarkaske-konstrukcije/` ima 196 AI prikaza** — ista
+> stranica koja je u [[CLAUDE]] §7.4 kritična rupa redirect mape (478 GSC
+> klikova). Dodatan argument da F5 dobije pravu landing stranicu, ne 301 na shop
+> kategoriju. Conquest 2542 radi i u AI odgovorima (488). Duplikat parket/pločice
+> potvrđen i ovde (`-2` 459 vs original 81) — konsolidacija od 30.07 bila ispravna.
+>
+> 🆕 **Gotcha:** Chrome je bio prijavljen na **`cpgujam@gmail.com`**, koji nema
+> pristup property-ju — GSC vraća „немате приступ овом производу", što lako
+> izgleda kao da izveštaj nije dostupan. Drugi nalog
+> (`miroslav.markovic109@gmail.com`) je već bio prijavljen, prebacivanje kroz
+> avatar meni; URL posle prebacivanja nosi `/u/1/`. Direktan URL
+> `/search-console/generative-ai` je **404** — izveštaj se otvara iz Performance
+> strane („Open report" banner) ili `/performance/search-analytics/ai`.
+>
+> Detalji: [[dnevnik/2026-08-12-genai-baseline-sesija]] ·
+> baseline: [[analiza/2026-08-12-genai-baseline]] · checklist stavka A štiklirana ·
+> ponovno očitavanje ~07.09 (pad na pojedinačnoj stranici uz stabilan zbir =
+> 301 problem, ne sadržajni).
+
 ## 2026-08-12 [claude-code] ALATI — Chrome dokumentacija ugrađena u skilove + novi `/antasline-ads` playbook ✅
 
 > Druga sesija istog dana, **read-only prema sajtu i bazi** — nijedna izmena na

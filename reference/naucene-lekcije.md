@@ -5,6 +5,13 @@ azurirano: 2026-08-12
 
 # Naučene lekcije (tehnički gotchas)
 
+## Browser automatizacija nad Google alatima: prvo proveri KOJI je nalog aktivan (2026-08-12)
+- Otvaranje GSC-a preko Chrome automatizacije vratilo je „Упс, немате приступ овом производу" — Chrome je bio prijavljen na **`cpgujam@gmail.com`**, a property je pod `miroslav.markovic109@gmail.com`.
+- 🔴 Opasnost je u pogrešnom zaključku: ta poruka lako se pročita kao „izveštaj/property nije dostupan" i završi u dnevniku kao nalaz, umesto kao pogrešan nalog. Isti obrazac važi za GA4, Ads i GMB UI.
+- Rešenje: oba naloga su već bila prijavljena → prebacivanje kroz avatar meni, bez ikakvog unosa lozinke. **URL posle prebacivanja nosi `/u/1/`** — to je i najbrža provera da si na pravom nalogu.
+- **Pravilo: pre bilo kakvog čitanja podataka iz Google UI-ja kroz browser, potvrdi aktivni nalog** (avatar ili `/u/N/` u URL-u), pa tek onda tumači ono što stranica prikazuje.
+- Usput: direktan URL `search.google.com/search-console/generative-ai` je **404**. Tačan put je `/performance/search-analytics/ai`, ili banner „Open report" na Performance strani. Ne izmišljati URL-ove Google konzola po analogiji — otvarati kroz navigaciju.
+
 ## Podešavanje koje tiho gasi ceo kanal, a ne ostavlja nikakav trag u podacima (2026-08-12)
 - Search Console ima **Settings → Search generative AI** (Include / Exclude / Inherit, podrazumevano *Include*) — određuje da li sadržaj sme u AI Overviews / AI Mode / Discover AI.
 - Opasnost nije u podešavanju nego u njegovoj **nevidljivosti**: isključivanje **ne dira ni rangiranje ni indeksiranje**, pa se u GSC izveštajima, GA4-u i rankingu ne bi videlo ništa. Sav GEO rad bi bio bez efekta na Google strani, a dijagnostika bi tražila uzrok u sadržaju.
