@@ -61,7 +61,7 @@ azurirano: 2026-08-10
 | # | Zadatak | Vlasnik | Napomena |
 |---|---|---|---|
 | 1.1 | Silo rebuild: `/spoljnje-podne-obloge/` → `/podloge-za-parking/` → `/kontakt/` → `/o-nama/` | CC | ✅ 2026-07-07 — sve 4 gotove (spoljne bez j, parking-staze, kontakt forma, o-nama). C1 parity: live `/spoljnje-*` → lokal `/spoljne-*` |
-| 1.2 | ✅ F5 trijaža zatvorena 2026-07-07 → **[[migracija/w1-red-cekanja]]** (33 stranice, kategorija A) je izvor istine za redosled. Gotovo: #1-12 (12/33) ✅ svi zatvoreni 2026-07-07/08 uključujući trake-za-obelezavanje i ceo LVT silo start (parent+Flow). Sledeći: kancelarije-i-poslovni-prostori (128), padel-tereni (119) | CC | Svaka nova namenska landing prati F7 standard (ikonice/skica/video iz woodmart-sabloni) |
+| 1.2 | ✅ **ZATVORENO — 33/33** (potvrđeno 2026-08-12 u [[migracija/w1-red-cekanja]], svih 33 nose ✅ sa datumom 2026-07-07/08). ⚠️ Ovaj red je do 2026-08-12 stajao na „12/33, sledeći kancelarije/padel" — bio je zastareo mesec dana i naveo na pogrešan izbor zadatka; ispravljen tog dana. F5 trijaža zatvorena 2026-07-07 → [[migracija/w1-red-cekanja]] ostaje izvor istine za redosled | CC | Svaka nova namenska landing prati F7 standard (ikonice/skica/video iz woodmart-sabloni) |
 | 1.3 | ✅ ODLUČENO 2026-07-07 (M8): **pun reimport svih 30 postova sa live** — izvršenje po [[migracija/promptovi/F3-posts-reimport]] | CC | restyle postova ide posle, iterativno |
 | 1.4 | ✅ ZATVORENO 2026-07-08 — Footer builder (5 kolona: logo+adresa/Antas Line/Podovi/kontakt/social) + bela varijanta logoa | CC | detalji [[migracija/woodmart-sabloni]] |
 | 1.5 | ✅ ZATVORENO 2026-07-08 — Meni proširen na 5-kategorijsku strukturu (Sport/Terase i dom/Industrija/Poslovni prostori/Specijalni podovi, parity sa live) | CC | 43 stavke, 3 nivoa |

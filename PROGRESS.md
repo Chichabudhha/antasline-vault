@@ -297,7 +297,9 @@
 
 4. ✅ **SEO quick-win: title/meta prepis 4 stranice — ZATVORENO 2026-07-08** (W2 2.3) — pop-tenis, podloga-za-odbojkaske-terene, spoljnje-podne-obloge, conquest 2542. Očekivano: +500–700 klikova/90d, prati se u narednim GSC izveštajima.
 
-5. 🆕 **W1 Polish Faza 4 — pravi GEO-intro pasus na 22 posta (planirano 2026-08-07)** → [[migracija/w1-polish-red-cekanja]] §Faza 4. Copywriting zadatak (izvesti "Kratak odgovor" pasus iz stvarnog sadržaja svakog posta, ništa izmišljeno), ~30–45 min/post, raditi u batch-evima od 5. Nije blokirano, čeka samo izbor kao glavni zadatak sesije.
+5. ✅ **W1 Polish Faza 4 — GEO-intro na 22 posta: ZATVORENO 2026-08-07 (22/22, batch 1–3, sve u istoj sesiji).** ⚠️ Ovaj red je do 2026-08-12 stajao kao „planirano" i naveo na pogrešan predlog zadatka — ispravljen tog dana. Izvršenje verifikovano i na buildu (`.al-geo-intro` prisutan 1× na 3388/16616/6824/16612), ne samo u dokumentaciji. → [[migracija/w1-polish-red-cekanja]] §Faza 4.
+
+> 🟢 **W1 nema poznatog otvorenog posla (stanje 2026-08-12).** Red čekanja A **33/33** ([[migracija/w1-red-cekanja]]), Polish **Faze 1–4** sve zatvorene, novi proizvodi **S1–S8 8/8** ([[migracija/w1-novi-proizvodi-court-builder]]), Court builder CB1–CB3 + CB2-fix zatvoreni. Preostali kandidati nisu iz reda čekanja nego iz nalaza: **alt tekst** (67/81 proizvoda, 180/684 slika u sadržaju — M ga je 2026-07-30 svesno stavio van obima) i **`heading-order`/`target-size`** na product karticama (WoodMart core layout, veći zahvat). Oba menjaju sadržaj → ako se rade pre live-a, moraju **pre freeze-a 16.08**.
 
 - 🆕 **Radni nalog za sledeću `[cpanel-live]` sesiju spreman (2026-07-30)**: audit mejlova sa kontakt formi (da li se odgovara na ~93 leada od 01.06, koliko brzo, da li se nastavlja komunikacija) — direktno zatvara M5 pitanje iz master plana. → [[migracija/2026-07-30-cpanel-sesija-plan-mejlovi]]
 

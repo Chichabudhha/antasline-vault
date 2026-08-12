@@ -5,6 +5,13 @@ azurirano: 2026-08-12
 
 # Naučene lekcije (tehnički gotchas)
 
+## „Sledeće" liste truli tiše od „Urađeno" — zatvaranje zadatka mora ažurirati OBA mesta (2026-08-12)
+- Predložen je (i prihvaćen) zadatak „W1 Polish Faza 4 — GEO-intro na 22 posta", koji je **bio zatvoren 5 dana ranije (2026-08-07, 22/22)**. Isto i master plan 1.2: stajao je na „12/33, sledeći kancelarije/padel" dok je red čekanja bio **33/33 od 2026-07-08** — zastareo mesec dana.
+- Uzrok obrasca: sesija se zatvara upisom u **Urađeno** tabelu i u fajl reda čekanja, a red u **„Sledeće"** i statusna ćelija u master planu ostanu kako su bili. Urađeno raste i vidi se; „Sledeće" niko ne čita dok ne zatreba — a tada je pogrešno.
+- 🔴 Cena nije samo izgubljeno vreme: pogrešan predlog deluje **verodostojno** jer dolazi iz zvaničnog izvora istine, pa se prihvati bez provere.
+- **Pravilo: pri zatvaranju zadatka obavezno obrisati/preškrabati i njegov red u „Sledeće" i statusnu ćeliju u [[2026-07-06-MASTER-PLAN-V2]], ne samo dodati red u Urađeno.** A pri izboru zadatka na početku sesije: **status iz „Sledeće" se pre predlaganja proverava u fajlu reda čekanja** (jedan `grep`), nikad ne uzima zdravo za gotovo.
+- Srodno: „Skill građen iz JEDNOG izvora nasleđuje njegovu grešku" (2026-08-12) i lekcija o obrisanim blokerima bez ✅ traga (2026-08-11) — iste porodice, sve tri o tome da dokumentacija laže tamo gde je niko ne gleda.
+
 ## Hladan start XAMPP-a: prvi zahtev 134s, a CDP timeout izgleda kao pokvaren pregledač (2026-08-12)
 - Chrome merenje na lokalu palo je sa `CDP sendCommand "Runtime.evaluate" timed out after 45000ms` + „The renderer may be frozen or unresponsive". Renderer nije bio zamrznut — Apache je bio ugašen, pa je posle pokretanja prvi zahtev sa **praznim opcache-om trajao 134s**. Drugi 11,7s, treći 6,4s.
 - 🔴 Zamka je u poruci: govori o pregledaču, a uzrok je na serveru. Lako vodi u pogrešnu dijagnostiku (restart ekstenzije, drugi tab, „CDP je nepouzdan").
