@@ -66,8 +66,11 @@
 > previdi: **Settings → Search generative AI** (Include/Exclude/Inherit,
 > podrazumevano *Include*) — ako je ikad prebačena na *Exclude*, ceo GEO rad
 > nema efekta na Google strani, a nigde drugde se to ne bi videlo (isključivanje
-> ne dira rangiranje ni indeksiranje). Obe stavke → GSC UI, #ceka-miroslav.
-> [[seo/geo-ai-plan]] §0.1/§0.2.
+> ne dira rangiranje ni indeksiranje). ✅ **M potvrdio isti dan: kontrola je na
+> „Include" i izveštaj JE dostupan** za `sc-domain:antasline.com` — obe stavke
+> zatvorene bez odlaganja. Ostaje 🔵 **prvo očitavanje kao baseline PRE
+> migracije 24.08** (posle promene URL-ova poređenje „pre/posle" bez baseline-a
+> nije moguće). [[seo/geo-ai-plan]] §0.1/§0.2.
 >
 > Detalji: [[dnevnik/2026-08-12-chrome-docs-ads-skill]]
 

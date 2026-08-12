@@ -108,11 +108,11 @@ posta o *platform properties*.
       — v. Beleške #1 #ceka-miroslav
 - [ ] Posle svakog update-a `modern-web-guidance` paketa vratiti sekciju
       „LOKALNE NAPOMENE" u njegov SKILL.md #claude-code
-- [ ] **Generative AI performance report** — ✅ provereno: **UI-only**, API ga
-      ne izlaže; ostaje ručno mesečno očitavanje. Prvo proveriti da li je
-      dostupan za našu property (rollout delimičan) #ceka-miroslav
-- [ ] 🔴 Potvrditi da **Settings → Search generative AI** stoji na „Include"
-      #ceka-miroslav
+- [x] ✅ **M potvrdio isti dan: kontrola je na „Include", izveštaj JE dostupan**
+      za `sc-domain:antasline.com`
+- [ ] 🔵 **Prvo očitavanje Generative AI izveštaja — baseline PRE migracije
+      24.08.** Posle promene URL-ova poređenje „pre/posle" bez baseline-a nije
+      moguće; izveštaj je UI-only pa ide preko browsera ili ručno #claude-code
 - [ ] Posle live-a: povezati **Instagram** kao GSC platform property (YouTube
       tek kad Faza 1 oživi kanal) — proveriti prolazi li brend nalog
       verifikaciju #ceka-miroslav (traži prijavu na Instagram nalog)
