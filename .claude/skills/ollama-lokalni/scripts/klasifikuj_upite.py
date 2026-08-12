@@ -35,13 +35,25 @@ from lokalni_llm import DEFAULT_MODEL, OllamaGreska, chat_json  # noqa: E402
 KATEGORIJE: list[tuple[str, tuple[str, ...]]] = [
     # "epoks" pokriva epoksid/epoksidni/epoksi, "epox" pokriva epoxy/epoxi/
     # epoxidni/epox — pogresno kucanje je ovde pravilo, ne izuzetak.
-    ("epoksid-conquest", ("epoks", "epox")),
+    # Konkurentski brendovi idu PRE svega — "lidl podne obloge" nije upit za
+    # podne obloge, nego za Lidl. Zasebna korpa jer je to trzisna informacija,
+    # ne kategorija proizvoda.
+    ("konkurencija-brend", (
+        "dunk shop", "dunkshop", "lidl", "slajs", "amicus", "mosolut shop",
+    )),
+    # "tecni/polimerni/izliveni/3d/samorazlivajuci pod" su sve nazivi za liveni
+    # pod — ista conquest traznja kao epoksid, samo drugim recima.
+    ("epoksid-conquest", (
+        "epoks", "epox", "tecni pod", "tecnih pod", "polimern", "izliven",
+        "3d pod", "samorazliv",
+    )),
     ("esd-antistatik", ("esd", "antistatik", "antistaticn", "elektrostat", "provodn")),
     ("sport", (
         "kosark", "basket", "3x3", "tenis", "padel", "piklbol", "pickleball",
         "odbojk", "sportsk", "teren", "sljak", "kos sa", "kos za", "za kos",
         "kosev", "kos konstrukcij", "montazni kos", "igralist", "rukomet",
-        "fudbal", "gimnastick", "teretan", "tartan",
+        "fudbal", "gimnastick", "teretan", "tartan", "baletsk", "us open",
+        "stadion",
     )),
     ("ecotile-industrijski", (
         "ecotile", "industrijsk", "industrisk", "radionic", "garaz", "magacin",
@@ -52,19 +64,32 @@ KATEGORIJE: list[tuple[str, tuple[str, ...]]] = [
         # odbojku (sport), koja je gore u redosledu ali ne uvek.
         "odbojnic", "plasticn", "plastika za pod", "pvc trak",
         "traka za obele", "trake za obele",
+        # modularne / puzzle / multifunkcionalne ploce = Ecotile jezgro ponude
+        "modularn", "puzzle", "multifunkcionaln",
+        # "kombi vozil", NE goli "kombi" — "kombinacija parketa i plocica"
+        # sadrzi "kombi" i zavrsila bi ovde
+        "kombi vozil", "za kombi", "zastita za kabl", "kabl na podu", "bumper",
+        "kontejner",
     )),
     ("spolja-terasa", (
         "teras", "dvorist", "bergo", "parkiral", "parking", "bazen", "spoljn",
-        "balkon", "staz", "trotoar", "vrt", "bast",
+        "balkon", "staz", "trotoar", "vrt", "bast", "sljunak", "asfalt",
     )),
     ("lvt-vinil-trava", (
-        "lvt", "expona", "vinil", "vestack trav", "vestacke trav", "tepih",
-        "linoleum", "laminat", "marmoleum",
+        "lvt", "expona", "vinil", "tepih", "linoleum", "laminat", "marmoleum",
+        # "trav" pokriva travu/travnjak/travnatu — vestacka trava je zasebna
+        # stavka u ponudi, a ovde nema sudara ni sa jednom drugom kategorijom
+        "trav",
+        # renoviranje preko postojeceg poda: ciljano fraze, NE goli "plocic" —
+        # "gumene plocice za pod" bi tako zavrsile u vinilu
+        "preko plocic", "preko ploc", "preko parket", "parketa i ploc",
+        "plocica i parket", "imitacija parket",
     )),
     # Namerno POSLEDNJI i namerno odvojen: guma se kod nas prodaje i za sport
     # i za terase. Umesto da ih pravilo tiho gurne u pogresnu korpu, dobijaju
     # svoju — vidljivi su, pa se rucno presude ako ih bude mnogo.
-    ("gumene-podloge", ("gumen", "guma za pod", "gume za pod", "gumirani")),
+    # "gumiran", ne "gumirani" — GSC vraca i "gumirana podloga" (zenski rod)
+    ("gumene-podloge", ("gumen", "guma za pod", "gume za pod", "gumiran")),
 ]
 
 VALIDNE = [k for k, _ in KATEGORIJE] + ["ostalo"]

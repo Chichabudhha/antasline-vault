@@ -21,9 +21,9 @@ Izmereno 2026-08-12 na pravom GSC izvozu (400 upita, 31 dan, 37 KB):
 
 | Pristup | Pokriveno (% prikaza) | Vreme | Pouzdanost |
 |---|---:|---:|---|
-| **Pravila (regex) — podrazumevano** | **93,6 %** | **0,2 s** | ponovljivo 1:1 |
+| **Pravila (regex) — podrazumevano** | **97,7 %** | **0,3 s** | ponovljivo 1:1 |
 | qwen3:4b na ostatku | +2 % | 475 s | ~50 % gresaka na spornim |
-| qwen3:8b | — | >10 min / poziv | neupotrebljivo sporo |
+| qwen3:8b | — | >22 min / poziv | prekinuto, neupotrebljivo |
 
 **Usteda tokena dolazi od agregacije, ne od LLM-a.** Skripta pretvori 37 KB
 sirovog JSON-a (~12k tokena) u sazetak od ~2 KB (~700 tokena) — to je ~94 %
@@ -37,10 +37,30 @@ i5-11320H · 15,7 GB RAM · MX450 sa 2 GB (prakticno bez offload-a → sve na CP
 
 | Model | Stanje |
 |---|---|
-| `qwen3:4b` (2,5 GB) | ✅ radi, ~15 tok/s — jedini prakticno upotrebljiv |
-| `qwen3:8b` (5,2 GB) | ⚠️ radi ali >10 min po pozivu — nema smisla |
-| `qwen3:30b` (18 GB) | ❌ **ne staje u RAM**, Ollama odbija da ga ucita |
+| `qwen3:4b` (2,5 GB) | ✅ radi, ~15 tok/s — jedini prakticno upotrebljiv lokalno |
+| `gemma3:4b` (~3,3 GB) | ≈ ista klasa kao qwen3:4b; jaci multijezicki, ali isti plafon |
+| `qwen3:8b` / `gemma3:12b` | ⚠️ >22 min po pozivu — nema smisla |
+| `deepseek-r1:8b` | 🔴 **najgori izbor.** Reasoning model — generise dug lanac misljenja pre odgovora. qwen3:8b je vec 22 min BEZ misljenja |
+| `qwen3-coder:30b` | 🔴 model za KOD, pogresan alat + 18 GB |
+| `gemma3:27b`, `gpt-oss:20b`, `qwen3:30b` | ❌ **ne staju u RAM**, Ollama odbija da ih ucita |
 | `llama3.2:3b`, `gemma3:1b` | ✅ brzi, ali preslabi za srpski |
+
+### `*-cloud` modeli — rade, ali nisu lokalni
+
+Modeli sa sufiksom `-cloud` (`gpt-oss:120b-cloud`, `deepseek-v3.1:671b-cloud`,
+`glm-4.6:cloud`…) se **ne preuzimaju** — `ollama list` ih ne prikazuje, jer se
+izvrsavaju na Ollama serverima. Izmereno: `gpt-oss:120b-cloud` uradi isti posao
+za **16,8 s** umesto 475 s, i kvalitet je ocigledno bolji.
+
+🔴 **Ali podaci napustaju masinu.** To je tacno ono sto je uklonjeno kad je
+odbacen Windsor.ai (CLAUDE.md §3: „bez trecih ucesnika"). GSC upiti su poslovni
+podatak. Uz to imaju **sopstvenu kvotu** — „stednja Claude kvote" postaje
+„trosenje Ollama kvote".
+
+⚠️ Tehnicki: cloud modeli **ignorisu `format` (JSON schema)** — `gpt-oss:120b-cloud`
+je vratio markdown tabelu umesto trazenog JSON-a. Lokalni modeli postuju schema
+(grammar-constrained decoding radi samo lokalno). Ako se cloud ikad koristi,
+izlaz se mora parsirati odbrambeno.
 
 🔴 **Gotcha #1 — `num_ctx`.** Ollama 0.18 sam bira kontekst iz modelovog
 maksimuma (qwen3 = 262k), pa i model od 3B trazi ~15 GiB i pukne sa
@@ -105,6 +125,19 @@ pobedjuje**, pa je redosled deo logike:
 7. `gumene-podloge` — **poslednja i namerno odvojena**. Guma se prodaje i za
    sport i za terase; umesto da je pravilo tiho gurne u pogresnu korpu, dobija
    svoju pa je vidljiva.
+
+`konkurencija-brend` ide **pre svih** — „lidl podne obloge" nije upit za podne
+obloge, nego za Lidl. Zasebna korpa jer je to trzisna informacija, ne kategorija
+proizvoda (uhvaceno: Dunk Shop, Lidl, Slajs Valjevo, Amicus — 68 prikaza).
+
+### Sta ostaje u „ostalo" i zasto nijedan model to ne resava
+
+Posle sirenja pravila „ostalo" je **2,3 % prikaza**, i to je uglavnom tacno:
+- `ftalati` (58 prikaza) — informativni upit na kom rangiramo, nije kategorija
+- smece iz AI-chata — „de da vidim", „daj slike svega", `500*7%`, `mistä löytyy`
+
+Zato **jaci model ovde nema sta da dobije.** Kad „ostalo" poraste, prvo se gleda
+da li fale pravila (obicno da), pa tek onda bilo sta drugo.
 
 **Sudari kojih se cuvati pri dodavanju korena:**
 - `odbojn` bi pojeo i **odbojku** (sport) i **odbojnike za zid** (industrija) —
