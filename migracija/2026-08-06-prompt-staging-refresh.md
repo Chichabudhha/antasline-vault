@@ -44,9 +44,11 @@ inače će isti problem da se ponovi.
   `wordpress-importer`, `worker` (ManageWP), `wp-seo-multilingual`,
   `wpml-media-translation`. **`wordpress-seo` (Yoast) NAMERNO OSTAJE**
   (rollback rezerva, [[CLAUDE]] §7.1).
-  > 🔵 **Nadgrađeno 2026-08-13 (M odluka):** Yoast je van upotrebe, rollback na
-  > njega više nije opcija. Fajlovi su i dalje na disku (deaktivirani, 21 MB) —
-  > odluka o brisanju pre pakovanja za 24.08 stoji u [[PROGRESS]] Blokeri.
+  > 🔵 **Nadgrađeno 2026-08-13 (M odluka):** Yoast je van upotrebe i **obrisan sa
+  > diska** istog dana (21 MB) — više ga nema u `wp-content/plugins/`, pa ni u
+  > paketima koji se prave po ovom nalogu. Povratak samo iz arhive
+  > `antasline-backups/yoast-wordpress-seo-27.8_2026-08-13.tar.gz`
+  > (v. [[odluke/_pregled-odluka]] §SEO plugin).
 - **Baza očišćena**: 33 osirotele plugin-tabele + prateći options/postmeta/
   usermeta redovi + 2 osirotela cron hook-a + 9 "duh" `wp_*` (stari prefiks)
   tabela (poznat artefakt iz 07-21 uvoza, nikad korišćen). Backup pre svega:

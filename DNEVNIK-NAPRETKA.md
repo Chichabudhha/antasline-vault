@@ -39,7 +39,25 @@ uništilo traživost uzroka starih bagova.
 u bazi; aktivan je `seo-by-rank-math` **1.0.275**. Bez odluke, 21 MB mrtvog plugina ide
 u migracioni paket 24.08. Upisano kao nov bloker u [[PROGRESS]] sa tri opcije
 (preporuka: `wp plugin delete wordpress-seo` uz backup baze pre pakovanja — postmeta
-ostaje, pa je povratak i dalje moguć re-instalacijom). #ceka-miroslav
+ostaje, pa je povratak i dalje moguć re-instalacijom).
+
+**✅ Izvršeno isti dan (M: „obriši, ali ostavi da može da se vrati"):**
+1. Backup baze: `antasline-backups/antasline_local_2026-08-13_pre-yoast-brisanje.sql` (37,7 MB)
+2. Arhiva plugina: `antasline-backups/yoast-wordpress-seo-27.8_2026-08-13.tar.gz` (4,0 MB),
+   integritet potvrđen **pre** brisanja — `tar -tzf` daje **2.308** unosa = 1.855 fajlova +
+   453 foldera, tačno koliko `find` broji u samom folderu
+3. `rm -rf wordpress-seo` — 🔴 **namerno ne `wp plugin delete`**: WP-CLI-jev `delete_plugins()`
+   poziva uninstall rutinu plugina, koja sme da briše i podatke iz baze; `_yoast_wpseo_*`
+   postmeta (**690 redova**) je uslov da arhiva uopšte vredi, pa baza nije smela da se dira
+4. Verifikacija: `wp plugin list` → samo `seo-by-rank-math` **1.0.275 active** · 6 stranica
+   (početna, `/kontakt/`, `/industrijski-podovi/`, Woo kategorija, proizvod, conquest 2542)
+   **200 / 1×H1 / `<meta name="description">` u `<head>` / 0 PHP grešaka** · na proizvodu i
+   dalje 2 `application/ld+json` bloka · `sitemap_index.xml` 200 sa **7 child-ova**
+   (nepromenjeno, parity sa live) · `rank_math_*` postmeta **16.312** redova netaknuto
+
+**Praktična posledica za 24.08:** 21 MB mrtvog plugina manje u migracionom paketu.
+🔵 Arhiva je u `antasline-backups/` — **van git-a** (odluka 13.08 o `.gitignore`), dakle
+postoji samo na lokalnom disku. Postupak povratka: [[odluke/_pregled-odluka]] §SEO plugin.
 
 ---
 

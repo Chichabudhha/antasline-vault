@@ -237,8 +237,16 @@ Format: reč bez navodnika = broad negative · `"fraza"` = phrase negative ·
 > Yoast. Stara odluka „Yoast ostaje (ne RankMath)" iz [[odluke/_pregled-odluka]]
 > (28.06) je **ukinuta** — stajala je kao tvrdo pravilo 8 dana posle same
 > migracije i bila aktivan izvor grešaka (13.08 umalo pogrešan meta ključ na 13
-> arhiva). Zatečeno stanje fajlova: plugin `wordpress-seo` je **deaktiviran**
-> (v27.8, 21 MB još na disku), `_yoast_wpseo_*` postmeta ostaje u bazi.
+> arhiva).
+>
+> **Fajlovi obrisani 2026-08-13:** `wp-content/plugins/wordpress-seo` više ne
+> postoji na buildu (bio 21 MB, v27.8, deaktiviran) — ne ide u migracioni paket
+> 24.08. `_yoast_wpseo_*` postmeta **ostaje u bazi** (690 redova) i povratak je
+> moguć raspakivanjem arhive
+> `C:\xampp\htdocs\antasline-backups\yoast-wordpress-seo-27.8_2026-08-13.tar.gz`
+> (postupak u [[odluke/_pregled-odluka]]). Brisano `rm -rf`-om, **ne**
+> `wp plugin delete` — taj poziva uninstall rutinu koja može da obriše i podatke
+> iz baze.
 
 Šta je urađeno:
 - Uvoz podataka izveden PROGRAMSKI preko Rank Math-ove sopstvene

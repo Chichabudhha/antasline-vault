@@ -19,9 +19,21 @@ meta zapisa preneto, verifikovano na 10 kategorija + homepage + kontakt + conque
 Rank Math je od tada aktivan i emituje title/meta/schema/sitemap. Stara odluka je ostala
 zapisana kao pravilo 8 dana posle migracije i bila je aktivan izvor grešaka — 13.08 je
 zbog nje umalo upisan pogrešan meta ključ na 13 arhiva.
-**Stanje fajlova:** `wp-content/plugins/wordpress-seo` je **deaktiviran** i još stoji na
-disku (21 MB, v27.8); `_yoast_wpseo_*` postmeta ostaje u bazi (nije brisana). Brisanje sa
-diska — v. [[PROGRESS]] Blokeri.
+**Stanje fajlova (izvršeno 2026-08-13, M: „obriši, ali ostavi da može da se vrati"):**
+`wp-content/plugins/wordpress-seo` **obrisan sa diska** (bio 21 MB, v27.8, deaktiviran).
+`_yoast_wpseo_*` postmeta **ostaje u bazi** (690 redova) — namerno, to je uslov za povratak.
+
+**Povratak (ako ikad zatreba):**
+```
+cd /c/xampp/htdocs/antasline/wp-content/plugins
+tar -xzf /c/xampp/htdocs/antasline-backups/yoast-wordpress-seo-27.8_2026-08-13.tar.gz
+# pa aktivacija u wp-adminu ili: wp plugin activate wordpress-seo
+```
+🔴 Brisano je `rm -rf` folderom, **ne** `wp plugin delete` — namerno: `delete_plugins()`
+poziva uninstall rutinu plugina, koja može da obriše i podatke iz baze. Ovako je baza
+netaknuta.
+🔴 Arhiva (4,0 MB) živi u `C:\xampp\htdocs\antasline-backups\` — **van git-a** (odluka
+13.08 o `.gitignore`), dakle samo na lokalnom disku; klon vault-a je ne donosi.
 
 ## Epoksid — conquest, ne van ponude
 **Odluka:** epoxy upiti se namerno targetiraju kroz `/epoksidni-podovi-ili-ecotile-podovi/` (post 2542) radi konverzije u Ecotile.
