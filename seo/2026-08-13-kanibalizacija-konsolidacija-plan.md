@@ -191,15 +191,29 @@ signal skupi na jednu stranicu.
 | H2 struktura | „Podloge za sportske terene za otvorena i zatvorena igrališta" · „Vrste podloga za sportski teren?" · **„Izgradnja sportskih terena za basket u vašem dvorištu!"** | „Sportski podovi za spoljašnje i unutrašnje terene" · „Sportske podloge za svaku disciplinu" · „Bergo Ultimate — tehničke karakteristike" · FAQ · CTA |
 
 Live drži poziciju **1,6** za „podloga za košarkaški teren" (47 klikova) i **2,0**
-za „podloga za košarkaški teren cena" (39 klikova) — dakle skoro **polovina od 178
-klikova dolazi iz basket-podloga klastera**, a taj H2 („Izgradnja sportskih terena
-za basket u vašem dvorištu") **na buildu ne postoji**.
+za „podloga za košarkaški teren cena" (39 klikova), a taj H2 („Izgradnja sportskih
+terena za basket u vašem dvorištu") **na buildu ne postoji**.
+
+> 🔴 **Ispravka 2026-08-13 (svež `gsc_page_queries.py` pull, 15.05→12.08):** basket
+> klaster nosi **138 od 178 klikova (78%)**, ne „skoro polovinu" kako je gore
+> procenjeno — stavka je bila **potcenjena**. Šest upita: 47 · 39 · 14 · 13 · 12 · 12.
+> Sopstveni head term „sportske podloge" stoji na **poz. 17,3** (96 prikaza / 2 klika).
+>
+> **Nov nalaz, nije bio u ovoj analizi:** 5438 ima FAQ sa 4 pitanja ali **nema
+> FAQPage JSON-LD** — samo `Article` i `VideoObject`. Hub `/industrijski-podovi/`
+> ga je dobio 13.08 (stavka K), ovde je propušten.
 
 **Tvoja procena je tačna i ovo je, po mom sudu, najskuplja stavka na celoj listi.**
 Ne predlažem vraćanje starog dizajna — predlažem da se u novi dizajn vrati
 **semantika**: sekcija o basket terenu u dvorištu + fraza „vrste podloga za
 sportski teren", plus link ka `/planer-terena/` (build 5438 ga trenutno **ne
 pominje uopšte**, provereno u bazi).
+
+**Status: stavka E — plan izvršenja `[[migracija/idemo-na-e-korak-tender-petal]]`,
+izvršeno 2026-08-13** (semantika + FAQ + FAQPage schema, K1–K10 sa checkpoint-ima).
+Van obima i dalje: `rank_math_title`/meta (head term poz. 17,3) i **tartan klaster**
+(117 prikaza / 6 klikova, poz. 9–16, nijedna namenska sekcija) — kandidati za
+zasebne stavke posle live-a.
 
 ---
 
