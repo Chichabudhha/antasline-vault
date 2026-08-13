@@ -1,3 +1,125 @@
+## 2026-08-13 [claude-code] Vault higijena — PROGRESS.md 1,4 MB → 247 KB, jun+jul u arhivu ✅
+
+**Kontekst:** M je primetio „puno praznog i čudne linije" u PROGRESS-u. Provera je našla
+**tri odvojena problema**, od kojih je jedan bio i tihi radni trošak na svakoj sesiji.
+
+**1. 75% fajla su bili razmaci — 1.061.601 od 1.408.706 bajtova.** Uzrok:
+plugin **`table-editor-obsidian` (Advanced Tables)** poravnava kolone dopunom razmacima
+do širine najšire ćelije. Sa ćelijama od 1–4 hiljade znakova svaki red je dopunjen na
+~4.800 znakova; najduži pojedinačni niz razmaka bio je **4.209 uzastopnih**.
+🔴 **Zašto je to bilo bitno, a ne kozmetika:** CLAUDE.md §12 nalaže da se PROGRESS čita
+**prvi na svakoj sesiji**, a fajl se u tom stanju **nije mogao otvoriti Read alatom**
+(106.490 tokena naspram limita 25.000) — moralo se grepovati po sekcijama, što je tačno
+onaj razred greške koji je 12.08 doveo do pogrešnog izbora zadatka.
+Uklonjeno `sed`-om **samo u linijama koje počinju pipe-om** (prozni redovi sa `|` u
+inline kodu, npr. `cat part-* | tar -xzf -`, namerno preskočeni). Dokaz da sadržaj nije
+dirnut: **MD5 fajla sa uklonjenim svim razmacima identičan pre i posle**
+(`382d557a8a968f0f305bbc6c302b9aae`).
+
+**2. Jedan red je stvarno bio slomljen u prikazu.** Linija 34 je nosila **neescape-ovan**
+`|` unutar inline koda — regex `^(llms(-full)?|robots)\.txt$` — pa je Obsidian tretirao
+pipe kao granicu ćelije i prelomio ostatak teksta u fantomsku 4. kolonu (padding ga je
+usput razmakao na `? | robots`). Ispravljeno u `\|`; tačan oblik regexa potvrđen iz
+[[DNEVNIK-NAPRETKA]] (unos o `.htaccess` charset fix-u), ne iz pogađanja.
+⚠️ **Ispravka ranije tvrdnje:** prijavio sam dva slomljena reda — linija 79
+(`cat parts \| tar -xz`) je **već bila ispravno escape-ovana**, brojač pipe-ova ju je
+lažno prijavio jer `\|` i dalje sadrži pipe znak.
+
+**3. Tabela „Urađeno" imala je 273 reda** (3 jun · 180 jul · 90 avgust), prosečno ~1,4 KB
+stvarnog teksta po redu — pravi izvor veličine i posle skidanja razmaka. **183 reda
+(jun+jul) izmešteno u [[dnevnik/2026-07-arhiva-progress]]**; bili su neprekidni na dnu
+tabele, pa je razdvajanje bilo čisto. Junska 3 reda idu zajedno sa julom jer su starija —
+ostavljanje juna u tabeli a jula u arhivi dalo bi hronološku rupu. U PROGRESS-u je na
+njihovo mesto upisan pokazivač. **Provera: MD5 sortiranog skupa linija identičan pre i
+posle razdvajanja** (`c61c6190e9f5a849ab3888cd98b155d9`) → nijedna linija nije izgubljena
+ni izmenjena. Jedan julski red namerno ostavljen — stoji van tabele, u sekciji
+„Istorijske stavke".
+
+**Rezultat:** PROGRESS **1.408.706 → 246.692 bajtova** (417 linija), arhiva 158.386 B.
+Fajl je ponovo ispod 256 KB limita Read alata; struktura naslova i raspodela kolona po
+redovima nepromenjene.
+
+**Podešavanje:** `table-editor-obsidian/data.json` → `formatType` **`normal` → `weak`**
+(prestaje poravnavanje kolona dopunom, navigacija Tab/Enter ostaje).
+🔴 **Obsidian je bio pokrenut (od 08:27) — izmena važi tek posle restarta**, a ako se u
+međuvremenu dira bilo šta u podešavanjima tog plugina, in-memory stanje prepiše fajl
+nazad na `normal`.
+
+**Kopija pre izmene:** `scratchpad/PROGRESS.md.pre-depad` (nije u git-u).
+
+---
+
+## 2026-08-13 [claude-code] W2/SEO — čist slug za „preko starog parketa": 6588 preuzeo URL, 16613 ugašen ✅
+
+**Kontekst:** Osma stavka dana. M je iz stavke 1 (URL higijena) postavio pitanje o
+`sta-postaviti-preko-starog-parketa-ili-plocica-2` sa pretpostavkom da su dve verzije
+u međuvremenu spojene u jednu stranicu — i tražio: **sadržaj sa `-2` stranice zadržati,
+ali `-2` iz slug-a ukloniti**.
+
+**Provera je oborila pretpostavku o spajanju** — dva različita članka, i na live-u i na
+buildu, oba HTTP 200 sa različitim canonical-om:
+
+| | 16613 (`…-plocica`) | 6588 (`…-plocica-2`) |
+|---|---|---|
+| Nastanak | 2022-07-23 | 2025-09-17 (prepis) |
+| Dužina | 4.940 zn. | **8.041 zn.** |
+| SEO title | „PVC podovi i podovi od vinila" | „Šta postaviti preko starog parketa ili pločica?" |
+| Robots na buildu | noindex (od 30.07) | index |
+| Sadržaj | uvod + Objectflor Clic LVT + R-Tek | isto **+ Ecotile + FAQ (4 pitanja) + galerija primera** |
+
+Spajanje je zapravo **već bilo izvedeno u smeru `-2`**: 6588 pokriva sve iz starog članka
+u boljem obliku (stari nosi i tipfelere: „posojeći", „gradjevinskih", „sisitemom"). Jedino
+što se gubi gašenjem 16613 je ciljanje fraze „PVC podovi i podovi od vinila" iz njegovog
+SEO title-a — **132 prikaza / 5 klikova / 90d**.
+
+**🔴 Ovo ukida odluku od 2026-07-30** (`redirect-mapa-FINAL.csv` red 18), koja je na osnovu
+GSC preseka 01.01–27.07 (`-2`: 3.353 impr / **258 kl.** / poz. **5,5** nasuprot 1.667 / 84 /
+7,6) zaključila da `-2` ostaje i da čist URL ide na 301. Smer je sada obrnut na M zahtev.
+
+**🟢 Olakšavajuća okolnost koja je promenila procenu rizika:** cilj 301 **nije nov URL** —
+`/…-plocica/` živi na produkciji od 2022, indeksiran je i nosi svojih 84 klika/god. Znači
+konsolidacija dva Google-u poznata URL-a, ne selidba rangirane stranice na praznu adresu.
+Posle migracije oba live URL-a ostaju ispravna: čist servira direktno, `-2` ide na 301.
+
+**Izvršeno** (`migracija/alati/job-slug-swap-parket-2026-08-13.php`, probni prolaz pa `--write`):
+1. **16613** → `draft` + slug `…-plocica-original-2022` (oslobađa čist slug)
+2. **6588** → slug `…-plocica` (bez `-2`)
+3. `redirect-mapa-FINAL.csv` red 18 → smer okrenut, obrazloženje prepisano
+4. `htaccess-301-generate.php` → draft regenerisan, **76 pravila, svi ciljevi 200**;
+   linija 34 sada `RedirectMatch 301 "^/…-plocica-2/?$" /…-plocica/`
+5. `redirect-verify.php`: **0 duplikata · 0 petlji · 45/45 ciljeva 200 · 0 kolizija**
+6. `parity-inventar.csv` (red `-2` → 301-KANDIDAT, čist red dobio `lokal_id` 6588),
+   `regression-pages.csv` (URL za sledeći sweep)
+
+**Verifikovano:** čist URL **200** sa novim sadržajem, 1×H1, `index` + prava Rank Math meta ·
+`-2` **404** na buildu (301 ga hvata posle migracije) · `post-sitemap.xml` nosi čist URL,
+31 URL nepromenjeno.
+
+**🔴 Gotcha — zašto `$wpdb->update`, a ne `wp_update_post`:** `wp_unique_post_slug()` bi na
+6588 zatekao slug koji drugi post drži i **tiho vratio `-2` nazad** — tačno ono što se
+uklanja. Iz istog razloga je redosled obavezan: prvo 16613 pusti slug, pa ga 6588 uzme.
+
+**🔴 Gotcha — Rank Math sitemap keš ne zna za direktan SQL upis:** posle zamene je
+`post-sitemap.xml` još 15-ak minuta servirao stari `-2` URL. Hook-ovi ne okidaju pri
+`$wpdb->update`, pa keš treba ručno oboriti:
+`\RankMath\Sitemap\Cache::invalidate_storage()`. Isto važi za svaku buduću izmenu slug-a
+ili statusa izvedenu direktnim upisom.
+
+**🔵 Usput zatvoreno:** nedoslednost „5455 draftovan, 16613 publish+noindex" iz [[PROGRESS]]
+Blokera — 16613 je sada draft, pa `redirect-verify.php` više ne prijavljuje upozorenje
+(sekcija 5: 0 kolizija).
+
+**🔵 Nova razlika koju treba držati na umu:** dva `-2` slug-a na buildu nastaju iz različitih
+uzroka — `ergonomske-podloge-2` je WP-ov automatski sufiks jer slug drži **prilog** (čist
+slug je besplatan, stavka A), a `…-plocica-2` je bio **namerno drugi post**. Prvo je
+higijena, drugo je odluka o saobraćaju.
+
+**Backup:** `antasline_local_2026-08-13_pre-slug-swap-parket.sql` (37,6 MB).
+**Ostaje otvoreno pre freeze-a (16.08):** stavke **E** i **F** iz analize.
+Detalji: [[seo/2026-08-13-kanibalizacija-konsolidacija-plan]] §1.
+
+---
+
 ## 2026-08-13 [claude-code] W2/SEO — kanibalizacija: analiza 9 klastera + tri konsolidacije (C/D/B) ✅
 
 **Kontekst:** Sedma stavka dana. M-ova lista od 9 tačaka (URL higijena, Ads smernice,

@@ -23,13 +23,20 @@ Ceo build ima **3** slug-a sa `-2` (publish+draft, page/post/product):
 
 | ID    | Slug                                               | Status    | GSC 90d                      | Odluka                                                                                                                                                                                                                                            |
 | ----- | -------------------------------------------------- | --------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 6588  | `sta-postaviti-preko-starog-parketa-ili-plocica-2` | publish   | **249 prikaza / 13 klikova** | 🔴 **NE DIRATI.** `-2` je ovde **pobednička** verzija i to je URL koji live već ima. Duplikat bez `-2` (16613) ima 132/5, već je `noindex` + ima 301 pravilo. Preimenovanje bi bacilo 13 klikova/90d za kozmetiku.                                |
+| 6588  | `sta-postaviti-preko-starog-parketa-ili-plocica-2` | publish   | **249 prikaza / 13 klikova** | ✅ **IZVRŠENO 2026-08-13 (M odluka), suprotno prvobitnoj preporuci.** Prvobitno je ovde pisalo „NE DIRATI" jer `-2` nosi 3× više klikova. M je tražio da **sadržaj ostane, a slug se očisti** — provera je pokazala da članci **nisu spojeni** (6588 = prepis iz 09/2025, 8.041 zn., LVT+Ecotile+R-Tek+FAQ+galerija; 16613 = original iz 07/2022, 4.940 zn., bez ijednog jedinstvenog pasusa). 16613 → draft + preimenovan u `…-original-2022`, 6588 → čist slug, 301 okrenut na `-2` → čist. Ključna olakšavajuća okolnost: cilj 301 **nije nov URL** — živi na live-u od 2022 (1.667 impr / 84 kl. / poz. 7,6), pa je ovo konsolidacija dva Google-u poznata URL-a, ne selidba na praznu adresu. |
 | 3274  | `izbor-industrijskog-poda-...-2`                   | **draft** | —                            | ✅ Nema URL-a, 301→2622 već u draftu. Ništa.                                                                                                                                                                                                       |
 | 16672 | `ergonomske-podloge-2`                             | publish   | 1 prikaz                     | 🟢 **Jedini pravi kandidat.** `-2` postoji jer slug `ergonomske-podloge` drži **prilog** (attachment 12489), ne stranica. Fix: preimenovati slug priloga → stranica na čist `/ergonomske-podloge/` → 301 sa starog. ~15 min, rizik ~0 (1 prikaz). |
 
 **Zaključak:** „dupli permalinci" nisu sistemski problem na ovom buildu — 1 stvarna
 stavka, i to bezvredna po saobraćaju. Pravilo za ubuduće: pre kreiranja stranice
 proveriti da slug ne drži **prilog** (WP tiho dodaje `-2` i ne prijavi ništa).
+
+> 🔵 **Dopuna 2026-08-13 (posle M pitanja):** dva `-2` slug-a nastaju iz **dva
+> različita uzroka** i traže različit postupak. `ergonomske-podloge-2` je WP-ov
+> automatski sufiks jer slug drži **prilog** — tu je čist slug besplatan. `…-plocica-2`
+> je bio **namerno drugi post** (novi članak napisan pored starog 2025), pa čist slug
+> košta jednu 301 selidbu rangirane stranice. Prvo je higijena, drugo je odluka o
+> saobraćaju — ne mešati ih u istu stavku.
 
 ---
 

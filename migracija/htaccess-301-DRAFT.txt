@@ -31,7 +31,7 @@ RedirectMatch 301 "^/podne-obloge-za-promocije-i-sajmove/?$" /iznajmljivanje-pod
 RedirectMatch 301 "^/podovi-za-poslovni-prostor/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/
 RedirectMatch 301 "^/galerija-sportskih-terena/?$" /galerija/
 RedirectMatch 301 "^/izbor-industrijskog-poda-tri-najcesca-pitanja-2/?$" /izbor-industrijskog-poda-tri-najcesca-pitanja/
-RedirectMatch 301 "^/sta-postaviti-preko-starog-parketa-ili-plocica/?$" /sta-postaviti-preko-starog-parketa-ili-plocica-2/
+RedirectMatch 301 "^/sta-postaviti-preko-starog-parketa-ili-plocica-2/?$" /sta-postaviti-preko-starog-parketa-ili-plocica/
 RedirectMatch 301 "^/vestacka-trava/?$" /spoljnje-podne-obloge/vestacka-trava-za-terase/
 
 # ====== B. ISTORIJSKA PRAVILA — preuzeta iz Redirection plugina sa live-a ======

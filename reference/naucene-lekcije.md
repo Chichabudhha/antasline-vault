@@ -5,6 +5,50 @@ azurirano: 2026-08-13
 
 # Naučene lekcije (tehnički gotchas)
 
+## Advanced Tables tiho naduva markdown fajl 3–4× razmacima (2026-08-13)
+- Plugin `table-editor-obsidian` poravnava kolone **dopunom razmacima do širine najšire
+  ćelije**. U tabeli sa ćelijama od 1–4 hiljade znakova to znači da se **svaki** red
+  dopuni na tu širinu. PROGRESS.md je tako narastao na **1,4 MB, od čega 1,06 MB razmaka
+  (75%)** — jedan niz razmaka bio je 4.209 uzastopnih.
+- Šteta nije kozmetička: fajl koji CLAUDE.md §12 nalaže da se čita **prvi na svakoj
+  sesiji** prestao je da može da se otvori Read alatom (106k tokena vs limit 25k), pa se
+  čitao parcijalno kroz grep — isti razred greške koji je 12.08 doveo do pogrešnog izbora
+  zadatka.
+- Skidanje dopune: `sed -E '/^\|/ { s/[[:space:]]+\|/ |/g; s/\|[[:space:]]+/| /g }'` —
+  **ograničeno na linije koje počinju pipe-om**, inače pokvari proznu rečenicu sa `|` u
+  inline kodu (`cat part-* | tar -xzf -`).
+- Dokaz da je promenjen samo razmak: `tr -d ' ' < fajl | md5sum` mora biti **isti** pre i
+  posle. Za premeštanje redova između fajlova: `tr -d ' ' | sort | md5sum` nad unijom.
+- Trajno gašenje: `formatType` → `"weak"` u `data.json`. 🔴 Ako je Obsidian pokrenut,
+  izmena važi tek posle restarta, a dodirivanje podešavanja tog plugina u UI-ju vrati
+  in-memory `normal` nazad u fajl.
+
+## Literalan `|` u ćeliji markdown tabele lomi red, i to nevidljivo (2026-08-13)
+- `^(llms(-full)?|robots)\.txt$` unutar inline koda u ćeliji: Obsidian tretira pipe kao
+  granicu ćelije i prelomi ostatak teksta u fantomsku kolonu. Inline kod **ne štiti** od
+  toga — escape mora biti `\|`.
+- Otkriva se sa `awk -F'|' 'NF!=ocekivano {print NR}'`, ali pazi na **lažni pozitiv**:
+  već ispravno escape-ovan `\|` i dalje sadrži pipe znak, pa ga brojač prijavi kao grešku.
+  Pre prijave pogledati da li ispred pipe-a stoji `\`.
+
+## Zamena slug-a ide `$wpdb->update`-om, i to određenim redosledom (2026-08-13)
+- `wp_update_post()` prolazi kroz `wp_unique_post_slug()`, koji ako zatekne slug zauzet
+  drugim postom **tiho vrati `-2` nazad**. Kod zadatka „skini `-2` sa slug-a" to znači da
+  skripta prijavi uspeh, a stanje ostane nepromenjeno. Direktan `$wpdb->update` zaobilazi
+  tu logiku u celosti (uz `clean_post_cache()` posle).
+- Redosled je obavezan: **prvo stari post pusti slug** (preimenovanje + `draft`), pa ga tek
+  onda novi uzme. Obrnuto daje dva posta sa istim `post_name`.
+- Provera preduslova na početku skripte (jesu li slugovi u očekivanom polaznom stanju →
+  ako nisu, izlaz bez izmena) čini je bezbednom za ponovno pokretanje.
+
+## Rank Math sitemap keš ne zna za direktan SQL upis (2026-08-13)
+- Posle zamene slug-a preko `$wpdb->update`, `post-sitemap.xml` je i dalje servirao **stari**
+  URL — WP hook-ovi na kojima Rank Math visi ne okidaju pri direktnom upisu u bazu.
+- Rušenje keša: `\RankMath\Sitemap\Cache::invalidate_storage()` (kroz `php -r` sa
+  `wp-load.php`). Važi za svaku izmenu slug-a, statusa ili `noindex`-a izvedenu direktno.
+- Praktična posledica: sitemap se **mora ponovo proveriti** posle takvih izmena, inače u
+  migracioni paket ode spisak URL-ova koji više ne postoje.
+
 ## `wp plugin delete` nije „obriši fajlove" — briše i podatke (2026-08-13)
 - WP-CLI-jev `delete_plugins()` poziva **uninstall rutinu plugina** (`uninstall.php` /
   registrovani uninstall hook) pre brisanja foldera. Ako plugin tu čisti svoje opcije i
