@@ -1,0 +1,68 @@
+# Pravila za Grok CLI na antasline-vault projektu.
+#
+# 🔴 OVAJ FAJL TRENUTNO NIJE NA SNAZI — grok 1.0.3 ga NAĐE ali dozvole iz njega
+#    NE UČITA. Provereno 14.08.2026 preko `grok inspect`:
+#
+#        Config Sources
+#        └ Project: C:\Projekti\antasline-vault\.grok\config.toml   ← nađen
+#        Permissions
+#        └ Source: (none)
+#        └ 0 loaded, 0 skipped                                       ← ali prazan
+#
+#    Testirane obe forme iz dokumentacije — kompaktna `deny = [...]` i
+#    strukturirana `rules = [{ action = ..., tool = ... }]`. Nijedna se ne
+#    učitava iz projektnog opsega. Ista pravila na korisničkom nivou
+#    (`~/.grok/config.toml`) se učitavaju odmah. Dokumentacija
+#    (22-permissions-and-safety.md) tvrdi da projektni opseg radi — binarni
+#    fajl to još ne radi.
+#
+#    ZATO: pravila koja STVARNO važe stoje u `C:\Users\Miroslav\.grok\config.toml`.
+#    Ovaj fajl je identična kopija, ostavljena namerno — kad neka novija verzija
+#    počne da učitava projektni opseg, zaštita se aktivira sama i biće
+#    verzionisana u gitu (za razliku od korisničke kopije).
+#
+#    Posle svakog `grok update` proveriti:  grok inspect | Select-String Permissions
+#    Ako pokaže ovaj fajl kao izvor — korisnička kopija može da se ukloni.
+#
+# ⚠️ NE oslanjati se na ovaj fajl. Do daljeg, prva stvarna ograda je
+#    `--tools "read_file,grep,list_dir"` u .claude/skills/delegati/scripts/grok-citaj.ps1,
+#    druga je korisnički config.
+#
+# Zašto pravila NE idu u .claude/settings.json:
+#   Grok čita i taj fajl, i CLAUDE.md, i ~/.claude/. Sve stavljeno tamo pokupio
+#   bi i Claude Code — a Claude Code SME da piše po vault-u.
+#
+# Zašto ne `--sandbox`:
+#   Grok sandbox je Landlock (Linux) / Seatbelt (macOS). Na Windows-u nije
+#   podržan — samo upiše upozorenje u log i nastavi BEZ ikakve zaštite.
+
+[permission]
+deny = [
+  # 1. Nikakve izmene fajlova, nigde.
+  "Edit(**)",
+  "Write(**)",
+  # Nikakav shell.
+  "Bash",
+
+  # 2. Kredencijali — ni svoji, ni tuđi.
+  "Read(C:/Users/Miroslav/antasline-connector/**)",
+  "Read(C:/Users/Miroslav/.copilot/**)",
+  "Read(C:/Users/Miroslav/.grok/**)",
+  "Read(C:/Users/Miroslav/.gemini/**)",
+  "Read(C:/Users/Miroslav/.claude/**)",
+  "Read(**/auth.json)",
+  "Read(**/.env)",
+  "Read(**/wp-config.php)",
+
+  # 3. Sopstvena ograda.
+  "Read(**/.grok/**)",
+  "Read(**/.claude/settings*.json)",
+
+  # 4. Kvota-bombe i binarno smeće (antasline-backups/ = 718 MB SQL).
+  "Read(**/antasline-backups/**)",
+  "Read(**/*.sql)",
+  "Read(**/.git/**)",
+  "Read(**/.obsidian/**)",
+  "Read(**/__pycache__/**)",
+  "Read(**/node_modules/**)",
+]

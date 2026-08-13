@@ -1,0 +1,46 @@
+Pregledaj SVE {tip} fajlove u TAČNO ovom folderu:
+  {PUNA\APSOLUTNA\PUTANJA}      ({broj} fajlova)
+
+NE pretražuj nijedan drugi folder. NE pretražuj C:\Users\Miroslav.
+NE otvaraj: antasline-backups\, .git\, .obsidian\, *.sql, wp-config.php.
+Putanja je gore data u celosti — idi direktno na nju, bez traženja.
+
+CILJ: {jedna rečenica — šta se traži i zašto, sa rokom ako ga ima}
+
+ŠTA TRAŽIŠ:
+- {kriterijum 1 — konkretan obrazac u kodu, ne opšta ocena kvaliteta}
+- {kriterijum 2}
+- {kriterijum 3}
+
+PRAVILA:
+- PRVO izlistaj ceo folder, pa TEK ONDA filtriraj po ekstenziji. Ne kreni od
+  glob obrasca sa više ekstenzija odjednom — ako ti obrazac vrati 0 fajlova,
+  to je greška TVOJE pretrage, a ne dokaz da folder je prazan. Probaj drugi
+  način (prosto listanje foldera) pre nego što zaključiš bilo šta.
+- U rezimeu obavezno navedi KOLIKO si fajlova stvarno otvorio. Ako je 0,
+  vrati se i probaj ponovo — ne izveštavaj „nema nalaza" nad nula fajlova.
+- Svaka stavka MORA imati izvor: naziv fajla + broj linije + isečak koda.
+  Bez toga ne upisuj stavku.
+- Ne izmišljaj. Ako obrazac ne postoji, napiši „nema nalaza" — to je koristan
+  odgovor, ne neuspeh.
+- Ne predlaži refaktorisanje, stil, ni „best practice" saveta. Traži se
+  isključivo ono što je gore navedeno.
+- Ne menjaj nijedan fajl. Samo čitaj i ispiši rezultat. Ako ti alat za pisanje
+  bude odbijen, tako je namerno — ne traži zaobilazak.
+- Razlikuj NALAZ (ovo je stvarno pogrešno) od SUMNJE (ovo bi trebalo proveriti).
+  Označi svaki red jednim od ta dva.
+
+FORMAT IZLAZA — OBIČNA markdown pipe-tabela (NE ASCII okvir — raspada se posle
+~10 redova), sortirana po ozbiljnosti:
+
+| # | NALAZ/SUMNJA | Fajl | Linija | Šta je | Zašto je problem |
+
+Posle tabele:
+
+## Rezime
+{2–4 rečenice: koliko fajlova pregledano, koliko nalaza, šta je najozbiljnije}
+
+## Šta nisam mogao da proverim
+{sve što je zahtevalo pristup koji nemaš, ili podatak koji nije u kodu}
+
+Jezik: srpski, ekavica. Bez uvoda i zaključka.

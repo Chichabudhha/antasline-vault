@@ -1,0 +1,63 @@
+Pregledaj SVE .php, .sh i .sql fajlove u TAČNO ovom folderu:
+  C:\Projekti\antasline-vault\migracija\alati\      (~89 fajlova ukupno)
+
+POSTUPAK — ovim redom, ne preskači korak 1:
+  1. Izlistaj ceo folder migracija/alati (prosto listanje, bez glob obrasca).
+  2. Iz te liste izdvoji .php, .sh i .sql fajlove.
+  3. Otvori svaki od njih i pretraži.
+
+Ako ti neka pretraga vrati 0 fajlova — to je greška TVOJE pretrage, folder
+sigurno nije prazan. Probaj drugi način pre nego što zaključiš bilo šta.
+
+NE pretražuj nijedan drugi folder. NE pretražuj C:\Users\Miroslav.
+NE otvaraj: antasline-backups\, .git\, .obsidian\, wp-config.php.
+Idi direktno na zadatu putanju, bez traženja.
+
+CILJ: Naći svako mesto gde je prefiks WordPress tabela napisan sa pogrešnim
+case-om, pre migracije na produkciju 24.08.2026. Tačan prefiks je `wpgs_`,
+sve malim slovima.
+
+ZAŠTO JE OVO OZBILJNO:
+Lokalna MariaDB na Windows-u radi sa lower_case_table_names=1, pa ne razlikuje
+`wpGs_posts` od `wpgs_posts` — na lokalu sve radi bez obzira na case. Linux
+hosting (cPanel) RAZLIKUJE. Pogrešan case tamo ne prijavi grešku — tiho preskoči
+zamenu ili uveze u pogrešne tabele. To je već jednom oborilo probu migracije
+21.07.2026 („site not installed").
+
+ŠTA TRAŽIŠ, tim redom:
+- Bilo koji string `wpGs_` ili `WPGS_` ili bilo koja druga varijanta osim
+  potpuno malog `wpgs_`
+- SQL upiti sa hardkodovanim imenom tabele (npr. `wpgs_posts`, `wpgs_postmeta`)
+  — proveri case svakog
+- `sed` / `search-replace` / `str_replace` pozivi koji menjaju prefiks — proveri
+  i izvorni i ciljni string
+- `$table_prefix` dodele u bilo kom fajlu
+- Mesta gde se prefiks gradi spajanjem (konkatenacija, varijabla, konstanta) —
+  tu se case ne vidi na prvi pogled; navedi ih kao SUMNJA i reci odakle
+  vrednost dolazi
+
+PRAVILA:
+- Svaka stavka MORA imati izvor: naziv fajla + broj linije + isečak koda.
+  Bez toga ne upisuj stavku.
+- Ne izmišljaj. Ako nema nijednog pogrešnog case-a, napiši „nema nalaza" —
+  to je koristan i očekivan odgovor.
+- Ne predlaži refaktorisanje, stil, ni „best practice" saveta.
+- Ne menjaj nijedan fajl. Samo čitaj i ispiši rezultat. Ako ti alat za pisanje
+  bude odbijen, tako je namerno — ne traži zaobilazak.
+- Razlikuj NALAZ (case je stvarno pogrešan) od SUMNJE (prefiks se gradi
+  dinamički, treba proveriti izvor).
+
+FORMAT IZLAZA — OBIČNA markdown pipe-tabela (NE ASCII okvir), NALAZ redovi prvi:
+
+| # | NALAZ/SUMNJA | Fajl | Linija | Napisano | Trebalo bi |
+
+Posle tabele:
+
+## Rezime
+{koliko fajlova STVARNO otvoreno, koliko NALAZ, koliko SUMNJA}
+Ako je broj otvorenih fajlova 0 — vrati se na korak 1 i probaj ponovo.
+
+## Fajlovi bez ijednog pomena prefiksa
+{spisak — da se zna šta je pregledano a nije relevantno}
+
+Jezik: srpski, ekavica. Bez uvoda i zaključka.
