@@ -5,6 +5,30 @@ azurirano: 2026-08-13
 
 # Naučene lekcije (tehnički gotchas)
 
+## Zapisane GSC brojke u migracionim CSV-ovima nisu pouzdane — svež pull pre svake odluke (2026-08-13)
+- **Tri promašaja u jednoj sesiji**, sva tri bi vodila na pogrešnu odluku:
+  `parity-inventar.csv` pripisuje `/ergonomske-podloge-2/` **110 klikova** (stvarno **1 prikaz /
+  0 klikova** u 90d, 123/4 u 12 mes.) · isti fajl nosi `lokal_id` postova koji **ne postoje**
+  (15977/15967 za parket redove) · `redirect-mapa-FINAL.csv` red 17 tvrdi „311 klikova / poz. 6,9
+  / CTR 4,92%" za post 2622, koji u 12 meseci ima **0 klikova**.
+- Uzrok: kolone su popunjene jednokratno pri F1 baseline-u (21.07) ili ranije, iz različitih
+  perioda, i **nikad se ne osvežavaju** — a dokument izgleda autoritativno.
+- **Pravilo: pre svake odluke o URL-u pokreni `gsc_page_queries.py`** na 90d **i** 12 meseci.
+  Dva prozora, jer stranice odumiru — 90d sam može da prikaže mrtvom stranicu koja je nedavno
+  radila, a 12 meseci sam prikriva svež pad.
+- `PYTHONIOENCODING=utf-8` je obavezan kad se prosleđuje više `--page` argumenata, inače puca
+  na `UnicodeEncodeError` pri ispisu ćiriličnih upita.
+
+## Draftovanje stranice traži proveru da li je neko istorijsko pravilo cilja (2026-08-13)
+- Kad stranica ode u draft, **svako 301 pravilo koje na nju pokazuje počinje da vodi na 404** —
+  i to se vidi tek posle migracije, kad je najskuplje.
+- U jednoj sesiji tri puta: `/ergonomski-podovi/` (**160** pogodaka) · `/home/industrijski-podovi-najcesca-pitanja/`
+  (**615**) · jutros 4 pravila sa ukupno **365** pogodaka. Sve pretočeno na nov cilj u istom potezu.
+- Provera pre draftovanja: `grep -n "<slug>" migracija/redirect-mapa-HISTORIJSKI-65-FLAT.csv
+  migracija/redirect-mapa-FINAL.csv migracija/htaccess-301-DRAFT.txt` — traži slug i kao **cilj**,
+  ne samo kao izvor. `redirect-verify.php` hvata ciljeve koji nisu 200, ali tek posle regeneracije.
+- Isto važi za **stavke menija** (`_menu_item_object_id`) i dolazne linkove u `post_content`.
+
 ## Advanced Tables tiho naduva markdown fajl 3–4× razmacima (2026-08-13)
 - Plugin `table-editor-obsidian` poravnava kolone **dopunom razmacima do širine najšire
   ćelije**. U tabeli sa ćelijama od 1–4 hiljade znakova to znači da se **svaki** red

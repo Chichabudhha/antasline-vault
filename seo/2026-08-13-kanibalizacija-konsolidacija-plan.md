@@ -2,7 +2,8 @@
 tip: analiza
 naziv: Kanibalizacija, konsolidacija i URL higijena — nalazi + plan odluka
 datum: 2026-08-13
-status: čeka M odluke (rok NED 16.08 — content freeze)
+status: delimično izvršeno — A/B/C/D/J/K gotovi 13.08 · E i F otvoreni (rok NED 16.08, content freeze) · G/H nisu odobreni · I čeka M u Ads UI
+azurirano: 2026-08-13
 izvor-podataka: GSC 2026-05-15→2026-08-12 (90d, `gsc_page_queries.py`) · Google Ads API (`ads_final_urls.py`, 13.08) · lokalna baza `antasline_local`
 ---
 
@@ -25,11 +26,12 @@ Ceo build ima **3** slug-a sa `-2` (publish+draft, page/post/product):
 | ----- | -------------------------------------------------- | --------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 6588  | `sta-postaviti-preko-starog-parketa-ili-plocica-2` | publish   | **249 prikaza / 13 klikova** | ✅ **IZVRŠENO 2026-08-13 (M odluka), suprotno prvobitnoj preporuci.** Prvobitno je ovde pisalo „NE DIRATI" jer `-2` nosi 3× više klikova. M je tražio da **sadržaj ostane, a slug se očisti** — provera je pokazala da članci **nisu spojeni** (6588 = prepis iz 09/2025, 8.041 zn., LVT+Ecotile+R-Tek+FAQ+galerija; 16613 = original iz 07/2022, 4.940 zn., bez ijednog jedinstvenog pasusa). 16613 → draft + preimenovan u `…-original-2022`, 6588 → čist slug, 301 okrenut na `-2` → čist. Ključna olakšavajuća okolnost: cilj 301 **nije nov URL** — živi na live-u od 2022 (1.667 impr / 84 kl. / poz. 7,6), pa je ovo konsolidacija dva Google-u poznata URL-a, ne selidba na praznu adresu. |
 | 3274  | `izbor-industrijskog-poda-...-2`                   | **draft** | —                            | ✅ Nema URL-a, 301→2622 već u draftu. Ništa.                                                                                                                                                                                                       |
-| 16672 | `ergonomske-podloge-2`                             | publish   | 1 prikaz                     | 🟢 **Jedini pravi kandidat.** `-2` postoji jer slug `ergonomske-podloge` drži **prilog** (attachment 12489), ne stranica. Fix: preimenovati slug priloga → stranica na čist `/ergonomske-podloge/` → 301 sa starog. ~15 min, rizik ~0 (1 prikaz). |
+| 16672 | `ergonomske-podloge-2`                             | publish   | 1 prikaz (12 mes.: 123/4)    | ✅ **IZVRŠENO 2026-08-13 (stavka A).** `-2` je bio WP-ov automatski sufiks jer je čist slug držao **prilog** (12489), ne druga stranica — nema konsolidacije sadržaja, samo oslobađanje sluga. Prilog → `ergonomske-podloge-foto` (putanja fajla nedirnuta, slike rade), stranica uzela čist slug, 301 `-2` → čist, istorijsko pravilo `/ergonomski-podovi/` (160 pogodaka) **pretočeno sa `-2` na nov cilj** u istom potezu. Meni stavka 17388 je `post_type` tip → prati ID. GSC provereno pre izvršenja: 90d **1 prikaz / 0 klikova**, 12 meseci **123 prikaza / 4 klika** (drži „ergonomske podloge" poz. **3,8**, „podloga za stajanje" poz. **6,5**). 🔴 Podatak „110 klikova" iz `parity-inventar.csv` **nije potvrđen ni na jednom prozoru** — pogrešan. |
 
-**Zaključak:** „dupli permalinci" nisu sistemski problem na ovom buildu — 1 stvarna
-stavka, i to bezvredna po saobraćaju. Pravilo za ubuduće: pre kreiranja stranice
-proveriti da slug ne drži **prilog** (WP tiho dodaje `-2` i ne prijavi ništa).
+**Zaključak:** „dupli permalinci" **više ne postoje na ovom buildu** — od 3 slug-a sa `-2`,
+jedan je draft bez URL-a (3274), a oba živa su rešena 13.08 (6588 i 16672). Pravilo za
+ubuduće: pre kreiranja stranice proveriti da slug ne drži **prilog** (WP tiho dodaje `-2`
+i ne prijavi ništa).
 
 > 🔵 **Dopuna 2026-08-13 (posle M pitanja):** dva `-2` slug-a nastaju iz **dva
 > različita uzroka** i traže različit postupak. `ergonomske-podloge-2` je WP-ov
@@ -72,12 +74,12 @@ checkliste B1 koja inače pada za ~7 dana dok je consent screen u *Testing*.
 `kako-napraviti-teren-za-basket…` (2298) je **najjači sadržaj na sajtu**:
 **13.686 prikaza / 385 klikova / 90d**, i drži baš te upite na poziciji 1–2:
 
-| Upit | Prikazi | Poz. | Nova stranica na buildu koja cilja isti upit |
-|---|---|---|---|
-| dimenzije fudbalskog terena | 2.174 | 1,6 | 🔴 17027 `/dimenzije-fudbalskog-terena/` |
-| dimenzije košarkaškog terena (+ varijante) | 2.004 | 1,3–1,9 | 🔴 16586 `/dimenzije-kosarkaskog-terena/` |
-| dimenzije košarkaške table / table za koš | 719 | 1,0–1,2 | 🔴 16585 `/dimenzije-kosarkaske-table/` |
-| (tenis) | — | — | 🟡 16688 `/dimenzije-teniskog-terena/` (2298 ne cilja tenis) |
+| Upit                                       | Prikazi | Poz.    | Nova stranica na buildu koja cilja isti upit                 |
+| ------------------------------------------ | ------- | ------- | ------------------------------------------------------------ |
+| dimenzije fudbalskog terena                | 2.174   | 1,6     | 🔴 17027 `/dimenzije-fudbalskog-terena/`                     |
+| dimenzije košarkaškog terena (+ varijante) | 2.004   | 1,3–1,9 | 🔴 16586 `/dimenzije-kosarkaskog-terena/`                    |
+| dimenzije košarkaške table / table za koš  | 719     | 1,0–1,2 | 🔴 16585 `/dimenzije-kosarkaske-table/`                      |
+| (tenis)                                    | —       | —       | 🟡 16688 `/dimenzije-teniskog-terena/` (2298 ne cilja tenis) |
 
 **Stanje na buildu:** sve 4 nove stranice su `index`, **bez canonical-a**, i
 **nijedna ne linkuje ka 2298** (provereno u `post_content`). 2298 ne linkuje ka
@@ -233,19 +235,32 @@ ne duplira — ostaje na 16874.
 
 ## 5. Šta staje pre freeze-a (ned 16.08)
 
-| # | Stavka | Rizik | Vreme | Nepovratno? |
+> 🔄 **Status kolona dodata i osvežena 2026-08-13 uveče.** Tabela je do tada stajala kao da
+> ništa nije urađeno, iako su B/C/D izvršeni istog jutra — isti obrazac zastarelog reda koji
+> je 12.08 doveo do pogrešnog izbora zadatka. Održavati pri svakoj izmeni.
+
+| # | Stavka | Rizik | Vreme | Status |
 |---|---|---|---|---|
-| A | `ergonomske-podloge-2` → čist slug + 301 | ~0 | 15 min | ne (301) |
-| B | Bergo Easy → 301 → Iznajmljivanje + preseljenje sadržaja | ~0 | 45 min | ne |
-| C | Parkiralište: cena-sadržaj u 16589, 16876 → 301 | nizak | 45 min | ne |
-| D | Maloprodaja: 16683 → 301 → 16142 | nizak | 20 min | ne |
-| E | 🔴 `/sportske-podloge/` — vratiti basket/„vrste podloga" semantiku + Planer link | **visok ako se NE uradi** | 1–1,5 h | ne |
-| F | 🔴 Dimenzije klaster (4 str.) — uzajamni linkovi sa 2298 + pomak title-a | **visok ako se NE uradi** | 1 h | ne |
-| G | Meni „Cene" — ukloniti segment + popraviti prazan naslov 17424 | nizak | 20 min | ne (meni se vraća) |
-| H | Garaže/terase — uzajamni interni linkovi (16875↔16664, 2641↔16873) | ~0 | 30 min | ne |
-| I | Ads: 6 URL-ova za prepis + 2 tuđi domen + `/home/` putanje | — | M, u Ads UI | — |
+| A | `ergonomske-podloge-2` → čist slug + 301 | ~0 | 15 min | ✅ **izvršeno 13.08** — prilog 12489 → `…-foto`, stranica uzela čist slug, istorijsko pravilo #79 pretočeno na nov cilj. 🆕 Usput nađeno da **8 tipova sa te stranice nema nijedan proizvod u katalogu** → [[migracija/w1-ergonomske-podloge-proizvodi]] |
+| B | Bergo Easy → 301 → Iznajmljivanje + preseljenje sadržaja | ~0 | 45 min | ✅ **izvršeno 13.08** |
+| C | Parkiralište: cena-sadržaj u 16589, 16876 → 301 | nizak | 45 min | ✅ **izvršeno 13.08** |
+| D | Maloprodaja: 16683 → 301 → 16142 | nizak | 20 min | ✅ **izvršeno 13.08** |
+| E | 🔴 `/sportske-podloge/` — vratiti basket/„vrste podloga" semantiku + Planer link | **visok ako se NE uradi** | 1–1,5 h | 🔴 **otvoreno, rok 16.08** |
+| F | 🔴 Dimenzije klaster (4 str.) — uzajamni linkovi sa 2298 + pomak title-a | **visok ako se NE uradi** | 1 h | 🔴 **otvoreno, rok 16.08** |
+| G | Meni „Cene" — ukloniti segment + popraviti prazan naslov 17424 | nizak | 20 min | ❌ nije odobreno |
+| H | Garaže/terase — uzajamni interni linkovi (16875↔16664, 2641↔16873) | ~0 | 30 min | ❌ nije odobreno |
+| I | Ads: 6 URL-ova za prepis + 2 tuđi domen + `/home/` putanje | — | M, u Ads UI | 🟡 čeka M |
+| J | 🆕 Čist slug „preko starog parketa": 16613 → draft, 6588 → čist URL, 301 okrenut | nizak | 30 min | ✅ **izvršeno 13.08** (nije bilo u prvobitnoj listi — izašlo iz §1 na M pitanje) |
+| K | 🆕 **FAQ klaster „izbor industrijskog poda"** — sve tri stranice (2622 · 3274 · 17025) → draft + 301 na `/industrijski-podovi/`; 8 pitanja preneto u hub, hub dobio FAQPage schema | nizak | 1 h | ✅ **izvršeno 13.08** (M nalog, nije bilo u prvobitnoj listi). Sve tri imale **0 klikova / 12 meseci** dok hub drži „industrijski podovi" na poz. **6,7**. 🔴 Istorijsko pravilo sa **615 pogodaka** pretočeno na hub. Postovi po temi → posle live-a: [[seo/posle-live-postovi-izbor-industrijskog-poda]] |
 
-Ukupno CC posla: **~5 h**. Sve je povratno (301 se uklanja, meni se vraća,
-tekst se vraća iz backup-a). Ništa ne dira bazu destruktivno bez `wp db export`.
+Sve je povratno (301 se uklanja, meni se vraća, tekst se vraća iz backup-a). Ništa ne dira
+bazu destruktivno bez `wp db export`.
 
-**Redosled po vrednosti:** E → F → C → B → G → H → D → A.
+**Preostalo CC posla pre freeze-a: ~2,5 h — samo E i F.**
+Redosled po vrednosti: **E → F**. (Neodobreno, ako se ikad otvori: G → H.)
+
+> 🆕 **Izašlo iz stavke A, nije bilo na listi:** 8 tipova podloga na `/ergonomske-podloge/`
+> nema **nijedan** proizvod u katalogu, a telo stranice nema nijedan interni link. M je
+> 13.08 odobrio obim (nova `product_cat` + 8 proizvoda, cena „na upit", slike sa
+> ergomat.com) ali **odložio izvršenje** → [[migracija/w1-ergonomske-podloge-proizvodi]].
+> Menja sadržaj, pa je rok isti — NED 16.08 — inače ide posle live-a.

@@ -1,3 +1,163 @@
+## 2026-08-13 [claude-code] W2/SEO — treća FAQ stranica (17025) u hub, klaster zatvoren ✅
+
+**Kontekst:** Nastavak prethodne stavke istog dana. M: i `/industrijski-podovi-najcesca-pitanja/`
+ide u hub, 301 na `/industrijski-podovi/`. Time je **ceo FAQ klaster konsolidovan** —
+nijedna zasebna FAQ stranica na ovu temu više ne postoji.
+
+**Preneto na hub — 4 pitanja koja nije imao** (od 7 na 17025):
+samostalna montaža (ubodna testera/cirkular + gumeni čekić, klik-sistem, uputstvo uz
+isporuku) · **spoljašnja upotreba — odgovor je NE**, proizvođač ne preporučuje (negativan
+kvalifikator koji odbija pogrešne upite, korisniji od ćutanja) · postavljanje preko
+farbanog betona, keramike, tepiha ili vinila · kada je lepak potreban (tačkasto opterećenje,
+izolovan izvor toplote, direktna sunčeva svetlost; preporučeno **Uzin MK92S**).
+**Nije preneto** ono što hub već ima: viljuškari + tabela debljina, upotreba odmah po
+montaži, priprema podloge. **Hub sada nosi 15 FAQ pitanja.**
+
+**🔴 Zamka koja je uhvaćena na vreme:** istorijsko pravilo
+`/home/industrijski-podovi-najcesca-pitanja/` sa **615 GSC pogodaka** ciljalo je 17025.
+Draftovanje stranice bez prepravke pravila poslalo bi tih 615 na **404** posle migracije.
+Pretočeno na hub u istom potezu. Isti razred greške kao 4 pravila sa 365 pogodaka uhvaćena
+jutros pri konsolidaciji C/D/B — **draftovanje stranice uvek traži proveru da li je neko
+istorijsko pravilo cilja.**
+
+**Izvršeno** (`migracija/alati/job-faq-17025-konsolidacija-2026-08-13.php`):
+1. 16567 — 4 nova pitanja
+2. 16567 — **FAQPage JSON-LD se briše i gradi iznova** nad svih 15 pitanja (skripta odbija
+   upis ako parsira manje od 15) — dogradnja postojeće schema-e nije opcija jer bi se
+   vidljivi tekst i schema razišli
+3. **17025 → draft**
+4. **Meni stavka 17390 obrisana** — hub je u meniju već 2× (16706, 17371), pa bi
+   prevezivanje dalo treći duplikat. Provereno da stavka nema podstavki pre brisanja
+5. 301: nov red 17025 → hub · istorijsko pravilo (615) pretočeno. Draft **79 pravila**,
+   svi ciljevi 200 · verifikator **0 duplikata / 0 petlji / 43-43 / 0 kolizija**
+
+**Verifikacija:** hub **200** / 1×H1 / **1× FAQPage · 15 Question · 15 Answer** · sve tri
+FAQ stranice **404** · meni bez mrtvih stavki · sitemap bez 17025 · 0 dolaznih veza.
+
+**🔵 Lažna uzbuna pri regresiji:** `/podovi-za-magacine-i-hale/` vraća **301** — nije
+posledica ovog rada. 16687 je **child stranica huba**, pa flat oblik uvek 301-uje na
+`/industrijski-podovi/podovi-za-magacine-i-hale/` (200). Upisano u plan da se linkuje
+ugnježden oblik.
+
+**Backup:** `antasline_local_2026-08-13_pre-faq-17025.sql`. Tekst sva tri članka ostaje
+u bazi kao draft. Plan postova dopunjen → [[seo/posle-live-postovi-izbor-industrijskog-poda]].
+
+---
+
+## 2026-08-13 [claude-code] W2/SEO — FAQ klaster „izbor industrijskog poda" konsolidovan u hub ✅
+
+**Kontekst:** M: oba članka `/izbor-industrijskog-poda-tri-najcesca-pitanja/` i `-2` imaju
+istu tematiku i sličan FAQ → odgovori na FAQ sekciju `/industrijski-podovi/`, oba na 301
+ka hubu, zapisati obrađena pitanja i planirati zasebne postove po temi **posle migracije**.
+
+**🔴 Klaster je bio od TRI stranice, ne dve** — treća je `/industrijski-podovi-najcesca-pitanja/`
+(17025). Svež GSC pull pre bilo kakve izmene:
+
+| URL | 90d | 12 meseci | Pozicija |
+|---|---|---|---|
+| 2622 `/izbor-…-tri-najcesca-pitanja/` | 94 / 0 | **128 prikaza / 0 klikova** | 24–80 |
+| 3274 `…-2` (draft od 27.07) | 50 / 0 | **98 / 0** | 20–76 |
+| 17025 `/industrijski-podovi-najcesca-pitanja/` | 0 / 0 | **4 / 0** | 34–76 |
+| **16567 `/industrijski-podovi/`** | — | **16.417 / 410** | „industrijski podovi" **6,7** |
+
+Sve tri gađaju isti upit koji hub drži na 6,7 — tri slaba izvora cepaju signal protiv
+sopstvenog huba, uz **nula klikova u 12 meseci**. Konsolidacija ne gubi ništa.
+⚠️ **Treća pogrešna brojka u nizu:** obrazloženje reda 17 u `redirect-mapa-FINAL.csv`
+tvrdi „311 klikova / poz. 6,9 / CTR 4,92%" — nije potvrđeno ni na jednom prozoru
+(isti razred kao `gsc_klikovi` u `parity-inventar.csv`, dva puta danas).
+
+**🔵 Nalaz o sadržaju:** oba članka obrađuju **ista tri pitanja** (3274 je prepričan 2622),
+a jedini dodatak 3274 — Ecotile **500/5 · 500/7 · 500/10** po opterećenju — **hub već ima**
+u sekciji „Koja debljina za koju namenu?". Od 7 postojećih FAQ pitanja na hubu nijedno se
+nije dupliralo sa člancima, ali su pokrivala isti teren u direktnijem obliku.
+
+**Izvršeno** (`migracija/alati/job-faq-konsolidacija-2026-08-13.php`, probni pa `--write`):
+1. **16567 — 4 nova FAQ pitanja** koja hub nije imao: okvir odluke (3 pitanja) · svež beton
+   u novogradnji (sazrevanje do godinu dana, polaganje bez lepka i hidroizolacije) ·
+   priprema u odnosu na premaze (glodanje/brušenje, nedelje prašine) · otkup starog poda
+2. **16567 — FAQPage JSON-LD sa 11 pitanja**, koji hub **do sada uopšte nije imao**
+   (provereno: 0 FAQPage u renderu pre izmene). 🟢 Schema se **gradi parsiranjem vidljivog
+   teksta**, ne ručnim prepisom — inače se vremenom raziđu, što Google čita kao neusklađenost;
+   skripta odbija upis ako parsira manje od 8 parova
+3. **2622 → draft** (3274 već bio)
+4. **17025** — jedina stranica koja je linkovala ka oba članka, obe veze prevezane na hub
+5. 301: red 17 preusmeren sa 2622 na **hub**, dodat nov red za 2622 → hub. Draft
+   **78 pravila**, svi ciljevi 200 · verifikator **0 duplikata / 0 petlji / 44-44 / 0 kolizija**
+
+**Verifikacija:** hub **200**, 1×H1, **1× FAQPage · 11 Question · 11 Answer** · oba članka
+**404** na buildu · 17025 i dalje 200 bez mrtvih veza.
+
+**Plan za posle live-a** → [[seo/posle-live-postovi-izbor-industrijskog-poda]]: zapis šta su
+članci obrađivali (tabela po pitanju) + **5 predloženih postova** sa ciljnim upitima i
+obrazloženjem zašto nisu duplikati, uz mapu postojeće pokrivenosti (14 stranica) protiv koje
+se svaki proverava. Redosled P1 → P4 → P3 → P2 → P5, ~40–60 min po postu.
+🔴 U plan je upisano tvrdo pravilo: **GSC provera pre svakog posta** — ceo posao je nastao
+iz kanibalizacije i ne sme je proizvesti ponovo.
+
+**🟡 Ostaje otvoreno (#ceka-miroslav):** 17025 je treća FAQ stranica istog klastera sa
+**4 prikaza / 0 klikova / 12 meseci**, a hub sada nosi punu FAQ sekciju sa schema-om. Nije
+dirana jer nalog nije obuhvatao nju. Ako se gasi, 🔴 **istorijsko pravilo sa 615 pogodaka**
+(`/home/industrijski-podovi-najcesca-pitanja/`) mora se pretočiti na hub, plus stavka
+menija 17390.
+
+**Backup:** `antasline_local_2026-08-13_pre-faq-konsolidacija.sql` (37,6 MB).
+Tekst oba članka ostaje u bazi kao draft — nije izgubljen.
+
+---
+
+## 2026-08-13 [claude-code] W2/SEO — stavka A: čist slug `/ergonomske-podloge/` + nalaz da 8 tipova nema proizvode ✅
+
+**Kontekst:** Poslednja `-2` stavka iz §1 analize. M: „prepravi u `ergonomske-podloge`,
+301 na čist, prilog preimenuj" + zapažanje da stranica **prikazuje 8 tipova podloga a
+nema link ka stvarnim proizvodima**.
+
+**🔵 Ovo je `-2` druge prirode nego „preko starog parketa":** tamo je bio namerno napisan
+drugi članak, ovde je **WP-ov automatski sufiks** jer je čist slug držao **prilog**
+(attachment 12489). Nema konsolidacije sadržaja — samo se oslobađa slug. Zato je i cena
+poteza drugačija: kod parketa jedna 301 selidba rangirane stranice, ovde ništa.
+
+**GSC provereno pre diranja URL-a** (`gsc_page_queries.py`): 90d **1 prikaz / 0 klikova** ·
+12 meseci **123 prikaza / 4 klika**, drži „ergonomske podloge" poz. **3,8** i „podloga za
+stajanje" poz. **6,5**. 🔴 **Usput opovrgnut podatak iz `parity-inventar.csv`** koji toj
+stranici pripisuje **110 klikova** — nije potvrđen ni na jednom prozoru (90d ni 12 mes.).
+Isti fajl je i kod parket stavke nosio zastarele `lokal_id` vrednosti (postovi 15977/15967
+ne postoje) — **`gsc_klikovi` kolona iz F1 baseline-a nije pouzdana, proveriti pre
+oslanjanja.**
+
+**Izvršeno** (`migracija/alati/job-slug-swap-ergonomske-2026-08-13.php`, probni pa `--write`):
+1. **12489** (prilog) → `ergonomske-podloge-foto` — 🟢 `post_name` je slug attachment
+   *stranice*, ne ime fajla, pa putanje slika ostaju iste
+2. **16672** (stranica) → čist slug `ergonomske-podloge`
+3. **16567** `/industrijski-podovi/` — jedini dolazni link u sadržaju prevezan
+4. `redirect-mapa-FINAL.csv` +1 red · `redirect-mapa-HISTORIJSKI-65-FLAT.csv` red 44:
+   istorijsko pravilo `/ergonomski-podovi/` (**160 pogodaka**) **pretočeno sa `-2` na
+   čist cilj** — da nije, 160 pogodaka bi posle migracije išlo na 404
+5. Draft regenerisan: **77 pravila**, svi ciljevi 200 · verifikator **0/0/45-45/0**
+
+**Verifikacija:** čist URL **200**, 1×H1, sve slike 200 · `-2` **404** · sitemap nosi čist
+URL · meni stavka 17388 je `post_type` tip (prati ID, preživljava) · regresija na 4
+nevezane stranice čista.
+
+**🔴 Glavni nalaz nije bio slug nego katalog:** osam tipova sa stranice — Diamond Allround,
+Soft Air Meter, SuperSoft Smooth, SuperSoft Office, La Ola, La Ola Hygienic, Nitrile Walk,
+Solido I — **ne postoji nijedan kao proizvod**, ni na buildu ni na live-u (pretraga po
+naslovima kroz sve `product`/`page`/`post`). Telo stranice nema **nijedan** interni link
+osim `/kontakt/` i `tel:`. Dakle nije propust u linkovanju nego rupa u katalogu.
+`/brend/ergomat/` nije zamena — tih 27 proizvoda su odbojnici, DuraStripe trake i senzori.
+Imamo: **specifikacije** (na samoj stranici), **slike za 7 od 8** (fali La Ola), **nijednu
+cenu** u cenovniku, i **nijednu odgovarajuću `product_cat`** od 16 postojećih.
+**M odobrio obim, odložio izvršenje** → [[migracija/w1-ergonomske-podloge-proizvodi]]
+(nova kategorija + 8 proizvoda, cena „na upit", slike i podaci sa **ergomat.com**).
+⚠️ Menja sadržaj → pre **NED 16.08** ako ide u produkciju 24.08, inače post-live.
+🟡 U spec je upisano i upozorenje da namene za **SuperSoft Smooth/Office** na stranici
+deluju zamenjene — ukrstiti sa ergomat.com pre upisa, ne prepisivati slepo.
+
+**Backup:** `antasline_local_2026-08-13_pre-slug-swap-ergonomske.sql` (37,6 MB).
+🟢 Time su **oba živa `-2` slug-a na buildu rešena** (6588 i 16672); treći (3274) je draft
+bez URL-a.
+
+---
+
 ## 2026-08-13 [claude-code] Vault higijena — PROGRESS.md 1,4 MB → 247 KB, jun+jul u arhivu ✅
 
 **Kontekst:** M je primetio „puno praznog i čudne linije" u PROGRESS-u. Provera je našla

@@ -136,6 +136,23 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 > **16663**. 301 mapa dopunjena i **4 istorijska pravila sa 365 GSC pogodaka spljoštena**
 > (vodila su na upravo draftovane stranice).
 >
+> **✅ Nastavak iste liste, sesija 13.08 popodne (M odobrio još 3 stavke):**
+> **(A)** `/ergonomske-podloge/` — čist slug (prilog 12489 je držao slug, ne druga stranica),
+> istorijsko pravilo `/ergonomski-podovi/` (160 pogodaka) pretočeno na nov cilj ·
+> **(J)** `/sta-postaviti-preko-starog-parketa-ili-plocica/` — sadržaj iz `-2` (prepis 09/2025)
+> preseljen na čist slug, original iz 2022 draftovan; **ovo je ukinulo odluku od 30.07** ·
+> **FAQ klaster u celosti** — sve **tri** stranice (2622 · 3274 · 17025, zajedno **0 klikova
+> u 12 meseci**) draftovane i 301-ovane na `/industrijski-podovi/`, koji drži „industrijski
+> podovi" na poz. **6,7** (16.417 prikaza / 410 kl.); hub dobio **8 novih FAQ pitanja
+> (ukupno 15) i FAQPage JSON-LD koji do tada uopšte nije imao**. 🔴 Istorijsko pravilo sa
+> **615 pogodaka** pretočeno na hub — bez toga bi posle migracije išlo na 404.
+> **Time su svi `-2` slugovi na buildu rešeni.** 301 draft: **79 pravila**, svi ciljevi 200.
+> → [[dnevnik/2026-08-13-kanibalizacija-nastavak]] · [[seo/posle-live-postovi-izbor-industrijskog-poda]]
+>
+> ⚠️ **Sistemski nalaz iz iste sesije:** zapisane GSC brojke u migracionim CSV-ovima su se
+> **tri puta** pokazale netačne (`gsc_klikovi` u `parity-inventar.csv` 2×, obrazloženje reda 17
+> u `redirect-mapa-FINAL.csv` 1×). **Pre svake odluke ide svež pull**, ne oslanjanje na zapis.
+>
 > 🔴 **Dve stavke ostaju otvorene i imaju rok content freeze (16.08):** **(E)**
 > `/sportske-podloge/` je na buildu izgubila basket-semantiku koju live drži na poz. **1,6/2,0**
 > (~90 od 178 kl./90d) i ne pominje `/planer-terena/` · **(F)** 4 nove „dimenzije" stranice

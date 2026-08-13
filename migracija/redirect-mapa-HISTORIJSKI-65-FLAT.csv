@@ -21,7 +21,7 @@ stari_url;novi_url_flat;gsc_hits_zabelezeno;odluka_2026-08-11
 /lvt-podovi-za-komercijalne-i-javne-prostore/expona-commercial/;/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/;670
 /lvt-podovi-za-komercijalne-i-javne-prostore/podovi-za-kancelarije-i-radnje-vinil-podovi-podovi-za-komercijalne-objekte/;/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/;664
 /lvt-podovi-za-komercijalne-i-javne-prostore/podovi-za-poslovni-prostor-i-radnje-vinil-podovi-podovi-za-komercijalne-objekte/;/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/;631
-/home/industrijski-podovi-najcesca-pitanja/;/industrijski-podovi-najcesca-pitanja/;615
+/home/industrijski-podovi-najcesca-pitanja/;/industrijski-podovi/;615
 /lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-za-restorane-hotele-kafice-kancelarije-i-poslovne-prostore/;/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/;588;NE PRENOSI SE u .htaccess - izvorni URL na novom buildu postoji kao prava stranica (16686, W2 2.5 restorani, HTTP 200); pravilo iz Redirection plugina bi ubilo stranicu koju smo napravili. Posle migracije ovaj URL ostaje 200.
 /lvt-podovi-za-komercijalne-i-javne-prostore/podovi-za-kancelarije-i-radnje/;/lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/;581
 /vinil-podovi-za-komercijalne-i-javne-prostore/;/lvt-podovi-za-komercijalne-i-javne-prostore/;493
@@ -41,7 +41,7 @@ stari_url;novi_url_flat;gsc_hits_zabelezeno;odluka_2026-08-11
 /kako-izabrati-pravi-industrijski-pod/;/osteceni-industrijski-pod/;166
 /industrijski-podovi-kako-izabrati-industrijski-pod-koji-odgovara-vasim-zahtevima/;/osteceni-industrijski-pod/;162
 /kako-izabrati-pravi-industrijski-pod-koji-odgovara-vasim-poterbama/;/osteceni-industrijski-pod/;161
-/ergonomski-podovi/;/ergonomske-podloge-2/;160
+/ergonomski-podovi/;/ergonomske-podloge/;160
 /podovi-za-kretanje-teskih-vozila-preko-zemlje-trave-peska/;/montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi/;157
 /podovi-za-terase-podovi-za-baste-podovi-za-splavove-podovi-za-bazene/za-vlazne-prostore-bergo-soft/;/spoljnje-podne-obloge/;154
 /bergo-ultimate-i-ultimate-plus-nova-generacija-sportskih-podova/;/na-kojoj-podlozi-se-igraju-turniri-u-3x3/;116;NE PRENOSI SE u .htaccess - PETLJA sa redirect-mapa-FINAL redom 2, koji ide u suprotnom smeru (/na-kojoj-podlozi.../ -> /bergo-ultimate.../). Na novom buildu clanak zivi na /bergo-ultimate.../ (post 4813, HTTP 200), a /na-kojoj-podlozi.../ je 404 - dakle FINAL smer je tacan, ovo pravilo je zastareo ostatak.

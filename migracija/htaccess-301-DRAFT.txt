@@ -2,7 +2,7 @@
 # Aktivira se TEK na dan migracije (MASTER-PLAN V2, 3.9/3.11), iznad `# BEGIN WordPress` bloka.
 #
 # GENERISANO: 2026-08-13 skriptom migracija/alati/htaccess-301-generate.php
-# Izvori: redirect-mapa-FINAL.csv (15 pravila) +
+# Izvori: redirect-mapa-FINAL.csv (18 pravila) +
 #         redirect-mapa-HISTORIJSKI-65-FLAT.csv (61 pravila).
 # Svi ciljevi provereni HTTP 200 na lokalnom buildu na dan generisanja.
 #
@@ -30,9 +30,12 @@ RedirectMatch 301 "^/izgradnja-terena-za-tenis/?$" /sportske-podloge/sportski-po
 RedirectMatch 301 "^/podne-obloge-za-promocije-i-sajmove/?$" /iznajmljivanje-podova/
 RedirectMatch 301 "^/podovi-za-poslovni-prostor/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/
 RedirectMatch 301 "^/galerija-sportskih-terena/?$" /galerija/
-RedirectMatch 301 "^/izbor-industrijskog-poda-tri-najcesca-pitanja-2/?$" /izbor-industrijskog-poda-tri-najcesca-pitanja/
+RedirectMatch 301 "^/izbor-industrijskog-poda-tri-najcesca-pitanja-2/?$" /industrijski-podovi/
 RedirectMatch 301 "^/sta-postaviti-preko-starog-parketa-ili-plocica-2/?$" /sta-postaviti-preko-starog-parketa-ili-plocica/
 RedirectMatch 301 "^/vestacka-trava/?$" /spoljnje-podne-obloge/vestacka-trava-za-terase/
+RedirectMatch 301 "^/ergonomske-podloge-2/?$" /ergonomske-podloge/
+RedirectMatch 301 "^/izbor-industrijskog-poda-tri-najcesca-pitanja/?$" /industrijski-podovi/
+RedirectMatch 301 "^/industrijski-podovi-najcesca-pitanja/?$" /industrijski-podovi/
 
 # ====== B. ISTORIJSKA PRAVILA — preuzeta iz Redirection plugina sa live-a ======
 # 🔴 Bez ovog bloka se GUBE: migracija zamenjuje živu bazu lokalnom, a sa njom
@@ -59,7 +62,7 @@ RedirectMatch 301 "^/kuca-i-dvoriste/?$" /spoljnje-podne-obloge/   # 780
 RedirectMatch 301 "^/lvt-podovi-za-komercijalne-i-javne-prostore/expona-commercial/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/   # 670
 RedirectMatch 301 "^/lvt-podovi-za-komercijalne-i-javne-prostore/podovi-za-kancelarije-i-radnje-vinil-podovi-podovi-za-komercijalne-objekte/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/   # 664
 RedirectMatch 301 "^/lvt-podovi-za-komercijalne-i-javne-prostore/podovi-za-poslovni-prostor-i-radnje-vinil-podovi-podovi-za-komercijalne-objekte/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/   # 631
-RedirectMatch 301 "^/home/industrijski-podovi-najcesca-pitanja/?$" /industrijski-podovi-najcesca-pitanja/   # 615
+RedirectMatch 301 "^/home/industrijski-podovi-najcesca-pitanja/?$" /industrijski-podovi/   # 615
 RedirectMatch 301 "^/lvt-podovi-za-komercijalne-i-javne-prostore/podovi-za-kancelarije-i-radnje/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/kancelarije-i-poslovni-prostori/   # 581
 RedirectMatch 301 "^/vinil-podovi-za-komercijalne-i-javne-prostore/?$" /lvt-podovi-za-komercijalne-i-javne-prostore/   # 493
 RedirectMatch 301 "^/sportske-podloge/kosarkaskekonstrukcije/?$" /sportske-podloge/kosarkaske-konstrukcije/   # 382
@@ -77,7 +80,7 @@ RedirectMatch 301 "^/lako-montazni-podovi-za-kretanje-teskih-vozila-privremeni-p
 RedirectMatch 301 "^/kako-izabrati-pravi-industrijski-pod/?$" /osteceni-industrijski-pod/   # 166
 RedirectMatch 301 "^/industrijski-podovi-kako-izabrati-industrijski-pod-koji-odgovara-vasim-zahtevima/?$" /osteceni-industrijski-pod/   # 162
 RedirectMatch 301 "^/kako-izabrati-pravi-industrijski-pod-koji-odgovara-vasim-poterbama/?$" /osteceni-industrijski-pod/   # 161
-RedirectMatch 301 "^/ergonomski-podovi/?$" /ergonomske-podloge-2/   # 160
+RedirectMatch 301 "^/ergonomski-podovi/?$" /ergonomske-podloge/   # 160
 RedirectMatch 301 "^/podovi-za-kretanje-teskih-vozila-preko-zemlje-trave-peska/?$" /montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi/   # 157
 RedirectMatch 301 "^/podovi-za-terase-podovi-za-baste-podovi-za-splavove-podovi-za-bazene/za-vlazne-prostore-bergo-soft/?$" /spoljnje-podne-obloge/   # 154
 RedirectMatch 301 "^/home/industrijski-podovi-montaza-preko-ostecenog-epoksida/?$" /industrijski-podovi-montaza-preko-ostecenog-epoksida/   # 106
