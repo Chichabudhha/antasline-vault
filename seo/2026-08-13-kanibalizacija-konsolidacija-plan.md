@@ -21,11 +21,11 @@ izvor-podataka: GSC 2026-05-15→2026-08-12 (90d, `gsc_page_queries.py`) · Goog
 
 Ceo build ima **3** slug-a sa `-2` (publish+draft, page/post/product):
 
-| ID | Slug | Status | GSC 90d | Odluka |
-|---|---|---|---|---|
-| 6588 | `sta-postaviti-preko-starog-parketa-ili-plocica-2` | publish | **249 prikaza / 13 klikova** | 🔴 **NE DIRATI.** `-2` je ovde **pobednička** verzija i to je URL koji live već ima. Duplikat bez `-2` (16613) ima 132/5, već je `noindex` + ima 301 pravilo. Preimenovanje bi bacilo 13 klikova/90d za kozmetiku. |
-| 3274 | `izbor-industrijskog-poda-...-2` | **draft** | — | ✅ Nema URL-a, 301→2622 već u draftu. Ništa. |
-| 16672 | `ergonomske-podloge-2` | publish | 1 prikaz | 🟢 **Jedini pravi kandidat.** `-2` postoji jer slug `ergonomske-podloge` drži **prilog** (attachment 12489), ne stranica. Fix: preimenovati slug priloga → stranica na čist `/ergonomske-podloge/` → 301 sa starog. ~15 min, rizik ~0 (1 prikaz). |
+| ID    | Slug                                               | Status    | GSC 90d                      | Odluka                                                                                                                                                                                                                                            |
+| ----- | -------------------------------------------------- | --------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 6588  | `sta-postaviti-preko-starog-parketa-ili-plocica-2` | publish   | **249 prikaza / 13 klikova** | 🔴 **NE DIRATI.** `-2` je ovde **pobednička** verzija i to je URL koji live već ima. Duplikat bez `-2` (16613) ima 132/5, već je `noindex` + ima 301 pravilo. Preimenovanje bi bacilo 13 klikova/90d za kozmetiku.                                |
+| 3274  | `izbor-industrijskog-poda-...-2`                   | **draft** | —                            | ✅ Nema URL-a, 301→2622 već u draftu. Ništa.                                                                                                                                                                                                       |
+| 16672 | `ergonomske-podloge-2`                             | publish   | 1 prikaz                     | 🟢 **Jedini pravi kandidat.** `-2` postoji jer slug `ergonomske-podloge` drži **prilog** (attachment 12489), ne stranica. Fix: preimenovati slug priloga → stranica na čist `/ergonomske-podloge/` → 301 sa starog. ~15 min, rizik ~0 (1 prikaz). |
 
 **Zaključak:** „dupli permalinci" nisu sistemski problem na ovom buildu — 1 stvarna
 stavka, i to bezvredna po saobraćaju. Pravilo za ubuduće: pre kreiranja stranice
