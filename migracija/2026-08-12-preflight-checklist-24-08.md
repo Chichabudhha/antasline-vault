@@ -55,7 +55,7 @@
 
 | # | Tema | Izvor A (zastareo/sporan) | Izvor B (noviji) |
 |---|---|---|---|
-| 1 | SEO plugin | `odluke/_pregled-odluka.md` (28.06), `migracija/2026-07-28-W7-sanacija-builda.md`: **Yoast**, Rank Math zabranjen | `dnevnik/2026-08-11-gsc-priprema-sitemap.md`, `2026-08-12-product-brand-arhive.md`: migracija na **Rank Math** izvedena 05.08, Yoast deaktiviran |
+| 1 | ✅ **REŠENO 2026-08-13 (M odluka): Rank Math je jedini SEO plugin, Yoast van upotrebe.** Ispravljeno u `odluke/_pregled-odluka.md`, `CLAUDE.md` §7.1, master plan §„Pravila" + W2 zaglavlje, `/antasline-sesija`, `/obogati-proizvod`, `reference/claude-skilovi.md`, `seo/plan-novih-stranica.md`. | ~~`odluke/_pregled-odluka.md` (28.06): **Yoast**, Rank Math zabranjen~~ | migracija na **Rank Math** izvedena 05.08 |
 | 2 | Datum go-live | `migracija/w1-novi-proizvodi-court-builder.md`: **31.08** | `migracija/2026-08-10-pre-migration-checklist.md`: **24.08** (freeze 16.08, gate 21.08) |
 | 3 | Prefiks baze | `migracija/2026-07-05-live-export-prompt.md`, `PARITY-PLAN.md`: **`wpGs_`** | `2026-08-10-pre-migration-checklist.md`, `2026-08-06-prompt-staging-full-restore.md`: stvarno **`wpgs_`** |
 | 4 | Sloj 301 | `migracija/2026-07-21-analiza-65-redirection-pravila.md`: u **Redirection pluginu** | `dnevnik/2026-08-11-htaccess-301-reverifikacija.md`: prebačeno u **`.htaccess`** |

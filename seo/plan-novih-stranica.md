@@ -13,7 +13,7 @@ azurirano: 2026-07-04
 
 ## Pravila za SVAKU stranicu
 
-- Yoast >80 · na **lokalnom buildu** (ne live!)
+- Rank Math SEO score >80 · na **lokalnom buildu** (ne live!)
 - FAQ blok + **FAQPage/Product schema** (Product snippet CTR 10,5% — dokazano u [[analiza/2026-07-04-snapshot-full]] §1.5)
 - Cena od–do po m² gde ima smisla (`{{CENA_OD}}–{{CENA_DO}}` placeholder dok Miroslav ne da cifre)
 - Interni link ka `/industrijski-podovi/` gde ima smisla (organik poz. 11 — treba juice)

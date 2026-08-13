@@ -1,3 +1,48 @@
+## 2026-08-13 [claude-code] DOKUMENTACIJA — SEO plugin pravilo prepisano: Rank Math jedini, Yoast van upotrebe (M odluka) ✅
+
+**Kontekst:** Peta stavka dana, na M zahtev („Yoast je obrisan, Rank Math ostaje").
+Zatvara konflikt **#1** iz [[migracija/2026-08-12-preflight-checklist-24-08]] §Konflikti.
+**Samo dokumentacija** — 0 izmena na buildu/bazi, nema backup fajla.
+
+**Problem:** migracija Yoast→Rank Math izvedena je **05.08** ([[CLAUDE]] §7.1), ali je
+pravilo „Yoast ostaje (ne RankMath)" ostalo zapisano kao **tvrdo pravilo** u 7 fajlova
+punih 8 dana — uključujući dva skila koja se učitavaju na početku svake sesije. Isti
+razred aktivne mine kao pogrešan prefiks `wpGs_` (zatvoren 12.08): agent čita pravilo
+kao autoritet i nasleđuje grešku. Već je jednom skoro udarilo — 13.08 pri upisu meta
+opisa na 13 arhiva ključ je zamalo bio `_yoast_wpseo_metadesc`.
+
+**Ispravljeno (7 fajlova, 12 mesta):**
+- `odluke/_pregled-odluka` — odluka **prepisana**, ne obrisana: naslov „SEO plugin —
+  Rank Math (Yoast van upotrebe)", stara odluka od 28.06 ostaje vidljiva kao zamenjena,
+  uz razlog i zatečeno stanje fajlova
+- [[CLAUDE]] §7.1 — nova 🔴 ograda sa M odlukom 13.08; uklonjena rečenica „Yoast je
+  deaktiviran (ne obrisan — podaci ostaju za rollback)"
+- [[2026-07-06-MASTER-PLAN-V2]] — §„Pravila koja važe kroz ceo plan" + W2 zaglavlje
+  (`Yoast >80` → Rank Math SEO score >80)
+- `/antasline-sesija` — tvrdo pravilo §6, W2 pravila po stranici, verifikaciona stavka
+- `/obogati-proizvod` — tačka 5 (upis mete), gotcha blok, verifikacija, opis skila;
+  dodata i `is_protected_meta()` zamka za `rank_math_*` ključeve (nemaju `_` prefiks →
+  tihi prazan upis) i `\RankMath\Sitemap\Cache::invalidate_storage()` umesto
+  `wpgs_yoast_indexable` brisanja
+- `migracija/woodmart-sabloni` — helper `al_set_page()` je dokumentovan kao da piše
+  **Yoast** title/metadesc; svaka nova stranica napravljena po tom opisu ostala bi bez
+  mete koja se renderuje
+- `reference/claude-skilovi`, `seo/plan-novih-stranica` — ista dva pravila
+
+**Namerno NIJE dirano:** dnevnici, [[reference/naucene-lekcije]], W7 nalazi i analize —
+tamo je Yoast tačan istorijski podatak o periodu kad je važio. Prepisivanje istorije bi
+uništilo traživost uzroka starih bagova.
+
+**🔴 Nalaz — Yoast NIJE obrisan, samo deaktiviran:** provereno protiv builda pre izmena,
+`wp plugin list` → `wordpress-seo` **inactive, v27.8** (aktuelna 28.2), folder
+`wp-content/plugins/wordpress-seo` **21 MB** na disku, `_yoast_wpseo_*` postmeta i dalje
+u bazi; aktivan je `seo-by-rank-math` **1.0.275**. Bez odluke, 21 MB mrtvog plugina ide
+u migracioni paket 24.08. Upisano kao nov bloker u [[PROGRESS]] sa tri opcije
+(preporuka: `wp plugin delete wordpress-seo` uz backup baze pre pakovanja — postmeta
+ostaje, pa je povratak i dalje moguć re-instalacijom). #ceka-miroslav
+
+---
+
 ## 2026-08-13 [claude-code] W3 3.10 — Pun regression sweep posle FAZE 2 (239 str.): 0 regresija; −118 slika/str. objašnjeno, 301 mapa reverifikovana ✅
 
 **Kontekst:** Četvrta stavka dana. FAZA 2 je popravljala u dizajn sistemu (CF7 part

@@ -45,7 +45,7 @@ brza referenca okruženja (DB, backup, PHP) + standard verifikacije
 štikliranje u Master planu → lekcije u [[reference/naucene-lekcije]].
 
 **Tvrda pravila:** live se ne dira · epoksid se ne prodaje · bez izmišljenih
-brojeva · Yoast ostaje · backup pre destruktivnog.
+brojeva · SEO plugin = Rank Math (Yoast van upotrebe od 05.08) · backup pre destruktivnog.
 
 ## /obogati-proizvod — Woo proizvodi
 

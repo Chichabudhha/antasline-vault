@@ -302,7 +302,9 @@ Kad se gradi više stranica u istoj sesiji (npr. #13-#18), isplati se jedan `al-
 - `al_update_content($id, $content)` — `$wpdb->update` + `clean_post_cache()` + brisanje
   `wpgs_yoast_indexable` reda (obavezno posle svake programske izmene `post_content`/meta, gotcha #12)
 - `al_set_page($id, $title, $metadesc)` — postavlja `_woodmart_main_layout=full-width`,
-  `_woodmart_title_off=on`, Yoast title/metadesc u jednom pozivu
+  `_woodmart_title_off=on`, **Rank Math** title/metadesc (`rank_math_title` /
+  `rank_math_description`) u jednom pozivu — 🔴 od 05.08 **ne** `_yoast_wpseo_*`
+  (M odluka 13.08, v. [[CLAUDE]] §7.1); upis u Yoast ključeve se tiho ne renderuje
 
 Svaka nova stranica: `wp_insert_post()` sa praznim `post_content` (dobija ID), zatim `al_update_content()`
 sa punim sadržajem (izbegava gotcha #9 — CLI insert/update briše `[vc_raw_html]`).

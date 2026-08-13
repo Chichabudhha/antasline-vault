@@ -45,7 +45,7 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
 ### W2 — SEO content (C3 + GEO)
 - Master lista: `[[seo/plan-novih-stranica]]` (20 stranica, 4 tijera, checkbox)
 - Draftovi Tier1 postoje u `dnevnik/2026-07-05-draft-*.md` — ne pisati ispočetka
-- Pravila po stranici: Yoast >80 · FAQ + FAQPage/Product schema · cena od–do
+- Pravila po stranici: Rank Math SEO score >80 · FAQ + FAQPage/Product schema · cena od–do
   ili placeholder · CTA `069 234 00 72` + forma · interni link ka `/industrijski-podovi/` ·
   prvi pasus = direktan odgovor (GEO) · anti-kanibalizacija provera
   (postojeći sadržaj na istu temu → skratiti + linkovati)
@@ -116,7 +116,7 @@ expansion `{a,b}` pravi literalne foldere; velike fajlove čitaj Read alatom.
 
 - [ ] HTTP 200 · tačno 1×H1 · JSON-LD validan bez dupliranja
 - [ ] Slike i interni linkovi vraćaju 200
-- [ ] Yoast title/metadesc u `<head>`
+- [ ] Rank Math title/metadesc u `<head>` (`rank_math_title` / `rank_math_description`)
 - [ ] wpautop nije razbio markup (HTML u jednoj liniji unutar grid blokova)
 - [ ] Regression: 1–2 ranije stranice i dalje ispravne
 
@@ -151,7 +151,8 @@ Kad izmena dira CSS/layout (ne samo sadržaj) — DevTools 151 prečice:
   isključivo kad Miroslav eksplicitno traži
 - ❌ Epoksid se ne prodaje — epoksid upiti idu na conquest (post 2542)
 - ❌ Ne izmišljati brojeve, cene, specifikacije — "Nema podataka" / "na upit"
-- ❌ RankMath se ne pominje kao akcija — Yoast ostaje do eksplicitne odluke
+- ✅ SEO plugin je **Rank Math** (`rank_math_title` / `rank_math_description`) —
+  migracija 05.08, Yoast van upotrebe (M odluka 13.08). Ne pisati u `_yoast_wpseo_*`
 - ✅ Backup pre svake destruktivne izmene baze
 - ✅ Analiza → predlog → Miroslavljevo odobrenje → izvršenje (za nepovratno)
 - Jezik: srpski ekavica · kratko · tabele · bez uvoda i zaključka

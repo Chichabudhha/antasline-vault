@@ -9,9 +9,19 @@ azurirano: 2026-08-13
 **Odluka:** flat `/proizvod/` umesto silo-u-URL-u.
 **Zašto:** silo autoritet se gradi internim linkovanjem, breadcrumb strukturom i schemom — URL path segment je zanemarljiv ranking faktor; flat struktura nosi manje operativnih rizika.
 
-## SEO plugin — Yoast (NE RankMath)
-**Odluka:** na redizajn buildu ostaje JEDINO Yoast (`_yoast_wpseo_title` / `_yoast_wpseo_metadesc`).
-**Zašto:** Miroslav eksplicitno potvrdio; ne predlagati RankMath dok se to ne promeni.
+## SEO plugin — Rank Math (Yoast van upotrebe)
+**Odluka (2026-08-13, M — zamenjuje odluku od 28.06 „Yoast, ne RankMath"):** na buildu
+je JEDINI SEO plugin **Rank Math** (`rank_math_title` / `rank_math_description`). Yoast
+je van upotrebe i ne vraća se; ne pisati više u `_yoast_wpseo_*` ključeve i ne
+proveravati Yoast izlaz u verifikaciji.
+**Zašto:** migracija Yoast→Rank Math je izvedena 2026-08-05 ([[CLAUDE]] §7.1, 7843 post
+meta zapisa preneto, verifikovano na 10 kategorija + homepage + kontakt + conquest 2542),
+Rank Math je od tada aktivan i emituje title/meta/schema/sitemap. Stara odluka je ostala
+zapisana kao pravilo 8 dana posle migracije i bila je aktivan izvor grešaka — 13.08 je
+zbog nje umalo upisan pogrešan meta ključ na 13 arhiva.
+**Stanje fajlova:** `wp-content/plugins/wordpress-seo` je **deaktiviran** i još stoji na
+disku (21 MB, v27.8); `_yoast_wpseo_*` postmeta ostaje u bazi (nije brisana). Brisanje sa
+diska — v. [[PROGRESS]] Blokeri.
 
 ## Epoksid — conquest, ne van ponude
 **Odluka:** epoxy upiti se namerno targetiraju kroz `/epoksidni-podovi-ili-ecotile-podovi/` (post 2542) radi konverzije u Ecotile.

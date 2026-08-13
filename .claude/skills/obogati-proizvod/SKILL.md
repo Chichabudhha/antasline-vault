@@ -1,6 +1,6 @@
 ---
 name: obogati-proizvod
-description: Obogaćivanje WooCommerce proizvoda na lokalnom AntasLine buildu po standardnom šablonu (atributi, galerija, opis struktura, Yoast, Product schema, cross-linkovi). Koristi kad Miroslav kaže "obogati proizvod X", "sredi proizvode", "product enrichment" ili pri radu na W1 zadatku obogaćivanja proizvoda.
+description: Obogaćivanje WooCommerce proizvoda na lokalnom AntasLine buildu po standardnom šablonu (atributi, galerija, opis struktura, Rank Math meta, Product schema, cross-linkovi). Koristi kad Miroslav kaže "obogati proizvod X", "sredi proizvode", "product enrichment" ili pri radu na W1 zadatku obogaćivanja proizvoda.
 ---
 
 # Obogaćivanje proizvoda — AntasLine lokalni build
@@ -15,7 +15,7 @@ nikad na live sajtu.
 1. Pročitaj `[[migracija/woodmart-sabloni]]` — 10 dokumentovanih gotcha-a važi i ovde
 2. Backup baze pre bilo kakve izmene:
    `C:\xampp\mysql\bin\mysqldump -u root antasline_local > C:\xampp\htdocs\antasline-backups\antasline_local_YYYY-MM-DD_pre-<opis>.sql`
-3. Proveri trenutno stanje proizvoda upitom (opis_len, kratak_len, galerija, atributi, cena, Yoast) pre izmena — ne diraj ono što je već obogaćeno
+3. Proveri trenutno stanje proizvoda upitom (opis_len, kratak_len, galerija, atributi, cena, Rank Math meta) pre izmena — ne diraj ono što je već obogaćeno
 
 ## Standard "obogaćen proizvod" (svih 8 tačaka)
 
@@ -100,8 +100,14 @@ nikad na live sajtu.
      🔴 Prefiks je **069** — „072" je skraćenica za poslednje dve cifre, nikad ne
      pisati „072 234 00 72" (v. [[CLAUDE]] §9)
    - `post_excerpt` (kratak opis) = 1–2 rečenice benefita
-5. **Yoast**: `_yoast_wpseo_title` + `_yoast_wpseo_metadesc` postmeta za svaki
+5. **Rank Math**: `rank_math_title` + `rank_math_description` postmeta za svaki
    proizvod. Title ≤60 znakova sa ključnom reči, metadesc ≤155.
+   🔴 **Ne `_yoast_wpseo_*`** — build je na Rank Math-u od 05.08, Yoast je van
+   upotrebe (M odluka 13.08). Upis u Yoast ključeve se tiho ne renderuje.
+   ⚠️ `rank_math_*` ključevi nemaju `_` prefiks → `is_protected_meta()` vraća
+   `false`, pa neki putevi upisa tiho upišu prazno; iz CLI koristi
+   `update_post_meta` direktno i **proveri vrednost čitanjem nazad**
+   (v. [[CLAUDE]] §7.1 Gotcha #1).
 6. **Product JSON-LD schema**: brand, name, description, image, offers
    (`priceSpecification` samo ako ima cene, inače bez offers cene). FAQ blok
    dobija FAQPage schema — pazi da se ne duplira sa temom.
@@ -117,9 +123,13 @@ nikad na live sajtu.
 - `wp_insert_post`/`wp_update_post` iz CLI **skida raw HTML/JSON-LD** (kses bez
   ulogovanog korisnika) → sadržaj sa `<script type="application/ld+json">`
   upisuj direktnim `$wpdb->update` na `post_content` + `clean_post_cache($id)`
-- Yoast taksonomija koristi `WPSEO_Taxonomy_Meta::set_values()` (množina!);
-  za postove/proizvode je obično `update_post_meta` na `_yoast_wpseo_*`
-- Yoast indexable keš ručno invalidirati posle direktnih DB izmena
+- Rank Math taksonomija: `update_term_meta($term_id, 'rank_math_title'/'rank_math_description', …)`
+  (obrazac potvrđen na 13 arhiva 13.08, `migracija/alati/job-metadesc-arhive.php`);
+  za postove/proizvode `update_post_meta` na `rank_math_*`
+- Rank Math sitemap keš invalidirati posle direktnih DB izmena:
+  `\RankMath\Sitemap\Cache::invalidate_storage()` (brisanje opcije nije dovoljno)
+- ⛔ istorijski (Yoast era, do 05.08): `WPSEO_Taxonomy_Meta::set_values()` i
+  `wpgs_yoast_indexable` keš — više se ne koristi, ostaje samo za čitanje starih zapisa
 - Slug kolizije: postojeći slug (i attachment slug!) blokira novi — proveri
   `get_page_by_path` ponašanje; pravilo sufiks `5` ako mora novi slug
 - PHP skripte piši u scratchpad, pokreći sa `C:\xampp\php\php.exe skripta.php`
@@ -133,7 +143,7 @@ nikad na live sajtu.
 - [ ] Product + FAQPage JSON-LD validan i bez dupliranja (grep rendered HTML)
 - [ ] Sve slike galerije se učitavaju (200)
 - [ ] Interni linkovi vraćaju 200
-- [ ] Yoast title/metadesc u `<head>`
+- [ ] Rank Math title/metadesc u `<head>`
 - [ ] Tabela specifikacija se renderuje (wpautop nije razbio markup —
   HTML u jednoj liniji unutar grid blokova)
 
@@ -163,4 +173,4 @@ nikad na live sajtu.
 - ❌ Ne izmišljati cene, specifikacije, garancije — "na upit" / #ceka-miroslav
 - ❌ Live sajt se ne dira
 - ✅ Backup pre svake destruktivne izmene
-- ✅ Yoast ostaje (ne RankMath)
+- ✅ SEO plugin = **Rank Math** (Yoast van upotrebe od 05.08, M odluka 13.08)

@@ -228,9 +228,17 @@ Format: reč bez navodnika = broad negative · `"fraza"` = phrase negative ·
 
 **Lokalni build je prešao sa Yoast na Rank Math** (`rank_math_title` /
 `rank_math_description` meta ključevi, zamenili `_yoast_wpseo_title` /
-`_yoast_wpseo_metadesc`). Yoast je deaktiviran (ne obrisan — podaci ostaju
-za rollback), backup pre migracije:
+`_yoast_wpseo_metadesc`). Backup pre migracije:
 `antasline-backups/antasline_local_2026-08-05_pre-rankmath-migration.sql`.
+
+> 🔴 **M odluka 2026-08-13: Yoast je van upotrebe, ne vraća se.** Rank Math je
+> jedini SEO plugin projekta — nova pravila: pisati isključivo u `rank_math_*`
+> ključeve, verifikovati Rank Math izlaz u `<head>`, ne predlagati povratak na
+> Yoast. Stara odluka „Yoast ostaje (ne RankMath)" iz [[odluke/_pregled-odluka]]
+> (28.06) je **ukinuta** — stajala je kao tvrdo pravilo 8 dana posle same
+> migracije i bila aktivan izvor grešaka (13.08 umalo pogrešan meta ključ na 13
+> arhiva). Zatečeno stanje fajlova: plugin `wordpress-seo` je **deaktiviran**
+> (v27.8, 21 MB još na disku), `_yoast_wpseo_*` postmeta ostaje u bazi.
 
 Šta je urađeno:
 - Uvoz podataka izveden PROGRAMSKI preko Rank Math-ove sopstvene

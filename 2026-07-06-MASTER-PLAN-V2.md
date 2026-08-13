@@ -21,7 +21,7 @@ azurirano: 2026-08-10
 
 **Cilj:** redizajnirani sajt live 2026-08-24, bez gubitka organskog saobraćaja, sa Ads nalogom spremnim za Smart Bidding i čistim merenjem (GA4/GSC/Ads). Budžet Ads: 40k RSD/mes (ne diže se dok se ne optimizuje).
 
-**Pravila koja važe kroz ceo plan** ([[CLAUDE]]): lokalni build = staging, live se ne dira (osim eksplicitnih `[cpanel-live]` zadataka) · Yoast ostaje (ne RankMath) · epoksid samo conquest · Maximize Clicks do praga 20–30 plaćenih konverzija · jun 2026 = mesec-nula za sve serije konverzija.
+**Pravila koja važe kroz ceo plan** ([[CLAUDE]]): lokalni build = staging, live se ne dira (osim eksplicitnih `[cpanel-live]` zadataka) · **SEO plugin = Rank Math** (migracija izvedena 05.08; staro pravilo „Yoast ostaje, ne RankMath" ukinuto M odlukom 13.08) · epoksid samo conquest · Maximize Clicks do praga 20–30 plaćenih konverzija · jun 2026 = mesec-nula za sve serije konverzija.
 
 ---
 
@@ -114,7 +114,7 @@ azurirano: 2026-08-10
 > [[reference/naucene-lekcije]]. → [[dnevnik/2026-08-12-alt-tekst-slike-proizvoda]]
 
 ### W2 — SEO CONTENT (C3 + GEO)
-Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po stranici: Yoast >80, FAQ + FAQPage/Product schema, cena od–do gde ima smisla, CTA 072 + forma, interni link ka `/industrijski-podovi/`, prvi pasus = direktan odgovor (GEO pravilo).
+Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po stranici: Rank Math SEO score >80 (do 05.08 Yoast), FAQ + FAQPage/Product schema, cena od–do gde ima smisla, CTA 072 + forma, interni link ka `/industrijski-podovi/`, prvi pasus = direktan odgovor (GEO pravilo).
 
 | # | Zadatak | Vlasnik | Zavisi od |
 |---|---|---|---|
