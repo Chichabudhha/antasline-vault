@@ -1,3 +1,67 @@
+## 2026-08-13 [claude-code] W2/SEO — kanibalizacija: analiza 9 klastera + tri konsolidacije (C/D/B) ✅
+
+**Kontekst:** Sedma stavka dana. M-ova lista od 9 tačaka (URL higijena, Ads smernice,
+6 klastera kanibalizacije, meni „Cene", live alignment `/sportske-podloge/`) — obim veći
+od jedne sesije i **menja sadržaj**, pa 3 dana pred freeze po pravilu analiza → predlog →
+odobrenje → izvršenje. Podaci: GSC 90d po stranici (`gsc_page_queries.py`), Ads API
+(`ads_final_urls.py`, svež pull — usput **potvrđeno da je OAuth token živ**, stavka iz
+checkliste B1), lokalna baza.
+
+**🔴 Metodološki nalaz koji menja ceo okvir:** sve „cena" i „dimenzije" stranice imaju
+**0 GSC prikaza jer ne postoje na live-u** (napravljene na buildu u julu). Kanibalizacija
+se ne može *meriti* — samo *predvideti* za 24.08.
+
+**🔴 Najveći rizik nije bio na listi:** post 2298 (`kako-napraviti-teren-za-basket`) nosi
+**13.686 prikaza / 385 klikova / 90d** i drži poz. **1,0–1,9** za „dimenzije košarkaškog
+terena", „dimenzije table za koš", „dimenzije fudbalskog terena" (2.174 prikaza). Build
+izbacuje **4 nove stranice na tačno te upite** (16585/16586/16688/17027) — `index`, **bez
+canonical-a**, i **nijedna ne linkuje ka 2298** ni obrnuto. **Ostaje otvoreno** (stavka F,
+M nije odobrio).
+
+**🔴 `/sportske-podloge/` je na buildu izgubila sadržaj koji nosi klikove:** live drži poz.
+**1,6** za „podloga za košarkaški teren" (47 kl.) i **2,0** za „…cena" (39 kl.) — skoro
+polovina od 178 kl./90d dolazi iz basket klastera, a H2 „Izgradnja sportskih terena za
+basket u vašem dvorištu" na buildu **ne postoji**; 5438 ne pominje ni `/planer-terena/`.
+**Ostaje otvoreno** (stavka E).
+
+**Izvršeno (M odobrio C+D+B)** — `migracija/alati/job-konsolidacija-301-2026-08-13.php`:
+**C** Parkiralište — cenovni sadržaj sa 16876 preseljen u **16589** (1.197 prikaza / 98 kl.,
+poz. 1,0–1,8): H2 „Cena podloge za parkiralište po m²" + tabela 4 modela + „saće ili nasut
+šljunak" + 2 FAQ stavke (i vidljivo i u JSON-LD, 4→**6** pitanja); 16876 → draft (live 404,
+301 ne treba). **D** Maloprodaja — 16683 → draft, primarna **16142** (live URL + Ads
+odredište + 2× duža). **B** Bergo Easy 16665 → draft (proizvod diskontinuiran), sadržaj u
+**16663**: +5 event namena, **8 event fotografija**, title/meta preuzeli „manifestacije,
+sajmove i promocije". `htaccess-301-DRAFT.txt` **75 → 77 pravila**.
+
+**Ostali nalazi:** `-2` slugova ima **3**, od toga 1 draft, a `…plocica-2` je **pobednička**
+verzija (249 prikaza/13 kl.) — ne dira se; jedini kandidat je `ergonomske-podloge-2`
+(1 prikaz), gde `-2` postoji jer slug drži **prilog**, ne stranica. Ads: `tracking_url_template`
+**null na svih 14 kampanja** ✅, ali 3 oglasa + 2 asseta vode na **tuđi domen
+`ekopodneploce.rs`**, 11 URL-ova na mrtve `/home/…` putanje, 4 na `http://` — sve u
+PAUZIRANIM kampanjama, blokira **reaktivaciju**, ne 24.08.
+
+**Gotcha-i:** 🔴 **nova `.al-section` namerno nije pravljena** — na obe stranice bi novi blok
+pao između `paper` i `mist` i dao 144px mrtve trake (FAZA 2, isti dan); sadržaj ubačen
+**unutar postojećih sekcija**, 0 CSS izmena · 🔴 **FAQPage JSON-LD je inline u
+`post_content`**, ne u Rank Math meta — dodata FAQ stavka mora u oba mesta, inače se schema
+i vidljiv tekst tiho raziđu · 🔴 `post_content` se čita/piše **direktno preko `$wpdb`**
+(`get_post_field()` u `display` kontekstu pušta `wptexturize` koji obori `str_replace`) ·
+🟡 **draftovanje stranice ostavlja mrtve stavke u meniju** — `nav_menu_item` ne prati status
+cilja; nađene 4 (jedna draftovana, tri prevezane) · 🟢 skripta broji pogotke svakog obrasca
+i puca ako ih nije tačno 1 — **0 promašaja**.
+
+**Verifikacija:** 7 URL-ova **200 / 1×H1 / 0 PHP grešaka**, oba JSON-LD bloka na 16589
+validna (FAQPage 6 pitanja + Rank Math `@graph`) · 3 draftovane **404** ✅ · **0** preostalih
+veza ka draftovanim URL-ovima u celoj bazi i **0** stavki menija · 8 preseljenih fotografija
+**200** · `wpautop` nije razbio tabelu · regresija (početna, kontakt, industrijski-podovi,
+conquest 2542) 200.
+
+**Backup:** `antasline_local_2026-08-13_pre-konsolidacija-301.sql` ·
+Detalji: [[dnevnik/2026-08-13-konsolidacija-kanibalizacija]] ·
+Analiza: [[seo/2026-08-13-kanibalizacija-konsolidacija-plan]]
+
+---
+
 ## 2026-08-13 [claude-code] W3 3.10 — dry-run `build-staging-package.sh`: 2 skrivena kvara + kvota ne staje ✅
 
 **Kontekst:** Šesta stavka dana, jedina 🔴🆕 otvorena stavka iz [[PROGRESS]] „Sledeće".

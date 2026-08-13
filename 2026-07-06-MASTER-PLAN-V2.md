@@ -128,6 +128,22 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 | 2.8 | ✅ POTPUNO ZATVORENO 2026-08-11 · 🔵 **anotacija 2026-08-12:** Google-ov [AI optimization guide](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide) izričito kaže da **Search ne koristi `llms.txt`** („niti štete niti pomažu"), što se poklapa sa našim merenjem ([[analiza/BOT-CRAWLER-LOG]]: 0 organskih hitova / 2 preseka). Fajlovi ostaju (statični, bez održavanja, moguća korist kod ne-Google asistenata) ali **više nisu GEO poluga** — ostatak paketa (LocalBusiness+NAP, „O nama", `robots.txt`) je i po Google-ovim uputstvima ispravan. v. [[seo/geo-ai-plan]] §0 — GEO paket: `llms.txt` kreiran (07-08) + Organization proširen na LocalBusiness+NAP (filter, sitewide). "O nama" bio već gotov od ranije. `robots.txt` na live-u aktiviran `[cpanel-live]` 2026-08-11 (M dodao 9 AI-crawler pravila, provera otkrila i ispravila dupli `User-agent: *` blok + charset mojibake). Preostaje samo PR/GMB deo (van SEO/tehničkog obima) | CC+M | — |
 | 2.9 | ✅ ZATVORENO 2026-07-10 (spojeno sa W1 Faza 2 #1 restyle) — GEO intro, goli FAQ JSON-LD popravljen u script tag, al-table, link na /industrijski-podovi-cena/, dupli _thumbnail_id dedupe | CC | title/meta već iz 2.3 |
 
+> 🆕 **2026-08-13 — kanibalizacija i konsolidacija duplikata (ad-hoc po M listi od 9 tačaka).**
+> Analiza sa GSC 90d podacima po stranici → [[seo/2026-08-13-kanibalizacija-konsolidacija-plan]].
+> **Izvršeno (M odobrio 3 od 8 predloženih):** cenovni sadržaj sa 16876 → **16589**
+> (1.197 prikaza / 98 kl., poz. 1,0–1,8) uz 2 nove FAQ stavke · **16683 → draft**, primarna
+> **16142** · **Bergo Easy 16665 → draft** (diskontinuiran), sadržaj + 8 event fotografija →
+> **16663**. 301 mapa dopunjena i **4 istorijska pravila sa 365 GSC pogodaka spljoštena**
+> (vodila su na upravo draftovane stranice).
+>
+> 🔴 **Dve stavke ostaju otvorene i imaju rok content freeze (16.08):** **(E)**
+> `/sportske-podloge/` je na buildu izgubila basket-semantiku koju live drži na poz. **1,6/2,0**
+> (~90 od 178 kl./90d) i ne pominje `/planer-terena/` · **(F)** 4 nove „dimenzije" stranice
+> (16585/16586/16688/17027) gađaju upite koje post **2298** drži sa pozicije **1,0–1,9**
+> (13.686 prikaza / 385 kl./90d), bez canonical-a i bez ijedne uzajamne veze.
+> 🟡 Ads: 2 URL-a na tuđem domenu + 11 na mrtvim `/home/…` putanjama — blokira **reaktivaciju**
+> pauziranih kampanja (4.4), ne migraciju. → [[dnevnik/2026-08-13-konsolidacija-kanibalizacija]]
+
 ### W3 — SEO TEHNIČKA + MIGRACIJA (C1/C2 + CWV)
 > 🔄 **2026-07-07: C1/C2 pristup zamenjen parity strategijom** — build se pravi 1:1 prema live sajtu, redirect mapa se svodi na minimum. Izvor istine: [[migracija/PARITY-PLAN]], izvršenje kroz promptove [[migracija/promptovi/_README]] (F1–F7). Stare mape arhivirane u `migracija/arhiva/`.
 

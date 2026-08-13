@@ -966,6 +966,26 @@ require_once ABSPATH.'wp-admin/includes/taxonomy.php';
 - Obrazac izmeštanja koji je usvojen: vrednost u fajl van repo stabla (`~/antasline-ftp-creds.txt`), skripta ga `source`-uje preko `VAR_FILE="${VAR_FILE:-$HOME/…}"` i **tvrdo pada sa `exit 1` pre ijednog mrežnog poziva** ako fajl nedostaje ili ne definiše očekivanu promenljivu. Tiho nastavljanje sa praznim kredencijalom je gore od pada.
 - 🔴 **Izmeštanje ne briše tajnu iz git istorije.** Jedina prava sanacija je rotacija (promena lozinke kod provajdera). Prepisivanje istorije ovde nije opcija — vault ima tri površine (lokal / cPanel / GitHub) + Obsidian Git auto-sync, rewrite bi razbio sve tri. Rotaciju planirati **posle** migracije: ne dirati kanal prenosa neposredno pred prenos.
 
+## Draftovanje stranice ne prekida ni jednu vezu koja na nju pokazuje — meni, interni linkovi i 301 mapa ostaju da vise (konsolidacija, 2026-08-13)
+- WordPress `nav_menu_item` zapis nosi samo `_menu_item_object_id`; kad cilj ode u `draft`, stavka **ostaje u meniju** i renderuje mrtav link. Isto važi za `<a href>` u `post_content` drugih stranica.
+- Najskuplji sloj je treći i najlakše se previdi: **301 mapa**. Draftovanje 16665 i 16683 je učinilo da **4 istorijska pravila sa ukupno 365 GSC pogodaka** (268 + 54 + 43 + jedno bez brojača) pokazuju na stranice koje sada vraćaju 404 — lanac `stari URL → draftovana stranica → nova stranica` u najboljem slučaju gubi vrednost, u najgorem staje na 404. Uhvatio ih je `redirect-verify.php`, ne pregled.
+- **Pravilo: uz svaki `publish → draft` idu 4 provere** — (1) `post_content LIKE '%/slug/%'` po celoj bazi, (2) `nav_menu_item` sa tim `_menu_item_object_id`, (3) **da li je taj URL cilj nekog 301 pravila** (ako jeste — spljoštiti lanac na konačno odredište), (4) da li je Ads final URL.
+
+## 301 draft se generiše iz CSV-a — ručna izmena `.txt` fajla ne stigne do verifikatora (konsolidacija, 2026-08-13)
+- `htaccess-301-DRAFT.txt` je **izlaz**, izvor istine su `redirect-mapa-FINAL.csv` + `redirect-mapa-HISTORIJSKI-65-FLAT.csv`. `redirect-verify.php` čita **CSV-ove**, ne draft.
+- Posledica: ručno ispravljen draft prolazi vizuelnu proveru, ali verifikator i dalje prijavljuje stari nalaz — i sledeće pokretanje generatora **tiho vraća staro stanje**. Izgubljeno je 10-ak minuta na „zašto i dalje puca" pre nego što je pročitano zaglavlje verifikatora.
+- **Pravilo: menja se CSV, pa se pokrene generator, pa verifikator.** Draft se nikad ne edituje rukom.
+
+## Stranica sa 0 GSC prikaza nije dokaz da nema kanibalizacije — može značiti samo da još nije objavljena (kanibalizacija, 2026-08-13)
+- Sve „cena" i „dimenzije" stranice napravljene na buildu u julu imaju **0 prikaza jer ne postoje na live-u**. Čitano naivno, to izgleda kao „nema preklapanja" — a zapravo znači da se preklapanje **tek dešava, na dan migracije**, kad 4 nove stranice izađu na upite koje postojeća stranica drži sa pozicije 1.
+- Ispravno pitanje za build-only stranicu nije „koliko saobraćaja ima", nego **„koji upit cilja i ko ga danas drži"** — a to daje `gsc_page_queries.py` nad **postojećom** stranicom, ne nad novom.
+- Isto važi za smer 301: `/podloge-za-parkiraliste-cena/` vraća **404 na live-u**, pa joj 301 pravilo uopšte ne treba — dovoljno je draftovati. Pre svakog „dodaj 301", proveriti `curl` na **live** URL: pravilo treba samo onom URL-u koji zaista postoji napolju.
+
+## `open(putanja, 'w')` prazni fajl pre nego što skripta stigne da pukne — vault fajl od 375 KB nestao na `UnicodeEncodeError` (2026-08-13)
+- Python `open(p,'w')` **truncate-uje odmah**, pre prvog `write()`. Jednolinijski obrazac `open(p,'w',encoding='utf-8').write(novo)` je zato mina: ako se izraz `novo` sastavlja u istoj liniji i baci izuzetak (ovde: surogatni parovi iz `🔴` escape-ova u emoji-ju), fajl ostaje na **0 bajtova**, a original je nepovratno otišao.
+- Spaseno `git checkout -- PROGRESS.md` (Obsidian Git commit star ~40 min) — ali samo zato što je fajl bio verzionisan. Isti obrazac nad `antasline-backups/*.sql` (od 13.08 u `.gitignore`) bi bio trajan gubitak.
+- **Pravilo za izmene vault/velikih fajlova iz skripte:** sastaviti ceo sadržaj u promenljivu, upisati u `p + '.tmp'`, pa `os.replace(tmp, p)` (atomično). Emoji se piše kao **stvarni znak**, ne kao `\uXXXX` escape par.
+
 ## Live export sa samo `publish` statusom = tih blind spot u celom migracionom planu (draft blind spot, 2026-07-28)
 - Live export od 2026-07-05 (`migracija/live-export-2026-07-05/`), izvor istine za `parity-inventar.csv` i ceo F1–F7 tok, sadrži **isključivo postove sa statusom `publish`**. Dve stranice sa realnim GSC saobraćajem (`/sportske-podloge/sportski-podovi-za-teniske-terene/` 552 impr u Q1, `/gumeni-podovi-javne-objekte-i-teretane/` 433 impr / 12 kl) bile su tada `draft` na live-u — nikad nisu ušle u inventar, pa bi 2026-08-31 nestale bez ijednog upozorenja. Otkrivene tek slučajno, kroz 404 dijagnostiku 27.07.
 - **Pravilo: svaki naredni live export mora uključivati i draftove** (i `private`/`pending`), pa ih tek onda svesno filtrirati uz zabelešku — a ne ih nikad ni ne videti. Isto važi za bilo koji „popis live stanja": sitemap i sitemap-bazirani skenovi po definiciji ne vide draftove.
