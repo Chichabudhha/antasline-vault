@@ -153,9 +153,13 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 > **tri puta** pokazale netačne (`gsc_klikovi` u `parity-inventar.csv` 2×, obrazloženje reda 17
 > u `redirect-mapa-FINAL.csv` 1×). **Pre svake odluke ide svež pull**, ne oslanjanje na zapis.
 >
-> 🔴 **Dve stavke ostaju otvorene i imaju rok content freeze (16.08):** **(E)**
-> `/sportske-podloge/` je na buildu izgubila basket-semantiku koju live drži na poz. **1,6/2,0**
-> (~90 od 178 kl./90d) i ne pominje `/planer-terena/` · **(F)** 4 nove „dimenzije" stranice
+> ✅ **(E) ZATVORENA 2026-08-13** — `/sportske-podloge/` (5438) vratila basket-semantiku
+> (dve sekcije doslovnim live tekstom), planer link i FAQPage schemu; 10.328 → 15.129 B,
+> render 8×H2 / 3 JSON-LD. 🔴 Usput ispravljena brojka iz same ove analize: basket klaster
+> nosi **138 od 178 kl./90d (78%)**, ne „~90" kako je gore procenjeno — stavka je bila
+> potcenjena. → [[dnevnik/2026-08-13-5438-basket-semantika-faqpage]]
+>
+> 🔴 **Jedna stavka ostaje otvorena, rok content freeze (16.08):** **(F)** 4 nove „dimenzije" stranice
 > (16585/16586/16688/17027) gađaju upite koje post **2298** drži sa pozicije **1,0–1,9**
 > (13.686 prikaza / 385 kl./90d), bez canonical-a i bez ijedne uzajamne veze.
 > 🟡 Ads: 2 URL-a na tuđem domenu + 11 na mrtvim `/home/…` putanjama — blokira **reaktivaciju**

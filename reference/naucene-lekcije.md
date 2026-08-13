@@ -5,6 +5,52 @@ azurirano: 2026-08-13
 
 # Naučene lekcije (tehnički gotchas)
 
+## Ime tabele se nikad ne poredi sa `$wpdb->prefix` strogo (2026-08-13)
+
+`wp-config` lokalnog builda nosi `$table_prefix = 'wpGs_'`, a MySQL na Windows-u
+(`lower_case_table_names=1`) vraća `wpgs_`. Zato
+
+```php
+$t = $wpdb->prefix . 'yoast_indexable';
+if ( $wpdb->get_var( "SHOW TABLES LIKE '{$t}'" ) === $t ) { ... }   // 🔴 nikad true
+```
+
+**tiho** ispadne i skripta prijavi „tabela ne postoji" — a tabela postoji. Nema greške,
+nema upozorenja, samo preskočen korak (13.08 preskočeno brisanje `yoast_indexable` reda).
+Isti razred greške koji na Linux hostingu, gde je case stvarno osetljiv, obara migraciju.
+Ispravno: `strtolower()` sa obe strane poređenja, ili koristiti vraćeno ime tabele.
+v. [[dnevnik/2026-08-13-5438-basket-semantika-faqpage]]
+
+## „Obriši pa izgradi iznova" nije idempotentno dok se ne izmeri u bajtovima (2026-08-13)
+
+Obrazac za regenerisanje JSON-LD bloka (`preg_replace` starog `<script>` → pa umetanje
+novog) izgleda idempotentno i **jeste** po sadržaju, ali je 13.08 pri svakom ponovnom
+`--write` prolazu dodavao **po jedan bajt**: brisanje je ostavljalo `"
+"` kao zamenu, a
+umetanje nosi svoj vodeći prelom. Zamena mora biti prazan string kad umetanje samo
+obezbeđuje razmak.
+
+🔴 **Isti obrazac stoji i u `job-faq-17025-konsolidacija-2026-08-13.php`** (16567) — ako se
+ta skripta ikad pusti dvaput, dodaće bajt po prolazu. Nije popravljeno tamo jer je skripta
+već izvršena i zapisana; popraviti pre eventualnog ponovnog pokretanja.
+
+Praktično pravilo: checkpoint „pusti isti `--write` opet" ne proverava samo da nema
+duplikata u sadržaju nego da je **`strlen` identičan**. Bez toga se drift ne vidi.
+v. [[dnevnik/2026-08-13-5438-basket-semantika-faqpage]]
+
+## Provera koja meri pogrešnu stvar je gora od nikakve provere (2026-08-13)
+
+Dva puta u istoj sesiji je „crveno" došlo od merenja, ne od stranice:
+`[al_skica]` je proveravan tražeći ime skice u renderu — a shortcode emituje
+`<div class="al-skica-wrap">` + **inline** `<svg>`, ime se nigde ne pojavljuje; a kartice
+su na 1440 px izmerene kao 67 px široke sa 11 odsečenih naslova, jer je iframe **prvo
+učitan na 390 px pa proširen**, pa je layout ostao ustajao. Sveže učitavanje na 1440 daje
+grid `280px ×4`.
+
+Pravilo: pre nego što se prijavi regresija, proveriti da li provera meri ono što misli da
+meri — i responsive merenja raditi **svežim učitavanjem na ciljanoj širini**, ne resize-om
+posle učitavanja.
+
 ## Zapisane GSC brojke u migracionim CSV-ovima nisu pouzdane — svež pull pre svake odluke (2026-08-13)
 - **Tri promašaja u jednoj sesiji**, sva tri bi vodila na pogrešnu odluku:
   `parity-inventar.csv` pripisuje `/ergonomske-podloge-2/` **110 klikova** (stvarno **1 prikaz /
