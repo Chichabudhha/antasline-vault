@@ -14,6 +14,7 @@
 
 **2026-08-13**
 
+- ✅ `[claude-code]` W2/SEO stavka E — 5438 vratio basket-semantiku (78% klikova stranice) + planer link + FAQPage — [[dnevnik/2026-08-13-5438-basket-semantika-faqpage]]
 - ✅ `[claude-code]` W2/SEO — treća FAQ stranica (17025) u hub, klaster zatvoren
 - ✅ `[claude-code]` W2/SEO — FAQ klaster „izbor industrijskog poda" konsolidovan u hub
 - ✅ `[claude-code]` W2/SEO stavka A — čist slug `/ergonomske-podloge/` + nalaz da 8 tipova nema proizvode

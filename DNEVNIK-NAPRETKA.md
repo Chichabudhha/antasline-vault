@@ -6033,3 +6033,22 @@ Backup pre rada: `antasline-backups/antasline_local_2026-08-12_pre-faza1-visual.
 **Tehnički gotcha (novo, vredi zapamtiti):** `get_post_field('post_content', $id)` podrazumevano radi u `display` kontekstu i provlači sadržaj kroz `the_content` filtere — wptexturize iskrivi apostrofe unutar WPBakery `css=""` atributa, pa `str_replace` tiho promaši. Za programske izmene sadržaja čitati **raw** (`$wpdb`) i pisati direktno preko `$wpdb->update` + `clean_post_cache()`, jer `wp_update_post()` bez ulogovanog korisnika pušta kses koji čisti inline stilove iz builder markup-a.
 
 #ceka-miroslav: hero stranice 16686 (ugostiteljstvo) je i dalje flat swatch dezena (`French-Vanilla-Oak-4058.jpg`) — predlog: zameniti pravom fotografijom vinarije (att. 17832), ali nije dirano jer nije bilo u zadatku.
+
+## 2026-08-13 [claude-code] — Stavka E: `/sportske-podloge/` (5438) vraća basket-semantiku + FAQPage
+
+Pun tekst: `[[dnevnik/2026-08-13-5438-basket-semantika-faqpage]]` · plan izvršenja:
+`[[migracija/idemo-na-e-korak-tender-petal]]` · izvor: `[[seo/2026-08-13-kanibalizacija-konsolidacija-plan]]` §3.8.
+
+**Zašto:** svež GSC pull (15.05→12.08) pokazuje da basket klaster nosi **138 od 178 klikova (78%)** te stranice — plan §3.8 je procenio „skoro polovinu", dakle stavka je bila **potcenjena**. Build je pri WoodMart redizajnu izgubio H2 „Izgradnja sportskih terena za basket u vašem dvorištu!" i „Vrste podloga za sportski teren?", i nije uopšte pominjao `/planer-terena/`. Nov nalaz van plana: FAQ sa 4 pitanja, ali **nula FAQPage JSON-LD** (samo Article + VideoObject).
+
+**Urađeno** (jedna skripta `job-5438-semantika-faq-schema-2026-08-13.php`, jer sva četiri koraka diraju isti `post_content`): dve nove sekcije doslovnim live tekstom (Zion Builder export live posta 1849; kopiran tekst, ne markup) + `<ul>` sa 7 modela + CTA ka planeru; FAQ par #3 zamenjen bukvalnim GSC upitom sa 39 klikova („Koliko košta podloga za košarkaški teren?"); FAQPage JSON-LD građen **parsiranjem vidljivog teksta**, ne ručnim prepisom. Rezultat: 10.328 → **15.129 B**, 6 → 8 `[vc_row]`, render 8×H2 / 15×H3 / 3 JSON-LD bloka uklj. 1× FAQPage sa 4 Question.
+
+**Verifikacija** (nova `verify-5438-2026-08-13.php`, samo čita): K6 sve zeleno; K7 Chrome 1440+390 px — 0 horizontalnog scrolla, 11 kartica cele, `al-btn` računski identičan hero dugmetu, video facade i `[al_skica]` netaknuti, 0 console poruka; K8 6 stranica 0/0/0; K9 pun sweep 207 URL-ova / 3.267 slika, 0 nalaza.
+
+🔴 **Dve greške uhvaćene checkpoint-ima, obe sistemske:**
+1. **`wpgs_` vs `wpGs_`** — provera `SHOW TABLES LIKE` poređena strogo sa `$wpdb->prefix` je **tiho** preskočila brisanje `yoast_indexable` reda i prijavila „tabela ne postoji", a tabela postoji (wp-config nosi `wpGs_`, MySQL vraća `wpgs_`). Tačno razred greške iz CLAUDE.md §2 koji na Linux hostingu obara migraciju. **Pravilo: nikad ne porediti ime tabele sa `$wpdb->prefix` strogo.**
+2. **Ciklus „obriši pa izgradi schema blok" nije bio bajt-idempotentan** — drugi `--write` prolaz dao +1 bajt. Isti obrazac stoji i u `job-faq-17025-konsolidacija-2026-08-13.php`: ako se ta skripta ikad pusti dvaput, dodaće bajt po prolazu. Ovde popravljeno; posle popravke tri uzastopna prolaza daju +0 B.
+
+**Rollback:** `antasline-backups/5438-post_content_2026-08-13_pre.txt` (10.328 B) ili `antasline_local_2026-08-13_pre-5438-semantika.sql` (37,6 MB).
+
+**Van obima:** `rank_math_title`/meta nisu dirani — head term „sportske podloge" stoji na poz. 17,3 (96 prikaza / 2 klika). Nov nalaz za posle live-a: **tartan klaster** na ovoj stranici bez ijedne namenske sekcije — 117 prikaza / 6 klikova, sve na poz. 9–16.
