@@ -117,8 +117,38 @@ checklist §A izričito traži ponovnu proveru u tom slučaju.
 
 **Zaključak: `.htaccess` draft ostaje važeći, ne treba ga regenerisati.**
 
+## Dopuna iste sesije — 13 meta description-a upisano (M odobrio)
+
+M je odlučio: **ikonice menija se ne vraćaju pre live-a** (zatvara pitanje iz §1) i
+**meta opisi se pišu**.
+
+Upisano preko `migracija/alati/job-metadesc-arhive.php` (probni prolaz pa `--write`),
+backup pre upisa `antasline_local_2026-08-13_pre-metadesc-arhive.sql`:
+
+| Taksonomija | Termini |
+|---|---|
+| `category` (blog) | industrijski-podovi (17 postova) · sportski-tereni (8) · kosarkaski-tereni (3) · teniski-teren (3) · garazni-podovi (5) · pod-za-prodavnice-i-radnje (4) |
+| `product_cat` | sportske-podloge (4) · brodske-palube (2) · vestacka-trava (10) · parking-i-travne-resetke (7) · lvt-podovi (8) · rampe-i-zavrsni-profili (5) |
+| `product_brand` | bergo (11) |
+
+- **Ključ je `rank_math_description`** u `wpgs_termmeta` — build je od 05.08 na Rank
+  Math-u ([[CLAUDE]] §7.1), pa je napomena „Yoast ostaje" u skilu `/antasline-sesija`
+  za ovaj slučaj zastarela. Postojećih 12 term opisa (10 `product_cat` + Ecotile +
+  Ergomat) koristi isti ključ — stil i dužina preuzeti odatle.
+- **Svaki opis je pisan iz stvarnog sadržaja termina** — naslovi postova/proizvoda
+  izlistani iz baze pre pisanja, bez izmišljenih modela i bez cena (Bergo je „na upit"
+  po M11). Dužina 103–134 znaka, skripta odbija upis preko 160 i odbija da pregazi
+  postojeći opis.
+- 🟢 **18 `product_tag` arhiva namerno preskočeno** — prored im je zakazan posle
+  live-a (checklist §B7); pisati opise za arhive koje se gase je bačen posao.
+- **Verifikovano na svih 13 URL-ova:** 200 · 1×H1 · `<meta name="description">`
+  prisutan (106–139 bajtova) · 0 PHP grešaka. Regresija (`kategorija-proizvoda/
+  industrijski-podovi/`, `brend/ecotile/`, početna) nepromenjena; `oznaka-proizvoda/
+  namena-esd/` i dalje bez opisa — očekivano.
+
 ## Otvorene akcije
-- [ ] Meta description za 13 arhiva (6 blog kategorija + 6 `product_cat` + `brend/bergo`) — pre freeze-a 16.08 ako se odobri #ceka-miroslav
+- [x] Meta description za 13 arhiva (6 blog kategorija + 6 `product_cat` + `brend/bergo`) — ✅ upisano istog dana po M odobrenju
+- [x] Ikonice menija — M odlučio: **ne vraćaju se pre live-a**, ostaju skinute
 - [ ] Ujednačiti 16613 sa 5455 (draft vs publish+noindex) — **posle live-a**, ne pred gate #claude-code
 - [x] Pun sweep posle FAZE 2 #claude-code
 - [x] Reverifikacija 301 mape posle promene statusa stranica #claude-code

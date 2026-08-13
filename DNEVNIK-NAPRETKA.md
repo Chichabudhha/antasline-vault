@@ -52,6 +52,22 @@ Smart Bidding-a bi se završilo baš na dan migracije) i 4 preduslova za ponovno
 
 **Nov baseline za post-migracionu proveru: `analiza/2026-08-13-regression-post-faza2-*`**
 (pages.csv / assets.json / summary.json) — ne više 10.08.
+
+**Dopuna iste sesije — 2 M odluke i 13 meta description-a upisano:** (1) **ikonice
+menija se NE vraćaju pre live-a** — ostaju skinute, 79 SVG priloga stoji u medijateci
+za kasnije; (2) **opisi se pišu** → `rank_math_description` upisan za **6 blog
+kategorija + 6 `product_cat` + `brend/bergo`** preko
+`migracija/alati/job-metadesc-arhive.php` (probni prolaz pa `--write`; skripta odbija
+>160 znakova i odbija da pregazi postojeći opis). Svaki opis pisan **iz naslova
+stvarnih postova/proizvoda u terminu**, bez izmišljenih modela i bez cena (Bergo je
+„na upit" po M11); dužina 103–134 znaka, stil preuzet od postojećih 12 opisa. 🔴
+Ključ je **`rank_math_description`**, ne Yoast — build je na Rank Math-u od 05.08
+([[CLAUDE]] §7.1), pa je „Yoast ostaje" u `/antasline-sesija` za ovaj slučaj
+zastarelo. 🟢 **18 `product_tag` arhiva namerno preskočeno** (prored zakazan posle
+live-a, checklist §B7). **Verifikovano:** svih 13 → 200 / 1×H1 / meta prisutan
+(106–139 B) / 0 PHP grešaka; regresija na 3 nedirnute arhive + početnoj čista.
+Backup: `antasline_local_2026-08-13_pre-metadesc-arhive.sql`.
+
 Detalji: [[dnevnik/2026-08-13-regression-sweep-post-faza2]].
 
 ---
