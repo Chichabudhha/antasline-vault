@@ -5,6 +5,21 @@ azurirano: 2026-08-13
 
 # Naučene lekcije (tehnički gotchas)
 
+## Sitewide skok u regression brojkama je prvo pitanje „šta je uklonjeno", ne „šta je pokvareno" (2026-08-13)
+- Sweep je pokazao **−118 slika na svakoj stranici** u odnosu na baseline od 3 dana ranije. Prvo čitanje je „nešto je masovno polomljeno".
+- Razrešeno **jednom brojkom**: jedinstvenih slika 1.182 → 1.158 (samo −24). Da su slike stvarno nestale, jedinstveni skup bi pao za ~118. Konstantna delta po stranici + skoro nepromenjen jedinstveni skup = **nestao globalni blok** (zaglavlje/podnožje/meni), a slike i dalje postoje na svojim stranicama.
+- Uzrok nađen za 2 minuta — **po imenu backup fajla** (`..._pre-uklanjanje-meni-ikonica.sql`), ne u dokumentaciji, jer unosa nije ni bilo. **Pravilo: `ls antasline-backups/` je brži izvor istine o tome šta se juče radilo nego dnevnik**, kad dnevnik zataji.
+- Potvrda u bazi je obavezna pre zaključka: `uploads/meni-ikonice/` ima 79 fajlova i 79 priloga, ali **0 referenci** iz `nav_menu_item` (`post_content` + `postmeta`). Fajlovi koji postoje ≠ fajlovi koji se renderuju.
+
+## Ledger unos na dnu fajla je nevidljiv unos (2026-08-13)
+- [[DNEVNIK-NAPRETKA]] je newest-on-top. Unos „FAZA 1 — Visual, Assets & Media Cleanup" (13.08) završio je **na dnu fajla**, iza unosa iz juna — posao je bio uredno zapisan, ali ga nijedno otvaranje sesije ne bi videlo, i nije stigao u [[PROGRESS]].
+- Isti razred greške kao „Sledeće liste trule tiše od Urađeno" (12.08): dokumentacija koja postoji ali se ne čita jednaka je nepostojećoj.
+- **Pravilo pri zatvaranju sesije: posle upisa proveriti `grep -n "^## " DNEVNIK-NAPRETKA.md | head -3` — tvoj unos mora biti prvi.**
+
+## Regression sweep se pušta u fajl, ne kroz `| tail` (2026-08-13)
+- `php regression-sweep.php | tail -60` na 239 stranica traje >10 min i **ne ispisuje ništa do kraja** (`tail` bafer) — izgleda kao da je zamrznuto, a background izlazni fajl ostaje na 0 bajtova.
+- Pisati `> izlaz.txt` pa čitati fajl, ili pustiti bez `tail`. Isto važi za svaku dugu skriptu u ovom shell-u.
+
 ## Ista zamerka na 5 stranica je jedan uzrok, ne pet popravki (2026-08-13)
 - M je prijavio 4 odvojene „prevelike praznine" na 4 stranice. Sve četiri su bile isti obrazac: **dve susedne `.al-section` istog tona** (`--paper`+`--paper` ili `--mist`+`--mist`) daju 72+72 = 144px jednobojne trake bez linije ili promene boje koja bi je opravdala. Uz to WPBakery `margin-bottom: 35px` na poslednjem bloku u sekciji i goli `<br>` iz `wpautop` (~18px).
 - Popravka po stranici bi rešila 4 prijavljene i ostavila **15 spojeva na 14 stranica** (prebrojano SQL-om nad `post_content`) plus Woo kategorija stranice netaknutim. Popravka u dizajn sistemu rešava sve odjednom.

@@ -13,3 +13,4 @@
 {"ts":"2026-08-12T18:55:00","akcija":"padel-tereni — 2 nove SVG ikonice (brzina, odbijanje) + ozicene sve 4 kartice","tokens_delta_k":52,"session_k":121}
 {"ts":"2026-08-12T19:25:00","akcija":"maloprodaja — 2 nove ikonice + 3 kartice ozicene + sekcija R-Tile proizvoda + CSS izuzetak za naslov-link","tokens_delta_k":61,"session_k":182}
 {"ts":"2026-08-12T19:45:00","akcija":"zatvaranje sesije — DNEVNIK + dnevnik fajl + PROGRESS + master plan + 4 nove lekcije","tokens_delta_k":24,"session_k":206}
+{"ts":"2026-08-13T10:55:00","akcija":"W3 3.10 — pun regression sweep posle FAZE 2 (239 str.) + reverifikacija 301 mape + odluka 4.8 + zatvaranje sesije","tokens_delta_k":612,"session_k":612,"napomena":"mereno iz transkripta: input+output+cache_write (612k); cache_read 22.172k izostavljen"}

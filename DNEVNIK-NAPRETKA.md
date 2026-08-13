@@ -1,3 +1,61 @@
+## 2026-08-13 [claude-code] W3 3.10 — Pun regression sweep posle FAZE 2 (239 str.): 0 regresija; −118 slika/str. objašnjeno, 301 mapa reverifikovana ✅
+
+**Kontekst:** Četvrta stavka dana. FAZA 2 je popravljala u dizajn sistemu (CF7 part
+na ~55 stranica, ritam sekcija na 14 + Woo kategorije, 17× `al-display--lg`), a
+verifikovano je bilo 32 URL-a; pun sweep nije puštan od **10.08**, a u međuvremenu
+su prošle i FAZA 1 i ceo 12.08. **Read-only** — 0 izmena na buildu/bazi, nema backup fajla.
+
+**Sweep (239 stranica · 1.158 slika · 1.801 link):** status≠200 **0** · bez H1 **0** ·
+2×H1 **0** · nevalidan JSON-LD **0** · slomljene slike **0** · bez `<title>` **0** ·
+problematičnih linkova **1** (`http://localhost/antasline` → 301 na kosu crtu =
+artefakt poddirektorijuma na lokalu, na produkciji je koren domena) · **bez meta
+description 31**.
+
+**Poređenje sa baseline-om 10.08 (skripta nepromenjena, provereno):** na 194
+zajednička URL-a **0 razlika** u `code`/`h1`/`jsonld_bad`/`title`. 5 stranica je u
+međuvremenu **dobilo** metadesc (uklj. početnu). FAZA 2 nije polomila ništa.
+
+🔴 **Najveći nalaz i njegovo objašnjenje — −118 slika na SVAKOJ stranici** (ukupno
+26.626→4.397), dok jedinstvenih slika ima skoro isto (1.182→1.158): nestao je jedan
+**globalni blok**, ne same slike. Uzrok: **ikonice mega menija uklonjene 12.08**
+(backup `..._2026-08-12_pre-uklanjanje-meni-ikonica.sql`; 59 linkova × 2 renderovanja
+menija = 118). Provereno u bazi: 79 SVG priloga i `uploads/meni-ikonice/` i dalje
+postoje, ali ih **nijedna `nav_menu_item` stavka ne referencira**. Isti uzrok nosi i
+−2 interna linka po stranici i `imgs_noalt` **23.010→0**. 🔴 **Neevidentirano u
+[[PROGRESS]]/ovom ledgeru** — jedini trag je ime backup fajla; isto važi za još 4
+backup-a od 12.08 i za **FAZU 1 od danas, čiji je unos završio na DNU ovog fajla**
+(ledger je newest-on-top) pa je praktično nevidljiv.
+
+**Sitemap 195→239 (+45, −1):** rast je od ranije (`category`/`product_cat`/
+`product_tag` uključeni 11.08, `product_brand` 12.08) + 2 nova proizvoda iz FAZE 1
+(isotrack-l/x) i `brend/bergo`. **Nestao** `/vestacka-trava/` (5455, draftovan 12.08
+kao duplikat) — 🟢 pokriveno, `htaccess-301-DRAFT.txt:98` ima baš to pravilo, a live
+URL i dalje vraća 200 pa je 301 neophodan.
+
+**Bez metadesc 6→31 — nov nalaz, nije regresija:** svih 31 su taksonomijske arhive
+koje su tek 11–12.08 ušle u sitemap — 18 `product_tag` (prored već zakazan posle
+live-a, checklist §B7) + **6 blog kategorija + 6 `product_cat` + `brend/bergo`**.
+Tih 13 je jedini sadržajni posao koji još staje pre freeze-a. #ceka-miroslav
+
+**Reverifikacija 301 mape** (`redirect-verify.php`, jer je posle 11.08 menjan status
+stranica): ciljevi **45/45 → 200**, duplikata **0**, petlji **0**, 15 prefiks-kolizija
+poznato i nebitno (draft koristi sidreni `RedirectMatch "^/put/?$"`). 🟡 Jedno
+upozorenje: `/sta-postaviti-preko-starog-parketa-ili-plocica/` (16613) vraća 200 a
+pravilo ga šalje na `-2` (6588, 84 kl.) — **namerna** konsolidacija od 30.07, 16613 je
+publish+`noindex`; nedosledno u odnosu na 5455 (draft), ujednačiti posle live-a.
+**Draft ostaje važeći, ne regeneriše se.**
+
+**Quick-win:** odluka **4.8 (Maximize Conversions)** zatvorena u
+[[odluke/_pregled-odluka]] kao „odloženo do posle live-a" — sa razlogom (17 od 26
+„plaćenih" su `tel` klikovi → pravih lidova 9; serija naduvana tagom id 18; učenje
+Smart Bidding-a bi se završilo baš na dan migracije) i 4 preduslova za ponovno otvaranje.
+
+**Nov baseline za post-migracionu proveru: `analiza/2026-08-13-regression-post-faza2-*`**
+(pages.csv / assets.json / summary.json) — ne više 10.08.
+Detalji: [[dnevnik/2026-08-13-regression-sweep-post-faza2]].
+
+---
+
 ## 2026-08-13 [cpanel-live] — LiteSpeed prefetch provera: Instant Click bezbedan, prefetch ne prerender (UŽIVO, read-only) ✅
 
 > Zatvara otvoren rizik iz [[reference/chrome-web-platform-2026]] §3 ("Isto važi za

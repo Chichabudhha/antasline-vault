@@ -40,6 +40,21 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
       koja je kritična rupa u redirect mapi. Pun spisak:
       [[analiza/2026-08-12-genai-baseline]]. Ponoviti očitavanje ~07.09 i
       uporediti po stranici.
+- [x] ✅ **Regression sweep PONOVLJEN 2026-08-13** posle FAZE 1 i FAZE 2 (prethodni
+      je bio 10.08, pre tri sitewide sesije). **239 stranica: 0 non-200 · 0 bez H1 ·
+      0×2H1 · 0 nevalidan JSON-LD · 0 slomljenih slika (1.158) · 0 internih 404
+      (1.801 link).** Protiv baseline-a 10.08: **0 razlika** u statusu/H1/JSON-LD/title
+      na 194 zajednička URL-a. Prividna regresija „−118 slika/str." = uklonjene
+      ikonice mega menija 12.08, ne kvar. 🆕 31 arhiva bez metadesc (18 `product_tag`
+      → posle live-a; 13 ostalih → pre freeze-a ako M odobri).
+      **Nov baseline za post-migracionu proveru: `analiza/2026-08-13-regression-post-faza2-*`**
+      (na dan migracije `$BASE` → `https://www.antasline.com` i poredi se sa OVIM,
+      ne sa 10.08). → [[dnevnik/2026-08-13-regression-sweep-post-faza2]]
+- [x] ✅ **301 mapa reverifikovana 2026-08-13** (`redirect-verify.php`) jer je posle
+      regeneracije 11.08 draftovana stranica 5455: **45/45 ciljeva → 200**, 0
+      duplikata izvora, 0 petlji. **Draft se NE regeneriše.** 🟡 Jedno očekivano
+      upozorenje: 16613 vraća 200 (publish+`noindex`) a pravilo ga šalje na `-2` —
+      namerna konsolidacija od 30.07.
 - [ ] **Enhanced Conversions — Ads UI** (M, 5 min): Goals → Conversions →
       „Lead - forma (GTM)" → Settings → Enhanced conversions → uključiti, metod
       **Google Tag Manager**, prihvatiti customer data terms.

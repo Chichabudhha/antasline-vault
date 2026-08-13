@@ -1,0 +1,20 @@
+{
+    "bad_images": [],
+    "bad_links": [
+        {
+            "url": "http://localhost/antasline",
+            "code": 301,
+            "redir": "http://localhost/antasline/",
+            "na": [
+                "http://localhost/antasline/katalog/",
+                "http://localhost/antasline/proizvod/isotrack-l/",
+                "http://localhost/antasline/proizvod/isotrack-x/",
+                "http://localhost/antasline/proizvod/bergo-excellence/",
+                "http://localhost/antasline/proizvod/bergo-xl-ploca/"
+            ],
+            "broj": 124
+        }
+    ],
+    "total_images": 1158,
+    "total_links": 1801
+}
