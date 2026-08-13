@@ -1,3 +1,59 @@
+## 2026-08-13 [claude-code] W3 3.10 — dry-run `build-staging-package.sh`: 2 skrivena kvara + kvota ne staje ✅
+
+**Kontekst:** Šesta stavka dana, jedina 🔴🆕 otvorena stavka iz [[PROGRESS]] „Sledeće".
+Skripta poslednji put pokrenuta **06.08**, a **10.08** su joj dodata dva exclude pravila
+koja **nikad nisu izvršena** — a preflight rizici **#1 i #4 (🔴🔴)** oslanjaju se baš na
+njih. **Read-only prema buildu i bazi** (0 izmena na `C:\xampp\htdocs\antasline`, nema
+backup fajla); paketi napravljeni u scratchpad-u i obrisani po završetku.
+
+**Nalaz 0 — skripta se nije mogla ni testirati:** `WP_ROOT`/`OUT_DIR` hardkodirani, pa
+dry-run nije mogao van produkcione izlazne fascikle. Tačan razlog zašto nije testirana
+posle 10.08. Popravljeno kao `PFX`/`OUT` u `live-export.sh` (12.08) — pregazivi preko
+okruženja, podrazumevane vrednosti nepromenjene.
+
+**Nalaz 1 — exclude pravila od 10.08 RADE ✅ (rizici #1 i #4 zatvoreni).** Pun `full`
+prolaz, `tar -tzf` nad arhivom (22.936 unosa): `al-local-mail-log.php` ❌ · `mail-log.txt`
+❌ · **32** `.bak-*`/`.orig`/`.old`/`~` fajla sa builda ❌ nijedan (checklist beleži 27 od
+10.08 — porastao za 5 iz današnje FAZE 2 i Aria fiksa) · `al-harness.html`+`harness390.html`
+❌ · ~20 debug/import PHP skripti ❌ · `wp-config*.php` ❌ · `uploads`/`.git`/`.claude`/`*.sql`
+0 unosa · Yoast (obrisan danas) ❌. Pozitivno: 2 teme, 10 plugina, tačno 2 ispravna
+mu-plugina, 16 root fajlova.
+
+**Nalaz 2 🔴 — `.htaccess` je bio u paketu i oborio bi produkciju.** Lokalni nosi
+`RewriteBase /antasline/` + `RewriteRule . /antasline/index.php` (build je u podfolderu):
+na produkciji bi **svaki zahtev** otišao na nepostojeću putanju, uz gubitak produkcijskog
+`# BEGIN LSCACHE` bloka (na kome visi ceo LCP plan). Checklist **B3** ionako kaže da se
+301 blok **dodaje** u serverski `.htaccess` — fajl se na serveru edituje, ne prenosi iz
+builda. Izbačen iz root whitelist-e.
+
+**Nalaz 3 ✅ — chunk+md5 ispravan.** 136 delova (uploads) + 4 (kod), `md5sum -c` 4/4,
+`cat part-* > tar` daje **bajt-identičan** md5 originalu.
+
+**Nalaz 4 🔴 — paket je 2× veći nego što pre-flight računa, kvota ne staje.** Kod
+**72,3 MB** + uploads **2.706,9 MB** = **2.779,2 MB**; uploads na buildu je 2,9 GB i
+praktično se ne kompresuje. Disk-bloker je zatvoren jutros računicom „~1,3 GB paket +
+~1,3 GB backup ≈ 2,6 GB" — **stvarni paket je 2,7 GB sam za sebe**. Slobodno na serveru
+**5.867 MB**. Naivan tok (delovi + sklopljen tar istovremeno) = **5.558 MB** → ostaje
+309 MB pre backup-a i pre raspakivanja → **ne staje**. Disciplinovan tok (backup skinut
+i obrisan pre uploada · streamovati `cat part-* | tar -xzf -` bez sklapanja · brisati
+delove u hodu) → pik **~4,4 GB** ✅. Prva preporuka za 24.08: **rsync/scp preko SSH-a**
+(pristup potvrđen M6, 21.07) — FTP chunking je bio zaobilaznica za nestabilnu
+data-konekciju, ne zahtev hostinga.
+
+**Gotcha (nova lekcija):** prvi prolaz je pukao na `ploads: command not found` jer sam
+editovao `.sh` **dok se izvršavao** — bash čita skriptu inkrementalno po bajt-ofsetu,
+izmena pomeri ostatak i raspolovi komandu. Nije kvar skripte. Pogoršava to što je proces
+izašao sa **kodom 0** uprkos `set -euo pipefail`. Drugi, čist prolaz prošao end-to-end.
+
+**Otvoreno:** 🔴 disk prostor se reotvara kao rizik (redosled koraka na dan migracije) ·
+🟡 `ftp-upload-chunks.sh` nosi **FTP lozinku u čistom tekstu** (linija 8) i verzionisan je
+u git-u vault-a #ceka-miroslav · 🔵 `antasline-staging-upload\` drži 5,67 GB zastarelih
+artefakata od 06.08.
+
+**Detalji:** [[dnevnik/2026-08-13-dry-run-build-staging-package]]
+
+---
+
 ## 2026-08-13 [claude-code] DOKUMENTACIJA — SEO plugin pravilo prepisano: Rank Math jedini, Yoast van upotrebe (M odluka) ✅
 
 **Kontekst:** Peta stavka dana, na M zahtev („Yoast je obrisan, Rank Math ostaje").

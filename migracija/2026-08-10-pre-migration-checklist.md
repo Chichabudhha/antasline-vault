@@ -120,6 +120,24 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 - [ ] Napraviti paket: `migracija/alati/build-staging-package.sh full`
       🟢 Skripta od 2026-08-10 sama izbacuje lokalne artefakte (v. B2) — ne
       oslanjati se na ručno brisanje.
+      ✅ **Dry-run izveden 2026-08-13, exclude pravila potvrđena** (22.936 unosa
+      pregledano `tar -tzf`-om; 32 `.bak`-klase fajla, mail-logger, `mail-log.txt`,
+      harness i debug skripte — nijedan nije ušao). Usput popravljeno: `.htaccess`
+      izbačen iz whitelist-e (v. B3), `WP_ROOT`/`OUT_DIR` postali pregazivi.
+      → [[dnevnik/2026-08-13-dry-run-build-staging-package]]
+- [ ] 🔴 **REDOSLED PRENOSA — paket je 2,7 GB, ne 1,3 GB (izmereno 13.08).**
+      Kod 72,3 MB + uploads **2.706,9 MB**; slike se ne kompresuju (2,9 GB na disku
+      → 2,71 GB u arhivi). Slobodno na serveru **5.867 MB**.
+      🔴 Naivan tok — uploadovati delove pa ih sklopiti u tar **pored** delova —
+      traži **5.558 MB**, pre svežeg backup-a i pre raspakivanja → **NE STAJE**.
+      Ispravan redosled:
+      1. **Prvi izbor: `rsync`/`scp` preko SSH-a** (pristup potvrđen M6, 21.07) —
+         bez chunkovanja i sklapanja. FTP chunking (`ftp-upload-chunks.sh`) je bio
+         zaobilaznica za nestabilnu data-konekciju 06.08, ne zahtev hostinga.
+      2. Ako ipak FTP: **ne sklapati tar** — `cat part-* | tar -xzf - -C …` uz
+         brisanje delova u hodu.
+      3. Svež backup **skinuti lokalno i obrisati sa servera PRE** uploada.
+      Disciplinovan tok: pik ~4,4 GB ✅.
 
 ### B2. Fajlovi koji NE SMEJU na produkciju
 > 🟢 **Sva tri su od 2026-08-10 pokrivena exclude pravilima u
@@ -148,7 +166,12 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
       `wpGs_` kako dokumentacija na više mesta piše (potvrđeno 06.08 u dump-u)
 - [ ] `wp rewrite flush --hard`
 - [ ] Aktivirati `.htaccess` 301 blok — sadržaj `htaccess-301-DRAFT.txt`, **iznad
-      `# BEGIN WordPress` bloka**. `RewriteBase` nije potreban (mod_alias, ne
+      `# BEGIN WordPress` bloka**.
+      🔴 **Serverski `.htaccess` se EDITUJE, nikad ne prenosi iz builda** (potvrđeno
+      13.08 dry-run-om: lokalni nosi `RewriteBase /antasline/` i
+      `RewriteRule . /antasline/index.php` jer je build u podfolderu — prepisivanje
+      bi oborilo sajt u celosti i obrisalo produkcijski `# BEGIN LSCACHE` blok).
+      Skripta ga od 13.08 više ne pakuje, ali pravilo važi i za ručno kopiranje. `RewriteBase` nije potreban (mod_alias, ne
       mod_rewrite). Posle aktivacije: spot-check 5 pravila sa najviše GSC pogodaka
       (`/sportski-podovi/`, `/izgrdanja-sportskig-terena/`,
       `/podovi-za-baste-splavove-bazene/`, `/home/industrijski-podovi/ecotile-5007/`,
