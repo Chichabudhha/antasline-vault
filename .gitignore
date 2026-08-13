@@ -13,3 +13,13 @@ desktop.ini
 # ovo je samo bajtkod keš, nikad tajni
 __pycache__/
 *.pyc
+
+# SQL backupi lokalnog build-a (odluka M, 2026-08-13) — 683 MB u 20 dump-ova,
+# rasli su svakom sesijom i sinhronizovali se na hosting, gde je prostor bio 🔴
+# bloker pred migraciju 24.08 (pre-flight 12.08: ovaj folder 539 MB na serveru,
+# drugi po veličini odmah posle obrisanog ~/staging/).
+# Fajlovi OSTAJU na lokalu (`C:\projekti\antasline-vault\antasline-backups\`) i
+# dalje se prave pre svake izmene baze — samo se više ne verzionišu.
+# ⚠️ Rollback izvor je LOKALNI disk, ne git. Ako se vault ikad klonira na čistu
+# mašinu, backupi NE dolaze sa njim.
+antasline-backups/*.sql
