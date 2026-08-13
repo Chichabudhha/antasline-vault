@@ -14,7 +14,7 @@
 
 **2026-08-13**
 
-- ✅ `[cpanel-live]` staging.antasline.com V4 puno postavljanje (ručni upload) — GTM ugašen pre klijentskog pregleda večeras, Basic Auth restauriran (nova lozinka, ne u vault-u), verifikacija 10/10 — v. DNEVNIK-NAPRETKA
+- ✅ `[cpanel-live]` staging.antasline.com V4 puno postavljanje — [[dnevnik/2026-08-13-staging-v4-puno-postavljanje]]
 - ✅ `[claude-code]` W2/SEO stavka E — 5438 vratio basket-semantiku (78% klikova stranice) + planer link + FAQPage — [[dnevnik/2026-08-13-5438-basket-semantika-faqpage]]
 - ✅ `[claude-code]` W2/SEO — treća FAQ stranica (17025) u hub, klaster zatvoren
 - ✅ `[claude-code]` W2/SEO — FAQ klaster „izbor industrijskog poda" konsolidovan u hub

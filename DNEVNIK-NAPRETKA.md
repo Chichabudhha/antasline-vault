@@ -1,71 +1,10 @@
 ## 2026-08-13 [cpanel-live] staging.antasline.com V4 puno postavljanje (ručni upload) ✅
 
-**Kontekst:** M ubacio 3 fajla ručno preko cPanel File Manager-a direktno u
-`/home/antasline/staging` (docroot, obrisan par dana ranije). Prompt:
-[[migracija/promptovi/2026-08-13-staging-full-restore-v4.md]]. Klijent gleda
-sajt **večeras** — GTM je morao biti ugašen pre bilo kakvog javnog pristupa.
-
-**Zatečeno u KORAKU 0:** subdomen `staging.antasline.com` postoji (docroot
-`/home/antasline/staging`, potvrđeno `uapi DomainInfo`). FTP folder
-(`/home/antasline/antasline.com/staging`) prazan (samo `.ftpquota`, poznat
-mismatch). Baza `antasline_staging` postoji, ali nosila je zastareo (pre-05.08,
-pre-Rank Math) sadržaj — očekivano, obrisana u KORAKU 5. Kvota: 3.807 GB
-slobodno od 12,24 GB limita (ispod „bar 6GB" preporuke iz KORAKA 0, ali iznad
-1GB hard-stop praga iz KORAKA 3) — dovoljno se pokazalo, extrakcija uploads
-paketa (2,8GB) prošla bez problema.
-
-**🔴 Referentni fajl sa MD5 tabelom (`…v4.md`) nije postojao lokalno u vault-u
-na početku sesije** — `git pull` je povukao commit koji ga je dodao (uz još 26
-fajlova) tek u sredini sesije. Bez njega KORAK 1 (poređenje MD5) nije bio
-izvodljiv — rešeno pull-om, ne zaobiđeno.
-
-**MD5 sve tri arhive/dump poklopile su se tačno** sa tabelom u v4 promptu
-(`0f6c2dc3…` kod, `d55c7d9e…` uploads, `a0f169d4…` sql) — upload kroz File
-Manager nije bio prekinut. Tar struktura OK (bez prefiksa), raspakovano u
-`/home/antasline/staging`.
-
-**🔴 `.htaccess`/`.htpasswd` NISU preživeli brisanje docroot-a** (paket ovaj
-put namerno ne nosi `.htaccess`, pa se ništa nije imalo šta vratiti) — staging
-je bio kratko potpuno otvoren posle raspakivanja koda. Basic Auth vraćen ODMAH
-(pre nastavka na uploads/bazu): novi `.htaccess` upisan ručno, `.htpasswd`
-napravljen sa `openssl passwd -apr1` (sistem nema `htpasswd` binarku). **Nova
-nasumična lozinka generisana** (stara nije bila poznata/upisana nigde) —
-saopštena Miroslavu direktno u chat-u, **namerno NE upisana u vault** (isto
-pravilo kao za DB lozinku). Potvrđeno: 401 bez auth, 200 sa auth.
-
-**wp-config.php:** paket nije nosio ni `wp-config-sample.php` (za razliku od
-V3) — generisan preko `wp config create`. DB lozinka iz
-`~/staging-db-credentials.txt` je ovaj put **radila iz prve** (nije trebalo
-reset, za razliku od 06.08). Prefiks potvrđen `wpgs_` (malim slovima,
-direktno iz dump-a, ne pretpostavljeno). Salt-ovi promešani.
-
-**Baza:** `wp db reset` + import (37,6MB dump) OK. `search-replace
-localhost/antasline → staging.antasline.com`: **14.316 zamena** (poklapa se sa
-očekivanih „~14.000" iz prompta). `siteurl`/`home` oba potvrđena
-`https://staging.antasline.com`.
-
-**GTM ugašen** (M odluka 13.08, nije opciono — klijent gleda uživo večeras):
-`al-tracking-gtm-consent.php` → `.php.off`. Potvrđeno `grep -c GTM-TRDT8K9` =
-**0** na homepage.
-
-**KORAK 10 verifikacija — sve prošlo:**
-- 401 bez auth / 200 sa auth
-- 5 ključnih stranica (industrijski-podovi, katalog, kontakt, planer-terena,
-  sportske-podloge) + 1 proizvod stranica (`goaliath-gb60-kos-za-kosarku`) —
-  svih 6 **200**
-- 7 nasumičnih slika (2018×2, 2020, 2022, 2026/08×2 + planirano 5) — svih
-  **200**, uklj. stare datumske foldere i avgustovske
-- Namenska provera 5438 (`/sportske-podloge/`): **1×H1, ≥1 basket tekst, 1×
-  FAQPage, 2× planer-terena link** — sve četiri prošle tačno kako je
-  očekivano
-
-**Cleanup:** ni docroot ni FTP folder nisu zadržali tar/sql ostatke transfera.
-
-**Otvoreno / pažnja:** favicon i dalje nepodešen (očekivano, dump ne nosi
-site_icon) · GTM Preview test na stagingu trenutno NIJE moguć dok je mu-plugin
-ugašen (posledica namerna, v. prompt KORAK 8) · **lozinka za `stagingtest` je
-NOVA i nije u vault-u** — proslediti je Miroslavu ako je izgubljena, ne postoji
-zapisana kopija.
+Docroot bio obrisan, fajlovi ubačeni ručno kroz File Manager — MD5 potvrđen (referentni
+fajl stigao tek mid-sesije preko `git pull`), Basic Auth zatečen mrtav pa odmah vraćen
+sa novom lozinkom (nije u vault-u), GTM ugašen pre klijentskog pregleda iste večeri,
+14.316 URL zamena, KORAK 10 verifikacija 10/10 (uklj. namensku proveru 5438).
+→ [[dnevnik/2026-08-13-staging-v4-puno-postavljanje]]
 
 ---
 
