@@ -1,3 +1,18 @@
+## 2026-08-13 [cpanel-live] — Kvota potvrđena: keš se osvežio, 5,7 GB slobodno (UŽIVO, read-only) ✅
+
+> Nastavak nalaza iz 2026-08-12 (`~/staging` brisanje, 3,4 GB oslobođeno) — tada je
+> `uapi Quota get_quota_info` i dalje prijavljivao stari broj (2.487,65 MB slobodno),
+> keš nije bio real-time. Provereno ponovo danas direktno na `wp1.oblak.host`:
+
+- `uapi Quota get_quota_info`: limit **12.240 MB**, iskorišćeno **6.372,93 MB**,
+  slobodno **5.867,07 MB** (~5,7 GB, 52% iskorišćenost) — keš se osvežio, broj sad
+  odgovara stvarnom stanju.
+- `du -sh ~` (ceo home): **5,7 GB** — u skladu sa uapi brojem.
+- Zaključak: dovoljno prostora za probu migracije/backup pre 24.08 go-live-a, nalaz
+  iz 08-12 pre-flight-a je zatvoren.
+
+---
+
 ## 2026-08-13 [claude-code] — FAZA 2: layout/CSS/UI popravke (5 stranica prijavljeno → 3 sistemska uzroka, popravljeno sitewide) ✅
 
 > Prva sesija dana. M je dao listu od 6 zamerki na 5 stranica („prevelike praznine",
