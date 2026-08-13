@@ -112,6 +112,23 @@
 > jednokratne, u scratchpad-u, nisu vraćane u vault.
 >
 > Detalji: [[dnevnik/2026-08-13-faza2-layout-ui-fixes]].
+>
+> **Dopuna iste sesije — `antasline-backups/` izbačen iz git-a (odluka M, opcija a).**
+> Usput nađeno pri commit-u: folder je **683 MB u 20 SQL dump-ova** i **verzionisan** —
+> `.gitignore` ga nije pokrivao, pa je Obsidian Git auto-commit (`3beb20f`) pokupio i
+> dva današnja backup-a (+75 MB). Isti folder je pre-flight 12.08 izmerio na **539 MB
+> na serveru**, drugi po veličini odmah posle obrisanog `~/staging/`, dok je prostor
+> bio 🔴 bloker pred 24.08.
+> Izvršeno: `antasline-backups/*.sql` u `.gitignore` + `git rm --cached` nad svih 20
+> fajlova → commit **`f2dde40`**. **Fajlovi ostaju na lokalnom disku** i dalje se prave
+> pre svake izmene baze; prestaju samo da se verzionišu i sinhronizuju na hosting.
+> Provereno: `git ls-files antasline-backups/` → **0**, `ls` → **20**, nov `.sql`
+> u folderu se ne pojavljuje ni uz `--untracked-files=all`, radni direktorijum čist.
+> 🔴 **Dve posledice:** (1) **rollback izvor je od sada lokalni disk, ne git** — klon
+> vault-a na čistu mašinu ne donosi backupe; (2) na serveru se fajlovi brišu **tek pri
+> sledećem `git pull`**, a `.git` se **neće smanjiti** (77 MB) jer istorija zadržava sve
+> verzije — skraćivanje istorije nije rađeno (previše rizično 3 dana pred freeze, a
+> kompresija ionako svodi 683 MB na 77 MB).
 
 ---
 
