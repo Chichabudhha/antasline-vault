@@ -5,6 +5,28 @@ azurirano: 2026-08-13
 
 # Naučene lekcije (tehnički gotchas)
 
+## `wp plugin delete` nije „obriši fajlove" — briše i podatke (2026-08-13)
+- WP-CLI-jev `delete_plugins()` poziva **uninstall rutinu plugina** (`uninstall.php` /
+  registrovani uninstall hook) pre brisanja foldera. Ako plugin tu čisti svoje opcije i
+  postmeta, „brisanje plugina" postaje i brisanje podataka — bez upozorenja i bez pitanja.
+- Kad je cilj „skini fajlove, zadrži mogućnost povratka": arhivirati folder (`tar -czf`),
+  pa `rm -rf` folder. Baza ostaje netaknuta i povratak je raspakivanje + aktivacija.
+- Provera integriteta arhive ide **pre** brisanja, ne posle: `tar -tzf | wc -l` mora da se
+  poklopi sa `find <folder> -type f | wc -l` + `-type d | wc -l`. Posle `rm -rf` nema sa čim
+  da se poredi. (Yoast 27.8: 2.308 unosa = 1.855 fajlova + 453 foldera.)
+
+## Pravilo koje nadživi svoju odluku je aktivna mina, ne zastarela beleška (2026-08-13)
+- Migracija Yoast→Rank Math izvedena 05.08, ali je „Yoast ostaje (ne RankMath)" ostalo kao
+  **tvrdo pravilo** u 7 fajlova — uključujući `/antasline-sesija` i `/obogati-proizvod`, koji
+  se učitavaju na početku svake sesije. Isti razred kao pogrešan prefiks `wpGs_` (12.08).
+- Šteta nije teorijska: 13.08 je pri upisu meta opisa na 13 arhiva ključ zamalo bio
+  `_yoast_wpseo_metadesc`. Upis u ključ mrtvog plugina **ne puca** — samo se tiho ne renderuje.
+- **Pravilo: onaj ko izvrši migraciju alata isti dan pretražuje vault za starim pravilom**
+  (`grep -rn -i "<stari alat>" --include=*.md` po `odluke/`, `.claude/skills/`, master planu,
+  `reference/`) — dnevnički zapis da je migracija urađena nije zamena za brisanje pravila.
+- Odluku **prepisati, ne obrisati**: stara ostaje vidljiva kao zamenjena, sa datumom i
+  razlogom. Inače se za mesec dana ne zna da li je promena bila namerna.
+
 ## Sitewide skok u regression brojkama je prvo pitanje „šta je uklonjeno", ne „šta je pokvareno" (2026-08-13)
 - Sweep je pokazao **−118 slika na svakoj stranici** u odnosu na baseline od 3 dana ranije. Prvo čitanje je „nešto je masovno polomljeno".
 - Razrešeno **jednom brojkom**: jedinstvenih slika 1.182 → 1.158 (samo −24). Da su slike stvarno nestale, jedinstveni skup bi pao za ~118. Konstantna delta po stranici + skoro nepromenjen jedinstveni skup = **nestao globalni blok** (zaglavlje/podnožje/meni), a slike i dalje postoje na svojim stranicama.

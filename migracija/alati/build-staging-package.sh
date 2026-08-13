@@ -30,8 +30,11 @@
 
 set -euo pipefail
 
-WP_ROOT="/c/xampp/htdocs/antasline"
-OUT_DIR="/c/xampp/htdocs/antasline-staging-upload"
+# WP_ROOT/OUT_DIR su pregazivi preko okruzenja — isti obrazac kao PFX/OUT u
+# live-export.sh (popravka 2026-08-12). Bez ovoga se dry-run ne moze pustiti
+# van produkcione izlazne fascikle, pa se skripta u praksi nikad ne testira.
+WP_ROOT="${WP_ROOT:-/c/xampp/htdocs/antasline}"
+OUT_DIR="${OUT_DIR:-/c/xampp/htdocs/antasline-staging-upload}"
 DATE_TAG=$(date +%Y-%m-%d)
 CHUNK_SIZE=20m
 MODE="${1:-}"
@@ -65,10 +68,19 @@ CODE_TAR="antasline-wp-code-${DATE_TAG}.tar.gz"
 #     (`functions.php.bak-…` → HTTP 200, 53KB PHP izvornog koda). Nema
 #     kredencijala u njima, ali otkrivaju logiku court-builder tokena,
 #     honeypota i rate-limita. Nemaju šta da traže na produkciji.
+# 🔴 W3 3.10 dry-run (2026-08-13) — `.htaccess` IZBACEN iz whitelist-e.
+# Lokalni `.htaccess` nosi `RewriteBase /antasline/` i `RewriteRule .
+# /antasline/index.php` (build je u podfolderu) + lokalno-only RedirectMatch sa
+# `/antasline/` prefiksom. Ako prepise `.htaccess` na serveru, SVAKI zahtev se
+# prepisuje na nepostojeci `/antasline/index.php` — sajt pada u celosti, a uz
+# to nestaje i produkcijski `# BEGIN LSCACHE` blok (LiteSpeed kesiranje).
+# Checklist B3 ionako kaze da se 301 blok DODAJE u postojeci serverski
+# `.htaccess` iznad `# BEGIN WordPress`, dakle fajl se na serveru edituje,
+# nikad ne prenosi iz builda.
 ROOT_WHITELIST=(index.php wp-activate.php wp-blog-header.php wp-comments-post.php
   wp-cron.php wp-links-opml.php wp-load.php wp-login.php wp-mail.php
   wp-settings.php wp-signup.php wp-trackback.php xmlrpc.php
-  .htaccess license.txt robots.txt llms.txt)
+  license.txt robots.txt llms.txt)
 ROOT_FILES=()
 for f in "${ROOT_WHITELIST[@]}"; do
   [ -f "$WP_ROOT/$f" ] && ROOT_FILES+=("$f")
