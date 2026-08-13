@@ -1,9 +1,42 @@
 ---
 tip: reference
-azurirano: 2026-08-12
+azurirano: 2026-08-13
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Ista zamerka na 5 stranica je jedan uzrok, ne pet popravki (2026-08-13)
+- M je prijavio 4 odvojene „prevelike praznine" na 4 stranice. Sve četiri su bile isti obrazac: **dve susedne `.al-section` istog tona** (`--paper`+`--paper` ili `--mist`+`--mist`) daju 72+72 = 144px jednobojne trake bez linije ili promene boje koja bi je opravdala. Uz to WPBakery `margin-bottom: 35px` na poslednjem bloku u sekciji i goli `<br>` iz `wpautop` (~18px).
+- Popravka po stranici bi rešila 4 prijavljene i ostavila **15 spojeva na 14 stranica** (prebrojano SQL-om nad `post_content`) plus Woo kategorija stranice netaknutim. Popravka u dizajn sistemu rešava sve odjednom.
+- **Pravilo: pre nego što napišeš override za prijavljenu stranicu, prebroj koliko stranica nosi isti obrazac.** Jedan `SELECT` je jeftiniji od otkrivanja istog baga za tri nedelje.
+
+## CSS `+` puca na `wpautop` `<br>` — pravilo radi na jednoj stranici, ne na drugoj sa „istim" markupom (2026-08-13)
+- Selektor `.al-section--paper + .vc_row-full-width + .al-section--paper` radio je na `/sportske-podloge/kosarkaske-konstrukcije/`, a **nije** na `/industrijski-podovi/`. Razlika je goli `<br>` koji `wpautop` ostavi između redova kad je `[/vc_row]` u `post_content` završen novim redom.
+- `+` traži **tačnu** susednost i ne preskače prazne markere. `display: none` na tom `<br>` **ne pomaže** — element i dalje stoji u DOM-u.
+- Rešenje: nabrojati sve stvarno viđene kombinacije (`br`, `.vc_row-full-width`, i permutacije). Verzija koja radi na jednoj stranici nije dokaz — proveri `getComputedStyle` na **svakoj** stranici koju pravilo treba da pogodi.
+
+## Tema ume da DEREGISTRUJE plugin CSS i zameni ga svojim — koji stiže samo kroz njen element (2026-08-13)
+- WoodMart (`inc/enqueue.php:591`) radi `wp_deregister_style('contact-form-7')` i nudi svoj `css/parts/int-wpcf7.css`. Taj part enqueue-uje **isključivo** `woodmart_shortcode_contact_form_7()`. Forma koju renderujemo sirovim `do_shortcode('[contact-form-7 …]')` ostaje **bez ijednog CF7 stila** — ni plugin-ovog, ni teminog.
+- Posledica su bila dva vidljiva artefakta na ~55 stranica: `<fieldset class="hidden-fields-container">` kao prazan okvir iznad prvog polja, i `.wpcf7-response-output` koji iz `parts/mod-notices-general.css` (koji **jeste** učitan) dobija `display:block` + warning žutu + ikonicu, pa stoji prazan ispod dugmeta.
+- 🔴 Bag je bio nevidljiv na `/kontakt/`, jedinoj stranici koja se rutinski proverava, jer ona formu renderuje kroz WPBakery CF7 element i part **ima**.
+- Fix je jedna linija (`woodmart_enqueue_inline_style('wpcf7')`), ne CSS override — override bi zamaskirao uzrok i ostavio ostatak part-a (spinner, `submitting` stanje) neaktivnim.
+- **Pravilo: kad plugin izgleda „neostilizovano", prvo `grep -rn "deregister_style"` u temi**, pa tek onda piši sopstveni CSS.
+
+## „Fajl je u renderu" nije isto što i „stil je primenjen" — proveri `<link>`, ne string (2026-08-13)
+- `grep -o 'parts/[a-z0-9-]*\.css' render.html` je vratio `int-wpcf7.css` i navelo na zaključak da je part učitan. Nije bio — ime se pojavljuje u WoodMart-ovoj JS listi za lazy učitavanje, bez `<link>` taga.
+- Dokaz je `grep -o '<link[^>]*int-wpcf7[^>]*>'` (prazno) i `[...document.styleSheets].some(s => s.href && s.href.includes('int-wpcf7'))` (`false`), ne prisustvo imena u HTML-u.
+- Isti razred kao lekcija o `getComputedStyle`-u (Chrome 149 tabele, 2026-08-12): **stanje se meri u renderu, ne čita iz izvora.**
+
+## `clip-path` paralelogram odseca vertikalne krakove `inset` box-shadow rama (2026-08-13)
+- `.al-btn--ghost` crta ram sa `box-shadow: inset 0 0 0 2px currentColor`, a oblik dolazi od `clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%)`. Kosi rez pada tačno preko levog i desnog kraka rama → dugme se renderuje kao **dve odvojene vodoravne crte**.
+- Na navy hero-u (jedno ghost dugme pored punog crvenog CTA) to prolazi kao potpis; u gridu od 4 kartice čita se kao nedovršen okvir. Isti `clip-path` je i pretpostavljao **jedan red teksta** — dvoredna labela ispada iz oblika.
+- Kad ghost dugme ide u grid/karticu: `clip-path: none` + pun ram. Rez je hero-potez, ne komponenta za ponavljanje.
+
+## MySQL u XAMPP-u pada na „Aria recovery failed" — treći put, isti fix (2026-08-13)
+- `[ERROR] Aria recovery failed… delete all aria_log.######## files` → `Plugin 'Aria' registration failed` → `Could not open mysql.plugin table`. **Poslednja poruka je posledica, ne uzrok** — čitati odozgo.
+- Fix: preimenovati `aria_log.00000001` i `aria_log_control` u `xampp/mysql/data/` (npr. `.bak-RRRRMMDD`), MariaDB ih ponovo napravi pri startu. Aria u XAMPP-u nosi samo `mysql.*` sistemske tabele; WP podaci su InnoDB, ništa se ne gubi.
+- Ponovilo se **10.07, 21.07, 13.08** (`.bak` fajlovi su trag). Ako se ponovi na dan migracije — to je 2 minuta, ne incident.
+- Uz to (2026-08-12 lekcija o hladnom startu): posle podizanja Apache-a prvi zahtev traje 100s+, pa `curl` pre Chrome merenja.
 
 ## Skripta koja se pokreće samo na dan migracije mora imati način da se testira ranije (2026-08-12)
 - `live-export.sh` je do 12.08 gubio **145 od 170** galerijskih slika (čitao `post_parent` + `_thumbnail_id`, nikad `_product_image_gallery`). Bag je preživeo mesecima jer se skripta pokreće **jednom, na dan migracije** — dakle prvi put bi se izvršila baš kad je cena greške najveća.
@@ -27,7 +60,8 @@ azurirano: 2026-08-12
 ## Windows CRLF u izlazu CLI alata pravi prazne liste i završne zareze (2026-08-12)
 - `wp db query --skip-column-names` na Windows-u vraća `
 ` i završni prazan red. Posledice: `grep -E '^[0-9]+$'` ne pogodi **ništa** (sve liste ID-eva prazne), a `paste -sd, -` pretvori prazan red u završni zarez pa `IN (1,2,)` pukne sa „syntax error near ')'".
-- Omotač koji rešava oboje: `q() { wp db query "$1" --skip-column-names | sed 's/$//; /^[[:space:]]*$/d'; }`. Bezopasno na Linux-u.
+- Omotač koji rešava oboje: `q() { wp db query "$1" --skip-column-names | sed 's/
+$//; /^[[:space:]]*$/d'; }`. Bezopasno na Linux-u.
 
 ## Ušteda tokena dolazi od AGREGACIJE, ne od lokalnog modela — pravila su pobedila qwen3 za 1300× (2026-08-12)
 - Cilj je bio da lokalni Ollama model razvrstava GSC/Ads/GA4 podatke umesto mene. Izmereno na pravom izvozu (400 upita, 37 KB): **regex pravila razvrstala 93,6% prikaza za 0,2 s**, `qwen3:4b` dodao +2% za **475 s** uz ~50% grešaka na spornim upitima (`table za kos` → vinil, `tartan kocke` → veštačka trava).

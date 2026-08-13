@@ -1,3 +1,120 @@
+## 2026-08-13 [claude-code] — FAZA 2: layout/CSS/UI popravke (5 stranica prijavljeno → 3 sistemska uzroka, popravljeno sitewide) ✅
+
+> Prva sesija dana. M je dao listu od 6 zamerki na 5 stranica („prevelike praznine",
+> „pravougaonik iznad polja Ime i prezime", „narandžasti pravougaonik sa uzvičnikom",
+> „sredi dugmad u Dokumentaciji"). **Nijedna nije rešena po stranici** — sve su svedene
+> na tri uzroka u dizajn sistemu / temi i popravljene tamo.
+>
+> **🔴 Preduslov (okruženje):** ni MySQL ni Apache nisu radili. MySQL je pao na
+> `Aria recovery failed` — **treći put** (postoje `aria_log*.bak-20260710` i
+> `.bak-20260721`). Isti fix: `aria_log.00000001` + `aria_log_control` preimenovani u
+> `.bak-20260813`, servis odmah podignut. Aria u XAMPP-u nosi samo `mysql.*` sistemske
+> tabele; WP podaci su InnoDB, ništa se ne gubi.
+>
+> **Uzrok 1 — dve susedne `.al-section` ISTOG tona daju 144px+ mrtve trake.**
+> `.al-section` nosi `padding: var(--al-gap) 0` (72px). Kad se dve sekcije iste pozadine
+> dodiruju bez dijagonalnog reza, korisnik vidi 72+72 jednobojne prazne trake i čita je
+> kao rupu, ne kao razmak — nema linije ni promene boje da je opravda. Dodatno: WPBakery
+> daje **svakom** `.wpb_content_element` `margin-bottom: 35px`, pa i poslednjem u sekciji,
+> i `wpautop` ostavlja gole `<br>` (~18px) između full-width redova.
+> Popravljeno u `antas-design.css` (nova sekcija „FAZA 2"): spoj istih tonova dobija
+> **jedan** ritam umesto dva (`padding-top: 0` na drugoj sekciji, `al-diag-*` izuzete jer
+> im padding-top nosi sam rez) · poslednji WPBakery blok u sekciji gubi 35px ·
+> `.wpb-content-wrapper > br { display: none }`.
+> **Domet:** 15 spojeva na 14 stranica (prebrojano SQL-om nad `post_content`) + Woo
+> kategorija stranice (opis kategorije i grid proizvoda su takođe dva `--mist` reda,
+> ne vide se u `post_content`).
+>
+> | Stranica (M zamerka) | Pre | Posle |
+> |---|---|---|
+> | `/kategorija-proizvoda/kosarkaske-konstrukcije/` (tekst → Filteri) | 199px | **92px** |
+> | `/sportske-podloge/kosarkaske-konstrukcije/` (ispod tabele modela) | 179px | **72px** |
+> | `/sportske-podloge/kosarkaske-konstrukcije/` (ispod galerije) | 179px | **96px** |
+> | `/lvt.../vinil-podovi-objectflor/` (Kolekcije → Primena) | 179px | **76px** |
+> | `/dimenzije-kosarkaskog-terena/` (Pitanja → Primeri) | 167px, bez granice | 144px **sa kontrastnom granicom** |
+>
+> 🔴 **Gotcha koji je pravilo skoro propustilo:** prva verzija selektora (`+` i
+> `+ .vc_row-full-width +`) radila je na `/sportske-podloge/kosarkaske-konstrukcije/`,
+> a **nije** na `/industrijski-podovi/` — iako je markup „isti". Razlika je goli `<br>`
+> iz `wpautop` između redova (nastaje kad je `[/vc_row]` u `post_content` završen novim
+> redom). CSS `+` traži **tačnu** susednost i ne preskače prazne markere. Rešeno
+> nabrajanjem svih šest stvarno viđenih kombinacija (`br`, `.vc_row-full-width`, i
+> njihove permutacije) po tonu. `display:none` na `<br>` **ne pomaže selektoru** —
+> element i dalje stoji u DOM-u.
+>
+> **Kontrastna boja (M je tražio predlog):** sekcija „Primeri" na
+> `/dimenzije-kosarkaskog-terena/` prebačena `al-section--paper` → **`al-section--mist`**
+> (`#EEF3F8`, brend neutral koji ista stranica već koristi dvaput). Razmak sada čita kao
+> namerna traka. Upis preko `$wpdb->update()` sa provetom jedinstvenosti sidra.
+>
+> **Uzrok 2 — WoodMart deregistruje CF7 CSS, a svoju zamenu enqueue-uje samo iz svog
+> elementa.** `woodmart/inc/enqueue.php:591` radi
+> `wp_deregister_style('contact-form-7')` i zamenjuje ga sa `css/parts/int-wpcf7.css`,
+> koji se enqueue-uje **isključivo** iz `woodmart_shortcode_contact_form_7()`. „Brzi upit"
+> (16737) renderujemo sirovim `do_shortcode('[contact-form-7 …]')` iz `the_content` prio 12,
+> pa taj part nikad nije stizao. Posledica su **oba** M-ova pravougaonika, na svih ~55
+> stranica sa formom:
+> - prazan okvir iznad „Ime i prezime" = `<fieldset class="hidden-fields-container">`
+>   (skriveni `_wpcf7_*` inputi) — gasi ga `div.wpcf7 .hidden-fields-container{display:none}`
+>   iz `int-wpcf7.css`;
+> - narandžasti okvir sa „!" ispod dugmeta = `.wpcf7-response-output`, koji iz
+>   `parts/mod-notices-general.css` (**jeste** učitan) dobija `display:block` + warning žutu
+>   (`#E0B252`) + `\f100` ikonicu; `int-wpcf7.css` ga gasi sa
+>   `form div.wpcf7-response-output{display:none}` i pušta tek kad forma dobije
+>   `.sent`/`.invalid`/… klasu.
+>
+> Fix: `woodmart_enqueue_inline_style('wpcf7')` u quick-quote filteru (`functions.php`) —
+> izjednačavanje sa `/kontakt/`, koji formu renderuje kroz WPBakery CF7 element i part je
+> oduvek imao. Naš styling polja/dugmeta/placeholdera ostaje jači po specifičnosti
+> (`.al-section .wpcf7 input[type=submit]` = 0,3,1 vs teminih 0,1,2) — vizuelno se ništa
+> drugo nije promenilo, provereno.
+> ⚠️ Prvo je razmatran čist CSS fix (sakriti oba elementa iz `antas-design.css`); odbačen
+> jer bi zamaskirao uzrok i ostavio i ostatak part-a (spinner, `not-valid-tip`) neaktivan.
+>
+> **Uzrok 3 — `clip-path` paralelogram odseca vertikalne krakove `inset` rama.**
+> `.al-btn--ghost` crta ram sa `box-shadow: inset 0 0 0 2px currentColor`, a oblik dolazi
+> od `clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%)`. Kosi rez pada
+> tačno preko levog i desnog kraka rama → dugme se renderuje kao **dve odvojene vodoravne
+> crte**. Na navy hero-u (jedno ghost dugme pored punog crvenog CTA) to prolazi kao
+> potpis; u „Dokumentacija" gridu od 4 kartice čita se kao nedovršen okvir. Uz to su
+> dugmad bila `inline-block` levo poravnata u vrhu kartice (kartice u gridu jednake
+> visine → mrtva zona ispod), a dvoredna labela („Deklaracija o performansama") ispadala
+> iz paralelograma crtanog za jedan red.
+> Fix: telo kartice postaje flex-centar, dugme puna širina + centriran tekst + manji font
+> (`clamp(18px,1.25vw,21px)`) i `line-height: 1.2`, **`clip-path: none`** → pun pravougaoni
+> navy ram. Scope: `.al-card:has(> .al-card__body > .al-btn:only-child)` — prebrojano,
+> **3 stranice** (16684 expona-click, 16685 vinil-podovi, 17252 expona-simplay).
+> Usput: `.al-btn--ghost:hover` je postavljao `rgba(255,255,255,0.1)`, što je na
+> `--paper`/`--mist` sekcijama **belo na belom = nikakav hover feedback**; na svetlim
+> podlogama sada popunjava navy sa belim tekstom (ram prati `currentColor`).
+>
+> **Dodatno na M zahtev („uskladi") — 17 golih `<h2>` posle `.al-label`.** Prijavljena su
+> dva (Reference na 16657, Primeri na 16586), SQL sken je našao **17** stranica sa istim
+> obrascem — naslov sekcije bez `al-display--lg`, vizuelno 38px umesto 68px pored svih
+> ostalih H2 na istoj stranici. Sve usklađene jednim prolazom; regex hvata isključivo
+> `<h2>` **bez ijednog atributa** odmah iza `<span class="al-label">…</span>`, po jedan
+> pogodak po stranici. Semantika netaknuta (`<h2>` ostaje `<h2>`), samo klasa.
+> Pogođeni ID-evi: 16585, 16586, 16589, 16590, 16657, 16658, 16679, 16683, 16688, 17025,
+> 571, 16660, 16665, 16666, 17019, 17026, 17027.
+>
+> **Verifikacija:** 17 + 15 URL-ova kroz `curl` — **svi 200 / 1×H1 / 0 PHP grešaka /
+> 0 preostalih golih `<h2>`**. Vizuelno u Chrome-u: obe kosarkaske stranice, dimenzije,
+> objectflor, expona-click, kategorija, homepage, `/kontakt/`, `/pvc-podne-ploce/`
+> i jedan blog post sa sidebar-om (forma se tamo renderuje kao kartica, ne 100vw breakout
+> — obe varijante čiste). Forma: `hidden-fields-container` i `wpcf7-response-output` oba
+> `display:none`, dugme/polja nepromenjeni. Homepage nema nijedan spoj istog tona → 0
+> izmenjenih sekcija, ništa nije regresiralo.
+>
+> **Backupi:** `antasline_local_2026-08-13_pre-faza2-layout.sql` (37,6 MB) ·
+> `antasline_local_2026-08-13_pre-h2-uskladjivanje.sql` ·
+> `antas-design.css.bak-2026-08-13-pre-faza2` · `functions.php.bak-2026-08-13-pre-faza2`.
+> **Skripte:** `fix-16586.php` (Primeri → mist) i `uskladi-h2.php` (17 naslova) —
+> jednokratne, u scratchpad-u, nisu vraćane u vault.
+>
+> Detalji: [[dnevnik/2026-08-13-faza2-layout-ui-fixes]].
+
+---
+
 ## 2026-08-12 [cpanel-live] — `~/staging/` obrisan (3,4 GB), prostor oslobođen (UŽIVO) ✅
 
 > Nastavak iste `[cpanel-live]` sesije, na M zahtev direktno posle pre-flight nalaza

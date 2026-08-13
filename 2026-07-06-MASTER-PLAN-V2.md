@@ -95,7 +95,23 @@ azurirano: 2026-08-10
 > Zatvara poslednju otvorenu stavku iz [[migracija/2026-07-30-lighthouse-a11y-plan]].
 > 🔵 Jedini preostali a11y nalaz — `heading-order` + `target-size` na product karticama
 > (WoodMart core layout) — **svesno odložen na posle live-a**, veći zahvat nego što
-> vredi 4 dana pred gate. → [[dnevnik/2026-08-12-alt-tekst-slike-proizvoda]]
+> vredi 4 dana pred gate.
+>
+> ✅ **FAZA 2 — layout/CSS/UI popravke (2026-08-13, ad-hoc po listi M).** 6 zamerki na
+> 5 stranica svedeno na **3 sistemska uzroka** i popravljeno u dizajn sistemu, ne po
+> stranici: **(1)** dve susedne `.al-section` istog tona daju 144px mrtve trake
+> (+35px WPBakery `margin-bottom` na poslednjem bloku, +18px goli `<br>` iz `wpautop`) —
+> **15 spojeva na 14 stranica** + Woo kategorija stranice; **(2)** WoodMart deregistruje
+> CF7 CSS i zamenjuje ga part-om koji stiže samo kroz theme element → dva neostilizovana
+> CF7 elementa na **svih ~55 stranica** sa „Brzim upitom" (`hidden-fields-container`
+> iznad polja, prazan warning `wpcf7-response-output` ispod dugmeta); **(3)** `clip-path`
+> paralelogram odseca krakove `inset` rama → ghost dugmad u „Dokumentacija" gridu
+> (3 Expona stranice) + nevidljiv hover na svetlim sekcijama. Usput na M zahtev:
+> **17 golih `<h2>`** posle `.al-label` dobilo `al-display--lg` (prijavljena 2).
+> Verifikovano 17+15 URL-ova (200 / 1×H1 / 0 PHP grešaka); **nijedan tekst nije menjan**
+> — samo klase, 3 dana pred content freeze.
+> Detalji: [[dnevnik/2026-08-13-faza2-layout-ui-fixes]] · 6 novih lekcija u
+> [[reference/naucene-lekcije]]. → [[dnevnik/2026-08-12-alt-tekst-slike-proizvoda]]
 
 ### W2 — SEO CONTENT (C3 + GEO)
 Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po stranici: Yoast >80, FAQ + FAQPage/Product schema, cena od–do gde ima smisla, CTA 072 + forma, interni link ka `/industrijski-podovi/`, prvi pasus = direktan odgovor (GEO pravilo).
