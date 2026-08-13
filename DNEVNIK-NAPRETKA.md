@@ -1,3 +1,24 @@
+## 2026-08-14 [claude-code] W1/BLOK C — Ergonomske podloge: nova Woo kategorija + 8 proizvoda ✅
+
+Izvršen spec od 13.08 (M odobrio obim, izvršenje bilo odloženo) — poslednji radni dan pre
+content freeze-a. `product_cat` **403** + proizvodi **17838–17845** (Diamond Allround, Soft
+Air Meter, SuperSoft Smooth/Office, La Ola, La Ola Hygienic, Nitrile Walk, Solido I), svi
+„cena na upit", svaki sa `al-table` specifikacijom, 2 FAQ pitanja i FAQPage schemom. Hub
+**16672**, koji do danas nije imao **nijedan** interni link osim `/kontakt/` i `tel:`,
+prevezan: 8 kartica → linkovi, nazivi u tabeli poređenja → linkovi, uzajamne veze ka
+`/industrijski-podovi/` i ESD stranici (7.329 → 9.600 B). Naslov kategorije namerno pomeren
+ka „asortiman i modeli" da ne kanibalizuje hub (poz. 3,8). Verifikacija 12 URL-ova
+200/1×H1/0 grešaka + 4 regresione stranice čiste.
+🔴 **Gotcha:** `wp_insert_post` bez prijavljenog korisnika primenjuje kses i **tiho briše
+`<script type="application/ld+json">`** — prvi prolaz je izgledao uspešno a schema nije
+postojala; fix `kses_remove_filters()`.
+🟢 **Tri pitanja za M zatvorena istog dana:** La Ola/La Ola Hygienic ostaju na generičkoj fotki
+(ergomat.com 403, `intl.ergomat.com` mrtav → dopuna slika iz spec-a nije bila izvodljiva) ·
+namene SuperSoft Smooth/Office ostaju kako su na hub stranici · kategorija se ne dodaje u meni.
+→ [[dnevnik/2026-08-14-ergonomske-podloge-proizvodi]]
+
+---
+
 ## 2026-08-13 [cpanel-live] staging.antasline.com V4 puno postavljanje (ručni upload) ✅
 
 Docroot bio obrisan, fajlovi ubačeni ručno kroz File Manager — MD5 potvrđen (referentni

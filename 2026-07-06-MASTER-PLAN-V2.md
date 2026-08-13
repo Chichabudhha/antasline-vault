@@ -112,6 +112,18 @@ azurirano: 2026-08-10
 > — samo klase, 3 dana pred content freeze.
 > Detalji: [[dnevnik/2026-08-13-faza2-layout-ui-fixes]] · 6 novih lekcija u
 > [[reference/naucene-lekcije]]. → [[dnevnik/2026-08-12-alt-tekst-slike-proizvoda]]
+>
+> ✅ **Ergonomske podloge — nova `product_cat` + 8 proizvoda (2026-08-14).** Poslednja
+> otvorena stavka koja menja sadržaj pre freeze-a. `/ergonomske-podloge/` (16672) je do tada
+> nabrajala 8 modela od kojih **nijedan nije postojao kao proizvod**, bez ijednog internog
+> linka. Sada: `product_cat` **403** + proizvodi **17838–17845** („cena na upit", `al-table`
+> specifikacija, FAQ + FAQPage schema), hub prevezan u oba pravca, naslov kategorije pomeren
+> ka „asortiman i modeli" zbog anti-kanibalizacije sa hub-om (poz. 3,8).
+> 12 URL-ova 200/1×H1/0 grešaka + 4 regresione čiste.
+> 🟢 Sva tri pitanja za M zatvorena istog dana: generička fotka ostaje na La Ola / La Ola
+> Hygienic (ergomat.com 403, dopuna iz spec-a nije bila izvodljiva) · namene SuperSoft
+> Smooth/Office ostaju kako su · kategorija se ne dodaje u meni. **Bez otvorenih repova.**
+> → [[dnevnik/2026-08-14-ergonomske-podloge-proizvodi]]
 
 ### W2 — SEO CONTENT (C3 + GEO)
 Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po stranici: Rank Math SEO score >80 (do 05.08 Yoast), FAQ + FAQPage/Product schema, cena od–do gde ima smisla, CTA 072 + forma, interni link ka `/industrijski-podovi/`, prvi pasus = direktan odgovor (GEO pravilo).

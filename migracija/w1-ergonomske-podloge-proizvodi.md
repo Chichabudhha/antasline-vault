@@ -2,12 +2,22 @@
 tip: zadatak
 naziv: Ergonomske podloge — nova Woo kategorija + 8 proizvoda
 datum: 2026-08-13
-status: planirano (M odobrio obim 13.08, izvršenje odloženo)
+status: ✅ izvršeno 2026-08-14 → [[dnevnik/2026-08-14-ergonomske-podloge-proizvodi]]
 vlasnik: CC
 zavisi-od: "M potvrda da su svih 8 tipova u ponudi"
 ---
 
 # Ergonomske podloge — nova kategorija + 8 proizvoda
+
+> ✅ **IZVRŠENO 2026-08-14.** `product_cat` **403**, proizvodi **17838–17845**, hub 16672
+> prevezan. Dva dela spec-a **nisu bila izvodljiva** i **M ih je zatvorio istog dana**
+> (generička fotka ostaje · namene ostaju · kategorija se ne dodaje u meni):
+> (1) dopuna slika sa **ergomat.com** — sajt vraća 403, `intl.ergomat.com` ne postoji, a
+> pretraga ne nalazi ove nazive modela ni kod jednog distributera → La Ola i La Ola Hygienic
+> dele generičku fotku 15927; (2) **ukrštanje namena SuperSoft Smooth/Office** — isti razlog,
+> ostalo kako stoji na hub stranici, opisi ne tvrde ništa preko tabele.
+> **Zadatak nema otvorenih repova.**
+> Detalji: [[dnevnik/2026-08-14-ergonomske-podloge-proizvodi]]
 
 ## Zašto
 

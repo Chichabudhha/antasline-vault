@@ -258,3 +258,84 @@ Originalni tekst (za trag):
 - ✅ ~~GMB ažuriranje~~ — rešeno 2026-07-06 (UTM + kategorije + post; review link čeka na poslove)
 - ✅ **C1 verifikacija spot** — 2026-07-07: Live 80 stranica vs lokal 98; pronađeno 38 nedostajućih (PROVERI redovi), 25 verifikovanih; CSV `antasline-redirect-mapa-2026-07-07.csv` kreirama. 🔴 Kritična stranica `/hvala-za-poruku/` dodana (ID 16600)
 
+
+## Zatvorene stavke iz „Sledeće" (izdvojeno 2026-08-14)
+
+> Izvor: [[PROGRESS]] sekcija „Sledeće", blok „Do content freeze-a (NED 16.08)".
+> Sve stavke ispod su **zatvorene** (13–14.08) i izmeštene istog dana po pravilu iz
+> `/zatvori-sesiju` — u PROGRESS-u su ostali samo jednolinijski unosi u „Urađeno".
+> Redovi su preneti **doslovno**, ništa nije skraćeno.
+
+### Zatvoreno 2026-08-13
+
+- ✅ **13 arhiva bez meta description — ZATVORENO 13.08 (M odobrio istog dana).**
+  6 blog kategorija + 6 `product_cat` + `brend/bergo` dobile `rank_math_description`
+  pisan iz stvarnog sadržaja termina; 18 `product_tag` arhiva namerno preskočeno
+  (prored posle live-a, checklist §B7). Verifikovano 13/13: 200 / 1×H1 / meta u `<head>`.
+- ✅ **Konsolidacija duplikata (C+D+B) — ZATVORENO 13.08 (M odobrio 3 od 8 predloženih stavki).**
+  Parkiralište (cenovni sadržaj → 16589, 16876 draft) · Maloprodaja (16683 draft → 16142) ·
+  Bergo Easy (16665 draft → 16663, +8 event fotografija). 301 mapa **75 → 77**, uz
+  **spljoštena 4 istorijska pravila (365 GSC pogodaka)** koja su vodila na draftovane stranice.
+  → [[dnevnik/2026-08-13-konsolidacija-kanibalizacija]]
+- ✅ **Čist slug „preko starog parketa" — ZATVORENO 13.08 (M odluka, ukida odluku od 30.07).**
+  Provera je pokazala da članci **nisu bili spojeni**: 6588 (`-2`, prepis 09/2025, 8.041 zn.,
+  +Ecotile +FAQ +galerija) i 16613 (2022, 4.940 zn., bez ijednog jedinstvenog pasusa).
+  16613 → draft + `…-original-2022`, **6588 preuzeo čist slug**, 301 okrenut na `-2` → čist.
+  Draft **76 pravila**, verifikator **0/0/45-45/0**. Cilj 301 nije nov URL (živi na live-u od
+  2022, 84 kl./god) → konsolidacija dva poznata URL-a. Usput zatvorena nedoslednost
+  „5455 draftovan, 16613 publish+noindex" iz Blokera.
+- ✅ **FAQ klaster „izbor industrijskog poda" — ZATVORENO 13.08 (M nalog).** 2622 i 3274 →
+  301 na `/industrijski-podovi/`; 4 pitanja koja hub nije imao preneta u njegov FAQ; hub
+  dobio **FAQPage JSON-LD sa 11 pitanja** koji do tada nije imao. Sve tri stranice klastera
+  imale **0 klikova / 12 meseci** dok hub drži „industrijski podovi" na poz. 6,7.
+  Postovi po temi → **posle live-a**: [[seo/posle-live-postovi-izbor-industrijskog-poda]].
+  Sve tri stranice klastera su ugašene istog dana (v. red iznad).
+- ✅ **Treća FAQ stranica 17025 — ZATVORENO 13.08 (M odluka, isti dan).** Draft + 301 na hub,
+  4 nova pitanja preneta, **istorijsko pravilo sa 615 pogodaka pretočeno na hub** (inače 404),
+  meni stavka 17390 obrisana. **Ceo FAQ klaster konsolidovan; hub nosi 15 pitanja + FAQPage schema.**
+- ✅ **Stavka A — čist slug `/ergonomske-podloge/` — ZATVORENO 13.08.** Prilog 12489 pustio
+  slug, stranica ga uzela, 301 `-2` → čist, istorijsko pravilo `/ergonomski-podovi/`
+  (160 pogodaka) pretočeno na nov cilj. **Oba živa `-2` sluga na buildu sada rešena.**
+- ✅ **Ergonomske podloge — ZATVORENO 14.08.** `product_cat` **403** + **8 proizvoda
+  (17838–17845)**, svi „cena na upit", svaki sa `al-table` specifikacijom, 2 FAQ pitanja i
+  FAQPage schemom; hub **16672** prevezan (8 kartica + nazivi u tabeli poređenja → linkovi;
+  stranica do tada nije imala **nijedan** interni link osim `/kontakt/` i `tel:`), dodate
+  uzajamne veze ka `/industrijski-podovi/` i ESD stranici. Naslov kategorije pomeren ka
+  „asortiman i modeli" da ne kanibalizuje hub (poz. 3,8). Verifikacija: 12 URL-ova
+  200/1×H1/0 grešaka, Product+FAQPage bez dupliranja, sitemap 8/8 + 1/1, 4 regresione
+  stranice čiste. 🟢 **Sva tri pitanja zatvorena istog dana (M):** La Ola / La Ola Hygienic
+  ostaju na generičkoj fotki (ergomat.com 403, `intl.ergomat.com` mrtav → dopuna slika iz
+  spec-a nije bila izvodljiva) · namene SuperSoft Smooth/Office ostaju kako su na hub stranici
+  · kategorija se **ne dodaje u meni**. **Nema otvorenih repova.**
+  → [[dnevnik/2026-08-14-ergonomske-podloge-proizvodi]]
+- ~~🟡 **Ergonomske podloge — 8 tipova bez ijednog proizvoda (13.08, M odobrio obim, izvršenje
+  odloženo).**~~ (izvršeno 14.08, v. red iznad) `/ergonomske-podloge/` nabraja 8 modela (Diamond Allround, Soft Air Meter,
+  SuperSoft Smooth/Office, La Ola, La Ola Hygienic, Nitrile Walk, Solido I) — **nijedan ne
+  postoji kao proizvod**, a telo stranice nema nijedan interni link. Treba: nova
+  `product_cat` + 8 proizvoda, cena **„na upit"**, slike/podaci sa **ergomat.com**
+  (imamo 7 od 8 slika, fali La Ola). ⚠️ **Menja sadržaj → pre NED 16.08 ako ide 24.08**,
+  inače post-live. Spec: [[migracija/w1-ergonomske-podloge-proizvodi]]
+- 🔴🆕 **E — `/sportske-podloge/` (5438) nije usklađena sa live sadržajem (13.08).** Live drži
+  poz. **1,6** za „podloga za košarkaški teren" (47 kl./90d) i **2,0** za „…cena" (39 kl.) —
+  skoro **polovina od 178 klikova/90d** dolazi iz basket klastera, a H2 „Izgradnja sportskih
+  terena za basket u vašem dvorištu" **na buildu ne postoji**; stranica ne pominje ni
+  `/planer-terena/`. Predlog: vratiti **semantiku** (ne stari dizajn) + link na planer, ~1–1,5 h.
+  **Menja sadržaj → mora pre NED 16.08.** Analiza: [[seo/2026-08-13-kanibalizacija-konsolidacija-plan]] §3.8
+
+### Odložena stavka (F) — pun opis, M odluka 2026-08-14
+
+> Nije zatvorena nego **odložena na posle live-a**; u PROGRESS Blokerima je ostala
+> jednolinijska stavka sa oznakom #posle-live.
+
+- 🟢 **F — M ODLUKA 2026-08-14: NE DIRAMO PRE LIVE-A.** Četiri „dimenzije" stranice ostaju
+  kako jesu (index, bez canonical-a, bez veza sa 2298); posle content freeze-a (16.08) svaka
+  izmena traži odmrzavanje builda, pa je stavka **post-live** (prvi prozor ~01.09). Rizik je
+  svesno prihvaćen: 2298 nosi 385 kl./90d sa poz. 1,0–1,9 i može ga deliti sa novim
+  stranicama. Original opisa ispod. #posle-live
+- ~~🔴 **F — 4 „dimenzije" stranice kanibališu post 2298 (13.08).**~~ 2298
+  (`kako-napraviti-teren-za-basket`) nosi **13.686 prikaza / 385 klikova / 90d** sa pozicije
+  **1,0–1,9** za „dimenzije košarkaškog terena", „dimenzije table za koš", „dimenzije
+  fudbalskog terena" (2.174 prikaza). Nove 16585/16586/16688/17027 gađaju iste upite, sve
+  `index`, **bez canonical-a**, i **nijedna ne linkuje ka 2298** ni obrnuto. Opcije: (a) klaster
+  — uzajamni linkovi + pomak title-a ka transakcionoj nameni (~1 h), (b) `noindex` na sve 4 do
+  posle live-a. **Isti rok (16.08).** §3.1 iste analize

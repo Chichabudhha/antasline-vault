@@ -15,3 +15,4 @@
 {"ts":"2026-08-12T19:45:00","akcija":"zatvaranje sesije — DNEVNIK + dnevnik fajl + PROGRESS + master plan + 4 nove lekcije","tokens_delta_k":24,"session_k":206}
 {"ts":"2026-08-13T10:55:00","akcija":"W3 3.10 — pun regression sweep posle FAZE 2 (239 str.) + reverifikacija 301 mape + odluka 4.8 + zatvaranje sesije","tokens_delta_k":612,"session_k":612,"napomena":"mereno iz transkripta: input+output+cache_write (612k); cache_read 22.172k izostavljen"}
 {"ts":"2026-08-13T11:40:00","akcija":"meta description za 13 taksonomijskih arhiva (rank_math_description) + verifikacija 13 URL-ova + upis u dokumentaciju","tokens_delta_k":98,"session_k":710,"napomena":"mereno iz transkripta: input+output+cache_write"}
+{"ts": "2026-08-14T00:29:45", "sesija": "2026-08-14 ergonomske-podloge", "akcija": "W1/BLOK C — product_cat 403 + 8 proizvoda 17838-17845 + hub 16672 prevezan", "input": 202, "output": 99337, "cache_read": 13938384, "cache_create": 359949, "alat": "claude-code"}

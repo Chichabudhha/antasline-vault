@@ -1,9 +1,27 @@
 ---
 tip: reference
-azurirano: 2026-08-13
+azurirano: 2026-08-14
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## `wp_insert_post` iz CLI skripte tiho briše `<script>` iz sadržaja (2026-08-14)
+
+Skripta pokrenuta preko `php skripta.php` nema prijavljenog korisnika, pa `wp_insert_post` /
+`wp_update_post` primenjuju **kses** — a kses uklanja `<script type="application/ld+json">`.
+Rezultat: FAQPage schema ostane kao **goli tekst** u sadržaju, kome `wptexturize` još i
+pretvori navodnike u tipografske, pa se u renderu vidi `&#8220;@type&#8220;` umesto validnog
+JSON-a. Ništa ne prijavi grešku: upis „uspe", stranice vrate 200, 1×H1, Rank Math meta u
+`<head>` — sve zeleno, a schema ne postoji.
+
+```php
+kses_remove_filters();          // pre svakog wp_insert_post/wp_update_post iz CLI-ja
+```
+
+**Kako se hvata:** verifikacija mora brojati `application/ld+json` u renderu (očekivano 2 na
+proizvodu — Rank Math Product + naš FAQPage), ne samo „ima li JSON-LD". Provera „HTTP 200 +
+1×H1" ovaj kvar ne vidi. Isto važi za svaki HTML koji kses filtrira (`<iframe>`, `<style>`).
+v. [[dnevnik/2026-08-14-ergonomske-podloge-proizvodi]]
 
 ## Ime tabele se nikad ne poredi sa `$wpdb->prefix` strogo (2026-08-13)
 

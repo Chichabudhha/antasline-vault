@@ -12,6 +12,10 @@
 > [[dnevnik/2026-08-arhiva-progress]] · jun–jul: [[dnevnik/2026-07-arhiva-progress]]
 > · pune sesije: [[DNEVNIK-NAPRETKA]]
 
+**2026-08-14**
+
+- ✅ `[claude-code]` W1/BLOK C — Ergonomske podloge: `product_cat` 403 + 8 proizvoda (17838–17845) + hub 16672 prevezan — [[dnevnik/2026-08-14-ergonomske-podloge-proizvodi]]
+
 **2026-08-13**
 
 - ✅ `[cpanel-live]` staging.antasline.com V4 puno postavljanje — [[dnevnik/2026-08-13-staging-v4-puno-postavljanje]]
@@ -73,13 +77,11 @@
 
 **Do content freeze-a (NED 16.08) — poslednji prozor za izmene sadržaja:**
 - Ništa nije obavezno otvoreno. W1 (red A 33/33, Polish 1–4, S1–S8, Court builder,
-  alt tekst ✅ 12.08, **FAZA 1 vizuali ✅ 13.08**, **FAZA 2 layout/CSS/UI ✅ 13.08**)
-  i W2 (20/20 content plan) su iscrpljeni. **Pun regression sweep ✅ 13.08 —
-  0 regresija na 239 stranica**, `.htaccess` 301 mapa reverifikovana (45/45 ciljeva 200).
-- ✅ **13 arhiva bez meta description — ZATVORENO 13.08 (M odobrio istog dana).**
-  6 blog kategorija + 6 `product_cat` + `brend/bergo` dobile `rank_math_description`
-  pisan iz stvarnog sadržaja termina; 18 `product_tag` arhiva namerno preskočeno
-  (prored posle live-a, checklist §B7). Verifikovano 13/13: 200 / 1×H1 / meta u `<head>`.
+  alt tekst ✅ 12.08, FAZA 1 vizuali ✅ 13.08, FAZA 2 layout/CSS/UI ✅ 13.08,
+  **ergonomske podloge — 8 proizvoda ✅ 14.08**) i W2 (20/20 content plan) su iscrpljeni.
+  **Pun regression sweep ✅ 13.08 — 0 regresija na 239 stranica**, `.htaccess` 301 mapa
+  reverifikovana (45/45 ciljeva 200). Zatvorene stavke od 13–14.08 sa punim opisom:
+  [[dnevnik/2026-08-arhiva-progress]] (sekcija „Zatvorene stavke iz Sledeće").
 - ✅ **Ikonice menija — M odluka 13.08: ne vraćaju se pre live-a.** Ostaju skinute
   (79 SVG priloga stoji u medijateci nevezano, za posle live-a ako se poželi).
 - 🔵 **Vizuelno prihvatanje FAZE 2 (13.08):** pravila ritma sekcija pogađaju **14
@@ -94,58 +96,15 @@
   (WoodMart core layout, veći zahvat — **preporuka: posle live-a**, ne 4 dana pred gate).
 - 🔵 Opciono: `15793` je jedina stranica u buildu sa legacy `productColors-block`
   markupom (swatch „Silk Black" renderuje prazan prostor) — čeka M odluku, v. Blokeri.
-
-- ✅ **Konsolidacija duplikata (C+D+B) — ZATVORENO 13.08 (M odobrio 3 od 8 predloženih stavki).**
-  Parkiralište (cenovni sadržaj → 16589, 16876 draft) · Maloprodaja (16683 draft → 16142) ·
-  Bergo Easy (16665 draft → 16663, +8 event fotografija). 301 mapa **75 → 77**, uz
-  **spljoštena 4 istorijska pravila (365 GSC pogodaka)** koja su vodila na draftovane stranice.
-  → [[dnevnik/2026-08-13-konsolidacija-kanibalizacija]]
-- ✅ **Čist slug „preko starog parketa" — ZATVORENO 13.08 (M odluka, ukida odluku od 30.07).**
-  Provera je pokazala da članci **nisu bili spojeni**: 6588 (`-2`, prepis 09/2025, 8.041 zn.,
-  +Ecotile +FAQ +galerija) i 16613 (2022, 4.940 zn., bez ijednog jedinstvenog pasusa).
-  16613 → draft + `…-original-2022`, **6588 preuzeo čist slug**, 301 okrenut na `-2` → čist.
-  Draft **76 pravila**, verifikator **0/0/45-45/0**. Cilj 301 nije nov URL (živi na live-u od
-  2022, 84 kl./god) → konsolidacija dva poznata URL-a. Usput zatvorena nedoslednost
-  „5455 draftovan, 16613 publish+noindex" iz Blokera.
-- ✅ **FAQ klaster „izbor industrijskog poda" — ZATVORENO 13.08 (M nalog).** 2622 i 3274 →
-  301 na `/industrijski-podovi/`; 4 pitanja koja hub nije imao preneta u njegov FAQ; hub
-  dobio **FAQPage JSON-LD sa 11 pitanja** koji do tada nije imao. Sve tri stranice klastera
-  imale **0 klikova / 12 meseci** dok hub drži „industrijski podovi" na poz. 6,7.
-  Postovi po temi → **posle live-a**: [[seo/posle-live-postovi-izbor-industrijskog-poda]].
-  Sve tri stranice klastera su ugašene istog dana (v. red iznad).
-- ✅ **Treća FAQ stranica 17025 — ZATVORENO 13.08 (M odluka, isti dan).** Draft + 301 na hub,
-  4 nova pitanja preneta, **istorijsko pravilo sa 615 pogodaka pretočeno na hub** (inače 404),
-  meni stavka 17390 obrisana. **Ceo FAQ klaster konsolidovan; hub nosi 15 pitanja + FAQPage schema.**
-- ✅ **Stavka A — čist slug `/ergonomske-podloge/` — ZATVORENO 13.08.** Prilog 12489 pustio
-  slug, stranica ga uzela, 301 `-2` → čist, istorijsko pravilo `/ergonomski-podovi/`
-  (160 pogodaka) pretočeno na nov cilj. **Oba živa `-2` sluga na buildu sada rešena.**
-- 🟡🆕 **Ergonomske podloge — 8 tipova bez ijednog proizvoda (13.08, M odobrio obim, izvršenje
-  odloženo).** `/ergonomske-podloge/` nabraja 8 modela (Diamond Allround, Soft Air Meter,
-  SuperSoft Smooth/Office, La Ola, La Ola Hygienic, Nitrile Walk, Solido I) — **nijedan ne
-  postoji kao proizvod**, a telo stranice nema nijedan interni link. Treba: nova
-  `product_cat` + 8 proizvoda, cena **„na upit"**, slike/podaci sa **ergomat.com**
-  (imamo 7 od 8 slika, fali La Ola). ⚠️ **Menja sadržaj → pre NED 16.08 ako ide 24.08**,
-  inače post-live. Spec: [[migracija/w1-ergonomske-podloge-proizvodi]]
-- 🔴🆕 **E — `/sportske-podloge/` (5438) nije usklađena sa live sadržajem (13.08).** Live drži
-  poz. **1,6** za „podloga za košarkaški teren" (47 kl./90d) i **2,0** za „…cena" (39 kl.) —
-  skoro **polovina od 178 klikova/90d** dolazi iz basket klastera, a H2 „Izgradnja sportskih
-  terena za basket u vašem dvorištu" **na buildu ne postoji**; stranica ne pominje ni
-  `/planer-terena/`. Predlog: vratiti **semantiku** (ne stari dizajn) + link na planer, ~1–1,5 h.
-  **Menja sadržaj → mora pre NED 16.08.** Analiza: [[seo/2026-08-13-kanibalizacija-konsolidacija-plan]] §3.8
-- 🔴🆕 **F — 4 „dimenzije" stranice kanibališu post 2298 (13.08).** 2298
-  (`kako-napraviti-teren-za-basket`) nosi **13.686 prikaza / 385 klikova / 90d** sa pozicije
-  **1,0–1,9** za „dimenzije košarkaškog terena", „dimenzije table za koš", „dimenzije
-  fudbalskog terena" (2.174 prikaza). Nove 16585/16586/16688/17027 gađaju iste upite, sve
-  `index`, **bez canonical-a**, i **nijedna ne linkuje ka 2298** ni obrnuto. Opcije: (a) klaster
-  — uzajamni linkovi + pomak title-a ka transakcionoj nameni (~1 h), (b) `noindex` na sve 4 do
-  posle live-a. **Isti rok (16.08).** §3.1 iste analize
+- 🟢 **(F) 4 „dimenzije" stranice vs post 2298 — M ODLUKA 14.08: ne diramo pre live-a.**
+  Post-live zadatak (~01.09), rizik svesno prihvaćen. Pun opis: [[dnevnik/2026-08-arhiva-progress]]
+  · analiza [[seo/2026-08-13-kanibalizacija-konsolidacija-plan]] §3.1 #posle-live
 - 🟡🆕 **Ads — pre reaktivacije pauziranih kampanja (M):** 3 oglasa + 2 asseta vode na **tuđi
   domen `ekopodneploce.rs`** (kršenje Google smernica), **11 URL-ova** na mrtve `/home/…`
   putanje, 4 na `http://`. Jedina ENABLED kampanja (ECOTILE) je čista → **ne blokira 24.08**,
   blokira reaktivaciju i 4.4. §2 iste analize
-- 🔵🆕 Sitno, nije odobreno: meni stavka **17424 nema naslov** (prazan red u „Cene" segmentu) ·
-  `ergonomske-podloge-2` (1 prikaz) može na čist slug — ali tada se mora prepraviti i istorijsko
-  pravilo `#79` u 301 mapi (`/ergonomski-podovi/` → `/ergonomske-podloge-2/`, 160 pogodaka).
+- 🔵 Sitno, nije odobreno: meni stavka **17424 nema naslov** (prazan red u „Cene" segmentu).
+  (Drugi deo ove stavke — `ergonomske-podloge-2` na čist slug — zatvoren 13.08.)
 
 **N7' (17–21.08), freeze — samo migraciona priprema:**
 - W3 **3.10** — pre-migration checklist §A do kraja → [[migracija/2026-08-10-pre-migration-checklist]]
@@ -184,7 +143,6 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 > Samo otvorene stavke. **73 zatvorenih** (i „Istorijske stavke") izdvojeno
 > 2026-08-13 u [[dnevnik/2026-08-arhiva-progress]].
 
-- 🔴 **Kanibalizaciona stavka (F) čeka odluku, rok je content freeze NED 16.08.** Izašla iz analize [[seo/2026-08-13-kanibalizacija-konsolidacija-plan]], **menja sadržaj** pa posle 16.08 traži odmrzavanje builda. **(F)** 4 nove „dimenzije" stranice (16585/16586/16688/17027) gađaju upite koje post **2298** drži sa pozicije **1,0–1,9** (13.686 prikaza / 385 kl./90d) — sve `index`, **bez canonical-a**, bez ijedne uzajamne veze sa 2298. Opcije: (a) klaster — uzajamni linkovi + pomak title-a ka transakcionoj nameni (~1 h), (b) `noindex` na sve 4 do posle live-a. **Ne blokira migraciju** — blokira očuvanje pozicija posle nje. #ceka-miroslav · **(E) ZATVORENA 2026-08-13** → [[dnevnik/2026-08-13-5438-basket-semantika-faqpage]]
 - 🟡🆕 **Ads URL-ovi pre reaktivacije pauziranih kampanja (2026-08-13, svež pull).** 3 oglasa + 2 asseta imaju final URL na **tuđem domenu `ekopodneploce.rs`** (kršenje Google smernica — final URL mora biti na istom domenu kao prikazani), **11 URL-ova** vodi na mrtve `/home/…` putanje koje ne postoje ni na buildu ni u 301 draftu, 4 su na `http://`. 🟢 `tracking_url_template`/`final_url_suffix` su `null` na svih 14 kampanja, a jedina **ENABLED** kampanja (ECOTILE) je čista → **za 24.08 nema posla**; ovo je uslov za reaktivaciju i blokira W4 4.4. #ceka-miroslav
 - 🟢 **Ikonice menija — M ODLUČIO 2026-08-13: ne vraćaju se pre live-a.** Uklanjanje od 12.08 je potvrđeno kao namerno; 79 SVG priloga i `uploads/meni-ikonice/` ostaju u medijateci nevezani ni za jednu `nav_menu_item` stavku (rollback moguć posle live-a). Meni ide u produkciju kao čist tekst. Dokumentacioni deo stavke ispod ostaje otvoren (nedostajući unosi za 12.08 rad).
 - 🟡🆕 **Izmene builda od 12–13.08 koje nigde nisu evidentirane — nađene tek regression sweep-om (2026-08-13).** Sweep je pokazao **−118 slika na svakoj stranici**; uzrok je **uklanjanje ikonica iz mega menija 12.08**, o kome ne postoji nijedan unos ni u [[DNEVNIK-NAPRETKA]] ni ovde — jedini trag je ime backup fajla `antasline_local_2026-08-12_pre-uklanjanje-meni-ikonica.sql`. Isto važi za još 4 backup-a od 12.08 (`_pre-draft-5455`, `_pre-bergo-varijacije`, `_pre-15480-rebuild`, `_pre-stari-format-stranice`) i za **FAZU 1 od 13.08**, čiji je ledger unos završio **na dnu** `DNEVNIK-NAPRETKA.md` umesto na vrhu (fajl je newest-on-top) pa je bio nevidljiv — prenet u „Urađeno" tabelu 13.08. **Zašto je bitno 3 dana pred freeze:** build je jedini izvor istine za migraciju, a ono što nije zapisano ne može se ni proveriti ni vratiti; 79 SVG ikonica (`uploads/meni-ikonice/`) sada stoji u medijateci nevezano ni za jednu `nav_menu_item` stavku. **Ne blokira migraciju.** #ceka-miroslav — potvrditi da je uklanjanje ikonica bila namerna odluka (poklapa se sa #ceka-miroslav stavkom od 06.08 „ikonice za meni Miroslav sam bira") i da li ikonice treba vratiti pre live-a ili se skidaju trajno.
