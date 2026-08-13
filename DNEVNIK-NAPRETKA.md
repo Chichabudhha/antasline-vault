@@ -1,3 +1,43 @@
+## 2026-08-13 [cpanel-live] — LiteSpeed prefetch provera: Instant Click bezbedan, prefetch ne prerender (UŽIVO, read-only) ✅
+
+> Zatvara otvoren rizik iz [[reference/chrome-web-platform-2026]] §3 ("Isto važi za
+> bilo koji prefetch/prerender... proveriti pre migracije 24.08"). Nastavak istog
+> dana, druga `[cpanel-live]` read-only sesija.
+
+- `wp option list --search="litespeed.conf.*"` na `wp1.oblak.host`/`~/public_html`:
+  `litespeed.conf.util-instant_click=1` (Instant Click UKLJUČEN), `optm-dns_prefetch_ctrl=1`
+  (auto DNS prefetch), `optm-dns_prefetch`/`optm-dns_preconnect` prazni nizovi (ništa
+  ručno podešeno).
+- `curl -sL https://www.antasline.com/` potvrđuje da se `instant_click.min.js`
+  (LiteSpeed Cache 7.8.1) stvarno učitava na live stranici — konfiguracija nije
+  samo upisana nego i aktivna na frontend-u.
+- 🔴→✅ **Ključna provera — mehanizam, ne samo da li je uključeno.** Izvorni kod
+  `instant_click.min.js` podržava native Speculation Rules API
+  (`HTMLScriptElement.supports("speculationrules")`) i grana na `type="prerender"`
+  ISKLJUČIVO ako `document.body.dataset.instantSpecrules === "prerender"`. Taj atribut
+  **ne postoji nigde** — ni u `<body>` tagu (proverено na homepage i 404 stranici),
+  ni u LiteSpeed config-u (plugin 7.8.1 UI uopšte ne izlaže tu opciju). Default grana:
+  `_speculationRulesType = "prefetch"`. **Prefetch preko Speculation Rules API-ja
+  dovlači HTML u pozadini ali NE izvršava JS te stranice** (za razliku od
+  `"prerender"`, koje bi izvršilo GTM tagove pre stvarne posete) — `generate_lead`
+  trigger na `/hvala-za-poruku/` page view (BLOK A, [[CLAUDE]] §4) ne može lažno
+  da okine na hover/mousedown nad linkom.
+- 🟢 **Sporedan nalaz, bez rizika**: DNS Prefetch Control (auto) emituje samo 1
+  `dns-prefetch` tag na homepage (`fonts.googleapis.com` — WP core default, ne
+  LiteSpeed-ov doprinos). `googletagmanager.com` (učitan na svakoj stranici preko
+  GTM snippet-a) nema dns-prefetch/preconnect hint — očekivano, GTM ubacuje domen
+  kroz inline JS string, ne kroz literalan `<script src=...>` u sirovom HTML-u,
+  pa ga LiteSpeed-ov statički skener ne vidi. Sitna, ne-hitna optimizacija:
+  ručno dodati `googletagmanager.com` u `optm-dns_preconnect` listu, nije urađeno
+  ove sesije (van obima "provera").
+- **Ništa nije menjano** — čisto čitanje (`wp option list`, `curl`), nema
+  `wp option update`, nema izmene fajla/baze/plugin podešavanja.
+- Ažurirano: [[reference/chrome-web-platform-2026]] §3 (rizik zatvoren za trenutnu
+  konfiguraciju, uslov za ponovno otvaranje ako se ikad ručno doda
+  `data-instant-specrules="prerender"`).
+
+---
+
 ## 2026-08-13 [cpanel-live] — Kvota potvrđena: keš se osvežio, 5,7 GB slobodno (UŽIVO, read-only) ✅
 
 > Nastavak nalaza iz 2026-08-12 (`~/staging` brisanje, 3,4 GB oslobođeno) — tada je

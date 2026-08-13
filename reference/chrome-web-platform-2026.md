@@ -81,6 +81,26 @@ false`, pa tek onda speculation rules. Ne obrnuto. Do tada — ne dirati.
 Isto važi za bilo koji prefetch/prerender koji bi neko uključio kroz
 LiteSpeed/optimizacioni plugin na produkciji — proveriti pre migracije 24.08.
 
+✅ **Provereno 2026-08-13 [cpanel-live], live produkcija — BEZBEDNO.** LiteSpeed
+Cache 7.8.1 ima `util-instant_click=1` (Instant Click) aktivan, `instant_click.min.js`
+se stvarno učitava na live stranicama (potvrđeno curl-om). Pregledan izvorni kod
+skripte: podržava native Speculation Rules API (`HTMLScriptElement.supports("speculationrules")`)
+i grana na `"prerender"` SAMO ako `document.body.dataset.instantSpecrules === "prerender"`
+— taj atribut **ne postoji nigde** (ni u temi, ni u LiteSpeed config-u, plugin UI
+uopšte ne izlaže tu opciju u 7.8.1). Default grana je `_speculationRulesType =
+"prefetch"`, ne `"prerender"` — **prefetch preko Speculation Rules API-ja dovlači
+HTML u pozadini ali NE izvršava JS te stranice**, pa GTM/`generate_lead` na
+`/hvala-za-poruku/` ne može lažno da okine na hover/mousedown. Rizik iz ovog
+odeljka zatvoren za trenutnu LiteSpeed konfiguraciju. **Ako se ikad ručno doda
+`data-instant-specrules="prerender"` (ili LiteSpeed izloži tu opciju u budućem
+UI-ju) — ponovo primeniti pravilo iznad (GTM trigger na `document.prerendering
+=== false` PRE uključivanja).** Usput nalaz bez rizika: DNS Prefetch Control
+(`optm-dns_prefetch_ctrl=1`, auto) emituje samo 1 `dns-prefetch` tag na live
+(`fonts.googleapis.com`, WP core default) — `googletagmanager.com` nema hint jer
+GTM snippet ubacuje domen kroz inline JS, ne kroz `<script src=...>` u sirovom
+HTML-u, pa ga LiteSpeed-ov statički skener ne vidi (očekivano, nije bag).
+Detalji: [[DNEVNIK-NAPRETKA]] 2026-08-13.
+
 ---
 
 ## 4. ⏸️ ČEKAJ BASELINE — zanimljivo, ne sada
