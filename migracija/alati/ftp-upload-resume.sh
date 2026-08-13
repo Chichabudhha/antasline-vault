@@ -2,9 +2,26 @@
 # Robustan FTP upload sa auto-resume na svaki pad konekcije.
 # Koristi curl -C - (REST) da nastavi tamo gde je stalo, umesto od nule.
 
-LOCAL="/c/xampp/htdocs/antasline-staging-upload/antasline-wp-site-2026-08-06.tar.gz"
-REMOTE="ftp://antasline.com/antasline-wp-site-2026-08-06.tar.gz"
-CREDS='staging@antasline.com:1~LI$$Ex&^gm~A2e'
+# 🔴 Kredencijali su 2026-08-13 IZMESTENI VAN VAULT-A (do tada su stajali ovde
+# u cistom tekstu i bili verzionisani u git-u od 06.08). Fajl van repozitorijuma:
+#   ~/antasline-ftp-creds.txt   (pregazivo preko FTP_CREDS_FILE)
+# Nikad ne vracati vrednost u ovaj fajl — vault se sinhronizuje na hosting.
+CREDS_FILE="${FTP_CREDS_FILE:-$HOME/antasline-ftp-creds.txt}"
+if [ ! -f "$CREDS_FILE" ]; then
+  echo "GRESKA: nema kredencijala — ocekivan fajl: $CREDS_FILE" >&2
+  echo "Sadrzaj treba da bude:  FTP_CREDS='korisnik:lozinka'" >&2
+  exit 1
+fi
+. "$CREDS_FILE"
+if [ -z "${FTP_CREDS:-}" ]; then
+  echo "GRESKA: $CREDS_FILE ne definise FTP_CREDS." >&2
+  exit 1
+fi
+CREDS="$FTP_CREDS"
+HOST="${FTP_HOST:-antasline.com}"
+
+LOCAL="${1:-/c/xampp/htdocs/antasline-staging-upload/antasline-wp-site-2026-08-06.tar.gz}"
+REMOTE="ftp://$HOST/$(basename "$LOCAL")"
 LOCAL_SIZE=$(stat -c%s "$LOCAL")
 
 attempt=0

@@ -45,9 +45,19 @@ editovao `.sh` **dok se izvršavao** — bash čita skriptu inkrementalno po baj
 izmena pomeri ostatak i raspolovi komandu. Nije kvar skripte. Pogoršava to što je proces
 izašao sa **kodom 0** uprkos `set -euo pipefail`. Drugi, čist prolaz prošao end-to-end.
 
+**Dopuna iste sesije (M: „izmesti je van vaulta"):** FTP lozinka izmeštena iz vault-a —
+nađena u **dva** fajla, ne jednom (`ftp-upload-chunks.sh` l. 8 + `ftp-upload-resume.sh`
+l. 7, oba verzionisana od 06.08). Sada u `C:\Users\Miroslav\antasline-ftp-creds.txt` (van
+repo stabla), obe skripte je `source`-uju preko `FTP_CREDS_FILE` i **padaju sa `exit 1`**
+pre ijednog poziva ako fajla nema. Usput izvučeni hardkodiran host i hardkodiran naziv
+arhive od 06.08. Verifikovano: `grep` po radnom stablu ne nalazi lozinku, specijalni
+znakovi (`$$`, `&^`) očuvani pri učitavanju, `bash -n` prolazi na oba.
+🔴 **Ne briše je iz git istorije** — jedina prava sanacija je **promena FTP lozinke u
+cPanel-u**, preporučeno **posle** 24.08 (ne dirati kanal prenosa pred prenos); rewrite
+istorije se ne preporučuje (tri površine + Obsidian Git auto-sync). #ceka-miroslav
+
 **Otvoreno:** 🔴 disk prostor se reotvara kao rizik (redosled koraka na dan migracije) ·
-🟡 `ftp-upload-chunks.sh` nosi **FTP lozinku u čistom tekstu** (linija 8) i verzionisan je
-u git-u vault-a #ceka-miroslav · 🔵 `antasline-staging-upload\` drži 5,67 GB zastarelih
+🟡 promena FTP lozinke posle migracije #ceka-miroslav · 🔵 `antasline-staging-upload\` drži 5,67 GB zastarelih
 artefakata od 06.08.
 
 **Detalji:** [[dnevnik/2026-08-13-dry-run-build-staging-package]]

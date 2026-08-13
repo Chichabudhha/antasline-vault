@@ -94,16 +94,50 @@ Preporuka za 24.08, po redosledu:
    `cat part-* | tar -xzf - -C …` i brisati delove u hodu.
 3. Backup skinuti i obrisati sa servera **pre** početka uploada, ne posle.
 
+### 6. FTP kredencijali izmešteni van vault-a (M zahtev, isti dan)
+Nalaz iz tačke 5 (čitanje `ftp-upload-chunks.sh` radi provere kako se delovi sklapaju)
+otkrio je lozinku u čistom tekstu. Na M zahtev odmah izmešteno.
+
+Bila je u **dva** fajla, ne jednom:
+
+| Fajl | Bilo | Sad |
+|---|---|---|
+| `migracija/alati/ftp-upload-chunks.sh` l. 8 | `CREDS='staging@…:<lozinka>'` | `source` iz `~/antasline-ftp-creds.txt` |
+| `migracija/alati/ftp-upload-resume.sh` l. 7 | isto | isto |
+
+Nova lokacija: `C:\Users\Miroslav\antasline-ftp-creds.txt` — **van repo stabla**
+(`git check-ignore` javlja „outside repository", dakle git ga ni ne vidi). Obe skripte
+čitaju `FTP_CREDS_FILE` (podrazumevano `~/antasline-ftp-creds.txt`) i **padaju sa
+`exit 1` pre ijednog FTP poziva** ako fajl nedostaje ili ne definiše `FTP_CREDS`.
+
+Usput izvučena još dva hardkodirana podatka: host → `$HOST`, i naziv arhive od 06.08
+u `ftp-upload-resume.sh` → prvi argument (skripta je do tada umela da pošalje samo
+jedan konkretan avgustovski fajl).
+
+Verifikovano: `bash -n` prolazi na oba · `grep` po celom radnom stablu ne nalazi
+lozinku · učitavanje čuva specijalne znakove (`$$`, `&^`) · tvrdi pad testiran sa
+`FTP_CREDS_FILE=/nepostojeci/put` → `exit 1`.
+
 ## Otvorene akcije
 
 - 🔴 **Disk prostor se reotvara kao rizik** — nije „potpuno zatvoren" kako je
   upisano 13.08 ujutru; brojka na kojoj je zatvoren (~1,3 GB paket) je 2× manja od
   stvarne. Ne blokira gate, ali diktira **redosled koraka** na dan migracije.
-- 🟡 **`ftp-upload-chunks.sh` nosi FTP lozinku u čistom tekstu** (linija 8,
-  `staging@antasline.com`) i verzionisana je u git-u vault-a. Vault je privatan, ali
-  kredencijal ostaje u istoriji zauvek. Predlog: izmestiti u fajl van vault-a (isti
-  princip kao `~/staging-htaccess-creds.txt` na serveru, 21.07) + promeniti lozinku
-  posle migracije. #ceka-miroslav
+- ✅ **FTP lozinka izmeštena van vault-a — izvršeno istog dana na M zahtev.**
+  Nađena u **dva** fajla, ne jednom: `ftp-upload-chunks.sh` (l. 8) i
+  `ftp-upload-resume.sh` (l. 7), oba verzionisana od 06.08. Sada u
+  `C:\Users\Miroslav\antasline-ftp-creds.txt` (van repo stabla), obe skripte ga
+  `source`-uju preko `FTP_CREDS_FILE` (podrazumevano `~/antasline-ftp-creds.txt`)
+  i **padaju sa `exit 1`** pre ijednog FTP poziva ako fajl nedostaje ili ne
+  definiše `FTP_CREDS`. Usput izvučeni i hardkodiran host (`$HOST`) i hardkodiran
+  naziv arhive od 06.08 u `ftp-upload-resume.sh` (sada prvi argument).
+  Verifikovano: `grep` po celom radnom stablu ne nalazi lozinku; učitavanje čuva
+  specijalne znakove (`$$`, `&^`); oba `bash -n` prolaze.
+  🔴 **Ostaje:** izmeštanje **ne briše lozinku iz git istorije** (commit-ovi od
+  06.08, a vault se sinhronizuje na hosting). Jedina prava sanacija je **promena
+  FTP lozinke u cPanel-u**, preporučeno **posle** 24.08 — ne dirati kanal prenosa
+  pred sam prenos. Prepisivanje git istorije se ne preporučuje (tri površine +
+  Obsidian Git auto-sync). #ceka-miroslav
 - 🔵 `C:\xampp\htdocs\antasline-staging-upload\` drži **5,67 GB** zastarelih
   artefakata od 06.08 (tar + 136 delova). Lokalni disk je na 91% (44 GB slobodno) —
   nije hitno, ali može da se obriše.
