@@ -2,7 +2,7 @@
 tip: analiza
 datum: 2026-07-27
 blok: C3 / W2
-izvor: "GSC API 90d (2026-04-26 → 2026-07-24), 1.624 upita / 156 stranica / 2.477 query-page parova + lokalni build inventar (wpGs_posts)"
+izvor: "GSC API 90d (2026-04-26 → 2026-07-24), 1.624 upita / 156 stranica / 2.477 query-page parova + lokalni build inventar (wpgs_posts)"
 status: aktivan
 azurirano: 2026-07-27
 ---
@@ -12,7 +12,7 @@ azurirano: 2026-07-27
 > Metod: svih 1.624 GSC upita (90d) svrstano u 17 tematskih klastera po
 > prioritetnom keyword matchingu, pa ukršteno sa (a) live stranicama koje
 > stvarno rangiraju za taj klaster i (b) inventarom lokalnog builda
-> (71 page + 30 post, `wpGs_posts`).
+> (71 page + 30 post, `wpgs_posts`).
 >
 > ⚠️ Ključna razlika koju ova analiza pravi, a ranije analize nisu:
 > **GSC vidi samo live sajt.** Veliki deo W1/W2 rada postoji samo lokalno i

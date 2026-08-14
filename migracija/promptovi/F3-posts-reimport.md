@@ -22,7 +22,7 @@ Miroslava — ili radi sa postojećim i zabeleži datum).
 | Šta | Vrednost |
 |---|---|
 | Lokalni WP | `C:\xampp\htdocs\antasline` → `http://localhost/antasline` |
-| DB | `antasline_local`, prefiks `wpGs_` |
+| DB | `antasline_local`, prefiks `wpgs_` |
 | PHP skripte | scratchpad + `C:\xampp\php\php.exe skripta.php` (`require 'C:/xampp/htdocs/antasline/wp-load.php';`) |
 | Backup | `mysqldump -u root antasline_local > C:\xampp\htdocs\antasline-backups\antasline_local_YYYY-MM-DD_pre-posts-reimport.sql` |
 
@@ -72,7 +72,7 @@ Miroslava — ili radi sa postojećim i zabeleži datum).
 
 ## Verifikacija
 
-- [ ] `SELECT COUNT(*) FROM wpGs_posts WHERE post_type='post' AND post_status='publish'` = 30 + zadržani LOKAL-NOVO (bergo-ultimate post) = **31**
+- [ ] `SELECT COUNT(*) FROM wpgs_posts WHERE post_type='post' AND post_status='publish'` = 30 + zadržani LOKAL-NOVO (bergo-ultimate post) = **31**
 - [ ] Svih 30 live slugova postoji lokalno (uporedi sa post-sitemap.xml)
 - [ ] 5 nasumičnih postova: 200, slike se učitavaju sa lokala (ne sa antasline.com!)
 - [ ] Conquest članak: sadržaj identičan live verziji (spot-check naslova i prvog pasusa)

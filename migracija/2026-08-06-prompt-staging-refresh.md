@@ -119,15 +119,19 @@ KORAK 4 — wp-config.php (isti DB kredencijali kao 07-21, PONOVO KORISTI):
   - DB_NAME: antasline_staging / DB_USER: antasline_antasline
   - DB_PASSWORD: proveri ~/staging-db-credentials.txt na serveru — NE
     pogađaj/ne izmišljaj, ako nema pitaj Miroslava
-  - DB_HOST: localhost / $table_prefix = 'wpGs_';
+  - DB_HOST: localhost / $table_prefix = 'wpgs_';
+    🔴 MALIM slovima. Na Linux-u je case OSETLJIV (za razliku od lokalnog
+    Windows MySQL-a); pogrešan case daje „site not installed" bez druge greške.
+    Pre pisanja potvrdi protiv samog dump-a:
+    grep -o -m3 "CREATE TABLE \`[a-zA-Z_]*\`" antasline_staging_dump_2026-08-06.sql
   - Ako wp-config.php već postoji od 07-21 i dalje je ispravan (isti DB), NE
     mora se ponovo praviti — samo proveri da radi (`wp option get siteurl`).
 
 KORAK 5 — DROP + import nove baze (baza se u potpunosti zamenjuje):
   wp db reset --yes --path=<PRAVI_DOCROOT>
   wp db import antasline_staging_dump_2026-08-06.sql --path=<PRAVI_DOCROOT>
-  Posle importa, proveri da NEMA wp_* (stari prefiks) tabela pored wpGs_*
-  (`wp db tables --path=<PRAVI_DOCROOT> | grep -v wpGs_`) — ne bi trebalo,
+  Posle importa, proveri da NEMA wp_* (stari prefiks) tabela pored wpgs_*
+  (`wp db tables --path=<PRAVI_DOCROOT> | grep -v wpgs_`) — ne bi trebalo,
   već obrisane iz lokalnog izvora ovog puta.
 
 KORAK 6 — URL rewrite:

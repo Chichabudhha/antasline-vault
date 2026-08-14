@@ -102,7 +102,7 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
 | Šta | Vrednost |
 |---|---|
 | WP build | `C:\xampp\htdocs\antasline` → `http://localhost/antasline` |
-| DB | `antasline_local`, prefiks **`wpgs_`** (malim slovima — lokalni `wp-config` nosi `wpGs_` i radi samo zbog Windows case-insensitivity; na Linux serveru puca), MariaDB |
+| DB | `antasline_local`, prefiks **`wpgs_`** (malim slovima, i u bazi i u `wp-config` od 2026-08-14 — ranije je config nosio `wpGs_` i „radio" samo zbog Windows case-insensitivity, a na Linux-u puca), MariaDB |
 | MySQL CLI | `/c/xampp/mysql/bin/mysql -u root antasline_local` |
 | PHP skripte | scratchpad + `C:\xampp\php\php.exe skripta.php` (wp-load bootstrap) |
 | Backup | `mysqldump -u root antasline_local > C:\xampp\htdocs\antasline-backups\antasline_local_YYYY-MM-DD_pre-<opis>.sql` |

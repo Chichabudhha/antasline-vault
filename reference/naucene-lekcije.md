@@ -5,6 +5,140 @@ azurirano: 2026-08-14
 
 # Naučene lekcije (tehnički gotchas)
 
+## Reference koje agent čita kao autoritet ustaju tiho (2026-08-14)
+
+`reference/identifikatori.md` je 14.08 zatečen sa datumom 27.07 i **tri od pet
+tvrdnji o lokalnom okruženju netačne**:
+
+| Tvrdnja | Pisalo | Stvarno |
+|---|---|---|
+| Broj tabela | 106 | **78** |
+| Tema/builder | Porto + WPBakery | **WoodMart 8.5.4 + child** |
+| SEO plugin | Yoast | **Rank Math** (Yoast obrisan 13.08) |
+| Prefiks baze | `wpGs_` | **`wpgs_`** |
+
+Nijedna izmena stack-a (tema u julu, Rank Math 05.08, brisanje Yoasta 13.08)
+nije povukla ažuriranje ove reference. Isti razred problema kao `CLAUDE.md` §2,
+koji je do 12.08 tvrdio pogrešan prefiks.
+
+🔴 **Zašto je opasno:** za razliku od koda, ustajala referenca ne baca grešku —
+agent je pročita, poveruje joj i **radi po njoj**. Pogrešan prefiks iz `CLAUDE.md`
+je 13.08 umalo doveo do upisa u pogrešan meta ključ na 13 arhiva.
+
+**Pravilo:** pri svakoj većoj promeni stack-a (tema, SEO plugin, prefiks, PHP,
+verzija baze) osvežiti `reference/identifikatori.md` i `CLAUDE.md` §2 —
+**provereno protiv sistema, ne iz sećanja**:
+
+```sql
+SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='antasline_local';
+SELECT option_name, option_value FROM wpgs_options WHERE option_name IN ('template','stylesheet');
+SELECT option_value FROM wpgs_options WHERE option_name='active_plugins';
+```
+(`wp eval` na ovom buildu pada na 300s timeout — koristiti direktan SQL.)
+v. [[dnevnik/2026-08-14-copilot-grok-delegati]]
+
+## `Select-String` je podrazumevano case-NEosetljiv (2026-08-14)
+
+Posle sweep-a `wpGs_` → `wpgs_` provera je pokazala da su „popravljeni" fajlovi
+i dalje puni pogodaka. Fajlovi su bili ispravni — **provera nije**: PowerShell
+`Select-String` bez `-CaseSensitive` broji i `wpgs_` i `wpGs_`, pa je izgledalo
+kao da nijedna izmena nije prošla.
+
+```powershell
+Select-String -Pattern 'wpGs_' -CaseSensitive        # tačno
+Get-ChildItem ... | Select-String 'wpGs_'            # laže na case-razlici
+```
+
+Ista zamka važi za `-match`, `-like`, `-eq` i `-replace` u PowerShell-u — svi su
+case-neosetljivi po podrazumevanoj vrednosti (case-osetljive varijante su
+`-cmatch`, `-clike`, `-ceq`, `-creplace`). I za MySQL `LIKE` pod `_ci` kolacijom
+(rešenje: `COLLATE utf8mb4_bin`).
+
+**Pravilo:** kad je ceo zadatak razlika u veličini slova, **alat za proveru mora
+biti eksplicitno case-osetljiv** — inače potvrđuje sam sebe.
+v. [[dnevnik/2026-08-14-copilot-grok-delegati]]
+
+## Prefiks baze nije samo ime tabele — WP od njega izvodi i ključeve-stringove (2026-08-14)
+
+Pri promeni `$table_prefix` sa `wpGs_` na `wpgs_` nije dovoljno izmeniti
+`wp-config.php`. WordPress od prefiksa gradi i **ključeve koji se u bazi čuvaju
+kao obični stringovi**:
+
+| Ključ | Tabela | Ako je promašen |
+|---|---|---|
+| `<prefiks>capabilities` | `usermeta` | **svi korisnici bez ijedne dozvole → zaključan wp-admin** |
+| `<prefiks>user_roles` | `options` | **nestaju definicije rola** |
+| `<prefiks>user_level` | `usermeta` | legacy nivo |
+| `<prefiks>user-settings`, `…-time`, `dashboard_*`, `persisted_preferences` | `usermeta` | kozmetika |
+
+🔴 **Zašto SQL provera daje lažno zeleno:** kolacija je `utf8mb4_general_ci`,
+dakle case-**ne**osetljiva — `WHERE meta_key='wpgs_capabilities'` uredno nađe
+sačuvano `wpGs_capabilities`. Ali WP meta keš je **PHP niz**:
+`update_meta_cache()` ga puni imenima kakva vrati baza, a `get_metadata_raw()`
+traži `isset($meta_cache[$meta_key])` — **ključevi PHP nizova su case-osetljivi**,
+pa lookup promašuje i vraća prazno.
+
+**Postupak (redosled je bitan):** backup → preimenovati ključeve u bazi →
+**tek onda** `wp-config.php`. Obrnuto ostavlja prozor u kom WP traži ključeve
+kojih još nema.
+
+```sql
+-- COLLATE utf8mb4_bin je obavezan: bez njega LIKE case-neosetljivo
+-- pogodi i redove koji su već ispravni
+UPDATE wpgs_usermeta SET meta_key = CONCAT('wpgs_', SUBSTRING(meta_key, 6))
+WHERE meta_key COLLATE utf8mb4_bin LIKE 'wpGs\_%';
+```
+
+**Verifikacija koja stvarno dokazuje:** `wp user list --fields=ID,user_login,roles`
+— ide kroz pun WP stek i baš kroz meta keš. HTTP 200 nije dovoljan (sajt se
+prikazuje i kad su role pale; puca tek wp-admin).
+
+⚠️ Usput: `wp eval` na ovom buildu pada na **300s timeout** u
+`woocommerce/src/Proxies/LegacyProxy.php:53`, dok `wp user list` prolazi.
+Za brzu proveru koristiti konkretne `wp` komande, ne `eval`.
+v. [[dnevnik/2026-08-14-copilot-grok-delegati]] · [[CLAUDE]] §2
+
+## Cena u izlazu alata nije račun — prvo se proveri način autentifikacije (2026-08-14)
+
+Grok je na trivijalan poziv vratio `total_cost_usd: 0.060434` i ja sam iz toga
+zaključio „naplaćuje se ~$0,06 po pozivu" — upisao to u skill, u blokere i u
+preporuku da se alat štedi **zbog novca**. M je rekao da nema nikakvu pretplatu.
+Provera je pokazala da je bio u pravu: `XAI_API_KEY` **nije postavljen**
+(autentifikacija je OAuth/OIDC), a log posle stvarnih poziva ponavlja
+`subscription_tier: null` · `paywall_check_no_subscription` · `tier: "Free"`.
+
+Broj je bio **očitavanje brojila po API cenovniku** — koliko bi ti tokeni koštali
+preko plaćenog ključa. Grok dokumentacija to i kaže (`14-headless-mode.md`):
+cena se štancuje za API-key saobraćaj, dok OAuth putanja obično ne nosi stvarnu
+cenu. Na Free nalogu se troši kvota; kad se potroši → **odbijanje, ne račun**.
+
+**Pravilo:** pre nego što se bilo čija potrošnja proglasi novcem, proveriti
+**čime je autentifikovan** (`env` ključ vs OAuth) i **šta server prijavljuje o
+tieru**. Polje `cost` u izlazu alata je metrika, ne faktura. Obrnuto takođe važi:
+odsustvo cene ne znači besplatno.
+
+🟢 Deo zaključka koji je preživeo: **token-težina je stvarna** (~23k ulaznih
+tokena po grok pozivu, jer učita `CLAUDE.md` + `AGENTS.md` svaki put). Alat se
+i dalje štedi — samo je razlog kvota, ne novac.
+v. [[dnevnik/2026-08-14-copilot-grok-delegati]]
+
+## Maskiranje tajni mora da pokrije ugnežđene objekte (2026-08-14)
+
+Pri proveri tipa autentifikacije ispisan je `auth.json` uz maskiranje po imenu
+polja (`token|secret|key|jwt`). Maska je gađala **samo prvi nivo**, a ceo
+kredencijal je bio u **ugnežđenom objektu** pod ključem koji je izgledao
+bezopasno (`https://auth.x.ai::<uuid>`). Rezultat: JWT i **refresh token**
+(ne ističe sam) završili u transkriptu sesije.
+
+**Pravilo:** kredencijal-fajl se ne ispisuje ni maskiran. Ako treba samo
+utvrditi *tip* autentifikacije, dovoljno je:
+```powershell
+[bool]$env:XAI_API_KEY            # postoji li API ključ
+Test-Path "$env:USERPROFILE\.grok\auth.json"
+```
+a za detalje čitati **log**, ne sam kredencijal. Ako se ipak procuri —
+sanacija je rotacija (`logout` → `login`), ne brisanje ispisa.
+
 ## Delegat-agent ume da vrati uredan izveštaj nad nula fajlova (2026-08-14)
 
 Copilot je na prvom `wpgs` auditu krenuo od glob obrasca sa tri ekstenzije

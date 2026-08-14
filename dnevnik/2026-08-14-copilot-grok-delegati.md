@@ -185,13 +185,127 @@ bez ikakve kvote, a do sada najmanje korišćen.
 `.claude/settings.json` (LastWriteTime i dalje 07.08), `~/.copilot/config.json`,
 PATH — sve netaknuto. Svi novi fajlovi su dodaci.
 
+## Popravka prefiksa (isti dan, M odobrio oba koraka)
+
+M je izabrao da se `$wpdb->prefix` kaskada reši **u korenu** (jedna izmena u
+`wp-config.php`) umesto po fajlovima (~11 mesta). Ispravno, ali **nije
+jednodelna izmena** — i to je glavni nalaz ovog koraka.
+
+🔴 **Prefiks nije samo ime tabele.** WordPress od njega izvodi i ključeve koji se
+u bazi čuvaju **kao stringovi**. Zatečeno **16 redova**:
+
+| Ključ | Gde | Redova | Posledica da je promašen |
+|---|---|---|---|
+| `wpGs_capabilities` | `usermeta` | 4 | **svi korisnici bez ijedne dozvole → zaključan wp-admin** |
+| `wpGs_user_roles` | `options` | 1 | **nestaju definicije rola** |
+| `wpGs_user_level` | `usermeta` | 4 | legacy nivo |
+| `user-settings`, `user-settings-time`, `dashboard_quick_press_last_post_id`, `persisted_preferences`, `yoast_notifications` | `usermeta` | 7 | kozmetika |
+
+Zamka je što **SQL ovo ne bi otkrio**: kolacija je `utf8mb4_general_ci`, dakle
+case-neosetljiva, pa `WHERE meta_key='wpgs_capabilities'` **nalazi** sačuvano
+`wpGs_capabilities`. Ali WP meta keš je **PHP niz**, a ključevi PHP nizova
+**jesu** case-osetljivi (`update_meta_cache()` puni niz imenima kakva vrati baza,
+`get_metadata_raw()` traži `isset($meta_cache[$meta_key])`) → promašaj → nula
+dozvola. Provera „upit radi" bi dala lažno zeleno.
+
+**Izvršeno ovim redom** (namerno — build ni u jednom trenutku ne gleda u
+nepostojeće ključeve):
+1. `mysqldump` → `antasline-backups/antasline_local_2026-08-14_pre-prefix-lowercase.sql` (36,0 MB)
+2. `job-plugin-cleanup-cron.php:12,33` → `wpgs_options`
+3. baza: `UPDATE ... SET meta_key = CONCAT('wpgs_', SUBSTRING(meta_key,6))` uz
+   `COLLATE utf8mb4_bin LIKE 'wpGs\_%'` — **binarna kolacija je obavezna**, inače
+   `LIKE` case-neosetljivo pogodi i već ispravne redove
+4. `wp-config.php:67` → `$table_prefix = 'wpgs_';` uz komentar sa razlogom i putanjom backup-a
+
+**Verifikacija:**
+- baza: 0 preostalih `wpGs_` · `wpgs_capabilities` = 4 · `wpgs_user_roles` = 1
+- HTTP 200: `/` (184 KB) · `/wp-login.php` · `/industrijski-podovi/` (191 KB)
+- `wp user list` **kroz pun WP stek**: `sava` i `sale` = **administrator**,
+  `Antas Line` i `goran` = subscriber → meta keš putanja radi (najjača potvrda)
+- sweep teme i `mu-plugins`: **0 pogodaka** na `wpGs_`
+
+⚠️ Usput viđeno, nije uzrokovano ovom izmenom: `wp eval` sa punim bootstrap-om
+pada na **300s timeout** u `woocommerce/src/Proxies/LegacyProxy.php:53`.
+`wp user list` posle toga prolazi normalno. Poznata spora bootstrap putanja
+lokalnog builda, ne regresija — ali vredi zapamtiti da `wp eval` na ovom buildu
+nije pouzdan alat za brzu proveru.
+
+### Sweep dokumentacije (M odobrio: „sweep svih promptova")
+
+Ispravljeno je **samo ono što bi agent izvršio**; istorijski zapisi i pravila
+koja *citiraju* pogrešan oblik kao ono što treba izbeći ostavljeni su netaknuti
+— prepisivanje bi im uništilo smisao.
+
+**Ispravljeno (13 fajlova):**
+- `promptovi/F1-parity-inventar` · `F2-permalink-fix` · `F3-posts-reimport` — env tabele + SQL upiti
+- `2026-07-21-prompt-subdomen-import` · `2026-07-21-prompt-secure-exposed-db-creds` ·
+  `2026-08-06-prompt-staging-refresh` — 🔴 **ciljaju Linux**; uz zamenu case-a dodata i
+  obavezna provera prefiksa protiv samog dump-a (`grep "CREATE TABLE"`)
+- `2026-08-06-prompt-staging-refresh` — pokvarena **provera**: `wp db tables | grep -v wpGs_`
+  na Linux-u ne bi filtrirao `wpgs_` tabele, pa bi test lažno prijavio da su sve pogrešne
+- `2026-07-27-cpanel-sesija-plan` (cPanel = Linux) · `2026-07-28-W7-sanacija-builda` ·
+  `w1-novi-proizvodi-court-builder` · `blokovi/BLOK-D-ai-chat` · `seo/2026-07-27-content-klasteri`
+- `2026-07-21-prompt-redirection-export` — tvrdnja „prefiks može biti drugačiji od `wpGs_`
+  koji koristi lokalni build" postala netačna, prepisana
+- 🔴 `.claude/skills/antasline-sesija/SKILL.md` — **čita se na početku svake sesije**,
+  tvrdio da config nosi `wpGs_`
+- `reference/identifikatori.md` — navodio prefiks kao `wpGs_`
+
+**Ostavljeno namerno:** `preflight.txt` i preflight/pre-migration checkliste
+(dokumentuju baš taj sukob) · `2026-08-06-prompt-staging-full-restore:119`
+(„NE prepisuj `wpGs_` ili `wpgs_` napamet — proveri" je ispravan savet) ·
+`promptovi/2026-08-13-staging-full-restore-v4:139` (tačno objašnjava uzrok) ·
+`staging-import.sh` (kod je `wpgs_`, komentar objašnjava zamku) ·
+`delegati/promptovi/wpgs-prefiks.txt` (posao mu je da traži `wpGs_`) ·
+dnevnici, `CLAUDE.md`, `AGENTS.md`, `naucene-lekcije` (pravila i istorija).
+
+⚠️ **Gotcha u samoj proveri:** prvi sweep je pokazao da su „popravljeni" fajlovi
+i dalje puni pogodaka — **`Select-String` je podrazumevano case-NEosetljiv**, pa
+je brojao i ispravne `wpgs_`. Ista klasa greške koju smo ceo dan lovili. Tačna
+provera traži `-CaseSensitive`:
+```powershell
+Select-String -Pattern 'wpGs_' -CaseSensitive
+```
+
+### `reference/identifikatori.md` osvežen (M odobrio)
+
+Fajl je bio od 27.07 i **tri od pet tvrdnji o lokalnom okruženju bile su netačne**.
+Osvežen proverom protiv sistema, ne iz sećanja:
+
+| Tvrdnja | Bilo | Stvarno (provereno 14.08) |
+|---|---|---|
+| Broj tabela | 106 | **78** |
+| Tema/builder | Porto + WPBakery | **WoodMart 8.5.4 + `woodmart-child`** |
+| SEO plugin | Yoast | **Rank Math** (Yoast obrisan 13.08) |
+| PHP / MariaDB | 8.2.12 / 10.4 | ✅ tačno (8.2.12 / 10.4.32) |
+| Prefiks | `wpGs_` | **`wpgs_`** (ispravljen ranije ovog dana) |
+
+Kako je provereno (bez `wp eval`, koji na ovom buildu pada na 300s timeout):
+```sql
+SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='antasline_local';
+SELECT option_name, option_value FROM wpgs_options WHERE option_name IN ('template','stylesheet');
+SELECT option_value FROM wpgs_options WHERE option_name='active_plugins';
+```
+
+Dodato i ono što je falilo: spisak **9 aktivnih plugina**, napomena da je
+`js_composer` i dalje aktivan (legacy shortcode markup iz reimportovanih postova,
+i otvoren LCP bloker), GTM DRAFT stavke od 22.07, sitemap 7/238, i nova sekcija
+sa delegat-agentima.
+
+🟡 **Šira pouka:** `identifikatori.md` je referenca koju agent čita kao autoritet,
+a stajala je dva meseca neažurirana dok se ispod nje menjala tema, SEO plugin i
+prefiks. Isti razred mine kao `CLAUDE.md` §2 pre 12.08. Vredi je proveriti protiv
+sistema pri svakoj većoj promeni stack-a, ne „kad se setimo".
+
 ## Otvorene akcije
 
-- [ ] **`job-plugin-cleanup-cron.php` linije 12 i 33 — `wpGs_options` → `wpgs_options`.** Sirovi `mysqli` upiti; na Linux hostingu gađaju nepostojeću tabelu. #claude-code
-- [ ] **`$wpdb->prefix` kaskada — prebrojati i odlučiti.** Lokalni `wp-config.php` nosi `wpGs_` (CLAUDE.md §2), pa svaki `{$wpdb->prefix}yoast_indexable` upit nasleđuje pogrešan case. Jedan fajl to već zaobilazi sa `strtolower($wpdb->prefix)` (`job-5438-…php:257`), ostalih ~11 ne. Popravlja se kod ili `wp-config.php`? #claude-code
+- [x] ~~`job-plugin-cleanup-cron.php` linije 12 i 33~~ ✅ **popravljeno isti dan** (M odobrio) — `wpGs_options` → `wpgs_options`.
+- [x] ~~`$wpdb->prefix` kaskada~~ ✅ **rešeno u korenu isti dan (M odluka: „popravi wp-config").** v. sekciju „Popravka prefiksa" ispod.
 - [x] ~~Proveriti kvotu Grok-a~~ ✅ **razrešeno isti dan: Free nalog, OAuth, bez naplate.** `total_cost_usd` je očitavanje brojila, ne račun.
-- [ ] **Proveriti Copilot plan** — `/usage` u interaktivnoj sesiji, pa upisati nalaz u `SKILL.md` §2 (tabela „nalaz → posledica"). Od toga zavisi koliko posla sme na njega. #ceka-miroslav
-- [ ] **Rotirati Grok refresh token** — `grok logout` pa `grok login`. Token je ispisan u transkript sesije i ne ističe sam. #ceka-miroslav
+- [x] ~~Proveriti Copilot plan~~ ✅ **M potvrdio isti dan: Free (~50 premium zahteva mesečno).** Router prepisan po oskudnosti, v. „Beleške / odluke".
+- [x] ~~Rotirati Grok refresh token~~ ✅ **M uradio `logout`/`login` isti dan.**
+- [x] ~~`wpGs_` u dokumentaciji~~ ✅ **sweep izvršen isti dan** (M: „sweep svih promptova") — 13 fajlova ispravljeno, istorijski zapisi namerno ostavljeni. v. sekciju „Sweep dokumentacije".
+- [x] ~~`reference/identifikatori.md` ustajao~~ ✅ **osvežen isti dan** (M: „Osveži") — 3 od 5 tvrdnji o lokalnom okruženju bile netačne, sve provereno protiv baze i fajlova.
 - [ ] **Posle svakog `grok update`** proveriti da li je projektni `.grok/config.toml` počeo da se učitava; ako jeste, ukloniti korisničku kopiju. #claude-code
 
 ## Veze

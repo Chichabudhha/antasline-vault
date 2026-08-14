@@ -17,7 +17,7 @@ redirect mape. Strategija: [[migracija/PARITY-PLAN]].
 | Šta | Vrednost |
 |---|---|
 | Lokalni WP | `C:\xampp\htdocs\antasline` → `http://localhost/antasline` |
-| DB | `antasline_local`, prefiks `wpGs_`, MariaDB · CLI: `/c/xampp/mysql/bin/mysql -u root antasline_local` |
+| DB | `antasline_local`, prefiks `wpgs_`, MariaDB · CLI: `/c/xampp/mysql/bin/mysql -u root antasline_local` |
 | PHP skripte | piši u scratchpad, izvrši `C:\xampp\php\php.exe skripta.php` (bootstrap: `require 'C:/xampp/htdocs/antasline/wp-load.php';`) |
 | Live sitemap | `https://www.antasline.com/sitemap_index.xml` (Yoast, 7 sub-sitemapa) |
 
@@ -31,8 +31,8 @@ Bash ograničenja: komande >965 bajtova pucaju — piši skriptu u fajl pa izvr�
    `product_tag-sitemap.xml`. Izvuci sve `<loc>` URL-ove.
 
 2. **Za svaki live URL** izvuci putanju i poslednji slug, pa proveri lokal:
-   - post/page/product: `SELECT ID, post_name, post_status FROM wpGs_posts WHERE post_name='<slug>' AND post_type IN ('post','page','product')`
-   - kategorije/tagovi/brendovi: `wpGs_terms` JOIN `wpGs_term_taxonomy` po odgovarajućem taxonomy
+   - post/page/product: `SELECT ID, post_name, post_status FROM wpgs_posts WHERE post_name='<slug>' AND post_type IN ('post','page','product')`
+   - kategorije/tagovi/brendovi: `wpgs_terms` JOIN `wpgs_term_taxonomy` po odgovarajućem taxonomy
    - Najpouzdanije kroz jedan PHP skript sa wp-load (može `get_page_by_path`, `get_term_by`), ne 100 pojedinačnih mysql poziva.
 
 3. **Statusi** (kolona `status`):

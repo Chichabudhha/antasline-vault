@@ -91,7 +91,7 @@ Ko klikne broj koji vidi — zove drugi broj. Bitno jer je **072 dominantan kana
    po redu jer je dominantan).
 4. Proveri i ostale pojave po sajtu:
    ```
-   wp db query "SELECT ID,post_title FROM wpGs_posts WHERE post_content LIKE '%234 00 7%' AND post_status='publish'"
+   wp db query "SELECT ID,post_title FROM wpgs_posts WHERE post_content LIKE '%234 00 7%' AND post_status='publish'"
    ```
    i widgete (`wp option get widget_custom_html --format=json`).
 5. `wp litespeed-purge all`, pa `curl` + provera da href i tekst odgovaraju.

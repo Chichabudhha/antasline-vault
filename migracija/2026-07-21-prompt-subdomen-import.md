@@ -14,7 +14,7 @@ vault-u) direktno u root tog FTP naloga:
   BEZ starih backup .sql fajlova, BEZ `wp-content/mu-plugins/al-local-mail-log.php`,
   BEZ `debug.log`/`mail-log.txt`)
 - `antasline_staging_dump_20260721.sql` (48.495.193 B, svež mysqldump lokalne
-  `antasline_local` baze, tabele već sa prefiksom `wpGs_`, `--single-transaction
+  `antasline_local` baze, tabele već sa prefiksom `wpgs_`, `--single-transaction
   --routines --triggers`)
 
 Kopiraj sve iz bloka ispod u Claude Code sesiju na cPanel terminalu:
@@ -54,11 +54,13 @@ KORAK 2 — wp-config.php za staging (NOVI fajl, ne kopiraj lokalni):
     serveru od ranije; ako ni tu nije, stani i traži od Miroslava direktno,
     NE pogađaj/ne izmišljaj)
   - DB_HOST: localhost
-  - $table_prefix = 'wpGs_';
+  - $table_prefix = 'wpgs_';   🔴 MALIM slovima — na Linux-u je case OSETLJIV,
+    pogrešan case daje „site not installed" bez druge greške. Potvrdi protiv dump-a:
+    grep -o -m3 "CREATE TABLE \`[a-zA-Z_]*\`" antasline_staging_dump_20260721.sql
   - fresh auth keys/salts (wp config shuffle-salts posle kreiranja, ili
     generiši preko wp-cli helpera)
   - koristi `wp config create --dbname=... --dbuser=... --dbpass=... \
-    --dbhost=localhost --dbprefix=wpGs_ --path=<PRAVI_DOCROOT> --skip-check`
+    --dbhost=localhost --dbprefix=wpgs_ --path=<PRAVI_DOCROOT> --skip-check`
     umesto ručnog pisanja fajla ako je moguće (manje grešaka)
 
 KORAK 3 — import baze:

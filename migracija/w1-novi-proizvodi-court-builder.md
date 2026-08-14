@@ -48,7 +48,7 @@ Line-marking traka → postojeća **248 Podno obeležavanje**; Hoop n Court → 
 
 `pa_boja`: nov termin `roze` (Condor); ostale boje mapirati na postojeće srpske slugove; dark/light nijanse NE kao termini (spec u opisu). Ne dodavati više atributa (dtex/gustina → spec tabela).
 
-Izvršenje: PHP skripta (`wp_insert_term` + INSERT u `wpGs_woocommerce_attribute_taxonomies` + `delete_transient('wc_attribute_taxonomies')`).
+Izvršenje: PHP skripta (`wp_insert_term` + INSERT u `wpgs_woocommerce_attribute_taxonomies` + `delete_transient('wc_attribute_taxonomies')`).
 
 ### Proizvodi po dobavljaču
 

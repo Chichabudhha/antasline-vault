@@ -299,8 +299,6 @@ Sledeći kandidati (prompt još nije napisan):
 - Copilot: hardkodovani `localhost` URL-ovi u temi i mu-pluginima (`-Build`)
 - Grok: audit 2×H1 duplikata (`_woodmart_title_off`) kroz nove WoodMart stranice
 - Copilot: `.htaccess` 301 sanity pre aktivacije na dan migracije
-- Copilot: **`$wpdb->prefix` kaskada** — lokalni `wp-config.php` nosi `wpGs_`
-  (CLAUDE.md §2), pa svaki `{$wpdb->prefix}yoast_indexable` upit na Linux-u
-  gađa nepostojeću tabelu. Jedan fajl to već rešava sa
-  `strtolower($wpdb->prefix)` (`job-5438-...php:257`), ostali ne. Trebalo bi
-  prebrojati koliko ih je i odlučiti da li se popravlja kod ili `wp-config.php`.
+- ~~`$wpdb->prefix` kaskada~~ ✅ **zatvoreno 14.08** — rešeno u korenu
+  (`wp-config.php` → `wpgs_` + 16 prefiks-izvedenih ključeva u bazi), pa
+  `{$wpdb->prefix}` sada svuda vraća ispravan case. v. [[CLAUDE]] §2.

@@ -16,8 +16,9 @@ status: spreman-za-izvrsenje
 ## Koraci (izvršiti u cPanel terminalu, u `~/public_html`)
 
 1. `cd ~/antasline-vault && git pull --no-edit` (standardni preduslov)
-2. Potvrdi tačno ime tabele (prefiks može biti drugačiji od `wpGs_` koji koristi
-   lokalni build):
+2. Potvrdi tačno ime tabele (prefiks je `wpgs_` — malim slovima — i na lokalu
+   i na serveru; ranija verzija ovog prompta je tvrdila da lokalni build koristi
+   `wpGs_`, što je ispravljeno 2026-08-14):
    ```
    wp db query "SHOW TABLES LIKE '%redirection_items%'"
    ```

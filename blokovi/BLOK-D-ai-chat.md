@@ -42,7 +42,7 @@ u svakom pozivu, i odgovara na osnovu toga. "Trening" se svodi na:
    - Kontakt info, radno vreme, telefon (072 prioritet — [[reference/naucene-lekcije]])
 2. **Pretraga** — s obzirom na veličinu kataloga (~150 proizvoda, ~100-tak stranica),
    puna vektorska baza je verovatno prekomplikovana za MVP. Jednostavnija opcija: MySQL
-   FULLTEXT pretraga (WP već ima `wpGs_posts`/`wpGs_postmeta`) ili laka embedding pretraga
+   FULLTEXT pretraga (WP već ima `wpgs_posts`/`wpgs_postmeta`) ili laka embedding pretraga
    nad malim brojem dokumenata (može stati u SQLite/JSON fajl, bez posebnog vektor
    servisa). Odluka o ovome je implementaciona, ne menja pristup.
 3. **LLM poziv** — Claude API (Haiku klasa dovoljna za B2B kvalifikaciju upita, jeftinije

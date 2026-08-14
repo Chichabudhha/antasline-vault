@@ -41,14 +41,23 @@ koji prodaje epoksid.
 | Stack (lokalno) | PHP 8.2.12, XAMPP, WoodMart 8.5.4 tema + child (design sistem `antas-design.css`, self-hosted Inter+Bebas) — napušten raniji Porto+WPBakery pristup |
 
 > 🔴 **PREFIKS BAZE — `wpgs_`, ne `wpGs_` (ispravljeno 2026-08-12, provereno protiv baze).**
-> `SHOW TABLES` na lokalu vraća `wpgs_posts`; isto stoji i u live/staging dump-ovima.
-> Lokalni `wp-config.php` **ipak nosi `$table_prefix = 'wpGs_'`** i radi — ali samo zato
-> što je MariaDB na Windows-u `lower_case_table_names=1` (provereno), pa ne razlikuje
-> velika i mala slova. **Na Linux hostingu (cPanel/staging) razlikuje** — to je tačan
-> uzrok „site not installed" greške pri probi migracije 2026-07-21.
-> **Pravilo:** svaka skripta, `sed`, `wp search-replace` i `wp-config` za server piše
-> **`wpgs_`**. Pogrešan case ne prijavi grešku — tiho preskoči zamenu ili uveze u
-> pogrešne tabele.
+> `SHOW TABLES` na lokalu vraća `wpgs_posts`; isto stoji u live/staging dump-ovima.
+> ✅ **Od 2026-08-14 i lokalni `wp-config.php` nosi `$table_prefix = 'wpgs_'`** — pre toga
+> je stajalo `wpGs_` i „radilo" samo zato što je MariaDB na Windows-u
+> `lower_case_table_names=1` (provereno), pa ne razlikuje velika i mala slova.
+> **Na Linux hostingu (cPanel/staging) razlikuje** — to je tačan uzrok
+> „site not installed" greške pri probi migracije 2026-07-21.
+> **Pravilo:** svaka skripta, `sed`, `wp search-replace` i `wp-config` piše **`wpgs_`**.
+> Pogrešan case ne prijavi grešku — tiho preskoči zamenu ili uveze u pogrešne tabele.
+>
+> 🔴 **Prefiks nije samo ime tabele.** WordPress od njega izvodi i **ključeve koji se
+> čuvaju kao stringovi**: `<prefiks>capabilities` i `<prefiks>user_level` u `usermeta`,
+> `<prefiks>user_roles` u `options`, plus `user-settings`, `dashboard_*`, `persisted_preferences`.
+> SQL bi ih našao (kolacija `utf8mb4_general_ci` je case-neosetljiva), **ali WP meta keš je
+> PHP niz, a ključevi PHP nizova jesu case-osetljivi** → `isset($cache['wpgs_capabilities'])`
+> promašuje sačuvano `wpGs_capabilities` i **svi korisnici ostaju bez ijedne dozvole**
+> (zaključan wp-admin). Zato je 14.08 uz `wp-config` preimenovano i **16 redova** u bazi.
+> Ako se prefiks ikad opet menja — menjaju se **oba**, i uvek uz backup.
 
 Claude Code radi u vault-u; Obsidian Git tamo auto-sinhronizuje na ~10 min.
 Kad se nešto radi direktno na produkciji (cPanel), taj rad se taguje

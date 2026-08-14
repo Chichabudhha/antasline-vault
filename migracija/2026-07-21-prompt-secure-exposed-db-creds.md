@@ -42,7 +42,7 @@ KORAK 4a — AKO se u KORAKU 2 pokazalo da su to kredencijali za
   `antasline_staging`/`antasline_antasline` (proba migracije, očekivano):
   Nastavi tačno KORAK 2 iz [[migracija/2026-07-21-prompt-subdomen-import]]:
   wp config create --dbname=antasline_staging --dbuser=antasline_antasline \
-    --dbpass=<lozinka iz fajla> --dbhost=localhost --dbprefix=wpGs_ \
+    --dbpass=<lozinka iz fajla> --dbhost=localhost --dbprefix=wpgs_ \
     --path=/home/antasline/staging --skip-check
   Zatim nastavi Korake 3–9 iz istog prompta (import baze, URL rewrite,
   Basic Auth, čišćenje, verifikacija, vault append) bez ponovnog pitanja.

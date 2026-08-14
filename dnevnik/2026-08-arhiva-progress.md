@@ -157,7 +157,42 @@ izvor: "[[PROGRESS]]"
 | 2026-07-30 | `[claude-code]` **Sitewide Yoast title/meta mojibake (93/103) + Välinge objašnjenje + WoodMart breadcrumb schema bag — sva 3 ZATVORENA** ✅ | ✅ M prijavio čudne karaktere na Expona Commercial title-u. Uzrok: `wpgs_yoast_indexable` KEŠ tabela (ne postmeta, koji je bio čist) nosila je dvostruko-enkodovan tekst na 93 naslova/103 opisa sitewide (svi Expona proizvodi, kontakt, hvala-za-poruku, planer-terena, DuraStripe/Bergo/Goaliath serija). Fix: direktan `UPDATE` iz izvora istine u postmeta (namerno ne `wp yoast index --reindex` — briše sve ID-jeve, rizikuje isti breadcrumb-hijerarhija bag kao 07-29, plus `js_composer` 300s fatal error na probni wp-cli poziv). ✅ Välinge klik sistem (16917/16919) dobio kratko objašnjenje + link na prvo pominjanje. 🔴 Usput nađen WoodMart **vendor** tema bag (`class-breadcrumbs.php:56`, dvostruko ugnježden `itemListElement` niz, nevalidna schema) — popravljen, ali će ga theme update prebrisati (proveriti posle svakog update-a). Backup: `antasline_local_2026-07-30_pre-yoast-indexable-encoding-fix.sql`, `...pre-valinge-explainer.sql`, `class-breadcrumbs.php.bak-2026-07-30`. Detalji: [[DNEVNIK-NAPRETKA]] |
 
 
-## Zatvoreni blokeri (75, izdvojeni 2026-08-13)
+## Zatvoreni blokeri (78, izdvojeni 2026-08-13; +3 dodato 2026-08-14)
+
+### 2026-08-14 — Grok refresh token ispisan u transkript ✅ ROTIRAN
+Pri proveri tipa autentifikacije ispisan je ceo `auth.json`; maskiranje je gađalo
+imena polja na **prvom nivou**, a kredencijal je bio u ugnežđenom objektu pod
+ključem koji izgleda bezopasno (`https://auth.x.ai::<uuid>`) — pa su JWT i
+**refresh token** (ne ističe sam) završili u transkriptu. **M izvršio
+`grok logout` → `grok login` isti dan.** Usput potvrđeno da su OAuth scope-ovi
+bezopasni za coding CLI (`openid profile email offline_access grok-cli:access
+api:access conversations:* workspaces:*` — **ništa vezano za X nalog**) i da je
+`coding_data_retention_opt_out=True`. Lekcija upisana u [[reference/naucene-lekcije]]
+(„Maskiranje tajni mora da pokrije ugnežđene objekte").
+
+### 2026-08-14 — Kvota delegata ✅ RAZREŠENA: oba su FREE
+Grok: OAuth, **bez naplate** (`XAI_API_KEY` nije postavljen; log posle stvarnih
+poziva `subscription_tier: null` / `paywall_check_no_subscription` / `tier: "Free"`).
+`total_cost_usd` iz JSON izlaza je **očitavanje brojila po API cenovniku, ne račun**.
+Copilot: Free, **~50 premium zahteva mesečno ≈ 1,6 dnevno** (testiranje 14.08
+potrošilo ~5). 🔴 Posledica: prvobitna premisa „delegati rasterećuju Claude kvotu"
+**ne stoji** — oni su specijalisti za par pitanja mesečno, Claude Code ostaje
+radni konj. Router prepisan po stvarnoj oskudnosti: `ollama` (neograničen) →
+`agy` → Grok → Copilot (samo migraciono-kritičan pregled koda).
+v. `.claude/skills/delegati/SKILL.md` §1–2
+
+### 2026-08-14 — `reference/identifikatori.md` ✅ OSVEŽEN
+Fajl je bio od 27.07 i **3 od 5 tvrdnji** o lokalnom okruženju bile netačne:
+106 tabela → **78** · Porto + WPBakery → **WoodMart 8.5.4 + child** · Yoast →
+**Rank Math**. Osvežen proverom protiv baze i fajlova (`information_schema`,
+`template`/`stylesheet`, `active_plugins`), ne iz sećanja; dodat spisak 9 aktivnih
+plugina, GTM DRAFT stavke, sitemap 7/238 i sekcija delegat-agenata.
+Pravilo izvedeno iz ovoga živi u [[reference/naucene-lekcije]] („Reference koje
+agent čita kao autoritet ustaju tiho").
+
+---
+
+## Zatvoreni blokeri — ranije (75, izdvojeni 2026-08-13)
 ### 2026-08-13 — stavka E `/sportske-podloge/` (5438) izvršena
 
 Zatvoren deo blokera „Dve kanibalizacione stavke" (stavka F ostaje otvorena u [[PROGRESS]]). Basket-semantika, planer link i FAQPage vraćeni; brojka iz originalnog blokera („~90 od 178 klikova") je bila potcenjena — svež GSC pull daje **138 od 178 (78%)**. → [[dnevnik/2026-08-13-5438-basket-semantika-faqpage]]

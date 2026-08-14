@@ -279,7 +279,7 @@ na stranici (visina trave, broj uboda/m²), ne po imenu naslepo.
   🔴 Term 1 je bio `default_category` — WP ne dozvoljava brisanje podrazumevane
   kategorije, pa je redosled morao biti: prvo `default_category` → 64, pa brisanje.
   Term 64 preimenovan `Некатегоризовано` → `Nekategorizovano`, ostaje kao fallback (0 postova).
-  🔴 **Rep za sledeću F2 sesiju:** `count` u `wpGs_term_taxonomy` je ustajao sitewide
+  🔴 **Rep za sledeću F2 sesiju:** `count` u `wpgs_term_taxonomy` je ustajao sitewide
   (`Poslovni prostor` 65 tvrdi 4, ima 0 publish) → `wp term recount category`, nije
   rađeno bez najave jer menja brojke svuda.
 - **Reference na „O nama" (`571`)** — 20 imena klijenata kao goli tekst, bez ijednog
@@ -319,8 +319,8 @@ na stranici (visina trave, broj uboda/m²), ne po imenu naslepo.
 > Struktura živi u skripti `migracija/alati/job-w7f3-meni.php` (jedini izvor istine —
 > meni se ne uređuje ručno u adminu, nego se skripta pusti ponovo).
 
-**3.1 Bekap menija** pre svega — `mysqldump` samo `wpGs_terms`, `wpGs_term_taxonomy`,
-`wpGs_term_relationships` + `wpGs_posts`/`wpGs_postmeta` gde je
+**3.1 Bekap menija** pre svega — `mysqldump` samo `wpgs_terms`, `wpgs_term_taxonomy`,
+`wpgs_term_relationships` + `wpgs_posts`/`wpgs_postmeta` gde je
 `post_type='nav_menu_item'`.
 
 **3.2 Popravke postojećeg** — 5 stavki bez naslova (`16697`, `16701`, `16702`,

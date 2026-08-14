@@ -251,7 +251,7 @@ if ( strpos( (string) $hero, 'vc_custom_heroF45438' ) !== false ) {
 }
 
 if ( $WRITE ) {
-	// 🔴 CLAUDE.md §2: lokalni wp-config nosi `wpGs_`, a MySQL vraća `wpgs_` (Windows
+	// 🔴 Istorijski (do 2026-08-14): lokalni wp-config je nosio `wpGs_`, a MySQL vraćao `wpgs_` (Windows
 	// lower_case_table_names=1). Strogo poređenje sa $wpdb->prefix ovde je 13.08 tiho
 	// preskočilo brisanje — isti razred greške koji na Linux hostingu obara migraciju.
 	$tabela = strtolower( $wpdb->prefix ) . 'yoast_indexable';

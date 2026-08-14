@@ -9,7 +9,7 @@ if ($mysqli->connect_errno) {
     exit(1);
 }
 
-$res = $mysqli->query("SELECT option_value FROM wpGs_options WHERE option_name='cron'");
+$res = $mysqli->query("SELECT option_value FROM wpgs_options WHERE option_name='cron'");
 $row = $res->fetch_assoc();
 $cron = unserialize($row['option_value']);
 
@@ -30,7 +30,7 @@ foreach ($cron as $ts => $hooks) {
 }
 
 $new_value = serialize($cron);
-$stmt = $mysqli->prepare("UPDATE wpGs_options SET option_value=? WHERE option_name='cron'");
+$stmt = $mysqli->prepare("UPDATE wpgs_options SET option_value=? WHERE option_name='cron'");
 $stmt->bind_param('s', $new_value);
 $stmt->execute();
 

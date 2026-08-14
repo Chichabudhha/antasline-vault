@@ -20,7 +20,7 @@ blog arhiva je `/blog/` (live je `/aktuelnosti/`).
 | Šta | Vrednost |
 |---|---|
 | Lokalni WP | `C:\xampp\htdocs\antasline` → `http://localhost/antasline` |
-| DB | `antasline_local`, prefiks `wpGs_` · CLI: `/c/xampp/mysql/bin/mysql -u root antasline_local` |
+| DB | `antasline_local`, prefiks `wpgs_` · CLI: `/c/xampp/mysql/bin/mysql -u root antasline_local` |
 | PHP skripte | scratchpad + `C:\xampp\php\php.exe skripta.php` (`require 'C:/xampp/htdocs/antasline/wp-load.php';`) |
 | Backup | `mysqldump -u root antasline_local > C:\xampp\htdocs\antasline-backups\antasline_local_YYYY-MM-DD_pre-permalink-fix.sql` |
 
@@ -52,7 +52,7 @@ blog arhiva je `/blog/` (live je `/aktuelnosti/`).
 
 5. **Interni linkovi** — grep baze na stare putanje i ispravi:
    ```sql
-   SELECT ID, post_type FROM wpGs_posts WHERE post_status='publish'
+   SELECT ID, post_type FROM wpgs_posts WHERE post_status='publish'
      AND (post_content LIKE '%/shop/%' OR post_content LIKE '%/kategorija/%'
           OR post_content LIKE '%/blog/%');
    ```

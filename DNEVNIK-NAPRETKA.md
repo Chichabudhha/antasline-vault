@@ -1,3 +1,25 @@
+## 2026-08-14 [claude-code] W3 — Prefiks baze `wpGs_` → `wpgs_` zatvoren u korenu ✅
+
+M odobrio obe popravke iz Copilot nalaza. Rešeno u `wp-config.php` umesto po fajlovima —
+ali izmena **nije jednodelna**: WordPress od prefiksa izvodi i ključeve koji se čuvaju kao
+stringovi, pa je uz config preimenovano i **16 redova u bazi** (`wpGs_capabilities` ×4,
+`wpGs_user_roles`, `wpGs_user_level` ×4, +7 kozmetičkih). 🔴 **Zamka:** kolacija
+`utf8mb4_general_ci` je case-neosetljiva pa bi SQL provera dala lažno zeleno — ali WP meta
+keš je PHP niz, gde je case bitan, i promašaj bi ostavio **sve korisnike bez ijedne dozvole**
+(zaključan wp-admin). Verifikovano `wp user list` kroz pun WP stek: obe admin role netaknute,
+HTTP 200 na tri stranice, 0 pogodaka na `wpGs_` u temi i mu-pluginima. Backup 36 MB pre izmene.
+[[CLAUDE]] §2 ispravljen — tvrdio je da lokalni config nosi `wpGs_`.
+✅ **Rep zatvoren istog dana (M: „sweep svih promptova"):** 13 fajlova ispravljeno — F1/F2/F3
+promptovi, tri prompta koja gađaju Linux (uz dodatu obaveznu proveru prefiksa protiv dump-a),
+master skill sesije i `reference/identifikatori.md`; istorijski zapisi namerno ostavljeni.
+Usput uhvaćena **pokvarena provera** u staging promptu (`grep -v wpGs_` na Linux-u ne bi
+filtrirao `wpgs_` tabele) i osvežen `identifikatori.md`, gde su **3 od 5 tvrdnji** o lokalnom
+okruženju bile netačne (106 tabela → **78**, Porto+WPBakery → **WoodMart 8.5.4**, Yoast →
+**Rank Math**).
+→ [[dnevnik/2026-08-14-copilot-grok-delegati]]
+
+---
+
 ## 2026-08-14 [claude-code] ALATI — Copilot CLI i Grok CLI kao read-only delegati ✅
 
 Dva CLI alata instalirana 13.08 uvedena u posao uz tvrdu ogradu: nijedan ne menja fajlove
