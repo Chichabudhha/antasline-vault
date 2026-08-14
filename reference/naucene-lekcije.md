@@ -5,6 +5,63 @@ azurirano: 2026-08-14
 
 # Naučene lekcije (tehnički gotchas)
 
+## Delegat-agent ume da vrati uredan izveštaj nad nula fajlova (2026-08-14)
+
+Copilot je na prvom `wpgs` auditu krenuo od glob obrasca sa tri ekstenzije
+odjednom, dobio 0 rezultata i vratio **formatiranu, samouverenu tabelu**
+„nema nalaza · pregledano 0 fajlova" — nad folderom od **89 fajlova**. Nijedna
+greška, nijedno upozorenje. Ovo je najopasniji način otkaza jer izgleda kao uspeh.
+
+**Obavezno u svakom prompt šablonu za delegata:**
+1. „Prvo izlistaj ceo folder, pa TEK ONDA filtriraj po ekstenziji."
+2. „Ako pretraga vrati 0 fajlova, to je greška TVOJE pretrage, ne prazan folder."
+3. „U rezimeu navedi koliko si fajlova STVARNO otvorio."
+
+**I posle toga:** tvrdnja o pokrivenosti se proverava nezavisnim grep-om, ne
+prima na reč. (Drugi pokušaj: 3 NALAZ, sva tri tačna — ali je alat prijavio
+20 otvorenih fajlova od 83 relevantna; pokrivenost je spasao grep koji je pustio
+usput, ne otvaranje fajlova.)
+v. [[dnevnik/2026-08-14-copilot-grok-delegati]]
+
+## Zabrane za delegat-agente: dokumentacija nije dokaz, `inspect` jeste (2026-08-14)
+
+Grok 1.0.3 **nađe** projektni `.grok/config.toml` i **ne primeni** dozvole iz
+njega — `grok inspect` javi `Permissions: Source: (none), 0 loaded`, iako
+dokumentacija izričito tvrdi da projektni opseg radi. Testirane obe forme
+(`deny = [...]` i `rules = [{ action, tool }]`). Ista pravila u
+`~/.grok/config.toml` → **19 loaded, 0 skipped**.
+
+Isto važi za sandbox: `--sandbox` je Landlock/Seatbelt, dakle **Linux/macOS**.
+Na Windows-u grok samo upiše upozorenje u log i **nastavi bez zaštite** — flag
+koji izgleda kao zaštita, a nije.
+
+**Pravilo:** svaka ograda za delegata se posle podešavanja **testira živo**
+(traži od agenta da uradi zabranjenu stvar), a ne zaključuje iz dokumentacije.
+Copilot je pri istom testu **pokušao pa bio blokiran** (mehanizam), Grok je
+odustao na instrukciji iz `AGENTS.md` — što znači da mu `deny` sloj tada nije
+ni bio isproban.
+
+Uzgred, ista klasa: `.claude/settings.json` **čita i Grok**, ne samo Claude Code
+— pravila za delegate tamo procure na alat koji sme da piše.
+v. [[dnevnik/2026-08-14-copilot-grok-delegati]]
+
+## PowerShell 5.1 i srpski tekst — dva tiha razbijača skripti (2026-08-14)
+
+**BOM.** `.ps1` bez UTF-8 BOM-a PowerShell 5.1 čita kao ANSI, pa dijakritika i
+crtica `—` daju `Unexpected token`. Alati koji pišu UTF-8 bez BOM-a traže
+konverziju posle svake izmene:
+
+```powershell
+$c = [System.IO.File]::ReadAllText($p, [System.Text.UTF8Encoding]::new($false))
+[System.IO.File]::WriteAllText($p, $c, [System.Text.UTF8Encoding]::new($true))
+```
+
+**Navodnici.** Neparan broj `"` u argumentu razbije prosleđivanje native exe-u
+(Copilot javi `Invalid command format … prompt was not quoted`). Srpski tekst to
+pravi sam od sebe: `„ovako"` ima **tipografski** otvarač i **ASCII** zatvarač.
+Simptom je varljiv — puca po dužini isečka (800 ok / 1200 puca / 1600 ok), pa
+liči na ograničenje dužine. Fix: `$tekst -replace '"', '\"'` pre poziva.
+
 ## `wp_insert_post` iz CLI skripte tiho briše `<script>` iz sadržaja (2026-08-14)
 
 Skripta pokrenuta preko `php skripta.php` nema prijavljenog korisnika, pa `wp_insert_post` /

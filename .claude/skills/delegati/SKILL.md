@@ -15,18 +15,31 @@ kontekst i kvota ostaju za odluke.
 
 ## 1. Router — koji delegat za koji posao
 
-| Posao | Delegat | Zašto baš on |
-|---|---|---|
-| Masovno čitanje `.md`, klasifikacija, content parity kroz 100+ stranica | **`agy`** (Gemini Flash) | uhodano, jeftin veliki kontekst · [[agy-delegat]] |
-| Sažimanje sirovih API izlaza (GSC upiti, Ads search terms, 100+ redova) | **`ollama`** (lokalno) | besplatno, offline, nula kvote · [[ollama-lokalni]] |
-| **Pregled koda** — PHP/CSS/JS child teme, mu-plugins, migracione skripte, diff review, git arheologija | **Copilot** | najjači na kodu, GitHub MCP, odvojena kvota |
-| **Drugo mišljenje / velika sinteza** koju Gemini Flash ne izvuče | **Grok** | veliki kontekst, headless JSON, `--effort` |
-| Odluke, budžeti, GTM/GA4, baza, WordPress build, `.htaccess`, dan migracije | **Claude Code** | nepovratno |
+🔴 **Oba nova delegata su na FREE tieru (potvrđeno 14.08.2026).** Prvobitna
+premisa „rasteretimo Claude kvotu" time **slabi** — Copilot Free daje ~50
+premium zahteva **mesečno** (≈1,6 dnevno), Grok Free ima nepoznatu kvotu uz
+~23k tokena po pozivu. Delegati nisu izlaz za kvotu nego **specijalisti za par
+pitanja mesečno**. Claude Code ostaje radni konj.
 
-**Kad se dvoumiš između Copilot i agy:** ima li koda? → Copilot. Sam markdown? → agy.
+Redosled je po **stvarnoj oskudnosti**, od najjeftinijeg ka najskupljem:
+
+| # | Delegat | Cena | Za šta |
+|---|---|---|---|
+| 1 | **`ollama`** (lokalno) | 🟢 **neograničeno, nula kvote** | sažimanje sirovih izlaza, klasifikacija, razvrstavanje po fiksnom kriterijumu · [[ollama-lokalni]] |
+| 2 | **`agy`** (Gemini Flash) | 🟡 mala besplatna Google kvota | masovno čitanje `.md`, content parity kroz 100+ stranica · [[agy-delegat]] |
+| 3 | **Grok** | 🟡 Free, ~23k tokena po pozivu | drugo mišljenje, sinteza koju Flash ne izvuče |
+| 4 | **Copilot** | 🔴 **~50 zahteva MESEČNO** | **samo pregled koda** — PHP/CSS/JS teme, mu-plugins, migracione skripte, git arheologija |
+| — | **Claude Code** | — | odluke, budžeti, GTM/GA4, baza, build, `.htaccess`, dan migracije |
+
+**Pravilo:** pre nego što pozoveš delegata sa mesta 3 ili 4, pitaj se može li
+posao mesto 1 ili 2. Skoro uvek može.
+
+**Copilot se troši samo kad je pitanje migraciono-kritično** i kad je odgovor
+u kodu, ne u markdown-u. Jedan `wpgs` audit (14.08) potrošio je ~5 zahteva i
+našao pravi bag — to je dobra razmena. Pet „da probamo" poziva mesečno nije.
 
 **Kad se dvoumiš između Grok i agy:** treba li rasuđivanje ili samo češljanje?
-Češljanje → agy (jeftinije). Rasuđivanje nad velikim materijalom → Grok.
+Češljanje → `agy`. Rasuđivanje nad velikim materijalom → Grok.
 
 ### Zašto delegat NE donosi odluke
 
@@ -38,39 +51,47 @@ upotrebe od 13.08. Odlično češlja, ali ne zna šta je već odlučeno i zašto
 
 ## 2. Kvota — proveriti pre oslanjanja
 
-Stanje na 14.08.2026: Grok ulogovan (`auth.json` upisan 00:56), tier neproveren
-— log od 13.08 (pre logovanja, anonimno) prijavljuje `tier: "Free"`.
-Copilot ulogovan kao `Chichabudhha`, plan neproveren.
+**Utvrđeno 14.08.2026 — oba su FREE, nijedan nije plaćen.**
 
-```powershell
-# Grok — jedan minimalan poziv, `usage` i `total_cost_usd` su u JSON izlazu
-& "C:\Users\Miroslav\.grok\bin\grok.exe" -p "Odgovori samo: OK" --output-format json --no-auto-update
+| Alat | Stanje | Kako je utvrđeno |
+|---|---|---|
+| **Grok** | Free, OAuth, **bez naplate** | `XAI_API_KEY` nije postavljen; log posle stvarnih poziva: `subscription_tier: null` · `paywall_check_no_subscription` · `tier: "Free"` |
+| **Copilot** | Free (~50 premium zahteva/mesec) | M potvrdio |
 
-# Copilot — u interaktivnoj sesiji
-copilot        # pa ukucati /usage
-```
+Praktične granice:
+- **Copilot ≈ 1,6 zahteva dnevno.** Jedna CLI sesija ume da potroši više od
+  jednog (svaki model-turn se broji), pa realno ~15–25 ozbiljnih poslova mesečno.
+  Testiranje 14.08 potrošilo je ~5.
+- **Grok kvota nepoznate veličine** — kad se udari u zid, videće se kao greška,
+  ne kao račun. Pod (svaki poziv učita `CLAUDE.md` + `AGENTS.md`): **~23k tokena**
+  pre nego što pročita ijedan projektni fajl.
 
-| Nalaz | Posledica za router |
-|---|---|
-| Grok Free | Grok = „drugo mišljenje po potrebi", ne bulk čitač; bulk ostaje na `agy` |
-| Grok plaćen | Grok preuzima velike sinteze |
-| Copilot Free (~50 premium/mesec) | samo kratki ciljani pregledi koda; koristiti `-MaxCredits` |
-| Copilot Pro/Pro+/Business | Copilot = glavni delegat za kod i git arheologiju |
+Provera stanja (ne troši zahtev): `copilot` pa `/usage`.
 
-**Upisati nalaz ovde kad se proveri.** Dok je neproveren, ne planirati veliki
-posao ni na jednom od njih.
+Ako Copilot ostane bez kvote pre kraja meseca — posao se **ne prebacuje na
+Grok** nego na `ollama`/`agy`, ili čeka. Grok nije zamena za Copilot na kodu.
 
-### 🔴 Grok se naplaćuje po tokenu — i ima skup start
+### Grok: Free nalog, bez naplate — ali svaki poziv ima skup start
 
-Izmereno na trivijalnom pozivu (14.08.2026): **~23.000 ulaznih tokena, $0,060**.
-Uzrok nije prompt nego to što grok na svakom pozivu učita `CLAUDE.md`
-(~9.200 tokena) + `AGENTS.md` (~900) + skill definicije.
+**Stanje potvrđeno 14.08.2026:** `XAI_API_KEY` nije postavljen (autentifikacija
+je OAuth/OIDC), a log posle stvarnih poziva ponavlja `subscription_tier: null`,
+`paywall_check_no_subscription`, `tier: "Free"`. **Nema kartice, nema naplate.**
 
-**Svaki grok poziv, ma koliko sitan, košta oko 6 centi.** Zato:
+⚠️ `--output-format json` ipak vraća `total_cost_usd` (izmereno **$0,060434**).
+To je **očitavanje brojila po API cenovniku**, ne račun — koliko bi ti tokeni
+koštali preko plaćenog API ključa. Dokumentacija (`14-headless-mode.md`) kaže da
+se cena štancuje za API-key saobraćaj, dok OAuth putanja obično ne nosi stvarnu
+cenu. Na Free nalogu se troši besplatna kvota; kad se potroši → **odbijanje, ne
+račun**.
+
+🔴 **Ali token-težina je stvarna i to je pravi razlog za oprez:** izmereno
+**~23.000 ulaznih tokena na trivijalnom promptu**. Uzrok nije prompt nego to što
+grok na svakom pozivu učita `CLAUDE.md` (~9.200 tokena) + `AGENTS.md` (~900) +
+skill definicije. Zato:
 - nikad grok za posao koji `agy` ili `ollama` mogu — razlika je red veličine;
-- nikad grok „da se proba" — svaka proba je 6 centi;
-- ako ipak treba više koraka, koristiti `--resume <sessionId>` (skripta ga
-  ispiše) umesto novog poziva — keš tada pokrije najveći deo.
+- za više koraka koristiti `--resume <sessionId>` (skripta ga ispiše) umesto
+  novog poziva — keš tada pokrije najveći deo;
+- Free kvota je nepoznate veličine; kad se udari u zid, videće se kao greška.
 
 ---
 

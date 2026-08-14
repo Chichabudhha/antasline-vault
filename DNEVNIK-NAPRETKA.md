@@ -1,3 +1,25 @@
+## 2026-08-14 [claude-code] ALATI — Copilot CLI i Grok CLI kao read-only delegati ✅
+
+Dva CLI alata instalirana 13.08 uvedena u posao uz tvrdu ogradu: nijedan ne menja fajlove
+ni ne čita kredencijale, provereno živim testovima (Copilot **pokušao pa blokiran** na
+`write` i `shell`; `git status` čist posle svih testova). Nov skill `/delegati` je router
+za četiri delegata — Copilot za kod, Grok za drugo mišljenje, `agy` za markdown, `ollama`
+za sirove izlaze. Prvi posao odmah našao **`wpGs_options` u dva sirova `mysqli` upita**
+(`job-plugin-cleanup-cron.php:12,33`), verifikovano nezavisnim grep-om — ista klasa greške
+koja je oborila probu migracije 21.07.
+🔴 **Gotcha:** projektni `.grok/config.toml` grok 1.0.3 **nađe ali ne primeni**
+(`0 loaded`) — zabrane morale u `~/.grok/config.toml`, dakle van gita. Uz to: grok sandbox
+na Windows-u ne postoji, Copilot podrazumevano izvozi sesije na GitHub, a delegat ume da
+vrati uredan izveštaj „pregledano 0 fajlova" bez ijedne greške.
+🔴 **Revizija premise na kraju sesije:** oba delegata su **Free** — Copilot ~50 zahteva
+mesečno (≈1,6 dnevno, testiranje potrošilo ~5), Grok bez naplate ali sa ~23k tokena po
+pozivu. „Rasterećenje Claude kvote" time otpada; delegati su specijalisti za par pitanja
+mesečno, Claude Code ostaje nosilac posla. Router prepisan po **oskudnosti**
+(`ollama` → `agy` → Grok → Copilot), a `ollama` time postaje najvredniji jer je jedini bez kvote.
+→ [[dnevnik/2026-08-14-copilot-grok-delegati]]
+
+---
+
 ## 2026-08-14 [claude-code] W1/BLOK C — Ergonomske podloge: nova Woo kategorija + 8 proizvoda ✅
 
 Izvršen spec od 13.08 (M odobrio obim, izvršenje bilo odloženo) — poslednji radni dan pre

@@ -21,6 +21,7 @@ namena: Pregled Claude Code skilova za AntasLine projekat
 | `/antasline-konektor`| "konektor", "poveži API", "povuci podatke"        | GA4/GSC/Ads/GMB podaci (read-only)|
 | `/gemini-vizuali`    | "slike proizvoda", "unapredi fotke", "vizuali"    | Foto/video preko Gemini API       |
 | `/dnevni-video`      | "dnevni video", "Flow", "animiraj fotku"          | Jedan Veo kadar dnevno            |
+| `/delegati`          | "delegiraj", "pusti na Copilot/Grok", "ko ovo da odradi" | **Router** — koji od 4 delegata za koji posao |
 | `/agy-delegat`       | "agy", "antigravity", "delegiraj", "štedi tokene" | Masovno čitanje **fajlova** na Gemini (kvota!)|
 | `/ollama-lokalni`    | "ollama", "lokalni model", "qwen", "razvrstaj upite" | Sažimanje **brojki** iz konektora, lokalno i bez kvote |
 | `/woodmart-theme`    | rad na temi, CSS/builder/CF7 problemi             | Gotcha-i WoodMart teme (globalni) |
@@ -116,6 +117,38 @@ GSC 28d prilike (pozicije 5–15, nizak CTR).
 Format: tabele → "Ukupan broj pravih konverzija do sada: N" → SEO prilike →
 napomene → **"Akcija nedelje: …"**. Pravila: <5% = stabilno · "Nema podataka
 za [izvor]" umesto izmišljanja · pad posle tracking čišćenja ≠ pad performansi.
+
+## /delegati — router za četiri delegata
+
+Odluka „koji delegat za koji posao" je pravi posao; sam poziv je trivijalan.
+
+🔴 **Oba nova delegata su FREE (14.08.2026)** — Copilot ~50 zahteva **mesečno**,
+Grok nepoznata kvota uz ~23k tokena po pozivu. Nisu izlaz za Claude kvotu nego
+specijalisti za par pitanja mesečno. Redosled je po **oskudnosti**:
+
+| # | Delegat | Cena | Za šta |
+|---|---|---|---|
+| 1 | `ollama` | 🟢 neograničeno | sažimanje brojki, klasifikacija |
+| 2 | `agy` | 🟡 mala Google kvota | masovno čitanje `.md`, parity |
+| 3 | Grok | 🟡 Free | drugo mišljenje, sinteza |
+| 4 | Copilot | 🔴 **~50/mesec** | **samo** pregled koda, git arheologija |
+| — | Claude Code | — | odluke, Ads/GTM, baza, dan migracije |
+
+Pre poziva 3 ili 4 — može li 1 ili 2? Skoro uvek može.
+Copilot se troši samo kad je pitanje migraciono-kritično i odgovor je u kodu.
+
+**Pokretanje** (sve zabrane su u skriptama, ne kucaju se):
+```powershell
+cd C:\Projekti\antasline-vault\.claude\skills\delegati\scripts
+.\copilot-pregled.ps1 -Prompt ..\promptovi\wpgs-prefiks.txt
+.\grok-citaj.ps1 -Prompt ..\promptovi\neki-prompt.txt
+```
+Izlaz ide u `scratchpad\<alat>-<timestamp>.md`. `-Build` daje Copilot-u pristup
+XAMPP build-u (⚠️ otvara i `wp-config.php` — samo za ciljan pregled koda).
+
+🔴 Delegat **čita i izveštava, ne menja ništa**. Provereno živo 14.08: Copilot
+pokušao `write`/`shell` pa blokiran; `git status` čist. Nalazi se **ne primaju
+na reč** — verifikuju se protiv koda pre upisa u vault.
 
 ---
 
