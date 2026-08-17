@@ -151,7 +151,28 @@ kopiju konektor foldera, van git-a, po istom principu:
 `scan_leads.py` — `leads.csv` je obična čitljiva tabela, dostupna bilo kad
 preko cPanel File Manager-a/SFTP-a/SSH-a.
 
-## Korak F — Google traži verifikaciju aplikacije (otvoreno, 2026-08-11)
+## Korak F — Google traži verifikaciju aplikacije (✅ ZATVORENO 2026-08-17)
+
+> 🟢 **2026-08-17 — app je prebačena u *In production*, ovaj korak više ne važi u praksi.**
+> M je u konzoli (`APIs & Services → OAuth consent screen → Audience`) kliknuo
+> **Publish app**. Posledica: refresh token **više ne ističe na 7 dana**, „App not
+> verified" ekran i „Advanced → unsafe" zaobilaženje nisu više deo toka, a Test users
+> lista je irelevantna. Verifikovano isti čas — `token.json` se sam osvežio i
+> `ads_report.py` vratio pun izlaz, dakle **postojeći refresh token je preživeo
+> prelazak** (nije trebalo ponovo pokretati `authorize_oauth.py`).
+>
+> 🔴 **Gotcha:** konzola je prvo vraćala **„You need additional access"** sa
+> `oauthconfig.testusers.get` / `oauthconfig.verification.get` /
+> `resourcemanager.projects.get` kao Missing. **Uzrok nije bio nedostatak role nego
+> pogrešan Google nalog u Chrome-u** — projekat `mcp-za-claude` (`561984657473`) vidi
+> samo nalog koji ga poseduje. Ako se ovaj ekran ikad ponovi: prvo prebaci nalog
+> (avatar gore desno), pa tek onda razmišljaj o IAM-u.
+>
+> 🔴 **Verification Center se NE pokreće.** Puna Google verifikacija (demo video,
+> privacy policy, nedelje čekanja) postoji za javne app sa >100 korisnika — nama ne
+> treba i ne sme se startovati „za svaki slučaj".
+
+**Tekst ispod je istorijski (stanje 2026-08-11), zadržan zbog konteksta:**
 
 Pri ponovnoj autorizaciji (`authorize_oauth.py`, token istekao/opozvan)
 Google je pokazao ekran **"App not verified"** umesto direktnog "Allow" —

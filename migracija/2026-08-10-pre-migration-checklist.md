@@ -146,10 +146,12 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
       🔴 freeze je 17.08 ponovo otvoren sa 16.08 na 20.08, M odluka; zato se proverava
       20.08, ne 16.08). Provera: rekurzivni sweep `LastWriteTime` po buildu **i**
       `SELECT … WHERE post_modified >= '2026-08-21'` u bazi — oba moraju biti prazna.
-- [ ] 🔴 **Provera da je konektor OAuth token živ** (`ads_report.py --from … --to …`
-      mora vratiti JSON, ne `invalid_grant`). Token pada za ~7 dana dok je consent
-      screen u *Testing* statusu — bez njega ne rade ni 4.10 ni verifikacija
-      konverzija u B6. Ako pukne: `authorize_oauth.py` (browser, 1 min).
+- [ ] 🟡 **Provera da je konektor OAuth token živ** (`ads_report.py --from … --to …`
+      mora vratiti JSON, ne `invalid_grant`). Bez njega ne rade ni 4.10 ni
+      verifikacija konverzija u B6. Ako pukne: `authorize_oauth.py` (browser, 1 min).
+      🟢 **Rizik znatno smanjen 2026-08-17** — consent screen `mcp-za-claude` je
+      prebačen iz *Testing* u **In production**, pa refresh token **više ne ističe
+      na 7 dana**; provera ostaje kao rutinska, ne kao tempirana bomba.
 - [ ] Napraviti paket: `migracija/alati/build-staging-package.sh full`
       🟢 Skripta od 2026-08-10 sama izbacuje lokalne artefakte (v. B2) — ne
       oslanjati se na ručno brisanje.

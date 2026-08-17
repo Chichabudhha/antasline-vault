@@ -1,9 +1,32 @@
 ---
 tip: reference
-azurirano: 2026-08-14
+azurirano: 2026-08-17
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Verifikacija na zaostalom fajlu = lažno zeleno (2026-08-17)
+
+`curl -o /tmp/p.html … ` je vratio **`HTTP: 000`** (Apache nije radio), ali su
+`grep`-ovi u istom bloku ipak ispisali `H1: 1 | H2: 4 | JSON-LD: 2` — **iz
+`/tmp/p.html` zaostalog od ranije sesije**. Brojke izgledaju kao uredna
+verifikacija i odnose se na potpuno drugu stranicu.
+
+**Pravila:**
+1. `rm -f` izlazni fajl **pre** svakog `curl`-a.
+2. Čitaj `%{http_code}` i **stani** ako nije 200/3xx — ne nastavljaj na `grep`.
+3. Piši u scratchpad, ne u `/tmp` (deli se između sesija).
+4. Posle MySQL crash-a XAMPP Apache **ne mora biti pokrenut** — proveri
+   `Get-Process httpd` pre HTTP verifikacije.
+
+## Mrtve CSS klase ne prijavljuju grešku (2026-08-17)
+
+Porto/Kallyas markup (`productColors-block` / `color-list` / `color-square`) na
+stranici 15793 renderovao je **prazan prostor** umesto swatch-a: `.color-square`
+je div bez sopstvenih dimenzija, a klasa ne postoji ni u jednoj temi. Nema PHP
+greške, nema 404, sweep prolazi čisto — vidi se samo okom.
+**Provera pre dodavanja/nasleđivanja bilo kog markupa:**
+`grep -rn "klasa" wp-content/themes --include=*.css --include=*.php`.
 
 ## Reference koje agent čita kao autoritet ustaju tiho (2026-08-14)
 
