@@ -2,11 +2,12 @@
 tip: checklist
 naziv: Pre-migration checklist — dan migracije (W3 3.10)
 datum: 2026-08-10
-go-live: 2026-08-24
-status: aktivan — popunjava se do 21.08 (gate), izvršava 24.08
+go-live: 2026-08-25
+status: aktivan — popunjava se do 21.08 (gate), rezervni dan PON 24.08, izvršava UTO 25.08
+azurirano: 2026-08-17 (go-live 24.08 → 25.08, M odluka)
 ---
 
-# ✅ Pre-migration checklist — PON 2026-08-24
+# ✅ Pre-migration checklist — UTO 2026-08-25
 
 Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 **full regression** (rezultati: [[dnevnik/2026-08-10-w3-310-full-regression]]).
@@ -14,6 +15,15 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 > **Redosled je namerno ovakav:** sve što se može uraditi RANIJE (do 21.08) je
 > odvojeno od onoga što se MORA na dan migracije. Na dan migracije se ne
 > improvizuje.
+
+> 🟢 **2026-08-17 — migracija pomerena PON 24.08 → UTO 25.08** (M odluka). Gate ostaje
+> **PET 21.08**, pa je **PON 24.08 od sada rezervni radni dan**:
+> - ako gate padne u petak → popravka ide u ponedeljak, datum migracije se **ne** pomera
+> - ako je gate čist → ponedeljak se koristi za **pripremu**, tj. one B1 korake koji
+>   smeju dan ranije: svež live backup, JetBackup provera, provera OAuth tokena,
+>   `build-staging-package.sh full`, postavka `rsync`/SSH prenosa
+> 🔴 Šta se **ne sme** pomeriti na ponedeljak: sam prenos, `search-replace`, aktivacija
+> `.htaccess` 301 bloka i GTM paket — to je sve utorak, u jednom prozoru, po §B redosledu.
 
 ---
 
@@ -23,10 +33,28 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
       `[cpanel-live]` 2026-08-11.** Ručan DB dump + `wp-content` tar.gz, MD5
       provereno, skinuto na `C:\Miroslav\Antas line\Backup` + `G:\AntasLine-Backups`,
       server-kopije obrisane. Gate stavka zadovoljena — **B1 ispod i dalje traži
-      NOVI backup na sam dan migracije** (24.08), ovaj ne zamenjuje taj korak.
-- [ ] **Backup finalnog lokalnog builda** na 2 lokacije — 🔴 poznato ograničenje:
-      `nocni-backup.ps1` piše na SAMO JEDNU destinaciju (prioritet G:→OneDrive→lokalno).
-      Za „2 lokacije" treba ručna druga kopija na dan zamrzavanja builda.
+      NOVI backup na sam dan migracije** (25.08), ovaj ne zamenjuje taj korak.
+- [ ] **Backup finalnog lokalnog builda** na 2 lokacije — 🔴 **ostaje otvoreno do posle
+      novog freeze-a (20.08)**; backup od 17.08 je bezbednosna kopija tekućeg stanja, ne
+      „finalni build", jer je freeze tog dana ponovo otvoren.
+      ✅ **Ograničenje „samo jedna destinacija" POPRAVLJENO 2026-08-17.** Do tada je
+      `nocni-backup.ps1` pisao na **jednu** destinaciju (G:→OneDrive→lokalno), pa se serija
+      razlivala (10–12.08 na `C:`, 13–14.08 na `G:`, OneDrive folder ne postoji) — **nijedan
+      datum nije imao dve kopije, iako je to ova gate stavka**. Skripta sada posle uspešnog
+      zip-a kopira na drugu destinaciju uz proveru veličine (rotacija 3). Kopija
+      `nocni-backup.ps1.bak-2026-08-17`.
+      🔴 **Nova logika još nije prošla pun run** (run od 17.08 je startovao pre izmene) —
+      prvi pun test je backup posle freeze-a 20.08; tada i verifikovati da postoje **dva**
+      fajla istog imena i iste veličine.
+- [ ] 🆕 **Posle novog content freeze-a (ČET 20.08) — obaveze koje nosi ponovno otvaranje:**
+      - [ ] **ponovni full regression sweep** (`migracija/alati/regression-sweep.php`) —
+            baseline od 13.08 (`analiza/2026-08-13-regression-post-faza2-*`) prestaje da važi
+            u trenutku prve sadržajne izmene, a on je referenca za §B6
+      - [ ] **ako se promenio ijedan slug** → `redirect-verify.php` pa
+            `htaccess-301-generate.php` ponovo (draft 73 pravila)
+      - [ ] **nov backup zamrznutog builda na 2 lokacije** (v. stavka iznad)
+      🔴 Sve tri staju u **jedan dan pre gate-a (21.08)** — zato izmene 17–20.08 držati
+      lokalnim i bez dirania slugova.
 - [x] ✅ **Rollback plan ZATVOREN 2026-08-11** (pre roka 15.08) — sva 3 pitanja:
       JetBackup 5 dnevni/off-site/90 dana · **nema CDN/edge sloja** (samo LiteSpeed,
       pa je „očisti keš" = LSCWP Purge All i ništa više) · M odluka **„migracija
@@ -46,7 +74,7 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
       (1.801 link).** Protiv baseline-a 10.08: **0 razlika** u statusu/H1/JSON-LD/title
       na 194 zajednička URL-a. Prividna regresija „−118 slika/str." = uklonjene
       ikonice mega menija 12.08, ne kvar. 🆕 31 arhiva bez metadesc (18 `product_tag`
-      → posle live-a; 13 ostalih → pre freeze-a ako M odobri).
+      → posle live-a; 13 ostalih → ✅ zatvoreno 13.08).
       **Nov baseline za post-migracionu proveru: `analiza/2026-08-13-regression-post-faza2-*`**
       (na dan migracije `$BASE` → `https://www.antasline.com` i poredi se sa OVIM,
       ne sa 10.08). → [[dnevnik/2026-08-13-regression-sweep-post-faza2]]
@@ -76,7 +104,7 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
       `migracija/alati/htaccess-301-generate.php` (odbija upis ako ijedan cilj nije
       200) — ne pisati ga ručno. → [[dnevnik/2026-08-11-htaccess-301-reverifikacija]]
       🔴 NE aktivirati pre dana migracije.
-      ⚠️ **Ako se do 24.08 promeni ijedan slug** — pustiti `redirect-verify.php` pa
+      ⚠️ **Ako se do 25.08 promeni ijedan slug** — pustiti `redirect-verify.php` pa
       `htaccess-301-generate.php` ponovo.
 - [x] ✅ **GSC priprema — ZATVORENA 2026-08-11 (CC deo).** 🟢 **URL za resubmit je
       nepromenjen**: `https://www.antasline.com/sitemap_index.xml`, i child-ovi
@@ -100,7 +128,7 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 
 ---
 
-## B. DAN MIGRACIJE (24.08) — redosled izvršenja
+## B. DAN MIGRACIJE (UTO 25.08) — redosled izvršenja
 
 ### B1. Pre prebacivanja
 - [ ] 🔴 **DOSTUPNOST (prva stavka dana, M odluka 2026-08-11): ne pokretati
@@ -112,7 +140,10 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 - [ ] Provera u cPanel → JetBackup da poslednji automatski snapshot **nije
       stariji od 24h** — besplatan drugi primerak pored ručnog backup-a.
 - [ ] Backup live sajta ponovo, neposredno pre dodira (db + wp-content), datiran.
-- [ ] Potvrditi da je lokalni build **zamrznut** (nema izmena posle 16.08 freeze-a).
+- [ ] Potvrditi da je lokalni build **zamrznut** (nema izmena posle **20.08** freeze-a —
+      🔴 freeze je 17.08 ponovo otvoren sa 16.08 na 20.08, M odluka; zato se proverava
+      20.08, ne 16.08). Provera: rekurzivni sweep `LastWriteTime` po buildu **i**
+      `SELECT … WHERE post_modified >= '2026-08-21'` u bazi — oba moraju biti prazna.
 - [ ] 🔴 **Provera da je konektor OAuth token živ** (`ads_report.py --from … --to …`
       mora vratiti JSON, ne `invalid_grant`). Token pada za ~7 dana dok je consent
       screen u *Testing* statusu — bez njega ne rade ni 4.10 ni verifikacija
@@ -210,7 +241,7 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 - [ ] Spot-check top 20 GSC URL-ova iz [[analiza/2026-07-21-serp-snapshot-pre-migracija]]
 - [ ] 4.10 — ispraviti final URL-ove oglasa po spisku iz A
 
-### B7. Post-live (25.08+)
+### B7. Post-live (26.08+)
 - [ ] GSC sitemap resubmit — URL **`https://www.antasline.com/sitemap_index.xml`**
       (nepromenjen, v. §A). Pre resubmit-a proveriti da index vraća **7**
       child-ova (`post`/`page`/`product`/`category`/`product_brand`/`product_cat`/

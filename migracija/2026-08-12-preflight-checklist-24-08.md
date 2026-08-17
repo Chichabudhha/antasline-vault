@@ -1,4 +1,8 @@
-# PRE-FLIGHT CHECKLIST — migracija 2026-08-24
+# PRE-FLIGHT CHECKLIST — migracija 2026-08-25
+
+> 🟢 **2026-08-17:** datum migracije pomeren PON 24.08 → **UTO 25.08** (M odluka); gate
+> ostaje 21.08, PON 24.08 je rezervni radni dan. Ime fajla nosi stari datum i namerno se
+> **ne** menja (link-stabilnost); merodavan datum je ovaj naslov.
 
 > Izvor: `agy` (Gemini 3.6 Flash) pročitao svih 87 .md fajlova iz `dnevnik/` i
 > `migracija/` (2026-08-12). Sirov izlaz: `migracija/preflight.txt` (ispisan
@@ -56,7 +60,7 @@
 | # | Tema | Izvor A (zastareo/sporan) | Izvor B (noviji) |
 |---|---|---|---|
 | 1 | ✅ **REŠENO 2026-08-13 (M odluka): Rank Math je jedini SEO plugin, Yoast van upotrebe.** Ispravljeno u `odluke/_pregled-odluka.md`, `CLAUDE.md` §7.1, master plan §„Pravila" + W2 zaglavlje, `/antasline-sesija`, `/obogati-proizvod`, `reference/claude-skilovi.md`, `seo/plan-novih-stranica.md`. | ~~`odluke/_pregled-odluka.md` (28.06): **Yoast**, Rank Math zabranjen~~ | migracija na **Rank Math** izvedena 05.08 |
-| 2 | Datum go-live | `migracija/w1-novi-proizvodi-court-builder.md`: **31.08** | `migracija/2026-08-10-pre-migration-checklist.md`: **24.08** (freeze 16.08, gate 21.08) |
+| 2 | Datum go-live | `migracija/w1-novi-proizvodi-court-builder.md`: **31.08** | `migracija/2026-08-10-pre-migration-checklist.md`: **25.08** (freeze **20.08**, gate 21.08) |
 | 3 | Prefiks baze | `migracija/2026-07-05-live-export-prompt.md`, `PARITY-PLAN.md`: **`wpGs_`** | `2026-08-10-pre-migration-checklist.md`, `2026-08-06-prompt-staging-full-restore.md`: stvarno **`wpgs_`** |
 | 4 | Sloj 301 | `migracija/2026-07-21-analiza-65-redirection-pravila.md`: u **Redirection pluginu** | `dnevnik/2026-08-11-htaccess-301-reverifikacija.md`: prebačeno u **`.htaccess`** |
 | 5 | `mu-plugins` prenos | komentar u `al-local-mail-log.php`: ne prenosi se | `2026-08-10-pre-migration-checklist.md`: **prenosi se** sa `wp-content` — 07.08 blokiralo mejlove |
@@ -69,7 +73,7 @@
 **🔴 `CLAUDE.md` je na pogrešnoj strani konflikta #3.** Sekcije §2 i §7.5 tvrde prefiks
 **`wpGs_`**. Po ovom nalazu stvarni prefiks je `wpgs_` malim slovima. Pošto svaki
 agent (i ja) čita `CLAUDE.md` kao autoritet, ovo je aktivna mina — treba ispraviti
-u `CLAUDE.md` ili eksplicitno potvrditi protiv same baze pre 24.08.
+u `CLAUDE.md` ili eksplicitno potvrditi protiv same baze pre 25.08.
 
 **Konflikt #6 poništava odluku o Maximize Conversions.** Prag 20–30 nije dostignut
 (9, ne 26). Ne prelaziti na Maximize Conversions. Isto vredi za `odluke/`

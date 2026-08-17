@@ -78,7 +78,7 @@ preko Claude Code-a:
 - budžeti, licitiranje, strategija Google Ads-a
 - GTM tagovi/trigeri, GA4 key eventi i publike
 - izmene baze, WordPress builda, `.htaccess`, redirect mape
-- sam dan migracije (24.08.2026)
+- sam dan migracije (25.08.2026)
 - bilo šta nepovratno
 
 Smeš da **primetiš** problem u bilo čemu od navedenog i da ga prijaviš. Ne smeš

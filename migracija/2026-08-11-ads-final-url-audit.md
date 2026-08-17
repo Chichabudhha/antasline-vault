@@ -2,7 +2,7 @@
 tip: audit
 naziv: Final URL audit oglasa — priprema (W4 4.10 / checklist §A)
 datum: 2026-08-11
-go-live: 2026-08-24
+go-live: 2026-08-25
 status: ZATVORENO 2026-08-11 — oba izvora povučena, spisak za dan migracije napravljen
 ---
 
@@ -26,7 +26,7 @@ Ads saobraćaja), a URL koji ni 301 ne pokriva postaje **404 plaćen po kliku**.
 |---|---|---|
 | **Google Ads API** (`ads_final_urls.py`, nova) | final URL svakog oglasa + mobile URL + keyword-level URL + sitelink/asset URL + tracking template | 🟢 autoritativno — vidi i oglase/sitelinkove **bez ijednog klika** |
 | **GA4 paid landing** (`ga4_paid_landing.py`, nova) | na koje URL-ove korisnici stvarno sleću iz `medium=cpc` | 🟡 presek — vidi samo ono što ima klikove, i vidi URL **posle** redirekta |
-| **73 pravila iz `htaccess-301-DRAFT.txt`** | šta će 301 pokriti na dan migracije | 🟢 isti fajl koji se aktivira 24.08 |
+| **73 pravila iz `htaccess-301-DRAFT.txt`** | šta će 301 pokriti na dan migracije | 🟢 isti fajl koji se aktivira 25.08 |
 
 Alat: **`migracija/alati/ads-url-audit.php`** (read-only). Prima `--json`
 (Ads), `--ga4`, `--txt` (ručni spisak), sve tri se mogu kombinovati.
@@ -155,7 +155,7 @@ izolovanom Apache folderu (`htdocs/redirtest2/`, obrisan posle merenja):
 
 ---
 
-## 5. OAuth token — rešeno danas, ali ostaje obaveza za 24.08
+## 5. OAuth token — rešeno danas, ali ostaje obaveza za 25.08
 
 Ads export je prvo pukao na `invalid_grant: Token has been expired or revoked`.
 `token.json` je bio osvežen **06.08**, mrtav **11.08** — 5 dana. Rešeno
@@ -167,7 +167,7 @@ statusu *Testing*, gde Google gasi refresh token posle **7 dana**. Servisni
 nalozi (GA4/GSC) to ne osećaju — zato je `ga4_paid_landing.py` radio dok
 `ads_report.py` nije.
 
-🔴 **Posledica za dan migracije:** 24.08 se radi 4.10 i verifikacija
+🔴 **Posledica za dan migracije:** 25.08 se radi 4.10 i verifikacija
 konverzija; mrtav token tada znači browser-consent u najgorem trenutku.
 Uvedena stavka **B1** u [[migracija/2026-08-10-pre-migration-checklist]] —
 provera da je token živ, pre svega ostalog.
@@ -184,7 +184,7 @@ venv\Scripts\python.exe ...\scripts\ga4_paid_landing.py --from D1 --to D2 > ga4-
 C:\xampp\php\php.exe migracija\alati\ads-url-audit.php --json ads-urls.json --ga4 ga4-paid.json --out izvestaj.csv
 ```
 
-⚠️ **Ako se do 24.08 promeni ijedan slug** — pustiti ponovo (isto pravilo kao
+⚠️ **Ako se do 25.08 promeni ijedan slug** — pustiti ponovo (isto pravilo kao
 za `.htaccess` generator).
 
 ## 7. Akcije za dan migracije (4.10)

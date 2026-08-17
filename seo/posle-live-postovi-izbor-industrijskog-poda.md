@@ -2,7 +2,7 @@
 tip: plan
 naziv: Postovi iz ugašenog FAQ klastera „izbor industrijskog poda" — posle migracije
 datum: 2026-08-13
-status: planirano — izvršenje POSLE live-a (24.08), najranije ~01.09
+status: planirano — izvršenje POSLE live-a (25.08), najranije ~01.09
 vlasnik: CC
 izvor: "[[seo/2026-08-13-kanibalizacija-konsolidacija-plan]]"
 ---

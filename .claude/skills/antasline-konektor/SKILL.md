@@ -45,7 +45,7 @@ ne trebaju ovaj korak, rade preko service account-a odmah).
 🔴 **GA4 brojevi su naduvani dok live Kallyas stoji (dijagnoza 2026-08-11):**
 hvala-proxy **÷2** (suvišan `page_view` tag id 18 — postoji i na buildu, pa
 preživljava migraciju) · `generate_lead` **÷3** (live ima dva GTM embeda —
-nestaje samo od sebe posle 24.08). Skripta faktore **izlaže, ne primenjuje** —
+nestaje samo od sebe posle 25.08). Skripta faktore **izlaže, ne primenjuje** —
 sirovi brojevi ostaju sirovi, korekcija je posao izveštaja. Ads strana nije
 naduvana istim faktorom. v. [[dnevnik/2026-08-11-generate-lead-inflacija-dijagnoza]]
 

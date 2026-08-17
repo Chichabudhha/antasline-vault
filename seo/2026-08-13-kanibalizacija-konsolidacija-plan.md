@@ -12,7 +12,7 @@ izvor-podataka: GSC 2026-05-15→2026-08-12 (90d, `gsc_page_queries.py`) · Goog
 > **Metodološka napomena koja menja ceo okvir:** stranice napravljene na buildu u
 > julu (Tier1 „cena" stranice, dimenzije stranice) imaju **0 GSC prikaza jer ne
 > postoje na live-u**. Kanibalizacija se zato **ne meri** — ona je *predviđanje*
-> šta će se desiti 24.08 kad te stranice prvi put izađu pred Google. Svaka odluka
+> šta će se desiti 25.08 kad te stranice prvi put izađu pred Google. Svaka odluka
 > ispod je zato „koliko rizikujemo postojeći saobraćaj", ne „šta pokazuju brojke o
 > duplikatu".
 
@@ -48,7 +48,7 @@ i ne prijavi ništa).
 nema pokvarenog tracking template-a, auto-tagging (`gclid`) radi na nivou naloga i
 🟢 već je izmereno 11.08 da `?gclid=` preživljava naš 301.
 
-Nalazi koji krše Google smernice ili pucaju 24.08 — **svi u PAUZIRANIM kampanjama**,
+Nalazi koji krše Google smernice ili pucaju 25.08 — **svi u PAUZIRANIM kampanjama**,
 pa ne troše ni dinar danas, ali **blokiraju reaktivaciju** (i 4.4):
 
 | Nalaz | Gde | Zašto je problem |
@@ -83,7 +83,7 @@ checkliste B1 koja inače pada za ~7 dana dok je consent screen u *Testing*.
 
 **Stanje na buildu:** sve 4 nove stranice su `index`, **bez canonical-a**, i
 **nijedna ne linkuje ka 2298** (provereno u `post_content`). 2298 ne linkuje ka
-njima. Dakle 24.08 izlaze 4 nove stranice koje se takmiče sa stranicom koja nam
+njima. Dakle 25.08 izlaze 4 nove stranice koje se takmiče sa stranicom koja nam
 donosi 385 klikova/90d sa pozicije 1.
 
 **Preporuka (opcija B ispod):** ne brisati ih — pretvoriti u klaster: 2298 ostaje

@@ -1,6 +1,6 @@
 ---
 tip: plan
-naziv: Rollback plan — migracija 2026-08-24
+naziv: Rollback plan — migracija 2026-08-25 (pomereno sa 24.08, M odluka 2026-08-17)
 datum: 2026-07-27
 azurirano: 2026-08-11 (sva 3 otvorena pitanja zatvorena)
 status: ✅ zatvoren 2026-08-11 — gate stavka ispunjena pre roka 15.08
@@ -116,7 +116,7 @@ isto pravilo kao svaka druga nepovratna akcija.
   **Šta ovo znači operativno — obavezno na dan migracije (3.11):**
   - Migracija se **ne pokreće** ako Miroslav nema ispred sebe ~6h slobodnih
     (rollback budžet je 35–50 min, ali tek posle dijagnostike i odluke).
-    Kasno popodne/veče PON 24.08 nije prihvatljiv start.
+    Kasno popodne/veče UTO 25.08 nije prihvatljiv start.
   - Ako se pokaže da tog dana nema tog prozora → migracija se **pomera**, isto
     pravilo kao gate ("ne gura se na silu").
   - Ako Miroslav postane nedostupan **usred** incidenta, ostaje jedino

@@ -97,7 +97,7 @@ se 06.07 nije dodalo 7 falećih oblika. Za svaki pojam nabroj padežne oblike.
 
 **Licitiranje**: prag 20–30 plaćenih konverzija je pređen (26), ali prelazak na
 Maximize Conversions odložen na ~01.09 — learning traje do ~3 nedelje i svaka
-značajna izmena ga restartuje, a migracija 24.08 menja finalne URL-ove svih
+značajna izmena ga restartuje, a migracija 25.08 menja finalne URL-ove svih
 oglasa. Redosled: migracija → stabilizacija → strategija.
 
 **Migracija-checklist za Ads** (finalni URL-ovi, sitelink asseti, 301 lanci,

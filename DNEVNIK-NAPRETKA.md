@@ -1,3 +1,63 @@
+## 2026-08-17 [claude-code] PLAN — CONTENT FREEZE PONOVO OTVOREN: 16.08 → ČET 20.08 🔴
+
+M odluka, ista sesija kao pomeranje go-live-a. Povod: pregled §4 pokazao da je **8 stavki
+propustilo prvi freeze (16.08)**, ali da **7 od 8 nije bilo blokirano vremenom nego materijalom
+od M** — fotke (14 proizvoda, 4 reference na `/o-nama/`), metadesc tekstovi (2699/4318/1094),
+poreklo „trava u boji“ slika, odluka o mapiranju veštačke trave (F2.8), potvrda za brisanje
+menija 67, definicija „starog formata“ za 5119. Prozor **17–20.08** služi da ti materijali uđu.
+**Gate ostaje PET 21.08**, migracija UTO 25.08, rezerva 22–24.08.
+
+🔵 **Jedina stavka koja ne čeka M:** `15793` (`/zastitne-podloge-za-travu-i-plocnike/`) —
+jedina stranica u buildu sa legacy `productColors-block` markupom iz Porto/Kallyas ere, swatch
+„Silk Black“ renderuje prazan prostor. Lokalizovano na jednu stranicu, bez promene sluga.
+
+🔴 **Cena ponovnog otvaranja — tri obaveze koje moraju stati u 20–21.08:**
+1. **Ponovni full regression sweep** — baseline od 13.08
+   (`analiza/2026-08-13-regression-post-faza2-*`) prestaje da važi u trenutku prve izmene, a on
+   je referenca za post-migracionu proveru (§B6 checkliste).
+2. **Ako se promeni ijedan slug** → `redirect-verify.php` pa `htaccess-301-generate.php` ponovo
+   (draft = 73 pravila, generator odbija upis ako cilj nije 200).
+3. **Nov backup zamrznutog builda na 2 lokacije** — backup od 17.08 prestaje da bude „finalni
+   build“ iz §A.
+
+Svesno prihvaćen rizik: sadržajne izmene ulaze **bez rezervnog dana za regresije** (gate je dan
+posle freeze-a). Zato pravilo za prozor: izmene što manje, što lokalnije, **bez dirania slugova**.
+
+Ažurirano: master plan (§2 raspored, §4 uvod + nova napomena sa obavezama), [[PROGRESS]]
+(header + „Sledeće“ prepisan u sadržajni prozor), [[CLAUDE]] §8/§15, pre-migration checklist
+(B1 provera zamrznutosti gleda 20.08 ne 16.08, nova §A stavka sa tri obaveze), preflight
+checklist, skill `/antasline-sesija`.
+→ [[dnevnik/2026-08-17-backup-mysql-crash-pomeranje-roka]]
+
+---
+
+## 2026-08-17 [claude-code] PLAN — GO-LIVE POMEREN DAN KASNIJE: PON 24.08 → UTO 25.08 🟢
+
+M odluka. Suprotno pomeranju od 10.08 (koje je **skraćivalo** rok), ovo je **dobijen dan**:
+gate ostaje **PET 21.08** i freeze ostaje **NED 16.08**, pa rezerva raste sa „samo vikend
+22–23.08“ na **vikend + ceo PON 24.08 = 3 dana**. **Ponedeljak 24.08 je od sada rezervni
+radni dan** — prelivanje ako gate padne (bez pomeranja celog datuma), ili B1 priprema ako je
+gate čist (svež live backup, JetBackup provera, OAuth token, `build-staging-package.sh full`,
+rsync postavka). 🔴 Ono što se **ne sme** raditi u ponedeljak: sam prenos,
+`wp search-replace`, aktivacija `.htaccess` 301 bloka i GTM paket — to je utorak, u jednom
+prozoru, po §B redosledu.
+
+**Rokovi M odluka se NISU pomerili** — 21.08 ostaje tvrd rok, namerno, da rezerva ostane
+rezerva a ne razvučen rok.
+
+**Sweep kroz vault:** 156 pojava datuma u 46 fajlova, ažurirano **24 fajla** — master plan
+(frontmatter `go-live`, §2 raspored, §3 gate, §8 post-live, 3.11), [[PROGRESS]], [[CLAUDE]] §8/§12/§15,
+pre-migration checklist (naslov, §A/§B, B7 → 26.08+), preflight checklist, rollback plan,
+Ads final URL audit, Enhanced Conversions spec, `AGENTS.md`, 6 skillova (`/antasline-sesija`,
+`/antasline-ads`, `/antasline-konektor`, `/nedeljni-izvestaj`, `/w6-social`, `/agy-delegat`),
+`reference/` ×4, `seo/` ×3. **Datirani zapisi (`dnevnik/`, `analiza/`) namerno nisu prepisivani** —
+oni beleže šta je bilo tačno tog dana; merodavni su plan i checklist. Ime fajla
+`2026-08-12-preflight-checklist-24-08.md` ostaje nepromenjeno zbog link-stabilnosti, uz napomenu
+u naslovu.
+→ [[dnevnik/2026-08-17-backup-mysql-crash-pomeranje-roka]]
+
+---
+
 ## 2026-08-14 [claude-code] W3 — Prefiks baze `wpGs_` → `wpgs_` zatvoren u korenu ✅
 
 M odobrio obe popravke iz Copilot nalaza. Rešeno u `wp-config.php` umesto po fajlovima —

@@ -69,7 +69,7 @@ Kad padnu prikazi ili skoči CPC, ne nagađaj uzrok — proveri ovim redom:
 - 🔴 **I nezavisno od praga, prelazak je odložen na ~01.09:**
   learning period traje do **2 nedelje za manje, do ~3 nedelje / 1–2
   konverziona ciklusa za veće promene**, a svaka značajna izmena ga restartuje.
-  Migracija 24.08 menja finalne URL-ove svih oglasa — to je značajna izmena.
+  Migracija 25.08 menja finalne URL-ove svih oglasa — to je značajna izmena.
   Pokretanje Smart Bidding-a pre migracije znači da learning pada tačno na dan
   kad se menjaju URL-ovi = dupli reset. Redosled je: **migracija → stabilizacija
   → tek onda promena strategije.**
@@ -134,7 +134,7 @@ realno javljaju u upitima, ne samo osnovni oblik. Proveri protiv stvarnog
   (`form_submission`, Chrome 151) ili prefetch iz LiteSpeed-a izvršavaju
   `/hvala-za-poruku/` pre nego što korisnik stigne. Pre bilo kakvog uvođenja:
   GTM trigger gate-ovan na `document.prerendering === false`. Proveriti
-  LiteSpeed podešavanja pre migracije 24.08. Detalji:
+  LiteSpeed podešavanja pre migracije 25.08. Detalji:
   `[[reference/chrome-web-platform-2026]]` §3
 - **Enhanced Conversions** (Faza 3, još neimplementirano): dopunjava postojeću
   konverziju heširanim (SHA-256) first-party podacima iz forme — email,
@@ -145,7 +145,7 @@ realno javljaju u upitima, ne samo osnovni oblik. Proveri protiv stvarnog
   GRANTED pre korisnikove akcije**, što je otvoreno pitanje u [[PROGRESS]]
   Blokeri; rešiti to pre nego što se počne slati PII, makar heširan
 
-## 8. Migracija 24.08 — Ads deo (uraditi pre, ne posle)
+## 8. Migracija 25.08 — Ads deo (uraditi pre, ne posle)
 
 - [ ] Popisati sve **finalne URL-ove** u oglasima i asset-ima; svaki koji se
       menja pripremiti unapred

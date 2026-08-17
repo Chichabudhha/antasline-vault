@@ -1,6 +1,6 @@
 ---
 name: antasline-sesija
-description: Master radni tok za AntasLine projekat (redizajn + SEO + Ads do live-a 2026-08-24). Koristi na početku svake radne sesije, kad Miroslav kaže "nastavljamo", "gde smo stali", "sledeći zadatak", "nastavi W1/W2/W3/W4/W5", ili imenuje bilo koji zadatak iz Master plana V2.
+description: Master radni tok za AntasLine projekat (redizajn + SEO + Ads do live-a 2026-08-25). Koristi na početku svake radne sesije, kad Miroslav kaže "nastavljamo", "gde smo stali", "sledeći zadatak", "nastavi W1/W2/W3/W4/W5", ili imenuje bilo koji zadatak iz Master plana V2.
 ---
 
 # AntasLine — protokol radne sesije
@@ -14,8 +14,8 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
 1. Pročitaj `[[PROGRESS]]` — poslednje urađeno + "Sledeće" + blokeri
 2. Pročitaj `[[2026-07-06-MASTER-PLAN-V2]]` sekciju 2 (N-raspored) — uporedi
    današnji datum sa nedeljom (N1=07–13.07 … N5=04–10.08, pa **prepravljeno
-   2026-08-10**: N6'=11–16.08, freeze od 16.08, N7'=17–21.08, gate PET 21.08,
-   **migracija PON 24.08**) i vidi šta je planirano za tekuću nedelju
+   2026-08-10**: N6'=11–16.08, N7'=17–20.08 (🔴 freeze ponovo otvoren 17.08: 16.08 → **20.08**), gate PET 21.08,
+   **rezervni radni dan PON 24.08**, **migracija UTO 25.08** — pomereno M odlukom 2026-08-17) i vidi šta je planirano za tekuću nedelju
 3. Proveri zavisnosti (sekcija 4 plana): zadatak blokiran na #ceka-miroslav
    se ne bira; ako rok zavisnosti prolazi — podseti Miroslava i ponudi fallback
 3b. **Ako je danas ponedeljak:** pre izbora zadatka, brzi pregled cele
@@ -89,7 +89,7 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
   posetu koja se nije desila. Uslov pre bilo kakvog uvođenja: GTM trigger
   gate-ovan na `document.prerendering === false`. Detalji:
   `[[reference/chrome-web-platform-2026]]` §3 — proveriti i LiteSpeed
-  podešavanja pre migracije 24.08
+  podešavanja pre migracije 25.08
 - Windsor gotchas: `[[reference/naucene-lekcije]]` (in-filter nepouzdan →
   povuci sve pa agregiraj; eksplicitni date_from/date_to za poređenja;
   hvala-proxy = `[["page_path","contains","hvala"]]` na `screen_page_views`)

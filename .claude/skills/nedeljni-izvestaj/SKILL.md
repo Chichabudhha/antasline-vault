@@ -34,7 +34,7 @@ odluku — v. [[PROGRESS]] Blokeri.
 Dijagnostikovano 2026-08-11 mrežnim merenjem (`g/collect` po `en=`), nije
 pretpostavka → [[dnevnik/2026-08-11-generate-lead-inflacija-dijagnoza]].
 
-| Metrika | Faktor | Uzrok | Posle migracije 24.08 |
+| Metrika | Faktor | Uzrok | Posle migracije 25.08 |
 |---|---|---|---|
 | hvala-proxy (pregledi) | **÷2** | suvišan GA4 `page_view` tag **id 18** na hvala pravilu | **ostaje** dok se tag 18 ne obriše (postoji i na buildu) |
 | `generate_lead` | **÷3** | live Kallyas ima **dva GTM embeda** istog kontejnera | **nestaje sam** (build ima jedan embed → 1×) |
@@ -47,7 +47,7 @@ Praktično u izveštaju:
   ne kao broj lidova.
 - Ads-ova strana (uvezene konverzije) **nije** naduvana istim faktorom — broji
   svoje, ne deliti je.
-- 🔴 **Prvi post-live izveštaj (posle 24.08):** `generate_lead` pada na ~⅓,
+- 🔴 **Prvi post-live izveštaj (posle 25.08):** `generate_lead` pada na ~⅓,
   hvala-proxy na ~½. **To nije pad konverzija** — obavezno napisati tu rečenicu
   u izveštaju, inače izgleda kao katastrofa.
 

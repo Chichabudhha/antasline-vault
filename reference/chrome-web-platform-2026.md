@@ -79,7 +79,7 @@ dogodi. Rezultat bi bio naduvan broj lidova, tj. tačno ono što je BLOK A
 false`, pa tek onda speculation rules. Ne obrnuto. Do tada — ne dirati.
 
 Isto važi za bilo koji prefetch/prerender koji bi neko uključio kroz
-LiteSpeed/optimizacioni plugin na produkciji — proveriti pre migracije 24.08.
+LiteSpeed/optimizacioni plugin na produkciji — proveriti pre migracije 25.08.
 
 ✅ **Provereno 2026-08-13 [cpanel-live], live produkcija — BEZBEDNO.** LiteSpeed
 Cache 7.8.1 ima `util-instant_click=1` (Instant Click) aktivan, `instant_click.min.js`

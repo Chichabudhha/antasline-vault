@@ -19,7 +19,7 @@ Build 5438 **nema** H2 „Izgradnja sportskih terena za basket u vašem dvorišt
 
 **Nov nalaz, nije u planu §3.8:** stranica ima FAQ sa 4 pitanja ali **nema FAQPage JSON-LD** — samo `Article` i `VideoObject`. Hub `/industrijski-podovi/` ga je dobio 13.08 (stavka K), ovde je propušten.
 
-Rok: **content freeze NED 2026-08-16**. Go-live 24.08.
+Rok: **content freeze NED 2026-08-16**. Go-live 25.08.
 
 ### Odluke donete pre plana
 1. **Obim:** semantika + FAQ + schema (2 nove sekcije, planer link, izmena FAQ cena-para, FAQPage).

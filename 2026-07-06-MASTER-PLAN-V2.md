@@ -3,23 +3,48 @@ tip: plan
 naziv: MASTER PLAN V2 — redizajn + SEO + Ads + tracking do live-a
 datum-plan: 2026-07-06 do 2026-08-26
 prioritet: Tehnička → SEO → Ads
-go-live: 2026-08-24
-go-live-raniji: 2026-08-31 (pomereno nedelju ranije, M odluka 2026-08-10)
+go-live: 2026-08-25
+go-live-raniji: 2026-08-24 (pomereno dan kasnije, M odluka 2026-08-17) · 2026-08-31 (pomereno nedelju ranije, M odluka 2026-08-10)
 status: aktivan
 zamenjuje: "[[2026-07-02-MASTER-PLAN-DO-LIVE]]"
-azurirano: 2026-08-10
+azurirano: 2026-08-17
 ---
 
-# 🚀 MASTER PLAN V2 — do live-a 2026-08-24
+# 🚀 MASTER PLAN V2 — do live-a 2026-08-25
 
+> 🟢 **2026-08-17 — GO-LIVE POMEREN DAN KASNIJE: PON 24.08 → UTO 25.08** (M odluka).
+
+> 🔴 **2026-08-17 (ista sesija, druga odluka) — CONTENT FREEZE PONOVO OTVOREN: 16.08 → ČET 20.08.**
+> Razlog: 8 stavki je propustilo prvi freeze, a 7 od 8 nije bilo blokirano vremenom nego
+> materijalom od M (fotke, metadesc tekstovi, poreklo slika, odluka o travi). Prozor 17–20.08
+> služi da ti materijali uđu. **Gate ostaje PET 21.08.**
+>
+> 🔴 **Šta ponovno otvaranje OBAVEZNO nosi (inače dobijeni dan pravi štetu, ne korist):**
+> 1. **Ponovni full regression sweep** posle poslednje sadržajne izmene, pre gate-a — baseline
+>    od 13.08 (`analiza/2026-08-13-regression-post-faza2-*`) prestaje da važi u trenutku prve
+>    izmene, a on je referenca za post-migracionu proveru (§B6 checkliste).
+> 2. **Ako se promeni ijedan slug** → `redirect-verify.php` pa `htaccess-301-generate.php`
+>    ponovo (draft je 73 pravila; generator odbija upis ako ijedan cilj nije 200).
+> 3. **Nov backup zamrznutog builda** posle 20.08 — backup od 17.08 prestaje da bude
+>    „finalni build" iz §A checkliste.
+> 4. Rizik koji se svesno prihvata: sadržajne izmene ulaze **bez rezervnog dana za regresije**
+>    (gate je dan posle freeze-a). Zato: izmene što manje i što lokalnije, bez dirania slugova.
+> Ovo je **dobijen dan, ne izgubljen**: gate ostaje **PET 21.08**, pa rezerva raste sa
+> „samo vikend 22–23.08" na **vikend + ceo PON 24.08** (3 dana). Ponedeljak 24.08 je
+> od sada **radni rezervni dan** — prelivanje ako gate padne, ili priprema/prazan hod
+> ako je sve čisto. Gate (21.08) se **ne menja**. 🔴 **Content freeze JE promenjen —
+> ponovo otvoren do ČET 20.08** (M odluka istog dana, v. napomenu ispod).
+> Posledice: §2 (raspored), §3 (gate rokovi nepromenjeni), §4 (rokovi M odluka
+> nepromenjeni — 21.08 ostaje tvrd rok), post-live monitoring **26.08+**.
+>
 > 🔴 **2026-08-10 — GO-LIVE POMEREN NEDELJU RANIJE: 31.08 → PON 24.08** (M odluka).
 > Seče se **N8 buffer nedelja** (25–30.08) — jedina rezerva u planu. Nova rezerva je
 > samo vikend **22–23.08**. Posledice u §2 (novi raspored), §3 (gate rokovi) i §4
-> (svi „pre 31.08" rokovi → **pre 21.08**).
+> (svi „pre 31.08" rokovi → **pre 21.08**). *(Delimično ublaženo odlukom 17.08 iznad.)*
 
 **Jedini izvor istine za plan projekta.** Zamenjuje [[2026-07-02-MASTER-PLAN-DO-LIVE]] (pisan pre Porto→WoodMart prelaska). Dnevno stanje: [[PROGRESS]] · istorija: [[DNEVNIK-NAPRETKA]].
 
-**Cilj:** redizajnirani sajt live 2026-08-24, bez gubitka organskog saobraćaja, sa Ads nalogom spremnim za Smart Bidding i čistim merenjem (GA4/GSC/Ads). Budžet Ads: 40k RSD/mes (ne diže se dok se ne optimizuje).
+**Cilj:** redizajnirani sajt live 2026-08-25, bez gubitka organskog saobraćaja, sa Ads nalogom spremnim za Smart Bidding i čistim merenjem (GA4/GSC/Ads). Budžet Ads: 40k RSD/mes (ne diže se dok se ne optimizuje).
 
 **Pravila koja važe kroz ceo plan** ([[CLAUDE]]): lokalni build = staging, live se ne dira (osim eksplicitnih `[cpanel-live]` zadataka) · **SEO plugin = Rank Math** (migracija izvedena 05.08; staro pravilo „Yoast ostaje, ne RankMath" ukinuto M odlukom 13.08) · epoksid samo conquest · Maximize Clicks do praga 20–30 plaćenih konverzija · jun 2026 = mesec-nula za sve serije konverzija.
 
@@ -193,9 +218,9 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 | 3.9 | ✅ **REVERIFIKOVANO I REGENERISANO 2026-08-11** — provera od 21.07 je gledala samo `redirect-mapa-FINAL.csv` (7 ciljeva) i propustila da draft ne sadrži **62 istorijska pravila iz Redirection plugina** (~46.000 GSC pogodaka), koja nestaju zajedno sa živom bazom pri migraciji. Draft **8 → 73 pravila**. Usput razrešeno: 🔴 petlja između dve mape (`/na-kojoj-podlozi…/` ↔ `/bergo-ultimate…/`) · 🔴 2 istorijska pravila koja bi pregazila stranice 16686 (588 GSC) i 16875 (182 GSC) izgrađene posle tih pravila · 🔴 `Redirect` je prefiks-match (15 kolizija) → sidreni `RedirectMatch "^/put/?$"`, redosled linija više nije bitan · 🟡 pogrešan cilj `spoljne-` bez „j" u FINAL mapi · 🟢 ćirilične putanje testirane pod Apache-om, stara „fallback `RewriteRule \x`" ograda skinuta. Draft se od sada **generiše skriptom** (`migracija/alati/htaccess-301-generate.php`, odbija upis ako cilj nije 200); verifikacija `migracija/alati/redirect-verify.php`. Funkcionalni test u izolovanom Apache folderu: 8/8 tačan 301, 3/3 negativna kontrola. Detalji: [[dnevnik/2026-08-11-htaccess-301-reverifikacija]] | CC | aktivira se TEK na dan migracije, iznad `# BEGIN WordPress` |
 | 3.10 | 🔄 **DELIMIČNO ZATVORENO 2026-08-10 — regression ✅, checklist napisan ✅, izvršenje na dan migracije ⏳** · Pre-migration checklist + full regression (forme, GTM, linkovi, slike) + 🔴 obrisati `al-harness.html` iz docroot-a (alat za vizuelnu proveru na 1500/390px, W7 F3 2026-07-29 — koristan lokalno, ne sme na produkciju) + 🔴 obrisati `mu-plugins/al-local-mail-log.php` i `wp-content/mail-log.txt` (lokalni mail logger presreće SVE mejlove — na produkciji forme ne bi slale ništa) + verifikovati stvarno slanje mejla na produkciji + 🆕 **GTM paket za dan migracije** (Enhanced Conversions promenljive/tag + brisanje mrtvih Meta Zion objekata) po [[migracija/2026-08-09-enhanced-conversions-4.7]] | CC | ✅ **REGRESSION DEO ZATVOREN 2026-08-10** — pun sweep nad 195 stranica (`migracija/alati/regression-sweep.php`, baseline u `analiza/2026-08-10-regression-baseline-pages.csv`): 4 bag-a nađena i popravljena (sitewide 404 u footeru na svih 195 str · 5 slomljenih slika · 3 interna 301 · 27 `.bak` fajlova koji se serviraju kao izvorni kod). Posle popravki: 0 non-200 / 0 bez H1 / 0×2H1 / 0 nevalidan JSON-LD / 0 slomljenih slika / 0 internih 404. Paket-skripta dobila exclude za `al-local-mail-log.php` i `*.bak-*`. **Checklist deo napisan i živi odvojeno: [[migracija/2026-08-10-pre-migration-checklist]]** (A: do 21.08 · B: dan migracije). Detalji: [[dnevnik/2026-08-10-w3-310-full-regression]].<br>N7 — 🔄 **rani start 2026-07-22**: GTM/Consent kritičan nalaz+fix, forma end-to-end (kontakt→hvala-za-poruku→generate_lead potvrđen preko network requesta), sitewide 214-URL sweep (0 pokvarenih, 7×2H1 fix, 13×putanja fix) — sve gotovo osim: WooCommerce checkout (N/A, catalog_mode uklonio), mail-log.php brisanje (namerno čeka do dana migracije, lokalno testiranje ga i dalje treba), finalni URL audit oglasa (čeka aktivne kampanje)<br>🆕 **2026-08-12 — DOPUNA, ne zamena: [[migracija/2026-08-12-preflight-checklist-24-08]]**. Postojeći `2026-08-10-pre-migration-checklist` je pisan unapred („šta treba uraditi"); ovaj je izvučen unazad iz **87 dnevnika** (`dnevnik/` 50 + `migracija/` 37) i beleži **šta je već jednom puklo** — 19 rizika sa izvorom i datumom, 11 ručnih radnji na dan migracije, **6 konflikata u dokumentaciji**. Posao delegiran na `agy`/Gemini Flash (v. skill `/agy-delegat`), nalazi ukršteni sa [[reference/naucene-lekcije]] i verifikovani protiv koda. 🔴 Tri stavke otvorene kao blokeri u [[PROGRESS]]: pogrešan prefiks `wpGs_` u [[CLAUDE]] · `live-export.sh` ne skuplja `_product_image_gallery` · GCP app u statusu *Testing*. → [[dnevnik/2026-08-12-agy-antigravity-delegat]] |
 | 3.10b | ✅ **REGRESSION SWEEP PONOVLJEN 2026-08-13, posle FAZE 1 i FAZE 2** — prethodni je bio od 10.08, a u međuvremenu su prošle tri sesije koje diraju sitewide (vizuali/mediji, alt tekst/brend arhive, layout u dizajn sistemu). **239 stranica · 1.158 slika · 1.801 link: 0 non-200 · 0 bez H1 · 0×2H1 · 0 nevalidan JSON-LD · 0 slomljenih slika · 0 internih 404.** Protiv baseline-a 10.08 na 194 zajednička URL-a **0 razlika** u statusu/H1/JSON-LD/title → **FAZA 2 nije polomila ništa**. 🔴 Prividna regresija **−118 slika po stranici** objašnjena: uklonjene **ikonice mega menija** 12.08 (59 linkova × 2 renderovanja), jedinstvenih slika 1.182→1.158 — nestao globalni blok, ne slike; usput `imgs_noalt` **23.010→0**. 🆕 **31 arhiva bez meta description** (18 `product_tag` = poznato, posle live-a; 6 blog kategorija + 6 `product_cat` + `brend/bergo` = jedini sadržajni posao koji staje pre freeze-a). **301 mapa reverifikovana** (`redirect-verify.php`, jer je 5455 draftovan posle regeneracije 11.08): **45/45 ciljeva 200**, 0 duplikata/petlji → draft ostaje važeći, ne regeneriše se. Nov baseline: `analiza/2026-08-13-regression-post-faza2-*`. → [[dnevnik/2026-08-13-regression-sweep-post-faza2]] | CC | zamenjuje 10.08 baseline za post-migracionu proveru |
-| 3.10c | ✅ **DRY-RUN `build-staging-package.sh` IZVRŠEN 2026-08-13** — skripta poslednji put pokrenuta 06.08, exclude pravila dodata 10.08 **nikad izvršena**, a preflight rizici #1/#4 (🔴🔴) vise baš na njima. **Rezultat: pravila rade** — u arhivi (22.936 unosa) nema `al-local-mail-log.php`, `mail-log.txt`, nijednog od **32** `.bak`-klase fajla, `al-harness.html`, ~20 debug PHP skripti, `wp-config*.php`, ni Yoasta; chunk+md5 ispravan (`cat part-*` bajt-identičan). Usput **2 kvara koje skripta nije mogla sama da prijavi**: **(a)** hardkodiran `WP_ROOT`/`OUT_DIR` → dry-run se nije mogao pustiti van produkcione fascikle (tačan razlog zašto nikad nije testirana), popravljeno kao `PFX`/`OUT` u `live-export.sh`; **(b)** 🔴 **`.htaccess` u root whitelist-i** — lokalni nosi `RewriteBase /antasline/` + `RewriteRule . /antasline/index.php`, prepisao bi serverski i oborio sajt u celosti, uz gubitak `# BEGIN LSCACHE` bloka (checklist B3 ionako kaže da se serverski fajl **edituje**) → izbačen. **(c) 🔴 Kvota:** paket je **2.779,2 MB** (uploads 2.706,9 + kod 72,3), ne ~1,3 GB kako je pre-flight računao; naivan tok (delovi + sklopljen tar) traži 5.558 MB od 5.867 MB slobodnih → ne staje uz backup. Preporuka za 24.08: rsync/scp preko SSH-a, ili stream-raspakivanje bez sklapanja + brisanje delova u hodu (pik ~4,4 GB ✅). → [[dnevnik/2026-08-13-dry-run-build-staging-package]] | CC | preduslov za 3.11, zatvara preflight #1/#4 |
+| 3.10c | ✅ **DRY-RUN `build-staging-package.sh` IZVRŠEN 2026-08-13** — skripta poslednji put pokrenuta 06.08, exclude pravila dodata 10.08 **nikad izvršena**, a preflight rizici #1/#4 (🔴🔴) vise baš na njima. **Rezultat: pravila rade** — u arhivi (22.936 unosa) nema `al-local-mail-log.php`, `mail-log.txt`, nijednog od **32** `.bak`-klase fajla, `al-harness.html`, ~20 debug PHP skripti, `wp-config*.php`, ni Yoasta; chunk+md5 ispravan (`cat part-*` bajt-identičan). Usput **2 kvara koje skripta nije mogla sama da prijavi**: **(a)** hardkodiran `WP_ROOT`/`OUT_DIR` → dry-run se nije mogao pustiti van produkcione fascikle (tačan razlog zašto nikad nije testirana), popravljeno kao `PFX`/`OUT` u `live-export.sh`; **(b)** 🔴 **`.htaccess` u root whitelist-i** — lokalni nosi `RewriteBase /antasline/` + `RewriteRule . /antasline/index.php`, prepisao bi serverski i oborio sajt u celosti, uz gubitak `# BEGIN LSCACHE` bloka (checklist B3 ionako kaže da se serverski fajl **edituje**) → izbačen. **(c) 🔴 Kvota:** paket je **2.779,2 MB** (uploads 2.706,9 + kod 72,3), ne ~1,3 GB kako je pre-flight računao; naivan tok (delovi + sklopljen tar) traži 5.558 MB od 5.867 MB slobodnih → ne staje uz backup. Preporuka za 25.08: rsync/scp preko SSH-a, ili stream-raspakivanje bez sklapanja + brisanje delova u hodu (pik ~4,4 GB ✅). → [[dnevnik/2026-08-13-dry-run-build-staging-package]] | CC | preduslov za 3.11, zatvara preflight #1/#4 |
 | 3.10a | ✅ ZATVORENO 2026-08-12 — **migracione skripte popravljene i prvi put testirane**: `live-export.sh` je gubio **145 od 170** galerijskih slika (nikad nije čitao `_product_image_gallery`; dodate i `product_cat` slike iz `termmeta`, tvrda provera pred dump, `PFX`/`OUT` pregazivi radi testiranja) · `staging-import.sh` je prepisivao prefiks u **`wpGs_`** umesto `wpgs_` (na Linux-u pravi pogrešne tabele bez greške). Testirano uživo na lokalnom buildu: 196→**341** attachment. 🔴 Tri gotcha-a otkrivena tek pokretanjem (višelinijski `wp db query` = prazno sa exit 0 · `--no-create-info` mangla WP-CLI 2.12 · Windows CRLF prazni liste). → [[dnevnik/2026-08-12-live-export-galerije-prefiks]]<br>✅ **2026-08-14 — REP ZATVOREN: `wpGs_` je živeo i van export/import skripti.** Pregled celog `migracija/alati/` (89 fajlova) delegiran na Copilot CLI, nalazi verifikovani nezavisnim grep-om: `job-plugin-cleanup-cron.php` **linije 12 i 33** koriste `wpGs_options` u **sirovim `mysqli` upitima** (ne `$wpdb`) — na Linux hostingu gađaju nepostojeću tabelu tiho, bez greške. Uz to **~11 fajlova** sa `{$wpdb->prefix}yoast_indexable` nasleđivalo je pogrešan case iz lokalnog `wp-config.php`. **Rešeno u korenu (M odluka):** `wp-config.php` → `wpgs_` **+ 16 prefiks-izvedenih ključeva u bazi** (`wpGs_capabilities` ×4, `wpGs_user_roles`, `wpGs_user_level` ×4, +7 kozmetičkih) — bez tog drugog dela svi korisnici bi ostali bez ijedne dozvole (zaključan wp-admin), jer je WP meta keš PHP niz gde je case bitan, a `_ci` kolacija bi SQL provericu lažno obojila u zeleno. Verifikovano `wp user list` kroz pun WP stek (obe admin role netaknute) + HTTP 200. Backup: `antasline_local_2026-08-14_pre-prefix-lowercase.sql` (36 MB). Zatim **sweep dokumentacije: 13 fajlova** (F1/F2/F3 promptovi, 3 prompta koja gađaju Linux uz dodatu proveru prefiksa protiv dump-a, master skill sesije, `reference/identifikatori.md`); usput uhvaćena pokvarena provera `grep -v wpGs_` u staging promptu. → [[dnevnik/2026-08-14-copilot-grok-delegati]] | CC | preduslov za 3.11 |
-| 3.11 | **MIGRACIJA 2026-08-24** (1 dan, pomereno sa 31.08): backup live → db+wp-content prebacivanje → URL zamena → 301 aktivacija → verifikacija | CC+M | SSH/hosting info #ceka-miroslav |
+| 3.11 | **MIGRACIJA 2026-08-25** (1 dan, UTO; pomereno sa 24.08 M odlukom 17.08, pre toga sa 31.08): backup live → db+wp-content prebacivanje → URL zamena → 301 aktivacija → verifikacija | CC+M | SSH/hosting info #ceka-miroslav |
 | 3.12 | Post-live (od 2026-08-25): GSC sitemap resubmit, crawl errors, GA4/GTM verify, CWV field data + UptimeRobot (besplatan) + dnevni 404 log pregled prvih 14 dana (umesto ad-hoc) | CC+CP | 🔄 **GSC priprema ZATVORENA 2026-08-11** (checklist §A): resubmit URL **nepromenjen** (`sitemap_index.xml`, ista imena child fajlova kao Yoast) → nijedan submit-ovan URL ne puca migracijom. 🔴 Usput nađeno da su svi `tax_*_sitemap` ključevi bili `off` posle Yoast→Rank Math importa — build je emitovao **3 sitemap-a gde live emituje 7**, van pokrivenosti 27 URL-ova sa **79 klikova / 2.583 prikaza** (3 mes.); uključeno `category`+`product_cat`+`product_tag`, sitemap 196→**236 URL-ova**, 42/42 verifikovano. ~~Brend sitemap namerno off (arhive prazne → i 301 cilj pogrešan, #ceka-miroslav).~~ ✅ **REŠENO 2026-08-12 (M odluka, opcija a):** Ecotile arhiva dobila **7** proizvoda, Ergomat **27** (nijedan od 94 proizvoda nije nosio `product_brand` termin — brojači 25/3 bili su 7 Porto priloga); obe arhive 200 / 1×H1 / `index, follow` sa pravim title/meta/uvodnim pasusom, `tax_product_brand_sitemap` uključen → sitemap **7 child-ova / 238 URL-ova** (parity sa live). 301 ciljevi `/бренд/*` više ne vode na praznu stranicu, draft se ne regeneriše. → [[dnevnik/2026-08-12-product-brand-arhive]]. Nov alat `scripts/gsc_sitemaps.py`. → [[dnevnik/2026-08-11-gsc-priprema-sitemap]] |
 | 3.13 | ✅ ZATVORENO — ⚠️ reotvoreno i ponovo zatvoreno 2026-07-09: scheduled task NIKAD nije stvarno radio (odbijan — baterija uslov + bez catch-up-a; popravljeno `Set-ScheduledTask`). Nova politika (M): destinacija **eksterni HDD G: "Maxtor" kad je prikačen** → OneDrive → lokalno; propušteni backup izvršen na G: 2026-07-09. Proveriti `LastTaskResult=0` posle sledeće noći | CC | OneDrive više nije blokator (G: je druga lokacija) |
 | 3.14 | ✅ ZATVORENO 2026-07-21 — proba migracije na `staging.antasline.com` kompletirana: wp-config kreiran (DB lozinka dobijena od M), 118-tabelni import, URL rewrite 11.451 zamena, rewrite flush, Basic Auth aktivan (`stagingtest`, kredencijali u `~/staging-htaccess-creds.txt` na serveru, van vault-a), arhiva/sql sklonjeni iz docroot-a. Verifikovano: 401 bez auth / 200 sa auth na homepage i `/industrijski-podovi/`, ispravan naslov "Početna \| Antas Line". 🟡 Nusnalaz: import je stvorio 9 "duh" tabela sa starim `wp_` prefiksom (mnogo manje redova od pravih `wpgs_` tabela — npr. 1964 vs 7992 posts) — verovatno artefakt generisanja dump-a na lokalu, ne brisano (nije korišćeno od WP-a, niska prioritetna čistka za kasnije) | CC+M | — |
@@ -236,8 +261,12 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 
 ---
 
-## 2. VREMENSKI PLAN — 7 nedelja unazad od 2026-08-24
+## 2. VREMENSKI PLAN — 7 nedelja unazad od 2026-08-25
 
+> 🟢 **Prepravljeno 2026-08-17** (go-live 24.08 → **UTO 25.08**). N1–N7' se **ne menjaju**
+> — freeze 16.08 i gate 21.08 stoje. Menja se samo rep: **PON 24.08 postaje rezervni
+> radni dan**, migracija je **UTO 25.08**, post-live monitoring **26.08+**.
+>
 > 🔄 **Prepravljeno 2026-08-10** (go-live 31.08 → 24.08). N1–N5 su istorija i ostaju
 > kako su odrađene. Menjaju se **samo poslednje dve nedelje**: stari N6/N7/N8 se
 > sabijaju u **N6' i N7'**, buffer nedelja nestaje.
@@ -250,18 +279,24 @@ N4  28.07–03.08  W2: Tier3 vertikali · W3: 3.1–3.2 C1 finalna verifikacija 
 N5  04–10.08  W3: 3.6 CWV optimizacija · W1: footer/meni/mobile QA ✅ rani start 2026-07-29 · W3: 3.8 checkout test ✅
 ─────────── ↓ ODAVDE PREPRAVLJENO (2026-08-10) ↓ ───────────
 N6' 11–16.08  POSLEDNJI SADRŽAJNI PROZOR. W3: **3.10 full regression** (glavno) · W4: 4.7 EC Ads UI toggle (M) · W5: nedeljni izveštaj + jul snapshot (kasne) · 🔴 gate: rollback plan zatvoriti do **15.08** (bilo „pre N7") · Tier4/nice-to-have samo ako regression prođe čisto
-    NED 16.08  ⛔ CONTENT FREEZE počinje (bilo 18.08)
-N7' 17–21.08  FREEZE. W3: 3.9 .htaccess finalna provera + 3.10 checklist do kraja + 🔴 svež live backup (cPanel) · GSC priprema · W4: 4.10 priprema URL audita
+    NED 16.08  ⛔ content freeze počeo (bilo 18.08) — 🔴 PONOVO OTVOREN 17.08 (M odluka)
+N7' 17–20.08  🆕 PRODUŽEN SADRŽAJNI PROZOR (M odluka 17.08). Paralelno: W3 3.9 .htaccess finalna provera + 3.10 checklist do kraja + 🔴 svež live backup (cPanel) · GSC priprema · W4: 4.10 priprema URL audita
+    ČET 20.08  ⛔ CONTENT FREEZE (novi, tvrd) — posle njega: ponovni full regression sweep + svež backup builda
     PET 21.08  🚦 GATE PREGLED (sekcija 3) → GO/NO-GO. Rok za SVE M odluke.
-    22–23.08   Vikend = jedina rezerva (bila cela N8 nedelja). Ništa se ne planira ovde — samo prelivanje ako gate padne.
-→   PON 24.08  MIGRACIJA (1 dan) → post-live monitoring 25.08+ (3.12, 5.7, 4.10)
+    22–23.08   Vikend = rezerva. Ništa se ne planira — samo prelivanje ako gate padne.
+    PON 24.08  🆕 REZERVNI RADNI DAN (dobijen odlukom 17.08). Prelivanje ako gate padne;
+               ako je čisto — priprema paketa i B1 koraci (backup, OAuth provera, rsync).
+→   UTO 25.08  MIGRACIJA (1 dan) → post-live monitoring 26.08+ (3.12, 5.7, 4.10)
 ```
 
-**Šta je izgubljeno pomeranjem:** cela N8 buffer nedelja (5 radnih dana). To je bila
+**Šta je izgubljeno pomeranjem 10.08:** cela N8 buffer nedelja (5 radnih dana). To je bila
 rezerva za „gate padne u petak, popravljamo ponedeljak–sreda, migriramo naredni
-ponedeljak". Sada je ta rezerva **2 dana vikenda**. Praktično: ako gate 21.08 padne
-na nečemu što nije popravivo za vikend, migracija se pomera na **PON 31.08** —
-tj. vraćamo se na originalni datum, ne guramo na silu (pravilo iz §3 ostaje).
+ponedeljak". Rezerva je tada spala na **2 dana vikenda**.
+
+**Šta je vraćeno odlukom 17.08:** rezerva je sada **vikend 22–23.08 + PON 24.08 = 3 dana**,
+a gate je i dalje 21.08. Praktično: ako gate padne u petak, ima se **ceo ponedeljak** za
+popravku pre migracije u utorak — bez pomeranja celog datuma. Ako ni to ne stigne,
+migracija ide na **sledeću nedelju (od 31.08)**, ne gura se na silu (pravilo iz §3 ostaje).
 
 **Kapacitet-realnost:** ~40 min–1h po C3 stranici, 30–90 min po rebuild stranici.
 Sa jednom nedeljom manje, **seče se prvo:** Tier4 i svaki preostali nice-to-have
@@ -273,6 +308,10 @@ W4 4.11/4.12 (Meta/LinkedIn, blokirani na M13/M14) → posle live-a.
 
 ## 3. GATE KRITERIJUMI — go/no-go za migraciju (pregled **PET 21.08**, bilo N8)
 
+> 🟢 **2026-08-17:** migracija je pomerena na **UTO 25.08**, ali **gate ostaje PET 21.08** —
+> namerno, da rezerva (vikend + PON 24.08) ostane rezerva, a ne da se rok razvuče.
+> Rokovi svih M odluka su **nepromenjeni**.
+>
 > 🔴 **2026-08-10:** pomeranjem na 24.08 gate pregled se seli sa 25–30.08 na
 > **petak 21.08**. Tri stavke su i dalje otvorene i sada imaju **11 dana**, ne 18:
 > LCP (spoljno ograničenje — hosting, verovatno ostaje crveno i ide kao svestan
@@ -287,7 +326,7 @@ W4 4.11/4.12 (Meta/LinkedIn, blokirani na M13/M14) → posle live-a.
 - [x] ✅ (2026-07-21, v. W3 3.8) Woo checkout — N/A u izvornom obliku (catalog_mode/M9 uklonio cart/checkout u potpunosti), pravi tok "Zatraži ponudu"→kontakt→hvala-za-poruku testiran end-to-end
 - [x] ✅ **Svež backup live sajta (db + wp-content) na 2 lokacije — ZATVORENO `[cpanel-live]` 2026-08-11.** Ručan DB dump (17,3MB) + `wp-content` tar.gz (1,29GB), MD5 provereno, skinuto na `C:\Miroslav\Antas line\Backup` + `G:\AntasLine-Backups`, kopije obrisane sa servera. Backup finalnog **lokalnog builda** na 2 lokacije ostaje odvojeno pitanje (isti skript-ograničenje, nije dirano ove sesije) — v. napomenu ispod.
 - [x] ✅ POPRAVLJENO 2026-07-27 — Automatski noćni backup builda: **nađen i popravljen pravi bag** — poslednji uspešan run bio 2026-07-22 (5 dana pauze), 07-27 su oba pokušaja (07:58, 08:04) pukla na `mysqldump exit code 2` jer XAMPP MySQL nije Windows servis i nije bio pokrenut u trenutku kad je task okinuo. Fix: `nocni-backup.ps1` sad proverava (`mysqladmin ping`) i sam pokreće MySQL headless pre dump-a ako ne radi (do 30s čekanja). Testirano uživo posle fixa — pun backup pokrenut (DB+wp-content, destinacija eksterni HDD "Maxtor", trenutno prikačen). Backup skripte: `.bak-2026-07-27` kopija sačuvana pre izmene. Detalji: [[DNEVNIK-NAPRETKA]]
-- [x] ✅ **ROLLBACK PLAN ZATVOREN 2026-08-11** (pre roka 15.08) — sva 3 otvorena pitanja odgovorena. Draft napisan 2026-07-27 → [[migracija/rollback-plan]] (trigger uslovi, prereq backup checklist, koraci <1h budžet, ko odlučuje). ✅ WHM/auto-backup: **JetBackup 5, dnevni, off-site, 90 dana** (odgovor je postojao u M6 redu od 07-27, samo nije bio prenet u plan). ✅ CDN/edge keš: **ne postoji** — DNS ide direktno na `138.201.234.168` (Hetzner/oblak.host), zaglavlja daju `Server: LiteSpeed` + `X-LiteSpeed-Cache`, bez `cf-ray`/`via`/`age`/`x-qc-cache`; korak „očisti keš" se svodi na LSCWP Purge All. ✅ **Ko izvršava rollback — ODLUČENO 2026-08-11 (M): „migracija samo kad sam tu."** Nema rezervne osobe niti dogovora sa hostingom unapred; umesto toga **dostupnost Miroslava (~6h slobodnih) postaje uslov za pokretanje migracije 24.08** — ako tog dana nema tog prozora, migracija se pomera. Prihvaćen rizik: ako postane nedostupan usred incidenta, ostaje samo improvizovan poziv oblak.host podršci (SLA namerno neproveren). Detalji: [[migracija/rollback-plan]] §4 i §5
+- [x] ✅ **ROLLBACK PLAN ZATVOREN 2026-08-11** (pre roka 15.08) — sva 3 otvorena pitanja odgovorena. Draft napisan 2026-07-27 → [[migracija/rollback-plan]] (trigger uslovi, prereq backup checklist, koraci <1h budžet, ko odlučuje). ✅ WHM/auto-backup: **JetBackup 5, dnevni, off-site, 90 dana** (odgovor je postojao u M6 redu od 07-27, samo nije bio prenet u plan). ✅ CDN/edge keš: **ne postoji** — DNS ide direktno na `138.201.234.168` (Hetzner/oblak.host), zaglavlja daju `Server: LiteSpeed` + `X-LiteSpeed-Cache`, bez `cf-ray`/`via`/`age`/`x-qc-cache`; korak „očisti keš" se svodi na LSCWP Purge All. ✅ **Ko izvršava rollback — ODLUČENO 2026-08-11 (M): „migracija samo kad sam tu."** Nema rezervne osobe niti dogovora sa hostingom unapred; umesto toga **dostupnost Miroslava (~6h slobodnih) postaje uslov za pokretanje migracije 25.08** (rok pomeren sa 24.08 M odlukom 17.08) — ako tog dana nema tog prozora, migracija se pomera. Prihvaćen rizik: ako postane nedostupan usred incidenta, ostaje samo improvizovan poziv oblak.host podršci (SLA namerno neproveren). Detalji: [[migracija/rollback-plan]] §4 i §5
 - [x] ✅ ZATVORENO 2026-07-21 — SSH/hosting pristup potvrđen (M) + proba migracije na subdomen izvedena (3.14, `staging.antasline.com`, M vizuelno potvrdio) — checkbox ovde bio zastareo, posao odavno gotov (v. §1 W3 3.14 + §4 M6)
 - [x] ✅ ZATVORENO 2026-07-21 — SERP snapshot top 20 upita snimljen pre migracije (3.15) — checkbox ovde bio zastareo (v. §1 W3 3.15)
 - [ ] 🆕 2026-08-05 — **GTM Meta Pixel Manual Advanced Matching prepravka na dan migracije** — 🟢 **POJEDNOSTAVLJENO 2026-08-09 (W4 4.7)**: lokalni build sada sam piše `al_am_em`/`al_am_ph` u `sessionStorage` iz CF7 `wpcf7mailsent` handler-a, pa selektore više ne treba prepisivati. Na dan migracije samo **obrisati** tag `Meta Pixel - Capture Lead Data` i trigger `Klik na Posalji (Zion forma)` (oba vezana za mrtvu Zion formu); `Meta Pixel - Base Code` ostaje **nepromenjen** — čita iste ključeve. Usput ispravljeno: stari tag je slao telefon bez pozivnog broja (`0692340072`), lokalni kod šalje `381692340072` → bolji Event Match Quality. Isti korak nosi i GTM deo Enhanced Conversions-a → izvršiti oba po [[migracija/2026-08-09-enhanced-conversions-4.7]]. Poreklo stavke: [[DNEVNIK-NAPRETKA]] 2026-08-05 "Meta Pixel Advanced Matching"
@@ -302,7 +341,9 @@ W4 4.11/4.12 (Meta/LinkedIn, blokirani na M13/M14) → posle live-a.
 
 > 🔴 **2026-08-10 — SVI ROKOVI POMERENI NEDELJU RANIJE.** Svako „pre 31.08" u
 > ovom planu i u [[PROGRESS]] sada znači **pre PET 21.08** (gate pregled). Odluke
-> koje utiču na sadržaj sajta moraju stići **pre NED 16.08** (content freeze).
+> koje utiču na sadržaj sajta moraju stići **pre ČET 20.08** — content freeze je 17.08
+> ponovo otvoren sa 16.08 na **20.08** (M odluka), da bi materijali koji su propustili
+> prvi freeze još mogli da uđu. 🔴 Posle 20.08 nema više izmena sadržaja.
 >
 > **Kritičan raspored M odluka posle pomeranja:**
 >
@@ -398,7 +439,7 @@ W4 4.11/4.12 (Meta/LinkedIn, blokirani na M13/M14) → posle live-a.
 
 ---
 
-## 8. W6/W7 — POSLE LIVE-A (2026-08-25+, bilo 09-02)
+## 8. W6/W7 — POSLE LIVE-A (2026-08-26+, bilo 08-25, pre toga 09-02)
 
 Detaljan social/email tok: skill `/w6-social`. Ovde samo ono što se planira
 UNAPRED da se ne dočeka nespremno.

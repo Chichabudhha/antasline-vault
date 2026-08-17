@@ -58,7 +58,7 @@ je **netačna** i ne sme se više koristiti kao osnov za odluku o licitiranju.
    (v. [[dnevnik/2026-08-11-generate-lead-inflacija-dijagnoza]]). Prelazak na Smart
    Bidding pre te korekcije značio bi učenje na pogrešnim brojkama.
 3. Vreme: Smart Bidding uči ~14 dana. Uključeno u avgustu → period učenja se završava
-   tačno kad se menjaju URL-ovi oglasa (migracija 24.08) — najgori mogući preklop.
+   tačno kad se menjaju URL-ovi oglasa (migracija 25.08) — najgori mogući preklop.
 **Preduslovi za ponovno otvaranje:** (a) `Klik na telefon (web)` prebačen u
 **Secondary action** · (b) tag id 18 obrisan iz GTM-a · (c) 301 slegnute posle
 migracije · (d) 20–30 **pravih** formi izmereno na očišćenoj seriji.

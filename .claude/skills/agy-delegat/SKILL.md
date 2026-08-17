@@ -186,7 +186,7 @@ Claude poziva, redosled je kontrolisan.
 | Datum | Posao | Rezultat |
 |---|---|---|
 | ~2026-08-12 | Audit celog vault-a | `analiza_vaulta_i_mana.md` — našao inflaciju `generate_lead`, `live-export.sh` gallery bug, OAuth istek na 7 dana, `ekopodneploce.rs` u sitelinkovima, isključene taksonomijske sitemape, `llms.txt` kao izgubljeno vreme |
-| 2026-08-12 | Pre-flight checklist za 24.08 (87 fajlova) | `migracija/2026-08-12-preflight-checklist-24-08.md` — 19 rizika, 11 ručnih radnji, 6 konflikata |
+| 2026-08-12 | Pre-flight checklist za 24/25.08 (87 fajlova) | `migracija/2026-08-12-preflight-checklist-24-08.md` — 19 rizika, 11 ručnih radnji, 6 konflikata |
 
 Oba su našla stvari koje Claude audit sa tri paralelna Explore agenta
 (`~/.claude/plans/pro-i-kroz-ceo-vault-sharded-otter.md`, 2026-08-07) nije.

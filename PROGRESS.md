@@ -1,10 +1,15 @@
 # SEO Progress — Antasline lokalni build
 
-> 🔴 **GO-LIVE: PON 2026-08-24** (M pomerio nedelju ranije 2026-08-10, bilo 31.08).
-> Content freeze **NED 16.08** · gate pregled **PET 21.08** · rezerva samo vikend 22–23.08.
-> Svi raniji rokovi „pre 31.08" sada znače **pre 21.08**.
+> 🟢 **GO-LIVE: UTO 2026-08-25** (M pomerio dan kasnije 2026-08-17, bilo PON 24.08;
+> pre toga 31.08 → 24.08 odlukom 2026-08-10).
+> 🔴 **Content freeze PONOVO OTVOREN 2026-08-17: 16.08 → ČET 20.08** (M odluka, ista sesija) —
+> da materijali koji su propustili prvi freeze još uđu. Gate pregled **PET 21.08 nepromenjen**;
+> rezerva je **vikend 22–23.08 + PON 24.08 (rezervni radni dan)**.
+> 🔴 Posle 20.08 obavezno: **ponovni full regression sweep** (baseline 13.08 prestaje da
+> važi), **nov backup builda**, a ako se promeni slug — i regeneracija `.htaccess` 301 drafta.
+> Svi raniji rokovi „pre 31.08" i dalje znače **pre 21.08** — rokovi M odluka se NISU pomerili.
 
-> **Plan projekta:** [[2026-07-06-MASTER-PLAN-V2]] (5 workstream-ova, migracija **2026-08-24**, gate kriterijumi) — stari [[2026-07-02-MASTER-PLAN-DO-LIVE]] je superseded.
+> **Plan projekta:** [[2026-07-06-MASTER-PLAN-V2]] (5 workstream-ova, migracija **2026-08-25**, gate kriterijumi) — stari [[2026-07-02-MASTER-PLAN-DO-LIVE]] je superseded.
 
 ## Urađeno
 
@@ -41,7 +46,7 @@
 
 - ✅ `[cpanel-live]` Pre-flight infrastruktura (UŽIVO, read-only) — disk prostor rizik, JetBackup nedostupan iz shell-a
 - ✅ `[claude-code]` W3 — `live-export.sh` gubio 145 od 170 galerijskih slika + prefiks baze ispravljen (`wpGs_`→`wpgs_`) — [[dnevnik/2026-08-12-live-export-galerije-prefiks]]
-- ✅ `[claude-code]` ALATI — Antigravity (`agy`) kao delegat za masovno čitanje + pre-flight checklist za 24.08 — [[dnevnik/2026-08-12-agy-antigravity-delegat]]
+- ✅ `[claude-code]` ALATI — Antigravity (`agy`) kao delegat za masovno čitanje + pre-flight checklist za 24/25.08 — [[dnevnik/2026-08-12-agy-antigravity-delegat]]
 - ✅ `[claude-code]` BLOK C — Vizuali referenci i ikonice kartica (homepage, O nama, padel, maloprodaja) — [[dnevnik/2026-08-12-vizuali-reference-ikonice]]
 - ✅ `[claude-code]` W1 — Alt tekst na slikama proizvoda: 66 priloga popunjeno, 159 dekorativnih ikonica namerno ostavljeno prazno — [[dnevnik/2026-08-12-alt-tekst-slike-proizvoda]]
 - `[claude-code]` W1 — red čekanja zatečen prazan, dva zastarela statusa ispravljena
@@ -77,7 +82,17 @@
 > i to je 12.08 stvarno dovelo do pogrešnog izbora zadatka. **Aktuelno stanje je
 > isključivo ovaj blok; sve ispod „Istorijske stavke" je arhiva, ne red čekanja.**
 
-**Do content freeze-a (NED 16.08) — poslednji prozor za izmene sadržaja:**
+**Sadržajni prozor 17–20.08 (freeze ponovo otvoren M odlukom 17.08) — šta može da uđe:**
+- 🟡 **Sve stavke ispod čekaju MATERIJAL OD MIROSLAVA, ne vreme.** Ako materijal ne stigne
+  do 20.08, fallback koji je već aktivan ostaje trajno: trava-u-boji poreklo · F2.8 mapiranje
+  veštačke trave · 14 proizvoda bez fotke · 4 reference na `/o-nama/` · P3 metadesc (2699/4318/1094)
+  · brisanje menija 67 · definicija „starog formata" za 5119.
+- 🔵 **Jedina stavka koja NE čeka M:** `15793` legacy `productColors-block` markup
+  (swatch „Silk Black" renderuje prazan prostor) — čist CC posao, lokalizovan na jednu stranicu,
+  bez promene sluga.
+- 🔴 Posle poslednje izmene: **ponovni regression sweep pre gate-a 21.08** + nov backup builda.
+
+**Zatvoreno pre prvog freeze-a (16.08):**
 - Ništa nije obavezno otvoreno. W1 (red A 33/33, Polish 1–4, S1–S8, Court builder,
   alt tekst ✅ 12.08, FAZA 1 vizuali ✅ 13.08, FAZA 2 layout/CSS/UI ✅ 13.08,
   **ergonomske podloge — 8 proizvoda ✅ 14.08**) i W2 (20/20 content plan) su iscrpljeni.
@@ -103,12 +118,12 @@
   · analiza [[seo/2026-08-13-kanibalizacija-konsolidacija-plan]] §3.1 #posle-live
 - 🟡🆕 **Ads — pre reaktivacije pauziranih kampanja (M):** 3 oglasa + 2 asseta vode na **tuđi
   domen `ekopodneploce.rs`** (kršenje Google smernica), **11 URL-ova** na mrtve `/home/…`
-  putanje, 4 na `http://`. Jedina ENABLED kampanja (ECOTILE) je čista → **ne blokira 24.08**,
+  putanje, 4 na `http://`. Jedina ENABLED kampanja (ECOTILE) je čista → **ne blokira 25.08**,
   blokira reaktivaciju i 4.4. §2 iste analize
 - 🔵 Sitno, nije odobreno: meni stavka **17424 nema naslov** (prazan red u „Cene" segmentu).
   (Drugi deo ove stavke — `ergonomske-podloge-2` na čist slug — zatvoren 13.08.)
 
-**N7' (17–21.08), freeze — samo migraciona priprema:**
+**N7' (17–20.08 sadržaj + migraciona priprema, 21.08 gate):**
 - W3 **3.10** — pre-migration checklist §A do kraja → [[migracija/2026-08-10-pre-migration-checklist]]
 - ✅ **Dry-run `build-staging-package.sh` — IZVRŠEN 13.08.** Exclude pravila od 10.08 **rade**
   (preflight rizici **#1 i #4** zatvoreni: ni mail-logger, ni `mail-log.txt`, ni ijedan od **32**
@@ -128,15 +143,19 @@
 - 🔴 **PET 21.08 — gate pregled.** Od 11 stavki otvorena je još samo **LCP**
   (blokirano na produkciju, ide kao svestan rizik).
 
-**PON 24.08 — migracija (3.11):** koraci u checklisti §B. Uslov za pokretanje:
+**PON 24.08 — 🆕 rezervni radni dan (M odluka 17.08).** Ako gate 21.08 padne — popravka
+ide ovde, bez pomeranja celog datuma. Ako je čisto — B1 priprema: svež live backup,
+provera OAuth tokena, `build-staging-package.sh full`, rsync postavka.
+
+**UTO 25.08 — migracija (3.11):** koraci u checklisti §B. Uslov za pokretanje:
 Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam tu").
 
-**Posle live-a (25.08+):** 3.12 post-live monitoring · 5.7 verifikacija merenja ·
+**Posle live-a (26.08+):** 3.12 post-live monitoring · 5.7 verifikacija merenja ·
 4.10 final URL audit · zatim W6 (social), Meta/LinkedIn tagovi, Display remarketing.
 
 **Čeka Miroslava** — puna lista u sekciji Blokeri; pred gate su bitni:
 `Klik na telefon (web)` → Secondary · pauziranje 6 BROAD reči · OAuth *Publish app*
-(inače token pada baš 24.08) · brisanje GTM taga id 18 · Enhanced Conversions toggle.
+(inače token pada baš oko 25.08) · brisanje GTM taga id 18 · Enhanced Conversions toggle.
 
 ---
 
@@ -150,7 +169,7 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 - 🟢 **Ikonice menija — M ODLUČIO 2026-08-13: ne vraćaju se pre live-a.** Uklanjanje od 12.08 je potvrđeno kao namerno; 79 SVG priloga i `uploads/meni-ikonice/` ostaju u medijateci nevezani ni za jednu `nav_menu_item` stavku (rollback moguć posle live-a). Meni ide u produkciju kao čist tekst. Dokumentacioni deo stavke ispod ostaje otvoren (nedostajući unosi za 12.08 rad).
 - 🟡🆕 **Izmene builda od 12–13.08 koje nigde nisu evidentirane — nađene tek regression sweep-om (2026-08-13).** Sweep je pokazao **−118 slika na svakoj stranici**; uzrok je **uklanjanje ikonica iz mega menija 12.08**, o kome ne postoji nijedan unos ni u [[DNEVNIK-NAPRETKA]] ni ovde — jedini trag je ime backup fajla `antasline_local_2026-08-12_pre-uklanjanje-meni-ikonica.sql`. Isto važi za još 4 backup-a od 12.08 (`_pre-draft-5455`, `_pre-bergo-varijacije`, `_pre-15480-rebuild`, `_pre-stari-format-stranice`) i za **FAZU 1 od 13.08**, čiji je ledger unos završio **na dnu** `DNEVNIK-NAPRETKA.md` umesto na vrhu (fajl je newest-on-top) pa je bio nevidljiv — prenet u „Urađeno" tabelu 13.08. **Zašto je bitno 3 dana pred freeze:** build je jedini izvor istine za migraciju, a ono što nije zapisano ne može se ni proveriti ni vratiti; 79 SVG ikonica (`uploads/meni-ikonice/`) sada stoji u medijateci nevezano ni za jednu `nav_menu_item` stavku. **Ne blokira migraciju.** #ceka-miroslav — potvrditi da je uklanjanje ikonica bila namerna odluka (poklapa se sa #ceka-miroslav stavkom od 06.08 „ikonice za meni Miroslav sam bira") i da li ikonice treba vratiti pre live-a ili se skidaju trajno.
 - 🟡 **FTP lozinka — IZMEŠTENA VAN VAULT-A 2026-08-13 (M zahtev, isti dan).** Nađena u **dva** fajla, ne jednom (`ftp-upload-chunks.sh` + `ftp-upload-resume.sh`, oba linija 7/8, verzionisana od 06.08). Sada u `C:\Users\Miroslav\antasline-ftp-creds.txt` (van repo stabla — git ga ni ne vidi), obe skripte ga `source`-uju preko `FTP_CREDS_FILE` sa podrazumevanom `~` putanjom i **tvrdo padaju sa `exit 1`** pre ijednog poziva ako fajla nema ili ne definiše `FTP_CREDS`. Usput: hardkodiran host → `$HOST`, a `ftp-upload-resume.sh` je imao i hardkodiran naziv arhive od 06.08 → sada prvi argument. Provereno: `grep` po celom radnom stablu ne nalazi lozinku nigde, učitavanje očuvalo specijalne znakove (`$$`, `&^`).
-  🔴 **Ostaje otvoreno i traži M: izmeštanje NE briše lozinku iz git istorije** (`.git/` je i dalje ima, commit-ovi od 06.08 nadalje, a vault se sinhronizuje na hosting). Jedina prava sanacija je **promena FTP lozinke u cPanel-u** — preporuka: posle migracije 24.08, da se ne dira kanal prenosa pred sam prenos. Prepisivanje git istorije se **ne preporučuje** (vault ima 3 površine i Obsidian Git auto-sync — rewrite bi razbio sve tri). #ceka-miroslav
+  🔴 **Ostaje otvoreno i traži M: izmeštanje NE briše lozinku iz git istorije** (`.git/` je i dalje ima, commit-ovi od 06.08 nadalje, a vault se sinhronizuje na hosting). Jedina prava sanacija je **promena FTP lozinke u cPanel-u** — preporuka: posle migracije 25.08, da se ne dira kanal prenosa pred sam prenos. Prepisivanje git istorije se **ne preporučuje** (vault ima 3 površine i Obsidian Git auto-sync — rewrite bi razbio sve tri). #ceka-miroslav
 - ⚪🆕 **JetBackup snapshot status — nedostupan iz shell-a (2026-08-12).** `uapi Backup list_backups` → nalog nema feature "backup"; `JetBackup5::wrapper` traži nedokumentovan format (3 pokušaja); nema lokalnih artifact fajlova. Poslednji datum/retencija/off-site status i dalje **nepotvrđen** — treba proveriti kroz WHM/cPanel UI (Backup Wizard/JetBackup stranica), API odavde ne daje odgovor. #ceka-miroslav ili sledeća sesija sa UI pristupom.
 - 🔴🆕 **Google Cloud app je u statusu *Testing* → OAuth pada svakih 5–7 dana (2026-08-12, potvrđeno i lekcijom 2026-08-11).** Konektor za Ads/GA4 gubi autorizaciju (`invalid_grant`). Ako padne na dan migracije, otpadaju tačke 3 i 10 iz pre-flight checklist-a (OAuth provera i Ads Final URL fix). Trajno rešenje je **`Testing` → `Published`** u Google Cloud konzoli, ne pokretanje `authorize_oauth.py` u panici na dan migracije. #ceka-miroslav — ~10 min klikanja u konzoli.
 - 🟡🆕 **Headless `agy` (`-p`) još ne radi — fale dozvole za čitanje (2026-08-12).** `permissions.allow` u `~/.gemini/antigravity-cli/settings.json` ima `command(...)` unose (dodato, potvrđeno da sintaksa radi), ali ne i `read_file(*)`, `list_dir(*)`, `grep_search(*)`, `find_by_name(*)`. Claude Code harness blokira i `--dangerously-skip-permissions` i dalje širenje dozvola drugom agentu, pa ovo mora M ručno. Bez toga `agy` radi **samo kroz TUI** (M nalepi prompt i odobri) — što je i dalje upotrebljivo, samo se ne može skriptovati. #ceka-miroslav
@@ -166,9 +185,9 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 - 🟡🆕 **Je li pauza kampanje „Podloge za terase i bazene" namerna? (2026-08-11)** Potrošnja je pala **−62%** (6.992 → 2.643 RSD) tokom nedelje 04–10.08, pa je kampanja pauzirana (zatečeno današnjim 4.10 auditom). Ako pauza nije namerna, gubimo ~158 klikova nedeljno na najjeftinijem CPC-u u nalogu (16,73 RSD vs 101,13 na ECOTILE). #ceka-miroslav.
 - 🟡🆕 **GSC UI — 3 sitna koraka čekaju Miroslava (2026-08-11).** Nijedan ne blokira migraciju, svi traže pristup Search Console UI-ju (API ih ne pokriva): (1) obrisati zastareo **`http://www.antasline.com/sitemap_index.xml`** unos — submit-ovan **2018-04-09**, Google ga i dalje povlači (poslednji put 10.08); (2) pogledati **3 + 4 upozorenja** na oba sitemap-a — Sitemaps API vraća samo brojač, ne i tekst; (3) potvrditi da su **email alerti uključeni** (profilni meni → *Search Console preferences*) — na dan migracije je alert o skoku indexing grešaka prvi signal da 301 blok nije proradio. v. [[migracija/2026-08-10-pre-migration-checklist]] §A.
 - 🔴🆕 **2 oglasna URL-a vode na TUĐI domen `ekopodneploce.rs` — odluka čeka Miroslava (2026-08-11).** Nađeno final URL auditom: `http://www.ekopodneploce.rs/` (3 oglasa u pauziranoj kampanji „Ecotile kampanja") i `http://www.ekopodneploce.rs/proizvodi/E%20500-7/E500-7.html` (sitelinkovi „Industrijski podovi" + „Podovi za magacine", nivo kampanje). Danas ne troše ništa jer je kampanja pauzirana, ali **301 mapa tu ne pomaže** (nije naš domen) — ako se kampanja ikad reaktivira, plaćen klik odlazi sa antasline.com. Takođe `http://`, ne `https://`. #ceka-miroslav: prepisati na antasline.com parnjak ili obrisati te objekte. **Ne blokira migraciju.** v. [[migracija/2026-08-11-ads-final-url-audit]] §2.2.
-- 🟡🆕 **OAuth consent screen — *Publish app* čeka Miroslava (2026-08-11).** Token je danas bio mrtav (`invalid_grant`, osvežen 06.08 → pao 11.08 = 5 dana) i re-autorizovan; ali uzrok je sistemski: u statusu *Testing* Google gasi refresh token svakih **7 dana**. 🔴 **Znači da će pući i 24.08**, kad se radi 4.10 i verifikacija konverzija. Trajno rešenje, 2 minuta: Cloud Console → APIs & Services → OAuth consent screen → **Publish app** (*In production*); u skriptama se ne menja ništa. Ako se ne uradi — ponovna autorizacija je **obavezna ujutru 24.08** (dodata kao stavka B1 u [[migracija/2026-08-10-pre-migration-checklist]]). GA4/GSC ovo ne osećaju (servisni nalog). v. [[migracija/2026-08-11-ads-final-url-audit]] §5.
-- 🆕 **Rank Math Redirections posle live-a — odluka čeka Miroslava (2026-08-11).** Poređenje `.htaccess` vs Rank Math urađeno (v. Urađeno tabela vrh). Preporuka: **do 24.08 ne dirati ništa** (uključivanje modula 5 dana pred freeze = nov modul + nove DB tabele + nov kod na svakom zahtevu, rizik bez dobitka), a **posle live-a** uključiti `redirections` + `404-monitor` u `rank_math_modules` da M sam rešava nove 404-ove kroz UI umesto ručnog pregleda serverskog loga (stavka B7 checkliste). Uz to ide 🔴 tvrdo pravilo: `.htaccess` = zamrznut migracioni skup, Rank Math = sve posle 24.08, **isti URL nikad na oba mesta** (`.htaccess` se izvršava prvi i tiho pobeđuje, pa pravilo u UI-ju izgleda „ne radi" bez ijedne poruke). #ceka-miroslav: „upiši u plan" ili „ostavi" — analiza je gotova, upis u [[migracija/2026-08-10-pre-migration-checklist]] §B7 i master plan 3.12 **namerno nije izvršen** bez odluke. **Ne blokira migraciju.** v. [[dnevnik/2026-08-11-htaccess-301-reverifikacija]].
-- 🔴🆕 **ROKOVI SU OD 2026-08-10 NEDELJU KRAĆI (go-live 24.08).** Svaka stavka ispod koja kaže „pre 31.08" znači **pre 21.08**. Raspored po tipu odluke:
+- 🟡🆕 **OAuth consent screen — *Publish app* čeka Miroslava (2026-08-11).** Token je danas bio mrtav (`invalid_grant`, osvežen 06.08 → pao 11.08 = 5 dana) i re-autorizovan; ali uzrok je sistemski: u statusu *Testing* Google gasi refresh token svakih **7 dana**. 🔴 **Znači da će pući i oko 25.08**, kad se radi 4.10 i verifikacija konverzija. Trajno rešenje, 2 minuta: Cloud Console → APIs & Services → OAuth consent screen → **Publish app** (*In production*); u skriptama se ne menja ništa. Ako se ne uradi — ponovna autorizacija je **obavezna ujutru 25.08** (dodata kao stavka B1 u [[migracija/2026-08-10-pre-migration-checklist]]). GA4/GSC ovo ne osećaju (servisni nalog). v. [[migracija/2026-08-11-ads-final-url-audit]] §5.
+- 🆕 **Rank Math Redirections posle live-a — odluka čeka Miroslava (2026-08-11).** Poređenje `.htaccess` vs Rank Math urađeno (v. Urađeno tabela vrh). Preporuka: **do 25.08 ne dirati ništa** (uključivanje modula 5 dana pred freeze = nov modul + nove DB tabele + nov kod na svakom zahtevu, rizik bez dobitka), a **posle live-a** uključiti `redirections` + `404-monitor` u `rank_math_modules` da M sam rešava nove 404-ove kroz UI umesto ručnog pregleda serverskog loga (stavka B7 checkliste). Uz to ide 🔴 tvrdo pravilo: `.htaccess` = zamrznut migracioni skup, Rank Math = sve posle 25.08, **isti URL nikad na oba mesta** (`.htaccess` se izvršava prvi i tiho pobeđuje, pa pravilo u UI-ju izgleda „ne radi" bez ijedne poruke). #ceka-miroslav: „upiši u plan" ili „ostavi" — analiza je gotova, upis u [[migracija/2026-08-10-pre-migration-checklist]] §B7 i master plan 3.12 **namerno nije izvršen** bez odluke. **Ne blokira migraciju.** v. [[dnevnik/2026-08-11-htaccess-301-reverifikacija]].
+- 🔴🆕 **ROKOVI SU OD 2026-08-10 NEDELJU KRAĆI (go-live 25.08, pomereno 17.08).** Svaka stavka ispod koja kaže „pre 31.08" znači **pre 21.08**. Raspored po tipu odluke:
   - ~~**do 15.08** — rollback plan~~ ✅ **ZATVOREN 2026-08-11, 4 dana pre roka** (sva 3 pitanja: JetBackup 5 dnevni/off-site/90 dana · nema CDN/edge sloja, samo LiteSpeed · M odluka „migracija samo kad sam tu"). 🔴 **Nosi obavezu za dan migracije:** ne pokretati 3.11 ako M nema ~6h slobodnih ispred sebe — inače se migracija pomera. v. [[migracija/rollback-plan]] §4/§5
   - **do 16.08 (content freeze)** — sve što menja sadržaj sajta: trava-u-boji poreklo · F2.8 mapiranje veštačke trave · 14 proizvoda bez fotke · brisanje menija 67 · P3 metadesc · Gemini žig kadar 5 + tablica kombija · YouTube handle
   - **do 21.08 (gate)** — Enhanced Conversions Ads UI toggle · ECOTILE budžet · odobrenje za live kontakt-forma fix · svež live backup (`[cpanel-live]`)

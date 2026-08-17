@@ -54,7 +54,7 @@ azurirano: 2026-08-14
 > shortcode markup iz reimportovanih postova. Njegov CSS (437 KB, render-blocking)
 > je otvoren LCP bloker, v. [[CLAUDE]] §7.6.
 
-## Live sajt (do migracije 2026-08-24)
+## Live sajt (do migracije 2026-08-25)
 
 - Domen: antasline.com
 - Tema: **Kallyas** (menja se za WoodMart na dan migracije)
