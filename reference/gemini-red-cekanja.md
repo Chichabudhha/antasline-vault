@@ -152,10 +152,14 @@ scene-fotografije (teren/vrt), ne izolovan proizvod na beloj pozadini kao
 `reference/standard-slika-proizvoda.md` traži. Kandidat za kasniji Gemini
 enhance prolaz ako se odluči da vredi ulagati dalje u ovih 6.
 
-16919 (EXPONA Living Clic) · 16990/16991
-(tribina/stolica) · 16998/17001/17002/17003 (generička sportska oprema) —
-**preostalih 7/13, i dalje čeka pravi izvor.**
-Isti spisak i razlog kao [[PROGRESS]] Blokeri "F2.9 rep".
+~~16919 (EXPONA Living Clic)~~ — **zatvoreno 2026-08-06** (attach 17594
+`16919-main.webp` + 3 galerijske enterijer slike).
+
+16990/16991 (tribina/stolica) · 16998/17001/17002/17003 (generička sportska
+oprema) — **preostalih 6/13**. 🔴 **Draftovani 2026-08-17** (M odluka: bez
+fotografije se ne ide u produkciju); vraćaju se na `publish` kad **M12**
+(dobavljači, pregovori u toku) da brend i fotografije.
+→ [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
 
 ## Veze
 - `.claude/skills/gemini-vizuali/SKILL.md`

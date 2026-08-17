@@ -145,6 +145,15 @@ azurirano: 2026-08-17
 > specifikacija, FAQ + FAQPage schema), hub prevezan u oba pravca, naslov kategorije pomeren
 > ka „asortiman i modeli" zbog anti-kanibalizacije sa hub-om (poz. 3,8).
 > 12 URL-ova 200/1×H1/0 grešaka + 4 regresione čiste.
+> ✅ **Sadržajne odluke od 17.08 izvršene istog dana (2026-08-17).** Poslednji sadržajni posao
+> pre novog freeze-a 20.08: **F2.8** zatvoren (kartice Highlands/Nature/Put/Springgrass na
+> `16673` → proizvod `16906` Radici Landscape) · **F2.9 rep** zatvoren (**6**, ne 14, proizvoda
+> bez fotografije → `draft`; 7 sa spiska je 06–07.08 dobilo slike uz M odobrenje, spisak u
+> PROGRESS-u bio zastareo 10 dana) · **W7 F3** zatvoren (stari meni term **67**, 39 stavki,
+> obrisan — nije bio dodeljen nijednoj lokaciji). Hub `16676` saniran da draft ne ostavi 4×404.
+> 🔴 Ponovni full regression sweep ide **posle poslednje** izmene pre gate-a, ne posle ove sesije.
+> → [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
+>
 > 🟢 Sva tri pitanja za M zatvorena istog dana: generička fotka ostaje na La Ola / La Ola
 > Hygienic (ergomat.com 403, dopuna iz spec-a nije bila izvodljiva) · namene SuperSoft
 > Smooth/Office ostaju kako su · kategorija se ne dodaje u meni. **Bez otvorenih repova.**

@@ -5,6 +5,23 @@ azurirano: 2026-08-17
 
 # Naučene lekcije (tehnički gotchas)
 
+## Odluka se donosi nad bazom, ne nad zapisom u vault-u (2026-08-17)
+
+M odluka „14 proizvoda bez fotografije → draft" bila je pisana nad spiskom iz
+[[PROGRESS]] poslednji put ažuriranim **30.07**. Provera baze pred izvršenje:
+spisak nabraja **13** ID-eva (ne 14), a **7 ih je u međuvremenu dobilo sliku** —
+06. i 07.08, pri čemu je 6 od tih 7 rešeno **eksplicitnim M odobrenjem** generičkih
+dobavljačkih fotografija. Doslovno izvršenje bi ugasilo 7 ispravnih proizvoda.
+
+Isti obrazac kao sistemski nalaz od 13.08 („zapisane GSC brojke tri puta netačne
+→ pre svake odluke ide svež pull"). **Pravilo se proširuje sa brojki na spiskove
+ID-eva:** pre izvršenja bilo koje bulk izmene (draft, brisanje, prevezivanje),
+regeneriši spisak upitom nad bazom i uporedi sa zapisom — razlika je nalaz, ne šum.
+
+Prateće pravilo: **draft proizvoda sa internim linkovima traži sanaciju hub
+stranice u istom koraku**, inače se 404 pojavi tek u sledećem regression sweep-u.
+Ovde: `wp_update_post` na 6 proizvoda + prepis 4 linka na `16676` u jednoj skripti.
+
 ## Verifikacija na zaostalom fajlu = lažno zeleno (2026-08-17)
 
 `curl -o /tmp/p.html … ` je vratio **`HTTP: 000`** (Apache nije radio), ali su

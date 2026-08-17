@@ -7,11 +7,29 @@ azurirano: 2026-08-17
 
 ## 🆕 4 odluke od 2026-08-17 (M) — sadržajni prozor 17–20.08
 
-> 🔴 **Upisane su samo odluke — izvršenje je namerno odloženo na sledeću sesiju** (M zahtev,
-> „akciju radimo u sledećoj sesiji"). Sve četiri menjaju sadržaj, pa moraju biti izvršene
-> **pre novog content freeze-a (ČET 20.08)**, a posle njih ide ponovni regression sweep.
+> ✅ **SVE ČETIRI IZVRŠENE 2026-08-17** (ista večer, sledeća sesija po M zahtevu) →
+> [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]. Backup pre izvršenja:
+> `antasline_local_2026-08-17_pre-odluke-17-08.sql` (36,9 MB).
+> 🔴 **Odstupanje kod odluke 1** — spisak je bio zapis od 30.07 i zastareo: nabraja **13**
+> ID-eva (ne 14), a **7 je u međuvremenu dobilo sliku**, pa je draftovano **6**. Detalji u redu 1.
+> 🔴 Ponovni regression sweep ide **posle poslednje** sadržajne izmene pre gate-a 21.08,
+> ne posle ove sesije — prozor je otvoren do 20.08.
 
-### 1. 14 proizvoda bez fotografije → **draft**
+### 1. ~~14~~ **6** proizvoda bez fotografije → **draft** ✅ izvršeno 17.08
+
+> 🔴 **Izvršeno nad 6, ne 13/14.** Provera baze pokazala je da je spisak ispod zapis od
+> **30.07**: nabraja **13** ID-eva (brojka „14" je netačna), a **7 ih je u međuvremenu dobilo
+> sliku** — `16919` (attach 17594, 06.08) i `16893`/`16899`/`16900`/`16901`/`16902`/`16906`
+> (attach 17681–17686, 07.08, uz **eksplicitno M odobrenje** generičkih dobavljačkih fotki;
+> v. [[reference/gemini-red-cekanja]], gde je taj deo spiska već prekrižen).
+> Draftovano je **6 koji stvarno nemaju nijednu sliku**: `16990` · `16991` · `16998` ·
+> `17001` · `17002` · `17003` — sve generička sportska oprema koja čeka **M12** (dobavljači).
+> Draftovanje svih 13 bi ugasilo 7 proizvoda sa slikama, među njima 6 koje je M sam odobrio.
+> 🟡 **#ceka-miroslav:** potvrditi da tih 7 ostaje `publish`, ili reći da i oni idu u draft.
+> Usput sanirana hub stranica **16676**: 4 interna linka ka draftovanim → `/kontakt/?form-naslov=`
+> (kartice zadržane — oprema je i dalje u ponudi), 0 preostalih 404.
+
+**Original odluke (spisak zastareo):**
 **Odluka:** proizvodi koji nemaju pravu fotografiju idu u `draft`, ne u produkciju bez slike.
 **Spisak (14, iz F2.9 repa):** `16893` Condor shock-pad · `16899` rugbi · `16900` golf ·
 `16901` hokej · `16902` Multisport MX · `16906` pejzažne površine (5× Radici tehnička trava
@@ -32,7 +50,12 @@ zatvoren — pretpostavka „Condor" je bila netačna.
 🔴 **Praktična posledica:** boje se ne poklapaju 1:1 sa lokalnim Condor Schools/Playgrass
 setom (7 vs 6 boja, delimično preklapanje) — pri izvršenju ne mešati ta dva seta.
 
-### 3. F2.8 — 4 modela veštačke trave se vezuju za **Radici Landscape**
+### 3. F2.8 — 4 modela veštačke trave se vezuju za **Radici Landscape** ✅ izvršeno 17.08
+
+> Kartice na `16673` prevezane na proizvod **`16906`** „Radici veštačka trava za pejzažne
+> površine" (`/proizvod/radici-vestacka-trava-za-pejzaz/`), verifikovano 4 linka / 200 / 1×H1.
+> 🔵 Korekcija: kartice **nisu vodile na kategoriju** kako je zapisano — uopšte nisu imale `<a>`.
+
 **Odluka:** Highlands · Nature · Put · Springgrass (kartice na `16673`) vezuju se za postojeći
 **Radici Landscape**, ne prave se 4 nova proizvoda.
 **Zašto:** to su Condor Grass dekorativni modeli za koje u katalogu **ne postoji nijedan
@@ -40,7 +63,12 @@ proizvod**; pravljenje 4 nova proizvoda bez fotografija i specifikacija dodalo b
 kartice (v. odluka 1). Radici Landscape je najbliža realna namena (pejzažne površine).
 🔴 Kartice trenutno vode na kategoriju — pri izvršenju prevezati na proizvod.
 
-### 4. Stari meni **67** se **briše**
+### 4. Stari meni **67** se **briše** ✅ izvršeno 17.08
+
+> `wp_delete_nav_menu(67)` — 39 stavki obrisano zajedno sa `nav_menu_item` postovima.
+> Pre brisanja potvrđeno da nije dodeljen nijednoj lokaciji (`theme_mods_woodmart-child`
+> → `main-menu` = **390**). Ostaju **390** (aktivan, 76 stavki) i **280** „Utility meni".
+
 **Odluka:** `nav_menu` term **67** („O firmi", 39 stavki) se briše. Nov meni je term **390**.
 **Zašto:** stajao je kao rollback dok M ne potvrdi da nova navigacija radi kako treba — potvrđeno.
 Term **28** i 10 praznih Porto menija su obrisani još 2026-07-30.

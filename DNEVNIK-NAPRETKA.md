@@ -1,3 +1,11 @@
+## 2026-08-17 [claude-code] SADRŽAJ — 3 odluke od 17.08 izvršene (draft · F2.8 · meni 67) ✅
+
+🔴 Glavni nalaz nije izvršenje nego **zastareo spisak**: odluka „14 proizvoda bez fotografije → draft" pisana je nad zapisom od 30.07, a spisak nabraja **13** ID-eva od kojih je **7 u međuvremenu dobilo sliku** (`16919` 06.08 · `16893`/`16899`–`16902`/`16906` 07.08, uz eksplicitno M odobrenje generičkih dobavljačkih fotki). Draftovano je zato **6 koji stvarno nemaju nijednu sliku** — sve generička sportska oprema koja čeka M12. Usput sanirana hub stranica 16676 (4 linka → `/kontakt/?form-naslov=`, 0 preostalih 404). **F2.8**: kartice Highlands/Nature/Put/Springgrass na 16673 prevezane na `16906` Radici Landscape (nisu vodile na kategoriju kako je zapisano — uopšte nisu imale link). **Meni 67** („O firmi", 39 stavki) obrisan, nije bio dodeljen nijednoj lokaciji; ostaju 390 (aktivan) i 280. Backup `_pre-odluke-17-08.sql` (36,9 MB), verifikovano 5 URL-ova 200/1×H1/0 grešaka.
+
+→ [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
+
+---
+
 ## 2026-08-17 [claude-code] W1 quick-win — 15793: legacy `productColors-block` swatch popravljen ✅
 
 Stranica `/zastitne-podloge-za-travu-i-plocnike/` (15793) bila je jedina u buildu sa Porto/Kallyas markupom — `.color-square` ne postoji ni u jednoj temi (potvrđeno grep-om), pa je swatch „Silk Black" renderovao prazan prostor; zamenjen samostalnim inline swatch-om, usput popravljen goli `<h2>` i dupli „Galerija" eyebrow. Verifikovano 200 / 1×H1 / 1 JSON-LD + 2 regresione stranice čiste. 🔴 Glavni gotcha nije bio u kodu nego u verifikaciji — `curl` je vratio `HTTP 000` (Apache ugašen) a `grep` ispisao uredne brojke iz zaostalog `/tmp/p.html` od ranije sesije.
