@@ -1,3 +1,58 @@
+## 2026-08-17 [claude-code] W3 3.10 — Noćni backup nije radio 3 dana: korumpirane Aria sistemske tabele ✅
+
+Zadatak je bio §A stavka „backup finalnog builda na 2 lokacije". Pri startu nalaz da **poslednji
+uspešan backup nije od danas nego od 14.08 03:00** — u logu nema unosa za 15., 16. ni 17.08, ni
+na `G:` ni u lokalnom `auto\backup-log.txt`. Task je jutros okinuo u 08:04:56 i pao sa
+`0xC000013A` (proces prekinut, ne greška skripte); 15–16.08 su subota/nedelja, mašina ugašena.
+
+🔴 **Pravi uzrok nije bio u skripti.** Ručno pokretanje reprodukovalo kvar: mysqld se **ruši
+u startu** (`mysqld.dmp`), pa skripta puca na „MySQL se nije pokrenuo ni posle 30 s". Start u
+prvom planu dao tačan razlog: `Table '.\mysql\db' is marked as crashed and last (automatic?)
+repair failed` → `Can't open and lock privilege tables` → `Aborting`. Uz to
+`InnoDB: Starting crash recovery`, a `ibdata1` poslednji put pisan **14.08 07:00** — XAMPP je
+ubijen gašenjem mašine.
+
+**Stanje Aria sistemskih tabela:** `mysql.db` korumpirana (`Key tree 1/2 is empty`, `error 176
+when reading datafile`) · `mysql.tables_priv` korumpirana (`Bitmap at page 0 has pages reserved
+outside of data file length`) · ~14 ostalih `marked as crashed`. **Nijedna nije AntasLine tabela**
+— InnoDB deo (sav sadržaj builda) se uredno vratio crash recovery-jem.
+
+**Popravka:** hladna kopija `mysql\data` pre ijedne izmene (448 fajlova / 217,9 MB, server ugašen
+= najsigurniji backup, popravka time potpuno povratna) → `aria_chk -r -f mysql\*.MAI` **iz
+`data\`** (iz `data\mysql\` ne nalazi `aria_log_control`) popravio 16 tabela → za 4 koje su pale
+na `aria_sort_buffer_size` (🔴 parametar `--sort_buffer_size` se **ignoriše**, ostaje 16384)
+`aria_chk -o -f` safe-recover. `mysql.db` izgubila 3 reda (`Wrong CRC on datapage`) — bezopasno,
+XAMPP tu drži samo podrazumevane grantove za `test` bazu, root privilegije su u `global_priv`.
+
+**Verifikacija:** MySQL startovao iz prve · `CHECK TABLE` nad **svih 78** `antasline_local`
+tabela → **0 zamerki** · 8.552 posts / 104 objavljena proizvoda / 66 stranica / 47.426 postmeta /
+245 termina / 1.005 options · dump 71,93 MB (14.08 bio 71,92) — **bez gubitka**.
+🟢 **Freeze verifikovan (B1 stavka):** 0 izmena od 16.08, i na fajlovima i u bazi.
+
+🔴 **Nezavisan nalaz — gate stavka „2 lokacije" nikad nije bila ispunjena.** Skripta je birala
+**jednu** destinaciju (G:→OneDrive→lokalno), pa se serija razlivala: 10–12.08 na `C:`, 13–14.08
+na `G:`, OneDrive folder **ne postoji**. Nijedan datum nije imao dve kopije, iako to checklist
+traži od 10.08. Ista klasa greške kao `build-staging-package.sh` 13.08 („pokriveno skriptom", a
+skripta nikad nije pokrenuta).
+
+**Tri popravke u `nocni-backup.ps1`** (kopija `.bak-2026-08-17`, sintaksa provereno čista):
+(1) kopija na drugu destinaciju posle uspešnog zip-a uz proveru veličine i zasebnu rotaciju (3);
+(2) čišćenje zaostalih `_tmp` dump-ova starijih od 12h — dump se brisao samo na uspehu, zatečeno
+**13 fajlova / 751,3 MB**; (3) pri padu MySQL-a u log se upisuje rep `mysql_error.log`-a, jer je
+„MySQL se nije pokrenuo" danas koštalo pola sata dijagnostike.
+
+**Rezultat (pun run 18:08–18:36, prvi test nove logike):** zip **2.810,4 MB** → `G:` u 18:33:49,
+druga kopija na `C:\...uto\` u 18:35:59. Oba fajla **identična, 2.946.948.322 B**, arhive
+čitljive (**102.488 unosa**, dump unutra 71,9 MB), `_tmp` prazan, rotacija 13 (G:) / 3 (C:).
+🔵 Backup je **bezbednosna kopija tekućeg stanja, ne „finalni build"** — freeze je istog dana
+ponovo otvoren do 20.08, pa §A stavka ostaje otvorena do tada.
+🔵 Zapaženo: `Compress-Archive` drži celu arhivu u memoriji (~2,6 GB pika) i upisuje na kraju —
+zato fajl stoji na 0 B ~25 min. Radi, ali je krhko; zamena mehanizma **nije** dirana 4 dana pred
+gate (namerno).
+→ [[dnevnik/2026-08-17-backup-mysql-crash-pomeranje-roka]]
+
+---
+
 ## 2026-08-17 [claude-code] ODLUKE — 4 sadržajne odluke upisane (izvršenje sledeća sesija) 🟢
 
 M doneo četiri odluke koje su blokirale sadržaj, neke od 29.07. **Upisane su samo odluke —

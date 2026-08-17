@@ -17,6 +17,13 @@
 > [[dnevnik/2026-08-arhiva-progress]] · jun–jul: [[dnevnik/2026-07-arhiva-progress]]
 > · pune sesije: [[DNEVNIK-NAPRETKA]]
 
+**2026-08-17**
+
+- ✅ `[claude-code]` W3 3.10 — noćni backup nije radio 3 dana: uzrok korumpirane Aria sistemske tabele (`mysql.db`), popravljeno, 78/78 tabela čisto; „2 lokacije" nikad nije radilo — popravljeno i testirano — [[dnevnik/2026-08-17-backup-mysql-crash-pomeranje-roka]]
+- ✅ `[claude-code]` PLAN — go-live **24.08 → UTO 25.08** (M): PON 24.08 = rezervni radni dan, 24 fajla ažurirano
+- ✅ `[claude-code]` PLAN — content freeze **ponovo otvoren 16.08 → ČET 20.08** (M) + 3 obaveze koje to nosi (regression sweep, 301 draft, nov backup)
+- ✅ `[claude-code]` ODLUKE — 4 sadržajne odluke upisane (14 proizvoda → draft · Edel Grass · F2.8 → Radici Landscape · meni 67 se briše); izvršenje sledeća sesija — [[odluke/_pregled-odluka]]
+
 **2026-08-14**
 
 - ✅ `[claude-code]` W3 — Prefiks `wpGs_`→`wpgs_` zatvoren u korenu: `wp-config.php` + 16 redova u bazi + sweep 13 dokumenata + `identifikatori.md` osvežen — [[dnevnik/2026-08-14-copilot-grok-delegati]]

@@ -43,9 +43,11 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
       datum nije imao dve kopije, iako je to ova gate stavka**. Skripta sada posle uspešnog
       zip-a kopira na drugu destinaciju uz proveru veličine (rotacija 3). Kopija
       `nocni-backup.ps1.bak-2026-08-17`.
-      🔴 **Nova logika još nije prošla pun run** (run od 17.08 je startovao pre izmene) —
-      prvi pun test je backup posle freeze-a 20.08; tada i verifikovati da postoje **dva**
-      fajla istog imena i iste veličine.
+      ✅ **Nova logika PROŠLA pun run 2026-08-17 18:08–18:36:** zip 2.810,4 MB na `G:`,
+      druga kopija u `antasline-backups/auto/`, oba fajla **identična (2.946.948.322 B)**,
+      arhive čitljive (102.488 unosa, dump 71,9 MB unutra), `_tmp` prazan, rotacija 13/3.
+      🔵 Taj backup je **bezbednosna kopija tekućeg stanja, ne „finalni build"** (freeze je
+      istog dana ponovo otvoren do 20.08) — zato ova stavka i dalje stoji neštriklovana.
 - [ ] 🆕 **Posle novog content freeze-a (ČET 20.08) — obaveze koje nosi ponovno otvaranje:**
       - [ ] **ponovni full regression sweep** (`migracija/alati/regression-sweep.php`) —
             baseline od 13.08 (`analiza/2026-08-13-regression-post-faza2-*`) prestaje da važi

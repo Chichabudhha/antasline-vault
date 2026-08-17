@@ -1240,6 +1240,48 @@ require_once ABSPATH.'wp-admin/includes/taxonomy.php';
 - Ipak, alat je sačuvao pun binarni fajl lokalno (putanja data u odgovoru, `tool-results/webfetch-*.pdf`) — `Read` alat na TOJ putanji je uspešno izvukao ceo čitljiv tekst (PDF podrška ugrađena u Read, ne u WebFetch).
 - **Pravilo**: kad treba pravi tekst iz PDF URL-a, prvo `WebFetch` (da se fajl preuzme i keš-putanja dobije), zatim `Read` na vraćenu lokalnu putanju za stvarni sadržaj — ne osloniti se na WebFetch-ov tekstualni rezime za PDF-ove.
 
+## Korumpirane Aria **sistemske** tabele obaraju ceo mysqld iako su podaci netaknuti — simptom je „backup ne radi" (2026-08-17)
+
+Noćni backup builda nije radio 3 dana; skripta je prijavljivala samo „MySQL se nije pokrenuo ni
+posle 30 s". Pravi uzrok: `mysql.db` i `mysql.tables_priv` (Aria, `.MAD`/`.MAI`) korumpirane posle
+ubijanja XAMPP-a gašenjem mašine → `Can't open and lock privilege tables` → `Aborting`. **InnoDB
+podaci su bili potpuno čitavi** (crash recovery prošao, `CHECK TABLE` 78/78 bez zamerki) — pao je
+samo sloj privilegija.
+
+**Postupak (offline, server ugašen):**
+```
+# 1. hladna kopija data dir-a PRE svega (popravka time postaje povratna)
+# 2. iz C:\xampp\mysql\data  — NE iz data\mysql\, tamo ne nalazi aria_log_control
+aria_chk -r -f mysql\*.MAI
+# 3. za ono što padne na aria_sort_buffer_size:
+aria_chk -o -f mysql\db.MAI mysql\columns_priv.MAI ...
+```
+🔴 **Dve zamke:** (a) `aria_chk` se **mora** pokretati iz `data\`, inače ne vidi
+`aria_log_control` i ne može da očisti transakcione ID-eve; (b) `--sort_buffer_size` se
+**ignoriše** — ostaje 16384 i `-r` puca na „aria_sort_buffer_size is too small"; rešenje je `-o`
+(safe-recover), ne veći broj.
+🟢 Gubitak redova u `mysql.db` je na XAMPP-u bezopasan — tamo su samo podrazumevani grantovi za
+`test` bazu; root privilegije žive u `global_priv`.
+🔵 Nije jednokratno: `db.MAD-260707173248.BAK` i `db.MAD-260721115741.BAK` su ostaci automatskih
+popravki od 07.07 i 21.07.
+
+## Gate stavka može stajati kao „pokriveno skriptom" a da skripta to nikad nije radila (backup „2 lokacije", 2026-08-17)
+
+Checklist je od 10.08 tvrdio da backup builda ide **na 2 lokacije**. Kod je birao **jednu**
+destinaciju (`G:` → OneDrive → lokalno), pa se serija razlivala: 10–12.08 na `C:`, 13–14.08 na
+`G:`, OneDrive folder uopšte ne postoji. **Nijedan datum nije imao dve kopije.** Ista klasa
+greške kao `build-staging-package.sh` 4 dana ranije (exclude pravila „pokrivena", a skripta
+nikad pokrenuta).
+
+**Pravilo:** kad checklist tvrdi da nešto radi automatski, dokaz je **artefakt na disku**, ne
+red u dokumentu — nabroj fajlove i uporedi veličine. Ovde: dva fajla istog imena i **identičnih
+2.946.948.322 B**, arhive otvorene i prebrojane (102.488 unosa), pa onda ✅.
+🔵 Uz to: `Compress-Archive` drži celu arhivu u **memoriji** (~2,6 GB pika za 2,8 GB zip) i
+upisuje na kraju — ciljni fajl stoji na **0 B** ~25 min, što izgleda kao da je posao stao.
+🔴 I: rutina koja briše temp fajl samo na uspehu curi na svakom padu — zatečeno 13 dump-ova /
+751 MB.
+
+
 ## `wp-load.php` bootstrap se zaglavio na CLI pozivu (visi bez greške), Yoast ima sopstvenu keš tabelu nezavisnu od postmeta (podovi-za-terase fix, 2026-07-27)
 - **`require_once wp-load.php` pozvan iz gole PHP CLI skripte se zaglavio** (proces živ, `Responding: True`, CPU raste sporo ali sadržajno ne napreduje ni posle nekoliko minuta) — nijedna od mojih izmena (ni prvi `update_post_meta()` poziv) nije stigla do baze pre nego što je proces ubijen, znači zaglavilo se u samom bootstrap-u, pre mog koda. Verovatan uzrok: neki mu-plugin/plugin radi neuslovljen mrežni poziv na `init`/`plugins_loaded` (license check, update ping i sl.) koji nema internet u ovom okruženju pa čeka na timeout. **Rešenje koje je odmah proradilo**: zaobići WordPress bootstrap potpuno — čist `mysqli`/PDO na `antasline_local` bazu, bez `wp-load.php`, isti princip kao ranije utvrđeno pravilo "koristi `$wpdb->update()` direktno" samo doveden do kraja (ni `$wpdb` ne treba, samo sirov mysqli).
 - **Yoast SEO (14+) drži sopstvenu keš tabelu `wp{prefix}_yoast_indexable`** (+ `_hierarchy`, `_seo_links` itd.) sa već-izračunatim `title`/`description`/`open_graph_*`/`twitter_*` poljima po `object_id`. Frontend čita IZ OVE TABELE, ne uvek direktno iz `_yoast_wpseo_title`/`_yoast_wpseo_metadesc` postmeta. **Direktna SQL izmena postmeta bez prolaska kroz WP `save_post`/Yoast hook-ove ostavlja ovu keš tabelu zastarelu** — promena je u bazi, ali se ne vidi na sajtu dok se keš ne osveži. Simptom: `curl` na stranicu i dalje pokazuje STARI `<title>` iako `SELECT` na `_yoast_wpseo_title` postmeta pokazuje nov tekst.
