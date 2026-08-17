@@ -1,3 +1,32 @@
+## 2026-08-17 [claude-code] ODLUKE — 4 sadržajne odluke upisane (izvršenje sledeća sesija) 🟢
+
+M doneo četiri odluke koje su blokirale sadržaj, neke od 29.07. **Upisane su samo odluke —
+izvršenje je namerno odloženo** na sledeću sesiju po M zahtevu („akciju radimo u sledećoj
+sesiji"). Sve četiri menjaju sadržaj → rok je **novi content freeze, ČET 20.08**.
+
+| # | Odluka | Bila otvorena od |
+|---|---|---|
+| 1 | **14 proizvoda bez fotografije → `draft`** (16893, 16899–16902, 16906, 16990, 16991, 16998, 17001–17003, 16919) | 30.07 |
+| 2 | **„Trava u boji" poreklo = Edel Grass B.V.**, ne Condor Grass | 08.08 |
+| 3 | **F2.8: 4 modela trave (Highlands/Nature/Put/Springgrass) → `Radici Landscape`**, ne novi proizvodi | 29.07 |
+| 4 | **Stari meni term 67 se briše** (nov je 390) | 30.07 |
+
+**Logika koja povezuje 1 i 3:** obe izbegavaju praznu karticu u katalogu. Za 14 proizvoda je
+pretražena cela foto-arhiva, baza i sajtovi proizvođača — nasumična slika bi rizikovala **tuđ
+proizvod** na našoj stranici; za 4 modela trave u katalogu ne postoji nijedan proizvod, pa bi
+pravljenje novih dalo četiri kartice bez slike i specifikacije.
+
+🔴 **Zamke zabeležene za izvršenje:** (1) pre draftovanja 14 proizvoda proveriti da nijedan
+interni link ni ijedno od **73** `.htaccess` pravila ne gađa te URL-ove — draft vraća 404;
+(2) brisanje menija 67 je nepovratno na nivou baze → backup pre; (3) Edel Grass boje se **ne**
+poklapaju 1:1 sa lokalnim Condor Schools/Playgrass setom (7 vs 6 boja) — ne mešati setove.
+
+Odluka 2 usput **zatvara bloker od 08.08** i potvrđuje da je ranija pretpostavka „Condor Grass"
+bila netačna.
+→ [[odluke/_pregled-odluka]] · [[dnevnik/2026-08-17-backup-mysql-crash-pomeranje-roka]]
+
+---
+
 ## 2026-08-17 [claude-code] PLAN — CONTENT FREEZE PONOVO OTVOREN: 16.08 → ČET 20.08 🔴
 
 M odluka, ista sesija kao pomeranje go-live-a. Povod: pregled §4 pokazao da je **8 stavki

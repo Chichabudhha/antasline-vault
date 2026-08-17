@@ -134,6 +134,28 @@ prozor: **izmene što manje, što lokalnije, bez dirania slugova.**
 🔵 Posledica za današnji backup: on **više nije „finalni build"**, nego bezbednosna kopija
 tekućeg stanja (i prvi backup posle 3 dana bez ijednog). §A stavka ostaje otvorena do 20.08.
 
+### 6. Četiri sadržajne odluke upisane (izvršenje odloženo na sledeću sesiju)
+
+M doneo četiri odluke koje su blokirale sadržaj, neke od 29.07. Po njegovom zahtevu upisane su
+**samo odluke**, bez izvršenja. Rok za izvršenje: **novi content freeze, ČET 20.08.**
+
+| # | Odluka | Otvorena od |
+|---|---|---|
+| 1 | 14 proizvoda bez fotografije → `draft` (16893, 16899–16902, 16906, 16990, 16991, 16998, 17001–17003, 16919) | 30.07 |
+| 2 | „Trava u boji" poreklo = **Edel Grass B.V.**, ne Condor Grass | 08.08 |
+| 3 | F2.8: Highlands/Nature/Put/Springgrass → **`Radici Landscape`**, ne novi proizvodi | 29.07 |
+| 4 | Stari meni term **67** se briše (nov je 390) | 30.07 |
+
+Odluke 1 i 3 dele istu logiku — obe izbegavaju **praznu karticu u katalogu**: za 14 proizvoda
+nasumična slika sa generičkog sajta rizikovala bi tuđ proizvod, a za 4 modela trave u katalogu
+ne postoji nijedan proizvod pa bi novi bili bez slike i specifikacije. Odluka 2 zatvara bloker
+od 08.08 i potvrđuje da je pretpostavka „Condor Grass" bila netačna.
+
+🔴 **Zamke zabeležene za izvršenje:** (1) pre draftovanja proveriti da nijedan interni link ni
+ijedno od **73** `.htaccess` pravila ne gađa te URL-ove — draft vraća 404; (2) brisanje menija
+67 je nepovratno na nivou baze → backup pre; (3) Edel Grass boje se **ne** poklapaju 1:1 sa
+lokalnim Condor Schools/Playgrass setom (7 vs 6 boja).
+
 ## Otvorene akcije
 
 - [ ] 🔴 Provera zašto se scheduled task prekida (`0xC000013A`) ako se ponovi — danas je
@@ -141,10 +163,13 @@ tekućeg stanja (i prvi backup posle 3 dana bez ijednog). §A stavka ostaje otvo
 - [ ] Testirati novu logiku druge lokacije kroz **pun** run skripte (današnji run je startovao
       pre izmene, pa je išao po starom kodu) #claude-code
 - [ ] 9 stavki sa rokom **21.08** — sve u Ads/GSC/GTM UI, sve na M #ceka-miroslav
-- [ ] 🔴 **Materijali do ČET 20.08** (inače fallback ostaje trajno): fotke za 14 proizvoda ·
-      fotke/logotipi za 4 reference (Beobasket, BG liga 3x3, Hotel Prag, Restoran Sidro) ·
-      metadesc tekstovi za 2699/4318/1094 · poreklo „trava u boji" slika · odluka F2.8
-      (4 modela trave) · potvrda za brisanje menija 67 · šta konkretno štrči na 5119 #ceka-miroslav
+- [ ] 🟢 **IZVRŠITI 4 odluke od 17.08 — rok ČET 20.08** (odluke upisane, akcija odložena na
+      sledeću sesiju po M zahtevu): 14 proizvoda → `draft` · F2.8 kartice → `Radici Landscape` ·
+      brisanje menija 67 (backup pre, nepovratno) · Edel Grass poreklo zabeleženo, bez akcije
+      na buildu #claude-code
+- [ ] 🔴 **Još čeka M do ČET 20.08:** fotke/logotipi za 4 reference (Beobasket, BG liga 3x3,
+      Hotel Prag, Restoran Sidro) · metadesc tekstovi za 2699/4318/1094 · šta konkretno štrči
+      na 5119 #ceka-miroslav
 - [ ] `15793` legacy `productColors-block` → `al-*` dizajn sistem (jedina stavka prozora koja
       ne čeka M) #claude-code
 - [ ] Posle 20.08: ponovni regression sweep · `redirect-verify` + `htaccess-301-generate` ako se

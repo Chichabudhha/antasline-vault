@@ -1,9 +1,51 @@
 ---
 tip: odluke
-azurirano: 2026-08-13
+azurirano: 2026-08-17
 ---
 
 # Pregled odluka (i zašto)
+
+## 🆕 4 odluke od 2026-08-17 (M) — sadržajni prozor 17–20.08
+
+> 🔴 **Upisane su samo odluke — izvršenje je namerno odloženo na sledeću sesiju** (M zahtev,
+> „akciju radimo u sledećoj sesiji"). Sve četiri menjaju sadržaj, pa moraju biti izvršene
+> **pre novog content freeze-a (ČET 20.08)**, a posle njih ide ponovni regression sweep.
+
+### 1. 14 proizvoda bez fotografije → **draft**
+**Odluka:** proizvodi koji nemaju pravu fotografiju idu u `draft`, ne u produkciju bez slike.
+**Spisak (14, iz F2.9 repa):** `16893` Condor shock-pad · `16899` rugbi · `16900` golf ·
+`16901` hokej · `16902` Multisport MX · `16906` pejzažne površine (5× Radici tehnička trava
+bez imena modela) · `16990` Tribina · `16991` Stolica za tribine · `16998` Go za mali fudbal ·
+`17001`/`17002`/`17003` mreže tenis/padel/koš · `16919` Expona Living Clic.
+**Zašto:** za sve je pretražena cela foto-arhiva, baza i sajtovi proizvođača — nula pouzdanih
+pogodaka; nasumična slika sa generičkog sajta rizikuje **tuđ proizvod** na našoj stranici.
+Draft je bolji od prazne kartice u katalogu.
+🔴 **Pri izvršenju proveriti:** vode li interni linkovi ili 301 pravila na ijedan od tih
+14 URL-ova (draft = 404), i da li ijedan ulazi u `.htaccess` draft od 73 pravila.
+
+### 2. „Trava u boji" — poreklo je **Edel Grass B.V.**
+**Odluka:** potvrđeno da su slike sa live `/vestacka-trava/` sekcije „trava u boji" Edel Grass,
+**ne** Condor Grass.
+**Zašto:** poklapa se sa nalazom od 2026-08-08 (filename `EG-Colourful-*`, Edel Grass nije na
+`condor-group.eu` listi članova, u vlasništvu Oranjewoud grupe). Time je bloker od 08.08
+zatvoren — pretpostavka „Condor" je bila netačna.
+🔴 **Praktična posledica:** boje se ne poklapaju 1:1 sa lokalnim Condor Schools/Playgrass
+setom (7 vs 6 boja, delimično preklapanje) — pri izvršenju ne mešati ta dva seta.
+
+### 3. F2.8 — 4 modela veštačke trave se vezuju za **Radici Landscape**
+**Odluka:** Highlands · Nature · Put · Springgrass (kartice na `16673`) vezuju se za postojeći
+**Radici Landscape**, ne prave se 4 nova proizvoda.
+**Zašto:** to su Condor Grass dekorativni modeli za koje u katalogu **ne postoji nijedan
+proizvod**; pravljenje 4 nova proizvoda bez fotografija i specifikacija dodalo bi četiri prazne
+kartice (v. odluka 1). Radici Landscape je najbliža realna namena (pejzažne površine).
+🔴 Kartice trenutno vode na kategoriju — pri izvršenju prevezati na proizvod.
+
+### 4. Stari meni **67** se **briše**
+**Odluka:** `nav_menu` term **67** („O firmi", 39 stavki) se briše. Nov meni je term **390**.
+**Zašto:** stajao je kao rollback dok M ne potvrdi da nova navigacija radi kako treba — potvrđeno.
+Term **28** i 10 praznih Porto menija su obrisani još 2026-07-30.
+🔴 Backup baze pre brisanja (nepovratno na nivou baze).
+
 
 ## URL struktura — flat `/proizvod/`
 **Odluka:** flat `/proizvod/` umesto silo-u-URL-u.
