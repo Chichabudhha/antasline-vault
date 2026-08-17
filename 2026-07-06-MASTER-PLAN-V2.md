@@ -354,6 +354,7 @@ W4 4.11/4.12 (Meta/LinkedIn, blokirani na M13/M14) → posle live-a.
 > | **16.08** | Gemini žig kadar 5 + tablica kombija · YouTube handle | ako ne stigne → video objava ide **posle** live-a (nije blokator migracije) |
 > | **21.08** | Enhanced Conversions Ads UI toggle · ECOTILE budžet · live kontakt-forma fix odobrenje | poslednji dan pre migracije |
 > | **odmah ili nikad** | 4.8 Maximize Conversions — v. napomena ispod | Smart Bidding uči ~14 dana |
+> | ~~21.08~~ ✅ | **OAuth *Publish app*** — urađeno **2026-08-17** (M): consent screen `mcp-za-claude` iz *Testing* u **In production**, refresh token više ne ističe na 7 dana; verifikovano živim `ads_report.py` pozivom | ~~token bi pao ~20.08, tik pred gate i migraciju~~ ispunjeno → [[dnevnik/2026-08-17-oauth-publish-i-15793-swatch]] |
 >
 > ⚠️ **4.8 je pomeranjem postao odluka sa rokom „danas".** Smart Bidding učenje traje
 > ~2 nedelje. Uključeno danas (10.08) → period učenja se završava **tačno na dan

@@ -1,79 +1,16 @@
 ## 2026-08-17 [claude-code] W1 quick-win — 15793: legacy `productColors-block` swatch popravljen ✅
 
-Poslednja stavka iz sadržajnog prozora 17–20.08 koja **ne čeka materijal od M**. Stranica
-`/zastitne-podloge-za-travu-i-plocnike/` (15793, „Bergo Solid") bila je jedina u buildu sa
-Porto/Kallyas markupom: `<div id="colorBlock" class="productColors-block">` → `.color-list` →
-`.color-square`. **Potvrđeno grep-om pre izmene** da nijedna od te tri klase ne postoji ni u
-jednom CSS/PHP fajlu ni `woodmart` ni `woodmart-child` teme → `.color-square` je div bez
-dimenzija, pa je swatch „Silk Black" renderovao **prazan prostor** ispod naslova.
+Stranica `/zastitne-podloge-za-travu-i-plocnike/` (15793) bila je jedina u buildu sa Porto/Kallyas markupom — `.color-square` ne postoji ni u jednoj temi (potvrđeno grep-om), pa je swatch „Silk Black" renderovao prazan prostor; zamenjen samostalnim inline swatch-om, usput popravljen goli `<h2>` i dupli „Galerija" eyebrow. Verifikovano 200 / 1×H1 / 1 JSON-LD + 2 regresione stranice čiste. 🔴 Glavni gotcha nije bio u kodu nego u verifikaciji — `curl` je vratio `HTTP 000` (Apache ugašen) a `grep` ispisao uredne brojke iz zaostalog `/tmp/p.html` od ranije sesije.
 
-**Rešenje:** samostalan inline-stilizovan swatch (56×56 px, `border-radius:8px`, `border`
-rgba(14,41,80,.18) da crna bude vidljiva na svetloj sekciji) + `aria-hidden` na kvadratu jer
-boju nosi tekst pored njega. **Namerno bez nove klase u `antas-design.css`** — komponenta bi
-se koristila na tačno jednoj stranici, a plan za prozor 17–20.08 izričito traži „izmene što
-manje i što lokalnije"; stranica ionako već koristi inline stilove u istom gridu.
-
-**Dva nusnalaza popravljena usput:**
-- `<h2>Bergo Solid u primeni</h2>` bio je **goli h2 bez eyebrow-a i bez `al-display--lg`** —
-  isti obrazac koji je sitewide popravljen 13.08 (17 h2), ova stranica je promašena.
-- Posle te popravke stranica je imala **dva identična „Galerija" eyebrow-a** (prva galerija =
-  fotografije proizvoda, druga = primena) → drugi prepravljen u **„U primeni"**.
-
-🔴 **Gotcha u verifikaciji, ne u kodu:** prva `curl` provera vratila je `HTTP 000`, ali su
-brojevi H1/H2/JSON-LD ipak ispisani — **iz zaostalog `/tmp/p.html` od ranije sesije**. Apache
-nije radio (posledica jutrošnjeg MySQL crash-a, v. unos ispod). Da izlaz nije proveren, ovi
-brojevi bi bili upisani kao „verifikovano" a odnosili bi se na tuđu stranicu. **Pravilo: uvek
-`rm -f` izlazni fajl pre `curl`-a i čitaj `%{http_code}`, ne samo grep rezultat.**
-
-**Verifikacija (posle pokretanja Apache-a):** 15793 → **HTTP 200 · 1×H1 · 1 JSON-LD validan**
-(`@graph`: Place/LocalBusiness+Organization/WebSite/ImageObject/BreadcrumbList/WebPage/Person/
-Article) · 0 PHP grešaka · 0 legacy klasa · swatch div renderuje ceo (wpautop ubacio samo
-prelom reda između `<h3>` i `<div>`, bez `<p>` omotača). Regresija: `5119` 200/1×H1/1 JSON-LD;
-`16673` daje 301 na `/spoljnje-podne-obloge/vestacka-trava-za-terase/` → **nije regresija nego
-`post_parent` konvencija** (ugnježden URL), krajnji 200/1×H1/1 JSON-LD.
-
-**Backup:** `antasline-backups/antasline_local_2026-08-17_pre-15793-swatch.sql` (37,7 MB).
-Upis kroz `$wpdb->update` + `clean_post_cache` (ne `wp_update_post` — izbegnut kses u
-CLI kontekstu bez korisnika).
-
-🟡 **Ostaje otvoreno na 15793** (čeka M definiciju „starog formata"): specifikacija kao običan
-`<ul>` umesto `al-table` · dve galerije na istoj stranici (2022 JPG + 2026 WebP) ·
-inline `<img style="width:100%">` · nula `al-card` (Bergo Solid i Mosolut Heavy opisani inline
-umesto karticama ka `/proizvod/`).
+→ [[dnevnik/2026-08-17-oauth-publish-i-15793-swatch]]
 
 ---
 
 ## 2026-08-17 [claude-code] KONEKTOR — OAuth consent screen `mcp-za-claude`: Testing → In production ✅
 
-Zatvara 🔴 bloker od 2026-08-12 („OAuth pada svakih 5–7 dana"). U statusu *Testing* Google gasi
-refresh token na 7 dana; `token.json` je poslednji put osvežen **13.08 15:15**, dakle pad je bio
-zakazan za **~20.08** — pre gate-a (21.08) i pre migracije (25.08), tačno preko tačaka 3 i 10
-pre-flight checklist-a (OAuth provera, Ads Final URL audit).
+Zatvara 🔴 bloker od 12.08: u statusu *Testing* Google gasi refresh token na 7 dana, a poslednji je bio od 13.08 — pad je bio zakazan za ~20.08, tik pred gate i migraciju. M kliknuo **Publish app**, verifikovano živim `ads_report.py` pozivom (35 kampanja, 1.467,48 RSD) i `token.json` se sam osvežio, dakle refresh token je preživeo prelazak. 🔴 Gotcha: konzola je vraćala „You need additional access" sa 3 missing `oauthconfig.*` permission-a — uzrok nije bio IAM nego pogrešan Google nalog u Chrome-u.
 
-**Izvršenje:** M kliknuo u Google Cloud konzoli (`APIs & Services → OAuth consent screen →
-Audience → Publish app`). CC je otvorio stranicu i dijagnostikovao, klikove radio M.
-
-🔴 **Gotcha koji je koštao prvi pokušaj:** konzola je vratila **„You need additional access"** za
-projekat `561984657473` sa tri Missing permission-a (`oauthconfig.testusers.get`,
-`oauthconfig.verification.get`, `resourcemanager.projects.get`) i ponudila „Request access" +
-role `OAuth Config Viewer/Editor`. **To je bio lažan trag** — nije nedostajala IAM rola nego je
-Chrome bio ulogovan na **drugi Google nalog** (indikacije: „Select a project" umesto imena
-projekta i banner „Start your Free Trial with $300"). Rešeno prebacivanjem naloga. Pravilo za
-ubuduće: na ovom ekranu **prvo proveri nalog, pa tek onda IAM**.
-
-**Verification Center namerno nije pokretan** — puna Google verifikacija (demo video, privacy
-policy, nedelje čekanja) postoji za javne app sa >100 korisnika; naša ima jednog.
-
-**Verifikacija (isti čas):** `ads_report.py --from 2026-08-14 --to 2026-08-16` vratio pun JSON
-(35 kampanja, ukupno 1.467,48 RSD / 20 klikova / 119 prikaza), `token.json` se sam osvežio →
-**postojeći refresh token je preživeo prelazak**, ponovna autorizacija nije bila potrebna.
-
-🟡 **Nusnalaz iz istog pull-a:** kampanja **„Podloge za terase i bazene" ima potrošnju 14–16.08**
-— 63,33 RSD / 4 klika / 28 prikaza / CPC 15,83. U [[PROGRESS]] se od 11.08 vodi kao **PAUZIRANA**.
-Ili je reaktivirana bez upisa, ili pauza nije potpuna. #ceka-miroslav — proveriti status u Ads UI.
-
-**Ažurirano:** [[PROGRESS]] (bloker zatvoren + „Čeka Miroslava" red) · [[reference/api-konektor-setup.md]]
-Korak F · [[migracija/2026-08-10-pre-migration-checklist]] §B1 (🔴 → 🟡, rutinska provera).
+→ [[dnevnik/2026-08-17-oauth-publish-i-15793-swatch]]
 
 ---
 

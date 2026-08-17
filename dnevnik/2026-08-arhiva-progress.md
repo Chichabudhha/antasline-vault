@@ -159,6 +159,8 @@ izvor: "[[PROGRESS]]"
 
 ## Zatvoreni blokeri (78, izdvojeni 2026-08-13; +3 dodato 2026-08-14)
 
+- 🟢 **ZATVORENO 2026-08-17 (M) — Google Cloud app je *In production*.** `mcp-za-claude` (projekat `561984657473`) prebačen sa *Testing* na *In production* u OAuth consent screen-u → refresh token više ne ističe na 7 dana. Verifikovano isti čas: `ads_report.py --from 2026-08-14 --to 2026-08-16` vratio pun izlaz (35 kampanja, 1.467,48 RSD), `token.json` osvežen 19:49 — dakle refresh token je preživeo prelazak, nije trebala ponovna autorizacija. 🔴 **Gotcha pri klikanju:** Chrome je bio ulogovan na drugi Google nalog → konzola je vraćala „You need additional access" sa 3 missing permissions (`oauthconfig.testusers.get`, `oauthconfig.verification.get`, `resourcemanager.projects.get`); rešeno prebacivanjem naloga, ne dodavanjem role. **Verification Center namerno NIJE pokretan** (nije potreban — jedan korisnik, sopstvena app). Time otpada rizik da OAuth padne baš 25.08 i obori tačke 3 i 10 pre-flight checklist-a. ~~Original (2026-08-12):~~ app u statusu *Testing*, token padao svakih 5–7 dana (`invalid_grant`).
+
 ### 2026-08-14 — Grok refresh token ispisan u transkript ✅ ROTIRAN
 Pri proveri tipa autentifikacije ispisan je ceo `auth.json`; maskiranje je gađalo
 imena polja na **prvom nivou**, a kredencijal je bio u ugnežđenom objektu pod
@@ -295,6 +297,13 @@ Originalni tekst (za trag):
 
 
 ## Zatvorene stavke iz „Sledeće" (izdvojeno 2026-08-14)
+
+- ✅ **`15793` legacy `productColors-block` — ZATVORENO 2026-08-17.** Bila je jedina stranica
+  u buildu sa Porto/Kallyas markupom; swatch „Silk Black" renderovao prazan prostor jer
+  `.color-square` ne postoji ni u jednoj temi. Zamenjen samostalnim inline swatch-om; usput
+  popravljen goli `<h2>` i dupli „Galerija" eyebrow. 🟡 Ostatak nalaza na toj stranici (spec
+  kao `<ul>` umesto `al-table`, dve galerije, nula `al-card`) i dalje čeka M definiciju
+  „starog formata" — v. Blokeri u [[PROGRESS]]. → [[dnevnik/2026-08-17-oauth-publish-i-15793-swatch]]
 
 > Izvor: [[PROGRESS]] sekcija „Sledeće", blok „Do content freeze-a (NED 16.08)".
 > Sve stavke ispod su **zatvorene** (13–14.08) i izmeštene istog dana po pravilu iz

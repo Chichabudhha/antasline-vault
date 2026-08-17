@@ -19,9 +19,8 @@
 
 **2026-08-17**
 
-- ✅ `[claude-code]` W1 quick-win — `15793` legacy `productColors-block` zamenjen (swatch „Silk Black" više nije prazan prostor) + goli `<h2>` i dupli „Galerija" eyebrow popravljeni — [[DNEVNIK-NAPRETKA]] 2026-08-17
-- ✅ `[claude-code]` KONEKTOR — OAuth consent screen `mcp-za-claude` **Testing → In production** (M kliknuo): refresh token više ne ističe na 7 dana, verifikovano živim Ads pozivom; rizik „OAuth pada baš 25.08" zatvoren — [[DNEVNIK-NAPRETKA]] 2026-08-17
-- 🟡 `[claude-code]` ADS nusnalaz — „Podloge za terase i bazene" ima potrošnju 14–16.08 (63,33 RSD / 4 klika), iako je od 11.08 vođena kao PAUZIRANA → proveriti status
+- ✅ `[claude-code]` W1 quick-win — 15793: legacy `productColors-block` swatch popravljen — [[dnevnik/2026-08-17-oauth-publish-i-15793-swatch]]
+- ✅ `[claude-code]` KONEKTOR — OAuth consent screen Testing → In production, token više ne ističe — [[dnevnik/2026-08-17-oauth-publish-i-15793-swatch]]
 - ✅ `[claude-code]` W3 3.10 — noćni backup nije radio 3 dana: uzrok korumpirane Aria sistemske tabele (`mysql.db`), popravljeno, 78/78 tabela čisto; „2 lokacije" nikad nije radilo — popravljeno i testirano — [[dnevnik/2026-08-17-backup-mysql-crash-pomeranje-roka]]
 - ✅ `[claude-code]` PLAN — go-live **24.08 → UTO 25.08** (M): PON 24.08 = rezervni radni dan, 24 fajla ažurirano
 - ✅ `[claude-code]` PLAN — content freeze **ponovo otvoren 16.08 → ČET 20.08** (M) + 3 obaveze koje to nosi (regression sweep, 301 draft, nov backup)
@@ -52,38 +51,6 @@
 - ✅ `[cpanel-live]` Disk kvota — zvaničan broj potvrđen (UŽIVO, read-only), pre-flight nalaz iz 08-12 potpuno zatvoren
 - ✅ `[claude-code]` FAZA 2 — layout/CSS/UI: 6 zamerki na 5 stranica svedeno na 3 sistemska uzroka, popravljeno sitewide
 
-**2026-08-12**
-
-- ✅ `[cpanel-live]` Pre-flight infrastruktura (UŽIVO, read-only) — disk prostor rizik, JetBackup nedostupan iz shell-a
-- ✅ `[claude-code]` W3 — `live-export.sh` gubio 145 od 170 galerijskih slika + prefiks baze ispravljen (`wpGs_`→`wpgs_`) — [[dnevnik/2026-08-12-live-export-galerije-prefiks]]
-- ✅ `[claude-code]` ALATI — Antigravity (`agy`) kao delegat za masovno čitanje + pre-flight checklist za 24/25.08 — [[dnevnik/2026-08-12-agy-antigravity-delegat]]
-- ✅ `[claude-code]` BLOK C — Vizuali referenci i ikonice kartica (homepage, O nama, padel, maloprodaja) — [[dnevnik/2026-08-12-vizuali-reference-ikonice]]
-- ✅ `[claude-code]` W1 — Alt tekst na slikama proizvoda: 66 priloga popunjeno, 159 dekorativnih ikonica namerno ostavljeno prazno — [[dnevnik/2026-08-12-alt-tekst-slike-proizvoda]]
-- `[claude-code]` W1 — red čekanja zatečen prazan, dva zastarela statusa ispravljena
-- ✅ `[claude-code]` W1 quick-win — Chrome 149 `border-color` na tabelama proveren, build nije pogođen
-- ✅ `[claude-code]` W5/GEO — GenAI baseline snimljen pre migracije — [[dnevnik/2026-08-12-genai-baseline-sesija]]
-- ✅ `[claude-code]` ALATI — Chrome dokumentacija ugrađena u skilove + novi `/antasline-ads` playbook
-- ✅ `[claude-code]` BLOK C — `product_brand` arhive napunjene (Ecotile 7, Ergomat 27), 301 cilj više nije prazna stranica — [[dnevnik/2026-08-12-product-brand-arhive]]
-
-**2026-08-11**
-
-- ✅ `[claude-code]` W5 5.4 — korekcioni faktori upisani u skillove + mesečni snapshot za jul (kasnio 11 dana) — [[dnevnik/2026-08-11-mesecni-snapshot-jul]]
-- ✅ `[cpanel-live]` Live backup (DB+wp-content) na 2 lokacije + robots.txt AI-crawler pravila aktivirana i ispravljena
-- ✅ `[cpanel-live]` LiteSpeed CCSS/UCSS/LQIP/VPI status provera — UCSS oživeo posle 11 dana, LQIP nov lokalni bug nađen (fix odbijen) — [[dnevnik/2026-08-11-litespeed-ccss-ucss-lqip-vpi-status]]
-- ✅ `[cpanel-live]` LiteSpeed Redis/Web Cache Manager (nove cPanel opcije) — istraženo, NE rešava stari QUIC.cloud problem, Redis odložen — [[dnevnik/2026-08-11-litespeed-redis-web-cache-manager]]
-- ✅ `` W1 — Ergomat DuraStripe trake: slike po bojama + simple → variable
-- ✅ `` W5 — inflacija `generate_lead` DIJAGNOSTIKOVANA: dva različita baga, jedan preživljava migraciju — [[dnevnik/2026-08-11-generate-lead-inflacija-dijagnoza]]
-- `` W5 5.4 — ponovljen nedeljni izveštaj sirovim konektorom, obe današnje lekcije pregažene — [[dnevnik/2026-08-11-w5-nedeljni-izvestaj]]
-- ✅ `[cpanel-live]` W6 / 4.9 — Customer Match upload pokušan uživo: blokiran na Data Manager API, koriguje raniju pretpostavku (Standard access) — [[dnevnik/2026-08-11-customer-match-data-manager-api]]
-- ✅ `[claude-code]` W5 5.4 — nedeljni izveštaj (04–10.08); merenje „pravih konverzija" je naduvano ~3× — [[dnevnik/2026-08-11-w5-nedeljni-izvestaj]]
-- ✅ `[claude-code]` GSC priprema — build je emitovao 3 sitemap-a gde live emituje 7; 27 URL-ova sa 79 klikova bilo van sitemap-a — [[dnevnik/2026-08-11-gsc-priprema-sitemap]]
-- ✅ `[claude-code]` W4 4.10 — Final URL audit oglasa ZATVOREN: aktivna kampanja čista (7/7), 2 URL-a vode na tuđi domen — [[dnevnik/2026-08-11-ads-final-url-audit]]
-- ✅ `[claude-code]` W3 3.9 — `.htaccess` 301 reverifikacija: draft je bio 8 pravila, treba 73; petlja i 2 pregažene stranice uhvaćene — [[dnevnik/2026-08-11-htaccess-301-reverifikacija]]
-- ✅ `[claude-code]` W3 CWV — dijeta asseta: proizvod stranice lakše 46%, postovi 51%, blog arhiva 65% — [[dnevnik/2026-08-11-dijeta-asseta-tema]]
-- ✅ `[claude-code]` Legacy CPT-ovi (Custom Post Type UI) obrisani iz builda i baze + 5 zamenjenih stranica u draft
-- ✅ `[claude-code]` Rollback plan ZATVOREN (gate stavka, 4 dana pre roka) + sitewide provera dijakritike čista — [[dnevnik/2026-08-11-rollback-plan-i-dijakritika]]
-- ✅ `[claude-code]` 6 stranica bez meta opisa (uklj. početnu) — napisani i objavljeni, bloker zatvoren
-
 ## Sledeće
 
 > Prepisano 2026-08-12. Prethodno je ovo bila nenaslovljena gomila od ~15 stavki sa
@@ -97,10 +64,6 @@
   do 20.08, fallback koji je već aktivan ostaje trajno: trava-u-boji poreklo · F2.8 mapiranje
   veštačke trave · 14 proizvoda bez fotke · 4 reference na `/o-nama/` · P3 metadesc (2699/4318/1094)
   · brisanje menija 67 · definicija „starog formata" za 5119.
-- ✅ ~~**Jedina stavka koja NE čeka M:** `15793` legacy `productColors-block` markup~~
-  **ZATVORENO 17.08** — swatch „Silk Black" sada renderuje; usput 2 nusnalaza popravljena
-  (goli `<h2>`, dupli „Galerija" eyebrow). Ostatak 15793 nalaza (spec kao `<ul>` umesto
-  `al-table`, dve galerije, nula `al-card`) i dalje čeka M definiciju „starog formata".
 - 🔴 Posle poslednje izmene: **ponovni regression sweep pre gate-a 21.08** + nov backup builda.
 
 **Zatvoreno pre prvog freeze-a (16.08):**
@@ -122,8 +85,6 @@
   Isto i definicija „starog formata" za 5119/15793 (v. Blokeri).
 - 🔵 Opciono, ako se ukaže sesija: `heading-order` + `target-size` na product karticama
   (WoodMart core layout, veći zahvat — **preporuka: posle live-a**, ne 4 dana pred gate).
-- 🔵 Opciono: `15793` je jedina stranica u buildu sa legacy `productColors-block`
-  markupom (swatch „Silk Black" renderuje prazan prostor) — čeka M odluku, v. Blokeri.
 - 🟢 **(F) 4 „dimenzije" stranice vs post 2298 — M ODLUKA 14.08: ne diramo pre live-a.**
   Post-live zadatak (~01.09), rizik svesno prihvaćen. Pun opis: [[dnevnik/2026-08-arhiva-progress]]
   · analiza [[seo/2026-08-13-kanibalizacija-konsolidacija-plan]] §3.1 #posle-live
@@ -172,8 +133,9 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 
 ## Blokeri
 
-> Samo otvorene stavke. **73 zatvorenih** (i „Istorijske stavke") izdvojeno
-> 2026-08-13 u [[dnevnik/2026-08-arhiva-progress]].
+> Samo otvorene stavke. Zatvoreni → [[dnevnik/2026-08-arhiva-progress]] („Zatvoreni blokeri").
+
+- 🟡🆕 **Je li „Podloge za terase i bazene" stvarno pauzirana? (2026-08-17)** Kampanja se od 11.08 vodi kao **PAUZIRANA**, ali svež Ads pull pokazuje potrošnju **14–16.08: 63,33 RSD / 4 klika / 28 prikaza / CPC 15,83**. Ili je reaktivirana bez upisa, ili pauza nije potpuna. Iznos je sitan, ali status u planu ne odgovara stvarnosti — a to je kampanja sa **najjeftinijim CPC-om u nalogu** (15,83 vs 87,76 na ECOTILE). #ceka-miroslav — proveriti u Ads UI. → [[dnevnik/2026-08-17-oauth-publish-i-15793-swatch]]
 
 - 🟡🆕 **Grok zabrane su van gita (2026-08-14).** Grok 1.0.3 **ne primenjuje** projektni `.grok/config.toml` (`grok inspect` → `0 loaded`), pa 19 deny pravila živi u `C:\Users\Miroslav\.grok\config.toml`. Posledica: važe za **sve** projekte na mašini, i **ne dolaze sa vault-om** ako se klonira na drugu mašinu. Projektna kopija je identična i aktivira se sama kad verzija to podrži. **#claude-code** — posle svakog `grok update` proveriti `grok inspect | Select-String Permissions`. Ne blokira migraciju.
 - 🟡🆕 **Ads URL-ovi pre reaktivacije pauziranih kampanja (2026-08-13, svež pull).** 3 oglasa + 2 asseta imaju final URL na **tuđem domenu `ekopodneploce.rs`** (kršenje Google smernica — final URL mora biti na istom domenu kao prikazani), **11 URL-ova** vodi na mrtve `/home/…` putanje koje ne postoje ni na buildu ni u 301 draftu, 4 su na `http://`. 🟢 `tracking_url_template`/`final_url_suffix` su `null` na svih 14 kampanja, a jedina **ENABLED** kampanja (ECOTILE) je čista → **za 24.08 nema posla**; ovo je uslov za reaktivaciju i blokira W4 4.4. #ceka-miroslav
@@ -182,7 +144,6 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 - 🟡 **FTP lozinka — IZMEŠTENA VAN VAULT-A 2026-08-13 (M zahtev, isti dan).** Nađena u **dva** fajla, ne jednom (`ftp-upload-chunks.sh` + `ftp-upload-resume.sh`, oba linija 7/8, verzionisana od 06.08). Sada u `C:\Users\Miroslav\antasline-ftp-creds.txt` (van repo stabla — git ga ni ne vidi), obe skripte ga `source`-uju preko `FTP_CREDS_FILE` sa podrazumevanom `~` putanjom i **tvrdo padaju sa `exit 1`** pre ijednog poziva ako fajla nema ili ne definiše `FTP_CREDS`. Usput: hardkodiran host → `$HOST`, a `ftp-upload-resume.sh` je imao i hardkodiran naziv arhive od 06.08 → sada prvi argument. Provereno: `grep` po celom radnom stablu ne nalazi lozinku nigde, učitavanje očuvalo specijalne znakove (`$$`, `&^`).
   🔴 **Ostaje otvoreno i traži M: izmeštanje NE briše lozinku iz git istorije** (`.git/` je i dalje ima, commit-ovi od 06.08 nadalje, a vault se sinhronizuje na hosting). Jedina prava sanacija je **promena FTP lozinke u cPanel-u** — preporuka: posle migracije 25.08, da se ne dira kanal prenosa pred sam prenos. Prepisivanje git istorije se **ne preporučuje** (vault ima 3 površine i Obsidian Git auto-sync — rewrite bi razbio sve tri). #ceka-miroslav
 - ⚪🆕 **JetBackup snapshot status — nedostupan iz shell-a (2026-08-12).** `uapi Backup list_backups` → nalog nema feature "backup"; `JetBackup5::wrapper` traži nedokumentovan format (3 pokušaja); nema lokalnih artifact fajlova. Poslednji datum/retencija/off-site status i dalje **nepotvrđen** — treba proveriti kroz WHM/cPanel UI (Backup Wizard/JetBackup stranica), API odavde ne daje odgovor. #ceka-miroslav ili sledeća sesija sa UI pristupom.
-- 🟢 **ZATVORENO 2026-08-17 (M) — Google Cloud app je *In production*.** `mcp-za-claude` (projekat `561984657473`) prebačen sa *Testing* na *In production* u OAuth consent screen-u → refresh token više ne ističe na 7 dana. Verifikovano isti čas: `ads_report.py --from 2026-08-14 --to 2026-08-16` vratio pun izlaz (35 kampanja, 1.467,48 RSD), `token.json` osvežen 19:49 — dakle refresh token je preživeo prelazak, nije trebala ponovna autorizacija. 🔴 **Gotcha pri klikanju:** Chrome je bio ulogovan na drugi Google nalog → konzola je vraćala „You need additional access" sa 3 missing permissions (`oauthconfig.testusers.get`, `oauthconfig.verification.get`, `resourcemanager.projects.get`); rešeno prebacivanjem naloga, ne dodavanjem role. **Verification Center namerno NIJE pokretan** (nije potreban — jedan korisnik, sopstvena app). Time otpada rizik da OAuth padne baš 25.08 i obori tačke 3 i 10 pre-flight checklist-a. ~~Original (2026-08-12):~~ app u statusu *Testing*, token padao svakih 5–7 dana (`invalid_grant`).
 - 🟡🆕 **Headless `agy` (`-p`) još ne radi — fale dozvole za čitanje (2026-08-12).** `permissions.allow` u `~/.gemini/antigravity-cli/settings.json` ima `command(...)` unose (dodato, potvrđeno da sintaksa radi), ali ne i `read_file(*)`, `list_dir(*)`, `grep_search(*)`, `find_by_name(*)`. Claude Code harness blokira i `--dangerously-skip-permissions` i dalje širenje dozvola drugom agentu, pa ovo mora M ručno. Bez toga `agy` radi **samo kroz TUI** (M nalepi prompt i odobri) — što je i dalje upotrebljivo, samo se ne može skriptovati. #ceka-miroslav
 - 🔵🆕 **Maximize Conversions — prag NIJE dostignut, odluka 4.8 se odlaže (2026-08-12).** Od 26 „plaćenih konverzija" **17 su bili `tel` klikovi**, pravih formi sa `/hvala-za-poruku/` ima **9**. Prag 20–30 nije ni blizu. Ostaje **Maximize Clicks**. Uz to: posle migracije GA4 konverzije padaju **~70%** (nestaje dupli GTM embed iz Kallyas teme) — to treba iskomunicirati unapred da se ne pročita kao pad prodaje. #claude-code — zatvoriti odluku 4.8 u [[odluke/_pregled-odluka]] kao „odloženo, prag nije dostignut".
 - 🟡🆕 **Šta znači „stari format" na 5119 i 15793? — sesija PREKINUTA na zahtev M (2026-08-12).** M je prijavio da su `/vestacka-trava-za-fudbal/` (5119) i `/zastitne-podloge-za-travu-i-plocnike/` (15793) „u starom formatu". **Nije reprodukovano:** obe koriste aktuelan `al-*` dizajn sistem (hero, `al-section`, `al-label`, `al-display`, dijagonale, CTA) i imaju **identične `body` klase** kao rebuild-ovane stranice (`page-template-default`, `wrapper-full-width`, isti theme/child). Na pitanje šta konkretno štrči M je odgovorio **„Prekini"** → **0 izmena** na te dve stranice, baza nije dirana. **Nalazi za kad se tema otvori:** ✅ **legacy markup na 15793 POPRAVLJEN 2026-08-17** — `<div id="colorBlock" class="productColors-block">` sa `.color-square` (Porto/Kallyas klase, potvrđeno grep-om da ne postoje ni u jednom CSS/PHP fajlu obe teme → swatch „Silk Black" renderovao **prazan prostor**) zamenjen samostalnim inline-stilizovanim swatch-om; usput spec kao običan `<ul>` umesto `al-table`, **dve galerije** na istoj stranici (2022 JPG + 2026 WebP), jedan `<h2>` bez `al-label` eyebrow-a, inline-stilizovan `<img style="width:100%">`, **nula `al-card`** (Bergo Solid i Mosolut Heavy opisani inline umesto karticama ka `/proizvod/`). **5119** nema nijedan legacy marker (12 `al-card`, 7 `al-hero`); jedino galerija je gola `<img>` mreža bez lightbox-a iako tekst kaže „Kliknite na sliku za uvećan prikaz". **Audit svih 53 objavljene stranice:** `productColors-block`/`color-square` **samo na 15793**; ⚠️ zastavica `porto` u auditu je **lažni pozitiv** (poklapa se unutar reči „s**porto**va"), a `raw-table` je legitiman sadržaj. #ceka-miroslav — reći šta se vidi (ili poslati screenshot), pa ciljano popraviti. v. [[dnevnik/2026-08-12-vizuali-reference-ikonice]] §3.
