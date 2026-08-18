@@ -19,6 +19,7 @@
 
 **2026-08-18**
 
+- ✅ `[claude-code]` W2/SEO — **stavka F (dimenzije klaster) zatvorena**: 4 nove stranice ↔ hub 2298 (13.686 prikaza / 385 klikova / 90d, poz. 1–2) uzajamno linkovane + title 16586/17027 pomeren ka izgradnji; usput **title/meta `/industrijski-podovi/`** sa cenom `od 5.500 RSD/m²` (head termin: 6.321 prikaz, CTR 2,6%). 🔴 Dve greške zatvorene u toku: mojibake kroz PS pipe (baza vraćena iz backup-a) i 2×H1 na 17027 (`_woodmart_title_off` ne radi na `post` tipu) — [[dnevnik/2026-08-18-F-dimenzije-klaster]]
 - ✅ `[claude-code]` W2/W3 — **cenovne stranice konsolidovane u hubove** (4 „cena” stranice + `/cene/` draftovane; nijedna nije postojala na live-u, a hub već rangira poz. 6,6 za cenovni upit); segment „Cene” obrisan iz menija (77 → 70 stavki); 🔴 vraćeno 301 pravilo `/podovi-za-garaze/` (182 pogotka) koje je odluka od 11.08 isključila **jer je URL bio zauzet baš tom stranicom** — draft 79 → 80 pravila — [[dnevnik/2026-08-18-konsolidacija-cenovnih-stranica]]
 - ✅ `[claude-code]` ALATI — `PROGRESS` „Blokeri" skraćen 27 → 7,5 KB (45 → 28 stavki, 6 zatvorenih/nadjačanih izmešteno); ceo fajl **41,2 → 22,1 KB**, pun tekst doslovno u arhivi — [[dnevnik/2026-08-arhiva-progress]]
 - ✅ `[claude-code]` ALATI — token audit starta sesije: ledger 965 KB → 20 KB (357 unosa doslovno u arhive, 4 zalutala unosa vraćena), otvaranje sesije −67k tokena; duplo `§9` u CLAUDE.md razrešeno — [[dnevnik/2026-08-18-token-audit-rotacija-ledgera]]

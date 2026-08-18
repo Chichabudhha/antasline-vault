@@ -11,6 +11,21 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
+## 2026-08-18 [claude-code] [W2/SEO] — Stavka F zatvorena: dimenzije klaster ↔ hub 2298 + title/meta `/industrijski-podovi/` ✅
+
+Poslednja otvorena stavka iz plana kanibalizacije. Post **2298** (`kako-napraviti-teren-za-basket…`) je najjači sadržaj na sajtu — **13.686 prikaza / 385 klikova / 90d**, poz. 1–2 za „dimenzije fudbalskog terena" (2.174), „dimenzije košarkaškog terena" (2.004) i „dimenzije košarkaške table" (719) — a četiri **nove** stranice na buildu (16585 · 16586 · 16688 · 17027) gađaju baš te upite i 25.08 bi izašle pred Google **bez ijednog uzajamnog linka** sa njim. Sve četiri sada linkuju ka hubu i međusobno (pasus ispred zatvarajuće CTA sekcije, vodi ka izvođenju — služi i korisniku), hub dobio linkove ka tenisu i fudbalu. Title 16586 i 17027 pomeren ka **izgradnji** („…i izgradnja"); 16585 (već ima „cena") i 16688 (2298 ne cilja tenis) namerno nedirnuti.
+
+Usput i **akcija #4 iz istraživanja 18.08**: `/industrijski-podovi/` (16567) — head termin curi na **6.321 prikaz / CTR 2,6% / poz. 7,2**. Live naslov je 78 znakova, seče se u SERP-u, bez cene i bez diferencijatora. Novo: `Industrijski podovi — od 5.500 RSD/m², montaža bez zastoja` + opis sa „klik-montaža preko postojećeg betona, bez lepka i bez zastoja proizvodnje" + focus keyword koji nije postojao. Cifra nije izmišljena — 5.500/6.800 RSD/m² već stoje u telu stranice, a namenska cenovna stranica 16874 je jutros draftovana pa nema dupliranja. 🔴 Cena je sada u `<title>` → ide u isti potez sa svakom promenom cenovnika.
+
+🔴 **Dve greške zatvorene u toku rada.** (1) `Get-Content -Raw | mysql` duplo enkodira UTF-8 → naslovi upisani kao „koĹˇarkaĹˇkog", a anchor sa dijakritikom se nije poklopio pa se izmena na 2298 **tiho preskočila**; baza vraćena iz backup-a i sve ponovljeno kroz Bash redirekciju (`mysql … < fajl.sql`). (2) Hero heading 17027 prebačen sa `<h2>` na `<h1>` kao „propust" — ali 17027 je `post`, a **`_woodmart_title_off` radi samo za `page`**; WoodMart svejedno daje `wd-post-title` H1 → nastao 2×H1, vraćeno. **Pravilo je već bilo zapisano** — `migracija/woodmart-sabloni.md` **F7.18**, i to na primeru baš ovog posta (27.07); promašeno jer taj fajl (79 KB, „OBAVEZNO prvo”) nije otvoren pre izmene. Argument više za njegovo cepanje na kratak checklist + duboku referencu (vault higijena u [[PROGRESS]]).
+
+Backup `_pre-F-dimenzije.sql` (35,2 MB). Verifikovano HTTP-om: 5 URL-ova 200, **1×H1 svuda**, link ka hubu na sve 4, dijakritika čista na renderu.
+
+⚠️ **Ograničenje:** interno linkovanje smanjuje, ali ne uklanja rizik da Google posle 25.08 privremeno zameni 2298 nekom od četiri stranice. Merenje: GSC poz. za 6 upita nedeljno; ako 2298 padne ispod poz. 3 → `noindex` na 17027 i 16586 dok se ne slegne.
+
+→ [[dnevnik/2026-08-18-F-dimenzije-klaster]]
+
+
 ## 2026-08-18 [claude-code] [W2/W3] — Cenovne stranice konsolidovane u hubove + vraćeno 301 pravilo koje je odluka od 11.08 isključila ✅
 
 M primedba („zašto dodajemo kontent koji se sukobi sa postojećim?") pokrenula proveru koja je pokazala da **nijedna od 4 „cena" stranice ne postoji na live-u** (sve 404) — napravljene 10.07 samo na buildu, prvi put bi otišle uživo 25.08, dakle **0 GSC istorije**. U isto vreme hub `/industrijski-podovi/` već drži „industrijski podovi cena po m2" na **poz. 6,6 bez ijedne cene na stranici**. Time je preporuka od 13.08 („tabela ostaje na cenovnoj stranici, hub dobija link") oborena. Cene prešle u hubove (`/industrijski-podovi/` kao 4. kolona postojeće tabele debljina · garaže dobile sekciju po kvadraturi · `/spoljnje-podne-obloge/` sekciju po vrsti podloge · parking hub već imao sve), 5 stranica draftovano, segment „Cene" obrisan iz menija (77 → 70 stavki, nestala i prazna stavka 17424).

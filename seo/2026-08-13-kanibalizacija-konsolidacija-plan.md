@@ -2,8 +2,8 @@
 tip: analiza
 naziv: Kanibalizacija, konsolidacija i URL higijena — nalazi + plan odluka
 datum: 2026-08-13
-status: delimično izvršeno — A/B/C/D/J/K gotovi 13.08 · E i F otvoreni (rok NED 16.08, content freeze) · G/H nisu odobreni · I čeka M u Ads UI
-azurirano: 2026-08-13
+status: izvršeno — A/B/C/D/E/J/K gotovi 13.08 · F i G gotovi 18.08 · H nije odobren · I čeka M u Ads UI
+azurirano: 2026-08-18
 izvor-podataka: GSC 2026-05-15→2026-08-12 (90d, `gsc_page_queries.py`) · Google Ads API (`ads_final_urls.py`, 13.08) · lokalna baza `antasline_local`
 ---
 
@@ -259,9 +259,9 @@ ne duplira — ostaje na 16874.
 | B | Bergo Easy → 301 → Iznajmljivanje + preseljenje sadržaja | ~0 | 45 min | ✅ **izvršeno 13.08** |
 | C | Parkiralište: cena-sadržaj u 16589, 16876 → 301 | nizak | 45 min | ✅ **izvršeno 13.08** |
 | D | Maloprodaja: 16683 → 301 → 16142 | nizak | 20 min | ✅ **izvršeno 13.08** |
-| E | 🔴 `/sportske-podloge/` — vratiti basket/„vrste podloga" semantiku + Planer link | **visok ako se NE uradi** | 1–1,5 h | 🔴 **otvoreno, rok 16.08** |
-| F | 🔴 Dimenzije klaster (4 str.) — uzajamni linkovi sa 2298 + pomak title-a | **visok ako se NE uradi** | 1 h | 🔴 **otvoreno, rok 16.08** |
-| G | Meni „Cene" — ukloniti segment + popraviti prazan naslov 17424 | nizak | 20 min | ❌ nije odobreno |
+| E | `/sportske-podloge/` — vratiti basket/„vrste podloga" semantiku + Planer link | **visok ako se NE uradi** | 1–1,5 h | ✅ **izvršeno 13.08** (semantika + FAQ + FAQPage schema, v. §3.8) — red je do 18.08 stajao kao „otvoreno", zastareo |
+| F | Dimenzije klaster (4 str.) — uzajamni linkovi sa 2298 + pomak title-a | **visok ako se NE uradi** | 1 h | ✅ **izvršeno 18.08** — [[dnevnik/2026-08-18-F-dimenzije-klaster]] |
+| G | Meni „Cene" — ukloniti segment + popraviti prazan naslov 17424 | nizak | 20 min | ✅ **izvršeno 18.08** (M odobrio) — [[dnevnik/2026-08-18-konsolidacija-cenovnih-stranica]]; 17424 = lažna uzbuna |
 | H | Garaže/terase — uzajamni interni linkovi (16875↔16664, 2641↔16873) | ~0 | 30 min | ❌ nije odobreno |
 | I | Ads: 6 URL-ova za prepis + 2 tuđi domen + `/home/` putanje | — | M, u Ads UI | 🟡 čeka M |
 | J | 🆕 Čist slug „preko starog parketa": 16613 → draft, 6588 → čist URL, 301 okrenut | nizak | 30 min | ✅ **izvršeno 13.08** (nije bilo u prvobitnoj listi — izašlo iz §1 na M pitanje) |
@@ -270,8 +270,7 @@ ne duplira — ostaje na 16874.
 Sve je povratno (301 se uklanja, meni se vraća, tekst se vraća iz backup-a). Ništa ne dira
 bazu destruktivno bez `wp db export`.
 
-**Preostalo CC posla pre freeze-a: ~2,5 h — samo E i F.**
-Redosled po vrednosti: **E → F**. (Neodobreno, ako se ikad otvori: G → H.)
+**Preostalo CC posla pre freeze-a: 0.** E ✅ 13.08 · F ✅ 18.08 · G ✅ 18.08. Otvoreno ostaje samo **H** (neodobreno) i **I** (čeka M u Ads UI).
 
 > 🆕 **Izašlo iz stavke A, nije bilo na listi:** 8 tipova podloga na `/ergonomske-podloge/`
 > nema **nijedan** proizvod u katalogu, a telo stranice nema nijedan interni link. M je
