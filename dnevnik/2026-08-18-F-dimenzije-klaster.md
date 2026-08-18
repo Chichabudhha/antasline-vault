@@ -57,16 +57,27 @@ Head termin curi: **6.321 prikaz, CTR 2,6%, poz. 7,2**.
 
 | | Novo |
 |---|---|
-| `rank_math_title` | `Industrijski podovi — od 5.500 RSD/m², montaža bez zastoja` (58 zn.) |
-| `rank_math_description` | `Ecotile PVC ploče za magacine, proizvodnju i radionice — od 5.500 RSD/m². Klik-montaža preko postojećeg betona, bez lepka i bez zastoja proizvodnje. R10, VOC E1.` |
+| `rank_math_title` | `Industrijski podovi preko postojećeg betona — bez zastoja` (56 zn.) |
+| `rank_math_description` | `Ecotile PVC ploče od 5.500 RSD/m² — polažu se preko postojećeg betona, bez lepka i bez zastoja proizvodnje. Oštećena ploča se menja pojedinačno, bez zatvaranja zone.` |
 | `rank_math_focus_keyword` | `industrijski podovi` (nije postojao) |
 
-Cifra **nije izmišljena** — 5.500 RSD/m² (500/7) i 6.800 (500/10) već stoje u telu
-16567. Namenska stranica 16874 je 18.08 prebačena u draft (konsolidacija cenovnih
-stranica), pa hub nosi cenovni intent sam — nema dupliranja.
+🔴 **Cena namerno NIJE u title-u — M odluka 18.08, ista sesija.** Prva verzija je
+glasila `Industrijski podovi — od 5.500 RSD/m², montaža bez zastoja`; M je to oborio
+sa obrazloženjem koje je jače od CTR pravila iz istraživanja: **cena u title-u
+diskvalifikuje pre klika.** Kome se cifra ne svidi, neće kliknuti — a kamoli pozvati
+da čuje zašto je takva. Ecotile ploča jeste skuplja po m², ali rešava problem
+dugoročnije, i taj argument se ne može izneti u 60 znakova; iznosi se na stranici,
+posle klika.
 
-🔴 **Održavanje:** cena je sada u `<title>`. Kad se cenovnik promeni, meni ovo mora
-ući u isti potez, inače SERP obećava staru cifru.
+Podela posla je time jasna: **title tera na klik** (obara najčešću primedbu — „moraću
+da rušim i da stanem sa radom"), **opis nosi cenu** — Google i dalje vidi da stranica
+odgovara na cenovni upit i servira je za `industrijski podovi cena po m2`, a
+kvalifikacija se dešava u snippetu, ne u naslovu.
+
+Cifra u opisu **nije izmišljena** — 5.500 RSD/m² (500/7) i 6.800 (500/10) već stoje u
+telu 16567. Namenska stranica 16874 je 18.08 prebačena u draft (konsolidacija cenovnih
+stranica), pa hub nosi cenovni intent sam — nema dupliranja. Kad se cenovnik promeni,
+opis ide u isti potez.
 
 ## Dve greške u toku rada (i kako su zatvorene)
 
