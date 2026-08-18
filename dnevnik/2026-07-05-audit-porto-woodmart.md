@@ -52,7 +52,7 @@ tema: Porto → WoodMart prelazak (WPBakery ostaje)
 **Prelazak je jeftin: 62% sadržaja prolazi bez ikakvog posla, rok 2026-09-02 nije ugrožen.** Bonus: post 4937 je blokiran WPBakery JS bugom koji dolazi od starih/nepoznatih shortcode atributa — čišćenje `porto_*` elemenata na toj stranici verovatno usput rešava i bug (6 blokova čeka ubacivanje).
 
 ## Uslovi pre aktivacije WoodMart-a
-1. `wp db export` snapshot (obavezno, [[CLAUDE]] §8.5)
+1. `wp db export` snapshot (obavezno, [[CLAUDE]] §9.5)
 2. Proveriti verziju bundlovanog `js_composer` u WoodMart-u vs trenutna ([[CLAUDE]] §7.3 — markup mora odgovarati verziji)
 3. Kupiti licencu (~$59, ThemeForest)
 4. Redosled: aktivacija na buildu → header/footer → 16 stranica po prioritetu (4937 prvi) → test

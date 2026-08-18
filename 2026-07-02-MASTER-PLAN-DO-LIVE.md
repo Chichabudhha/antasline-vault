@@ -13,10 +13,10 @@ zamenjen-sa: "[[2026-07-06-MASTER-PLAN-V2]]"
 > [!warning] ⛔ SUPERSEDED (2026-07-06)
 > Ovaj plan je zamenjen sa **[[2026-07-06-MASTER-PLAN-V2]]** — pisan je pre Porto→WoodMart prelaska (2026-07-05), live exporta i C3 draftova. Čuva se samo kao istorijski snapshot. Ne raditi po njemu.
 
-**Početak:** 2026-07-02  
-**Cilj:** Redizajn live na antasline.com  
-**Prioritet:** Tehnička optimizacija → SEO → Ads optimizacija  
-**Budžet Ads:** 40k RSD/mesec (bez povećanja dok se ne optimizuje)  
+**Početak:** 2026-07-02
+**Cilj:** Redizajn live na antasline.com
+**Prioritet:** Tehnička optimizacija → SEO → Ads optimizacija
+**Budžet Ads:** 40k RSD/mesec (bez povećanja dok se ne optimizuje)
 **Konačni cilj:** Maksimalna prodaja sa minimalnim budžetom (brz sajt, odličan SEO, precizna analitika)
 
 ---
@@ -41,7 +41,7 @@ VAULT (~/antasline-vault na hosting)
   = Dokumentacija, ne WP fajlovi ili baza
 ```
 
-**Konsekvencu:** 
+**Konsekvencu:**
 - ❌ Nema SSH pristupa za live bazu
 - ❌ Nema WooCommerce migracije sada
 - ❌ Nema rad na live sajtu dok se lokal ne završi
@@ -109,7 +109,7 @@ Conversion rate: 53 / (1.500 × 4) = 0,88% (EKSTREMNO NISKO)
   - Web Vitals: LCP, CLS, INP
   - Lighthouse audit (lokalno)
   - Napravi detaljnu analizu i spremi kao `PERFORMANCE-AUDIT.md` u dnevnik/
-  
+
 - [ ] **Lokalni build optimizacija (NE LIVE!)**
   - Porto tema — ukloniti nepotrebne CSS/JS
   - WPBakery optimizacija — slike, shortcodes

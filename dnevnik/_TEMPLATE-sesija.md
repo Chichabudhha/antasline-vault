@@ -1,9 +1,9 @@
 ---
 tip: template
-alat: 
-datum: 
-blok: 
-status: 
+alat:
+datum:
+blok:
+status:
 ---
 
 # Sesija — {NASLOV}
@@ -12,14 +12,14 @@ status:
 > Popuni frontmatter: `alat:` (claude-code | chat | rucno), `datum:`, `blok:` (A | B | C | -), `status:` (zavrseno | u-toku | ceka).
 
 ## Šta je urađeno
-- 
+-
 
 ## Otvorene akcije
 - [ ]  #claude-code
 - [ ]  #ceka-miroslav
 
 ## Beleške / odluke
-- 
+-
 
 ## Veze
 - Povezana odluka: [[odluke/_pregled-odluka]] (ako se odnosi na donesene odluke)

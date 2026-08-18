@@ -4,6 +4,48 @@ azurirano: 2026-08-18
 ---
 
 # Naučene lekcije (tehnički gotchas)
+## Ispravka na dnu append-only loga ne poništava tvrdnju sa vrha (2026-08-18)
+
+`ADS-DNEVNIK.md` je 12.08 dobio uredno napisanu ispravku: „kumulativ 26 / prag pređen
+NE VAŽI, pravih lidova ima 9". Ispravka je bila tačna, datirana i na pravom mestu — u
+Log sekciji. Ipak je hub **šest dana** nastavio da se čita kao da je prag pređen, jer
+zaglavlje fajla i stariji unosi (11.08, 06.08, 30.07) i dalje tvrde suprotno, a ispravka
+je jedan blok među desetinama.
+
+**Pravilo:** kad ispravka poništava **stanje** (a ne samo jedan istorijski unos), mora i
+na **vrh** dokumenta — kao `[!warning]` blok ispod zaglavlja. Append-only log ostaje
+netaknut (istorija se ne prepravlja), ali trenutno stanje ne sme da se rekonstruiše
+čitanjem 40 redova unazad. Isti obrazac je 13.08 već jednom ugrizao (`DNEVNIK-NAPRETKA`
+unos završio na dnu newest-on-top fajla → bio nevidljiv).
+
+---
+
+## Zastareli rokovi: živi dokumenti se ispravljaju, datirani se ne diraju (2026-08-18)
+
+Pri zatvaranju konflikta „go-live 31.08 vs 25.08" ispalo je da `31.08` i dalje stoji u
+6 fajlova. Pet su **datirani** sesijski planovi/promptovi (`2026-07-27-cpanel-sesija-plan.md`
+i sl.) — to su istorijski zapisi, tačni za trenutak pisanja, i **ne prepravljaju se**.
+Šesti, `w1-novi-proizvodi-court-builder.md`, je **živi red čekanja bez datuma u imenu** —
+i baš je on bio jedini pravi problem, jer se čita kao aktuelno uputstvo.
+
+**Pravilo:** kod pomeranja roka grep-ovati stari datum, pa razdvojiti pogotke po tome da
+li fajl ima datum u imenu. Bez te podele se ili prepravlja istorija, ili se propušta
+jedini fajl koji stvarno vara.
+
+---
+
+## Prazan `post_title` na `nav_menu_item` nije bag (2026-08-18)
+
+Meni stavka 17424 je mesecima vođena kao „nema naslov, prazan red u meniju". U bazi
+`post_title` **jeste** prazan — kao i na još 8 stavki istog menija. Ali sve su
+`_menu_item_type=post_type`, a tu WordPress pri renderu pada na naslov povezane
+stranice: 17424 se prikazuje kao „Podovi za garaže".
+
+**Pravilo:** nalaz iz baze o meni stavkama se potvrđuje **u renderu** (`curl` + grep po
+`menu-item-<ID>`) pre nego što se upiše kao zadatak. Ista logika važi za svako polje
+koje WP ima kao fallback.
+
+---
 
 ## Klaster agregat krije pod-klastere — prilika se vidi tek na query nivou (2026-08-18)
 - Simptom: u [[seo/2026-07-27-content-klasteri]] klaster INDUSTRIJSKI stoji kao 1.537 prikaza / 90d — mali, neprioritetan. Pogled na **query nivo** u istom izvoru (`seo/gsc-svi-upiti-16m-2026-07-04.csv`) pokazuje da unutar njega „radionica" varijante (`podovi za radionice`, `pod za radionicu`, `gumeni/pvc/podne obloge za radionice`, `plocice za radionicu`, + „cena" varijante) nose **~4.700 prikaza / ~275 klikova sa poz. 3,5–7 i CTR do 9,8%** — i **nemaju nijednu namensku stranicu**.
@@ -343,7 +385,7 @@ posle učitavanja.
   ćelije**. U tabeli sa ćelijama od 1–4 hiljade znakova to znači da se **svaki** red
   dopuni na tu širinu. PROGRESS.md je tako narastao na **1,4 MB, od čega 1,06 MB razmaka
   (75%)** — jedan niz razmaka bio je 4.209 uzastopnih.
-- Šteta nije kozmetička: fajl koji CLAUDE.md §12 nalaže da se čita **prvi na svakoj
+- Šteta nije kozmetička: fajl koji CLAUDE.md §13 nalaže da se čita **prvi na svakoj
   sesiji** prestao je da može da se otvori Read alatom (106k tokena vs limit 25k), pa se
   čitao parcijalno kroz grep — isti razred greške koji je 12.08 doveo do pogrešnog izbora
   zadatka.
@@ -1213,7 +1255,7 @@ require_once ABSPATH.'wp-admin/includes/taxonomy.php';
 
 ## Bash inline `php -r` sa sadržajem koji ima ugnježdene navodnike (2026-07-11)
 - **Veliki `php -r "..."` pozvan direktno kroz Bash tool sa string sadržajem koji meša jednostruke/dvostruke navodnike (HTML `alt="..."`, WPBakery markup) je krhak** — shell-escaping kroz slojeve (Bash tool → sh → php -r) je pojeo/iskvario deo koda i rezultat je bio da je `post_content` stranice 16676 upisan kao doslovno `"1"` (ceo sadržaj izgubljen) umesto namenjenog HTML-a. Uzrok nije definitivno utvrđen (verovatno kolizija ugnježdenih `\"` sekvenci), ali posledica je bila tiha (skripta je "uspešno" odradila `$wpdb->update` sa pogrešnim sadržajem, bez PHP greške).
-- **Fix i pravilo ubuduće**: SVAKI upis koji menja `post_content` postojeće stranice preko `str_replace`/`$wpdb->update` MORA ići kroz `.php` fajl (Write alat), nikad kroz inline `php -r "..."` kad string sadržaj ima HTML atribute sa navodnicima — ovo je već pravilo iz CLAUDE.md §8.4 za >965B komande, ali se pokazalo da važi i za KRAĆE komande čim se pojave ugnježdeni navodnici, ne samo zbog dužine.
+- **Fix i pravilo ubuduće**: SVAKI upis koji menja `post_content` postojeće stranice preko `str_replace`/`$wpdb->update` MORA ići kroz `.php` fajl (Write alat), nikad kroz inline `php -r "..."` kad string sadržaj ima HTML atribute sa navodnicima — ovo je već pravilo iz CLAUDE.md §9.4 za >965B komande, ali se pokazalo da važi i za KRAĆE komande čim se pojave ugnježdeni navodnici, ne samo zbog dužine.
 - **Oporavak**: pošto je backup baze napravljen neposredno pre izmene (standardni protokol), sadržaj je vraćen tako što je backup `.sql` uvezen u privremenu bazu (`CREATE DATABASE antasline_restore_tmp` → `mysql < backup.sql`), pravi `post_content` pročitan odatle i upisan nazad u živu tabelu, pa je temp baza obrisana. Ovo je razlog zašto se backup pravi PRE svake sesije koja menja bazu, čak i za naizgled bezopasne string-replace izmene.
 
 ## Task Scheduler / backup (2026-07-09)
@@ -1439,3 +1481,29 @@ upisuje na kraju — ciljni fajl stoji na **0 B** ~25 min, što izgleda kao da j
 ## Server nema `htpasswd` CLI — `openssl passwd -apr1` daje kompatibilan Apache hash (staging V4, 2026-08-13)
 - `htpasswd -bc` je vratio `command not found` na cPanel serveru. Zamena bez dodatnog paketa: `openssl passwd -apr1 '<lozinka>'` generiše APR1-MD5 hash koji Apache/LiteSpeed prihvata identično, upisan ručno u `.htpasswd` kao `korisnik:hash`.
 - Vezano: kad se paket namerno NE prepisuje serverski `.htaccess` (ispravna odluka da se sačuva postojeći Basic Auth), ta odluka tiho pretpostavlja da serverski fajl **postoji**. Ako je ceo docroot ranije obrisan (kao ovde — staging obrisan par dana pre ove sesije), pretpostavka pada bez greške: raspakivanje samo ostavlja prazninu, staging ostaje kratko potpuno otvoren dok se to eksplicitno ne proveri (`head -20 .htaccess` posle svakog raspakivanja koda kad prompt to traži — ne preskakati ovaj korak ni kad "izgleda kao formalnost").
+
+
+## `Read` bez `limit` povlači 2000 linija — kod nas to zna biti 50k+ tokena iz jednog poziva (token audit, 2026-08-18)
+- `DNEVNIK-NAPRETKA.md` je bio 988 KB / 6.320 linija. Jedan `Read` bez `limit`-a = prvih 2000 linija = **160 KB ≈ 52k tokena**, a na otvaranju sesije treba ~10 poslednjih unosa. Fajl koji staje u 2000 linija (`reference/naucene-lekcije.md`, 233 KB / 1.483 linije) ulazi **ceo** — ~75k tokena.
+- Izmereno iz transkripata (`~/.claude/projects/<slug>/*.jsonl`, `usage` polje): dve od pet sesija su u prvih 12 poruka narasle **+65k i +70k**, a prvi `Read` pozivi su bili PROGRESS i master plan **bez limita** — master plan čak dvaput (prvo ceo, pa isti fajl sa `limit 150`; prvo čitanje čist gubitak).
+- **Pravilo: pre `Read`-a na nepoznat fajl uraditi `wc -c`.** Preko ~40 KB → `head -N`, `sed -n 'OD,DOp'` ili `grep -rn` (kod `grep`-a u kontekst ulaze samo pogođene linije, bez obzira na veličinu fajla).
+
+## „Append na kraj“ u append-only ledgeru koji je newest-on-top = tiho nevidljivi unosi (token audit, 2026-08-18)
+- `DNEVNIK-NAPRETKA` je newest-on-top, ali su tri uputstva doslovno nalagala suprotno: `CLAUDE-CODE-instrukcija-CPANEL.md` („DODAJ (append) **na kraj**“), `CLAUDE-CODE-instrukcija.md` („red **na kraj**“) i `CLAUDE.md` §9.1 („→ append `[cpanel-live]` unos“). Rezultat: 4 unosa (06-23, 07-10, 07-30, 08-13) završila su na dnu fajla.
+- Posledica nije bila kozmetička — unos od 13.08 je bio „praktično nevidljiv“ i **propušten iz PROGRESS tabele**, što je otkriveno tek naknadno. Ni `Read` ga ne bi našao: bio je na liniji 6291, a `Read` staje na 2000.
+- **Pravilo: kad se popravlja simptom u podacima, potraži tekst uputstva koji ga proizvodi.** Rotacija bi sredila fajl, ali bi ga sledeći `[cpanel-live]` unos ponovo pokvario.
+- Vezano: rotacija/sortiranje takvog fajla mora ići **po datumu parsiranom iz naslova**, nikad po poziciji linije — inače skript zalutale unose arhivira u pogrešan mesec.
+
+## Bash heredoc u Claude Code alatu skuplja dvostruke obrnute kose crte — za skripte sa escape-ovima koristi Write (token audit, 2026-08-18)
+- `python - <<'EOF'` sa `'EOF'` u navodnicima treba da prenese sadržaj doslovno, ali je `\n` u izvoru stizalo do Pythona kao pravi prelom reda, a `.replace('\','/')` kao neterminisan string. Jednostruki `\d` u regexu prolazi; dvostruki ne.
+- **Fix:** skripte sa escape sekvencama pisati `Write` alatom u fajl pa pokrenuti `python fajl.py`. Isto važi i za srpske navodnike: `„tekst"` unutar Python stringa u dvostrukim navodnicima prekida string na ASCII `"` — koristiti `'...'` ili `„...“`.
+
+## Mešani CRLF/LF fajlovi: normalizacija celog fajla ga naduva (token audit, 2026-08-18)
+- Skript za čišćenje razmaka je u prvom prolazu **povećao** `migracija/arhiva/2026-08-11-legacy-cpt-sadrzaj.md` za 2.354 B, jer taj fajl ima **1.144 CRLF i 2.354 LF** reda, a logika „ako fajl sadrži CRLF, vrati sve na CRLF“ je konvertovala i LF redove.
+- **Pravilo: čuvaj završetak reda po liniji** (`cr = seg.endswith('')`), ne po fajlu. Vault ima obe konvencije (136 LF : 47 CRLF : 1 mešan), `core.autocrlf=true` ih normalizuje tek pri commit-u.
+
+## Pre renumeracije sekcija — inventar referenci sa kontekstom, ne globalna zamena (CLAUDE.md, 2026-08-18)
+- `CLAUDE.md` je imao **dve sekcije numerisane 9** (WORKFLOW I ALATI i KLJUČNE LEKCIJE), a podsekcije workflow-a su nosile brojeve 8.1–8.7. Deset spoljnih referenci na „§9“ bilo je dvosmisleno u oba smera.
+- Od 15 pogodaka na `§10` u vault-u, **samo 9 je gledalo u `CLAUDE.md`** — ostalo su bile reference na `/woodmart-theme` §13/§14, `chrome-web-platform-2026` §12 i „§6 ovog plana“. Globalna zamena bi ih polomila.
+- **Postupak koji je prošao čisto:** (1) inventar `(fajl, linija, broj, kontekst)`, (2) razdvajanje živih uputstava od datiranih zapisa — zapisi se **ne** prepravljaju, (3) imenovane zamene sa `assert count == 1` po svakoj, (4) završna semantička provera: svaka živa referenca upoređena sa stvarnim naslovom ciljne sekcije, (5) mapa starih→novih brojeva ostavljena u samom dokumentu.
+- Usput se ispostavilo da je jedna referenca bila pogrešna i **pre** renumeracije (`migracija/w1-polish-red-cekanja.md` je GEO pravilo pripisivao `CLAUDE.md` §10, a ono živi u `/antasline-sesija` W2) — inventar sa kontekstom hvata i takve, globalna zamena ne.

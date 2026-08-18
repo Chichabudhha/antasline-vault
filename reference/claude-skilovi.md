@@ -11,21 +11,21 @@ namena: Pregled Claude Code skilova za AntasLine projekat
 > Pozivaju se sa `/<ime>` u Claude Code-u ili prirodnom rečenicom iz
 > kolone "Okidač". Ovaj fajl je podsetnik ŠTA koji skill radi.
 
-| Skill                | Okidač (primeri)                                  | Šta radi                          |
+| Skill | Okidač (primeri) | Šta radi |
 | -------------------- | ------------------------------------------------- | --------------------------------- |
-| `/antasline-sesija`  | "nastavljamo", "gde smo stali", "sledeći zadatak" | Master protokol sesije            |
-| `/obogati-proizvod`  | "obogati proizvode", "sredi Ecotile proizvode"    | Šablon obogaćivanja Woo proizvoda |
-| `/w6-social`         | "social", "newsletter", "Instagram post", "W6"    | Social/email/GMB workstream       |
-| `/nedeljni-izvestaj` | "nedeljni izveštaj", "kako stojimo"               | 7d vs 7d izveštaj kroz konektor   |
-| `/antasline-ads`     | "ads", "oglasi", "CPC", "budžet", "RSA", "PMax"   | W4 Google Ads playbook            |
-| `/antasline-konektor`| "konektor", "poveži API", "povuci podatke"        | GA4/GSC/Ads/GMB podaci (read-only)|
-| `/gemini-vizuali`    | "slike proizvoda", "unapredi fotke", "vizuali"    | Foto/video preko Gemini API       |
-| `/dnevni-video`      | "dnevni video", "Flow", "animiraj fotku"          | Jedan Veo kadar dnevno            |
-| `/delegati`          | "delegiraj", "pusti na Copilot/Grok", "ko ovo da odradi" | **Router** — koji od 4 delegata za koji posao |
-| `/agy-delegat`       | "agy", "antigravity", "delegiraj", "štedi tokene" | Masovno čitanje **fajlova** na Gemini (kvota!)|
-| `/ollama-lokalni`    | "ollama", "lokalni model", "qwen", "razvrstaj upite" | Sažimanje **brojki** iz konektora, lokalno i bez kvote |
-| `/woodmart-theme`    | rad na temi, CSS/builder/CF7 problemi             | Gotcha-i WoodMart teme (globalni) |
-| `/modern-web-guidance`| pre novog CSS/JS obrasca                         | Chrome vodiči + Baseline podaci   |
+| `/antasline-sesija` | "nastavljamo", "gde smo stali", "sledeći zadatak" | Master protokol sesije |
+| `/obogati-proizvod` | "obogati proizvode", "sredi Ecotile proizvode" | Šablon obogaćivanja Woo proizvoda |
+| `/w6-social` | "social", "newsletter", "Instagram post", "W6" | Social/email/GMB workstream |
+| `/nedeljni-izvestaj` | "nedeljni izveštaj", "kako stojimo" | 7d vs 7d izveštaj kroz konektor |
+| `/antasline-ads` | "ads", "oglasi", "CPC", "budžet", "RSA", "PMax" | W4 Google Ads playbook |
+| `/antasline-konektor`| "konektor", "poveži API", "povuci podatke" | GA4/GSC/Ads/GMB podaci (read-only)|
+| `/gemini-vizuali` | "slike proizvoda", "unapredi fotke", "vizuali" | Foto/video preko Gemini API |
+| `/dnevni-video` | "dnevni video", "Flow", "animiraj fotku" | Jedan Veo kadar dnevno |
+| `/delegati` | "delegiraj", "pusti na Copilot/Grok", "ko ovo da odradi" | **Router** — koji od 4 delegata za koji posao |
+| `/agy-delegat` | "agy", "antigravity", "delegiraj", "štedi tokene" | Masovno čitanje **fajlova** na Gemini (kvota!)|
+| `/ollama-lokalni` | "ollama", "lokalni model", "qwen", "razvrstaj upite" | Sažimanje **brojki** iz konektora, lokalno i bez kvote |
+| `/woodmart-theme` | rad na temi, CSS/builder/CF7 problemi | Gotcha-i WoodMart teme (globalni) |
+| `/modern-web-guidance`| pre novog CSS/JS obrasca | Chrome vodiči + Baseline podaci |
 
 ---
 

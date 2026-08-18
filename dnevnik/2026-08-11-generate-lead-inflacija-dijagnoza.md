@@ -37,10 +37,10 @@ Namerno bez GTM Preview-a (traži M-a i pušta hitove u produkciju). Umesto toga
   okidač `gtm.init`) šalje **svoj automatski `page_view`** na svakoj stranici.
 - Izmereno jedno učitavanje na oba okruženja:
 
-  | | `page_view` | `generate_lead` | GTM embeda u HTML-u |
-  |---|---|---|---|
-  | Live (Kallyas) | 2× | **3×** | **2** + noscript |
-  | Lokalni build (WoodMart) | 2× | **1×** | 1 + noscript |
+ | | `page_view` | `generate_lead` | GTM embeda u HTML-u |
+ |---|---|---|---|
+ | Live (Kallyas) | 2× | **3×** | **2** + noscript |
+ | Lokalni build (WoodMart) | 2× | **1×** | 1 + noscript |
 
   Live merenje se poklapa sa GA4 agregatom za 04–10.08 (26 `page_view` / 39
   `generate_lead` na 10 sesija).

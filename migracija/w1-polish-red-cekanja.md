@@ -94,7 +94,7 @@ Nijedan naknadni "Faza" nastavak nije planiran — sledeći W1 rad ide kroz novi
 > Otvorena na M zahtev 2026-08-07 ("stavi to u plan") — nastavak Faze 3 dopune.
 > Batch 6 (v. tabelu iznad) je dodao samo generički zatvarajući CTA na ovih 22
 > posta; nijedan od njih nema pravi `.al-geo-intro` "Kratak odgovor" pasus na
-> vrhu (GEO pravilo iz CLAUDE.md §10: prvi pasus = direktan odgovor). Ovo JESTE
+> vrhu (GEO pravilo iz `/antasline-sesija` W2: prvi pasus = direktan odgovor). Ovo JESTE
 > copywriting — svaki pasus mora se izvesti iz stvarnog sadržaja posta, ništa
 > izmišljeno — pa je sporiji od Faze 3 (mehaničke izmene). Isti F7.24
 > obrazac/CSS (`.al-geo-intro`, mist pozadina + crveni levi border).

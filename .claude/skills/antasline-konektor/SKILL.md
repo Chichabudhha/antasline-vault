@@ -85,7 +85,7 @@ presets, ista disciplina kao kod Windsor rada (izbegava dvosmislenost oko
   jednostavnosti i da ostane eksplicitno koji je period koji.
 - GSC podaci kasne 2–3 dana — pomeri `--to` unazad za toliko.
 - `nedeljni-izvestaj` skill sad poziva ove skripte umesto Windsor MCP
-  poziva — format izveštaja (CLAUDE §10) je NEPROMENJEN.
+  poziva — format izveštaja (CLAUDE §11) je NEPROMENJEN.
 - Pravilo "Nema podataka za [izvor]" umesto izmišljanja i dalje važi ako
   skripta vrati grešku (npr. Ads developer token još nije odobren).
 

@@ -24,6 +24,18 @@ sinhronizovano-sa: [[DNEVNIK-NAPRETKA]], [[PROGRESS]]
 
 Nalog: `156-886-0314` (Gogin Nalog) · Strategija: **Maximize Clicks** (namerno, do praga) · Valuta: RSD
 
+> [!warning] 🔴 Prag 20–30 NIJE dostignut — pravih plaćenih lidova ima **9**, ne 26 (stanje 2026-08-18)
+> Svi Log unosi **zaključno sa 11.08** broje `Klik na telefon (web)` kao konverziju
+> (akcija ima `include_in_conversions_metric=True` + `primary_for_goal=True`, protiv
+> pravila [[CLAUDE]] §4). Od 01.06 do 10.08: **17 tel + 9 forma**. Kad u starijem unosu
+> pročitaš „kumulativ 24/26, prag pređen" — **to ne važi**, v. ispravku 12.08 u Logu.
+> Odluka **4.8 (Maximize Conversions) je odložena na ~01.09**, zatvorena u
+> [[odluke/_pregled-odluka]] 13.08. Uslov za ponovno otvaranje: `Klik na telefon (web)`
+> prebačen u *Secondary action* (#ceka-miroslav) **i** 20–30 lidova iz forme.
+> 🟡 Uz to: posle migracije 25.08 GA4 `generate_lead` pada na ~⅓ a hvala-proxy na ~½
+> (nestaje dupli GTM embed + tag id 18) — **to nije pad prodaje.**
+> *(Upisano 2026-08-18 — konflikt #6 iz [[migracija/2026-08-12-preflight-checklist-24-08]].)*
+
 ---
 
 ## 🚦 Trenutno stanje (snimak: 2026-07-01)
@@ -218,7 +230,7 @@ konverzijama uvek proveriti `include_in_conversions_metric` /
 | 30.07–05.08 | 228 | 76,56 | +47% (već upisano juče) |
 | 01–05.08 (podskup) | 161 | 78,98 | **potvrđuje trend, nije bio jednonedeljni šum** |
 
-Za poređenje (iz junskog throttling incidenta, već u dnevniku): pre-throttle **802 impr / ~26 RSD CPC**, throttling špic **261 impr / 74 RSD CPC**. Trenutne brojke (150–250 impr, CPC sad **78,98 — iznad** junskog špica od 74) nose isti potpis koji [[CLAUDE]] §9 opisuje: "visok impression share + sitni apsolutni impressions + skok CPC = throttling na nivou naloga, ne pad tražnje". Terase kampanja u istom periodu ide suprotnim smerom (CPC 20,11→18,07→17,95 opadajuće, impresije rastu 218→1268→1065) — dakle problem NIJE tržišni niti nalog-širok (odblokiranje 07-04 je i dalje na snazi), izolovan je na ECOTILE kampanju specifično. Mogući uzroci van dosega konektora (read-only): dnevni budžet cap koji je postao preplitak za novi (viši) CPC opseg, ili Quality Score/Ad Rank efekat na uskom setu ključnih reči. **Nije izvršena nikakva izmena** (konektor je read-only za Ads write akcije) — upisano kao nalaz za Miroslava, v. Bloker ispod.
+Za poređenje (iz junskog throttling incidenta, već u dnevniku): pre-throttle **802 impr / ~26 RSD CPC**, throttling špic **261 impr / 74 RSD CPC**. Trenutne brojke (150–250 impr, CPC sad **78,98 — iznad** junskog špica od 74) nose isti potpis koji [[CLAUDE]] §10 opisuje: "visok impression share + sitni apsolutni impressions + skok CPC = throttling na nivou naloga, ne pad tražnje". Terase kampanja u istom periodu ide suprotnim smerom (CPC 20,11→18,07→17,95 opadajuće, impresije rastu 218→1268→1065) — dakle problem NIJE tržišni niti nalog-širok (odblokiranje 07-04 je i dalje na snazi), izolovan je na ECOTILE kampanju specifično. Mogući uzroci van dosega konektora (read-only): dnevni budžet cap koji je postao preplitak za novi (viši) CPC opseg, ili Quality Score/Ad Rank efekat na uskom setu ključnih reči. **Nije izvršena nikakva izmena** (konektor je read-only za Ads write akcije) — upisano kao nalaz za Miroslava, v. Bloker ispod.
 
 **4.6 — Pravilo preklapanja organik/plaćeno — sveže GSC (06.07–03.08) potvrđuje raniji zaključak iz [[analiza/2026-07-04-snapshot-full]], sa ažuriranim brojkama:**
 - **Terase-cena klaster i dalje organski dominantan (NE plaćati baš na ove tačne fraze):** "gumeni podovi za terase cena" poz. 1,6 (215 impr, CTR 5,12%) · "gumene podloge za terasu" poz. 2,1 · "gumeni podovi za terase" poz. 3,2 · "podloge za terasu" poz. 2,6 — svi top-3.
@@ -326,6 +338,6 @@ Za poređenje (iz junskog throttling incidenta, već u dnevniku): pre-throttle *
 
 <!-- ŠABLON ZA NOVI UNOS — kopiraj iznad ovog reda:
 ### YYYY-MM-DD [chat|claude-code|cpanel-live]
-- 
-**Sledeći korak:** 
+-
+**Sledeći korak:**
 -->

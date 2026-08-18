@@ -13,21 +13,21 @@ status: popunjeno 2026-07-07
 
 ## Profili
 
-| Mreža              | URL profila                                     | Pristup ima | Stanje (aktivan/mrtav/nema)     | Poslednja objava                                                | Napomena                                 |
+| Mreža | URL profila | Pristup ima | Stanje (aktivan/mrtav/nema) | Poslednja objava | Napomena |
 | ------------------ | ----------------------------------------------- | ----------- | ------------------------------- | --------------------------------------------------------------- | ---------------------------------------- |
-| Facebook           | https://www.facebook.com/sportskepodloge        |             | aktivan                         | 7 dana                                                          |                                          |
-| Instagram          | https://www.instagram.com/antas_line/           |             | aktivan                         | 7 dana                                                          |                                          |
-| LinkedIn (firma)   | https://www.linkedin.com/company/antas-line-doo |             | mrtav                           |                                                                 |                                          |
-| YouTube            | https://www.youtube.com/@antasline5676          |             | mrtav                           |                                                                 |                                          |
-| TikTok             | nema                                            |             |                                 |                                                                 |                                          |
-| X / Twitter        | nema                                            |             |                                 |                                                                 |                                          |
-| Google My Business | ✅ postoji — "Industrijski podovi AntasLine"     | Miroslav    | aktivan, zapušten (6 recenzija) | 06.07.2026, pre ove objave, poslednji post napisan pre 6 godina | UTM fix + recenzije = W5 zadatak 5.2/5.3 |
+| Facebook | https://www.facebook.com/sportskepodloge | | aktivan | 7 dana | |
+| Instagram | https://www.instagram.com/antas_line/ | | aktivan | 7 dana | |
+| LinkedIn (firma) | https://www.linkedin.com/company/antas-line-doo | | mrtav | | |
+| YouTube | https://www.youtube.com/@antasline5676 | | mrtav | | |
+| TikTok | nema | | | | |
+| X / Twitter | nema | | | | |
+| Google My Business | ✅ postoji — "Industrijski podovi AntasLine" | Miroslav | aktivan, zapušten (6 recenzija) | 06.07.2026, pre ove objave, poslednji post napisan pre 6 godina | UTM fix + recenzije = W5 zadatak 5.2/5.3 |
 
 ## Ostali online profili (direktorijumi, portali)
 
-| Gde       | URL                                                        | Napomena |
+| Gde | URL | Napomena |
 | --------- | ---------------------------------------------------------- | -------- |
-| Pinterest | https://www.pinterest.com/antassport/industrijske-podloge/ |          |
+| Pinterest | https://www.pinterest.com/antassport/industrijske-podloge/ | |
 
 ## Kad se popuni (Claude Code radi)
 

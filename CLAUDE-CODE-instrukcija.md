@@ -24,7 +24,9 @@ PRAVILA:
    - [[PROGRESS]] (gde smo)
    - [[blokovi/BLOK-C-sledece]] (prioritet)
 2. POSLE rada:
-   a) DODAJ (append, ne overwrite) red na kraj `DNEVNIK-NAPRETKA.md`:
+   a) DODAJ red NA VRH `DNEVNIK-NAPRETKA.md` (ispod zaglavlja, pre prvog
+      `## ` unosa) — **ne na kraj, i nikad overwrite**; ledger je
+      newest-on-top:
       `## YYYY-MM-DD [claude-code] — kratak opis`
       pa 1–3 bullet-a šta je urađeno + otvorene akcije sa
       `#claude-code` ili `#ceka-miroslav`.

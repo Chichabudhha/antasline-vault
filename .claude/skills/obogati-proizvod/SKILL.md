@@ -98,7 +98,7 @@ nikad na live sajtu.
    - 3 FAQ pitanja
    - CTA: telefon **`069 234 00 72`** (`tel:+381692340072`) + link ka kontakt formi.
      🔴 Prefiks je **069** — „072" je skraćenica za poslednje dve cifre, nikad ne
-     pisati „072 234 00 72" (v. [[CLAUDE]] §9)
+     pisati „072 234 00 72" (v. [[CLAUDE]] §10)
    - `post_excerpt` (kratak opis) = 1–2 rečenice benefita
 5. **Rank Math**: `rank_math_title` + `rank_math_description` postmeta za svaki
    proizvod. Title ≤60 znakova sa ključnom reči, metadesc ≤155.

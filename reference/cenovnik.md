@@ -24,44 +24,44 @@ status: popunjen (M10 zatvoren 2026-07-29) — preostaje samo svesno "na upit" (
 
 ## Terase i spoljne podloge (W2 Tier1 #1, #6)
 
-| Proizvod/usluga          | Cena od (RSD) | Cena do (RSD) | Jedinica      | Napomena                                       |
+| Proizvod/usluga | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
 | ------------------------ | ------------- | ------------- | ------------- | ---------------------------------------------- |
-| Bergo XL                 | 3300          | 3300          | m²            |                                                |
-| Bergo Elite              | 5800          | 5800          | m²            |                                                |
-| Bergo Unique             | 3900          | 3900          | m²            |                                                |
-| Bergo Easy               |               |               | m²            | nema više u ponudi                             |
-| Montaža (rad)            | paušal        |               | m² ili paušal | paušal - u zavisnosti od kvadrature i lokacije |
-| Podloge za parking/staze | 2800          | 4200          | m²            |                                                |
+| Bergo XL | 3300 | 3300 | m² | |
+| Bergo Elite | 5800 | 5800 | m² | |
+| Bergo Unique | 3900 | 3900 | m² | |
+| Bergo Easy | | | m² | nema više u ponudi |
+| Montaža (rad) | paušal | | m² ili paušal | paušal - u zavisnosti od kvadrature i lokacije |
+| Podloge za parking/staze | 2800 | 4200 | m² | |
 
 ## Industrijski podovi (W2 Tier1 #2)
 
-| Proizvod        | Cena od (RSD) | Cena do (RSD) | Jedinica      | Napomena                                       |
+| Proizvod | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
 | --------------- | ------------- | ------------- | ------------- | ---------------------------------------------- |
-| Ecotile E500/7  | 4600          | 5500          | m²            |                                                |
-| Ecotile E500/10 | 6800          | 6800          | m²            |                                                |
-| ESD 7mm ploče   | na upit       |               | m²            | cena na upit                                   |
-| Mosolut Heavy   | 5200          |               | m²            |                                                |
-| Montaža (rad)   | paušal        |               | m² ili paušal | paušal - u zavisnosti od kvadrature i lokacije |
+| Ecotile E500/7 | 4600 | 5500 | m² | |
+| Ecotile E500/10 | 6800 | 6800 | m² | |
+| ESD 7mm ploče | na upit | | m² | cena na upit |
+| Mosolut Heavy | 5200 | | m² | |
+| Montaža (rad) | paušal | | m² ili paušal | paušal - u zavisnosti od kvadrature i lokacije |
 
 ## Garaže (W2 Tier1 #3)
 
-| Rešenje              | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
+| Rešenje | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
 | -------------------- | ------------- | ------------- | -------- | -------- |
-| PVC ploče za garažu  | 4600          | 5500          | m²       |          |
-| Gumeni pod za garažu | 4600          | 5500          | m²       |          |
+| PVC ploče za garažu | 4600 | 5500 | m² | |
+| Gumeni pod za garažu | 4600 | 5500 | m² | |
 
 ## Sportski tereni / konstrukcije
 
-| Proizvod                                                             | Cena od (RSD)  | Cena do (RSD) | Jedinica  | Napomena                                                                                       |
+| Proizvod | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
 | -------------------------------------------------------------------- | -------------- | ------------- | --------- | ---------------------------------------------------------------------------------------------- |
-| Bergo Ultimate (sportski pod, court builder pločica)                 | Na upit        |               | m²        | konačna odluka M (potvrđeno 2x) — projektna/upit cena, ne unosi se u `al_cb_prices` (`tile:16770` ostaje prazan, planer prikazuje "na upit" za ovu stavku) |
-| Bergo Ultimate FLOW (pickleball podloga)                             | Na upit        |               | m²        | isto kao gore (`tile:16801` prazan)                                                            |
-| Ecotile rampe/završni profili (4 proizvoda, 16930/16939/16943/16949) | 1560           |               | m ili kom | ✅ primenjeno 2026-07-29 — WC već imao 1560/varijanta (S6 import), `al_cb_prices` opcija dopunjena (`ramp`/`ramp_corner` = 1300 bez PDV + 20% PDV = 1560) |
-| Lite Shot 325 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena i dalje neupisana                                               |
-| Mini Shot 225 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena i dalje neupisana                                               |
-| MicroShot 125 (koš)                                                  | Na upit        |               | kom       | legacy proizvod (pre S7), cena i dalje neupisana                                               |
-| Koš na kolicima "Street Sport"                                       | 294000         |               | kom       | ✅ primenjeno 2026-07-29 u WC (ID 16532, `_regular_price`)                                      |
-| Zglobni obruč za koš                                                 | nema na stanju |               | kom       | ✅ primenjeno 2026-07-29 u WC (ID 16536, `_stock_status`→outofstock)                            |
+| Bergo Ultimate (sportski pod, court builder pločica) | Na upit | | m² | konačna odluka M (potvrđeno 2x) — projektna/upit cena, ne unosi se u `al_cb_prices` (`tile:16770` ostaje prazan, planer prikazuje "na upit" za ovu stavku) |
+| Bergo Ultimate FLOW (pickleball podloga) | Na upit | | m² | isto kao gore (`tile:16801` prazan) |
+| Ecotile rampe/završni profili (4 proizvoda, 16930/16939/16943/16949) | 1560 | | m ili kom | ✅ primenjeno 2026-07-29 — WC već imao 1560/varijanta (S6 import), `al_cb_prices` opcija dopunjena (`ramp`/`ramp_corner` = 1300 bez PDV + 20% PDV = 1560) |
+| Lite Shot 325 (koš) | Na upit | | kom | legacy proizvod (pre S7), cena i dalje neupisana |
+| Mini Shot 225 (koš) | Na upit | | kom | legacy proizvod (pre S7), cena i dalje neupisana |
+| MicroShot 125 (koš) | Na upit | | kom | legacy proizvod (pre S7), cena i dalje neupisana |
+| Koš na kolicima "Street Sport" | 294000 | | kom | ✅ primenjeno 2026-07-29 u WC (ID 16532, `_regular_price`) |
+| Zglobni obruč za koš | nema na stanju | | kom | ✅ primenjeno 2026-07-29 u WC (ID 16536, `_stock_status`→outofstock) |
 
 ### Hoop n Court koševi — VEĆ POTVRĐENO (S7, 2026-07-11, ne čeka M11)
 
@@ -90,16 +90,16 @@ builder ih već prikazuje kao "na upit".
 
 ## Ergomat zaštita / DuraStripe
 
-| Proizvod                            | Cena od (RSD) | Cena do (RSD) | Jedinica    | Napomena                                                                                             |
+| Proizvod | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
 | ----------------------------------- | ------------- | ------------- | ----------- | ---------------------------------------------------------------------------------------------------- |
-| Odbojnici/bumperi (razne varijante) | 1000          | 3000          | kom         | ima 15+ varijanti — ili paušalno "od X do Y po tipu" ili batch popuniti pri /obogati-proizvod sesiji |
-| DuraStripe trake za obeležavanje    | na upit       |               | m ili rolna |                                                                                                      |
+| Odbojnici/bumperi (razne varijante) | 1000 | 3000 | kom | ima 15+ varijanti — ili paušalno "od X do Y po tipu" ili batch popuniti pri /obogati-proizvod sesiji |
+| DuraStripe trake za obeležavanje | na upit | | m ili rolna | |
 
 ## Veštačka trava
 
-| Usluga                          | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
+| Usluga | Cena od (RSD) | Cena do (RSD) | Jedinica | Napomena |
 | ------------------------------- | ------------- | ------------- | -------- | -------- |
-| Veštačka trava (dvorište/teren) | 3200          | 4500          | m²       |          |
+| Veštačka trava (dvorište/teren) | 3200 | 4500 | m² | |
 
 ## Veze
 

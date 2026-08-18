@@ -7,7 +7,7 @@ description: Lokalna obrada velikih izlaza iz konektora (GSC upiti, Ads search t
 
 Sestrinski skill uz `[[agy-delegat]]`. Razlika je bitna:
 
-| | `agy-delegat` (Gemini) | `ollama-lokalni` | 
+| | `agy-delegat` (Gemini) | `ollama-lokalni` |
 |---|---|---|
 | Gde radi | Google cloud, mala besplatna kvota | ova masina, bez kvote |
 | Sta mu ide dobro | citanje **mnogo fajlova**, trazenje protivrecnosti | **sazimanje brojki** iz jednog JSON-a |

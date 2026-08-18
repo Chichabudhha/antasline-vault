@@ -1,3 +1,7 @@
 # Dnevnik je append-only ledger: na konfliktu (npr. lokal i cPanel
 # dopisali u isto vreme) zadrži OBA unosa automatski, bez ručnog merge-a.
 DNEVNIK-NAPRETKA.md merge=union
+
+# Mesečne arhive ledgera (skripte/rotiraj-dnevnik.py) su takođe append-only
+# i mogu da se dopišu i sa lokala i sa cPanel-a: zadrži OBA unosa na konfliktu.
+dnevnik/arhiva-dnevnik-*.md merge=union

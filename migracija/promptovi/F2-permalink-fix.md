@@ -43,11 +43,11 @@ blog arhiva je `/blog/` (live je `/aktuelnosti/`).
    Proveri i interni linkovi/meni da ne ostane `/blog/`.
 
 4. **Proizvod slugovi — vraćanje na live** (2 sigurna + 1 za proveru):
-   | Lokalni slug (menja se) | Live slug (cilj) |
-   |---|---|
-   | `durastripe-supreme-v-industrijska-traka-za-podno-obelezavanje-trajna-i-uklonjiva` | `durastripe-supreme-v-roll-50-mm-x-30-m-ergomat` |
-   | `ecotile-e500-10-ultra-heavy-duty-podovi-za-kretanje-kamiona-i-viljuskara` | `ecotile-e500-10-ultra-heavy-duty-interlocking-podna-ploca` |
-   | ⚠️ `lite-shot-325-...` | **PRVO PROVERI**: live ima `lite-shot-795-...` — 325 i 795 su verovatno RAZLIČITI modeli (Sure Shot serija). Ako jesu: lokalni 325 OSTAJE (LOKAL-NOVO), a live 795 ide u F5 listu za dodavanje. Ne preimenovati slepo! |
+ | Lokalni slug (menja se) | Live slug (cilj) |
+ |---|---|
+ | `durastripe-supreme-v-industrijska-traka-za-podno-obelezavanje-trajna-i-uklonjiva` | `durastripe-supreme-v-roll-50-mm-x-30-m-ergomat` |
+ | `ecotile-e500-10-ultra-heavy-duty-podovi-za-kretanje-kamiona-i-viljuskara` | `ecotile-e500-10-ultra-heavy-duty-interlocking-podna-ploca` |
+ | ⚠️ `lite-shot-325-...` | **PRVO PROVERI**: live ima `lite-shot-795-...` — 325 i 795 su verovatno RAZLIČITI modeli (Sure Shot serija). Ako jesu: lokalni 325 OSTAJE (LOKAL-NOVO), a live 795 ide u F5 listu za dodavanje. Ne preimenovati slepo! |
    `wp_update_post(['ID'=>..., 'post_name'=>...])` po proizvodu.
 
 5. **Interni linkovi** — grep baze na stare putanje i ispravi:

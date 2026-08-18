@@ -397,21 +397,29 @@ VAULT (~/antasline-vault na hosting)
 
 ## 9. WORKFLOW I ALATI
 
-### 8.1 Tri-surface Git workflow
+> Podsekcije su do 2026-08-18 bile numerisane **8.1–8.7** (naslov je govorio 9,
+> podnaslovi 8) — ispravljeno u 9.1–9.7. Puna mapa starih brojeva: §10 ispod.
+
+### 9.1 Tri-surface Git workflow
 - **Lokal** — Claude Code piše u vault, Obsidian Git auto-sync na ~10 min
 - **Chat** — Claude u chatu na kraju sesije daje dated `.md` fajl za `dnevnik/`
   koji Miroslav ubacuje u vault
-- **cPanel** — pull → rad na produkciji → append `[cpanel-live]` unos →
-  commit → push
+- **cPanel** — pull → rad na produkciji → `[cpanel-live]` unos **NA VRH**
+  ledgera (ne append na dno — v. §9.2) → commit → push
 
 Tagovi u dnevniku: `[claude-code]` = lokalni terminal, `[chat]` = chat
 sesija, `[cpanel-live]` = live produkcija.
 
-### 8.2 Obsidian struktura
+### 9.2 Obsidian struktura
 - Vault: `C:\Projekti\antasline-vault\`
 - [[PROGRESS]] — snapshot trenutnog stanja (**izvor istine za "gde smo
   stali"** — pre svakog zadatka proveriti ovaj fajl)
-- [[DNEVNIK-NAPRETKA]] — append-only ledger, `merge=union` u `.gitattributes`
+- [[DNEVNIK-NAPRETKA]] — append-only ledger, **newest-on-top**, `merge=union`
+  u `.gitattributes`. Nov unos ide **NA VRH** iz svih tri površine — unos
+  koji završi na dnu je praktično nevidljiv (13.08.2026 tako propušten iz
+  PROGRESS tabele). Rotira se sa `python skripte/rotiraj-dnevnik.py` kad
+  pređe ~40 KB; starije ide doslovno u `dnevnik/arhiva-dnevnik-YYYY-MM.md`.
+  🔴 **Arhive se NE čitaju `Read`-om** (290–620 KB po fajlu) — samo `grep`.
 - Dataview plugin je potreban za dashboard upite
 - Wikilinks: `[[blokovi/BLOK-A-tracking]]`,
   `[[blokovi/BLOK-B-publike]]`, `[[DNEVNIK-NAPRETKA]]`
@@ -419,25 +427,25 @@ sesija, `[cpanel-live]` = live produkcija.
   RSA asset bank na srpskom za obe kampanje, hard rules/guardrails, append-only
   dated log
 
-### 8.3 Blok organizacija projekta
+### 9.3 Blok organizacija projekta
 - **BLOK A** — tracking (zatvoren)
 - **BLOK B** — publike (suštinski zatvoren)
 - **BLOK C** — redirect mapa (C1) / content parity (C2) / on-page build (C3) —
   aktivan, biraj jedan zadatak po sesiji
 
-### 8.4 Claude Code bash ograničenja
+### 9.4 Claude Code bash ograničenja
 - Komande preko ~965 bajtova → "Command too long for parsing" — koristi
   Write/Edit alate za sadržaj fajla, ili napiši `.sh` fajl pa `bash script.sh`
 - Velike fajlove čitaj preko Read alata po putanji, ne `cat`/pipe
 - Brace expansion `{a,b}` pravi **literalne** foldere umesto ekspanzije —
   koristi `for` petlju
 
-### 8.5 Analiza pre implementacije
+### 9.5 Analiza pre implementacije
 Claude analizira i predlaže opcije → Miroslav odobrava → Claude Code izvršava
 lokalno. Ne izvršavati destruktivne/nepovratne izmene na bazi bez prethodnog
 backup-a i bez odobrenja.
 
-### 8.6 Token usage tracking
+### 9.6 Token usage tracking
 Log: `Token Logs/.token_log.jsonl` (vault root, append-only, JSONL). Posle
 svake logičke akcije u sesiji ispiši na konzolu `✓ {akcija} | +Xk tokens |
 Session: Yk` i append-uj log unos. Brojevi dolaze iz stvarnog usage polja u
@@ -445,7 +453,7 @@ Claude Code transkriptu sesije (`~/.claude/projects/<slug>/<session-id>.jsonl`),
 ne iz procene. Preko 150k u sesiji → predloži `/clear`. Ne čitati log fajl
 tokom rada osim na eksplicitan zahtev. Detalji i formula: [[reference/token-tracking]].
 
-### 8.7 Design skillovi — uključeni 2026-08-06, koristi automatski kad treba dizajn
+### 9.7 Design skillovi — uključeni 2026-08-06, koristi automatski kad treba dizajn
 Ranije (od 2026-08-05) su ovi skillovi bili isključeni po defaultu (`/doctor`
 čišćenje, nula poziva u 50 skeniranih sesija) i trebalo je pitati Miroslava
 pre uključivanja. **Posle sesije doterivanja meni ikonica (2026-08-06,
@@ -493,7 +501,26 @@ dalje isključen.**
 
 ---
 
-## 9. KLJUČNE LEKCIJE (da se ne ponavljaju greške)
+## 10. KLJUČNE LEKCIJE (da se ne ponavljaju greške)
+
+> 🔢 **Numeracija ispravljena 2026-08-18.** Ova sekcija je ranije nosila broj
+> **9**, isti kao „WORKFLOW I ALATI" — pa je „§9" u starijim beleškama
+> dvosmislen. Prevod starih brojeva na nove:
+>
+> | Staro | Novo | Sekcija |
+> |---|---|---|
+> | §9 (lekcije) | **§10** | KLJUČNE LEKCIJE — *telefon, silo, throttling, GTM* |
+> | §9 (workflow) | §9 | WORKFLOW I ALATI — *tri-surface git, tokeni* |
+> | §8.1–8.7 | §9.1–9.7 | podsekcije workflow-a |
+> | §10 | **§11** | FORMAT IZVEŠTAVANJA |
+> | §11 | **§12** | ULOGE |
+> | §12 | **§13** | GDE PROVERITI TRENUTNO STANJE |
+> | §13 | **§14** | KOMPLETAN HUB |
+> | §14 | **§15** | ISTORIJSKI SNAPSHOT |
+> | §15 | **§16** | ZA CLAUDE-A SLEDEĆI PUT |
+>
+> Datirane beleške u `dnevnik/` i arhivama **nisu prepravljane** — one su
+> zapis o tome šta je tada urađeno; koristi ovu tabelu pri čitanju.
 
 **Tracking:**
 - Svaki GTM consent update handler mora slati eksplicitne vrednosti za sve
@@ -554,7 +581,7 @@ sopstvenim konektorom preko `.claude/skills/antasline-konektor/`, videti
 
 ---
 
-## 10. FORMAT IZVEŠTAVANJA I KOMUNIKACIJA
+## 11. FORMAT IZVEŠTAVANJA I KOMUNIKACIJA
 
 - **Jezik: srpski, ekavica** (ili engleski, po potrebi razgovora)
 - Kratko, skenabilno, tabele, brojevi. **Bez uvoda i zaključka.**
@@ -576,7 +603,7 @@ sopstvenim konektorom preko `.claude/skills/antasline-konektor/`, videti
 
 ---
 
-## 11. ULOGE (u zavisnosti od zadatka)
+## 12. ULOGE (u zavisnosti od zadatka)
 
 - **E-commerce menadžer / UX/UI** — optimizacija levka (one-page checkout,
   trust badges, tekstualni wireframe modeli)
@@ -589,7 +616,7 @@ sopstvenim konektorom preko `.claude/skills/antasline-konektor/`, videti
 
 ---
 
-## 12. GDE PROVERITI TRENUTNO STANJE
+## 13. GDE PROVERITI TRENUTNO STANJE
 
 Ovaj fajl nosi *pravila ponašanja i istorijski kontekst* — ne menja se često.
 Za **"gde smo stali danas"** uvek prvo pogledaj:
@@ -601,7 +628,7 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 
 ---
 
-## 13. KOMPLETAN HUB SVIH FAJLOVA (Wikilinks za navigaciju)
+## 14. KOMPLETAN HUB SVIH FAJLOVA (Wikilinks za navigaciju)
 
 ### 📋 OSNOVNO — Pročitaj prvo
 - `[[00-INDEX]]` — Dashboard (Dataview tabele)
@@ -654,15 +681,15 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 
 ---
 
-## 14. ⛔ ISTORIJSKI SNAPSHOT (2026-07-02) — SUPERSEDED, ne koristiti za "gde smo stali"
+## 15. ⛔ ISTORIJSKI SNAPSHOT (2026-07-02) — SUPERSEDED, ne koristiti za "gde smo stali"
 
 Arhivirano u [[dnevnik/2026-07-02-arhiva-snapshot]] (izmešteno tokom `/doctor`
-čišćenja 2026-08-05). Za trenutno stanje uvek koristi §12 (redom:
+čišćenja 2026-08-05). Za trenutno stanje uvek koristi §13 (redom:
 [[2026-07-06-MASTER-PLAN-V2]] → [[PROGRESS]] → [[DNEVNIK-NAPRETKA]]).
 
 ---
 
-## 15. ZA CLAUDE-A SLEDEĆI PUT
+## 16. ZA CLAUDE-A SLEDEĆI PUT
 
 Kada otvorim CLAUDE.md sledeći put, znaću:
 

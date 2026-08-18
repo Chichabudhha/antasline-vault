@@ -156,7 +156,7 @@ razloga, svaki dovoljan sam za sebe:
 | Prepreka | Detalj |
 |---|---|
 | 🔴 **Jezik** | Podržani: EN, JA, ES, DE, FR. **Srpskog nema.** Ceo naš sadržaj i publika su na srpskom |
-| 🔴 **Platforma** | Samo desktop Chrome (Win 10/11, macOS 13+, Linux, Chromebook Plus). **Nema Android ni iOS.** Naša publika je mobilna — ~46 od 50 klikova na telefon dolazi sa mobilnog ([[CLAUDE]] §9) |
+| 🔴 **Platforma** | Samo desktop Chrome (Win 10/11, macOS 13+, Linux, Chromebook Plus). **Nema Android ni iOS.** Naša publika je mobilna — ~46 od 50 klikova na telefon dolazi sa mobilnog ([[CLAUDE]] §10) |
 | 🔴 **Hardver** | >4 GB VRAM · 16 GB RAM · 4 jezgra · 22 GB slobodnog prostora (model se sam briše ispod 10 GB). Provereno 2026-08-12: radna mašina ima **2 GB VRAM, 15,7 GB RAM, 25,1 GB slobodno** — ne prolazi prag, ne može ni da se testira |
 | 🔴 **Politika podrške** | Nije Baseline; feature koji radi za par procenata posetilaca traži server fallback — a ako svakako gradiš server put, on pokriva 100% i lokalni model ne donosi ništa |
 

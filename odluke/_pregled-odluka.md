@@ -1,9 +1,41 @@
 ---
 tip: odluke
-azurirano: 2026-08-17
+azurirano: 2026-08-18
 ---
 
 # Pregled odluka (i zašto)
+
+## 🆕 2026-08-18 (M) — cenovne stranice se **konsoliduju u hubove**, ne objavljuju odvojeno
+
+**Odluka M:** „Ne želim odvojenu stranicu industrijski podovi cena jer već imamo stranicu
+sa industrijskim podovima na kojoj je cena. Zašto da dodajemo kontent koji se sukobi sa
+postojećim?" → primenjeno na **sve četiri** cenovne stranice iz W2 Tier1 paketa + zbirni
+hub `/cene/`, uz brisanje segmenta „Cene" iz glavnog menija.
+
+**Zašto je odluka jača od ranije preporuke (13.08: „tabela ostaje na cenovnoj stranici,
+hub dobija izvod + link"):** provera 18.08 je pokazala da **nijedna od te četiri stranice ne
+postoji na live-u** (sve vraćaju 404) — napravljene su 10.07 samo na buildu i prvi put bi
+otišle uživo 25.08. Dakle imaju **0 GSC istorije i 0 klikova**, dok hub `/industrijski-podovi/`
+već drži „industrijski podovi cena po m2" na **poz. 6,6** — i to bez ijedne cene na stranici.
+Objava bi uvela konkurenta stranici koja pobeđuje. Argument „stranica je namenski građena za
+taj upit" ne stoji: namenski građena ≠ zarađuje.
+
+| Draftovano (nikad nije bilo na live-u) | Sadržaj prešao u |
+|---|---|
+| `/industrijski-podovi-cena/` | `/industrijski-podovi/` — cena ušla kao 4. kolona postojeće tabele debljina + brojke u FAQ |
+| `/podovi-za-garaze/` | `/industrijski-podovi/garaze-i-autoservisi/` — nova sekcija „Koliko košta pod za garažu?" |
+| `/gumeni-podovi-za-terase-cena/` | `/spoljnje-podne-obloge/` — nova sekcija „Cena spoljnih podloga po m²" |
+| `/podloge-za-parkiraliste-cena/` | `/podloge-za-parkiraliste-i-staze/` — **ništa nije prenošeno**, hub je taj sadržaj već imao |
+| `/cene/` (zbirni hub) | — |
+
+🔴 **Nuspojava koja je zamalo prošla nezapaženo:** odluka od 11.08 da se istorijsko pravilo
+`/podovi-za-garaze/` **ne prenosi** u `.htaccess` imala je za razlog baš to što je taj URL na
+buildu bio zauzet stranicom 16875. Draftovanjem je razlog pao, a URL nosi **182 GSC pogotka** —
+bez vraćanja pravila bio bi 404 posle migracije. Pravilo je vraćeno, cilj namerno promenjen sa
+blog posta `/koji-pod-postaviti-u-garazu/` na hub garaža (upit je komercijalan), draft
+`.htaccess`-a regenerisan (79 → 80 pravila, svi ciljevi 200).
+
+→ [[dnevnik/2026-08-18-konsolidacija-cenovnih-stranica]]
 
 ## 🆕 4 odluke od 2026-08-17 (M) — sadržajni prozor 17–20.08
 

@@ -20,7 +20,10 @@ PRE BILO KOJE IZMENE NA SAJTU:
 
 POSLE RADA (obavezno, ovim redom):
   1. cd ~/antasline-vault && git pull --no-edit
-  2. DODAJ (append) na kraj [[DNEVNIK-NAPRETKA]]:
+  2. DODAJ unos NA VRH [[DNEVNIK-NAPRETKA]] (odmah ispod zaglavlja, PRE
+     prvog `## ` unosa) — **ne na kraj**: ledger je newest-on-top, a unos
+     na dnu je praktično nevidljiv (13.08.2026 je jedan tako propušten iz
+     PROGRESS tabele). Format:
        ## YYYY-MM-DD [cpanel-live] — kratak opis (UŽIVO)
        - šta je TAČNO promenjeno na produkciji
        - otvorene akcije: #ceka-miroslav ili #claude-code

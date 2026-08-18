@@ -46,7 +46,7 @@ azurirano: 2026-07-02
 
 #### 1. **"dimenzije kosarkaskog terena"** — 240 impresija, 2,5% CTR, pozicija 2,1
 - **Problem:** Ogroman volume, ali pozicija je loša (trebalo bi 1,0)
-- **Rešenje:** 
+- **Rešenje:**
   - Kreiraj `/basketski-teren-dimenzije/` (ili optimizuj postojeću stranicu)
   - Naslov: "Dimenzije Basketball terena — standardi i mere" (72 znaka)
   - Meta: "Basketball teren: NBA standardi (28×15m), FIBA (28×15m),校園 (26×14m). Saznaj kako praviti basket teren sa našim podlogama."
@@ -88,21 +88,21 @@ azurirano: 2026-07-02
 
 #### 6. **"podloga za kosarkaski teren" (Rank #2)** — 21 klik, ali pozicija 1,8
 - **Problem:** Imaš stranicu, ali nije na poziciji 1,0
-- **Rešenje:** 
+- **Rešenje:**
   - Proveri `/kako-napraviti-teren-za-basket-ili-kosarkaski-teren/` — je li na poziciji 1,0?
   - Ako jeste, dodaj internal link sa pozicije 2 ka poziciji 1 iz SERP-a
   - Ako nije, ubaci H1 "Podloga za kosarkaski teren" eksplicitno
 
 #### 7. **"podloge za terasu"** — 4 klika, 160 impresija, 2,5% CTR, pozicija 3,6
 - **Problem:** Pozicija je loša (trebalo bi 1–2)
-- **Rešenje:** 
+- **Rešenje:**
   - Refresh `/spoljnje-podne-obloge/` Yoast meta sa fokusom na "podloge za terasu"
   - Dodaj H2 "Podloge za terasu — Bergo modularne ploče"
   - Link ka cena sekciji
 
 #### 8. **"antistatik pod"** — 5 klikov, pozicija 1,6
 - **Problem:** Pozicija nije 1,0
-- **Rešenje:** 
+- **Rešenje:**
   - Optimizuj `/antistatik-i-elektroprovodljivi-podovi/` sa:
     - H1: "Antistatik podovi — ESD zaštita za elektroniku"
     - Meta: "Antistatik podovi za čiste sobe, elektroniku i farmacie. ESD zaštita, bez mirisa, brza ugradnja. Cena na upitu."

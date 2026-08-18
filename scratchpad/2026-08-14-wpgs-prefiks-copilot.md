@@ -1,4 +1,4 @@
-﻿Listing the target folder to get an exact file list (step 1). Then will extract all .php, .sh and .sql filenames and open each to search for any wrong-cased WP table prefixes. Running directory listing now.
+Listing the target folder to get an exact file list (step 1). Then will extract all .php, .sh and .sql filenames and open each to search for any wrong-cased WP table prefixes. Running directory listing now.
 
 Opening every .php and .sh file found in the directory and scanning for occurrences of variants of the WP table prefix and related patterns ($table_prefix, sed/search-replace, str_replace). Reading all files in parallel.
 
@@ -22,8 +22,8 @@ Searching the folder for any mention of "wpgs" (case-insensitive), occurrences o
 | 14 | SUMNJA | migracija\alati\job-w7f35-podovi-za-stale.php | 60 | $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}yoast_indexable WHERE object_id=%d AND object_type='post'", $ID ) ); | wpgs_yoast_indexable (iz $wpdb->prefix) |
 
 ## Rezime
-- Otvoreno fajlova: 20 (direktorij i 19 izlistanih fajlova učitano i pregledano)  
-- NALAZ: 3 (pogrešan case eksplicitno napisan: wpGs_ / wpGs_options)  
+- Otvoreno fajlova: 20 (direktorij i 19 izlistanih fajlova učitano i pregledano)
+- NALAZ: 3 (pogrešan case eksplicitno napisan: wpGs_ / wpGs_options)
 - SUMNJA: 11 (dinamičko građenje imena tabela preko $wpdb->prefix / konkatenacija)
 
 ## Fajlovi bez ijednog pomena prefiksa (pregledani, nema wpGs/WPGS ni konkatenacija)

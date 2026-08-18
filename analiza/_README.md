@@ -15,7 +15,7 @@ Periodični puni snapshot svih marketing podataka preko Windsor.ai. Svaki snapsh
 - **Prozori:** 16mo trend (GSC tvrdi limit) · 90d breakdowns · 28d vs prethodnih 28d
 - **Posle pisanja:** red u [[DNEVNIK-NAPRETKA]] + link u [[00-INDEX]]
 
-## Pravila podataka (iz [[CLAUDE]] §10)
+## Pravila podataka (iz [[CLAUDE]] §11)
 
 - Prava konverzija = **hvala-proxy** (`page_path contains "hvala"`) — serija postoji tek od juna 2026
 - GA4 `conversions` metrika je slomljena od juna 2026 (key event bug) — NE koristiti dok se ne popravi

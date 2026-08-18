@@ -22,11 +22,11 @@ izvor-podataka: GSC 2026-05-15→2026-08-12 (90d, `gsc_page_queries.py`) · Goog
 
 Ceo build ima **3** slug-a sa `-2` (publish+draft, page/post/product):
 
-| ID    | Slug                                               | Status    | GSC 90d                      | Odluka                                                                                                                                                                                                                                            |
+| ID | Slug | Status | GSC 90d | Odluka |
 | ----- | -------------------------------------------------- | --------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 6588  | `sta-postaviti-preko-starog-parketa-ili-plocica-2` | publish   | **249 prikaza / 13 klikova** | ✅ **IZVRŠENO 2026-08-13 (M odluka), suprotno prvobitnoj preporuci.** Prvobitno je ovde pisalo „NE DIRATI" jer `-2` nosi 3× više klikova. M je tražio da **sadržaj ostane, a slug se očisti** — provera je pokazala da članci **nisu spojeni** (6588 = prepis iz 09/2025, 8.041 zn., LVT+Ecotile+R-Tek+FAQ+galerija; 16613 = original iz 07/2022, 4.940 zn., bez ijednog jedinstvenog pasusa). 16613 → draft + preimenovan u `…-original-2022`, 6588 → čist slug, 301 okrenut na `-2` → čist. Ključna olakšavajuća okolnost: cilj 301 **nije nov URL** — živi na live-u od 2022 (1.667 impr / 84 kl. / poz. 7,6), pa je ovo konsolidacija dva Google-u poznata URL-a, ne selidba na praznu adresu. |
-| 3274  | `izbor-industrijskog-poda-...-2`                   | **draft** | —                            | ✅ Nema URL-a, 301→2622 već u draftu. Ništa.                                                                                                                                                                                                       |
-| 16672 | `ergonomske-podloge-2`                             | publish   | 1 prikaz (12 mes.: 123/4)    | ✅ **IZVRŠENO 2026-08-13 (stavka A).** `-2` je bio WP-ov automatski sufiks jer je čist slug držao **prilog** (12489), ne druga stranica — nema konsolidacije sadržaja, samo oslobađanje sluga. Prilog → `ergonomske-podloge-foto` (putanja fajla nedirnuta, slike rade), stranica uzela čist slug, 301 `-2` → čist, istorijsko pravilo `/ergonomski-podovi/` (160 pogodaka) **pretočeno sa `-2` na nov cilj** u istom potezu. Meni stavka 17388 je `post_type` tip → prati ID. GSC provereno pre izvršenja: 90d **1 prikaz / 0 klikova**, 12 meseci **123 prikaza / 4 klika** (drži „ergonomske podloge" poz. **3,8**, „podloga za stajanje" poz. **6,5**). 🔴 Podatak „110 klikova" iz `parity-inventar.csv` **nije potvrđen ni na jednom prozoru** — pogrešan. |
+| 6588 | `sta-postaviti-preko-starog-parketa-ili-plocica-2` | publish | **249 prikaza / 13 klikova** | ✅ **IZVRŠENO 2026-08-13 (M odluka), suprotno prvobitnoj preporuci.** Prvobitno je ovde pisalo „NE DIRATI" jer `-2` nosi 3× više klikova. M je tražio da **sadržaj ostane, a slug se očisti** — provera je pokazala da članci **nisu spojeni** (6588 = prepis iz 09/2025, 8.041 zn., LVT+Ecotile+R-Tek+FAQ+galerija; 16613 = original iz 07/2022, 4.940 zn., bez ijednog jedinstvenog pasusa). 16613 → draft + preimenovan u `…-original-2022`, 6588 → čist slug, 301 okrenut na `-2` → čist. Ključna olakšavajuća okolnost: cilj 301 **nije nov URL** — živi na live-u od 2022 (1.667 impr / 84 kl. / poz. 7,6), pa je ovo konsolidacija dva Google-u poznata URL-a, ne selidba na praznu adresu. |
+| 3274 | `izbor-industrijskog-poda-...-2` | **draft** | — | ✅ Nema URL-a, 301→2622 već u draftu. Ništa. |
+| 16672 | `ergonomske-podloge-2` | publish | 1 prikaz (12 mes.: 123/4) | ✅ **IZVRŠENO 2026-08-13 (stavka A).** `-2` je bio WP-ov automatski sufiks jer je čist slug držao **prilog** (12489), ne druga stranica — nema konsolidacije sadržaja, samo oslobađanje sluga. Prilog → `ergonomske-podloge-foto` (putanja fajla nedirnuta, slike rade), stranica uzela čist slug, 301 `-2` → čist, istorijsko pravilo `/ergonomski-podovi/` (160 pogodaka) **pretočeno sa `-2` na nov cilj** u istom potezu. Meni stavka 17388 je `post_type` tip → prati ID. GSC provereno pre izvršenja: 90d **1 prikaz / 0 klikova**, 12 meseci **123 prikaza / 4 klika** (drži „ergonomske podloge" poz. **3,8**, „podloga za stajanje" poz. **6,5**). 🔴 Podatak „110 klikova" iz `parity-inventar.csv` **nije potvrđen ni na jednom prozoru** — pogrešan. |
 
 **Zaključak:** „dupli permalinci" **više ne postoje na ovom buildu** — od 3 slug-a sa `-2`,
 jedan je draft bez URL-a (3274), a oba živa su rešena 13.08 (6588 i 16672). Pravilo za
@@ -74,12 +74,12 @@ checkliste B1 koja inače pada za ~7 dana dok je consent screen u *Testing*.
 `kako-napraviti-teren-za-basket…` (2298) je **najjači sadržaj na sajtu**:
 **13.686 prikaza / 385 klikova / 90d**, i drži baš te upite na poziciji 1–2:
 
-| Upit                                       | Prikazi | Poz.    | Nova stranica na buildu koja cilja isti upit                 |
+| Upit | Prikazi | Poz. | Nova stranica na buildu koja cilja isti upit |
 | ------------------------------------------ | ------- | ------- | ------------------------------------------------------------ |
-| dimenzije fudbalskog terena                | 2.174   | 1,6     | 🔴 17027 `/dimenzije-fudbalskog-terena/`                     |
-| dimenzije košarkaškog terena (+ varijante) | 2.004   | 1,3–1,9 | 🔴 16586 `/dimenzije-kosarkaskog-terena/`                    |
-| dimenzije košarkaške table / table za koš  | 719     | 1,0–1,2 | 🔴 16585 `/dimenzije-kosarkaske-table/`                      |
-| (tenis)                                    | —       | —       | 🟡 16688 `/dimenzije-teniskog-terena/` (2298 ne cilja tenis) |
+| dimenzije fudbalskog terena | 2.174 | 1,6 | 🔴 17027 `/dimenzije-fudbalskog-terena/` |
+| dimenzije košarkaškog terena (+ varijante) | 2.004 | 1,3–1,9 | 🔴 16586 `/dimenzije-kosarkaskog-terena/` |
+| dimenzije košarkaške table / table za koš | 719 | 1,0–1,2 | 🔴 16585 `/dimenzije-kosarkaske-table/` |
+| (tenis) | — | — | 🟡 16688 `/dimenzije-teniskog-terena/` (2298 ne cilja tenis) |
 
 **Stanje na buildu:** sve 4 nove stranice su `index`, **bez canonical-a**, i
 **nijedna ne linkuje ka 2298** (provereno u `post_content`). 2298 ne linkuje ka

@@ -296,7 +296,7 @@ Dodaj ovo **PRE FAQ sekcije** (ako postoji) ili kao **NOV FAQ blok** u WPBakery:
 
 ## 📊 Očekivani rezultat
 
-**PRE:** 
+**PRE:**
 - Position: 2,1
 - CTR: 2,5%
 - Impressions: 240/mesec
@@ -317,7 +317,7 @@ Dodaj ovo **PRE FAQ sekcije** (ako postoji) ili kao **NOV FAQ blok** u WPBakery:
 
 ## 📌 Placeholder cene (zameni sa realnim):
 - `{{CENA_BASKET_MALI}}` — mali teren (13×14m)
-- `{{CENA_BASKET_PUNI}}` — puni teren (26×14m) 
+- `{{CENA_BASKET_PUNI}}` — puni teren (26×14m)
 - `{{CENA_BASKET_SAMO}}` — samo podloga (bez konstrukcije)
 
 **Ako nemaš cene, kontaktiraj Miroslava.**

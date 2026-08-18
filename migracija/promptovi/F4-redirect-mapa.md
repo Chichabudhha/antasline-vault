@@ -23,15 +23,15 @@ Strategija i hibrid pravilo: [[migracija/PARITY-PLAN]] §1 (P1).
 
 1. Učitaj `migracija/parity-inventar.csv`, sortiraj po `gsc_klikovi`.
 2. **Granični slučajevi — prezentuj Miroslavu tabelu i sačekaj odluku po stavci:**
-   | Live URL | Lokal | GSC težina | Opcije |
-   |---|---|---|---|
-   | `/spoljnje-podne-obloge/` | `/spoljne-podne-obloge/` | ~11k impr — verovatno top 15 | (a) vrati "j" = parity · (b) zadrži ispravku + 301 |
-   | `/podovi-za-parkiraliste-i-staze/` | `/podloge-za-parkiraliste-i-staze/` | niska | (a) rename lokal na "podovi" · (b) 301 |
-   | `/padel-tereni/` (page) | `padel-tenis` (draft post iz F3) | srednja | (a) rebuild pod live slugom · (b) novi slug + 301 |
-   | `/sportski-podovi-za-sale-i-balone/` | `...-za-skole-i-sportske-sale` | niska | novi slug bolji → 301 (preporuka) |
-   | duplikati `izbor-industrijskog-poda-...` (live ima 2 verzije) | konsolidacija u jedan | — | oba live URL-a → 301 na konsolidovani |
-   | bergo-easy/elite/unique/xl (live pages) | `bergo-ultimate` | — | konsolidacija → 301 (potvrđeno ranije) |
-   | `/kako-izabrati-pravi-...-poterbama` (draft) | typo u slugu | — | obrisati ili konsolidovati |
+ | Live URL | Lokal | GSC težina | Opcije |
+ |---|---|---|---|
+ | `/spoljnje-podne-obloge/` | `/spoljne-podne-obloge/` | ~11k impr — verovatno top 15 | (a) vrati "j" = parity · (b) zadrži ispravku + 301 |
+ | `/podovi-za-parkiraliste-i-staze/` | `/podloge-za-parkiraliste-i-staze/` | niska | (a) rename lokal na "podovi" · (b) 301 |
+ | `/padel-tereni/` (page) | `padel-tenis` (draft post iz F3) | srednja | (a) rebuild pod live slugom · (b) novi slug + 301 |
+ | `/sportski-podovi-za-sale-i-balone/` | `...-za-skole-i-sportske-sale` | niska | novi slug bolji → 301 (preporuka) |
+ | duplikati `izbor-industrijskog-poda-...` (live ima 2 verzije) | konsolidacija u jedan | — | oba live URL-a → 301 na konsolidovani |
+ | bergo-easy/elite/unique/xl (live pages) | `bergo-ultimate` | — | konsolidacija → 301 (potvrđeno ranije) |
+ | `/kako-izabrati-pravi-...-poterbama` (draft) | typo u slugu | — | obrisati ili konsolidovati |
 3. Posle odluka: gde je odluka "parity" → izvrši slug rename na lokalu (backup pre!),
    red ne ulazi u mapu; gde je "301" → red ulazi u `redirect-mapa-FINAL.csv`:
    ```

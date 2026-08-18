@@ -1,6 +1,6 @@
 ---
 name: nedeljni-izvestaj
-description: Nedeljni mini-izveštaj za AntasLine — 7 dana vs prethodnih 7 (GA4 + Google Ads preko sopstvenog konektora) + GSC 28d prilike, po formatu CLAUDE §10. Koristi kad Miroslav kaže "nedeljni izveštaj", "izveštaj", "kako stojimo ove nedelje", "performanse" ili pri W5 zadatku 5.4.
+description: Nedeljni mini-izveštaj za AntasLine — 7 dana vs prethodnih 7 (GA4 + Google Ads preko sopstvenog konektora) + GSC 28d prilike, po formatu CLAUDE §11. Koristi kad Miroslav kaže "nedeljni izveštaj", "izveštaj", "kako stojimo ove nedelje", "performanse" ili pri W5 zadatku 5.4.
 ---
 
 # Nedeljni izveštaj — 7d vs 7d
@@ -118,7 +118,7 @@ novom razgovoru.
 - Pomeri `--to` 2–3 dana unazad (GSC kašnjenje)
 - Uporedi YoY gde je moguće (sezonski špic mar–maj maskira trendove)
 
-## 3. Format izveštaja (tačan redosled, [[CLAUDE]] §10)
+## 3. Format izveštaja (tačan redosled, [[CLAUDE]] §11)
 
 1. **GA4 tabela**: korisnici · sesije · generate_lead · tel · mailto —
    kolone: tekućih 7d / prethodnih 7d / Δ%

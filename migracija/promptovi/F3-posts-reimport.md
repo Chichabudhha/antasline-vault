@@ -38,15 +38,15 @@ Miroslava — ili radi sa postojećim i zabeleži datum).
 
 3. **Odluči sudbinu 7 lokalnih postova bez live parnjaka** (konsultuj F1
    `LOKAL-NOVO` statuse; podrazumevano po hibrid pravilu):
-   | Lokalni post | Podrazumevano |
-   |---|---|
-   | `bergo-ultimate-i-ultimate-plus-...` | ZADRŽATI (namerno nov sadržaj) |
-   | `izbor-industrijskog-poda-tri-najcesca-pitanja-2-2` | OBRISATI (treći duplikat; konsolidacija duplikata ide u F4) |
-   | `kako-izabrati-pravi-industrijski-pod-...-poterbama` | prebaci u **draft** (odluka u F4 — ima typo u slugu "poterbama") |
-   | `padel-tenis` | prebaci u **draft** (granični slučaj za F4: live page je `padel-tereni`) |
-   | `podovi-za-garaze` | prebaci u **draft** (live parnjak je page `garaze-i-autoservisi` — F5 rebuild) |
-   | `sportska-podloga-za-odbojku` | OBRISATI — live `podloga-za-odbojkaske-terene` (2.668 impr) ga zamenjuje pod live slugom |
-   | `sportski-podovi-za-skole-i-sportske-sale` | prebaci u **draft** (granični slučaj za F4: live je `sportski-podovi-za-sale-i-balone`) |
+ | Lokalni post | Podrazumevano |
+ |---|---|
+ | `bergo-ultimate-i-ultimate-plus-...` | ZADRŽATI (namerno nov sadržaj) |
+ | `izbor-industrijskog-poda-tri-najcesca-pitanja-2-2` | OBRISATI (treći duplikat; konsolidacija duplikata ide u F4) |
+ | `kako-izabrati-pravi-industrijski-pod-...-poterbama` | prebaci u **draft** (odluka u F4 — ima typo u slugu "poterbama") |
+ | `padel-tenis` | prebaci u **draft** (granični slučaj za F4: live page je `padel-tereni`) |
+ | `podovi-za-garaze` | prebaci u **draft** (live parnjak je page `garaze-i-autoservisi` — F5 rebuild) |
+ | `sportska-podloga-za-odbojku` | OBRISATI — live `podloga-za-odbojkaske-terene` (2.668 impr) ga zamenjuje pod live slugom |
+ | `sportski-podovi-za-skole-i-sportske-sale` | prebaci u **draft** (granični slučaj za F4: live je `sportski-podovi-za-sale-i-balone`) |
    Draft = sadržaj sačuvan, URL oslobođen, odluka odložena — sigurnije od brisanja.
 
 4. **Obriši preostale lokalne publish postove** (samo `post_type='post'`; pages i

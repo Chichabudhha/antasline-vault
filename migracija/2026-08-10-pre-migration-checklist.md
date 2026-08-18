@@ -53,10 +53,22 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
             baseline od 13.08 (`analiza/2026-08-13-regression-post-faza2-*`) prestaje da važi
             u trenutku prve sadržajne izmene, a on je referenca za §B6
       - [ ] **ako se promenio ijedan slug** → `redirect-verify.php` pa
-            `htaccess-301-generate.php` ponovo (draft 73 pravila)
+            `htaccess-301-generate.php` ponovo (draft **80** pravila od 18.08, ranije zapisano 73)
       - [ ] **nov backup zamrznutog builda na 2 lokacije** (v. stavka iznad)
       🔴 Sve tri staju u **jedan dan pre gate-a (21.08)** — zato izmene 17–20.08 držati
       lokalnim i bez dirania slugova.
+      🔴 **18.08 — sadržajna izmena se DESILA, sweep više nije uslovan nego siguran:**
+      konsolidacija cenovnih stranica u hubove (M odluka) izmenila je 5 objavljenih stranica,
+      draftovala 5 i skratila glavni meni (77 → 70 stavki) →
+      [[dnevnik/2026-08-18-konsolidacija-cenovnih-stranica]].
+      🔴 **Ista sesija je otkrila uslovan izuzetak u redirect mapi koji je tiho pao.** Pravilo
+      `/podovi-za-garaze/` (182 GSC pogotka) bilo je 11.08 isključeno iz drafta *jer je taj URL
+      na buildu bio zauzet stranicom 16875*; draftovanjem te stranice URL je opet prazan, pa bi
+      bez pravila posle migracije bio **404**. Vraćeno (cilj: hub garaža, ne stari blog post),
+      draft regenerisan — **79 → 80 pravila, svi ciljevi 200**, diff = tačno jedna nova linija.
+      ⚠️ Uz to važi obrnuto: **ako se ijedna od 5 draftovanih stranica vrati u `publish`, pravilo
+      se mora ponovo isključiti.** Isti oblik izuzetka („ne prenosi se **jer** je URL zauzet")
+      postoji u istorijskoj mapi još jednom — proveriti oba pri svakoj promeni statusa stranica.
 - [x] ✅ **Rollback plan ZATVOREN 2026-08-11** (pre roka 15.08) — sva 3 pitanja:
       JetBackup 5 dnevni/off-site/90 dana · **nema CDN/edge sloja** (samo LiteSpeed,
       pa je „očisti keš" = LSCWP Purge All i ništa više) · M odluka **„migracija

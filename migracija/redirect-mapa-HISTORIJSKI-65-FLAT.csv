@@ -37,7 +37,7 @@ stari_url;novi_url_flat;gsc_hits_zabelezeno;odluka_2026-08-11
 /home/o-nama-2/;/o-nama/;222
 /lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi-objectflor-expona-commercial/;/lvt-podovi-za-komercijalne-i-javne-prostore/vinil-podovi/;216
 /lako-montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi/;/montazni-podovi-za-kretanje-teskih-vozila-privremeni-podovi/;202
-/podovi-za-garaze/;/koji-pod-postaviti-u-garazu/;182;NE PRENOSI SE u .htaccess - izvorni URL na novom buildu postoji kao prava stranica (16875, W2 Tier1 "Podovi za garaze", HTTP 200); redirect bi je ubio i poslao saobracaj na blog post 16609.
+/podovi-za-garaze/;/industrijski-podovi/garaze-i-autoservisi/;182;;PONOVO SE PRENOSI od 2026-08-18. Odluka od 11.08 ("NE PRENOSI SE - izvorni URL na novom buildu postoji kao prava stranica 16875, redirect bi je ubio") je PAO SA SVOJIM RAZLOGOM: 16875 je 18.08 draftovana u okviru konsolidacije cenovnih stranica u hubove (M odluka), pa je /podovi-za-garaze/ na buildu ponovo prazan i bez ovog pravila bi posle migracije bio 404 sa 182 GSC pogotka. Cilj namerno NIJE stari /koji-pod-postaviti-u-garazu/ (blog post 16609) nego hub garaza, jer je upit komercijalan i hub od 18.08 nosi i cene.
 /kako-izabrati-pravi-industrijski-pod/;/osteceni-industrijski-pod/;166
 /industrijski-podovi-kako-izabrati-industrijski-pod-koji-odgovara-vasim-zahtevima/;/osteceni-industrijski-pod/;162
 /kako-izabrati-pravi-industrijski-pod-koji-odgovara-vasim-poterbama/;/osteceni-industrijski-pod/;161

@@ -12,7 +12,14 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
 ## 1. Otvaranje sesije (uvek, redom)
 
 1. Pročitaj `[[PROGRESS]]` — poslednje urađeno + "Sledeće" + blokeri
-2. Pročitaj `[[2026-07-06-MASTER-PLAN-V2]]` sekciju 2 (N-raspored) — uporedi
+1b. Poslednji unosi u ledgeru: `head -200 DNEVNIK-NAPRETKA.md` preko Bash-a
+   (~3 dana, ~4,5k tokena). **Ne `Read` na ceo fajl** i **nikad na**
+   `dnevnik/arhiva-dnevnik-*.md` — arhive su 290–620 KB, jedno čitanje = 90k+
+   tokena. Za stariju istoriju: `grep -rn "pojam" --include="*.md" .`
+   (u kontekst ulaze samo pogođene linije).
+2. Pročitaj **samo sekciju 2** `[[2026-07-06-MASTER-PLAN-V2]]` (N-raspored) —
+   fajl je 80 KB (~26k tokena), pa ga sužavaj: `grep -n "^## " 2026-07-06-MASTER-PLAN-V2.md`
+   pa `sed -n 'OD,DOp' 2026-07-06-MASTER-PLAN-V2.md` — uporedi
    današnji datum sa nedeljom (N1=07–13.07 … N5=04–10.08, pa **prepravljeno
    2026-08-10**: N6'=11–16.08, N7'=17–20.08 (🔴 freeze ponovo otvoren 17.08: 16.08 → **20.08**), gate PET 21.08,
    **rezervni radni dan PON 24.08**, **migracija UTO 25.08** — pomereno M odlukom 2026-08-17) i vidi šta je planirano za tekuću nedelju
@@ -93,7 +100,7 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
 - Windsor gotchas: `[[reference/naucene-lekcije]]` (in-filter nepouzdan →
   povuci sve pa agregiraj; eksplicitni date_from/date_to za poređenja;
   hvala-proxy = `[["page_path","contains","hvala"]]` na `screen_page_views`)
-- Nedeljni izveštaj: format [[CLAUDE]] §10 (7d vs 7d, RSD, "Nema podataka za
+- Nedeljni izveštaj: format [[CLAUDE]] §11 (7d vs 7d, RSD, "Nema podataka za
   [izvor]" umesto izmišljanja, na kraju "Akcija nedelje: …")
 - GTM izmene: ručno u GTM UI (JSON import na ovom kontejneru puca — ne pokušavati)
 
@@ -107,10 +114,17 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
 | PHP skripte | scratchpad + `C:\xampp\php\php.exe skripta.php` (wp-load bootstrap) |
 | Backup | `mysqldump -u root antasline_local > C:\xampp\htdocs\antasline-backups\antasline_local_YYYY-MM-DD_pre-<opis>.sql` |
 | Tema | WoodMart 8.5.4 + child; design system `antas-design.css`; `_woodmart_title_off=on` protiv 2×H1 |
-| CTA telefon | **`069 234 00 72`** → `tel:+381692340072` (tzv. „linija 72"; druga linija je `069 234 00 74`). 🔴 Prefiks je **069**, ne 072 — v. [[CLAUDE]] §9 |
+| CTA telefon | **`069 234 00 72`** → `tel:+381692340072` (tzv. „linija 72"; druga linija je `069 234 00 74`). 🔴 Prefiks je **069**, ne 072 — v. [[CLAUDE]] §10 |
 
 Bash ograničenja: komande >965 bajtova pucaju (piši fajl pa izvrši); brace
-expansion `{a,b}` pravi literalne foldere; velike fajlove čitaj Read alatom.
+expansion `{a,b}` pravi literalne foldere.
+
+🔴 **Veliki fajlovi = najveći trošak tokena u projektu.** `Read` bez `limit`
+povuče do 2000 linija; kod nas to zna biti 160+ KB (~52k tokena) iz jednog
+poziva. Pre `Read`-a na nepoznat fajl: `wc -c fajl`. Preko ~40 KB → `head`,
+`sed -n` opseg ili `grep`, ne pun `Read`. Poznati mamci: `reference/naucene-lekcije.md`
+(233 KB), `dnevnik/arhiva-dnevnik-*.md` (290–620 KB), `migracija/woodmart-sabloni.md`
+(79 KB), `2026-07-06-MASTER-PLAN-V2.md` (80 KB).
 
 ## 4. Standard verifikacije (svaka izmenjena stranica)
 
@@ -143,7 +157,11 @@ Kad izmena dira CSS/layout (ne samo sadržaj) — DevTools 151 prečice:
    isto u `[[seo/plan-novih-stranica]]` ako je W2
 4. Nova naučena lekcija → `[[reference/naucene-lekcije]]` ili woodmart-sabloni
 5. Otvorena pitanja → #ceka-miroslav + jasno reci Miroslavu šta čekaš
-6. Git: Obsidian Git auto-sync (~10 min) — ne komituj ručno osim na zahtev
+6. **Rotacija ledgera:** ako `wc -c DNEVNIK-NAPRETKA.md` pređe ~40 KB —
+   `python skripte/rotiraj-dnevnik.py` (zadrži poslednjih 5 dana, starije ide
+   doslovno u `dnevnik/arhiva-dnevnik-YYYY-MM.md`; skript usput sortira i
+   unose koji su završili na dnu fajla)
+7. Git: Obsidian Git auto-sync (~10 min) — ne komituj ručno osim na zahtev
 
 ## 6. Tvrda pravila (prekršaj = greška sesije)
 

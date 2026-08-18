@@ -109,7 +109,7 @@ Bazeno na GA4 podacima, trebalo bi podeliti postojeće publike:
 - **Conversion Quality:** Odličan (120%+ converison rate)
 
 ```
-GA4 Publika: 
+GA4 Publika:
 {
   event: "page_view"
   page_path matches regex "^/(spoljnje-podne-obloge|vestacka-trava)"
@@ -132,7 +132,7 @@ GA4 Publika:
 - **Conversion Quality:** Umeren (100–130% conversion rate)
 
 ```
-GA4 Publika: 
+GA4 Publika:
 {
   event: "page_view"
   page_path matches regex "^/(industrijski-podovi|antistatik)"
@@ -157,7 +157,7 @@ GA4 Publika:
 - **GSC:** 266 + 259 + 136 = 661 clicks — organski je jak!
 
 ```
-GA4 Publika: 
+GA4 Publika:
 {
   event: "page_view"
   page_path matches regex "^/(sportske-podloge|kako-napraviti-teren)"
@@ -181,7 +181,7 @@ GA4 Publika:
 - **GSC:** 180 clicks, 8,2% CTR — odličan signal!
 
 ```
-GA4 Publika: 
+GA4 Publika:
 {
   event: "page_view"
   page_path contains "/podloge-za-parkiraliste"
@@ -206,10 +206,10 @@ GA4 Publika:
 - **GSC:** 44 clicks, 3,8% CTR sa pozicije 6,9
 
 ```
-GA4 Publika: 
+GA4 Publika:
 {
   event: "page_view"
-  (page_path contains "/podovi-za-bazene" OR 
+  (page_path contains "/podovi-za-bazene" OR
    (page_path matches "bergo" AND referrer contains "bazen"))
   lookback_window: 30d
 }
@@ -281,4 +281,4 @@ GA4 Publika:
 - [[PROGRESS]] — update-uj nakon kreiranja publika
 - [[blokovi/BLOK-C-sledece]] — SEO redirect prioritet za parking stranice
 
-**Sledeći unos:** posle kreiranja GA4 publika + Ads ad grupa 
+**Sledeći unos:** posle kreiranja GA4 publika + Ads ad grupa
