@@ -151,6 +151,38 @@ na kontroli statike u tim prostorima, ne na kupovini određenog poda.
 
 Oba dozvoljena iskaza su upisana na stranicu 16658 (23.815 znakova).
 
+### 7. Vizuelno presecanje teksta (M primedba: „izgleda kao jedan veliki blok teksta")
+
+Posle svih dopuna gornji deo stranice je bio ~10k znakova čistog teksta bez ijedne slike.
+Dodato tri vizuala, svaki na mestu gde nešto objašnjava — ne kao ukras:
+
+1. **SVG skala otpora „Gde stoji koja ploča"** — sopstveni, na srpskom, u brend paleti
+   (navy `#0E2950` → sky `#5287B7` → svetlo → mist, markeri narandžasti `#F89C1C`).
+   Četiri trake (elektroprovodljivo / ESD / antistatik / izolativno) na logaritamskoj osi
+   10¹–10²⁰, sa ucrtanim položajem naše tri ploče. Ecotile ima sličan dijagram, ali na
+   engleskom i u svojoj zelenoj — zato je rađen naš. Ima `<title>`/`<desc>` za čitače ekrana.
+2. **Foto-red tri ploče** posle uporedne tabele, sa natpisima koji nose poruku
+   („bez uzemljenja" / „uzemljuje se" / „priključak ima samo ESD verzija").
+3. **Foto mreže bakarnih traka** (naša ugradnja, HTEC Niš) uz sekciju o merenju — pokazuje
+   ono što tekst tvrdi: bez trake nema uzemljenja, bez uzemljenja nema zapisnika.
+
+🔴 **Ispravka opsega, izašla iz crtanja dijagrama.** Da bih ucrtao trake morao sam da
+fiksiram granice — i tada se videlo da kopi tvrdi **„elektroprovodljivo = ispod 10⁶ Ω"**,
+dok **sama Ecotile skala kaže 10¹–10⁴ Ω** (ESD 10⁴–10⁹, antistatik 10⁹–10¹¹, izolativno
+preko 10¹¹). Ispravljeno na tri mesta, uključujući FAQ JSON-LD. Vrednost „ispod 10⁶" je
+došla iz istraživanja od 18.08 i bila je preuzeta iz sekundarnih izvora, ne iz deklaracije.
+
+🔴 **Pogrešna fotografija uhvaćena tek na ekranu.** Slika `xjoint-ploca` (sa Ecotile ESD
+stranice) **ne prikazuje golu ploču nego pribor za uzemljenje** — bakarnu traku, žuti
+priključak i kabl. Bila je postavljena kao glavna slika **antistatik** proizvoda i kao prva
+kartica u foto-redu, tačno ispod natpisa „bez uzemljenja". Protivrečnost se ne vidi iz HTML
+provere, samo okom. Ispravljeno: pribor prebačen u galeriju **ESD** proizvoda 16542 (gde i
+pripada), antistatik dobio čistu fotku spojenih ploča, naslovi i alt tekstovi usklađeni.
+
+Stranica: 23.815 → 32.376 znakova. Vizuelno provereno u brauzeru na tri preseka.
+
 ## Otvoreno
 
-Ništa — sve stavke ESD klastera zatvorene.
+- **Video** — M predložio Flow/Veo ili Gemini. Nije rađeno ove sesije; predlog kadrova je
+  u izveštaju (skala otpora kao animacija + polaganje bakarne trake iz naših fotki HTEC/Quectel).
+  Traži M-ov Flow nalog i kredite → [[dnevni-video]] tok.
