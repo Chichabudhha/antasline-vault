@@ -107,10 +107,30 @@ na dve nove ploče i hub.
 | Grid na stranici | prikazuje sve tri ploče |
 | Sitemap | oba nova proizvoda prisutna posle purge-a keša |
 
+### 5. Slike proizvoda sa proizvođača (dopuna, ista sesija)
+
+Šest fotografija preuzeto sa ecotileflooring.com i shop.ecotileflooring.com, obrađeno po
+projektnom standardu — **1:1 center-crop, max 1000×1000, WebP**:
+
+| Proizvod | Glavna | Galerija |
+|---|---|---|
+| E500/7 ESD (17860) | `e500-ploca` 705² | `e500-spajanje` 1000² · `e500-t-joint` 705² |
+| X-Joint antistatik (17861) | `xjoint-ploca` 705² | `xjoint-spajanje` 705² · `xjoint-tamno-siva` 934² |
+
+Za svaku su **generisane WP veličine** (150/300/400/600/768/900 px) i upisan pun
+`_wp_attachment_metadata` — bez toga bi grid vukao punu sliku umesto 300 px varijante.
+Alt tekstovi na srpskom, opisni. Attachment ID 17870–17875, `post_parent` = proizvod.
+
+⚠️ **Napomena o izvoru:** Ecotile ne objavljuje zasebnu fotografiju antistatik ploče —
+X-Joint ploča je vizuelno identična ESD verziji (razlika je u materijalu: antistatik PVC
+bez čeličnih vlakana). Za 17861 su zato uzete fotografije X-Joint formata **bez priključka
+za uzemljenje**, jer se ta ploča ne uzemljuje; fotografija sa uzemljivačkim priključkom
+namerno **nije** korišćena na antistatik proizvodu.
+
+Verifikovano: obe stranice 200, glavna slika i po 3 slike u galeriji, `srcset` radi u
+gridu (300w/150w/400w/600w/705w), **Product schema sada nosi `image`**.
+
 ## Otvoreno
 
-- Novi proizvodi **nemaju slike** (`_thumbnail_id` prazan) — kartice u gridu su bez vizuala.
-  Fotke za E500/7 ESD i X-Joint antistatik: ili sa ecotileflooring.com, ili iz naših
-  izvedenih projekata.
 - Nije proveren srpski SRPS koji preuzima IEC 61340-5-1 — pravilo „ne pisati zakonska
   obaveza" ostaje na snazi.

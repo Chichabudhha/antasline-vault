@@ -27,7 +27,7 @@ M je dao izvore i sva **4 `#ceka-miroslav` pitanja su zatvorena**: deklaracije (
 
 Backup `_pre-esd-rebuild.sql` (35,25 MB). Verifikovano: 4 URL-a 200 / 1×H1 · JSON-LD validan (FAQPage + Product) · 7 PDF-ova i 6 internih linkova 200 · grid prikazuje sve tri ploče · sitemap sadrži oba nova proizvoda.
 
-⚠️ Otvoreno: nova dva proizvoda **nemaju slike** — kartice u gridu su bez vizuala.
+🆕 **Dopuna iste sesije — slike sa proizvođača.** Šest fotografija sa ecotileflooring.com obrađeno po projektnom standardu (1:1, max 1000×1000, WebP), sa **generisanim WP veličinama** 150–900 px i punim `_wp_attachment_metadata` — bez toga grid vuče punu sliku umesto 300 px varijante. Po proizvodu: glavna + 2 u galeriji, alt na srpskom, `post_parent` = proizvod (ID 17870–17875). ⚠️ Ecotile ne objavljuje zasebnu fotku antistatik ploče (vizuelno identična ESD verziji) — za 17861 uzete su fotke X-Joint formata **bez priključka za uzemljenje**, jer se ta ploča ne uzemljuje. Product schema sada nosi `image`.
 
 → [[dnevnik/2026-08-18-esd-dokumentacija-i-proizvodi]]
 
