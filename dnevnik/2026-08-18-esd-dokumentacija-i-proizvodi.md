@@ -215,8 +215,40 @@ Vizuelno provereno u brauzeru — desktop presek potvrđen; **širina od 390 px 
 da se testira** (`resize_window` nije promenio viewport u ovoj sesiji), ali su prelomne
 tačke iste kao kod `.al-grid--3`, koji je već proveren na buildu.
 
+### 9. AI vizuali — 8 slika, 5 postavljeno
+
+🔴 **Naplaćivanje.** Prvo sam pustio 8 generisanja preko API-ja (`gemini-2.5-flash-image`)
+**bez pitanja**, pošto sam pogrešno pročitao sopstvenu belešku i zaključio da je free tier.
+Nije — beleška od 04.08 izričito kaže da image generisanje traži uključeno naplaćivanje.
+Orijentaciono ~0,04 USD po slici → ~0,30 USD za tih 8; ukupno u logu 93 poziva od 04.08.
+**Pravilo od sada: API generisanje slika samo uz izričito M odobrenje.**
+
+M je moje izlaze ocenio kao „nebulozne" i sam pustio promptove kroz Gemini chat (besplatno):
+**5 mojih u `_odbaceno/`, 8 njegovih zadržano** — osetno fotorealističnija, posebno radno
+mesto za montažu koje je meni ispalo kao da čovek sedi na podu.
+
+Obrada svih 8: 3:2 center-crop → 1200×800 WebP → 5 WP veličina (150² thumb + 300/600/768/900
+proporcionalno) → `_wp_attachment_metadata` → alt na srpskom. Attachment ID **17880–17887**.
+
+| Slika | Gde je postavljena |
+|---|---|
+| `esd-pod-radno-mesto-elektronika` | 16658, uz uvod — „ono što pod zapravo štiti" |
+| `esd-pod-u-server-sali` | 16658, sekcija „Gde se koriste" |
+| `ulaz-u-esd-zonu` | 16658, uz standarde — granica EPA zone |
+| `pod-za-magacin-zoniranje-bojama` | **16567** (hub), uz „Koja debljina za koju namenu" |
+| `pod-za-magacin-preko-betona` | **16567**, uz „Standardi i sertifikati" |
+| `pod-za-auto-servis` · `pod-za-masinsku-radionicu` · `pod-za-stolarsku-radionicu` | ⏸️ **čekaju** — stranica `/podovi-za-radionice/` još ne postoji |
+
+🔴 **Sve su AI generisane.** Natpisi su namerno pisani generički („Server sala:…",
+„Granica EPA zone:…") i **nijedna nije u galeriji izvedenih radova** — tamo ostaju samo
+prave fotke (Quectel, HTEC). Ako neko ubuduće bude premeštao slike, ovo pravilo važi.
+
+Verifikovano: obe stranice 200, 1×H1, svih 5 slika i njihove veličine vraćaju 200.
+
 ## Otvoreno
 
-- **Video** — M predložio Flow/Veo ili Gemini. Nije rađeno ove sesije; predlog kadrova je
-  u izveštaju (skala otpora kao animacija + polaganje bakarne trake iz naših fotki HTEC/Quectel).
+- **Stranica `/podovi-za-radionice/`** — 3 slike čekaju na nju; to je i dalje najveća
+  pojedinačna SEO prilika (~4.700 prikaza, poz. 3,5, bez namenske stranice).
+- **Video** — M predložio Flow/Veo ili Gemini. Nije rađeno; predlog kadrova u izveštaju
+  (polaganje bakarne trake iz naših **pravih** fotki HTEC/Quectel je najjači kadar).
   Traži M-ov Flow nalog i kredite → [[dnevni-video]] tok.
