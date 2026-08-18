@@ -301,10 +301,22 @@ je intent transakcioni.
 
 ## 4. Otvorena pitanja / šta nije istraženo
 
-- Nije provereno koji tačno srpski propis/SRPS preuzima IEC 61340-5-1 i da li se
-  na njega negde poziva domaća regulativa o bezbednosti na radu — vredi
-  proveriti pre nego što se u kopiju napiše „zakonska obaveza" (za sada **ne
-  pisati** to).
+- ✅ **PROVERENO 2026-08-18.** Srpska oznaka postoji: **SRPS EN 61340-5-1:2017** + ispravka
+  **/AC:2020** (na snazi, stadijum 60.60), identično preuzet EN 61340-5-1:2016 /
+  IEC 61340-5-1:2016 — isti dokument koji navode Ecotile deklaracije. Izdanje 2024
+  (`dnaSRPS EN IEC 61340-5-1:2024`, objavljeno 07.08.2024, stadijum 50.99) je **još u
+  postupku preuzimanja**, nije zamenilo 2017.
+  **Pravni status:** primena srpskih standarda je po *Zakonu o standardizaciji*
+  (Sl. glasnik RS 36/2009, 46/2015) **dobrovoljna**, osim kad se tehnički propis izričito
+  pozove na standard tako da je poštovanje standarda jedini način usklađivanja. Za ESD pod
+  takav propis **nije nađen**.
+  🔴 **Ali postoji stvarna zakonska obaveza u susednom polju:** propis o preventivnim merama
+  za rad u eksplozivnim atmosferama obavezuje poslodavca da proceni i kontroliše izvore
+  paljenja, **u koje izričito spada elektrostatičko pražnjenje**. Obaveza je na kontroli
+  statike u tim prostorima, ne na kupovini određenog poda.
+  **Pravilo za kopi:** ✅ sme „SRPS EN 61340-5-1:2017" kao domaća oznaka (traže je nabavka i
+  kontrola kvaliteta) · ✅ sme „u eksplozivnim atmosferama poslodavac je dužan da kontroliše
+  elektrostatičko pražnjenje kao izvor paljenja" · ❌ **ne sme** „ESD pod je zakonska obaveza".
 - Nema podataka o stvarnim nabavkama ESD podova kod navedenih firmi — spisak je
   za prospekting, ne potvrđena tražnja.
 - Nije istražena cena konkurencije na ESD ploče po m² (PiK Group objavljuje cene

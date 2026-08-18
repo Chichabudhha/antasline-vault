@@ -130,7 +130,27 @@ namerno **nije** korišćena na antistatik proizvodu.
 Verifikovano: obe stranice 200, glavna slika i po 3 slike u galeriji, `srcset` radi u
 gridu (300w/150w/400w/600w/705w), **Product schema sada nosi `image`**.
 
+### 6. SRPS provera (dopuna, ista sesija) — poslednja otvorena stavka zatvorena
+
+| | |
+|---|---|
+| **Na snazi** | **SRPS EN 61340-5-1:2017** + ispravka **/AC:2020** (stadijum 60.60), identično preuzet EN 61340-5-1:2016 / IEC 61340-5-1:2016 |
+| **U toku** | `dnaSRPS EN IEC 61340-5-1:2024` — objavljeno 07.08.2024, stadijum 50.99, **još nije zamenilo** izdanje iz 2017 |
+| **Prateći** | SRPS CLC/TR 61340-5-2:2012 (tehnički izveštaj, uputstvo za primenu) |
+| **Pravni status** | Primena SRPS-a je po *Zakonu o standardizaciji* (Sl. glasnik RS 36/2009, 46/2015) **dobrovoljna**, osim kad se tehnički propis izričito pozove na standard. Za ESD pod takav propis **nije nađen** |
+
+🔴 **Ali obaveza postoji u susednom polju.** Propis o preventivnim merama za rad u
+eksplozivnim atmosferama obavezuje poslodavca da proceni i kontroliše izvore paljenja,
+**u koje izričito spada elektrostatičko pražnjenje**. To je stvarna zakonska dužnost — ali
+na kontroli statike u tim prostorima, ne na kupovini određenog poda.
+
+**Pravilo za kopi, konačno:**
+- ✅ sme „SRPS EN 61340-5-1:2017" kao domaća oznaka — traže je službe nabavke i kontrole kvaliteta
+- ✅ sme „u eksplozivnim atmosferama poslodavac je dužan da kontroliše elektrostatičko pražnjenje kao izvor paljenja"
+- ❌ **ne sme** „ESD pod je zakonska obaveza"
+
+Oba dozvoljena iskaza su upisana na stranicu 16658 (23.815 znakova).
+
 ## Otvoreno
 
-- Nije proveren srpski SRPS koji preuzima IEC 61340-5-1 — pravilo „ne pisati zakonska
-  obaveza" ostaje na snazi.
+Ništa — sve stavke ESD klastera zatvorene.
