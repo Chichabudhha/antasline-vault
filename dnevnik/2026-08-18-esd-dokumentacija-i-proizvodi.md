@@ -156,11 +156,8 @@ Oba dozvoljena iskaza su upisana na stranicu 16658 (23.815 znakova).
 Posle svih dopuna gornji deo stranice je bio ~10k znakova čistog teksta bez ijedne slike.
 Dodato tri vizuala, svaki na mestu gde nešto objašnjava — ne kao ukras:
 
-1. **SVG skala otpora „Gde stoji koja ploča"** — sopstveni, na srpskom, u brend paleti
-   (navy `#0E2950` → sky `#5287B7` → svetlo → mist, markeri narandžasti `#F89C1C`).
-   Četiri trake (elektroprovodljivo / ESD / antistatik / izolativno) na logaritamskoj osi
-   10¹–10²⁰, sa ucrtanim položajem naše tri ploče. Ecotile ima sličan dijagram, ali na
-   engleskom i u svojoj zelenoj — zato je rađen naš. Ima `<title>`/`<desc>` za čitače ekrana.
+1. **Skala otpora** — prvo urađena kao SVG, pa **odbačena i prerađena** (v. ispod).
+   Ecotile ima sličan dijagram, ali na engleskom i u svojoj zelenoj — zato je rađen naš.
 2. **Foto-red tri ploče** posle uporedne tabele, sa natpisima koji nose poruku
    („bez uzemljenja" / „uzemljuje se" / „priključak ima samo ESD verzija").
 3. **Foto mreže bakarnih traka** (naša ugradnja, HTEC Niš) uz sekciju o merenju — pokazuje
@@ -179,7 +176,44 @@ kartica u foto-redu, tačno ispod natpisa „bez uzemljenja". Protivrečnost se 
 provere, samo okom. Ispravljeno: pribor prebačen u galeriju **ESD** proizvoda 16542 (gde i
 pripada), antistatik dobio čistu fotku spojenih ploča, naslovi i alt tekstovi usklađeni.
 
-Stranica: 23.815 → 32.376 znakova. Vizuelno provereno u brauzeru na tri preseka.
+### 8. SVG skala odbačena — zamenjena HTML/CSS komponentom `.al-scale`
+
+M primedba: *„ne objašnjava dobro, a na mobilnom se slabo vidi jer je sitno."* Oba nalaza
+tačna, i drugi je **strukturni, ne stvar podešavanja**: u SVG-u se tekst skalira zajedno
+sa slikom, pa širok dijagram od 1000 px na telefonu od 390 px pretvara natpis od 13 px u
+~5 px. Nijedno povećanje fonta to ne rešava dok je oblik horizontalna traka.
+
+**Rešenje:** ista informacija kao **pravi HTML tekst** u novoj komponenti dizajn sistema
+`.al-scale` (dodata u `css/antas-design.css`, prati postojeće `.al-grid` konvencije):
+4 kolone na desktopu → 2 na ≤992 px → **1 kolona na ≤576 px**. Font ostaje 13–17 px
+bez obzira na širinu, tekst se selektuje, čita čitačem ekrana i indeksira.
+
+**I sadržaj je prerađen da objašnjava, ne samo da prikazuje.** Umesto gole ose sa
+brojevima, svaka kolona sada odgovara na pitanje kupca:
+
+| | Elektroprovodljivo | ESD | Antistatik | Izolativno |
+|---|---|---|---|---|
+| Opseg | 10¹–10⁴ Ω | 10⁴–10⁹ Ω | 10⁹–10¹¹ Ω | preko 10¹¹ Ω |
+| Šta radi | najbrže odvodi | **kontrolisano** odvodi | sprečava nakupljanje | ne odvodi ništa |
+| Za koga | ATEX zone | elektronika, laboratorije, EPA | server sale, kancelarije | običan pod — tu nastaje problem |
+| Uzemljenje | obavezno | obavezno, 1 MΩ | nije potrebno | nema svrhe |
+| Naše | po zahtevu | X-Joint ESD · E500/7 ESD | X-Joint antistatik | — |
+
+Ključna poruka koju stara verzija nije nosila: **„niže nije automatski bolje"** — u EPA
+zoni se traži kontrolisano odvođenje, a u kancelariji je dovoljno sprečiti nakupljanje.
+Dodata je i četvrta, „izolativna" kolona kao kontrast — pokazuje zašto običan pod nije opcija.
+
+🔴 Gotcha: WoodMart reset spljošti `<sup>` na baseline, pa je `10⁴` renderovano kao `104`.
+Vidi se samo na ekranu. Popravljeno pravilom `.al-scale sup { vertical-align: super }`.
+
+🔴 Gotcha: neuspeo bash heredoc je upisao doslovnu liniju `grep -c "al-scale sup" …`
+**u CSS fajl**. Nije prijavio grešku, a nevalidan red u CSS-u može oboriti parsiranje
+pravila ispod. Obrisano. Pouka: posle svakog `>>` na produkcioni fajl proveriti `tail`.
+
+Stranica: 23.815 → 28.062 znakova (HTML komponenta je kraća od SVG-a).
+Vizuelno provereno u brauzeru — desktop presek potvrđen; **širina od 390 px nije uspela
+da se testira** (`resize_window` nije promenio viewport u ovoj sesiji), ali su prelomne
+tačke iste kao kod `.al-grid--3`, koji je već proveren na buildu.
 
 ## Otvoreno
 
