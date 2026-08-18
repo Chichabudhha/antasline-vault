@@ -283,6 +283,10 @@ poz. 1,6, CTR 15,7%; već potvrđeno kao ~5k RSD/90d otpada u
 (`podovi za magacine`, `podovi za auto servise`) gde organski stojimo slabije ili
 je intent transakcioni.
 
+> ✅ **ZATVORENO 2026-08-18 (isti dan).** M je dao zvanične izvore — Ecotile tehnički listovi
+> i live stranica. Sve četiri stavke odgovorene, vrednosti upisane na build:
+> [[dnevnik/2026-08-18-esd-dokumentacija-i-proizvodi]]. Pitanja ispod ostaju kao zapis šta se tražilo.
+
 **#ceka-miroslav — pre objave sadržaja:**
 1. Deklaracija o performansama za ESD seriju koju prodajemo (tačne vrednosti
    otpora, prema kom metodu mereno, koja verzija: disipativna i/ili

@@ -11,6 +11,27 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
+## 2026-08-18 [claude-code] [W1/W2] — ESD klaster: zvanična dokumentacija, dva nova proizvoda, dopuna stranice ✅
+
+M je dao izvore i sva **4 `#ceka-miroslav` pitanja su zatvorena**: deklaracije (X-Joint ESD 1,46×10⁶ / 9,3×10⁵ Ω · E500/7 ESD 2,2×10⁴–3×10⁶ / 2,9×10⁴–5,7×10⁵ Ω, BS EN / IEC 61340-5-1:2016) · elektroprovodljivo **na upit, ne paušalno** (ATEX se ne sme tvrditi bez deklaracije za isporuku) · **merenje sa zapisnikom — da** · cena ESD **na upit**.
+
+**Datasheetovi su otkrili da su u pitanju tri ploče, a katalog je imao jednu.** Dodati **E500/7 ESD** (17860) i **X-Joint antistatik** (17861, ≈1×10⁹ Ω, **bez uzemljenja** — server sale, kancelarije, servisi, štamparije). Treća je antistatik, ne ESD, i ta razlika određuje da li prostor mora da se uzemlji — stranica je ranije nije objašnjavala. Oba proizvoda: tehnička tabela iz deklaracije, PDF-ovi, unakrsni linkovi, Rank Math meta, 9 atributa + 4 nova terma, cena „na upit".
+
+**7 zvaničnih PDF-ova** u medijateku (attachment 17850–17856), uključujući **zapisnik ispitivanja X500/7 ESD (7 strana)** — dokument koji traži inženjer kvaliteta uz auditsku dokumentaciju EPA zone. Stranica 16658 (13.797 → 22.925 zn.) dobila: uporednu tabelu antistatik/ESD/elektroprovodljivo · sekciju „Merenje otpora sa zapisnikom" · **„Zašto ne epoksidni antistatik pod"** (conquest ugao koji je falio) · sekciju dokumentacije · **FAQPage JSON-LD** koji nije postojao, sa 7 pitanja.
+
+🔴 **Stara spec tabela nosila je vrednost „otpornost 3,4×10⁴ – 5×10⁶ Ω" koje nema ni u jednom tehničkom listu** (preneta sa live-a), i „debljina 7 mm (dostupno i 5 mm)" — 5 mm ESD nije potvrđen nijednom deklaracijom. Zamenjeno deklarisanim vrednostima po seriji.
+
+🔴 **Ispravka mog ranijeg nalaza:** prijavio sam „42 od 52 rečenice sa live-a fale na buildu" i izveo 8 rupa — **pogrešno**. Diff je išao po rečenicama, a build je live tekst **prepisao, ne izbacio**. Build je već imao ATEX, zoniranje bojama, MoD UK, 25 godina, premeštanje, 80 m², tepih/kvaka. Stvarnih rupa bilo je pet, sve zatvorene.
+
+🔴 Tri gotcha-a: (1) **Windows CRLF konverzija kvari `post_content`** iz `mysql -B --raw` — čitati `HEX()`, pisati `UNHEX()`, pa uporediti; (2) nov proizvod ne ulazi u WooCommerce upite bez reda u **`wpgs_wc_product_meta_lookup`**; (3) **Rank Math kešira sitemap kao fajlove** u `uploads/rank-math/*.xml` — brisanje opcije i transienata ne pomaže, `lastmod` je ostajao na 13.08 dok fajlovi nisu obrisani.
+
+Backup `_pre-esd-rebuild.sql` (35,25 MB). Verifikovano: 4 URL-a 200 / 1×H1 · JSON-LD validan (FAQPage + Product) · 7 PDF-ova i 6 internih linkova 200 · grid prikazuje sve tri ploče · sitemap sadrži oba nova proizvoda.
+
+⚠️ Otvoreno: nova dva proizvoda **nemaju slike** — kartice u gridu su bez vizuala.
+
+→ [[dnevnik/2026-08-18-esd-dokumentacija-i-proizvodi]]
+
+
 ## 2026-08-18 [claude-code] [W2/SEO] — Stavka F zatvorena: dimenzije klaster ↔ hub 2298 + title/meta `/industrijski-podovi/` ✅
 
 Poslednja otvorena stavka iz plana kanibalizacije. Post **2298** (`kako-napraviti-teren-za-basket…`) je najjači sadržaj na sajtu — **13.686 prikaza / 385 klikova / 90d**, poz. 1–2 za „dimenzije fudbalskog terena" (2.174), „dimenzije košarkaškog terena" (2.004) i „dimenzije košarkaške table" (719) — a četiri **nove** stranice na buildu (16585 · 16586 · 16688 · 17027) gađaju baš te upite i 25.08 bi izašle pred Google **bez ijednog uzajamnog linka** sa njim. Sve četiri sada linkuju ka hubu i međusobno (pasus ispred zatvarajuće CTA sekcije, vodi ka izvođenju — služi i korisniku), hub dobio linkove ka tenisu i fudbalu. Title 16586 i 17027 pomeren ka **izgradnji** („…i izgradnja"); 16585 (već ima „cena") i 16688 (2298 ne cilja tenis) namerno nedirnuti.
