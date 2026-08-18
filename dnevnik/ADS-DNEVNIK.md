@@ -8,7 +8,7 @@ kampanje:
   - Podloge za terase i bazene
   - ECOTILE INDUSTRIJSKI PODOVI
 prag-maximize-conversions: 20-30
-azurirano: 2026-08-12
+azurirano: 2026-08-18
 skill: antasline-ads
 sinhronizovano-sa: [[DNEVNIK-NAPRETKA]], [[PROGRESS]]
 ---
@@ -108,6 +108,59 @@ Industrijski PVC podovi · Ecotile ploče za hale · Montaža bez prekida rada �
 ## 🗒️ Log
 
 > Najnoviji unos na vrhu. Format: `### YYYY-MM-DD [izvor]`
+
+### 2026-08-18 [claude-code] — 🔴 „Podloge za terase i bazene": status PAUSED i potrošnja postoje ISTOVREMENO (isprekidana isporuka, 4.571 RSD u 2 nedelje)
+
+**Period 11–17.08 vs 04–10.08** (izvor: sopstveni konektor, `ads_report.py`,
+nedeljni izveštaj W5 5.4).
+
+Sumnja podignuta 17.08 (63 RSD u tri dana) je bila **potcenjena**:
+
+| Period | Potrošnja | Klikovi | Prikazi | CTR | CPC | Konv. |
+|---|---|---|---|---|---|---|
+| 11–17.08 | 1.928,33 | 92 | 317 | 29,02% | 20,96 | 0 |
+| 04–10.08 | 2.642,94 | 158 | 919 | 17,19% | 16,73 | 3 |
+
+**Ključni nalaz — nije ni „pauzirana" ni „aktivna", nego oboje.** Ads API je
+11.08 vratio `campaign_status: PAUSED` (provereno u
+`analiza/2026-08-11-ads-final-urls.json` — dakle unos od 11.08 u ovom hubu i
+audit §2.1 nisu pogrešno pročitali API), **ali je kampanja tog istog dana
+potrošila 222 RSD / 14 klikova.** Dnevni presek:
+
+| Dan | 08.08 | 09.08 | 10.08 | 11.08 | 12–15.08 | 16.08 | 17.08 |
+|---|---|---|---|---|---|---|---|
+| RSD | 225 | — | 897 | 222 | — | 63 | **1.643** |
+| Klikovi | 15 | 0 | 52 | 14 | 0 | 4 | **74** |
+
+Obrazac je isprekidan (pauze 09.08 i 12–15.08), sa **najvećim danom naloga
+17.08** — 1.643 RSD / 74 klika, dan pre ovog izveštaja. Dve mogućnosti:
+kampanja se ručno pali/gasi, ili pauza ne hvata sve (npr. deo asseta/ad grupa
+ostaje ENABLED — `ad_group_status` i `ad_status` su 11.08 oba bili **ENABLED**
+ispod PAUSED kampanje).
+
+- 🟢 **Ne blokira migraciju 25.08.** Final URL-ovi kampanje su čisti:
+  `/spoljnje-podne-obloge/` + `bergo-xl` / `bergo-unique` / `podovi-za-bazene` /
+  `bergo-elite` — svi **200 na buildu** (`analiza/2026-08-11-ads-url-audit.csv`).
+  Problem `ekopodneploce.rs` / mrtvih `/home/…` putanja tiče se drugih kampanja.
+- 💰 **Najjeftiniji CPC u nalogu:** 20,96 vs 94,41 RSD na ECOTILE-u. Prošle
+  nedelje je donela **3 od 5** uvezenih konverzija naloga. Ako se gasi, gasi se
+  svesno — ne zato što „valjda već jeste pauzirana".
+- 🟡 Prikazi 919 → 317 (−66%) uz CPC +25% i CTR 17% → 29% — ali to je ovde
+  najverovatnije posledica dana-bez-isporuke, ne throttlinga kao kod ECOTILE-a
+  u julu (v. Log 2026-08-06). Ne tumačiti kao pad tražnje.
+
+🔴 **Metodološka lekcija (ide i u [[reference/naucene-lekcije]]):**
+`campaign.status` iz Ads API-ja **nije dokaz da kampanja ne troši**. Status i
+potrošnja se čitaju zajedno, po danu. Ovaj hub je 7 dana (11→18.08) vodio
+kampanju kao pauziranu dok je trošila budžet, a isti zaključak je prepisan i u
+[[migracija/2026-08-11-ads-final-url-audit]] §2.1 (tamo dopunjeno 18.08).
+`[[CLAUDE]]` §6 („obe aktivne kampanje") je sve vreme bio bliži istini i
+**ostaje nepromenjen**.
+
+**Sledeći korak:** #ceka-miroslav — u Ads UI: (1) da li je kampanja ručno
+paljena 10.08/17.08, (2) ako treba da bude pauzirana, proveriti status ad
+grupa/asseta ispod nje, (3) ako treba da radi — vratiti je u evidenciju kao
+aktivnu i pustiti Fazu 1 RSA banku koja je za nju spremna (v. Log 2026-08-05).
 
 ### 2026-08-12 [claude-code] — 🔴 ISPRAVKA: „kumulativ 26 / prag pređen" iz unosa 11.08 NE VAŽI — pravih plaćenih lidova ima 9
 

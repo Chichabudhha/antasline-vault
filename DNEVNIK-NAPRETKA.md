@@ -1,3 +1,19 @@
+## 2026-08-18 [claude-code] W2 CONTENT — Istraživanje sekcije „Industrijski podovi" + ESD ✅
+
+Istraživanje za sadržaj (modularne PVC/LVT/ESD obloge, epoksid van opsega): sedam problema kupca po segmentima, ESD dubinski deo (standardi IEC 61340-5-1 / EN 1081 / EN 14041 / ATEX, rizični sektori u Srbiji, pet prodajnih uglova) i 8 prioritizovanih akcija za sajt. 🔴 Glavni nalaz je u GSC-u na query nivou, nevidljiv u klaster agregatu: **„radionica" nosi ~4.700 prikaza / 275 klikova sa poz. 3,5–7 bez ijedne namenske stranice** — više kvalifikovane tražnje nego ceo Ecotile-PVC klaster; uz to head-termin `industrijski podovi` curi (6.321 prikaz, CTR 2,6%) i ~1.800 prikaza čistog cenovnog intenta stoji neopsluženo, dok kontrolni `antistatik pod cena` ima CTR 23,5%. Standardi su iz javnih izvora i **nisu verifikovani protiv deklaracije Ecotile serija** — 4 pitanja za M pre bilo kakve objave. Post-live materijal, build nije diran.
+
+→ [[dnevnik/2026-08-18-istrazivanje-industrijski-podovi-esd]]
+
+---
+
+## 2026-08-18 [claude-code] W5 5.4 — Nedeljni izveštaj + 🔴 kampanja „Terase i bazene" troši uz PAUSED status ✅
+
+Izveštaj 11–17.08: saobraćaj +15% (728 korisnika), ali `generate_lead` 39→6 — **nije pad nego povratak u normalu** (nedeljni niz hvala-proxy: 4·6·12·6·**26**·4, prošla nedelja je bila izuzetak). Kumulativ pravih konverzija od 01.06 = **53**; pravih plaćenih formi ≈10 od potrebnih 20–30, prag 4.8 i dalje nedostignut. 🔴 Glavni nalaz: „Podloge za terase i bazene" je 11.08 u Ads API-ju bila `campaign_status: PAUSED` a **tog istog dana potrošila 222 RSD** — dnevni presek pokazuje 4.571 RSD / 250 klikova u dve nedelje (najveći dan naloga: 17.08, 1.643 RSD), uz `ad_group_status`/`ad_status` = ENABLED ispod pauzirane kampanje. Ne blokira migraciju (svih 5 njenih final URL-ova = 200 na buildu), ali je kampanja sa najjeftinijim CPC-om u nalogu (20,96 vs 94,41) sedam dana bila nevidljiva za analizu. Usklađeni ADS-DNEVNIK, PROGRESS i audit §2.1; `CLAUDE.md` §6 namerno nepromenjen.
+
+→ [[dnevnik/2026-08-18-nedeljni-izvestaj-terase-status]]
+
+---
+
 ## 2026-08-17 [claude-code] SADRŽAJ — 3 odluke od 17.08 izvršene (draft · F2.8 · meni 67) ✅
 
 🔴 Glavni nalaz nije izvršenje nego **zastareo spisak**: odluka „14 proizvoda bez fotografije → draft" pisana je nad zapisom od 30.07, a spisak nabraja **13** ID-eva od kojih je **7 u međuvremenu dobilo sliku** (`16919` 06.08 · `16893`/`16899`–`16902`/`16906` 07.08, uz eksplicitno M odobrenje generičkih dobavljačkih fotki). Draftovano je zato **6 koji stvarno nemaju nijednu sliku** — sve generička sportska oprema koja čeka M12. Usput sanirana hub stranica 16676 (4 linka → `/kontakt/?form-naslov=`, 0 preostalih 404). **F2.8**: kartice Highlands/Nature/Put/Springgrass na 16673 prevezane na `16906` Radici Landscape (nisu vodile na kategoriju kako je zapisano — uopšte nisu imale link). **Meni 67** („O firmi", 39 stavki) obrisan, nije bio dodeljen nijednoj lokaciji; ostaju 390 (aktivan) i 280. Backup `_pre-odluke-17-08.sql` (36,9 MB), verifikovano 5 URL-ova 200/1×H1/0 grešaka.

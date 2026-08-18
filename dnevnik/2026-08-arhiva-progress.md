@@ -19,6 +19,20 @@ izvor: "[[PROGRESS]]"
 > **Ništa nije skraćeno ni prepisano** — redovi su preneti doslovno.
 > Za hronologiju sa punim opisima sesija videti [[DNEVNIK-NAPRETKA]].
 
+## „Urađeno" — jednoredni unosi izmešteni iz PROGRESS-a (2026-08-18)
+
+> PROGRESS „Urađeno" drži samo tekuću nedelju. Redovi ispod su izmešteni odavde;
+> pun tekst svakog stoji u dnevnik fajlu na koji red linkuje.
+> Dani 13.08 nisu ovde jer već stoje u punom tekstu u tabeli ispod (14 redova).
+
+**2026-08-14**
+
+- ✅ `[claude-code]` W3 — Prefiks `wpGs_`→`wpgs_` zatvoren u korenu: `wp-config.php` + 16 redova u bazi + sweep 13 dokumenata + `identifikatori.md` osvežen — [[dnevnik/2026-08-14-copilot-grok-delegati]]
+- ✅ `[claude-code]` ALATI — Copilot/Grok kao read-only delegati + skill `/delegati`; prvi posao našao `wpGs_options` u 2 mysqli upita — [[dnevnik/2026-08-14-copilot-grok-delegati]]
+- ✅ `[claude-code]` W1/BLOK C — Ergonomske podloge: `product_cat` 403 + 8 proizvoda (17838–17845) + hub 16672 prevezan — [[dnevnik/2026-08-14-ergonomske-podloge-proizvodi]]
+
+---
+
 ## „Urađeno" — avgust 2026 (pun tekst, 94 redova)
 
 | Datum | Stranica | Šta | |
@@ -158,6 +172,20 @@ izvor: "[[PROGRESS]]"
 
 
 ## Zatvoreni blokeri (78, izdvojeni 2026-08-13; +3 dodato 2026-08-14)
+
+### 2026-08-17 — 3 sadržajne odluke izvršene (draft · F2.8 · meni 67) ✅
+Puni tekst: [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
+
+- ✅ **IZVRŠENO 2026-08-17 — proizvodi bez fotografije draftovani, ali ih je 6, ne 14.** Spisak u odluci je bio zapis od **30.07**: nabraja **13** ID-eva (ne 14), a **7 je u međuvremenu dobilo sliku** — `16919` (06.08) i `16893`/`16899`–`16902`/`16906` (07.08, uz **eksplicitno M odobrenje** generičkih dobavljačkih fotki, v. [[reference/gemini-red-cekanja]]). Draftovano **6** stvarno bez slike: `16990` `16991` `16998` `17001` `17002` `17003` — sva generička sportska oprema koja čeka **M12**. 0 od 73 `.htaccess` pravila i 0 menija ih gađa; 4 interna linka (svi na `16676`) prevezana na `/kontakt/?form-naslov=`. 🟡 **#ceka-miroslav:** potvrditi da 7 sa generičkim fotkama ostaje `publish`, ili reći da i oni idu u draft. → [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
+- 🟢 **F2.9 rep — ZATVOREN 2026-08-17: 34/40 ima sliku, 6 draftovano.** ⚠️ Spisak ispod je zapis od **30.07 i bio je zastareo 10 dana** — `16919` je dobio sliku 06.08, a `16893`/`16899`–`16902`/`16906` 07.08 (M odobrio generičke dobavljačke fotke, v. [[reference/gemini-red-cekanja]]). Ostalo je **6** (`16990` `16991` `16998` `17001`–`17003`, generička sportska oprema), i oni su **draftovani 17.08** — vraćaju se na `publish` kad **M12** (dobavljači) da brend i fotografije. **Tekst ispod je istorijski, ne red čekanja.**
+- 🆕 ~~**F2.9 rep — „40 proizvoda bez slike": 26/40 sada ima sliku, 14 #ceka-miroslav (ažurirano 2026-07-30).**~~ Pregledano po linijama (Bergo, Geoplast, Condor/Radici, R-Tile, sportska oprema); svaki preostali „ne" ima proveren razlog, ništa forsirano. **2026-07-30: +14 dobilo sliku sa zvaničnog sajta proizvođača** (Bergo Flooring, Geoplast, Radici Sport×2, Ecotile×5, Heskins — v. [[DNEVNIK-NAPRETKA]] 2026-07-30 za spisak i izvore) — uklonjeno iz spiska ispod: `16800`, `16836`, `16842`, `16907`, `16908`, `16910`, `16894`, `16895`, `16922`, `16929`, `16930`, `16939`, `16943`, `16949`. Spisak 14 koja i dalje čekaju pravu fotografiju:
+  - **0 fotografija u celoj arhivi + web pretraga nije dala pouzdan proizvođački pogodak** — `16893` Condor shock-pad (condor-group.eu ima samo generičku fotografiju terena, ne izolovan snimak materijala) · 5× Radici tehnička trava BEZ specifičnog imena modela (`16899` rugbi, `16900` golf, `16901` hokej, `16902` Multisport MX, `16906` pejzažne površine — radicisport.it kategorije su JS-renderovane, generičko ime u katalogu ne mapira pouzdano na konkretan model, isti rizik kao poznat "Highlands" slučaj) · `16990` Tribina · `16991` Stolica za tribine · `16998` Go za mali fudbal · `17001`/`17002`/`17003` mreže tenis/padel/koš (hoopncourt.com proveren 2026-07-30, potvrđeno NE prodaje ovu opremu — nema poznatog dobavljača u katalogu, nasumičan izbor sa generičkog sajta bi rizikovao tuđ proizvod) · `16919` Expona Living Clic (poznato od ranije, objectflor.de floor-finder 404 za ovu liniju, i dalje čeka distributera)
+  - **Dodatno, van brojača od 40** (nisu roditelj-proizvodi): 14 pojedinačnih Condor Schools/Playgrass varijacija boje (`16878`–`16884`, `16886`–`16892`) — roditelji imaju sliku (plava), pojedinačne boje ne
+  - #ceka-miroslav: fotografije za gornji spisak (naročito sportska oprema — koji je pravi dobavljač?), ili svesna odluka da neki od njih ostanu bez slike trajno.
+- ✅ **IZVRŠENO 2026-08-17 — stari meni term 67 („O firmi", 39 stavki) OBRISAN.** Pre brisanja potvrđeno da nije dodeljen nijednoj lokaciji (`theme_mods_woodmart-child` → `main-menu` = **390**). Ostaju **390** „Glavni meni 2026" (aktivan) i **280** „Utility meni". **W7 F3 stavka o brisanju starih menija time zatvorena u celosti** (term 28 + 10 praznih Porto menija obrisani 30.07).
+- ~~🆕 **W7 F3 — brisanje starih menija čeka M**~~ ✅ **ZATVORENO 2026-08-17** (v. red iznad).
+- ✅ **IZVRŠENO 2026-08-17 — F2.8 zatvoren.** Kartice **Highlands · Nature · Put · Springgrass** na `16673` (`/spoljnje-podne-obloge/vestacka-trava-za-terase/`) prevezane na proizvod **`16906`** „Radici veštačka trava za pejzažne površine". 🔵 Sitna korekcija ranijeg zapisa: kartice **nisu vodile na kategoriju** — uopšte nisu imale `<a>` (link ka kategoriji stoji na drugom mestu u tekstu). Verifikovano 200 / 1×H1 / 4 linka.
+- ~~🆕 **W7 F2.8 — mapiranje veštačke trave čeka M (2026-07-29)**~~ ✅ **ZATVORENO 2026-08-17** (v. red iznad).
 
 - 🟢 **ZATVORENO 2026-08-17 (M) — Google Cloud app je *In production*.** `mcp-za-claude` (projekat `561984657473`) prebačen sa *Testing* na *In production* u OAuth consent screen-u → refresh token više ne ističe na 7 dana. Verifikovano isti čas: `ads_report.py --from 2026-08-14 --to 2026-08-16` vratio pun izlaz (35 kampanja, 1.467,48 RSD), `token.json` osvežen 19:49 — dakle refresh token je preživeo prelazak, nije trebala ponovna autorizacija. 🔴 **Gotcha pri klikanju:** Chrome je bio ulogovan na drugi Google nalog → konzola je vraćala „You need additional access" sa 3 missing permissions (`oauthconfig.testusers.get`, `oauthconfig.verification.get`, `resourcemanager.projects.get`); rešeno prebacivanjem naloga, ne dodavanjem role. **Verification Center namerno NIJE pokretan** (nije potreban — jedan korisnik, sopstvena app). Time otpada rizik da OAuth padne baš 25.08 i obori tačke 3 i 10 pre-flight checklist-a. ~~Original (2026-08-12):~~ app u statusu *Testing*, token padao svakih 5–7 dana (`invalid_grant`).
 

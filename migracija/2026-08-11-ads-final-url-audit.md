@@ -73,9 +73,36 @@ PODOVI" — 1 RSA oglas + 6 sitelinkova. **Svih 7 URL-ova = 200 na buildu.**
 | Sitelink „Obeležavanje podova" | `/industrijski-podovi/trake-za-obelezavanje/` |
 | Sitelink „Bumperi za regale" | `/industrijski-podovi/bumperi-zastita-za-police-regale-i-zidove/` |
 
-⚠️ **Usput ispravka činjenice u planu:** „Podloge za terase i bazene" je
-**PAUSED**. [[CLAUDE]] §6 i master plan na više mesta govore o „obe aktivne
-kampanje" — to više ne važi. Sve ostalo osim ECOTILE je pauzirano.
+🔴 **DOPUNA 2026-08-18 — tvrdnja ispod je bila tačna u trenutku pulla, ali vodi na pogrešan zaključak.**
+Ads API je 11.08 stvarno vratio `campaign_status: PAUSED` za „Podloge za terase
+i bazene" (provereno u `analiza/2026-08-11-ads-final-urls.json`) — to nije bila
+greška skripte. **Ali je kampanja istog tog dana potrošila 222 RSD / 14 klikova.**
+Dnevni presek pokazuje isprekidanu isporuku, ne pauzu:
+
+| Dan | 08.08 | 09.08 | 10.08 | 11.08 | 12–15.08 | 16.08 | 17.08 |
+|---|---|---|---|---|---|---|---|
+| RSD | 225 | — | 897 | 222 | — | 63 | **1.643** |
+| Klikovi | 15 | 0 | 52 | 14 | 0 | 4 | **74** |
+
+Dakle „PAUSED" status i potrošnja postoje **istovremeno**. Zaključak „sve osim
+ECOTILE je pauzirano" i posledično „`[[CLAUDE]]` §6 više ne važi" **se povlače**
+— §6 („obe aktivne kampanje") ostaje kakav jeste, ne menjati ga.
+Puna analiza: [[dnevnik/ADS-DNEVNIK]] 2026-08-18.
+
+> ~~⚠️ **Usput ispravka činjenice u planu:** „Podloge za terase i bazene" je~~
+> ~~**PAUSED**. [[CLAUDE]] §6 i master plan na više mesta govore o „obe aktivne~~
+> ~~kampanje" — to više ne važi. Sve ostalo osim ECOTILE je pauzirano.~~
+
+🟢 **Šta se NE menja:** URL nalazi ovog audita ostaju validni. Final URL-ovi
+kampanje „Podloge za terase i bazene" (`/spoljnje-podne-obloge/` +
+`bergo-xl` / `bergo-unique` / `podovi-za-bazene` / `bergo-elite`) su **svi 200
+na buildu** — v. redove 11, 13, 14, 16, 19 u
+`analiza/2026-08-11-ads-url-audit.csv`. Problemi iz §2.2 i §2.3
+(`ekopodneploce.rs`, `/home/…`) tiču se drugih kampanja i migraciju ne blokiraju.
+
+🔴 **Metodološka lekcija:** `campaign.status` iz Ads API-ja **nije dokaz da
+kampanja ne troši**. Status i potrošnja se moraju čitati zajedno (`ads_report.py`
+po danu), inače se pauzirana-na-papiru kampanja ispusti iz svake analize.
 
 ### 2.2 🔴 2 URL-a vode na TUĐI domen — `ekopodneploce.rs`
 

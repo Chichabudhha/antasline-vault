@@ -1,9 +1,23 @@
 ---
 tip: reference
-azurirano: 2026-08-17
+azurirano: 2026-08-18
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Klaster agregat krije pod-klastere — prilika se vidi tek na query nivou (2026-08-18)
+- Simptom: u [[seo/2026-07-27-content-klasteri]] klaster INDUSTRIJSKI stoji kao 1.537 prikaza / 90d — mali, neprioritetan. Pogled na **query nivo** u istom izvoru (`seo/gsc-svi-upiti-16m-2026-07-04.csv`) pokazuje da unutar njega „radionica" varijante (`podovi za radionice`, `pod za radionicu`, `gumeni/pvc/podne obloge za radionice`, `plocice za radionicu`, + „cena" varijante) nose **~4.700 prikaza / ~275 klikova sa poz. 3,5–7 i CTR do 9,8%** — i **nemaju nijednu namensku stranicu**.
+- Uzrok: klasterizacija po prioritetnom keyword matchingu svrstava sve „industrijsko" u jednu kantu, pa se pod-intent sa sopstvenim rečnikom („radionica", a ne „industrijski pod") rastvori u proseku. Isti agregat istovremeno skriva i da head-termin `industrijski podovi` (6.321 prikaz) curi sa CTR 2,6%.
+- Ovo se dogodilo **drugi put**: revizija „dvorište" (27.07) je oborila preporuku za novu stranicu upravo tako što je sišla na query→page parove i našla tri intenta sa tri različita vlasnika.
+- **Pravilo:** pre bilo koje odluke „ovaj klaster nije vredan" ili „napravi novu stranicu za ovaj klaster" — sići na query nivo i grupisati po **rečniku kojim kupac govori**, ne po našoj taksonomiji proizvoda. Agregat služi za redosled rada, ne za odluku o pojedinačnoj stranici.
+- Srodno: „Zapisane GSC brojke u migracionim CSV-ovima nisu pouzdane — svež pull pre svake odluke (2026-08-13)".
+
+## `campaign.status` iz Ads API-ja nije dokaz da kampanja ne troši (2026-08-18)
+- Simptom: kampanja „Podloge za terase i bazene" je 11.08 vraćena kao `campaign_status: PAUSED`, i taj status je ušao u [[migracija/2026-08-11-ads-final-url-audit]] §2.1 kao „od 14 kampanja samo je jedna ENABLED", pa i u [[dnevnik/ADS-DNEVNIK]] i [[PROGRESS]]. Sedam dana kasnije (18.08) `ads_report.py` je pokazao da je **istog tog 11.08** potrošila 222 RSD / 14 klikova, a 17.08 čak 1.643 RSD / 74 klika — najveći dan u nalogu.
+- Uzrok nije bug u skripti: API je vratio tačno ono što je bilo u nalogu. Ispod PAUSED kampanje `ad_group_status` i `ad_status` su oba bila **ENABLED**, a isporuka je isprekidana (dani sa nulom se smenjuju sa danima od 900–1.600 RSD) — dakle status na nivou kampanje ne opisuje šta se stvarno servira.
+- Posledica: cela nedelja analiza je kampanju tretirala kao nepostojeću — nije ušla ni u nedeljni izveštaj, ni u URL audit kao rizik, ni u razmatranje budžeta, iako ima **najjeftiniji CPC u nalogu** (20,96 vs 94,41 RSD) i donela je 3 od 5 uvezenih konverzija u nedelji 04–10.08.
+- **Pravilo:** status i potrošnja se čitaju **zajedno**, i to **po danu**, ne samo za ceo period. Nijedna kampanja se ne isključuje iz analize na osnovu `campaign.status` — isključuje se tek kad `spend + impressions = 0` kroz ceo posmatrani period. Isti princip već postoji u ovom fajlu za obrnut slučaj („prazan odgovor za kampanju ne znači grešku konektora — proveri spend+impressions"); ovde važi u drugom smeru.
+- Srodno: [[reference/naucene-lekcije]] „Odluka se donosi nad bazom, ne nad zapisom u vault-u (2026-08-17)" — isti obrazac, drugi izvor istine.
 
 ## Odluka se donosi nad bazom, ne nad zapisom u vault-u (2026-08-17)
 

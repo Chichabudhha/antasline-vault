@@ -17,6 +17,11 @@
 > [[dnevnik/2026-08-arhiva-progress]] · jun–jul: [[dnevnik/2026-07-arhiva-progress]]
 > · pune sesije: [[DNEVNIK-NAPRETKA]]
 
+**2026-08-18**
+
+- ✅ `[claude-code]` W2 CONTENT — istraživanje „Industrijski podovi" + ESD: „radionica" ~4.700 prikaza bez stranice, 8 akcija, 4 pitanja za M — [[dnevnik/2026-08-18-istrazivanje-industrijski-podovi-esd]]
+- ✅ `[claude-code]` W5 5.4 — nedeljni izveštaj + nalaz: „Terase i bazene" troši uz PAUSED status — [[dnevnik/2026-08-18-nedeljni-izvestaj-terase-status]]
+
 **2026-08-17**
 
 - ✅ `[claude-code]` SADRŽAJ — 3 odluke od 17.08 izvršene: 6 proizvoda → draft (ne 14 — spisak zastareo, 7 ima slike) · F2.8 kartice → Radici Landscape · meni 67 obrisan — [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
@@ -26,31 +31,6 @@
 - ✅ `[claude-code]` PLAN — go-live **24.08 → UTO 25.08** (M): PON 24.08 = rezervni radni dan, 24 fajla ažurirano
 - ✅ `[claude-code]` PLAN — content freeze **ponovo otvoren 16.08 → ČET 20.08** (M) + 3 obaveze koje to nosi (regression sweep, 301 draft, nov backup)
 - ✅ `[claude-code]` ODLUKE — 4 sadržajne odluke upisane (14 proizvoda → draft · Edel Grass · F2.8 → Radici Landscape · meni 67 se briše); izvršenje sledeća sesija — [[odluke/_pregled-odluka]]
-
-**2026-08-14**
-
-- ✅ `[claude-code]` W3 — Prefiks `wpGs_`→`wpgs_` zatvoren u korenu: `wp-config.php` + 16 redova u bazi + sweep 13 dokumenata + `identifikatori.md` osvežen — [[dnevnik/2026-08-14-copilot-grok-delegati]]
-- ✅ `[claude-code]` ALATI — Copilot/Grok kao read-only delegati + skill `/delegati`; prvi posao našao `wpGs_options` u 2 mysqli upita — [[dnevnik/2026-08-14-copilot-grok-delegati]]
-- ✅ `[claude-code]` W1/BLOK C — Ergonomske podloge: `product_cat` 403 + 8 proizvoda (17838–17845) + hub 16672 prevezan — [[dnevnik/2026-08-14-ergonomske-podloge-proizvodi]]
-
-**2026-08-13**
-
-- ✅ `[cpanel-live]` staging.antasline.com V4 puno postavljanje — [[dnevnik/2026-08-13-staging-v4-puno-postavljanje]]
-- ✅ `[claude-code]` W2/SEO stavka E — 5438 vratio basket-semantiku (78% klikova stranice) + planer link + FAQPage — [[dnevnik/2026-08-13-5438-basket-semantika-faqpage]]
-- ✅ `[claude-code]` W2/SEO — treća FAQ stranica (17025) u hub, klaster zatvoren
-- ✅ `[claude-code]` W2/SEO — FAQ klaster „izbor industrijskog poda" konsolidovan u hub
-- ✅ `[claude-code]` W2/SEO stavka A — čist slug `/ergonomske-podloge/` + nalaz da 8 tipova nema proizvode
-- ✅ `[claude-code]` Vault higijena — PROGRESS.md 1,4 MB → 247 KB, jun+jul u arhivu
-- ✅ `[claude-code]` W2/SEO — čist slug za „preko starog parketa": 6588 preuzeo URL, 16613 ugašen
-- ✅ `[claude-code]` W2/SEO — kanibalizacija: analiza 9 klastera + tri konsolidacije (C/D/B)
-- ✅ `[claude-code]` W3 3.10 — dry-run `build-staging-package.sh`: 2 skrivena kvara + kvota ne staje — [[dnevnik/2026-08-13-dry-run-build-staging-package]]
-- ✅ `[claude-code]` Dokumentacija — SEO plugin pravilo prepisano: Rank Math jedini, Yoast van upotrebe (M odluka) — [[dnevnik/2026-08-13-seo-plugin-pravilo-yoast-brisanje]]
-- ✅ `[claude-code]` W3 3.10 — pun regression sweep posle FAZE 2 (239 str.): 0 regresija; −118 slika/str. objašnjeno; 301 mapa reverifikovana — [[dnevnik/2026-08-13-regression-sweep-post-faza2]]
-- ✅ `[claude-code]` W2/SEO — meta description za 13 taksonomijskih arhiva (M odobrio isti dan)
-- `[claude-code]` FAZA 1 — vizuali, mediji i Bergo blok (unos zatečen na DNU ledgera, prenet ovde 13.08)
-- ✅ `[cpanel-live]` LiteSpeed prefetch/Instant Click provera (UŽIVO, read-only) — bezbedno, rizik iz Chrome-platform §3 zatvoren — [[dnevnik/2026-08-13-litespeed-prefetch-instant-click]]
-- ✅ `[cpanel-live]` Disk kvota — zvaničan broj potvrđen (UŽIVO, read-only), pre-flight nalaz iz 08-12 potpuno zatvoren
-- ✅ `[claude-code]` FAZA 2 — layout/CSS/UI: 6 zamerki na 5 stranica svedeno na 3 sistemska uzroka, popravljeno sitewide
 
 ## Sledeće
 
@@ -138,8 +118,9 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 
 > Samo otvorene stavke. Zatvoreni → [[dnevnik/2026-08-arhiva-progress]] („Zatvoreni blokeri").
 
-- 🟡🆕 **Je li „Podloge za terase i bazene" stvarno pauzirana? (2026-08-17)** Kampanja se od 11.08 vodi kao **PAUZIRANA**, ali svež Ads pull pokazuje potrošnju **14–16.08: 63,33 RSD / 4 klika / 28 prikaza / CPC 15,83**. Ili je reaktivirana bez upisa, ili pauza nije potpuna. Iznos je sitan, ali status u planu ne odgovara stvarnosti — a to je kampanja sa **najjeftinijim CPC-om u nalogu** (15,83 vs 87,76 na ECOTILE). #ceka-miroslav — proveriti u Ads UI. → [[dnevnik/2026-08-17-oauth-publish-i-15793-swatch]]
+- 🔴🆕 **„Podloge za terase i bazene" troši uz `PAUSED` status (2026-08-18).** 4.571 RSD / 250 klikova u dve nedelje, najveći dan naloga 17.08 (1.643 RSD); ad grupe i asseti ispod pauzirane kampanje su ENABLED. Najjeftiniji CPC u nalogu (20,96 vs 94,41). 🟢 Ne blokira 25.08 — svih 5 final URL-ova = 200 na buildu. #ceka-miroslav — Ads UI: pali li se ručno i hvata li pauza ad grupe/assete. → [[dnevnik/2026-08-18-nedeljni-izvestaj-terase-status]]
 
+- 🟡🆕 **ESD sadržaj čeka 4 potvrde pre objave (2026-08-18).** Istraživanje je gotovo, ali sve tehničke brojke u njemu su iz **javnih izvora, neverifikovane protiv deklaracije Ecotile serija koje prodajemo**. #ceka-miroslav: (1) deklaracija o performansama ESD serije (vrednosti otpora + metod merenja); (2) da li imamo **elektroprovodljivu** verziju ≤ 10⁶ Ω — bez toga se ATEX segment (boje/lakovi/gorivo/municija) ne sme ciljati; (3) da li nudimo merenje otpora sa zapisnikom + uzemljenje (bakarna traka) — jedini argument koji zatvara posao kod inženjera kvaliteta, nema ga nijedan konkurent; (4) cenovni raspon za industrijsku i ESD liniju ([[reference/cenovnik]]). 🟢 Ne blokira 25.08 — post-live materijal, build nije diran. → [[dnevnik/2026-08-18-istrazivanje-industrijski-podovi-esd]]
 - 🟡🆕 **Grok zabrane su van gita (2026-08-14).** Grok 1.0.3 **ne primenjuje** projektni `.grok/config.toml` (`grok inspect` → `0 loaded`), pa 19 deny pravila živi u `C:\Users\Miroslav\.grok\config.toml`. Posledica: važe za **sve** projekte na mašini, i **ne dolaze sa vault-om** ako se klonira na drugu mašinu. Projektna kopija je identična i aktivira se sama kad verzija to podrži. **#claude-code** — posle svakog `grok update` proveriti `grok inspect | Select-String Permissions`. Ne blokira migraciju.
 - 🟡🆕 **Ads URL-ovi pre reaktivacije pauziranih kampanja (2026-08-13, svež pull).** 3 oglasa + 2 asseta imaju final URL na **tuđem domenu `ekopodneploce.rs`** (kršenje Google smernica — final URL mora biti na istom domenu kao prikazani), **11 URL-ova** vodi na mrtve `/home/…` putanje koje ne postoje ni na buildu ni u 301 draftu, 4 su na `http://`. 🟢 `tracking_url_template`/`final_url_suffix` su `null` na svih 14 kampanja, a jedina **ENABLED** kampanja (ECOTILE) je čista → **za 24.08 nema posla**; ovo je uslov za reaktivaciju i blokira W4 4.4. #ceka-miroslav
 - 🟢 **Ikonice menija — M ODLUČIO 2026-08-13: ne vraćaju se pre live-a.** Uklanjanje od 12.08 je potvrđeno kao namerno; 79 SVG priloga i `uploads/meni-ikonice/` ostaju u medijateci nevezani ni za jednu `nav_menu_item` stavku (rollback moguć posle live-a). Meni ide u produkciju kao čist tekst. Dokumentacioni deo stavke ispod ostaje otvoren (nedostajući unosi za 12.08 rad).
@@ -179,16 +160,7 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 - 🆕 **ECOTILE dnevni budžet — spike-dani gube 50% prikaza, odluka o povećanju čeka Miroslava (2026-08-06).** Uzrok CPC rasta (52,20→78,98 RSD) nađen: budžet 1.300 RSD/dan dovoljan prosečno, ali na 2/12 dana potrošen pre kraja dana (`search_budget_lost_impression_share` 50%). Nije nalog-širok throttling kao jun (Terase zdrava paralelno). #ceka-miroslav: povećati na 1.800–2.000 RSD ili prihvatiti povremeni gubitak. v. Urađeno tabela vrh + [[dnevnik/ADS-DNEVNIK]].
 - 🆕 **Ads kumulativ konverzija dostigao prag 20–30 (2026-08-06: 24) — odluka o Maximize Conversions čeka Miroslava (zadatak 4.8).** v. Urađeno tabela vrh + [[dnevnik/ADS-DNEVNIK]].
 - 🔴 **NOVO 2026-08-04 — kontakt forma na live `/kontakt/` tiho odbija validne unose (Firma/Ime, Kontakt telefon).** Potvrđeno uživo testom: `zn_validate_is_letters_ws` prihvata samo ASCII slova (odbija brojeve/tačke/dijakritiku/ćirilicu u nazivu firme), `zn_validate_is_numeric` odbacuje razmake u telefonu (a broj je svuda na sajtu ispisan baš sa razmacima). Kod pada validacije: crvena ivica, 0 AJAX poziva, nema poruke — korisnik ne zna zašto ništa ne radi. Nije nova regresija (JS nepromenjen), verovatno dugogodišnji baseline gubitak submit-ova. #ceka-miroslav: odobrenje za cpanel-live fix (ublažiti regex + dodati vidljivu poruku greške). Detalji: [[DNEVNIK-NAPRETKA]] 2026-08-04.
-- ✅ **IZVRŠENO 2026-08-17 — proizvodi bez fotografije draftovani, ali ih je 6, ne 14.** Spisak u odluci je bio zapis od **30.07**: nabraja **13** ID-eva (ne 14), a **7 je u međuvremenu dobilo sliku** — `16919` (06.08) i `16893`/`16899`–`16902`/`16906` (07.08, uz **eksplicitno M odobrenje** generičkih dobavljačkih fotki, v. [[reference/gemini-red-cekanja]]). Draftovano **6** stvarno bez slike: `16990` `16991` `16998` `17001` `17002` `17003` — sva generička sportska oprema koja čeka **M12**. 0 od 73 `.htaccess` pravila i 0 menija ih gađa; 4 interna linka (svi na `16676`) prevezana na `/kontakt/?form-naslov=`. 🟡 **#ceka-miroslav:** potvrditi da 7 sa generičkim fotkama ostaje `publish`, ili reći da i oni idu u draft. → [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
-- 🟢 **F2.9 rep — ZATVOREN 2026-08-17: 34/40 ima sliku, 6 draftovano.** ⚠️ Spisak ispod je zapis od **30.07 i bio je zastareo 10 dana** — `16919` je dobio sliku 06.08, a `16893`/`16899`–`16902`/`16906` 07.08 (M odobrio generičke dobavljačke fotke, v. [[reference/gemini-red-cekanja]]). Ostalo je **6** (`16990` `16991` `16998` `17001`–`17003`, generička sportska oprema), i oni su **draftovani 17.08** — vraćaju se na `publish` kad **M12** (dobavljači) da brend i fotografije. **Tekst ispod je istorijski, ne red čekanja.**
-- 🆕 ~~**F2.9 rep — „40 proizvoda bez slike": 26/40 sada ima sliku, 14 #ceka-miroslav (ažurirano 2026-07-30).**~~ Pregledano po linijama (Bergo, Geoplast, Condor/Radici, R-Tile, sportska oprema); svaki preostali „ne" ima proveren razlog, ništa forsirano. **2026-07-30: +14 dobilo sliku sa zvaničnog sajta proizvođača** (Bergo Flooring, Geoplast, Radici Sport×2, Ecotile×5, Heskins — v. [[DNEVNIK-NAPRETKA]] 2026-07-30 za spisak i izvore) — uklonjeno iz spiska ispod: `16800`, `16836`, `16842`, `16907`, `16908`, `16910`, `16894`, `16895`, `16922`, `16929`, `16930`, `16939`, `16943`, `16949`. Spisak 14 koja i dalje čekaju pravu fotografiju:
-  - **0 fotografija u celoj arhivi + web pretraga nije dala pouzdan proizvođački pogodak** — `16893` Condor shock-pad (condor-group.eu ima samo generičku fotografiju terena, ne izolovan snimak materijala) · 5× Radici tehnička trava BEZ specifičnog imena modela (`16899` rugbi, `16900` golf, `16901` hokej, `16902` Multisport MX, `16906` pejzažne površine — radicisport.it kategorije su JS-renderovane, generičko ime u katalogu ne mapira pouzdano na konkretan model, isti rizik kao poznat "Highlands" slučaj) · `16990` Tribina · `16991` Stolica za tribine · `16998` Go za mali fudbal · `17001`/`17002`/`17003` mreže tenis/padel/koš (hoopncourt.com proveren 2026-07-30, potvrđeno NE prodaje ovu opremu — nema poznatog dobavljača u katalogu, nasumičan izbor sa generičkog sajta bi rizikovao tuđ proizvod) · `16919` Expona Living Clic (poznato od ranije, objectflor.de floor-finder 404 za ovu liniju, i dalje čeka distributera)
-  - **Dodatno, van brojača od 40** (nisu roditelj-proizvodi): 14 pojedinačnih Condor Schools/Playgrass varijacija boje (`16878`–`16884`, `16886`–`16892`) — roditelji imaju sliku (plava), pojedinačne boje ne
-  - #ceka-miroslav: fotografije za gornji spisak (naročito sportska oprema — koji je pravi dobavljač?), ili svesna odluka da neki od njih ostanu bez slike trajno.
-- ✅ **IZVRŠENO 2026-08-17 — stari meni term 67 („O firmi", 39 stavki) OBRISAN.** Pre brisanja potvrđeno da nije dodeljen nijednoj lokaciji (`theme_mods_woodmart-child` → `main-menu` = **390**). Ostaju **390** „Glavni meni 2026" (aktivan) i **280** „Utility meni". **W7 F3 stavka o brisanju starih menija time zatvorena u celosti** (term 28 + 10 praznih Porto menija obrisani 30.07).
-- ~~🆕 **W7 F3 — brisanje starih menija čeka M**~~ ✅ **ZATVORENO 2026-08-17** (v. red iznad).
-- ✅ **IZVRŠENO 2026-08-17 — F2.8 zatvoren.** Kartice **Highlands · Nature · Put · Springgrass** na `16673` (`/spoljnje-podne-obloge/vestacka-trava-za-terase/`) prevezane na proizvod **`16906`** „Radici veštačka trava za pejzažne površine". 🔵 Sitna korekcija ranijeg zapisa: kartice **nisu vodile na kategoriju** — uopšte nisu imale `<a>` (link ka kategoriji stoji na drugom mestu u tekstu). Verifikovano 200 / 1×H1 / 4 linka.
-- ~~🆕 **W7 F2.8 — mapiranje veštačke trave čeka M (2026-07-29)**~~ ✅ **ZATVORENO 2026-08-17** (v. red iznad).
+- 🟡🆕 **7 proizvoda sa generičkim dobavljačkim fotkama — ostaju li `publish`? (2026-08-17)** Pri izvršenju odluke „proizvodi bez fotografije → draft" ispalo je da 7 sa spiska (`16893` · `16899`–`16902` · `16906` · `16919`) **ima sliku** — dodate 06–07.08, od kojih 6 uz eksplicitno M odobrenje generičkih dobavljačkih fotografija bez tačnog model-mapiranja. Nisu draftovani. #ceka-miroslav — potvrditi da ostaju u produkciji, ili reći da i oni idu u draft (rok: freeze **20.08**). Draftovano je 6 stvarno bez slike (`16990` `16991` `16998` `17001`–`17003`), koji čekaju **M12**. → [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
 - 🟡 **P3 metadesc prenos i dalje otvoren** — cPanel sesija nema mrežni pristup Miroslavljevoj lokalnoj XAMPP bazi, pa je preneto samo `_yoast_wpseo_title` za 2699/4318/1094, ne i `_yoast_wpseo_metadesc`. #ceka-miroslav: proslediti tačan metadesc tekst za sve tri (uključujući ispravku `072 234 00 72`→`069 234 00 72` na spoljnje-podne-obloge) ili čekati migraciju **24.08**.
 - 🟡 **GMB API kvota — forma podneta 2026-07-30, i dalje 429 (Google revizija u toku).** M potvrdio da je popunio `support.google.com/business/contact/api_default` → "Application for Basic API Access". Retest 2026-07-30 (`gmb_report.py --from 2026-07-23 --to 2026-07-29`): i dalje `429 Quota exceeded`. Nije greška — Google-ova ručna revizija obično traje nekoliko dana. Probati ponovo za par dana, ne ranije. Windsor.ai se više ne koristi (istekao). Detalji: [[DNEVNIK-NAPRETKA]], [[reference/api-konektor-setup.md]]
 
