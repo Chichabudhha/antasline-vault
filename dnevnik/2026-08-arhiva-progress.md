@@ -171,7 +171,14 @@ izvor: "[[PROGRESS]]"
 | 2026-07-30 | `[claude-code]` **Sitewide Yoast title/meta mojibake (93/103) + Välinge objašnjenje + WoodMart breadcrumb schema bag — sva 3 ZATVORENA** ✅ | ✅ M prijavio čudne karaktere na Expona Commercial title-u. Uzrok: `wpgs_yoast_indexable` KEŠ tabela (ne postmeta, koji je bio čist) nosila je dvostruko-enkodovan tekst na 93 naslova/103 opisa sitewide (svi Expona proizvodi, kontakt, hvala-za-poruku, planer-terena, DuraStripe/Bergo/Goaliath serija). Fix: direktan `UPDATE` iz izvora istine u postmeta (namerno ne `wp yoast index --reindex` — briše sve ID-jeve, rizikuje isti breadcrumb-hijerarhija bag kao 07-29, plus `js_composer` 300s fatal error na probni wp-cli poziv). ✅ Välinge klik sistem (16917/16919) dobio kratko objašnjenje + link na prvo pominjanje. 🔴 Usput nađen WoodMart **vendor** tema bag (`class-breadcrumbs.php:56`, dvostruko ugnježden `itemListElement` niz, nevalidna schema) — popravljen, ali će ga theme update prebrisati (proveriti posle svakog update-a). Backup: `antasline_local_2026-07-30_pre-yoast-indexable-encoding-fix.sql`, `...pre-valinge-explainer.sql`, `class-breadcrumbs.php.bak-2026-07-30`. Detalji: [[DNEVNIK-NAPRETKA]] |
 
 
-## Zatvoreni blokeri (78, izdvojeni 2026-08-13; +3 dodato 2026-08-14; +1 dodat 2026-08-18)
+## Zatvoreni blokeri
+
+### ESD sadržaj — 4 potvrde pre objave (zatvoreno 2026-08-18, isti dan kad je i otvoreno)
+
+Tražilo se: deklaracija ESD serije (otpor + metod) · postoji li elektroprovodljiva verzija za ATEX · nudimo li merenje otpora sa zapisnikom · cenovni raspon.
+
+M je dao zvanične izvore (Ecotile tehnički listovi + live stranica). Odgovori: otpor po seriji iz deklaracija (X-Joint ESD 1,46×10⁶ / 9,3×10⁵ Ω · E500/7 ESD 2,2×10⁴–3×10⁶ / 2,9×10⁴–5,7×10⁵ Ω, BS EN / IEC 61340-5-1:2016) · elektroprovodljivo **na upit, ne paušalno** (ATEX se ne sme tvrditi bez deklaracije za isporuku; Ecotile skala: provodljivo je 10¹–10⁴ Ω, ne „ispod 10⁶" kako je prvo napisano) · merenje sa zapisnikom **da** · cena ESD **na upit**. Sve upisano na build. → [[dnevnik/2026-08-18-esd-dokumentacija-i-proizvodi]]
+ (78, izdvojeni 2026-08-13; +3 dodato 2026-08-14; +1 dodat 2026-08-18)
 
 - ✅ **ZATVOREN 2026-08-18** **Maximize Conversions — prag NIJE dostignut, odluka 4.8 se odlaže (2026-08-12).** Od 26 „plaćenih konverzija" **17 su bili `tel` klikovi**, pravih formi sa `/hvala-za-poruku/` ima **9**. Prag 20–30 nije ni blizu. Ostaje **Maximize Clicks**. Uz to: posle migracije GA4 konverzije padaju **~70%** (nestaje dupli GTM embed iz Kallyas teme) — to treba iskomunicirati unapred da se ne pročita kao pad prodaje. ~~#claude-code — zatvoriti odluku 4.8~~ ✅ **zatvoreno 13.08**; 18.08 dopisano i na vrh [[dnevnik/ADS-DNEVNIK]] (hub je do tada ćutao — ispravka je bila samo u logu). Sadržaj bloka je sada trajno zapisan na vrhu [[dnevnik/ADS-DNEVNIK]] i u [[odluke/_pregled-odluka]], pa više ne mora da stoji u [[PROGRESS]]. → [[dnevnik/2026-08-18-zatvaranje-konflikata-preflight]]
 

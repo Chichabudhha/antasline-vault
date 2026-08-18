@@ -205,9 +205,11 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 > nosi **138 od 178 kl./90d (78%)**, ne „~90" kako je gore procenjeno — stavka je bila
 > potcenjena. → [[dnevnik/2026-08-13-5438-basket-semantika-faqpage]]
 >
-> 🔴 **Jedna stavka ostaje otvorena, rok content freeze (16.08):** **(F)** 4 nove „dimenzije" stranice
-> (16585/16586/16688/17027) gađaju upite koje post **2298** drži sa pozicije **1,0–1,9**
-> (13.686 prikaza / 385 kl./90d), bez canonical-a i bez ijedne uzajamne veze.
+> ✅ **(F) ZATVORENO 2026-08-18.** 4 nove „dimenzije" stranice (16585/16586/16688/17027) i post
+> **2298** (13.686 prikaza / 385 kl./90d, poz. 1,0–1,9) sada su **uzajamno ulinkovane u klaster**,
+> a title 16586 i 17027 pomeren ka transakcionoj nameni („…i izgradnja"). Interno linkovanje
+> **smanjuje, ne uklanja** rizik — merenje posle 25.08: ako 2298 padne ispod poz. 3 za 6 upita
+> iz analize → `noindex` na 17027 i 16586. → [[dnevnik/2026-08-18-F-dimenzije-klaster]]
 > 🟡 Ads: 2 URL-a na tuđem domenu + 11 na mrtvim `/home/…` putanjama — blokira **reaktivaciju**
 > pauziranih kampanja (4.4), ne migraciju. → [[dnevnik/2026-08-13-konsolidacija-kanibalizacija]]
 
@@ -221,8 +223,17 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 > cena` ima CTR **23,5%**; (3) **tabela `antistatik ≠ ESD ≠ elektroprovodljivo`** + FAQPage —
 > na `antistatik*` upitima smo poz. 1,6 sa CTR 15,7%, ali publiku ne kvalifikujemo.
 > 🔴 Head-termin `industrijski podovi` curi: 6.321 prikaz, CTR **2,6%**, poz. 7,2.
-> ⚠️ Tehničke brojke o standardima su iz javnih izvora i **nisu verifikovane protiv deklaracije
-> Ecotile serija** — 4 pitanja za M stoje u [[PROGRESS]] Blokeri pre bilo kakve objave.
+> ✅ **2026-08-18 (isto veče) — sva 4 pitanja za M zatvorena, kandidat (3) IZVRŠEN.** M je dao
+> zvanične Ecotile tehničke listove; brojke su sada iz deklaracija, ne iz javnih izvora.
+> Ispostavilo se da su u pitanju **tri ploče, a katalog je imao jednu** → dodati E500/7 ESD i
+> X-Joint antistatik (≈1×10⁹ Ω, **bez uzemljenja**). Stranica 16658 dobila uporednu tabelu
+> antistatik/ESD/elektroprovodljivo, FAQPage schema, 7 zvaničnih PDF-ova i merenje sa
+> zapisnikom kao uslugu. Provereno i **SRPS EN 61340-5-1:2017** (+/AC:2020) — primena
+> dobrovoljna, pa „zakonska obaveza" ostaje zabranjena formulacija.
+> Kandidat (2) delimično: title/meta `/industrijski-podovi/` prepravljen, **cena namerno u
+> opisu a ne u naslovu** (M odluka: cena u title-u diskvalifikuje pre klika).
+> 🔴 Kandidat (1) `/podovi-za-radionice/` **i dalje otvoren** — 3 AI slike već čekaju na njega.
+> → [[dnevnik/2026-08-18-esd-dokumentacija-i-proizvodi]]
 
 ### W3 — SEO TEHNIČKA + MIGRACIJA (C1/C2 + CWV)
 > 🔄 **2026-07-07: C1/C2 pristup zamenjen parity strategijom** — build se pravi 1:1 prema live sajtu, redirect mapa se svodi na minimum. Izvor istine: [[migracija/PARITY-PLAN]], izvršenje kroz promptove [[migracija/promptovi/_README]] (F1–F7). Stare mape arhivirane u `migracija/arhiva/`.

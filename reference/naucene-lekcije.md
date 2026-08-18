@@ -4,6 +4,97 @@ azurirano: 2026-08-18
 ---
 
 # Naučene lekcije (tehnički gotchas)
+## Sopstvena beleška se čita do kraja pre nego što se potroši novac (2026-08-18)
+
+Memorijska beleška je jasno govorila: Gemini free tier **ne pokriva** generisanje slika,
+`limit: 0`, mora se uključiti naplaćivanje. Kad je prvi API poziv prošao, zaključio sam
+„beleška je zastarela" — a tačan zaključak je bio obrnut: **prošao je zato što naplaćivanje
+jeste uključeno**, dakle svaka slika se plaća. Odatle je otišlo 8 poziva bez pitanja
+(~0,04 USD po slici).
+
+Pravilo: kad rezultat protivreči sopstvenoj belešci, prvo proveri da li beleška zapravo
+**objašnjava** rezultat, pa tek onda da je pogrešna. I: poziv koji troši tuđi novac traži
+odobrenje čak i kad je iznos mali — vlasnik računa odlučuje, ne izvršilac.
+
+## `mysql -B --raw` kroz Windows pipe kvari `post_content` (2026-08-18)
+
+Sadržaj stranica sadrži `\r` i `\n`; Windows pipe ih pri čitanju pretvara u `\r\n`, pa
+tekst koji vratiš u bazu **nije** tekst koji si pročitao. PowerShell varijanta je gora —
+`Get-Content -Raw | mysql` duplo enkodira UTF-8, pa ćirilica/dijakritika odu u mojibake
+(„koĹˇarkaĹˇkog"), a `REPLACE()` sa dijakritikom u ancoru **tiho promaši** i izmena se
+preskoči bez greške.
+
+Ispravno: `SELECT HEX(post_content)` → `binascii.unhexlify` u Pythonu → izmena → upis preko
+`CONVERT(UNHEX('…') USING utf8mb4)` → **obavezno čitanje nazad i poređenje sa upisanim**.
+Helper `wpdb.py` iz sesije 18.08. SQL fajlovi sa dijakritikom idu isključivo Bash
+redirekcijom (`mysql … < fajl.sql`), nikad PowerShell pipe-om.
+
+## Nov WooCommerce proizvod ne postoji dok nema reda u `wc_product_meta_lookup` (2026-08-18)
+
+Upis u `wpgs_posts` + `wpgs_postmeta` + `wpgs_term_relationships` napravi proizvod koji se
+otvara na svom URL-u i ima ispravan schema izlaz — ali **ne ulazi u WooCommerce upite**:
+ne pojavljuje se u `[woodmart_products]` gridu, u kategoriji ni u pretrazi. Woo čita
+`wpgs_wc_product_meta_lookup`, a taj red pravi samo `WC_Product::save()`.
+
+Pri programskom upisu proizvoda dodati i taj red (kolone: `product_id, sku, virtual,
+downloadable, min_price, max_price, onsale, stock_quantity, stock_status, rating_count,
+average_rating, total_sales, tax_status, tax_class`).
+
+## Rank Math kešira sitemap kao FAJLOVE, ne kao opciju (2026-08-18)
+
+Posle dodavanja dva proizvoda sitemap je i dalje vraćao `lastmod` od pre pet dana. Brisanje
+opcije `rank_math_sitemap_cache_files` i svih `_transient_*sitemap*` **nije promenilo ništa**
+— pravi keš su XML fajlovi u `wp-content/uploads/rank-math/*.xml`. Tek `rm *.xml` iz tog
+foldera natera regeneraciju.
+
+Isti obrazac kao „trebalo je `wp rewrite flush`" (§7.1): kad izlaz ne prati bazu, keš je
+najčešće na disku, ne u `wp_options`.
+
+## SVG nije alat za dijagram koji mora da radi na telefonu (2026-08-18)
+
+Dijagram skale otpora crtan kao SVG 1000×420 sa tekstom od 13–15 px izgleda odlično na
+desktopu, a na 390 px širine natpisi padnu na ~5 px. **Uzrok je strukturni:** u SVG-u se
+tekst skalira zajedno sa slikom, pa povećanje fonta ne pomaže dok je oblik široka
+horizontalna traka.
+
+Isti sadržaj kao HTML/CSS grid (komponenta `.al-scale`) rešava sve odjednom: font ostaje
+u px bez obzira na širinu, kolone se prelamaju u jednu, tekst se selektuje, indeksira i
+čita čitačem ekrana. **SVG čuvati za ono što jeste crtež** (presek poda, šema uzemljenja),
+ne za tabelarni sadržaj koji samo izgleda kao grafika.
+
+Uz to: WoodMart reset spljošti `<sup>` na baseline, pa `10⁴` bude renderovano kao `104` —
+traži `vertical-align: super` u sopstvenom pravilu.
+
+## Diff po rečenicama lažno prijavljuje da sadržaj nedostaje (2026-08-18)
+
+Poređenje live i build stranice po rečenicama dalo je „42 od 52 rečenice sa live-a ne
+postoje na buildu", iz čega je izvedeno osam nepostojećih rupa. Build je u stvari live
+tekst **prepisao u tečnije pasuse**, pa se nijedna rečenica nije poklopila doslovno iako
+je značenje preneto. Stvarnih rupa bilo je pet.
+
+Parity se meri **po temama i entitetima** (pominje li stranica ATEX, zoniranje bojama,
+uzemljenje na 80 m², referentne klijente), ne po podudaranju stringova. Pre prijave nalaza
+pročitati puni sadržaj obe strane — automatski diff je ovde alat za sumnju, ne za zaključak.
+
+## Neuspeo heredoc upisuje sopstvenu komandu u ciljni fajl (2026-08-18)
+
+`cat >> fajl.css <<'CSS'` koji se ne zatvori kako treba završi tako što u CSS upiše
+doslovnu liniju `grep -c "…" antas-design.css`. Bash prijavi samo `warning`, izlazni kod je
+0, a nevalidan red u CSS-u može oboriti parsiranje pravila ispod njega.
+
+Posle svakog `>>` na fajl koji ide u produkciju — `tail` na fajl. I: heredoc sa dugačkim
+sadržajem i navodnicima radije zameniti `Write` alatom.
+
+## Protivrečnost slike i natpisa se ne vidi iz HTML provere (2026-08-18)
+
+Fotografija sa Ecotile ESD stranice, imenovana kao „X-Joint ploča", zapravo prikazuje
+**pribor za uzemljenje** (bakarna traka, priključak, kabl). Postavljena je kao glavna slika
+antistatik proizvoda — onog koji se **ne uzemljuje** — i kao prva kartica ispod natpisa
+„bez uzemljenja". Sve provere su bile zelene: HTTP 200, 1×H1, `srcset` radi, alt postoji.
+
+Vizuelni sadržaj traži vizuelnu proveru. Posle svakog postavljanja slika otvoriti stranicu
+u brauzeru i pogledati je — naročito kad natpis tvrdi nešto što slika treba da potvrdi.
+
 ## Ispravka na dnu append-only loga ne poništava tvrdnju sa vrha (2026-08-18)
 
 `ADS-DNEVNIK.md` je 12.08 dobio uredno napisanu ispravku: „kumulativ 26 / prag pređen
@@ -1500,7 +1591,8 @@ upisuje na kraju — ciljni fajl stoji na **0 B** ~25 min, što izgleda kao da j
 
 ## Mešani CRLF/LF fajlovi: normalizacija celog fajla ga naduva (token audit, 2026-08-18)
 - Skript za čišćenje razmaka je u prvom prolazu **povećao** `migracija/arhiva/2026-08-11-legacy-cpt-sadrzaj.md` za 2.354 B, jer taj fajl ima **1.144 CRLF i 2.354 LF** reda, a logika „ako fajl sadrži CRLF, vrati sve na CRLF“ je konvertovala i LF redove.
-- **Pravilo: čuvaj završetak reda po liniji** (`cr = seg.endswith('')`), ne po fajlu. Vault ima obe konvencije (136 LF : 47 CRLF : 1 mešan), `core.autocrlf=true` ih normalizuje tek pri commit-u.
+- **Pravilo: čuvaj završetak reda po liniji** (`cr = seg.endswith('
+')`), ne po fajlu. Vault ima obe konvencije (136 LF : 47 CRLF : 1 mešan), `core.autocrlf=true` ih normalizuje tek pri commit-u.
 
 ## Pre renumeracije sekcija — inventar referenci sa kontekstom, ne globalna zamena (CLAUDE.md, 2026-08-18)
 - `CLAUDE.md` je imao **dve sekcije numerisane 9** (WORKFLOW I ALATI i KLJUČNE LEKCIJE), a podsekcije workflow-a su nosile brojeve 8.1–8.7. Deset spoljnih referenci na „§9“ bilo je dvosmisleno u oba smera.
