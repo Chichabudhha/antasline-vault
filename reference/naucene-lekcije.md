@@ -5,6 +5,34 @@ azurirano: 2026-08-19
 
 # Naučene lekcije (tehnički gotchas)
 
+## Uslovni izuzetak u 301 mapi se proverava u bazi, ne u zapisu (2026-08-19)
+
+Pravilo `/podovi-za-garaze/` je 11.08 izostavljeno iz `.htaccess` drafta *jer je taj
+URL na buildu bio zauzet živom stranicom*; 18.08 je stranica draftovana i razlog je
+pao, pa bi URL posle migracije bio 404. Provera pri svakom sweep-u je zato **upit u
+bazu**, ne čitanje beleške: `SELECT ID, post_status FROM wpgs_posts WHERE post_name
+IN (...)`. Isto važi obrnuto — vraćanje draftovane stranice u `publish` znači da
+pravilo mora **da se isključi**. Svaki izuzetak oblika „ne prenosi se **jer** je X"
+pada tiho kad X prestane da važi.
+
+## `cd` u Bash alatu traje kroz pozive (2026-08-19)
+
+Radni direktorijum se **pamti između poziva** Bash alata. Posle
+`cd migracija/alati && php skripta.php`, sledeći poziv sa relativnom putanjom
+(`grep ... migracija/htaccess-301-DRAFT.txt`) prijavljuje „No such file or
+directory" iako fajl postoji — traži ga iz `migracija/alati/`. Simptom liči na
+obrisan fajl, uzrok je cwd. Pravilo: apsolutne putanje, ili `cd` vraćati u istoj
+komandi.
+
+## Nula razlika u sweep-u ne znači nula promena (2026-08-19)
+
+Sweep 19.08 je vratio 0 kvarova, ali **30 URL promena i 18 izmena title/meta** u
+odnosu na baseline 13.08. Deo njih nije bio objašnjiv iz `PROGRESS`-a jer su
+konsolidacione skripte 13.08 radile **posle** generisanja baseline CSV-a (15:47–18:35
+vs snimak 17:24) — pa rad od 13.08 figurira kao „promena od 19.08". Kad diff pokaže
+više redova nego što dnevnik sugeriše, prvo se poredi **vreme nastanka baseline-a**
+sa vremenom izvršenja skripti tog dana, pa tek onda traži regresija.
+
 ## „Stranica ne postoji" se proverava u bazi, i to sa sinonimima (2026-08-19)
 
 U jednom danu dva puta je plan tražio **novu stranicu** za upit koji je već imao rangiran URL:

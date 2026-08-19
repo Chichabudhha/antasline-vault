@@ -11,15 +11,11 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
-## 2026-08-19 [claude-code] [W2/SEO] — „Skladišta" na 16687 + dva URL-a pogrešno prijavljena kao nepostojeća ✅
+## 2026-08-19 [claude-code] [W3 3.10] — Regression sweep pre freeze-a: 235 stranica, 0 kvarova; 301 mapa reverifikovana ✅
 
-Upit `podovi za skladišta` (poz. 14,6 / CTR 0%) opslužen **proširenjem postojeće 16687**, ne novom stranicom — namenu je već pokrivala ta landing (poz. 4,0 na `podovi za magacine`), a falila je samo reč: „magacin" 18 puta, „skladiš\*" jednom. Dodata sekcija o regalima i tačkastom opterećenju, FAQ 5 → 7, **FAQPage JSON-LD koji nije postojao**, nov Rank Math title/opis + focus keyword.
+Sweep pušten **dan pre freeze-a namerno** (baseline 13.08 pao je prvom izmenom 18.08, a 20.08 uveče ne bi ostalo vremena za popravku pred gate 21.08): **235 stranica / 1.174 slike / 1.799 linkova — 0 kvarova**, 30 URL promena i 18 meta izmena vs 13.08, sve vezane za dokumentovane odluke. 301 mapa reverifikovana istom sesijom: 80 pravila, 43 cilja 200, 0 kolizija; uslovni izuzetak `/podovi-za-garaze/` proveren u bazi i dalje važi. **Nov baseline za §B6: `analiza/2026-08-19-regression-pre-freeze-*`.**
 
-🔴 Glavni nalaz: **dva pogrešna „ne postoji" u istom danu** — i `/podovi-za-radionice/` postoji (blog post 5637, poz. 3,6, hobi tekst o garaži). Obe „nove stranice" bi kanibalizovale sopstvene landinge šest dana pred migraciju. Pravilo i dva `HTTP 000` gotcha-a upisani u [[reference/naucene-lekcije]]. Grok delegat pao na kvoti bez ijednog nalaza.
-
-⚠️ Nosi obavezu: **ponovni regression sweep pre gate-a 21.08** (baseline 13.08 ne pokriva 16687).
-
-→ [[dnevnik/2026-08-19-skladista-16687]]
+→ [[dnevnik/2026-08-19-regression-sweep-pre-freeze]]
 
 
 ## 2026-08-18 [claude-code] [W1/W2] — ESD klaster: zvanična dokumentacija, dva nova proizvoda, dopuna stranice ✅

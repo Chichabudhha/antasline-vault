@@ -5,8 +5,10 @@
 > 🔴 **Content freeze PONOVO OTVOREN 2026-08-17: 16.08 → ČET 20.08** (M odluka, ista sesija) —
 > da materijali koji su propustili prvi freeze još uđu. Gate pregled **PET 21.08 nepromenjen**;
 > rezerva je **vikend 22–23.08 + PON 24.08 (rezervni radni dan)**.
-> 🔴 Posle 20.08 obavezno: **ponovni full regression sweep** (baseline 13.08 prestaje da
-> važi), **nov backup builda**, a ako se promeni slug — i regeneracija `.htaccess` 301 drafta.
+> 🟢 **Dve od tri obaveze zatvorene 19.08, dan pre freeze-a:** pun regression sweep (0 kvarova,
+> nov baseline `analiza/2026-08-19-regression-pre-freeze-*`) i reverifikacija 301 mape (80 pravila,
+> 43 cilja 200). 🔴 **Posle 20.08 ostaje:** brz potvrdni sweep + **nov backup zamrznutog builda na
+> 2 lokacije**; regeneracija `.htaccess` drafta samo ako 20.08 promeni ijedan slug.
 > Svi raniji rokovi „pre 31.08" i dalje znače **pre 21.08** — rokovi M odluka se NISU pomerili.
 
 > **Plan projekta:** [[2026-07-06-MASTER-PLAN-V2]] (5 workstream-ova, migracija **2026-08-25**, gate kriterijumi) — stari [[2026-07-02-MASTER-PLAN-DO-LIVE]] je superseded.
@@ -19,6 +21,7 @@
 
 **2026-08-19**
 
+- ✅ `[claude-code]` W3 3.10 — regression sweep pre freeze-a (0 kvarova) + reverifikacija 301 mape; nov baseline za §B6 — [[dnevnik/2026-08-19-regression-sweep-pre-freeze]]
 - ✅ `[claude-code]` W2/SEO — „skladišta" na 16687; nova stranica napuštena (URL bi kanibalizovao postojeći) — [[dnevnik/2026-08-19-skladista-16687]]
 
 **2026-08-18**
@@ -58,8 +61,12 @@
 - 🟡 **Preostale 3 stavke čekaju MATERIJAL OD MIROSLAVA, ne vreme.** Ako ne stigne do 20.08,
   fallback koji je već aktivan ostaje trajno: **4 reference na `/o-nama/`** (fotke/logotipi) ·
   **P3 metadesc** (2699/4318/1094) · **definicija „starog formata" za 5119**.
-- 🔴 Posle poslednje izmene: **ponovni regression sweep pre gate-a 21.08** + nov backup builda.
-  🆕 **19.08 menjan sadržaj na 16687** — baseline od 13.08 više ne pokriva tu stranicu.
+- ✅ **Regression sweep IZVRŠEN 19.08 (dan pre freeze-a):** 235 stranica / 1.174 slike / 1.799 linkova —
+  **0 kvarova**; 30 URL promena i 18 meta izmena vs 13.08 — sve vezane za dokumentovane odluke, nula
+  neplaniranih. 301 mapa reverifikovana: 80 pravila, 43 cilja 200, 0 kolizija. Nov baseline za §B6:
+  `analiza/2026-08-19-regression-pre-freeze-*`. → [[dnevnik/2026-08-19-regression-sweep-pre-freeze]]
+- 🔴 Posle freeze-a 20.08 ostaje: **brz potvrdni sweep** + **nov backup zamrznutog builda na 2 lokacije**
+  (jedina gate stavka koja se ne može zatvoriti pre freeze-a).
 
 **Vault higijena — van sadržajnog prozora, ne blokira gate** (nalazi 18.08, [[dnevnik/2026-08-18-token-audit-rotacija-ledgera]]):
 - ✅ ~~`PROGRESS` „Blokeri" = 27 KB = 70% ovog fajla, 45 stavki~~ — **SKRAĆENO 2026-08-18** na ~7,5 KB / 28 stavki; ceo fajl 41,2 → 22,1 KB (**−46%**, ≈−6k tokena po sesiji). Pun tekst pre skraćivanja doslovno u [[dnevnik/2026-08-arhiva-progress]]

@@ -49,11 +49,23 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
       🔵 Taj backup je **bezbednosna kopija tekućeg stanja, ne „finalni build"** (freeze je
       istog dana ponovo otvoren do 20.08) — zato ova stavka i dalje stoji neštriklovana.
 - [ ] 🆕 **Posle novog content freeze-a (ČET 20.08) — obaveze koje nosi ponovno otvaranje:**
-      - [ ] **ponovni full regression sweep** (`migracija/alati/regression-sweep.php`) —
-            baseline od 13.08 (`analiza/2026-08-13-regression-post-faza2-*`) prestaje da važi
-            u trenutku prve sadržajne izmene, a on je referenca za §B6
-      - [ ] **ako se promenio ijedan slug** → `redirect-verify.php` pa
-            `htaccess-301-generate.php` ponovo (draft **80** pravila od 18.08, ranije zapisano 73)
+      - [x] ✅ **IZVRŠEN 2026-08-19, dan PRE freeze-a** (namerno ranije — da ostane vreme za
+            popravku pre gate-a 21.08). **235 stranica / 1.174 slike / 1.799 linkova: 0 non-200 ·
+            0 bez H1 · 0×2H1 · 0 nevalidnih JSON-LD · 0 slomljenih slika · 0 internih 404.**
+            Bez metadesc 18 (bilo 31) — samo `product_tag` arhive, posle live-a. Diff vs 13.08:
+            30 URL promena + 18 meta izmena, **sve vezane za dokumentovane odluke, nula
+            neplaniranih**. 🔴 **Nov baseline za §B6 je `analiza/2026-08-19-regression-pre-freeze-*`**,
+            ne snimak od 13.08. → [[dnevnik/2026-08-19-regression-sweep-pre-freeze]]
+      - [ ] **posle freeze-a 20.08: brz potvrdni sweep** protiv baseline-a od 19.08 (očekivano
+            0 razlika ako 20.08 ne uđe nova izmena)
+      - [x] ✅ **301 mapa REVERIFIKOVANA 2026-08-19** (`redirect-verify.php`): **80 pravila ·
+            43 jedinstvena cilja svi 200 · 0 duplikata izvora · 0 petlji · 0 kolizija sa živim
+            stranicama.** Upozorenje za 16613 iz provere 13.08 više se ne javlja (stranica
+            draftovana, slug swap izveden) — stanje ispravnije nego tada. Uslovni izuzetak
+            provereni u bazi: **16875/16874/17273 su i dalje `draft`**, pa pravilo
+            `/podovi-za-garaze/` ispravno stoji. **Draft se NE regeneriše.**
+            🔴 Ponoviti samo ako se 20.08 promeni ijedan slug ili neka draftovana stranica
+            vrati u `publish`.
       - [ ] **nov backup zamrznutog builda na 2 lokacije** (v. stavka iznad)
       🔴 Sve tri staju u **jedan dan pre gate-a (21.08)** — zato izmene 17–20.08 držati
       lokalnim i bez dirania slugova.
