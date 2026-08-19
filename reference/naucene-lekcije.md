@@ -1,9 +1,55 @@
 ---
 tip: reference
-azurirano: 2026-08-18
+azurirano: 2026-08-19
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## „Stranica ne postoji" se proverava u bazi, i to sa sinonimima (2026-08-19)
+
+U jednom danu dva puta je plan tražio **novu stranicu** za upit koji je već imao rangiran URL:
+
+| Plan je rekao | Stvarno stanje |
+|---|---|
+| `/podovi-za-radionice/` — „najveća prilika **bez namenske stranice**" | postoji na live-u i buildu: blog post **5637**, poz. **3,6** / CTR 7,6% — ali hobi tekst o privatnoj garaži, dok upit dolazi od auto-servisa i CNC radionica |
+| `podovi za skladišta` — „rupa, poz. 14,6 / CTR 0%" | namenu pokriva **16687** (`podovi-za-magacine-i-hale`), poz. **4,0** / CTR 5,5%; „magacin" na njoj **18 puta**, „skladiš\*" **jednom** |
+
+**Obrazac:** rupa u GSC-u skoro nikad ne znači „nema stranice" nego **nesklad namere ili
+leksike sa stranicom koja je već rangirana**. Nova stranica u oba slučaja ne bi popunila
+rupu nego podelila autoritet sa sopstvenom stranicom koja radi.
+
+Obavezno pre svakog `wp_insert_post`:
+
+```sql
+SELECT ID,post_title,post_name,post_type,post_status FROM wpgs_posts
+WHERE post_name LIKE '%pojam%' OR post_title LIKE '%pojam%';
+```
+
+plus `grep` po `migracija/parity-inventar.csv` (nosi i live URL-ove, ne samo lokalne) **i
+provera sinonima** — magacin/skladište, radionica/servis, dvorište/terasa. Sinonim je ono
+što je oba puta promaklo: `post_name LIKE '%skladis%'` vraća prazno, a stranica postoji
+pod „magacin".
+
+Kad je nalaz nesklad leksike, ispravka je **proširenje postojeće stranice** (sinonim u H2,
+FAQ, title/meta, focus keyword), ne nov URL. Na 16687 je to bilo 1 → 25 pojavljivanja
+„skladiš\*" bez ijednog novog URL-a, izmene u `.htaccess` ili reda u sitemap-u.
+
+## `curl` u `while read` petlji vraća lažni `HTTP 000` (2026-08-19)
+
+`while read -r u; do curl ... "$u"; done < lista.txt` — **curl čita isti stdin** i pojede
+ostatak liste; rezultat je `000` na svim URL-ovima, identično kao kad je Apache ugašen.
+Fix: `curl ... < /dev/null` unutar petlje.
+
+Druga, nezavisna varijanta iste zablude: **Python `io.open(path,'w')` bez `newline='
+'`**
+na Windows-u upiše CRLF, pa `` završi **unutar URL-a** → opet `000`. Fix: `newline='
+'`
+pri pisanju ili `tr -d ''` pri čitanju.
+
+🔴 Pravilo: pre nego što `000` protumačiš kao pad servera, pozovi **jedan** URL direktno.
+17.08 je ista poruka značila ugašen Apache, 19.08 dve potpuno druge stvari — simptom je
+isti, uzrok nije.
+
 ## Sopstvena beleška se čita do kraja pre nego što se potroši novac (2026-08-18)
 
 Memorijska beleška je jasno govorila: Gemini free tier **ne pokriva** generisanje slika,

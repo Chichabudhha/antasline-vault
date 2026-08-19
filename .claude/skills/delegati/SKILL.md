@@ -62,8 +62,14 @@ Praktične granice:
 - **Copilot ≈ 1,6 zahteva dnevno.** Jedna CLI sesija ume da potroši više od
   jednog (svaki model-turn se broji), pa realno ~15–25 ozbiljnih poslova mesečno.
   Testiranje 14.08 potrošilo je ~5.
-- **Grok kvota nepoznate veličine** — kad se udari u zid, videće se kao greška,
-  ne kao račun. Pod (svaki poziv učita `CLAUDE.md` + `AGENTS.md`): **~23k tokena**
+- 🔴 **Grok Free kvota je UDARENA 19.08.2026** — prvi put izmereno da postoji zid.
+  Poruka: `Error: You've reached your free Grok Build usage limit for now.`,
+  izlazni kod **1**, skripta upozori „Izlaz nije bio validan JSON". Delegat je
+  pao **pre nego što je otvorio ijedan fajl** — nula nalaza, nula tokena posla,
+  ali prompt je već bio potrošen. Kvota je „for now" (vremenski prozor, ne
+  mesečna) — vredi probati kasnije isti dan.
+  🔴 **Pouka: Grok se ne stavlja na kritičan put.** Ako odgovor treba za odluku
+  u toku sesije, pusti ga kao dopunu uz sopstvenu analizu, nikad umesto nje. Pod (svaki poziv učita `CLAUDE.md` + `AGENTS.md`): **~23k tokena**
   pre nego što pročita ijedan projektni fajl.
 
 Provera stanja (ne troši zahtev): `copilot` pa `/usage`.
@@ -91,7 +97,7 @@ skill definicije. Zato:
 - nikad grok za posao koji `agy` ili `ollama` mogu — razlika je red veličine;
 - za više koraka koristiti `--resume <sessionId>` (skripta ga ispiše) umesto
   novog poziva — keš tada pokrije najveći deo;
-- Free kvota je nepoznate veličine; kad se udari u zid, videće se kao greška.
+- Free kvota **ima zid i on je udaren 19.08.2026** (v. tabelu gore) — greška, ne račun.
 
 ---
 

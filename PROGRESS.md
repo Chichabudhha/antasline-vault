@@ -17,6 +17,10 @@
 > [[dnevnik/2026-08-arhiva-progress]] · jun–jul: [[dnevnik/2026-07-arhiva-progress]]
 > · pune sesije: [[DNEVNIK-NAPRETKA]]
 
+**2026-08-19**
+
+- ✅ `[claude-code]` W2/SEO — „skladišta" na 16687; nova stranica napuštena (URL bi kanibalizovao postojeći) — [[dnevnik/2026-08-19-skladista-16687]]
+
 **2026-08-18**
 
 - ✅ `[claude-code]` W1/W2 ESD — 3 ploče u katalogu (2 nova proizvoda), 7 zvaničnih PDF-ova, uporedna tabela + FAQPage schema, SRPS provera — [[dnevnik/2026-08-18-esd-dokumentacija-i-proizvodi]]
@@ -26,7 +30,7 @@
 - ✅ `[claude-code]` ALATI — `PROGRESS` „Blokeri" skraćen 27 → 7,5 KB (45 → 28 stavki, 6 zatvorenih/nadjačanih izmešteno); ceo fajl **41,2 → 22,1 KB**, pun tekst doslovno u arhivi — [[dnevnik/2026-08-arhiva-progress]]
 - ✅ `[claude-code]` ALATI — token audit starta sesije: ledger 965 KB → 20 KB (357 unosa doslovno u arhive, 4 zalutala unosa vraćena), otvaranje sesije −67k tokena; duplo `§9` u CLAUDE.md razrešeno — [[dnevnik/2026-08-18-token-audit-rotacija-ledgera]]
 - ✅ `[claude-code]` W3 — zatvorena **svih 6 konflikata** u migracionoj dokumentaciji (#5 `mu-plugins` bio pravi, #4 lažni pozitiv); meni 17424 = lažna uzbuna, build nije diran — [[dnevnik/2026-08-18-zatvaranje-konflikata-preflight]]
-- ✅ `[claude-code]` W2 CONTENT — istraživanje „Industrijski podovi" + ESD: „radionica" ~4.700 prikaza bez stranice, 8 akcija, 4 pitanja za M — [[dnevnik/2026-08-18-istrazivanje-industrijski-podovi-esd]]
+- ✅ `[claude-code]` W2 CONTENT — istraživanje „Industrijski podovi" + ESD: „radionica" ~4.700 prikaza, 8 akcija, 4 pitanja za M (🔴 „bez stranice" ispravljeno 19.08 — URL postoji) — [[dnevnik/2026-08-18-istrazivanje-industrijski-podovi-esd]]
 - ✅ `[claude-code]` W5 5.4 — nedeljni izveštaj + nalaz: „Terase i bazene" troši uz PAUSED status — [[dnevnik/2026-08-18-nedeljni-izvestaj-terase-status]]
 
 **2026-08-17**
@@ -55,6 +59,7 @@
   fallback koji je već aktivan ostaje trajno: **4 reference na `/o-nama/`** (fotke/logotipi) ·
   **P3 metadesc** (2699/4318/1094) · **definicija „starog formata" za 5119**.
 - 🔴 Posle poslednje izmene: **ponovni regression sweep pre gate-a 21.08** + nov backup builda.
+  🆕 **19.08 menjan sadržaj na 16687** — baseline od 13.08 više ne pokriva tu stranicu.
 
 **Vault higijena — van sadržajnog prozora, ne blokira gate** (nalazi 18.08, [[dnevnik/2026-08-18-token-audit-rotacija-ledgera]]):
 - ✅ ~~`PROGRESS` „Blokeri" = 27 KB = 70% ovog fajla, 45 stavki~~ — **SKRAĆENO 2026-08-18** na ~7,5 KB / 28 stavki; ceo fajl 41,2 → 22,1 KB (**−46%**, ≈−6k tokena po sesiji). Pun tekst pre skraćivanja doslovno u [[dnevnik/2026-08-arhiva-progress]]
@@ -147,7 +152,7 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 - **7 proizvoda sa generičkim dobavljačkim fotkama** (`16893` `16899`–`16902` `16906` `16919`) — ostaju `publish` ili i oni u draft? → [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
 - **P3 metadesc** za 2699/4318/1094 (uklj. ispravku `072`→`069 234 00 72`) — cPanel nema pristup lokalnoj bazi, preneti su samo naslovi. Ako ne stigne → posle migracije.
 - **„Stari format" na 5119 i 15793** — nije reprodukovano (obe na aktuelnom `al-*` sistemu); legacy swatch na 15793 ✅ popravljen 17.08. Treba screenshot/opis šta konkretno štrči. → [[dnevnik/2026-08-12-vizuali-reference-ikonice]] §3
-- 🟡 **`/podovi-za-radionice/` — najveća otvorena SEO prilika:** ~4.700 prikaza / ~275 klikova, poz. 3,5, **bez namenske stranice**. 3 AI slike (auto-servis · CNC · stolarska) već obrađene i čekaju. Post-live materijal. → [[dnevnik/2026-08-18-esd-dokumentacija-i-proizvodi]]
+- 🟡 **`/podovi-za-radionice/` — najveća otvorena SEO prilika:** ~4.700 prikaza / ~275 klikova, poz. 3,6. 🔴 **Ispravka 19.08: URL POSTOJI** (blog post **5637**, hobi tekst o privatnoj garaži) — nije prazna rupa nego **nesklad namere**; nova stranica bi ga kanibalizovala. Preporuka: konverzija `post`→`page` uz isti ID i slug. 3 AI slike već obrađene i čekaju. **M odluka 19.08: post-live.** → [[dnevnik/2026-08-19-skladista-16687]]
 - 🟡 **Video — čeka M odluku o stranici i Flow kredite.** Predlog: kadar polaganja bakarne trake iz naših **pravih** fotki (HTEC/Quectel), ne iz AI slika. → [[dnevni-video]]
 - 🔴 **AI slike preko API-ja se PLAĆAJU** (`gemini-2.5-flash-image`, ~0,04 USD/sl.; 93 poziva od 04.08). Od 18.08: generisanje samo uz izričito M odobrenje; besplatna varijanta je Gemini chat.
 

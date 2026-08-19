@@ -11,6 +11,17 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
+## 2026-08-19 [claude-code] [W2/SEO] — „Skladišta" na 16687 + dva URL-a pogrešno prijavljena kao nepostojeća ✅
+
+Upit `podovi za skladišta` (poz. 14,6 / CTR 0%) opslužen **proširenjem postojeće 16687**, ne novom stranicom — namenu je već pokrivala ta landing (poz. 4,0 na `podovi za magacine`), a falila je samo reč: „magacin" 18 puta, „skladiš\*" jednom. Dodata sekcija o regalima i tačkastom opterećenju, FAQ 5 → 7, **FAQPage JSON-LD koji nije postojao**, nov Rank Math title/opis + focus keyword.
+
+🔴 Glavni nalaz: **dva pogrešna „ne postoji" u istom danu** — i `/podovi-za-radionice/` postoji (blog post 5637, poz. 3,6, hobi tekst o garaži). Obe „nove stranice" bi kanibalizovale sopstvene landinge šest dana pred migraciju. Pravilo i dva `HTTP 000` gotcha-a upisani u [[reference/naucene-lekcije]]. Grok delegat pao na kvoti bez ijednog nalaza.
+
+⚠️ Nosi obavezu: **ponovni regression sweep pre gate-a 21.08** (baseline 13.08 ne pokriva 16687).
+
+→ [[dnevnik/2026-08-19-skladista-16687]]
+
+
 ## 2026-08-18 [claude-code] [W1/W2] — ESD klaster: zvanična dokumentacija, dva nova proizvoda, dopuna stranice ✅
 
 M je dao izvore i sva **4 `#ceka-miroslav` pitanja su zatvorena**: deklaracije (X-Joint ESD 1,46×10⁶ / 9,3×10⁵ Ω · E500/7 ESD 2,2×10⁴–3×10⁶ / 2,9×10⁴–5,7×10⁵ Ω, BS EN / IEC 61340-5-1:2016) · elektroprovodljivo **na upit, ne paušalno** (ATEX se ne sme tvrditi bez deklaracije za isporuku) · **merenje sa zapisnikom — da** · cena ESD **na upit**.

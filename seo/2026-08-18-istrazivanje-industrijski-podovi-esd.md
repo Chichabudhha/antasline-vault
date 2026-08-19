@@ -97,13 +97,50 @@ Ovo su naši brojevi, ne procena. Klaster INDUSTRIJSKI + ESD-ANTISTATIK.
 
 **Tri nalaza koja menjaju plan sadržaja:**
 
-1. **„Radionica" je naš najjači komercijalni ulaz, a nema svoju stranicu.**
+1. **„Radionica" je naš najjači komercijalni ulaz, a stranica koju ima odgovara na
+   pogrešnu nameru.** (🔴 ispravljeno 2026-08-19 — v. okvir ispod)
    Zbir svih varijanti (`podovi za radionice`, `pod za radionicu`, `gumeni/pvc/
    podne obloge za radionice`, `plocice za radionicu`, + „cena" varijante) je
    **~4.700 prikaza / ~275 klikova**, prosečna pozicija 3,5–7 i CTR do 9,8%.
    To je više kvalifikovane tražnje nego ceo Ecotile-PVC klaster (924 prikaza/90d).
    Namenska stranica **„Podovi za radionice"** je najveća pojedinačna prilika u
    ovoj sekciji.
+
+> 🔴 **ISPRAVKA 2026-08-19 (provereno u bazi builda, ne pretpostavka).**
+> Tvrdnja „bez namenske stranice" je **netačna**. URL `/podovi-za-radionice/`
+> **postoji i na live-u i na buildu** i vraća 200 — to je red 31 u
+> `migracija/parity-inventar.csv` (status PARITY, live ID 15974 / lokalni 5637).
+>
+> Radi se o **blog postu ID 5637**, 7.138 znakova, naslov „Podovi za radionice i
+> garaže: **kad tvoj auto zaslužuje bolje od običnog betona**". Sadržaj je
+> hobi/potrošački i govori o uređenju **privatne garaže** („betonska pećina",
+> „ne diraj moju policu" zona, emoji, anketa „PVC ili guma?", poziv na komentare).
+> Post je već dva puta poliran (11.07 — uklonjena izmišljena `aggregateRating`;
+> 30.07 — `.al-cta-box` + `.al-btn`).
+>
+> **Prava rupa je nesklad namere, ne prazan URL.** Upit dolazi od vlasnika
+> auto-servisa / mašinske / stolarske radionice (B2B, 80–600 m²), a dočeka ga
+> tekst o tuningu privatne garaže. Zato pozicija jeste 3,6 i CTR 7,6%, ali
+> kvalifikacije nema.
+>
+> **Susedi koje to povlači:**
+> - **16615** `/podovi-za-detailing-radionice-i-servise/` — drugi post na istu
+>   nameru, 3.500 zn., 46 GSC pogodaka.
+> - **16875** `/podovi-za-garaze/` — hub, trenutno **draft**; kad izađe (25.08)
+>   preuzima garažnu polovinu 5637 → 5637 treba suziti na čistu radionicu.
+> - `product_tag` **`namena-radionica` (term 265) već nosi 15 proizvoda** —
+>   auto-grid radi bez ijednog novog taga.
+>
+> **Zato akcija #1 nije „nova stranica" nego postupak sa rangiranim URL-om:**
+> (A) prepiši 5637 u mestu kao `post` · (B) konvertuj `post`→`page` uz isti ID i
+> slug pa izgradi punu namensku landing · (C) nova stranica + 301 sa 5637.
+> Preporuka Claude Code-a: **B**, jer URL i istorija ostaju netaknuti a stranica
+> tek kao `page` može da nosi grid proizvoda, cenovnu tabelu i FAQPage schema
+> (`_woodmart_title_off` ne radi za postove — F7.18). **C se ne preporučuje** —
+> 301 na rangiranom URL-u baš na dan migracije gomila rizik.
+>
+> 🟡 **M odluka 2026-08-19: ne radi se sada** (pred content freeze 20.08 i gate
+> 21.08). Ostaje kao post-live zadatak. #claude-code
 2. **Head-termin `industrijski podovi` (6.321 prikaz) curi.** CTR 2,6% na
    poziciji 7,2 — svaka poena pozicije i svaki procenat CTR-a ovde vredi više
    nego cela ESD niša po volumenu. Uzrok je skoro sigurno kombinacija pozicije i
@@ -267,7 +304,7 @@ i navođenja tuđih referenci (Siemens, Toyota, Lockheed…) kao da su naši kli
 
 | # | Akcija | Zašto (dokaz) | Trud |
 |---|---|---|---|
-| 1 | **Nova stranica „Podovi za radionice"** (`/podovi-za-radionice/`) sa cenovnim rasponom i tabelom po tipu radionice (auto, mašinska, stolarska) | ~4.700 prikaza / 275 klikova / poz. 3,5 bez namenske stranice | S |
+| 1 | **Nova stranica „Podovi za radionice"** (`/podovi-za-radionice/`) sa cenovnim rasponom i tabelom po tipu radionice (auto, mašinska, stolarska) | ~4.700 prikaza / 275 klikova / poz. 3,5 — 🔴 URL POSTOJI (blog post 5637, pogrešna namera), v. ispravku u §1.3 | S |
 | 2 | **Cenovni raspon na `/industrijski-podovi/`** („od X RSD/m²", tabela po debljini) + `cena po m2` odgovor-blok | 1.800+ prikaza čistog cenovnog intenta; dokaz da radi: `antistatik pod cena` CTR 23,5% | S |
 | 3 | **Tabela antistatik vs. ESD vs. elektroprovodljivo** na ESD stranici + FAQPage schema | Dominiramo na `antistatik*` (poz. 1,6–2,2) ali publiku ne kvalifikujemo | S |
 | 4 | **Prepisati title/meta za `industrijski podovi`** — ubaciti cenovni i „bez zaustavljanja proizvodnje" signal | 6.321 prikaz, CTR 2,6% na poz. 7,2 — najveće curenje u sekciji | XS |

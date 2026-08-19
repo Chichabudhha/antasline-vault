@@ -1,0 +1,76 @@
+## 1. OBIM — čitaj ISKLJUČIVO ove fajlove (apsolutne putanje)
+
+C:\Projekti\antasline-vault\seo\2026-08-18-istrazivanje-industrijski-podovi-esd.md
+C:\Projekti\antasline-vault\seo\2026-08-13-kanibalizacija-konsolidacija-plan.md
+C:\Projekti\antasline-vault\migracija\parity-inventar.csv
+C:\Projekti\antasline-vault\seo\plan-novih-stranica.md
+
+To je 4 fajla. NE pretražuj nijedan drugi folder, NE idi rekurzivno kroz
+C:\Users, NE otvaraj wp-config.php ni bilo koji folder sa kredencijalima.
+Ako fajl ne postoji — napiši "NEMA FAJLA" i idi dalje, ne traži zamenu.
+
+## 2. CILJ
+
+Odlučujemo šta da uradimo sa URL-om /podovi-za-radionice/ šest dana pre
+migracije sajta na produkciju (25.08.2026). Treba mi drugo mišljenje o riziku,
+ne izvršenje.
+
+## 3. ČINJENICE KOJE VEĆ ZNAMO (ne proveravaj ih, uzmi kao date)
+
+- Upit "podovi za radionice" i varijante = ~4.700 prikaza / ~275 klikova u GSC-u,
+  prosečna pozicija 3,5–7, CTR do 7,6%. To je najveći komercijalni upit u sekciji
+  "industrijski podovi".
+- URL /podovi-za-radionice/ POSTOJI i na live sajtu i na buildu. To je BLOG POST
+  (ID 5637), 7.138 znakova, naslov "Podovi za radionice i garaže: kad tvoj auto
+  zaslužuje bolje od običnog betona".
+- Sadržaj tog posta je šaljiv, hobi/potrošački, o uređenju privatne garaže
+  ("betonska pećina", "ne diraj moju policu", emoji, poziv na komentare).
+- Stvarna tražnja iza upita je B2B: auto-servisi, mašinske/CNC radionice,
+  stolarske radionice.
+- Postoji i drugi post: ID 16615 /podovi-za-detailing-radionice-i-servise/
+  (3.500 znakova, 46 GSC pogodaka).
+- Postoji draft stranica ID 16875 /podovi-za-garaze/ (hub za garaže, još nije
+  objavljena) i objavljen hub ID 16567 /industrijski-podovi/.
+- Postoji product_tag termin "namena-radionica" sa 15 proizvoda.
+
+## 4. ŠTA TRAŽIM — odgovori na 3 pitanja
+
+P1. Koja je od ove tri opcije najmanje rizična za zadržavanje pozicije 3,5 na
+    upitu "podovi za radionice" posle migracije, i zašto:
+    (A) prepiši sadržaj posta 5637 u mestu (ostaje post_type=post, URL isti)
+    (B) konvertuj 5637 iz post u page pa ga izgradi kao landing (URL isti)
+    (C) napravi novu stranicu na drugom slug-u i 301 sa 5637 na nju
+
+P2. Da li 16615 (detailing) treba spojiti u 5637 uz 301, ostaviti odvojen, ili
+    suziti? Obrazloži kroz intent, ne kroz volumen.
+
+P3. Kakav je odnos "radionica" i "garaža" sadržaja — treba li 5637 da zadrži
+    garažni deo ili da ga ustupi hubu 16875? Šta se dešava ako se 16875 objavi
+    istog dana kad i prepisan 5637?
+
+Pored toga: pretraži zadata 4 fajla i navedi SVAKI red/rečenicu koja se tiče
+kanibalizacije, konsolidacije ili "radionic*" — sa imenom fajla i brojem linije.
+Ključne reči za grep: radionic, kanibaliz, konsolidac, garaz, detailing,
+podovi-za-radionice, 5637, 16615, 16875.
+
+## 5. PRAVILA
+
+- Za svaku tvrdnju navedi izvor: ime fajla + broj linije. Bez izvora = ne piši.
+- Ako dva fajla protivreče jedan drugom — označi red sa KONFLIKT i citiraj oba.
+- NE izmišljaj brojeve, ID-eve, URL-ove ni datume. Ako ne znaš — napiši "nema podatka".
+- NE menjaj nijedan fajl. Samo čitaj i izveštavaj.
+- Na kraju obavezno napiši koliko si fajlova STVARNO otvorio. Nula otvorenih
+  fajlova znači da ti je pretraga neispravna, ne da je folder prazan.
+
+## 6. FORMAT IZLAZA
+
+Prvo tabela nalaza:
+
+| # | Fajl | Linija | Citat (skraćen) | Zašto je važno |
+
+Zatim tri odeljka: "P1 — odgovor", "P2 — odgovor", "P3 — odgovor".
+Svaki odeljak: preporuka u prvoj rečenici, pa obrazloženje, pa "Rizik:" red.
+
+Na kraju red: "Otvoreno fajlova: N".
+
+Jezik: srpski, ekavica. Bez uvoda i zaključka.
