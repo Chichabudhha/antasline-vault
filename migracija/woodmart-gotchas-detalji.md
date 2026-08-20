@@ -1,0 +1,942 @@
+---
+name: woodmart-gotchas-detalji
+description: Puna hronologija F7.x gotcha-a za WoodMart rebuild (ikonice, video fasada, footer/meni, CF7, layered nav, JSON-LD, mobile QA, dijagonalni rezovi, itd), 2026-07-07 do 2026-08-07. Izmešteno iz migracija/woodmart-sabloni.md 2026-08-20 (vault higijena) — kratak checklist + šabloni ostaju u woodmart-sabloni.md, ovaj fajl je duboka referenca za konkretan F7.X broj kad se citira.
+---
+
+# WoodMart rebuild — F7.x gotcha detalji (hronologija)
+
+> Kratak "OBAVEZNO prvo" checklist (već-viđeni bagovi, utility klase, šabloni) je
+> u [[migracija/woodmart-sabloni]] — ovaj fajl otvori samo kad treba konkretan
+> F7.X detalj (na njega se referencira iz dnevnika/ledger-a po broju) ili duži
+> istorijski kontekst jedne feature oblasti.
+
+## F7.2 — Icon set: namena + USP (2026-07-07)
+
+Dodato 12 novih SVG ikonica u `woodmart-child/images/icons/`, isti stil kao postojećih 6
+(viewBox `0 0 24 24`, `stroke="#F04D22"` width `1.7`, `stroke-linecap/linejoin="round"`, `fill="none"`):
+
+- **Namena** (prati F6 `namena-*` product_tag termine): `namena-magacin-hala`, `namena-radionica`,
+  `namena-sport-dvorana`, `namena-sportski-teren-otvoreni`, `namena-esd`, `namena-garaza`,
+  `namena-terasa`, `namena-stala`. Kad F6 dobije novi termin (novi proizvod pokriva namenu koje
+  nema) — nova ikonica se crta u istom stilu i dodaje ovde.
+- **USP dopuna**: `garancija`, `sertifikat`, `dostava`, `telefon-podrska` (brza montaža i nosivost
+  već pokriveni postojećim `montaza.svg` / `izdrzljivost.svg`).
+
+Upotreba — ista kao postojeće ikonice, `<img class="al-icon" src=".../images/icons/NAZIV.svg" alt="" />`
+unutar `.al-card__body`.
+
+## F7.3 — Video lite-embed fasada (2026-07-07)
+
+**Problem:** direktan YouTube iframe embed učitava YouTube JS/iframe odmah (loše za LCP/CWV).
+**Rešenje:** thumbnail + play dugme (fasada), iframe se kreira TEK na klik/Enter/Space.
+
+- CSS: `.al-video-facade` / `.al-video-facade__play` u `antas-design.css`
+- JS: **globalni fajl** `woodmart-child/js/al-video-facade.js`, enqueue-ovan u `functions.php`
+  (`in_footer=true`, `filemtime` verzionisanje) — **ne** vc_raw_html po stranici. Ovo zaobilazi
+  gotcha #9 (CLI skida vc_raw_html) u potpunosti jer nema inline `<script>` u post_content-u;
+  markup u sadržaju je čist HTML (div/img/button), bezbedan za `wp_insert_post` sa CLI-ja.
+- Event delegation na `document` (klik + tastatura) — radi za bilo koji broj fasada na stranici
+  bez dodatne inicijalizacije po elementu.
+- `youtube-nocookie.com` domen (privacy-enhanced embed).
+
+Markup obrazac (unutar `vc_column_text`, jedna linija):
+```html
+<div class="al-video-facade" data-yt-id="YOUTUBE_ID" data-title="Naslov videa" role="button" tabindex="0" aria-label="Pokreni video: ...">
+  <img src="https://i.ytimg.com/vi/YOUTUBE_ID/hqdefault.jpg" alt="..." loading="lazy" width="480" height="270" />
+  <button class="al-video-facade__play" aria-label="Pokreni video" type="button">&#9658;</button>
+</div>
+```
+
+`VideoObject` JSON-LD ide kroz isti `vc_raw_html` base64 postupak kao FAQPage (gotcha #8/#9) —
+`name`/`thumbnailUrl`/`embedUrl` iz potvrđenih izvora (YouTube oEmbed API,
+`https://www.youtube.com/oembed?url=...&format=json`, bez auth). **`uploadDate` se izostavlja
+ako nije potvrđen** (ne izmišljati) — smanjuje rich-result eligibility ali ne krši tvrdo pravilo.
+
+**Video izvor**: PRVO proveri postoji li već pravi Ecotile/Bergo/Ergomat zvanični video
+(WebSearch, `allowed_domains: youtube.com,<brend>.com`) — potvrdi da radi preko oEmbed pre
+upotrebe (stari linkovi lako postanu privatni/obrisani, video 4-dNngajiCY iz starog lokalnog
+posta 3318 je npr. sad "Forbidden" na oEmbed-u — ne koristiti ga ponovo dok se ne proveri).
+
+Pilot: `/antistatik-i-elektroprovodljivi-podovi/` (ID 16658) — zvanično Ecotile "ESD Flooring -
+How to install" (kanal ecotile-Germany, potvrđeno oEmbed-om).
+
+### F7.3a — `VideoObject` JSON-LD se IZVODI iz fasade, ne upisuje po stranici (2026-08-10)
+
+Rank Math (besplatan, 1.0.275) **nema Video modul** — provereno i u
+`rank_math_modules` i na disku (`includes/modules/`, 23 modula, video nije među
+njima). Schema mora ručno.
+
+**Rešenje:** `woodmart-child/inc/al-video-schema.php` (require iz `functions.php`).
+Na `wp_footer` (prio 5, samo `is_singular()`) skenira `post_content` za
+`data-yt-id="…"`, dedupe-uje ID-eve i emituje `VideoObject` iz mape potvrđenih
+metapodataka. Jedan video → objekat, više → `@graph`.
+
+**Zašto ovako, a ne base64/`vc_raw_html` po stranici** (kako je F7.3 prvobitno
+predviđao): nula izmena u bazi — dakle nema kses (F7.15), nema `wpautop`
+artefakata (F7.20c), nema backup rizika; svih 9 postojećih stranica pokriveno
+jednim fajlom, a svaka buduća fasada radi čim joj se ID doda u mapu.
+
+🔴 **Tvrdo pravilo ugrađeno u kod:** ID koji nije u mapi **se preskače**.
+`uploadDate` i `duration` dolaze isključivo sa javne `youtube.com/watch`
+stranice (`ytInitialPlayerResponse` → `videoDetails` + `microformat.publishDate`),
+nikad iz procene. Ako video nema opis na YouTube-u, opis se izvodi **samo iz
+naslova i kanala** (npr. „Uputstvo proizvođača Bergo za ugradnju…") — nikad
+tvrdnja o onome što se u videu vidi.
+
+- `thumbnailUrl`: `maxresdefault.jpg` (1280×720) samo ako stvarno postoji —
+  provereno HTTP kodom po ID-u (6/8 ima, 2 imaju samo `hqdefault`); `hqdefault`
+  se uvek navodi kao drugi element niza.
+- `embedUrl` koristi `youtube-nocookie.com`, isti domen kao `al-video-facade.js`.
+- Provereno uživo: iframe se i dalje kreira **tek na klik** (0 youtube zahteva
+  pre klika), `is-playing` klasa radi, na strani su tačno 2 ld+json bloka
+  (Rank Math `@graph` + naš `VideoObject`) — bez dupliranja.
+
+⚠️ **Gotcha pri verifikaciji:** 4 od 9 stranica sa fasadom su **child stranice**
+(`/spoljnje-podne-obloge/bergo-*`) — na flat slugu vraćaju 301 i provera lažno
+prijavi „nema schema-e". Uvek uzeti `get_permalink()`, ne slug (isto pravilo
+kao `post_parent` provera pre linkovanja).
+
+## F7.4 — "antas-skica" stil (2026-07-07)
+
+Standard za tehničke ilustracije (presek slojeva, dimenzije, koraci montaže):
+- Linije: navy `#0E2950` za strukturu/dimenzije, crvena `#F04D22`/`#D43C14` samo za akcenat
+  (npr. statički elektricitet, upozorenje) — nikad kao glavna linija
+- Debljina: 2px za glavne konture, 1px za pomoćne/dimenzione linije, dashed za skrivene/unutrašnje
+  detalje (npr. čelična vlakna u ploči)
+- Font: Inter (`var(--al-text)`) za sve labele, 11–13px
+- Pozadina: transparent/bela — nema fill osim svetlih tokena (`--al-mist`, `--al-paper`) za slojeve
+- Dimenzione linije: tanka linija + kratke poprečne "tick" linije na krajevima + tekst pored
+- CSS klasa `.al-skica` (font-family + `max-width:100%; height:auto`) u `antas-design.css`
+- Fajlovi u `woodmart-child/images/skice/` (odvojeno od `icons/`)
+- Ubacivanje: inline SVG direktno u `post_content` (ne `<img>` fajl) da ostane skalabilno i da
+  labele nasleđuju font stranice — čitaj fajl i `str_replace(["\r","\n","\t"], '', $svg)` pre
+  ubacivanja u shortcode string (spreči wpautop da razbije markup, ista logika kao gotcha #1)
+
+Pilot primer: `esd-pod-presek-slojeva.svg` — presek ESD poda (betonska podloga → 7mm ESD ploča
+sa čeličnim vlaknima → uzemljenje), korišćen na `/antistatik-i-elektroprovodljivi-podovi/`.
+
+### 🔴 F7.4a — skice se GENERIŠU iz konstante razmere, ne crtaju „na oko" (2026-07-28)
+
+Skica FIBA terena na `/dimenzije-kosarkaskog-terena/` (16586) je preživela sve standardne
+provere (200, 1×H1, JSON-LD, mobilni) i **izgledala je kao teren za košarku** — a imala je
+pet grubih grešaka: linija za 3 poena crtana kao **Bézier parabola** (`Q` kontrolna tačka)
+umesto luka r=6,75 m sa pravim delovima u uglovima; reket širok 7,37 m umesto 4,90 m;
+centralni krug i krug slobodnih bacanja 2,36 m umesto 1,80 m; koš na 0,66 m od osnovne
+linije umesto 1,575 m; table uopšte nije bilo. Prijavio Miroslav, ne verifikacija.
+
+**Pravilo**: svaka `antas-skica` sa realnim merama piše se kao **generator**, ne kao ručni
+SVG string — jedna konstanta `$s` (px po metru), pa je svaka koordinata `metri * $s`.
+Izvedene tačke se računaju, ne procenjuju (npr. gde prava u uglu dodiruje luk za 3 poena:
+`dx = sqrt($r3*$r3 - $dy*$dy)`). Skripta na kraju ispiše sve mere nazad u metrima radi kontrole.
+
+**Obavezna dodatna provera** (standardni HTTP/H1/schema set je NE hvata) — premeriti iz
+renderovanog DOM-a nazad u metre i uporediti sa tabelom na istoj stranici:
+
+```js
+const s=13.5, svg=document.querySelector('svg.al-skica');
+[...svg.querySelectorAll('rect')].map(r=>[r.getAttribute('width')/s, r.getAttribute('height')/s]);
+[...svg.querySelectorAll('circle')].map(c=>c.getAttribute('r')/s);
+[...svg.querySelectorAll('path')].some(p=>/[QqCc]/.test(p.getAttribute('d'))); // mora biti false
+```
+
+Ako stranica ima tabelu mera, skica i tabela **moraju da se slažu do 2 decimale** — tabela je
+izvor istine, skica je njena ilustracija.
+
+## F7.5 — Performanse-ograda (2026-07-07)
+
+Svi F7 dodaci na pilot stranici (antistatik): ikonice ~250–400B/kom, JS fasada 972B (footer,
+deferred), inline skica ~2,4KB (vektor, bez dodatnog HTTP zahteva), video iframe se NE učitava
+dok se ne klikne (potvrđeno — HTML odgovor ne sadrži `<iframe>`, samo `<img loading="lazy">` +
+dugme). ⚠️ **Lighthouse CLI nije dostupan u ovom okruženju** (`npx lighthouse` traži instalaciju) —
+pun pre/posle LCP test ostaje za W3 3.5 (Lighthouse baseline sesija na celom buildu), gde će
+imati pravi alat i baseline za poređenje. Proxy provera (veličina fajlova + deferred loading)
+ne pokazuje regresiju.
+
+## F7.6 — Reusable PHP helper pattern za nove stranice (2026-07-08)
+
+Kad se gradi više stranica u istoj sesiji (npr. #13-#18), isplati se jedan `al-helpers.php` u scratchpad-u
+(ne perzistira između sesija — samo napraviti ponovo po ovom obrascu) sa:
+- `al_faq_jsonld($pairs)` — prima asocijativni niz pitanje→odgovor, vraća gotov `[vc_raw_html]...[/vc_raw_html]`
+  blok (base64(rawurlencode(JSON-LD script))) — zamenjuje ručno pisanje/enkodovanje po stranici
+- `al_update_content($id, $content)` — `$wpdb->update` + `clean_post_cache()` + brisanje
+  `wpgs_yoast_indexable` reda (obavezno posle svake programske izmene `post_content`/meta, gotcha #12)
+- `al_set_page($id, $title, $metadesc)` — postavlja `_woodmart_main_layout=full-width`,
+  `_woodmart_title_off=on`, **Rank Math** title/metadesc (`rank_math_title` /
+  `rank_math_description`) u jednom pozivu — 🔴 od 05.08 **ne** `_yoast_wpseo_*`
+  (M odluka 13.08, v. [[CLAUDE]] §7.1); upis u Yoast ključeve se tiho ne renderuje
+
+Svaka nova stranica: `wp_insert_post()` sa praznim `post_content` (dobija ID), zatim `al_update_content()`
+sa punim sadržajem (izbegava gotcha #9 — CLI insert/update briše `[vc_raw_html]`).
+
+## F6 troslojni model — potvrđen van pilota (2026-07-08)
+
+Drugi primer posle kosarkaske-konstrukcije pilota: `/industrijski-podovi/bumperi-zastita-za-police-regale-i-zidove/`
+— 19 postojećih Ergomat bumper proizvoda već direktno u Woo kategoriji `Zaštita i Bumperi` (term_id 245, ne
+poseban `namena-*` tag), pa je `[woodmart_products taxonomies="245" ...]` radio bez ikakve pripreme taksonomije.
+Kad namenska landing tačno odgovara postojećoj Woo kategoriji (ne poduzorku preko namena-taga), koristiti
+`taxonomies="<product_cat term_id>"` direktno — ne izmišljati novi `namena-*` tag ako nije potreban.
+Cross-link u oba smera i dalje obavezan (kategorija je Layout Builder `woodmart_layout` CPT — v. dnevnik
+"10 WooCommerce kategorija", term_id 245-254, str_replace na postojeći pasus, ne novi red).
+
+## F7.7 — Footer + glavni meni (W1 1.4/1.5, 2026-07-08)
+
+**Meni**: default lokalni `main-menu` (term_id 67) je imao samo 4 flat stavke (Početna/O nama/Aktuelnosti/Kontakt) —
+Figma odluka "5 kategorija" (gotcha #6) nikad nije izvedena. Live WebFetch je izvor istine za punu strukturu
+(Sport/Terase i dom/Industrija/Poslovni prostori/Specijalni podovi, ~34 podstavke, 1 pod-podstavka pod
+"Oprema za sportske terene" → "Košarkaške konstrukcije"). Rebuild preko `wp_update_nav_menu_item()`
+(NE direktan SQL insert — hendluje `_menu_item_*` meta i `menu-item-parent-id` hijerarhiju ispravno):
+
+```php
+wp_update_nav_menu_item( $menu_id, 0, array(
+    'menu-item-title'     => 'Naslov',
+    'menu-item-object-id' => $post_id,       // ili term_id za taxonomy tip
+    'menu-item-object'    => 'page',         // 'post' / 'product' / 'product_cat' itd.
+    'menu-item-type'      => 'post_type',    // 'taxonomy' za kategorije
+    'menu-item-parent-id' => $parent_item_id, // 0 = top level, inače povratna vrednost roditeljskog poziva
+    'menu-item-position'  => $order,
+    'menu-item-status'    => 'publish',
+) );
+```
+
+Pre upisa: potvrditi da SVI target slug-ovi postoje lokalno (`SELECT ID, post_name, post_parent FROM
+wp_posts WHERE post_name IN (...)`) — u ovoj sesiji svih ~34 URL-a je već postojalo (W1 1.2 red čekanja
+zatvoren ranije), nula 404.
+
+**Footer** — WoodMart footer je "kolona = zasebna sidebar" model, ne jedna sidebar sa auto-raspoređivanjem:
+
+- `sidebar-footer.php` zove `dynamic_sidebar('footer-' . $index)` PO KOLONI. Broj kolona dolazi iz
+  `woodmart_get_opt('footer-layout')` (default `13` = pet kolona) → `footer-1` ... `footer-5` sidebar-ovi
+  se registruju dinamički u `theme-setup.php`. Widgeti se raspoređuju preko
+  `sidebars_widgets['footer-N'] = array('widget-id')` — SVE u `footer-1` = sve u prvu kolonu, ostale prazne
+  (prva pogrešna pretpostavka ove sesije).
+- Postojeći NEAKTIVNI widgeti (`wp_inactive_widgets`) često nose prave stare podatke iz teme/migracije
+  pre WoodMart-a (`follow-us-widget-2` je već imao tačne social linkove, `custom_html-3` "Kontaktirajte nas"
+  tačan telefon) — proveriti `get_option('widget_<type>')` PRE pisanja novog sadržaja, reaktivacija je brža
+  i manje rizična od pisanja ispočetka.
+- Bela varijanta logoa: swap svih obojenih/teget `fill="#..."` na `#FFFFFF`, I OBRNUTO originalni
+  `fill="#ffffff"` (negative-space cutout unutar mark-a) na navy — replicira identičan optički efekat
+  (pozadina "proviruje" kroz cutout) na tamnoj pozadini kao original na svetloj.
+
+### 🔴 KRITIČAN gotcha — `xts-woodmart-options` je SVE-ILI-NIŠTA, ne merge
+
+WoodMart-ov `XTS\Admin\Modules\Options::load_options()` radi `self::$_options = get_option('xts-woodmart-options')`
+— **REPLACE, ne merge** — svaki put kad je ta DB opcija truthy (neprazna). `load_defaults()` (koji puni SVIH
+~883 registrovanih polja default vrednostima) se izvršava PRE toga (`init` prioritet 100 vs 110) i ostaje
+netaknut SAMO ako je opcija prazna/falsy. Direktan `update_option('xts-woodmart-options', ['moj_kljuc' => 'x'])`
+sa par ključeva BRIŠE sve ostale default-e (npr. `disable_footer`, `disable_copyrights`, `footer-layout`) —
+`footer.php` čita te ključeve BEZ default argumenta u `woodmart_get_opt()` pozivu, pa missing = `false` =
+**ceo `<footer>` element se tiho renderuje prazan** (ni copyrights bar). Nema PHP greške, nema warning-a —
+samo nestane sadržaj.
+
+**Pravilan postupak za izmenu bilo kog WoodMart theme option-a preko koda (ne UI):**
+1. Napraviti privremeni `wp-content/mu-plugins/zz-fix-TEMP.php` (MORA biti mu-plugin — `init` hook mora da se
+   zakači PRE `wp-load.php` završi bootstrap, obično CLI skripta sa `require wp-load.php` na vrhu je već
+   prekasno jer se `init` odradi TOKOM tog require-a)
+2. U mu-pluginu: `add_action('init', function(){ $defaults = \XTS\Admin\Modules\Options::get_options();
+   $full = array_merge($defaults, $moji_override_kljucevi); update_option('xts-woodmart-options', $full); }, 105);`
+   (prioritet 105 = između `load_defaults`@100 i `load_options`@110, hvata pun default niz pre nego što se
+   prepiše). **⚠️ Dopuna 2026-07-10: koristiti TROSMERNU merge** — `array_merge($defaults,
+   get_option('xts-woodmart-options') ?: [], $overrides)` — jer na 105 `get_options()` vraća SAMO
+   default-e (DB kastomizacije se učitavaju tek na 110), pa dvosmerna merge gubi sve ranije izmene
+   (footer, boje...). Trosmerna verzija verifikovana (futer preživeo 2 uzastopne izmene opcija).
+3. Pokrenuti JEDAN normalan front-end request (curl na bilo koju stranicu) da se mu-plugin izvrši
+4. Obrisati mu-plugin fajl odmah
+
+**Drugi keš sloj — CSS se NE regeneriše automatski posle `update_option`:** WoodMart generisani CSS iz
+theme opcija (uključujući `.wd-footer{background-color:...}` iz `footer-bar-bg` polja) je keširan preko
+`XTS\Modules\Styles_Storage` (data_name `theme_settings_default`), status `xts-theme_settings_default-status`
+mora biti `'valid'` DA BI SE KORISTIO keš — invalidacija normalno ide preko `xts_after_theme_settings` action-a
+koji ima guard (`$_GET['settings-updated']`/`$_GET['page']`) i ne okida se van pravog admin-save HTTP zahteva.
+Fix: `(new \XTS\Modules\Styles_Storage('theme_settings_default'))->reset_data(); ->delete_css();` — sledeći
+front-end request automatski regeneriše CSS iz trenutnih opcija (`print_styles()` na `wp` hook proverava
+`is_css_exists()` i piše svež CSS ako je false).
+
+## F7.8 — Footer/meni polish krug (2026-07-08, nastavak F7.7)
+
+Pet vizuelnih ispravki posle prve footer/meni verzije — sve rešeno u istoj sesiji:
+
+- **Bela linija ispod poslednje sekcije**: `main.wd-content-layout` nosi sitewide `padding-bottom:40px`
+  (WoodMart default) — nevidljivo na belim/mist završecima, otkriveno kad stranica završava
+  `al-section--navy` CTA-om. Fix: `main.wd-content-layout:has(.al-section) { padding-bottom: 0; }`
+  (scoped preko `:has()` na stranice koje koriste naš sistem, ne dira default Woo/blog stranice).
+- **Ikonice u sadržaju treba da prate `al-icon` stil** (isti stroke/viewBox kao USP kartice), ne generičke
+  Porto/tuđe SVG-ove zaostale iz starih widget-a. Za inline icon+tekst (ne card layout) koristiti
+  `.al-icon--sm` (20px, `display:inline-block`) — bazni `.al-icon` je `display:block` 46px sa
+  `margin-bottom`, lomi inline layout ako se ne override-uje.
+- **Social ikonice — koristiti WoodMart-ov native `[social_buttons]` shortcode**
+  (`woodmart_shortcode_social()`, `inc/shortcodes/social.php`), NE custom pill-dugmad/SVG. Primer:
+  ```php
+  do_shortcode('[social_buttons type="follow" social_links_source="custom" style="default" form="circle" color="light" fb_link="..." isntagram_link="..." linkedin_link="..." pinterest_link="..."]');
+  ```
+  (pažnja: parametar je `isntagram_link`, tipfeler ugrađen u temu, ne popravljati). Renderuje prave
+  icon-font glyph-ove iz `woodmart-font` seta. **Mora se pre-renderovati preko `do_shortcode()` i snimiti
+  kao statičan HTML** ako ide u `custom_html` widget — taj widget tip namerno NE prolazi kroz
+  `do_shortcode()` (WP core sigurnosna odluka). Brend boje se override-uju preko istih CSS custom
+  properties koje shortcode koristi (`--wd-social-color/-bg/-brd-color[-hover]`), scope-ovano na
+  wrapper klasu (npr. `.wd-footer .wd-social-icons`).
+- **Sticky header cramping = simptom, ne uzrok** — ako se sticky header čini "preuzak", prvo proveriti da
+  li se glavni meni prelama u 2 reda (čak i u ne-sticky stanju) pre nego što se diže `sticky_height`.
+  Uzrok je često prezasićen `mainmenu` (previše top-level stavki/dugih reči na 1222px kontejneru) — rešiti
+  raspodelu stavki (v. sledeća stavka) PRE podešavanja visine. `--nav-gap` na `.wd-nav` (default 20px)
+  je prvi lako podesiv parametar da se dobije još prostora bez sečenja stavki.
+- **Sekundarni/utility meni (odvojen od glavnog kategorija-menija)**: header builder `Menu` element
+  (razlikuje se od `Mainmenu`) prima `menu_id` DIREKTNO (ne zavisi od theme `nav_menu_locations`), pa
+  se može ubaciti bilo koji WP meni (`wp_create_nav_menu()`) u bilo koju header-builder kolonu
+  (`'type' => 'menu', 'params' => ['menu_id' => ['value' => $term_id, 'type' => 'select'], ...]`).
+  Koristiti za "gornji red" utility linkove (Početna/O nama/Kontakt/Aktuelnosti) odvojeno od glavnog
+  kategorija-menija u `general-header` redu. 🔴 **Mobile parity**: ako je top-bar/kolona gde utility meni
+  živi markirana `hide_mobile: true`, taj meni je NEVIDLJIV na mobilnom — dodati isti sadržaj (linkovi) i u
+  `mobile-menu-widgets` sidebar (postojeća WoodMart oblast "Area after the mobile menu", obično prazna).
+- 🔴 **Header builder CSS keš je ODVOJEN od theme options keša** (v. F7.7 `xts-woodmart-options` gotcha) —
+  isti `XTS\Modules\Styles_Storage` mehanizam, ali drugi `data_name`: `default_header` (ne
+  `theme_settings_default`). Izmena `sticky_height`/bilo čega u `woodmart_default_header_structure`
+  filteru se ne pojavljuje dok se ne resetuje:
+  ```php
+  (new \XTS\Modules\Styles_Storage('default_header'))->reset_data();
+  (new \XTS\Modules\Styles_Storage('default_header'))->delete_css();
+  ```
+
+## F7.9 — CF7 + katalog režim gotcha-i (2026-07-08, polish Faza 0)
+
+- 🔴 **CF7 čita formu iz `_form` POSTMETA, ne iz `post_content`** (isto: mail iz `_mail`,
+  poruke iz `_messages`). Programski kreirana forma upisom samo u `post_content` se renderuje
+  PRAZNA (samo hidden polja) i mail nikad ne odlazi — bez greške, bez warning-a. Pravi način:
+  `WPCF7_ContactForm::get_instance($id)` → `get_properties()` → izmena → `set_properties()` →
+  `save()` (save sinhronizuje i post_content).
+- 🔴 **CF7 tag gramatika: `[tip ime OPCIJE... "VREDNOSTI"...]`** — sve opcije MORAJU pre
+  quoted vrednosti; opcija posle quoted vrednosti (`placeholder "X" autocomplete:tel`) obara
+  ceo tag (renderuje se kao goli tekst). Opcije koriste dvotačku (`autocomplete:tel`,
+  `default:get`), NIKAD HTML-atribut sintaksu (`autocomplete="tel"` — znak `="` takođe obara
+  tag). Ispravno: `[text* ime autocomplete:tel default:get placeholder "Tekst"]`.
+- **CF7 prefill iz URL-a**: opcija `default:get` na polju → vrednost iz GET parametra sa
+  ISTIM imenom kao polje (`?form-naslov=...`). Koristi se za "Zatražite ponudu" tok sa
+  proizvoda (`add_query_arg('form-naslov', rawurlencode('Ponuda: '.$product->get_name()), ...)`).
+- **`wpcf7_mail_sent` PHP hook NE može da echo-uje `<script>` ka posetiocu** — izvršava se u
+  AJAX/REST kontekstu, output se odbacuje (ili kvari JSON odgovor). Za post-submit ponašanje
+  (redirect, tracking) koristiti front-end `document.addEventListener('wpcf7mailsent', ...)`
+  kroz `wp_footer`.
+- **WoodMart `catalog_mode`** (theme option): skida add-to-cart sa loop-a i single-a +
+  redirektuje cart/checkout na home. NE skida compare/wishlist/reviews — to su odvojene
+  opcije (`compare`, `compare_on_grid`, `wishlist`, `product_loop_wishlist`,
+  `enable_reviews_tab` + WC `woocommerce_enable_reviews`). Prazan "Shipping & Delivery" tab
+  dolazi iz `additional_tab_title` default vrednosti — isprazniti title da nestane. Sve kroz
+  mu-plugin merge postupak (F7.7).
+- **"Zatražite ponudu" CTA na proizvodu**: `woocommerce_single_product_summary` prioritet 30
+  (= tačna pozicija uklonjenog add-to-cart dugmeta). `.al-btn--ghost` je bele boje — na beloj
+  proizvod stranici nevidljiv, treba navy override (`.al-product-quote .al-btn--ghost`).
+- 🔴 **Shop stranica ne nastaje sama**: `woocommerce_shop_page_id` može da pokazuje na
+  nepostojeći post (ovde 1614 iz starog importa) → shop URL 404 bez ikakve greške u adminu.
+  Fix: kreirati stranicu, `update_option('woocommerce_shop_page_id', $id)`,
+  `flush_rewrite_rules(true)`. Lokalno: `/katalog/` = ID 16736.
+- **Sticky toolbar custom linkovi**: `sticky_toolbar_fields` prima `link_1`..`link_5`
+  (svaki ima `link_N_url`/`link_N_text`/`link_N_icon` opcije) — pun srpski tekst i `tel:` URL
+  rade. Bez attachment ikonice span `.wd-tools-icon` ostaje prazan → ikonica preko CSS
+  `background-image` na `.wd-toolbar-link-N .wd-tools-icon` (child `images/icons/` SVG-ovi).
+
+## F7.10 — Brzi upit / dinamička forma gotcha-i (2026-07-09)
+
+Puna strategija i uputstvo: [[migracija/brzi-upit-forma]]. Ovde samo gotcha-i:
+
+- 🔴 **CF7 `[_post_title]`/`[_post_url]` mail tagovi rade SAMO kad je forma renderovana
+  `in_the_loop()`** — CF7 tada upisuje hidden `_wpcf7_container_post` = get_the_ID()
+  (`contact-form.php:719`); van loop-a (npr. `wp_footer`) container = 0 i tagovi se
+  resolve-uju u PRAZAN string (bez greške). Za sitewide ubacivanje forme: `the_content`
+  filter **prio 12** (posle wpautop@10/do_shortcode@11; sopstveni markup + ručni
+  `do_shortcode()` na CF7 shortcode — ne prolazi wpautop).
+- 🔴 **`wpcf7mailsent` se NE okida ako `wp_mail` ne uspe** (→ `wpcf7mailfailed`) — na XAMPP-u
+  bez SMTP-a redirect na hvala stranicu deluje "pokvareno" a problem je mail transport.
+  Lokalni fix: mu-plugin `pre_wp_mail` logger (`al-local-mail-log.php`) koji vraća `true` i
+  loguje u `wp-content/mail-log.txt` — bolji od `wpcf7_skip_mail` jer se mail template
+  KOMPAJLIRA pa se vidi resolve special tagova. ⚠️ OBRISATI pre produkcije.
+- **`form-row`/`form-col-6` klase u CF7 markupu do 2026-07-09 NISU imale CSS nigde** —
+  stilizovano u `antas-design.css` (`.wpcf7 .form-row` flex + `flex: 1 1 240px` kolone =
+  auto-stack na mobilnom bez media query-ja).
+- **`scrollIntoView({behavior:'smooth'})` se ne animira u automatizovanom Chrome tabu**
+  (rAF ne radi u nefokusiranom tabu) — ista familija kao `loading="lazy"` nalaz (F7 P4).
+  Instant varijanta dokazuje tačan target; smooth radi za pravog korisnika.
+- 🔴 **Woo permalink opcija + `flush_rewrite_rules(true)` u ISTOM PHP procesu ne radi** —
+  taksonomija se registruje na `init` sa STAROM vrednošću opcije, pa flush upiše stara
+  pravila (bez greške; simptom: novi URL-ovi 404, stari i dalje 200). Fix: flush u SVEŽEM
+  procesu/requestu posle izmene opcije. (Nađeno pri `tag_base` → `oznaka-proizvoda` fixu.)
+- 🔴 **CF7 mail_2 (auto-reply) čini email polje faktički OBAVEZNIM** — mail_2 recipient
+  `[form-email]` sa praznim poljem obara CEO submit u `mail_failed` (nema redirecta na
+  hvala stranicu, nema konverzije). CF7 nema uslovno slanje mail_2 → `[email* ...]`.
+- 🔴 **`woodmart_products` shortcode upisuje kolone kao INLINE stil** (`--wd-col-lg:3` na
+  grid elementu) — CSS override kolona mora `!important`:
+  `.wd-products.grid-columns-3 { --wd-col-lg: 4 !important; }`.
+- **`wd-more-desc` hover blok se izliva van kartice** — WoodMart base hover na hover
+  prikazuje sirovi `post_content` excerpt u absolute fade bloku koji se širi ISPOD kartice
+  preko sledećeg reda (naročito ružno dok su opisi blok teksta, pre polish Faze 1).
+  Ugašeno globalno: `.wd-product .wd-more-desc { display: none; }`.
+- **Full-bleed sekcija iz `the_content` konteksta**: viewport breakout
+  `width:100vw; margin-left:calc(50% - 50vw)` radi SAMO kad je content kolona centrirana
+  u viewportu — na layoutu sa sidebar-om (blog postovi) breakout je iskošen (levo iseče,
+  desno rupa). Fix: `body:has(.sidebar-container)` override vraća blok u kolonu.
+  Stranice (page) nemaju `.sidebar-container` u DOM-u uopšte, postovi imaju — pouzdan uslov.
+- 🔴 **base.css `:is(.entry-content, ...) > :where(:last-child) { margin-bottom: 0 }` gazi
+  al-diag negativni margin-bottom** kad je diag sekcija POSLEDNJE dete entry-content-a —
+  `:is()` nosi specifičnost najspecifičnijeg argumenta (ovde `.is-layout-constrained >
+  .wp-block-group__inner-container` = 0,2,0), pa dvoklas selektor gubi na kasnijem redu
+  učitavanja. Simptom: bela traka visine --al-cut između sekcije i futera. Fix: selektor
+  sa TRI klase (npr. `.al-section.al-diag-top.al-quick-quote`). Diag u shorthand sudaru:
+  `padding` shorthand kasnijeg pravila gazi `padding-top` iz `.al-diag-top` — cut se mora
+  uračunati u sopstveni padding-top.
+
+## F7.11 — Shop filteri (layered nav) gotcha-i (2026-07-10, polish Faza 1 #8)
+
+- **Mehanika**: opcija `shop_filters='1'` (mu-plugin merge, F7.7) prikazuje "Filters" dugme na shop
+  toolbaru; klik otvara `filters-area` sidebar (`dynamic_sidebar('filters-area')`) iznad grida.
+  Widget: `WOODMART WooCommerce Layered Nav` (id_base `woodmart-woocommerce-layered-nav`), instanca:
+  `title`, `attribute` (slug BEZ `pa_`), `category:['all']`, `query_type` (and/or), `display:'list'`,
+  `labels/tooltips/checkboxes`, `search_by_filters`. Widget se renderuje samo na `is_shop()`/product
+  taksonomijama i sakriva termine bez proizvoda u tekućem prikazu.
+- 🔴 **WoodMart AUTO ubacuje "Sort by" i Price filter widgete** u filters-area čim je `shop_filters`
+  uključen (`woodmart_before_filters_widgets` hook) — sa Price/Rating opcijama koje u katalog režimu
+  nemaju smisla. Gase se theme opcijama `hide_sort_by='1'` + `hide_price_filter='1'`. Posledica
+  gašenja: default WC sort dropdown se vraća u toolbar (lokalizovan, prihvatljivo).
+- 🔴 **WC `wc_product_attributes_lookup` tabela je STALE posle direktnih `wp_set_object_terms` upisa**
+  (`woocommerce_attribute_lookup_enabled=yes` — Filterer iz nje računa brojeve uz filtere; sinhronizuje
+  se samo na pravi product save). Fix posle svakog programskog dodeljivanja pa_ termina:
+  `wc_get_container()->get(LookupDataStore::class)->create_data_for_product($product)` po proizvodu
+  + obrisati `_transient_wc_layered_nav_counts_*`. (Ovde: 113→413 redova.)
+- ✅ **REŠENO 2026-07-10 — Filteri na kategorijama**: WoodMart ima gotove layout shortcode-ove
+  `[woodmart_shop_archive_filters_area_btn]` (dugme, poziva `woodmart_filter_buttons`) i
+  `[woodmart_shop_archive_filters_area]` (oblast, poziva `woodmart_shop_filters_area`) — definisani u
+  `inc/modules/layouts/wpb/shortcodes/shop-archive/`. Ubačeni bez atributa neposredno PRE
+  `[woodmart_shop_archive_products]` u svih 10 layouta (16571–16580) — rade jer je `shop_filters=1`
+  već upaljen, widgeti u `filters-area` imaju `category:['all']`, a layered-nav sam krije termine
+  bez proizvoda u tekućoj kategoriji.
+
+## F7.12 — Faza 2 (postovi) + mobile QA lekcije (2026-07-10)
+
+- 🔴 **F3 reimport ostavlja DUPLE postmeta redove šire nego što se znalo** — na 2542 nađen 4×
+  `_thumbnail_id` (ranije već dedupe-ovan Yoast na 2542/4318). Pri svakom Faza 2 restyle-u:
+  `SELECT meta_key, COUNT(*) ... GROUP BY meta_key HAVING COUNT(*)>1` pa dedupe.
+- 🔴 **Goli FAQPage JSON-LD (bez `<script>` taga) je OBRAZAC, ne izolovan bug** — potvrđen na
+  odbojci (W2 #9) i na conquest 2542: JSON stoji kao vidljiv tekst na dnu posta, wpautop ga
+  mangle-uje, schema ne radi. Proveriti na svakom reimportovanom postu: `strpos(post_content,
+  '"@context"')` bez okolnog `<script`.
+- **Linkovi na `https://www.antasline.com/...` u reimportovanim postovima** → zameniti lokalnim
+  (parity; na migraciji URL replace vraća produkcioni domen).
+- **`.single-post .wd-sidebar-opener` sakriven** (antas-design.css) — WoodMart fixed burger za blog
+  sidebar lebdeo preko teksta na mobilnom; sidebar drži samo default widgete.
+- **Neprevedeni WoodMart stringovi** ("Continue reading", "Categories") → `gettext_woodmart` filter
+  u child functions.php (mapa string→prevod), ne .po fajl.
+- **Mobile QA metod**: Chrome `resize_window` NE menja viewport (window manager ignoriše) →
+  same-origin **iframe širine 390px** u praznom tabu; media queries u iframe-u reaguju na širinu
+  iframe-a. Automatski smoke po stranicama: `scrollWidth>390` (h-overflow), broj `<h1>`, slomljene
+  slike (`img.complete && naturalWidth===0`); `lazy.svg` unosi su WoodMart lazy placeholder, ne greška.
+  🔴 **Ograničenje uočeno 2026-07-29**: iframe harness je pouzdan za layout/overflow proveru (čista
+  geometrija), ali može dati **lažnu vizuelnu uzbunu za TEKST** — na `/sportske-podloge/sportski-podovi-
+  za-teniske-terene/` je H1 (Bebas Neue, 4 reda na 390px) u iframe screenshotu izgledao teško preklopljen,
+  a direktna navigacija na istu URL (bez iframe-a, pun viewport) pokazala savršeno čist tekst. Uzrok je
+  render glitch samog nested-iframe + custom webfont paint-a u ovom Chrome automation okruženju, ne pravi
+  bug. **Pravilo:** sumnjiv TEKST nalaz iz iframe screenshot-a → pre prijave kao bug, potvrditi direktnom
+  navigacijom (bez iframe-a) na istu URL, po mogućstvu i na širem viewport-u gde tekst i dalje ide u više
+  redova. Automatski JS sken (scrollWidth/H1 count/broken images) ostaje pouzdan bez ove provere.
+- 2 posta su u kategoriji НЕКАТЕГОРИЗОВАНО (term 64) — vidljivo kao ćirilični bedž na home blog
+  karticama; dodeliti prave kategorije tokom Faza 2 batch-a.
+- 🔴 **Goli JSON-LD može biti i LAŽNA Review schema** (2298: izmišljena recenzija "Sava Marković"
+  5/5 kao vidljiv tekst na vrhu posta) — takve se UKLANJAJU u potpunosti, ne pakuju u script tag
+  (fabricated review = Google spam policy + "ne izmišljati" pravilo). FAQPage/legit scheme → script tag.
+- 🔴 **AI-chat ostaci javno objavljeni u sadržaju** (treći slučaj 2026-07-11, politika-kolacica 16656:
+  uvod "U nastavku je primer...", citat linkovi sa `utm_source=chatgpt.com`, završna sekcija koja se
+  obraća Miroslavu i preporučuje tuđe alate) — na svakom F2 postu grep-ovati: `chatgpt`, "primer",
+  "preporuč", "pomenuo", citat linkove ka nepovezanim domenima. Ranije viđeno i u ergomat opisima
+  (`avantorsciences.com+6` otpad).
+- 🔴🔴 **`post_content` može biti POTPUNO PRAZAN uz punu ZionBuilder postmeta** (2026-07-11, post 6588,
+  202 GSC klika/6mes) — stranica na live-u građena ZionBuilder page builderom čuva sadržaj u
+  `zn_page_builder_els` serialized postmeta, standardni WXR export (`content:encoded`) ostaje prazan
+  CDATA. Simptom: HTTP 200, naslov se prikazuje (tema renderuje H1 iz post_title), ali telo stranice
+  je vidljivo prazno — lako se previdi jer stranica "radi". Provera na SVAKOM F2 postu PRE bilo čega:
+  `SELECT CHAR_LENGTH(post_content) FROM wp_posts WHERE ID=X` — ako je 0 i postoji `zn_page_builder_els`
+  meta, sadržaj treba doslovno izvući unserializacijom te postmeta vrednosti iz `live-posts-*.xml`
+  (obrazac skripte: `extract-zn-6588.php`, hoda kroz `TH_TextBox`/heading/`TH_ImageBox` čvorove) —
+  **ne izmišljati sadržaj**, prepisati doslovno pa tek onda dodati GEO intro/FAQ/CTA omotač.
+- **Live-domen→lokal zamena linkova može otkriti nove slomljene slike** — ako link/img src izgleda
+  ispravno dok cilja `antasline.com`, tek posle prebacivanja na `localhost` postaje vidljivo da fajl
+  ne postoji pod tim tačnim imenom (čest uzrok: import je dodao `-1` sufiks pri koliziji imena —
+  `wp-image-XXXX` CSS klasa u markupu otkriva pravi attachment ID pa se pravo ime nađe preko
+  `SELECT guid FROM wp_posts WHERE ID=XXXX`). Uvek re-proveriti slike POSLE live-link fixa, ne samo pre.
+- 🔴 **`post_author=0` na 28/30 F3 reimportovanih postova** (rešeno globalno 2026-07-11) — simptom:
+  prazan byline sa 404 linkom na `/author/`. Fix: `post_author=1` + user 1 nicename `savamar` /
+  display "Miroslav Marković" (live parity) + yoast_indexable regen. Novi reimporti: proveriti odmah.
+- 🔴 **mysql CLI kvari dijakritike I SA `--default-character-set=utf8mb4`** kad su u inline `-e`
+  stringu iz Git Bash-a (ć upisan kao literalno `?`). String upisi sa ne-ASCII karakterima →
+  ISKLJUČIVO PHP/wp-load (`$wpdb->update`). Provera ispravnosti: `SELECT HEX(kolona)` (ć = `C487`).
+  Napomena: python print takvih vrednosti u Windows konzoli prikazuje `�` i kad su bajtovi ispravni —
+  proveravati bajtove, ne konzolni prikaz.
+
+## F7.13 — Product JSON-LD duplira se čim proizvod dobije pravu cenu (2026-07-11, S4 Geoplast)
+
+🔴🔴 **W2 2.7 pretpostavka ("Yoast nikad ne renderuje Product schema") je bila tačna SAMO dok
+nijedan od 47 proizvoda nije imao cenu** (katalog režim od početka projekta). Čim je prva prava
+cena postavljena (S4: Runfloor/Geocross/Geogravel/Geoflor, prvi price-upis u projektu), **Yoast
+WooCommerce integracija je sama počela da emituje sopstvenu Product schemu** (ugnježdenu u
+`@graph` sa BreadcrumbList-om) — pored globalnog `functions.php` fallback hook-a (W2 2.7,
+`wp_footer` @ prioritet 25) koji se izvršava bezuslovno na svakoj `is_product()` stranici.
+Rezultat: 2× `"@type":"Product"` na stranici.
+
+**Fix** (`woodmart-child/functions.php`, u W2 2.7 hook-u): dodata provera odmah posle
+`global $product` — ako `$product->get_price()` nije prazno, `return` (Yoast preuzima).
+Fallback ostaje aktivan ISKLJUČIVO za proizvode bez cene.
+
+**⚠️ Svaki budući price-upis na postojeći proizvod (npr. kad M10 cenovnik konačno stigne i
+cene se upisuju na 47+ postojećih proizvoda) treba proveriti** — grep rendered HTML za broj
+pojavljivanja `"@type":"Product"` (i unutar `@graph` i van njega), ne pretpostavljati da je
+jednom verifikovano stanje trajno tačno.
+
+## F7.14 — Nova custom stranica bez `_woodmart_main_layout=full-width` pada na sidebar layout (2026-07-11, CB1 court builder)
+
+🔴 Svaka ranije izgrađena custom stranica (o-nama, iznajmljivanje-podova, industrijski-podovi,
+itd.) ima eksplicitno `_woodmart_main_layout` postmeta = `full-width`, ali to nigde nije bilo
+zapisano kao OBAVEZAN korak pri kreiranju nove stranice preko `wp_insert_post()` — samo se
+podrazumevalo. Nova stranica `/planer-terena/` (CB1, ID 17004) je napravljena bez tog meta
+ključa → WoodMart je pao na temin default page layout (sidebar), pa se globalna "Brzi upit"
+CF7 forma (auto-appendovana `the_content` hook-om na svaku stranicu, W1 1.10) vizuelno
+stisnula u usku sidebar kolonu i sticky-pozicionirala preko hero sekcije (vidljivo tek u
+browseru — HTML/curl provera ovo ne hvata, jer je sadržaj u markupu ispravan, problem je
+isključivo CSS layout posledica nedostajućeg meta ključa).
+
+**Fix**: `update_post_meta( $id, '_woodmart_main_layout', 'full-width' )` odmah posle
+`wp_insert_post()` na SVAKOJ novoj custom stranici (ne samo proizvodima/postovima —
+`_woodmart_title_off` se već upisuje rutinski, ovaj ključ treba isti tretman).
+
+**⚠️ Ovo je gotcha koji se NE hvata standardnim HTTP/H1/JSON-LD verifikacionim standardom** —
+potrebna je vizuelna provera u browseru (screenshot) za svaku novu stranicu koja koristi
+custom shortcode/builder sadržaj, ne samo curl. Dodati u standard verifikacije za W1 1.11+.
+
+## F7.15 — `wp_insert_post()` bez ulogovanog korisnika pušta content kroz kses i BRIŠE `<script>` tagove (2026-07-11, CB2 court builder)
+
+🔴🔴 **Drugačiji (ozbiljniji) mehanizam od F7.12/ranijih "goli JSON-LD" nalaza** — svi raniji
+slučajevi su bili wpautop koji razbija `<script>` u vidljiv tekst. Ovde je uzrok drugi: stranica
+`/planer-terena/` je kreirana preko `wp_insert_post(['post_content' => $content, ...])` sa
+FAQPage JSON-LD `<script>` tagom uključenim direktno u `$content` PRE upisa. Pošto CLI/php.exe
+skripta nema ulogovanog korisnika (`get_current_user_id()`=0 → `current_user_can('unfiltered_html')`
+false), `wp_insert_post()` je pustio ceo sadržaj kroz `wp_filter_post_kses`, koji je **obrisao
+`<script>` i `</script>` tagove ali ostavio goli JSON tekst kao vidljiv sadržaj stranice** (kses ne
+dira plain-text između tagova, samo same HTML tagove).
+
+**Zašto se ovo NIJE desilo na 40+ proizvoda kreiranih ranije danas (S1–S8)**: svi ti skriptovi
+su dosledno koristili `al_update_content()` helper koji piše `post_content` preko
+**`$wpdb->update()` direktno** (raw SQL, bez `wp_insert_post`/kses uopšte) — `wp_insert_post()`
+je korišćen SAMO za inicijalno kreiranje posta sa praznim `post_content=''`, a pravi sadržaj
+(uklj. `<script>` blokove) je uvek pisan u DRUGOM, odvojenom koraku preko `$wpdb->update()`.
+`/planer-terena/` stranica je bila IZUZETAK — ceo sadržaj (uklj. schema) upisan u JEDNOM
+`wp_insert_post()` pozivu.
+
+**Pravilo ubuduće**: NIKAD ne upisivati `<script>` (ili bilo koji HTML tag koji kses može
+tretirati kao "opasan" — `<iframe>`, `<style>`, itd.) direktno kroz `post_content` parametar
+`wp_insert_post()`/`wp_update_post()` pozvan iz CLI konteksta. Uvek: (1) `wp_insert_post()` sa
+praznim/osnovnim sadržajem, (2) `$wpdb->update($wpdb->posts, ['post_content' => $puni_sadrzaj], ['ID' => $id])`
+za sadržaj koji sadrži schema/script blokove — tačno onako kako `al_update_content()` helper
+radi u svim proizvod-skriptovima.
+
+**Fix primenjen**: sadržaj rekonstruisan (bare JSON pronađen regex-om, provera `json_decode()`
+uspešnosti pre upisa), pa upisan nazad preko `$wpdb->update()` sa pravim `<script>` omotačem.
+
+## F7.16 — Testimonials sekcija (W1 1.7, 2026-07-22)
+
+Figma link dobijen od Miroslava (`figma.com/proto/aEIaArDFo88XgnelDvMI9D/Antas-line`, isti fajl kao
+07-05 sync). Testimonials nisu bile deo glavnog "Desktop - 2" home frejma (97:189) — postojale su kao
+samostalna, nekomponovana "Cards" grupa na canvasu (node `12:100`, 3× "Customer Quote" kartica,
+prva kartica je čak imala Nevenin citat kao placeholder tekst u samom dizajnu).
+
+Sadržaj: GMB recenzije preko Windsor.ai `google_my_business` konektora (`review_reviewer`/
+`review_comment`/`review_star_rating` polja) — **6 recenzija ukupno, samo 2 imaju stvaran tekst**
+(ostale 4 su zvezdice bez komentara). M odluka: prikazati SAMO 2 prave (Nevena Đurac, Slobodan
+Dumonjić), grid `al-grid--2` umesto Figma 3-kolonskog rasporeda — bez izmišljanja treće kartice
+(isti princip kao izbegavanje fake-review problema sa `/teren-za-pickleball/`).
+
+Avatari: Figma koristi generičke stock foto avatare u krugu — namerno NE kopirano (ne predstavljati
+lažnu fotografiju kao pravu osobu). Zamenjeno inicijali u navy krugu (`.al-testimonial__avatar`,
+45×45px kao original). Prosečna ocena (4,7/5, 6 recenzija) dodata ispod grida kao real broj iz
+`review_average_rating_total`/`review_total_count` polja — ne izmišljeno.
+
+Implementacija: nova CSS klasa `.al-testimonial` (+ `.al-grid--2`, novi grid variant) u
+`antas-design.css`, sekcija ubačena u `post_content` (16550, home) preko `wp_update_post()`
+između Reference i Aktuelnosti — alternacija paper/mist pozadina očuvana tako što je Aktuelnosti
+red prebačen sa `al-section--mist` na `al-section--paper` (testimonials preuzele mist). Backup pre
+izmene: `antasline_local_2026-07-22_pre-testimonials.sql`.
+
+🔴 **Nov gotcha**: `mysql -N -e "SELECT post_content..."` u batch/redirect modu ESCAPUJE prave
+newline bajtove kao literalni `\n` tekst u izlazu (MySQL client batch-mode ponašanje) — izgleda kao
+da sadržaj nema pravih newline-ova, ali IMA. Ne kopirati takav dump doslovno u PHP single-quoted
+string (`'...\n...'`, gde `\n` ostaje 2 literalna karaktera) kao anchor za `str_replace` — mora
+double-quoted string (`"...\n..."`, PHP interpretira kao pravi newline bajt) ili direktan PHP dump
+(`var_export`/`bin2hex`) da se potvrdi stvarni sadržaj pre pisanja replace anchor-a.
+
+Verifikovano: HTTP 200 (home + 2 regresione stranice), 1×H1, 0 console grešaka, Chrome vizuelno
+(kartice/avatar-inicijali/UTF-8 ćčđšž ispravni, mist→paper prelaz ispravan).
+
+## F7.17 — "Najprodavanije podloge u 2025." foto baner (W1 1.7, 2026-07-22)
+
+Isti Figma fajl, node `284:790`/`284:752` ("Component 7"). Dizajn je Figma prototip sa 3 taba
+(Košarkaški tereni / Industrijski podovi / Poslovni prostori) koji menjaju pozadinsku fotografiju
+klikom — interaktivna prototip funkcija, ne stvarna implementacija. Odlučeno da se NE pravi JS
+tab-switcher (nepotrebna kompleksnost za promo baner) — umesto toga sva 3 taba su **prava 3 linka**
+ka stvarnim kategorijama (prvi kao pun `al-btn` CTA, ostala dva kao plain-text `al-promo-link`,
+verno originalnom vizuelnom hijerarhijom dizajna: aktivni tab = puno dugme, neaktivni = tekst),
+statična pozadinska fotografija (Spanoulis Court, već postojeća real reference slika).
+
+**Pozicioniranje**: Figma XML pokazuje ovaj node IZMEĐU USP sekcije (y=2740-3144) i teksta koji
+odgovara postojećoj Reference sekciji (y=4335) — ubačeno tačno tu (između USP i Reference), ne na
+kraj stranice gde je ranije ubačena testimonials sekcija (testimonials nemaju definisanu poziciju u
+Figmi, ostaju gde su bile).
+
+**Linkovi** (birani po stvarnom sadržaju/prioritetu, ne izmišljeno):
+- Košarkaški tereni → `/sportske-podloge/kosarkaske-konstrukcije/` (najveći organski GSC klaster, 923 klika/12mes, F6 pilot)
+- Industrijski podovi → `/industrijski-podovi/` (glavni silo)
+- Poslovni prostori → `/podovi-za-poslovni-prostor/` (isti target kao segment kartica na vrhu home-a)
+
+**"Najprodavanije" napomena**: sajt je catalog-mode (bez checkout-a) → nema pravih WooCommerce
+sales podataka. Ovo je merchandising copy (uobičajena praksa "istaknuto/popularno"), ne
+statistička tvrdnja — nije prekršaj "ne izmišljati brojeve" pravila jer se ne navodi nijedan broj.
+
+**Implementacija**: nova `.al-promo-photo`/`.al-promo-photo--najprodavanije`/`.al-promo-link` CSS
+(reuse `.al-hero`/`.al-hero__cta`/`.al-btn` za layout — minimalna nova CSS površina), navy overlay
+(60% `rgba(14,41,80,.6)`) isti obrazac kao `.al-hero-photo`. Ubačeno u home (16550) preko
+`wp_update_post()`. Backup pre izmene: `antasline_local_2026-07-22_pre-najprodavanije.sql`.
+
+Verifikovano: HTTP 200, 1×H1, sva 3 linka ispravna (`href` provera), 0 console grešaka, Chrome
+vizuelno, regresija 2 stranice čista.
+
+**Revizija (2026-07-22, isti dan)**: Miroslav tražio dve izmene — (1) "proizvodi" umesto "podloge" u naslovu, (2) 3 STVARNA proizvoda umesto 3 linka ka kategorijama. Naslov → "Najprodavaniji proizvodi u 2025.". Linkovi zamenjeni sa 3 mini-kartice pravih proizvoda (slika+naziv+cena) iz `kosarkaske-konstrukcije` kategorije (251) — jedina kategorija u katalogu sa PRAVIM fotkama i PRAVIM cenama (S7 sesija, Hoop n Court 2026-07-11), izbor namerno sa 3 različita brenda za realnu raznolikost (Goalrilla DC72E1 549.900 RSD, Hoopair D72 349.680 RSD, Goaliath GB60 246.750 RSD) umesto 3 varijante istog modela. Ispod kartica zadržan CTA link "Pogledajte celu ponudu →" ka istoj kategoriji da se ne izgubi vrednost prethodnog linka. Nova CSS: `.al-promo-products`/`.al-promo-product` (bela mini-kartica, thumbnail+naziv+cena, shadow za čitljivost na foto pozadini). Backup: `antasline_local_2026-07-22_pre-najprodavanije-proizvodi.sql`. Verifikovano isto kao gore + sve 3 proizvod stranice 200.
+
+Mobilna provera (390px, iframe harness metod iz F7.12): oba nova bloka (testimonials + najprodavaniji
+proizvodi) čista — kartice se ređaju u jednu kolonu, tekst se lepo prelama (naslov "NAJPRODAVANIJI
+PROIZVODI U / 2025." u 2 reda), bez preklapanja/overflow-a, foto pozadina i overlay ispravni.
+
+**W1 1.7 (Figma sync) sada u potpunosti zatvoren — testimonials (F7.16) + Najprodavaniji proizvodi (F7.17, revidirano), mobilno verifikovano.**
+
+## F7.18 — `_woodmart_title_off` NE radi za postove, samo za stranice (2026-07-27)
+
+🔴 Novi post `/dimenzije-fudbalskog-terena/` (17027) je dobio `_woodmart_title_off=on`
+kao i svaka nova stranica (F7.14 pravilo) — i **svejedno renderovao 2×H1**. Uzrok:
+WoodMart za `single-post` template ispisuje naslov kroz `wd-single-post-header`
+(`<h1 class="wd-entities-title wd-post-title title">`), što je **odvojen mehanizam** od
+page-title bara koji `_woodmart_title_off` gasi. Meta ključ se tiho ignoriše.
+
+**Pravilo**: kod **postova** hero naslov ide kao `<h2 class="al-display--xl">`, ne `<h1>` —
+tema već daje tačan H1 iz `post_title`. Kod **stranica** ostaje `<h1>` + `_woodmart_title_off=on`
+(tamo radi, potvrđeno na 17026 istog dana: 1×H1).
+
+Potvrda da nije izolovano: postojeći postovi 2699/4318 uopšte **nemaju** woodmart meta
+ključeve — njihov raniji 2×H1 fix je rađen uklanjanjem H1 iz sadržaja, istom logikom.
+
+Hvata se standardnom verifikacijom (broj `<h1>` u renderovanom HTML-u) — ne preskakati je
+za postove samo zato što je meta ključ postavljen.
+
+## 🔴 F7.19 — PRAVILO: vezane vrednosti idu u JEDNU custom property, nikad u dva pravila (2026-07-28)
+
+**Simptom (prijavio Miroslav):** „Brzi upit" forma na dnu stranice ispada ispod futera,
+vidi se samo deo bloka, futer seče preko dugmeta „Pošaljite upit".
+
+**Uzrok — sudar specifičnosti između dva pravila koja moraju da se slažu:**
+`.al-quick-quote` nosi `.al-diag-top`, čiji efekat čine **dve vezane vrednosti**:
+`top: -cut` (vizuelni pomak nagore) i `margin-bottom: -cut` (kompenzacija u toku,
+da futer krene tačno od vizuelnog dna). One su bile u različitim pravilima:
+
+| Vrednost | Iz pravila | Specifičnost | Pobeđuje u sidebar layoutu |
+|---|---|---|---|
+| `top: 0` | `body:has(.sidebar-container) .al-quick-quote` | (0,2,1) | ✅ |
+| `margin-bottom: -cut` | `.al-section.al-diag-top.al-quick-quote` | **(0,3,0)** | ✅ |
+
+Tri klase (0,3,0) tuku `body + :has() + klasa` (0,2,1) — `:has()` nosi specifičnost svog
+najspecifičnijeg argumenta, ne dodaje tip-selektor težinu. Rezultat: sekcija **nije**
+pomerena nagore, ali je futer **jeste** povučen nagore za ceo rez → preklop tačno
+`var(--al-cut)` (izmereno 76 px na 1280 px viewportu, `6vw`).
+
+Tro-klasno pravilo je i samo bilo raniji fix (F7.10, da pobedi temin `base.css`
+`:is(...) > :where(:last-child) { margin-bottom: 0 }`) — dakle **fix jednog problema je
+napravio drugi**, jer druga polovina para nije podignuta na istu specifičnost.
+
+**PRAVILO:** kad dve CSS vrednosti moraju da se menjaju zajedno (pomak + kompenzacija,
+visina + padding koji je uračunava, offset + njegov negativ), **ne pisati ih u dva
+pravila** — vezati ih za jednu custom property i gasiti/menjati promenljivu:
+
+```css
+.al-quick-quote            { --al-qq-shift: var(--al-cut); }   /* podrazumevano */
+body:has(.sidebar-container) .al-quick-quote { --al-qq-shift: 0px; }  /* isključi obe odjednom */
+
+.al-section.al-diag-top.al-quick-quote {
+	top:           calc(-1 * var(--al-qq-shift));
+	margin-bottom: calc(-1 * var(--al-qq-shift));
+}
+```
+
+Promenljiva se nasleđuje i razrešava po jednom kaskadnom takmičenju — obe vrednosti
+uvek čitaju isti rezultat, pa se **ne mogu raziići** bez obzira na to koje pravilo pobedi.
+
+**Obavezna provera (standardni HTTP/H1/schema set je NE hvata — problem je čisto layout):**
+premeriti dno sekcije protiv vrha futera, na **svim** stranicama i **obe** širine:
+
+```js
+const q=document.querySelector('.al-quick-quote'), f=document.querySelector('.wd-footer');
+const preklop = q.getBoundingClientRect().bottom - f.getBoundingClientRect().top; // mora <= 0
+const btn=q.querySelector('input[type=submit]');
+btn.getBoundingClientRect().bottom > f.getBoundingClientRect().top;                // mora false
+```
+
+Sken se radi kroz same-origin iframe (F7.12 metod), 1280 px i 390 px. ⚠️ Bug se ne
+pojavljuje svuda — javlja se **samo kad je sadržajna kolona viša od sidebar-a**, pa
+provera na jednoj-dve stranice nije dovoljna (na postovima sa dugim sidebar-om preklopa
+nema iako je CSS isti). Zadnji sken: **95 stranica × 2 širine, max preklop 0**.
+
+**Usput nađeno istim skenom** (F7.14 regresija): 7 stranica građenih 06–08.07, dakle
+pre nego što je F7.14 dokumentovan, nisu imale `_woodmart_main_layout=full-width` pa su
+padale na sidebar layout — 16585, 16586, 16688, 16584, 16581, 16582, 16583. Postavljeno.
+(`katalog` i `politika-kolacica` namerno preskočeni — nisu custom builder stranice.)
+
+## 🔴 F7.20 — Dijagonalni rezovi: dva reza uzastopno + tema koja gazi kompenzaciju (2026-07-28)
+
+Nastavak F7.19 (isti dan, isti blok). Pošto je „Brzi upit" forma prestala da se pomera
+nagore, isplivala su **dva zasebna problema** koja je raniji pomak maskirao.
+
+### (a) Dva reza jedan za drugim = navy blok ispada kao klin
+
+Sekcija ispred forme je na **svih 55 stranica** (izmereno, ne procenjeno) navy CTA sa
+`al-diag-top--rev` — rez ↘ na njenom vrhu. Forma je imala `al-diag-top` — rez ↗ na
+svom vrhu, dakle **odmah ispod, u suprotnom smeru**. Navy sekcija time dobija kosinu
+i gore i dole, u suprotnim smerovima, i vizuelno postaje iskošen klin.
+
+**Odluka:** forma više nema `al-diag-top` (klasa uklonjena u `functions.php`). Poenta te
+sekcije je bila **kontra-boja** (svetla traka između navy CTA i tamnog futera, M zamerka
+„sve plavo na dnu") — nju nosi `--al-mist` pozadina, rez nije bio potreban.
+
+**Pravilo:** dva `al-diag-*` reza ne smeju biti na uzastopnim sekcijama. Rez ima smisla
+kao prelaz *između dve različite boje*, ne kao ukras na svakoj sekciji. Pre dodavanja
+`al-diag-*` na bilo koju sekciju proveriti šta je neposredno iznad i ispod.
+
+### (b) Tema gazi kompenzacioni margin → praznina visine `cut + 20px`
+
+`base.css` (WoodMart) ima:
+
+```css
+:is(.wd-entry-content,.entry-content,.is-layout-flow,.is-layout-constrained,
+    .is-layout-constrained>.wp-block-group__inner-container) > * { margin-block: 0 var(--wd-block-spacing) }
+```
+
+`:is()` uzima specifičnost **najspecifičnijeg argumenta** — ovde `.is-layout-constrained >
+.wp-block-group__inner-container` = **(0,2,0)**. To gazi `.al-diag-top` / `.al-diag-top--rev`
+(0,1,0). Posledica: `top: -cut` pomak ostane, kompenzacija `margin-bottom: -cut` **nestane**
+i umesto nje dođe `+20px` → praznina visine `cut + 20px` ispod sekcije.
+
+Zato je i `margin-bottom` na tim rezovima podignut na **tri klase (0,3,0)**:
+
+```css
+.entry-content .al-section.al-diag-top,
+.entry-content .al-section.al-diag-top--rev,
+.wd-entry-content .al-section.al-diag-top,
+.wd-entry-content .al-section.al-diag-top--rev { margin-bottom: calc(-1 * var(--al-cut)); }
+```
+
+⚠️ Ovo je **treći** slučaj istog obrasca (F7.10 quick-quote, F7.19 sudar `top`/`margin-bottom`,
+sada i sami rezovi). Kad god pišeš pravilo koje kontroliše razmak elementa u
+`entry-content`, računaj da ti je protivnik **(0,2,0)**, ne (0,1,0).
+
+### (c) `wpautop` artefakti oko JSON-LD blokova
+
+Prazan `<p>` (24px) odnosno `<br>` + prazan `<p>` javljaju se od praznog reda ispred
+schema bloka — i kod `[vc_raw_html]` varijante i kod golog `<script type="application/ld+json">`
+u `post_content`. Ranije ih je krio pomak forme. Očišćeno na 16 stranica; ubuduće **ne
+ostavljati prazan red ispred schema bloka** pri programskom upisu (`$c .= "\n" . $jsonld;`
+→ `$c .= $jsonld;`).
+
+Uz to, WPBakery daje svakom `.wpb_content_element` (pa i nevidljivom `vc_raw_html`)
+`margin-bottom: 35px`. Neutralisano ciljano, samo za blokove koji sadrže isključivo script:
+
+```css
+.wpb_raw_code:has(> .wpb_wrapper > script:only-child) { margin-bottom: 0; }
+```
+
+### Provera (obavezna posle svake izmene `al-diag-*` ili strukture dna stranice)
+
+Kroz iframe (F7.12), **sve stranice × 1280 i 390 px**, tri mere:
+`clip-path` forme (mora `none`), razmak `prethodna.bottom → forma.top` (mora 0),
+preklop `forma.bottom → futer.top` (mora ≤ 0). Poslednji sken: **95 × 2, sve nule.**
+
+## F7.21 — Slike u sadržaju: manja verzija na stranici + lightbox (2026-07-28)
+
+Zatečeno: 314 fotografija u `post_content`, **410/473 `<img>` bez ikakvog resize-a**
+(src = original), **0 sa `srcset`**, 140/473 sa `width+height`, i **nijedna slika se
+nije otvarala uvećana**. WP galerije (`[gallery link="file"]`) vodile su posetioca na
+goli `.jpg` — izlazak sa sajta.
+
+**Rešenje je `the_content` filter, ne izmena baze.** Slike se ne diraju u
+`post_content`: reverzibilno je, hvata i sadržaj koji tek dolazi, i ne rizikuje
+kvarenje WPBakery shortcode-ova. `al_enhance_content_images()` (prio 20, posle
+wpautop/do_shortcode/quick-form) prolazi kroz HTML prateći **dubinu `<a>` tagova**:
+
+| slučaj | postupak |
+|---|---|
+| foto u `.al-card` / `.al-promo-product` (link ka drugoj stranici) | samo optimizacija veličine — lightbox bi oteo klik i pokvario navigaciju |
+| `<a href="…jpg">` (WP galerija, `link="file"`) | anchor se pretvara u lightbox okidač, href se prevodi na `al-lb` |
+| slobodna foto u sadržaju | umotava se u `<a class="al-lb">` |
+| `.al-icon`, SVG, `i.ytimg.com` thumb, logotipi partnera | preskače se |
+
+Registrovane veličine: `al-sm` 600 · `al-md` 900 · `al-lg` 1200 (ove tri idu u
+`srcset`) · `al-lb` 1600 (samo meta lightbox linka — **namerno van `srcset`-a**, da se
+velika verzija plaća tek kad posetilac stvarno otvori sliku).
+
+### 🔴 Ograničenje koje treba znati pri izboru fotki
+Od 265 priloga u sadržaju **samo 27 ima verziju ≥1400px** — originali su uglavnom već
+bili skalirani pri importu. Uparivanje sa folderima (`C:\Miroslav\Antas line`,
+`…priprema za sajt`, 1.807 fotki) našlo je **svega 8** slika sa većom verzijom u
+folderu. I u samim folderima je samo **20% (364/1807) ≥1400px**.
+**Lightbox ne uvećava veštački** — otvara najveću dostupnu. Zato pri kuriranju
+**birati iz hi-res foldera**: `novo/slike bergo multisport` (43/47 ≥1400),
+`novo/ecotile` (37/42), `novi sajt/Bergo` (49/163), `novi sajt/tereni za basket` (29/91),
+`Karusel slike Dekorativne meni` (18/20), `slike 12-22/bergo ultimate` (17/29).
+
+### 🔴 Dve zamke specifičnosti (isti obrazac kao F7.20)
+WoodMart `base.css` ima
+`:is(.btn, .button, button, [type="submit"], [type="button"]) { position: relative }`.
+`:is()` uzima specifičnost **najjačeg argumenta** → **(0,1,0)**, izjednačeno sa
+`.al-lb-close` / `.al-video-facade__play`, a `base.css` se učitava POSLE nas → gazio je.
+Oba su podignuta na **(0,2,0)** (`.al-lb-overlay .al-lb-close`,
+`.al-video-facade .al-video-facade__play`).
+
+> Usput otkriveno: **play dugme na video fasadama bilo je SIVO (#F3F3F3) umesto
+> brend-crvenog** i pre ove sesije — isti bag, samo se nije primećivao jer je sivi krug
+> sa ► i dalje ličio na play dugme.
+
+### 🔴 `[gallery]` piše href JEDNOSTRUKIM navodnicima
+WP-ov `wp_get_attachment_link()` generiše `<a href='…'>`. Regex pisan samo na `"`
+tiho je promašio **svih 42** linka u galeriji sportskih terena — `<img>` unutra jeste
+bio obrađen (pa je izgledalo da filter radi), a anchor nije. **Svi atributni regexi u
+ovom filteru su zato `("|\')…\1`.**
+
+### Natpis u lightbox-u
+`al_image_caption()`: `alt` → caption priloga → naslov priloga. WP podrazumevano upisuje
+**ime fajla** kao naslov ("Final-3x3-Graz"), što je šum ispod slike. Odbacuje se ako je
+(a) slugifikovan naslov = ime fajla, ili (b) nema nijedan razmak a ima crticu/donju crtu.
+
+### Nova sekcija sa galerijom u WPBakery stranici
+Umetati kao zaseban `[vc_row el_class="al-section al-section--paper"]` na tačan indeks
+(`preg_split('#(?=\[vc_row)#')`), **bez `al-diag-*`** ako susedna sekcija već nosi rez
+(F7.20). Slike u sekciju ići kao **gol `<img>`** — filter ih sam umota i doda srcset.
+
+## F7.24 — Post/članak GEO-intro + CTA-box klase (W1 Polish Faza 3, 2026-07-30)
+
+**Nalaz koji je pokrenuo zadatak (iz W8 audita 07-29/30):** 30/31 objavljenih
+postova ne koristi `al-section` dizajn sistem — koriste plain WoodMart default
+template. Merenje pokazalo da su `.al-geo-intro`/`.al-cta-box` klase već
+POSTOJALE u `post_content`-u dva posta (6588, 5170) i u samom CLAUDE.md GEO
+pravilu ("prvi pasus = direktan odgovor"), ali **nikad nisu imale CSS** —
+renderovale su se kao goli tekst bez ijedne vizuelne razlike. Ostali postovi
+(2298, 2542) su isti efekat postizali ad-hoc inline stilom
+(`style="background:#EEF3F8;border-left:4px solid #F04D22;…"`, ručno kopiranim
+tokenima dizajn-sistema bez klase).
+
+**Rešenje:** prave definicije dodate u `antas-design.css` (posle `.al-table`
+bloka):
+- `.al-geo-intro` — mist pozadina + crveni levi border, za GEO "Kratak odgovor"
+  pasus na vrhu članka
+- `.al-cta-box` — mist kartica sa okvirom, centriran tekst + `.al-btn`, za
+  zatvarajući CTA na dnu članka
+- `.al-grid` dobio `margin: 24px 0` u CSS (bio je ad-hoc `style="margin:24px 0"`
+  inline na delu stranica) — isti F7.19/F7.20 specificity gotcha
+  (`:is(.entry-content,…)>*{margin-block:0 20px}` iz base.css je (0,2,0),
+  gazi golu `.al-grid` klasu (0,1,0)) → selektor `.entry-content .al-grid,
+  .wd-entry-content .al-grid` da pobedi
+- `.al-btn--ghost` dobio isti entry-content override kao `.al-section--paper/
+  --mist` (bez njega je ghost dugme belo-na-belom, nevidljivo van `.al-section`)
+
+**Retrofit prvog batch-a (2298, 2542, 2699, 5170, 6588):** "Kratak odgovor"
+pasusi prevedeni na `.al-geo-intro`, ad-hoc callout div-ovi na `.al-cta-box`,
+mrtve `zn_contact_submit btn btn-fullcolor btn--rounded` klase (Zion Builder
+ostatak, renderovale su se kao neobojen pravougaonik — tema je odavno
+WoodMart) zamenjene sa `.al-btn`/`.al-btn--ghost` (2699, 3 dugmeta × 5 pojava
+kroz tekst). Alat: `migracija/alati/job-w1-polish-faza3-batch1.php`.
+
+### 🔴🔴 `wp_update_post()` iz CLI zove `wp_unslash()` nad CELIM post_content-om
+Ne samo nad delom koji se menja — nad **svim** postojećim backslash-escape
+sekvencama u sadržaju, čak i onim van dosega tvog `str_replace`-a. Na 2298 je
+originalni FAQPage JSON-LD imao ispravno eskejpovan navodnik u tekstu odgovora
+(`„uradi sam\"`, srpski nizak-visok navodnik gde zatvarač „`"`" mora biti
+eskejpovan unutar JSON stringa) — potpuno nepovezana izmena (GEO-intro
+retrofit) je preko `wp_update_post()` tiho pretvorila taj `\"` u goli `"` i
+pokvarila JSON (potvrđeno `json_decode()` grešku posle, dok je pre bio
+validan). Pokušaj popravke istim putem (`wp_update_post()` sa novim `\"`
+ubačenim u string) je **opet tiho promašio** — isti unslash je pojeo i moj
+dodati backslash. Radi tek preko `$wpdb->update()` direktno (gotcha #9,
+zaobilazi `wp_unslash()` u potpunosti). **Pravilo: svaki put kad post sadrži
+`<script>` JSON-LD ILI bilo koji drugi eskejpovan backslash, upis ide
+isključivo preko `$wpdb->update()`, nikad preko `wp_update_post()` — čak i
+kad izmena naizgled ne dodiruje taj deo sadržaja.**
+
+### NBSP (U+00A0) umesto običnog razmaka — nevidljiv u editoru, kida `str_replace`
+Na 5170, TinyMCE je između `<em>` i `<a>` ostavio `&nbsp;` (bajtovi `C2 A0`),
+ne obični razmak (`20`). Vizuelno identično u browseru i u tekstualnom prikazu
+fajla, ali `substr_count()`/`str_replace()` ga tretira kao drugačiji karakter
+→ tiho 0 pogodaka. Dijagnostika: `bin2hex()` na oba stringa uporedo (ne
+osloniti se na vizuelni diff). Fix: `"\xc2\xa0"` eksplicitno u PHP izvoru
+umesto kucanog razmaka na sumnjivim mestima (posle `<em>`, oko `<br>`, ispred
+zatvarajućih tagova — tipična mesta gde WYSIWYG editor ubacuje NBSP).
+
+### Full-paragraph string match je krhk na Unicode normalizaciji
+Poređenje celog pasusa (300+ karaktera sa dijakritikom) kao `str_replace` cilj
+je na "Postavljena je podloga…" (5170) pukao na JEDNOM karakteru — DB i ručno
+otkucan tekst izgledaju bajt-za-bajt identično, `cmp` ipak javlja razliku
+(NFC/NFD normalizacija istog dijakritika). Kad je moguće, cilj svesti na
+najmanji dovoljan ASCII fragment (npr. samo `<p style="text-align: left">` →
+`<p>`, ne cela sadržina pasusa) — manje površine za promašaj, i posao svejedno
+ne zahteva dodirivanje dijakritičkog teksta.
+
+### Header Builder CSS se generiše JEDNOM i keš-uje u wp_options — ne prati izmenu koda
+WoodMart `Frontend::print_header_styles()` (`inc/modules/header-builder/class-frontend.php`)
+generiše `<style>` blok za header (uklj. `--wd-top-bar-sticky-h` i sl. CSS
+custom property-je) i piše ga preko `Styles_Storage` u opcije
+`xts-{header_id}-css-data`/`-status`/`-version`/`-site-url` (za default header:
+`xts-default_header-*`). `print_header_styles()` regenerises **SAMO ako**
+`is_css_exists()` vrati false, a to zavisi od `theme_version`/`site_url`
+poklapanja — **izmena PHP filtera (`woodmart_default_header_structure`) ili
+postmeta (`_menu_item_width`, `_menu_item_sticky`...) ne invalidira ovaj keš
+sama od sebe.** Nalaz 2026-08-06: izmena `sticky`/`sticky_height` na top-bar
+redu je tiho pala na stari keš (`--wd-top-bar-sticky-h: .00001px` i dalje u
+generisanom CSS-u iako je izvorni podatak već 30). **Fix: `DELETE FROM
+wp_options WHERE option_name IN ('xts-default_header-css-data',
+'xts-default_header-site-url', 'xts-default_header-status',
+'xts-default_header-version')`** — sledeći page load regeneriše čisto.
+**Pravilo: nakon SVAKE izmene header strukture/params preko koda (ne kroz
+Header Builder UI), obrisati ova 4 reda pre verifikacije.**
+
+### CSS custom property "increment" (`calc(var(--x) + Npx) !important`) na potomku ne radi pouzdano ovde
+Pokušaj da se `--wd-dropdown-width` (setovan inline na `<li>` preko
+`_menu_item_width`) uveća za dropdown preko `.wd-dropdown-menu { --wd-dropdown-width:
+calc(var(--wd-dropdown-width) + 140px) !important; }` je slomio layout —
+panel je pao na ~186px (3 kolone u 1) umesto da se malo proširi. Uzrok nije
+utvrđen do kraja (očekivano da se `var()` razreši na inherited vrednost sa
+`<li>` pre nego što se novi override primeni, ali se to ovde nije desilo
+predvidivo). **Pravilo: za širinu dropdown-a menjati izvornu `_menu_item_width`
+postmeta vrednost direktno, ne CSS var self-reference trik.**
+
+### WP attachment slike (SVG/PNG) nemaju `?ver=` cache-busting po defaultu
+Za razliku od `wp_enqueue_style/script` (koji dobijaju `?ver=` iz filemtime-a
+ako se to eksplicitno prosledi), `wp_get_attachment_image()`/`<img src=...>`
+generisan preko `_thumbnail_id` NE dobija verzionu oznaku — URL fajla ostaje
+identičan i posle izmene sadržaja. Browser (i lokalni test i budući posetioci)
+može agresivno keš-ovati stari sadržaj na istom URL-u. **Kad se prepisuje
+sadržaj postojećeg attachment fajla (npr. menjanje SVG ikonice u meniju),
+obavezno hard-refresh (Ctrl+Shift+R) pri proveri — običan refresh može
+pokazati staru verziju i navesti na lažan zaključak da izmena "nije stigla".**
+
+## F7.25 — Pre građenja nove "Reference"/galerija sekcije, prvo proveriti da li stranica već ima jednu (2026-08-07)
+
+**Kontekst:** BLOK E foto arhiva sesija — dopuna `/industrijski-podovi/` (16567)
+i Isotrack (16111) pravim terenskim fotografijama. Na 16567 se ispostavilo da
+`.al-card`/`.al-grid` "Reference" sekcija (3 kartice + `.al-ref-row` tekstualni
+linkovi) već postoji od ranije, jedna od 3 kartice generički 2018 stock kadar.
+
+**Pravilo:** pre pisanja novog `[vc_row el_class="al-section al-section--paper"]`
+bloka za referentnu galeriju, `grep` postojeći `post_content` na `al-card`/
+`al-grid`/`Reference` — ako sekcija već postoji, dopuniti je (zameniti slabije
+kartice, dodati nove) umesto graditi duplikat ispod/iznad. Rezultat je
+konzistentniji (jedna sekcija, ne dve sa istim naslovom) i brži (nema potrebe
+za novim `[vc_row]` omotom, CSS klasama, diagonalnim rezovima F7.20).
+
+**Ista provera je pokazala da Geoplast hub (`/podloge-za-parkiraliste-i-staze/`,
+16589) već ima 9 pravih fotografija + FAQPage iz ranije W2 sesije** — ušteđen
+ceo posao za tu grupu jednim `grep -c al-card` pre nego što se počelo.
+

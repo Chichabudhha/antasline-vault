@@ -11,6 +11,20 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
+## 2026-08-20 [claude-code] [ALATI] — Vault higijena: cepanje 3 velika fajla (CLAUDE.md/naucene-lekcije/woodmart-sabloni), 0 sadržaja izgubljeno ✅
+
+Poslednja preostala 3 nalaza iz 18.08 token audita (v. [[dnevnik/2026-08-18-token-audit-rotacija-ledgera]]) zatvorena u jednoj sesiji.
+
+**`CLAUDE.md` (39,5 → 26,6 KB, −33%)**: §4.1 (GTM napredniji eventi), §7.1 (Rank Math migracija detalji), §7.3 (WPBakery legacy), §10 (Ključne lekcije + renumeracija tabela), §14 (kompletan hub) izmešteni u 5 novih `reference/*` fajlova; svaka sekcija je ostala u `CLAUDE.md` kao kratak sažetak + `[[wikilink]]`. §15 nedirano (već minimalan, 4 reda).
+
+**`reference/naucene-lekcije.md` (251 → 1,7 KB)**: fajl je bio preko `Read` limita od 2000 linija (~75k tokena u jednom pozivu), a čitao se posredno kroz svaku SEO/tehničku referencu. Iseckan Python skriptom (linijski raspon → kategorija, bez učitavanja celog teksta u razgovor) na 4 tematska fajla po istom hronološkom redosledu unutar teme: [[reference/lekcije-wp-db-tehnika]] (103 unosa) · [[reference/lekcije-seo-sadrzaj-migracija]] (55) · [[reference/lekcije-ads-tracking]] (19) · [[reference/lekcije-alati-vault-delegati]] (46). Original fajl postaje indeks sa tabelom + `grep` uputstvom. **Provera pokrivenosti linija (assert u skripti) garantuje 0 izgubljenih/dupliranih redova** — bez toga bi ručna kategorizacija ~220 unosa bila rizična.
+
+**`migracija/woodmart-sabloni.md` (78,8 → 13,8 KB, −82%)**: skill ga označava „OBAVEZNO prvo" za svaki W1 zadatak, pa je najskuplji za redovno čitanje. Kratak checklist (11 već-viđenih bagova, utility klase, SILO/NAMENSKA šabloni, Otvoreno) ostaje na mestu; 25 dated F7.x gotcha unosa (2026-07-07 do 2026-08-07, ikonice/video fasada/footer-meni/CF7/layered nav/JSON-LD/mobile QA/dijagonalni rezovi itd.) izmešteno u [[migracija/woodmart-gotchas-detalji]] — čita se samo kad treba konkretan F7.X broj.
+
+🔴 **Napomena:** stavka „posle 08.09 obrisati mapu numeracije iz CLAUDE.md §10" (iz 18.08 zapisa) više ne važi doslovno — tabela je sad u [[reference/kljucne-lekcije-projekat]], ne u `CLAUDE.md`; brisanje/arhiviranje po isteku roka ide tamo, ne kao edit na `CLAUDE.md`.
+
+Nijedna od tri izmene nije dirala build, bazu ni sadržaj sajta — čisto vault/dokumentacija, bez backup-a jer nema rizika po produkciju.
+
 ## 2026-08-20 [claude-code] [W3 3.10] — Potvrdni regression sweep (236 str., 0 regresija) + backup na 2 lokacije ✅
 
 M je posle pomeranja go-live-a (unos ispod) eksplicitno tražio da se svejedno uradi planirani

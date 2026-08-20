@@ -23,6 +23,7 @@
 
 **2026-08-20**
 
+- ✅ `[claude-code]` [ALATI] Vault higijena: `CLAUDE.md` (39,5→26,6 KB, −33%) + `naucene-lekcije.md` (251→1,7 KB indeks + 4 tematska fajla) + `woodmart-sabloni.md` (78,8→13,8 KB, −82%) — sva 3 preostala 18.08 nalaza zatvorena, 0 sadržaja izgubljeno
 - ✅ `[claude-code]` [W3 3.10] Potvrdni regression sweep (236 str., 0 regresija) + fix mrtvog linka Onda→draft Maxionda + backup na 2 lokacije (G:+C:) — noćni task 03:00 bio prekinut usred zip-a — [[dnevnik/2026-08-20-potvrdni-sweep-i-backup-posle-freeze]]
 - ✅ `[claude-code]` [PLAN] Go-live pomeren +14 dana: UTO 25.08 → **UTO 08.09** (M, razlog nezabeležen); freeze/gate/rezerva pomereni istim korakom — [[odluke/_pregled-odluka]]
 - ✅ `[claude-code]` [C3] Batch izmene (6 oblasti, ~20 stavki) + 5 brend logotipa sa zvaničnih sajtova — [[dnevnik/2026-08-20-batch-izmene-6-oblasti]]
@@ -87,10 +88,9 @@
 
 **Vault higijena — van sadržajnog prozora, ne blokira gate** (nalazi 18.08, [[dnevnik/2026-08-18-token-audit-rotacija-ledgera]]):
 - ✅ ~~`PROGRESS` „Blokeri" = 27 KB = 70% ovog fajla, 45 stavki~~ — **SKRAĆENO 2026-08-18** na ~7,5 KB / 28 stavki; ceo fajl 41,2 → 22,1 KB (**−46%**, ≈−6k tokena po sesiji). Pun tekst pre skraćivanja doslovno u [[dnevnik/2026-08-arhiva-progress]]
-- 🟡 `CLAUDE.md` (38,5 KB ≈ 12k tokena, čita se svaki start) → izmestiti §4.1/§7.1/§7.3/§10/§14/§15 u `reference/`
-- 🟡 `reference/naucene-lekcije.md` (230 KB) staje u 2000 linija → svako čitanje povlači ceo fajl (~75k tokena); iseći na 4 tematska fajla
-- 🟡 `migracija/woodmart-sabloni.md` (79 KB) je „OBAVEZNO prvo" za svaki W1 → kratak checklist + duboka referenca
-- ⚪ Posle 08.09: obrisati mapu numeracije iz `CLAUDE.md` §10
+- ✅ ~~`CLAUDE.md` (38,5 KB) → izmestiti §4.1/§7.1/§7.3/§10/§14/§15 u `reference/`~~ — **ZATVORENO 2026-08-20**. §4.1/§7.1(detalj)/§7.3/§10/§14(pun spisak) izmešteni u 5 novih `reference/*` fajlova, kratki pokazivači ostali na mestu; §15 nedirano (već 4 reda). **39,5 → 26,6 KB (−33%)**. Mapa renumeracije iz §10 je otišla sa ostatkom sadržaja u [[reference/kljucne-lekcije-projekat]] — stavka „obrisati posle 08.09" više ne važi jer tabela nije više u `CLAUDE.md`.
+- ✅ ~~`reference/naucene-lekcije.md` (230 KB) staje u 2000 linija~~ — **ZATVORENO 2026-08-20**. Iseckano na 4 tematska fajla (0 izgubljenih unosa, potvrđeno pokrivenošću linija): [[reference/lekcije-wp-db-tehnika]] (103) · [[reference/lekcije-seo-sadrzaj-migracija]] (55) · [[reference/lekcije-ads-tracking]] (19) · [[reference/lekcije-alati-vault-delegati]] (46). Original postaje indeks (251 → 1,7 KB).
+- ✅ ~~`migracija/woodmart-sabloni.md` (79 KB) je „OBAVEZNO prvo" za svaki W1~~ — **ZATVORENO 2026-08-20**. Kratak checklist (pravila/utility klase/šabloni/Otvoreno) ostaje na mestu, 25 F7.x dated gotcha-a izmešteno u [[migracija/woodmart-gotchas-detalji]]. **78,8 → 13,8 KB (−82%)**.
 
 **Zatvoreno pre prvog freeze-a (16.08):**
 - Ništa nije obavezno otvoreno. W1 (red A 33/33, Polish 1–4, S1–S8, Court builder,

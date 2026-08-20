@@ -126,51 +126,11 @@ na Maximize Conversions.
 
 ### 4.1 Napredniji eventi — stanje potvrđeno direktno u GTM-u 2026-07-22
 
-**✅ Već implementirano i ožičeno u GTM-TRDT8K9 (potvrđeno direktno u UI, ne
-pretpostavka):**
-- `view_product_category` — GA4 Event tag, trigger "Window Loaded" (Page Path
-  regex na ecotile/esd-pod/antistatik/industrijski-podovi/sportsk/tenis/padel/
-  pickleball/odbojk/kosark/basket/3x3/bergo). Parametar `category_name` preko
-  `{{RT - category_name}}` promenljive. Koristi se u publici "High-Intent B2B
-  Bidders" (sek. 5) — više NIJE pretpostavka, potvrđeno da tag/trigger stvarno
-  postoji.
-- `epoxy_conquest_engagement` — GA4 Event tag, trigger Scroll Depth OR Timer
-  (Timer: interval 30000ms, **Limit 1**, Page Path contains
-  `/epoksidni-podovi-ili-ecotile-podovi`). Limit 1 potvrđuje "fires samo jednom"
-  pravilo — filteri i dalje `count ≥ 1`, nikad `> 1`.
-- `lead_form_start` — GA4 Event tag, trigger "Custom Event trigger" (Custom
-  HTML tag "Lead Form Start" na All Pages šalje custom event u dataLayer).
-
-**🆕 Dodato 2026-07-22 (DRAFT u Workspace, NIJE Submit-ovano — čeka odobrenje):**
-- `pdf_download` — trigger "Klik na PDF" (Just Links, Click URL contains
-  `.pdf`) + GA4 Event tag sa parametrima `link_url={{Click URL}}` i
-  `link_text={{Click Text}}`. Pokriva sve postojeće PDF linkove (tehnički
-  listovi, sertifikati) na proizvod-stranicama, potvrđeno curl-om na Ecotile
-  E500/7 (5 PDF linkova).
-- `gallery_view` — trigger "Klik na galeriju proizvoda" (All Elements, Click
-  Classes contains `woocommerce-product-gallery` AND Page Path contains
-  `/proizvod/`) + GA4 Event tag, **Tag firing options = Once per page** (da
-  višestruki klik na thumbnail-e ne naduva brojku — isti obrazac kao epoxy
-  "fires jednom"). Bez custom parametara (GA4 automatski hvata page_location).
-  Potvrđeno na pravoj WooCommerce galeriji (`.woocommerce-product-gallery__image`
-  klasa, PhotoSwipe lightbox).
-
-🟢 **Ispravka 2026-07-22 (W3 3.10 regresija)**: stari "gtag stub id=DUMMY" gotcha
-gore je bio zastareo/netačan u trenutku pisanja — u stvarnosti lokalni build
-(`localhost`) nije imao NIKAKAV GTM/gtag kod, ni pravi ni DUMMY (BLOK A rad je
-postojao samo u GTM UI, embed snippet je ostao na starom Porto/Kallyas buildu i
-nikad nije prenet u WoodMart rebuild — nula analitike da je otišlo na migraciju
-neprimećeno). Popravljeno preko `mu-plugins/al-tracking-gtm-consent.php`
-(doslovna kopija live GTM+consent koda) — lokalni build sada učitava PRAVI
-GTM-TRDT8K9 kontejner. GTM Preview/Tag Assistant protiv `localhost` nije
-testiran ovu sesiju (moguće da i dalje ne radi iz drugih razloga — self-signed
-okruženje, CORS i sl.); ako zatreba live-test triggera pre Submit-a, i dalje je
-najsigurnija opcija GTM Preview protiv **live** antasline.com URL-a (read-only,
-samo dodaje `gtm_debug` query param).
-
-- **Enhanced Conversions** — GTM konfiguracija koja hešira (SHA-256) email/telefon
-  iz kontakt forme i šalje ih Google Ads-u za precizniji cross-device match. Nije
-  još implementirano — priprema je na čekanju.
+Pet eventa ožičeno u GTM-TRDT8K9: `view_product_category` i `epoxy_conquest_engagement`
+i `lead_form_start` su LIVE (potvrđeno u UI); `pdf_download` i `gallery_view` su DRAFT
+u Workspace, čekaju Submit. Enhanced Conversions (SHA-256 email/telefon hash) nije još
+implementirano. Pun detalj (trigger konfiguracija, parametri, gotcha istorija):
+[[reference/gtm-eventi-implementacija]]
 
 ---
 
@@ -243,70 +203,14 @@ Format: reč bez navodnika = broad negative · `"fraza"` = phrase negative ·
 > 🔴 **M odluka 2026-08-13: Yoast je van upotrebe, ne vraća se.** Rank Math je
 > jedini SEO plugin projekta — nova pravila: pisati isključivo u `rank_math_*`
 > ključeve, verifikovati Rank Math izlaz u `<head>`, ne predlagati povratak na
-> Yoast. Stara odluka „Yoast ostaje (ne RankMath)" iz [[odluke/_pregled-odluka]]
-> (28.06) je **ukinuta** — stajala je kao tvrdo pravilo 8 dana posle same
-> migracije i bila aktivan izvor grešaka (13.08 umalo pogrešan meta ključ na 13
-> arhiva).
->
-> **Fajlovi obrisani 2026-08-13:** `wp-content/plugins/wordpress-seo` više ne
-> postoji na buildu (bio 21 MB, v27.8, deaktiviran) — ne ide u migracioni paket
-> 25.08. `_yoast_wpseo_*` postmeta **ostaje u bazi** (690 redova) i povratak je
-> moguć raspakivanjem arhive
-> `C:\xampp\htdocs\antasline-backups\yoast-wordpress-seo-27.8_2026-08-13.tar.gz`
-> (postupak u [[odluke/_pregled-odluka]]). Brisano `rm -rf`-om, **ne**
-> `wp plugin delete` — taj poziva uninstall rutinu koja može da obriše i podatke
-> iz baze.
+> Yoast. `_yoast_wpseo_*` postmeta ostaje u bazi (690 redova, povratak moguć
+> raspakivanjem arhive ako ikad zatreba) — plugin fajlovi su obrisani.
 
-Šta je urađeno:
-- Uvoz podataka izveden PROGRAMSKI preko Rank Math-ove sopstvene
-  `\RankMath\Admin\Importers\Yoast` klase (Reflection poziv protected metoda
-  `settings()`/`postmeta()`/`termmeta()`/`usermeta()` iz wp-cli eval-file,
-  zaobiđen wp-admin wizard jer browser login nije bio dostupan). Pokrilo je
-  7843 post meta zapisa, 12 term meta, 4 user meta, opšta podešavanja.
-- **Gotcha #1**: `Meta` trait-ov `update_meta()` gate-uje na
-  `is_protected_meta($key)`, koji je `false` za `rank_math_*` ključeve (nemaju
-  `_` prefiks) van Rank Math-ovog sopstvenog AJAX/REST konteksta — prvi pokušaj
-  uvoza je "uspeo" (tačni brojevi u rezultatu) ali upisao PRAZNE vrednosti.
-  Fix: privremeni `add_filter('is_protected_meta', ...)` koji vraća `true` za
-  `rank_math_` prefiks, samo za trajanje import skripte.
-- **Gotcha #2**: Rank Math ne inicijalizuje `rank_math()->manager` (pa ni
-  title/meta/schema izlaz na front-endu) dok se ne "poveže" nalog (Setup
-  Wizard Connect korak) — bez toga su svi front-end filter-i (title, schema)
-  tiho neaktivni iako je plugin "active" u `wp plugin list`. Fix: legitimna
-  Rank Math opcija za preskakanje ovog koraka —
-  `update_option('rank_math_registration_skip', true)` +
-  `update_option('rank_math_is_configured', true)`.
-- **Gotcha #3**: Local SEO modul (LocalBusiness/NAP schema) nije uključen po
-  defaultu (`rank_math_modules` opcija) i Yoast import ga ne popunjava jer
-  NAP podaci (telefon 069 234 00 72, Ulcinjska 13) su ranije bili ubačeni
-  ručnim PHP filter-om (`wpseo_schema_organization` u child theme
-  `functions.php`), ne kroz Yoast Local plugin — importer nema šta da povuče.
-  Fix: `local-seo` dodat u `rank_math_modules`, NAP podaci ručno upisani u
-  `rank-math-options-titles` (`local_address`, `phone_numbers`,
-  `knowledgegraph_type=company`, `local_business_type=LocalBusiness`).
-- Stari Yoast-specifični PHP u `functions.php` (custom Product JSON-LD
-  fallback W2 2.7 + `wpseo_schema_organization` filter W2 2.8) je UKLONJEN —
-  Rank Math native Schema modul pokriva oboje bogatije (GTIN, dimenzije,
-  slike, offers za Product; Organization+LocalBusiness za NAP). Product
-  schema se sad emituje bez obzira na cenu (stari price-based duplication
-  guard više nema svrhu).
-- Breadcrumbs NISU dirani — WoodMart tema ima sopstveni native breadcrumb
-  (`woodmart_breadcrumbs()`) nezavisan od oba SEO plugina; theme opcije
-  `yoast_*_breadcrumbs`/`rankmath_*_breadcrumbs` su bile isključene i pre i
-  posle migracije, provereno u `xts-woodmart-options`.
-- Sitemap URL nepromenjen (`sitemap_index.xml`, isti kao Yoast) — trebalo je
-  `wp rewrite flush` posle uključivanja modula.
-- Verifikovano posle migracije: naslov/meta na 10 kategorija proizvoda +
-  homepage + kontakt + conquest članak (`/epoksidni-podovi-ili-ecotile-podovi/`)
-  su identični Yoast originalima (uklj. ćirilične/dijakritičke znakove), JSON-LD
-  na homepage i proizvod stranicama nema dupliranja (1× Organization/LocalBusiness,
-  1× Product po proizvod stranici).
-
-**Ostalo za proveru pri sledećem doticaju ove teme**: Rank Math admin UI
-(Setup Wizard/Dashboard) nikad nije otvoren u browseru ovu sesiju — cela
-migracija je urađena programski preko wp-cli. Ako nešto u UI izgleda
-"nedovršeno" (npr. Connect banner), to je očekivano — funkcionalno je sve
-aktivno preko `rank_math_registration_skip`.
+Uvoz je urađen programski preko Rank Math-ove Yoast importer klase (wp-cli
+eval-file), sa 3 gotcha-a (protected-meta gate prazni upis, registration-skip
+za front-end izlaz, ručni upis Local SEO/NAP podataka). Verifikovano: title/meta
+na 10 kategorija + homepage + kontakt + conquest članak identični originalima,
+JSON-LD bez dupliranja. Pun detalj i sve tri popravke: [[reference/rankmath-migracija-detalji]]
 
 ### 7.2 Struktura i konvencije (lokalni build)
 - WooCommerce URL-ovi (parity sa live, od 2026-07-07): `/proizvod/` (flat) i
@@ -322,19 +226,10 @@ aktivno preko `rank_math_registration_skip`.
 
 ### 7.3 WPBakery — poznati problemi (istorijski, tema je od jula 2026 WoodMart)
 
-> ⚠️ Build je prešao sa Porto+WPBakery na **WoodMart 8.5.4 + child** (vidi §2 i
-> `[[migracija/woodmart-sabloni]]` za trenutne gotcha-e). Ovaj pod-odeljak je
-> zadržan jer reimportovani postovi (F3, pun reimport sa live-a) mogu i dalje
-> nositi stari WPBakery shortcode markup unutar `post_content` — ako se na to
-> naiđe, važe pravila ispod. Post 4937 nalaz je potvrđeno **moot** (2026-07-22):
-> `/industrijski-podovi/` je nova WoodMart stranica (ID 16567, rebuild
-> 2026-07-05), 4937 je draft.
-- JS greška "Cannot read properties of undefined" dolazi od nepoznatih/starih
-  shortcode atributa ili nezatvorenih shortcode-ova
-- Pre bilo kakvog programskog ubacivanja blokova: proveriti tačnu verziju
-  `js_composer`, pisati markup koji odgovara toj verziji, regenerisati
-  `_wpb_shortcodes_custom_css` i `_wpb_post_custom_css` post meta posle izmena
-  sadržaja, **uvek prvo backup** (`wp db export`)
+Tema je prešla na WoodMart 8.5.4 + child (§2, `[[migracija/woodmart-sabloni]]`
+nosi trenutne gotcha-e). Ako reimportovan post (F3, pun reimport sa live-a) i
+dalje nosi stari WPBakery shortcode markup u `post_content` — pravila i JS
+gotcha-i: [[reference/wpbakery-legacy-gotchas]]
 
 ### 7.4 Parity strategija (od 2026-07-07 — zamenila staru redirect mapu)
 - **Build se pravi 1:1 prema live sajtu** (URL + content parity); redirect mapa
@@ -503,81 +398,14 @@ dalje isključen.**
 
 ## 10. KLJUČNE LEKCIJE (da se ne ponavljaju greške)
 
-> 🔢 **Numeracija ispravljena 2026-08-18.** Ova sekcija je ranije nosila broj
-> **9**, isti kao „WORKFLOW I ALATI" — pa je „§9" u starijim beleškama
-> dvosmislen. Prevod starih brojeva na nove:
->
-> | Staro | Novo | Sekcija |
-> |---|---|---|
-> | §9 (lekcije) | **§10** | KLJUČNE LEKCIJE — *telefon, silo, throttling, GTM* |
-> | §9 (workflow) | §9 | WORKFLOW I ALATI — *tri-surface git, tokeni* |
-> | §8.1–8.7 | §9.1–9.7 | podsekcije workflow-a |
-> | §10 | **§11** | FORMAT IZVEŠTAVANJA |
-> | §11 | **§12** | ULOGE |
-> | §12 | **§13** | GDE PROVERITI TRENUTNO STANJE |
-> | §13 | **§14** | KOMPLETAN HUB |
-> | §14 | **§15** | ISTORIJSKI SNAPSHOT |
-> | §15 | **§16** | ZA CLAUDE-A SLEDEĆI PUT |
->
-> Datirane beleške u `dnevnik/` i arhivama **nisu prepravljane** — one su
-> zapis o tome šta je tada urađeno; koristi ovu tabelu pri čitanju.
+Kurirane lekcije po domenu (Tracking · Konektor/Ads dijagnostika · SEO ·
+Telefon) + istorijska mapa renumeracije sekcija (staro §8.x/§9 → novo
+§9.x/§10–16, ako naiđeš na „§9" u starijoj belešci): [[reference/kljucne-lekcije-projekat]]
 
-**Tracking:**
-- Svaki GTM consent update handler mora slati eksplicitne vrednosti za sve
-  4 kategorije — prazan `gtag('consent','update',{})` ne preklapa prethodno
-  granted stanje; GTM Preview pokazuje "-" u On-page Update koloni ako je update prazan
-- Ugašeni WP pluginovi ne izvršavaju PHP — ako baner ostane posle
-  deaktivacije, grep-uj tekst banera, ne ime plugina
-- GTM ručno pisani container JSON import puca sa "Error deserializing enum
-  type [EventType]" na ovom kontejneru — ne pokušavati ponovo. Jedini pouzdani
-  putevi: (A) ručno kreiranje u GTM UI, ili (B) Export kontejnera pa merge u
-  tačnom formatu
-
-**Konektor / Google Ads dijagnostika** (istorijski Windsor.ai lekcije, i
-dalje važe principijelno — Windsor je istekao 2026-07-27, zamenjen
-sopstvenim konektorom preko `.claude/skills/antasline-konektor/`, videti
-[[reference/api-konektor-setup.md]]):
-- ECOTILE kolaps isporuke (visok impression share + sitni apsolutni
-  impressions + skok CPC) = throttling na nivou naloga (balans/verifikacija),
-  ne pad tražnje na tržištu
-- Prazan/nulti odgovor za kampanju ne znači grešku konektora — proveri
-  spend+impressions pre nego što pretpostaviš kvar (throttling istorija)
-- Konektor (i stari Windsor, i novi sopstveni) je read-only prema GTM/GA4
-  — potvrđuje da eventi stižu, ali ne može da menja tagove/triggere/key
-  event podešavanja
-- GA4 audience membership size se i dalje ne izlaže direktno preko
-  standardnog Data API runReport-a — `active_users` segmentiran po
-  `audience_name` (custom dimenzija, ako postoji) ostaje najbliži proxy;
-  prazne publike se jednostavno ne pojavljuju u rezultatima
-- Conversion action segmentacija vraća samo akcije sa bar jednom konverzijom
-  u traženom periodu — nove akcije sa nula konverzija se neće pojaviti
-- GA4 `in`-operator filter je nepouzdan — povuci sve evente nefiltrirano i
-  agregiraj u Python-u
-- Week-over-week: koristi eksplicitne `date_from`/`date_to` (`YYYY-MM-DD`)
-  za prethodni period, ne presets
-- `/hvala-za-poruku/` conversion proxy: filter `[["page_path", "contains",
-  "hvala"]]` na `screen_page_views`
-
-**SEO:**
-- Content parity je bitniji od 301 redirekcija samih po sebi — title/meta,
-  H1/H2 struktura, broj reči, pokrivenost ključnih reči, interni linkovi,
-  schema, indexability direktive — sve mora da se proveri stranica po stranicu
-- Silo SEO benefit dolazi od internog linkovanja i breadcrumb schema-e, ne
-  od kategorije-u-URL strukture
-- `/sportske-podloge/kosarkaske-konstrukcije/` — visok organski saobraćaj
-  (478 GSC klikova) bez potvrđenog redirect cilja — visok prioritet
-
-**Telefon:**
-- 🔴 **Oba broja su `069`** (potvrđeno na live-u i u temi 2026-07-29). „072" i
-  „074" su skraćenice za POSLEDNJE DVE CIFRE, ne prefiksi:
-  **linija 72** = `069 234 00 72` (`tel:+381692340072`) ·
-  **linija 74** = `069 234 00 74` (`tel:+381692340074`).
-  Nikad ne pisati „072 234 00 72" — takav zapis je stajao na 50 lokalnih
-  stranica i 37 Yoast metaopisa, ispravljen 2026-07-29.
-- **Linija 72 dominira** klikovima na telefon (~50 vs ~7 za liniju 74);
-  ~46/50 klikova sa mobilnog → prioritet linije 72 u ad asset-ima i on-page CTA-ovima
-- `mailto` sa pre-populate `?subject=` postoji na bar jednoj stranici
-  proizvoda — vredi proširiti na ostale
+🔴 Dva pravila odavde vredi ponoviti jer se stalno koriste: **telefon je uvek
+`069`** (linija 72 = `069 234 00 72`, linija 74 = `069 234 00 74` — „072"/„074"
+su poslednje dve cifre, ne prefiks) i **GTM ručni JSON import na ovom
+kontejneru puca** — izmene idu kroz UI ili export/merge, ne import.
 
 ---
 
@@ -630,54 +458,16 @@ Za **"gde smo stali danas"** uvek prvo pogledaj:
 
 ## 14. KOMPLETAN HUB SVIH FAJLOVA (Wikilinks za navigaciju)
 
-### 📋 OSNOVNO — Pročitaj prvo
-- `[[00-INDEX]]` — Dashboard (Dataview tabele)
-- `[[CLAUDE]]` — Ovo (instrukcije + kontekst)
-- `[[PROGRESS]]` — Trenutno stanje
-- `[[2026-07-06-MASTER-PLAN-V2]]` — Master plan do live-a (2026-09-08) — **aktivan**
-- `[[2026-07-02-MASTER-PLAN-DO-LIVE]]` — Stari plan (⛔ superseded, istorijski snapshot)
+**Pročitaj prvo:** `[[00-INDEX]]` (Dashboard) · `[[CLAUDE]]` (ovo) · `[[PROGRESS]]`
+(trenutno stanje) · `[[2026-07-06-MASTER-PLAN-V2]]` (master plan, aktivan) ·
+`[[DNEVNIK-NAPRETKA]]` (append-only ledger).
 
-### 📖 HRONOLOGIJA — Šta je urađeno po datumima
-- `[[DNEVNIK-NAPRETKA]]` — Append-only ledger (svaka sesija)
-- `[[dnevnik/2026-07-02-analiza-segmentacije]]` — GA4 publike + Ads strategija
-- `[[dnevnik/2026-07-02-gsc-keywords-analiza]]` — 60 GSC queries + 4 kritična prioriteta
-- `[[dnevnik/2026-07-02-basket-page-faq-schema]]` — FAQ + schema za basketball
-- `[[dnevnik/2026-06-28-postavljanje-vault]]` — Vault setup + GitHub most
-- `[[dnevnik/2026-06-28-db-backup-woo]]` — WooCommerce backup
-- `[[dnevnik/2026-06-28-woo-transfer-attempt]]` — WooCommerce migracija (čeka SSH)
-- `[[dnevnik/ADS-DNEVNIK]]` — Living hub za Google Ads, RSA banka, Faze 0-4
+**Strategija/odluke:** `[[odluke/_pregled-odluka]]` · `[[reference/identifikatori]]` ·
+`[[reference/naucene-lekcije]]` (tehnički gotchas) · `[[reference/cenovnik]]` (M10) ·
+`[[reference/claude-skilovi]]`.
 
-### 🧱 BLOK ORGANIZACIJA — Rad po prioritetima
-- `[[blokovi/BLOK-A-tracking]]` — ✅ ZATVOREN (GTM v10, Consent, key events)
-- `[[blokovi/BLOK-B-publike]]` — ✅ ZATVOREN (6 GA4 publika)
-- `[[blokovi/BLOK-C-sledece]]` — ⏳ AKTIVNO (C1 redirect / C2 content / C3 on-page)
-
-### 🎯 STRATEGIJA I ODLUKE
-- `[[odluke/_pregled-odluka]]` — Sve donete odluke + zašto
-- `[[reference/identifikatori]]` — Google Ads/GA4/GSC/GTM ID-evi
-- `[[reference/naucene-lekcije]]` — Tehnički gotchas (GTM, Windsor, SEO, telefon)
-- `[[reference/brend-knjiga]]` — Brand book: paleta boja, Inter tipografija, logo varijante, web look&feel (izvor: `Logo/*.pdf`)
-- `[[reference/claude-skilovi]]` — Pregled Claude Code skilova (/antasline-sesija, /obogati-proizvod, /w6-social, /nedeljni-izvestaj)
-- `[[reference/drustvene-mreze]]` — Popis social profila (W6 Faza 0, Miroslav popunjava)
-- `[[reference/cenovnik]]` — Jedinstveni cenovnik (M10, Miroslav popunjava jednom, Claude vuče odatle)
-- `[[reference/konkurencija-trziste-analiza]]` — Tržište i konkurencija po niši (2026-08-07): ko su konkurenti, gde smo šuplji/jači, preporuka fokusa
-- `[[reference/token-tracking]]` — Token usage tracking konvencija (Token Logs/.token_log.jsonl)
-- `[[reference/chrome-web-platform-2026]]` — Chrome 148–151 + DevTools 151: šta je upotrebljivo uz fallback, šta se meri, 🔴 prerender vs. konverzija
-
-### 📚 DOKUMENTACIJA
-- `[[briefs/_README]]` — (ako postoji brief za kampanje)
-- `[[seo/_README]]` — SEO strategija
-- `[[CLAUDE-CODE-instrukcija]]` — Instrukcije za Claude Code rad
-- `[[CLAUDE-CODE-instrukcija-CPANEL]]` — cPanel live rad instrukcije
-
-### 🔗 VAŽNI ESTERNI LINKOVI (U tekstu)
-- Live sajt: https://www.antasline.com
-- Lokalni build: http://localhost/antasline
-- Google Ads nalog: 156-886-0314 (vidi `[[reference/identifikatori]]`)
-- GA4: 292720335
-- GTM: GTM-TRDT8K9
-- GSC: sc-domain:antasline.com
-- GitHub vault: github.com/Chichabudhha/antasline-vault (privatan)
+Pun spisak (hronologija po datumu, blok organizacija, brend/design reference,
+dokumentacija, spoljni linkovi): [[reference/hub-navigacija]]
 
 ---
 
