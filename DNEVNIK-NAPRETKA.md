@@ -11,6 +11,20 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
+## 2026-08-20 [claude-code] [C3] — Batch izmene (6 oblasti, ~20 stavki): kontakt padding, blog sidebar, home page, 4 stranice, mobilni katalog, planer terena ✅ (2 blokirane na logo asset-ima)
+
+M poslao paket izmena preko 6 oblasti sajta, tražio plan pre izvršenja (plan sačuvan, odobren, sprovedeno u 4 faze). DB backup pre svake DB izmene: `antasline_local_2026-08-20_pre-batch-izmene.sql`.
+
+**Kod-only (Faza 1):** kontakt sekcija padding-top −40% (dva selektora); blog sidebar svedena na kategorije (search+recent-posts deaktivirani preko `wp widget`), "Search for posts" prevedeno preko `gettext_with_context_woodmart`; ukinut horizontalni red kategorija (`shop_categories` theme opcija) — sidebar meni je već postojao i radio; Bergo u "Košarkaške konstrukcije" proveren u bazi, **već nije tu** (ništa za ukloniti); mobile hero overlay pojačan (donji gradient stop .62→.80); header/footer poziv-ikonica zamenjena pravim handset SVG-om; footer sticky toolbar preređan (Katalog\|Email\|Poziv, `link_2`/`link_3` sadržaj i ikone), nova `katalog.svg`; planer terena — 3x3 `court_m` swap (bio [15,11], trebalo [11,15] zbog Cw=dubina/Ch=širina konvencije iz `lines()`) i responsive fix za veliki koš (`.al-cb__svg{width:100%;height:auto}` umesto fiksnog px).
+
+**Home page (16550):** hero naslov → "Profesionalna rešenja za svaki prostor"; najprodavaniji proizvodi zamenjeni sa 4 stvarna proizvoda (ESD 16542, Bergo Ultimate 16770, Ecotile E500/7 16538, Goalrilla DC72E1 16973 zadržan); Ergomat dodat u "Zastupamo brendove" (Artisport uklonjen, nije na traženoj listi).
+
+**4 stranice:** dimenzije-fudbalskog-terena (17027) — uklonjen dupli hero red + `_woodmart_title_off`, sad standardan post layout sa jednim H1; ESD "priča kupca" (6874) — naslov ispravljen, 3 lažna zelena "heading" span-a → prava `<h2>`, slika izvučena iz `<h2>`; podovi-za-radnje (16142) — hero slika zamenjena `rtile-ploce.webp` (jedina prava product-shot, ostale dve su generičke stock-fotke tuđe radnje pogrešno alt-tagovane kao "R-Tile"); kosarka-3x3-tereni (16584) — hero slika, naslov, benefit heading, tehnički tekst (16×11 rekreativno + link ka `dimenzije-kosarkaskog-terena`), galerija 3→9 fotografija iz sveže 2026/02 serije.
+
+**Mobilni katalog (Faza 4):** `/katalog/` sada prikazuje `[woodmart_categories]` grid (17 top-level kategorija) IZNAD flat liste proizvoda; CSS/`body_class` filter (`is_shop()` → `.al-katalog-mobile`) sakriva grid na desktopu i sakriva flat listu na mobilnom — kategorija-arhive (`.tax-product_cat`) nisu dirane.
+
+🔴 **Blokirano — čeka asset od M:** Luštica Bay logo (sekcija "Veruju nam") i loga za Sportpartner/Objectflor/Condor Grass/Isotrack (sekcija "Zastupamo brendove") ne postoje ni u jednom uploads folderu — samo product-shot fotke, nedovoljno za brend-logo red.
+
 ## 2026-08-20 [claude-code] [C] — Codex srl uvoz: 8 proizvoda (flooring + zaštitna padding linija), Onda objavljena sa cenom ✅
 
 Uvezeno 8 proizvoda italijanskog proizvođača Codex srl (od 30 kandidat-URL-ova, samo 5 nose realnu specifikaciju — ostalo dupli/use-case landing stranice, folded u "Primena" sekcije umesto posebnih SKU-ova). Onda (17957) objavljena sa cenom 16.906 RSD sa PDV (obračunato od datih 14.088+PDV); ostalih 7 su draft. Usput ispravljena i pogrešno mapirana fire-klasa (Wall Mat) i, na M-ovu opasku o duplikatima, spojeno 6 Quadrio use-case varijanti u osnovni proizvod.
