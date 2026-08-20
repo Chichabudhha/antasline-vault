@@ -23,6 +23,7 @@
 
 **2026-08-20**
 
+- ✅ `[claude-code]` [W3 3.10] Potvrdni regression sweep (236 str., 0 regresija) + fix mrtvog linka Onda→draft Maxionda + backup na 2 lokacije (G:+C:) — noćni task 03:00 bio prekinut usred zip-a — [[dnevnik/2026-08-20-potvrdni-sweep-i-backup-posle-freeze]]
 - ✅ `[claude-code]` [PLAN] Go-live pomeren +14 dana: UTO 25.08 → **UTO 08.09** (M, razlog nezabeležen); freeze/gate/rezerva pomereni istim korakom — [[odluke/_pregled-odluka]]
 - ✅ `[claude-code]` [C3] Batch izmene (6 oblasti, ~20 stavki) + 5 brend logotipa sa zvaničnih sajtova — [[dnevnik/2026-08-20-batch-izmene-6-oblasti]]
 - ✅ `[claude-code]` [C] Codex srl uvoz: 8 proizvoda, Onda objavljena sa cenom — [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
@@ -77,10 +78,12 @@
   **0 kvarova**; 30 URL promena i 18 meta izmena vs 13.08 — sve vezane za dokumentovane odluke, nula
   neplaniranih. 301 mapa reverifikovana: 80 pravila, 43 cilja 200, 0 kolizija. Nov baseline za §B6:
   `analiza/2026-08-19-regression-pre-freeze-*`. → [[dnevnik/2026-08-19-regression-sweep-pre-freeze]]
-- 🟡 **Brz potvrdni sweep + nov backup zamrznutog builda na 2 lokacije** — bila je jedina gate
-  stavka vezana za stari freeze (20.08); sa prozorom produženim do 03.09 nije više hitna, ali
-  ostaje otvorena i treba je uraditi **pre novog freeze-a 03.09** (pokriti i 2 content stavke
-  ušle 20.08 — batch izmene + Codex uvoz — pošto backup od 17.08 ionako više nije aktuelan).
+- ✅ **Brz potvrdni sweep + nov backup zamrznutog builda na 2 lokacije — ZATVORENO 20.08 (isto veče).**
+  236 stranica, 0 regresija (prvi prolaz je lažno prijavio 235/0 razlika zbog zastarelog Rank Math
+  sitemap keša — Onda nije bila uključena; drugi prolaz posle brisanja keša je našao pravi nalaz:
+  mrtav link Onda→draft Maxionda, fixovan). Backup na G:+C: — noćni task 03:00 bio prekinut usred
+  zip-a (mašina ugašena/uspavana), ručni run posle prikačivanja G: diska uspeo na obe lokacije.
+  → [[dnevnik/2026-08-20-potvrdni-sweep-i-backup-posle-freeze]]
 
 **Vault higijena — van sadržajnog prozora, ne blokira gate** (nalazi 18.08, [[dnevnik/2026-08-18-token-audit-rotacija-ledgera]]):
 - ✅ ~~`PROGRESS` „Blokeri" = 27 KB = 70% ovog fajla, 45 stavki~~ — **SKRAĆENO 2026-08-18** na ~7,5 KB / 28 stavki; ceo fajl 41,2 → 22,1 KB (**−46%**, ≈−6k tokena po sesiji). Pun tekst pre skraćivanja doslovno u [[dnevnik/2026-08-arhiva-progress]]
@@ -180,9 +183,8 @@ checklisti §B. Uslov za pokretanje: Miroslav ima ~6h slobodnih tog dana (M odlu
 - 🔴 **AI slike preko API-ja se PLAĆAJU** (`gemini-2.5-flash-image`, ~0,04 USD/sl.; 93 poziva od 04.08). Od 18.08: generisanje samo uz izričito M odobrenje; besplatna varijanta je Gemini chat.
 - 🆕 **Codex Onda cena (17957)** — potvrdi 16.906 RSD sa PDV (preračunato od datih 14.088+PDV) ili ispravi ručno. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
 - 🆕 **7 Codex draft proizvoda** (Quadrio/Polyshock/Interior/Sport Roll/Crossfit Floor/Maxionda/Wall Mat) — pregled i publish odluka. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
-- 🆕 **Onda objavljena baš na 20.08** (istog dana je pao i M odluka da se freeze pomeri na 03.09,
-  pa ovo više nije „poslednji dan prozora") — uključi u brz potvrdni sweep + nov backup pre novog
-  freeze-a. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
+- ✅ ~~Onda objavljena baš na 20.08~~ — pokrivena potvrdnim sweep-om isto veče (v. iznad); usput
+  otkriven i fixovan mrtav link ka draft Maxiondi.
 
 **🟡 Ads — ne blokira 08.09, blokira reaktivaciju pauziranih kampanja:**
 - 🔴🆕 **„Podloge za terase i bazene" troši uz `PAUSED` status** (18.08): 4.571 RSD / 250 klikova u dve nedelje, ad grupe i asseti ispod nje ENABLED, najjeftiniji CPC u nalogu (20,96 vs 94,41). Pali li se ručno i hvata li pauza ad grupe/assete? (Zamenjuje stavku od 11.08 „je li pauza namerna".) → [[dnevnik/2026-08-18-nedeljni-izvestaj-terase-status]]

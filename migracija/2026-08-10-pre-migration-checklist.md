@@ -41,9 +41,14 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
       provereno, skinuto na `C:\Miroslav\Antas line\Backup` + `G:\AntasLine-Backups`,
       server-kopije obrisane. Gate stavka zadovoljena — **B1 ispod i dalje traži
       NOVI backup na sam dan migracije** (25.08), ovaj ne zamenjuje taj korak.
-- [ ] **Backup finalnog lokalnog builda** na 2 lokacije — 🔴 **ostaje otvoreno do posle
-      novog freeze-a (20.08)**; backup od 17.08 je bezbednosna kopija tekućeg stanja, ne
-      „finalni build", jer je freeze tog dana ponovo otvoren.
+- [x] ✅ **Backup zamrznutog stanja (20.08) na 2 lokacije — IZVRŠEN 2026-08-20 uveče.**
+      🔴 Nalaz pre pokretanja: noćni zakazani task je 20.08 03:00 startovao, DB dump uspeo,
+      ali proces je prekinut usred zip-a (`LastTaskResult 3221225786`, mašina ugašena/uspavana)
+      — 0-bajtni zip, nijedan uspešan backup za 20.08 pre ove sesije. G: disk nije bio prikačen;
+      posle prikačivanja ručan `nocni-backup.ps1` run uspeo na obe lokacije u istom prolazu.
+      🔵 Ovo NIJE backup „finalnog builda pred migraciju" — go-live je pomeren na 08.09
+      (M odluka 20.08), pa pravi finalni backup ide bliže **novom** freeze-u (03.09).
+      → [[dnevnik/2026-08-20-potvrdni-sweep-i-backup-posle-freeze]]
       ✅ **Ograničenje „samo jedna destinacija" POPRAVLJENO 2026-08-17.** Do tada je
       `nocni-backup.ps1` pisao na **jednu** destinaciju (G:→OneDrive→lokalno), pa se serija
       razlivala (10–12.08 na `C:`, 13–14.08 na `G:`, OneDrive folder ne postoji) — **nijedan
@@ -63,8 +68,13 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
             30 URL promena + 18 meta izmena, **sve vezane za dokumentovane odluke, nula
             neplaniranih**. 🔴 **Nov baseline za §B6 je `analiza/2026-08-19-regression-pre-freeze-*`**,
             ne snimak od 13.08. → [[dnevnik/2026-08-19-regression-sweep-pre-freeze]]
-      - [ ] **posle freeze-a 20.08: brz potvrdni sweep** protiv baseline-a od 19.08 (očekivano
-            0 razlika ako 20.08 ne uđe nova izmena)
+      - [x] ✅ **IZVRŠEN 2026-08-20 uveče** (M eksplicitno tražio, ne čekati novi freeze 03.09).
+            **236 stranica** (235 + Onda, koja je objavljena 20.08), 0 non-200/h1_0/h1_multi/
+            jsonld_bad. Prvi prolaz je lažno prijavio 235/0 razlika — Rank Math sitemap keš je
+            bio zastareo, Onda nije bila u sitemap-u (poznat gotcha, v. §7.1 CLAUDE.md);
+            posle brisanja keš fajlova drugi prolaz je našao pravi nalaz: mrtav interni link
+            Onda→draft Maxionda (404), fixovan (link uklonjen, tekst ostao). Nov baseline za
+            §B6: `analiza/2026-08-20-regression-confirmatory-*`. → [[dnevnik/2026-08-20-potvrdni-sweep-i-backup-posle-freeze]]
       - [x] ✅ **301 mapa REVERIFIKOVANA 2026-08-19** (`redirect-verify.php`): **80 pravila ·
             43 jedinstvena cilja svi 200 · 0 duplikata izvora · 0 petlji · 0 kolizija sa živim
             stranicama.** Upozorenje za 16613 iz provere 13.08 više se ne javlja (stranica
@@ -73,7 +83,7 @@ Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
             `/podovi-za-garaze/` ispravno stoji. **Draft se NE regeneriše.**
             🔴 Ponoviti samo ako se 20.08 promeni ijedan slug ili neka draftovana stranica
             vrati u `publish`.
-      - [ ] **nov backup zamrznutog builda na 2 lokacije** (v. stavka iznad)
+      - [x] ✅ **nov backup zamrznutog builda na 2 lokacije** (v. stavka iznad, ista sesija)
       🔴 Sve tri staju u **jedan dan pre gate-a (21.08)** — zato izmene 17–20.08 držati
       lokalnim i bez dirania slugova.
       🔴 **18.08 — sadržajna izmena se DESILA, sweep više nije uslovan nego siguran:**

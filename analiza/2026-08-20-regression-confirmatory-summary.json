@@ -1,0 +1,28 @@
+{
+    "status": [],
+    "h1_0": [],
+    "h1_multi": [],
+    "jsonld_bad": [],
+    "notes": [],
+    "no_title": [],
+    "no_meta": [
+        "http://localhost/antasline/oznaka-proizvoda/namena-magacin-hala/",
+        "http://localhost/antasline/oznaka-proizvoda/namena-radionica/",
+        "http://localhost/antasline/oznaka-proizvoda/namena-sport-dvorana/",
+        "http://localhost/antasline/oznaka-proizvoda/namena-sportski-teren-otvoreni/",
+        "http://localhost/antasline/oznaka-proizvoda/namena-esd/",
+        "http://localhost/antasline/oznaka-proizvoda/namena-garaza/",
+        "http://localhost/antasline/oznaka-proizvoda/namena-terasa/",
+        "http://localhost/antasline/oznaka-proizvoda/namena-stala/",
+        "http://localhost/antasline/oznaka-proizvoda/bergo/",
+        "http://localhost/antasline/oznaka-proizvoda/ergomat/",
+        "http://localhost/antasline/oznaka-proizvoda/industrijski-amortizer/",
+        "http://localhost/antasline/oznaka-proizvoda/zastita-kablova/",
+        "http://localhost/antasline/oznaka-proizvoda/zastitnik-cevi/",
+        "http://localhost/antasline/oznaka-proizvoda/samolepljiva-zastita/",
+        "http://localhost/antasline/oznaka-proizvoda/konusni-stitnik/",
+        "http://localhost/antasline/oznaka-proizvoda/industrijski-bumper/",
+        "http://localhost/antasline/oznaka-proizvoda/namena-igraliste/",
+        "http://localhost/antasline/oznaka-proizvoda/namena-poslovni-prostor/"
+    ]
+}

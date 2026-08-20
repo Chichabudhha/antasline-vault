@@ -11,6 +11,27 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
+## 2026-08-20 [claude-code] [W3 3.10] — Potvrdni regression sweep (236 str., 0 regresija) + backup na 2 lokacije ✅
+
+M je posle pomeranja go-live-a (unos ispod) eksplicitno tražio da se svejedno uradi planirani
+potvrdni sweep + backup, ne čekati novi freeze (03.09). Prvi prolaz je lažno prijavio 235/0
+razlika — Rank Math sitemap keš je bio zastareo, Onda (objavljena danas) nije bila uključena
+(isti keš gotcha kao 18.08). Posle brisanja `uploads/rank-math/*.xml` drugi prolaz: **236
+stranica, 0 non-200/h1_0/h1_multi/jsonld_bad**, i pravi nalaz — mrtav interni link
+Onda→draft Maxionda (404), fixovan (link uklonjen, tekst ostao, verifikovano 200/1×H1).
+
+Backup: noćni zakazani task je 03:00 startovao, DB dump uspeo, ali proces prekinut usred zip-a
+(mašina ugašena/uspavana) — 0-bajtni fajl, nijedan uspešan backup za 20.08 pre ove sesije. G:
+disk nije bio prikačen; M ga prikačio na zahtev, ručan `nocni-backup.ps1` run uspeo na obe
+lokacije (G: + C:) u istom prolazu.
+
+**Nova lekcija:** sweep protiv sitemap-a treba raditi TEK posle provere da su sveže objavljene
+stranice u sitemap-u — inače lažno "0 razlika" maskira propuštenu proveru. → [[reference/naucene-lekcije]]
+
+Nov baseline za §B6: `analiza/2026-08-20-regression-confirmatory-*`.
+
+→ [[dnevnik/2026-08-20-potvrdni-sweep-i-backup-posle-freeze]]
+
 ## 2026-08-20 [claude-code] [PLAN] — Go-live pomeren +14 dana: UTO 25.08 → UTO 2026-09-08 (M odluka) ✅
 
 M odluka tokom otvaranja sesije, razlog nezabeležen (eksplicitno preskočeno kad je pitano).

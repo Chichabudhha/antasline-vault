@@ -5,6 +5,19 @@ azurirano: 2026-08-20
 
 # Naučene lekcije (tehnički gotchas)
 
+## Regression sweep protiv sitemap-a lažno prijavljuje "0 razlika" ako je sitemap zastareo (2026-08-20)
+
+`regression-sweep.php` čita listu URL-ova isključivo iz `sitemap_index.xml`. Rank Math kešira
+sitemap kao fajlove (`uploads/rank-math/*.xml`, gotcha zabeležen 18.08) — kad se proizvod objavi
+(`draft` → `publish`), keš se ne osvežava sam. Posledica: sveži publish se **tiho ne proveri**,
+a sweep i dalje prijavljuje "0 razlika naspram baseline-a" jer i baseline i novi sweep jednako
+propuštaju istu stranicu — brojevi se poklapaju, ali oba su pogrešna. Konkretan slučaj: Onda
+(17957) objavljena 20.08, prvi sweep isti dan pokazao 235/235 stranica i 0 razlika, dok stranica
+uopšte nije bila u sitemap-u. **Pravilo: pre svakog potvrdnog sweep-a posle publish/draft/slug
+promene prvo proveriti da je sveža stranica u relevantnom pod-sitemap-u** (`curl` + `grep` na
+slug), po potrebi obrisati `uploads/rank-math/*.xml` da se keš regeneriše, tek onda pokrenuti
+sweep. Detalji: [[dnevnik/2026-08-20-potvrdni-sweep-i-backup-posle-freeze]]
+
 ## `wp media import` puca na SVG preko "SVG Support" plugina van pune HTTP sesije (2026-08-20)
 
 `wp-cli media import fajl.svg` na ovom buildu baca fatalnu grešku ("Call to a
