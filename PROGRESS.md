@@ -19,6 +19,10 @@
 > [[dnevnik/2026-08-arhiva-progress]] · jun–jul: [[dnevnik/2026-07-arhiva-progress]]
 > · pune sesije: [[DNEVNIK-NAPRETKA]]
 
+**2026-08-20**
+
+- ✅ `[claude-code]` W1 KATALOG — 14 novih proizvoda od dobavljača **Codex srl** (IT), sportska zaštitna/podna linija (Quadrio, Polyshock, Onda, Maxionda, Wall Mat + 9 use-case varijanti); Onda objavljena sa cenom 16.906 RSD sa PDV (17957), ostalo draft; backup `antasline_local_2026-08-20_pre-codex-import.sql` — [[DNEVNIK-NAPRETKA]]
+
 **2026-08-19**
 
 - ✅ `[claude-code]` W3 3.10 — regression sweep pre freeze-a (0 kvarova) + reverifikacija 301 mape; nov baseline za §B6 — [[dnevnik/2026-08-19-regression-sweep-pre-freeze]]

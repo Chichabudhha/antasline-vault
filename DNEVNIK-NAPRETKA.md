@@ -11,6 +11,68 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
+## 2026-08-20 [claude-code] — Codex srl (codexsrl.com) proizvodi uvezeni: 14 novih, Onda objavljena sa cenom, ostalo draft
+
+M zadatak: dodati proizvode italijanskog proizvođača **Codex srl** (Treviso) —
+imamo potvrđenu cenu samo za Onda (14.088 RSD+PDV po ploči 2×1m). Obim je
+eksplicitno suziran (AskUserQuestion): Codex katalog ima 150+ proizvoda na
+3 jezika, većina van AntasLine asortimana (grejne maske, dečja oprema,
+brodska/industrijska zaštita, gadgeti) — uvezena su **samo flooring i
+sportska zaštitna padding linija**.
+
+**Proces:** WebFetch sitemap → 30 kandidat URL-ova (EN verzija) → fork za
+crawl/dedup/download slika (prvi fork poziv se odmah vratio sa 0 tool-poziva,
+harness hiccup — resume poruka ga je pokrenula, drugi pokušaj je uspeo i
+paralelno sam sâm radio istu ekstrakciju direktno preko `curl`+regex na
+sirovim HTML fajlovima jer je fork dugo ćutao; oba puta stigla su do istog
+zaključka). **Otkriveno:** od 30 URL-ova, samo 5 su prave "material data
+sheets" (tehničke specifikacije): Quadrio, Polyshock, Onda, Maxionda, Wall
+Mat. Ostalih 25 su ili dupli marketing landing stranice (ista specifikacija,
+druga slika-galerija) ili čisto kontekstualne "use-case" stranice (npr.
+"Padel field protections", "Basketball hoop protections") koje samo prikazuju
+Onda/Maxionda isečene za tu namenu — **nisu posebni materijali**. Zato:
+
+- **14 stvarnih proizvoda** kreirano (ne 25-30): Quadrio (baza), Polyshock,
+  Interior EVA obloga, Quadrio Terasa, Quadrio Gazebo, Sport Roll, Crossfit
+  Floor, Quadrio Atletska staza, Quadrio Štale, Quadrio Košarkaški teren,
+  Quadrio Rampa, Onda 22mm, Maxionda 28mm, Wall Mat 22mm — post ID 17888–17971.
+- 11 "use-case" landing stranica za Onda/Maxionda (stubovi, klupe, tribine,
+  teniske mreže, padel, koš...) **NISU** postale posebni proizvodi — sadržaj
+  je izvor za "Primena" tekst unutar Onda/Maxionda opisa, ne novi SKU.
+- Kategorije: postojeće (Sportske podloge / Podloge za bašte / Podloge za
+  štale i trave / Rampe i završni profili / **Zaštita i Bumperi** za
+  Onda/Maxionda/Wall Mat — nova kategorija NIJE otvorena).
+- Atributi: 3 nova `pa_materijal` termina (SBR guma, EVA/Polymat, PVC preko PE
+  pene), boje/montaža mapirane na postojeće termine. 🔴 Gotcha: prvi pokušaj
+  je mapirao Wall Mat-ov "Fire Retardant Class 1" (italijanski standard) na
+  postojeći EN termin `Bfl-S1` (EN 13501-1 **podni** pokrivač standard) —
+  pogrešno, jer Wall Mat nije pod i ekvivalencija nije potvrđena. Ispravljeno
+  odmah (uklonjen `pa_vatrootpornost` termin i iz `_product_attributes`
+  meta), tekst klase ostaje samo slobodan tekst u spec tabeli.
+  🔴 **Pravilo za sledeći put: ne mapirati strane/nacionalne fire-klase na
+  postojeće EN pa_vatrootpornost termine bez potvrđene ekvivalencije.**
+- 76 slika preuzeto sa codexsrl.com i uvezeno kao attachment-i (3-6 po
+  proizvodu), WP ih auto-konvertovao u `.webp` pri uploadu.
+- **Onda (17957) = publish, cena 16.906 RSD sa PDV** — obračunato od
+  14.088+PDV (20%) jer je site-wide `woocommerce_prices_include_tax=yes`
+  (cene se prikazuju sa uključenim PDV-om, provereno na postojećim
+  proizvodima). ⚠️ Ako Miroslav misli da 14.088 treba da bude finalna
+  cena bez preračuna — treba ručno ispraviti `_price`/`_regular_price` na
+  post 17957.
+- Backup pre uvoza:
+  `antasline-backups/antasline_local_2026-08-20_pre-codex-import.sql`
+  (37 MB).
+- Verifikovano: Onda stranica 200, tačno 1×H1, spec tabela renderuje, cena
+  i kategorija tačne, slike 200. Draft proizvodi nisu javno dostupni (po
+  dizajnu) — nisu HTTP-testirani, provereni direktno u bazi (kategorije,
+  atributi, galerija, thumbnail sve OK na uzorku od 6/14).
+- **#ceka-miroslav**: (1) potvrdi da li 16.906 (sa PDV) ili 14.088 treba da
+  stoji kao `_price` za Ondu; (2) pregled i publish odluka za ostalih 13
+  draft proizvoda; (3) opciono proširiti sadržaj tankih stranica (Terasa/
+  Gazebo/Atletska staza/Štale/Košarkaški teren/Rampa) pre publish-a — trenutno
+  imaju samo osnovni spec + cross-link na Quadrio, nema FAQ/JSON-LD ručno
+  pisanog (Rank Math automatski generiše Product schema iz meta-a).
+
 ## 2026-08-19 [claude-code] [W3 3.10] — Regression sweep pre freeze-a: 235 stranica, 0 kvarova; 301 mapa reverifikovana ✅
 
 Sweep pušten **dan pre freeze-a namerno** (baseline 13.08 pao je prvom izmenom 18.08, a 20.08 uveče ne bi ostalo vremena za popravku pred gate 21.08): **235 stranica / 1.174 slike / 1.799 linkova — 0 kvarova**, 30 URL promena i 18 meta izmena vs 13.08, sve vezane za dokumentovane odluke. 301 mapa reverifikovana istom sesijom: 80 pravila, 43 cilja 200, 0 kolizija; uslovni izuzetak `/podovi-za-garaze/` proveren u bazi i dalje važi. **Nov baseline za §B6: `analiza/2026-08-19-regression-pre-freeze-*`.**
