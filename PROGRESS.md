@@ -21,7 +21,7 @@
 
 **2026-08-20**
 
-- ✅ `[claude-code]` W1 KATALOG — 14 novih proizvoda od dobavljača **Codex srl** (IT), sportska zaštitna/podna linija (Quadrio, Polyshock, Onda, Maxionda, Wall Mat + 9 use-case varijanti); Onda objavljena sa cenom 16.906 RSD sa PDV (17957), ostalo draft; backup `antasline_local_2026-08-20_pre-codex-import.sql` — [[DNEVNIK-NAPRETKA]]
+- ✅ `[claude-code]` W1 KATALOG — **8 proizvoda** od dobavljača **Codex srl** (IT), sportska zaštitna/podna linija (Quadrio, Polyshock, Interior, Sport Roll, Crossfit Floor, Onda, Maxionda, Wall Mat); Onda objavljena sa cenom 16.906 RSD sa PDV (17957), ostalo draft. Prvi prolaz je napravio 14 (6 Quadrio use-case varijanti kao posebni SKU-ovi) — M primetio duplikate, spojeno u Quadrio "Primena" sekciju. Backup `antasline_local_2026-08-20_pre-codex-import.sql` — [[DNEVNIK-NAPRETKA]]
 
 **2026-08-19**
 

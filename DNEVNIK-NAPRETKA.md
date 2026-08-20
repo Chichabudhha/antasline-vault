@@ -11,6 +11,31 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
+## 2026-08-20 [claude-code] — Codex dopuna: 6 Quadrio "use-case" draftova spojeno u osnovni proizvod (14 → 8)
+
+M je posle prvog uvoza primetio da verovatno i tu ima duplikata — u pravu:
+6 od 14 kreiranih proizvoda (Terasa, Gazebo, Atletska staza, Štale, Košarkaški
+teren, Rampa) su bili isti fizički materijal (Quadrio, SBR 20mm) samo markiran
+za drugi kontekst — ista nekonzistentnost koju sam ispravno izbegao kod
+Onda/Maxionda use-case stranica (spojene u opis još u prvom prolazu), ali
+propustio da primenim i na Quadrio granu. M potvrdio: spoji sve u osnovni
+Quadrio.
+
+- Sadržaj sve 6 stranica prebačen u novu **"Primena"** sekciju unutar Quadrio
+  proizvoda (17888) — lista sa 6 stavki (Terase, Gazebo, Atletske staze,
+  Štale, Košarkaški tereni, Prelazne rampe), svaka sa kratkim opisom iz
+  originalnog Codex teksta.
+- 6 draft proizvoda (17909, 17916, 17933, 17938, 17945, 17952) i njihovih
+  26 attachment slika obrisano preko `wp_delete_post`/`wp_delete_attachment`
+  (trajno, ne trash — draftovi bez sadržajne vrednosti van spojenog teksta).
+- **Codex katalog sada: 8 proizvoda** (Quadrio, Polyshock, Interior EVA,
+  Sport Roll, Crossfit Floor, Onda [publish], Maxionda, Wall Mat) umesto 14.
+- Verifikovano: Quadrio post_content renderuje čisto, jedna "Primena" lista,
+  bez dupliranog teksta/tabele.
+- Nema drugih duplikata u bazi — proverено (0 dupliranih slugova/naslova u
+  celom `wpgs_posts` product setu, 0 preklapanja sa postojećim katalogom po
+  ključnim rečima gumen/EVA/zid/antitrauma/SBR/igrali pre spajanja).
+
 ## 2026-08-20 [claude-code] — Codex srl (codexsrl.com) proizvodi uvezeni: 14 novih, Onda objavljena sa cenom, ostalo draft
 
 M zadatak: dodati proizvode italijanskog proizvođača **Codex srl** (Treviso) —
