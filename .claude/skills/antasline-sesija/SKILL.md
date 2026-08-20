@@ -1,6 +1,6 @@
 ---
 name: antasline-sesija
-description: Master radni tok za AntasLine projekat (redizajn + SEO + Ads do live-a 2026-08-25). Koristi na početku svake radne sesije, kad Miroslav kaže "nastavljamo", "gde smo stali", "sledeći zadatak", "nastavi W1/W2/W3/W4/W5", ili imenuje bilo koji zadatak iz Master plana V2.
+description: Master radni tok za AntasLine projekat (redizajn + SEO + Ads do live-a 2026-09-08). Koristi na početku svake radne sesije, kad Miroslav kaže "nastavljamo", "gde smo stali", "sledeći zadatak", "nastavi W1/W2/W3/W4/W5", ili imenuje bilo koji zadatak iz Master plana V2.
 ---
 
 # AntasLine — protokol radne sesije
@@ -20,15 +20,16 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
 2. Pročitaj **samo sekciju 2** `[[2026-07-06-MASTER-PLAN-V2]]` (N-raspored) —
    fajl je 80 KB (~26k tokena), pa ga sužavaj: `grep -n "^## " 2026-07-06-MASTER-PLAN-V2.md`
    pa `sed -n 'OD,DOp' 2026-07-06-MASTER-PLAN-V2.md` — uporedi
-   današnji datum sa nedeljom (N1=07–13.07 … N5=04–10.08, pa **prepravljeno
-   2026-08-10**: N6'=11–16.08, N7'=17–20.08 (🔴 freeze ponovo otvoren 17.08: 16.08 → **20.08**), gate PET 21.08,
-   **rezervni radni dan PON 24.08**, **migracija UTO 25.08** — pomereno M odlukom 2026-08-17) i vidi šta je planirano za tekuću nedelju
+   današnji datum sa nedeljom (N1=07–13.07 … N5=04–10.08, N6'=11–16.08, N7'=17–20.08,
+   pa **prepravljeno 2026-08-20 (+14 dana, M odluka, razlog nezabeležen)**: N8''=21.08–02.09,
+   freeze ČET **03.09**, gate PET **04.09**, **rezervni radni dan PON 07.09**,
+   **migracija UTO 08.09**) i vidi šta je planirano za tekuću nedelju
 3. Proveri zavisnosti (sekcija 4 plana): zadatak blokiran na #ceka-miroslav
    se ne bira; ako rok zavisnosti prolazi — podseti Miroslava i ponudi fallback
 3b. **Ako je danas ponedeljak:** pre izbora zadatka, brzi pregled cele
    sekcije 4 (zavisnosti) naglas — rok/status/fallback po stavci, ne samo
    ono što direktno blokira ovu sesiju. Cilj: da kašnjenje isplivava odmah,
-   ne u gužvi pred gate (21.08). Rokovi su od 2026-08-10 nedelju kraći —
+   ne u gužvi pred gate (04.09). Rokovi su od 2026-08-20 pomereni +14 dana —
    videti tabelu M odluka u [[2026-07-06-MASTER-PLAN-V2]] §4.
 4. Predloži 1 glavni zadatak (+ eventualno 1 quick-win ≤15 min) i sačekaj
    potvrdu ako izbor nije očigledan iz Miroslavljeve poruke
@@ -96,7 +97,7 @@ workstream-u i zatvara. Jedan glavni zadatak po sesiji.
   posetu koja se nije desila. Uslov pre bilo kakvog uvođenja: GTM trigger
   gate-ovan na `document.prerendering === false`. Detalji:
   `[[reference/chrome-web-platform-2026]]` §3 — proveriti i LiteSpeed
-  podešavanja pre migracije 25.08
+  podešavanja pre migracije 08.09
 - Windsor gotchas: `[[reference/naucene-lekcije]]` (in-filter nepouzdan →
   povuci sve pa agregiraj; eksplicitni date_from/date_to za poređenja;
   hvala-proxy = `[["page_path","contains","hvala"]]` na `screen_page_views`)

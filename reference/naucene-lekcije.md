@@ -5,6 +5,38 @@ azurirano: 2026-08-20
 
 # Naučene lekcije (tehnički gotchas)
 
+## `wp media import` puca na SVG preko "SVG Support" plugina van pune HTTP sesije (2026-08-20)
+
+`wp-cli media import fajl.svg` na ovom buildu baca fatalnu grešku ("Call to a
+member function sanitize() on null" u `svg-support/functions/attachment.php`)
+— plugin-ov `wp_handle_sideload_prefilter` hook očekuje objekat koji se
+inicijalizuje samo u punom `wp-admin` request kontekstu, a WP-CLI ga nema.
+PNG/JPG uvoz kroz isti put radi normalno, problem je specifičan za SVG.
+Zaobilazno rešenje: ne ići kroz `media_handle_sideload()` uopšte — ručno
+kopirati fajl u `wp_upload_dir()` putanju i pozvati `wp_insert_attachment()`
+direktno (isti obrazac koji bi `wp media import` inače radio interno, samo
+bez sideload prefilter hook lanca). Ne diraj sam plugin da bi se ovo
+zaobišlo — dovoljan je alternativni upisni put za taj jedan fajl.
+
+## Court builder `court_m` prvi element je dubina-od-osnovne-linije, ne "širina" u svakodnevnom smislu (2026-08-20)
+
+`al-court-builder.js` čita sportske šablone kao `court_m: [Cw, Ch]` i taj par
+se direktno mapira na `state.widthM`/`state.heightM`, koji ujedno određuju i
+pikselsku širinu/visinu SVG platna (`cols`/`rows`) i osu duž koje `lines()`
+crta ključ/luk (rect/halfArc primitivi mere "dubinu od osnovne linije" duž
+Cw/prve ose). Za pun teren (`kosarka: [28,15]`) se to poklapa sa intuicijom
+jer je 28m baš osa na kojoj se dubina od svake od dve osnovne linije meri. Za
+polukort (3x3) intuicija puca: FIBA 3x3 je "širok" 15m (linija-do-linije) i
+"dubok" 11m (od jedne osnovne linije) — ali pošto Cw/prvi element MORA biti
+dubina-osa da bi `rect()`/`halfArc()` geometrija ostala tačna (isti kod se
+deli sa punim terenom), ispravan zapis je `court_m: [11, 15]`, ne intuitivni
+`[15, 11]`. Posledica: UI polje "Širina (m)" će za 3x3 prikazati 11, ne 15 —
+to je ispravno s obzirom na to kako ovaj fajl interno definiše "širinu" za
+SVAKI sport (ista stvar važi i za tenis: `[23.77, 10.97]`, gde je 23.77
+zvanična dužina terena, ne širina). Pre menjanja bilo kog `court_m` para,
+prvo proveri kako `lines()` koristi Cw/Ch za taj sport, ne samo koje su
+"tačne" dimenzije sa spec lista.
+
 ## Ne mapirati stranu fire-klasu na postojeći EN taksonomija termin bez potvrđene ekvivalencije (2026-08-20)
 
 Codex Wall Mat spec navodi "Fire Retardant Class 1" — italijanska građevinska

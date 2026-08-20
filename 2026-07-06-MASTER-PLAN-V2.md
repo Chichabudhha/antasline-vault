@@ -1,16 +1,25 @@
 ---
 tip: plan
 naziv: MASTER PLAN V2 — redizajn + SEO + Ads + tracking do live-a
-datum-plan: 2026-07-06 do 2026-08-26
+datum-plan: 2026-07-06 do 2026-09-10
 prioritet: Tehnička → SEO → Ads
-go-live: 2026-08-25
-go-live-raniji: 2026-08-24 (pomereno dan kasnije, M odluka 2026-08-17) · 2026-08-31 (pomereno nedelju ranije, M odluka 2026-08-10)
+go-live: 2026-09-08
+go-live-raniji: 2026-08-25 (pomereno +14 dana, M odluka 2026-08-20, razlog nezabeležen) · 2026-08-24 (pomereno dan kasnije, M odluka 2026-08-17) · 2026-08-31 (pomereno nedelju ranije, M odluka 2026-08-10)
 status: aktivan
 zamenjuje: "[[2026-07-02-MASTER-PLAN-DO-LIVE]]"
-azurirano: 2026-08-17
+azurirano: 2026-08-20
 ---
 
-# 🚀 MASTER PLAN V2 — do live-a 2026-08-25
+# 🚀 MASTER PLAN V2 — do live-a 2026-09-08
+
+> 🆕 **2026-08-20 — GO-LIVE POMEREN +14 DANA: UTO 25.08 → UTO 2026-09-08** (M odluka, razlog
+> nezabeležen). Freeze/gate/rezerva pomereni istim korakom, isti obrazac kao dosad (+14 dana
+> na svaki datum): **content freeze ČET 2026-09-03** · **gate pregled PET 2026-09-04** ·
+> rezerva **vikend 05–06.09 + PON 07.09 (rezervni radni dan)** · **migracija UTO 08.09**.
+> N7' raspored ispod (17–20.08 sadržaj, do gate-a 21.08) ostaje istorijski tačan za taj
+> period — sve što je urađeno u tom prozoru važi. Prozor **21.08–03.09** je nov, dodatan
+> sadržajni prostor; svi rokovi ispod („pre 21.08", „gate 21.08", „migracija 25.08") sada
+> znače **+14 dana** na svaki. Pun novi raspored: §2.
 
 > 🟢 **2026-08-17 — GO-LIVE POMEREN DAN KASNIJE: PON 24.08 → UTO 25.08** (M odluka).
 
@@ -295,7 +304,15 @@ Fazni plan i RSA banka: [[dnevnik/ADS-DNEVNIK]]. Strategija ostaje **Maximize Cl
 
 ---
 
-## 2. VREMENSKI PLAN — 7 nedelja unazad od 2026-08-25
+## 2. VREMENSKI PLAN — 9 nedelja unazad od 2026-09-08
+
+> 🆕 **Prepravljeno 2026-08-20** (go-live 25.08 → **UTO 2026-09-08**, M odluka, razlog
+> nezabeležen). N1–N7' se **ne menjaju** — freeze 16.08/20.08 i gate-istorija do 21.08
+> stoje kao odrađene. Dodaje se nov segment **N8'' (21.08–03.09)**: dodatni sadržajni
+> prozor + ponovljena migraciona priprema, isti obrazac repa kao ranije (freeze → gate →
+> vikend → rezervni radni dan → migracija), samo pomeren +14 dana: **freeze ČET 03.09**,
+> **gate PET 04.09**, **rezervni radni dan PON 07.09**, **migracija UTO 08.09**,
+> post-live monitoring **09.09+**.
 
 > 🟢 **Prepravljeno 2026-08-17** (go-live 24.08 → **UTO 25.08**). N1–N7' se **ne menjaju**
 > — freeze 16.08 i gate 21.08 stoje. Menja se samo rep: **PON 24.08 postaje rezervni
@@ -320,17 +337,30 @@ N7' 17–20.08  🆕 PRODUŽEN SADRŽAJNI PROZOR (M odluka 17.08). Paralelno: W3
     22–23.08   Vikend = rezerva. Ništa se ne planira — samo prelivanje ako gate padne.
     PON 24.08  🆕 REZERVNI RADNI DAN (dobijen odlukom 17.08). Prelivanje ako gate padne;
                ako je čisto — priprema paketa i B1 koraci (backup, OAuth provera, rsync).
-→   UTO 25.08  MIGRACIJA (1 dan) → post-live monitoring 26.08+ (3.12, 5.7, 4.10)
+    UTO 25.08  (istorijski plan migracije — PREVAZIĐEN odlukom 20.08, v. N8'' ispod)
+─────────── ↓ ODAVDE PREPRAVLJENO (2026-08-20, +14 dana) ↓ ───────────
+N8'' 21.08–02.09  🆕 DODATNI SADRŽAJNI PROZOR (M odluka 20.08, razlog nezabeležen). Isti
+    obrazac kao N7': sadržaj + migraciona priprema paralelno, W3 3.10 checklist ponovo
+    aktivan (bliži se nov freeze), W5 nedeljni izveštaji nastavljaju normalno.
+    ČET 03.09  ⛔ CONTENT FREEZE (novi) — posle njega: pun regression sweep + svež backup builda
+    PET 04.09  🚦 GATE PREGLED (sekcija 3) → GO/NO-GO. Rok za SVE M odluke.
+    05–06.09   Vikend = rezerva. Ništa se ne planira — samo prelivanje ako gate padne.
+    PON 07.09  🆕 REZERVNI RADNI DAN. Prelivanje ako gate padne;
+               ako je čisto — priprema paketa i B1 koraci (backup, OAuth provera, rsync).
+→   UTO 08.09  MIGRACIJA (1 dan) → post-live monitoring 09.09+ (3.12, 5.7, 4.10)
 ```
 
 **Šta je izgubljeno pomeranjem 10.08:** cela N8 buffer nedelja (5 radnih dana). To je bila
 rezerva za „gate padne u petak, popravljamo ponedeljak–sreda, migriramo naredni
 ponedeljak". Rezerva je tada spala na **2 dana vikenda**.
 
-**Šta je vraćeno odlukom 17.08:** rezerva je sada **vikend 22–23.08 + PON 24.08 = 3 dana**,
-a gate je i dalje 21.08. Praktično: ako gate padne u petak, ima se **ceo ponedeljak** za
-popravku pre migracije u utorak — bez pomeranja celog datuma. Ako ni to ne stigne,
-migracija ide na **sledeću nedelju (od 31.08)**, ne gura se na silu (pravilo iz §3 ostaje).
+**Šta je vraćeno odlukom 17.08:** rezerva je sada **vikend + 1 rezervni radni dan = 3 dana**,
+gate ostaje dan posle freeze-a. Praktično: ako gate padne u petak, ima se **ceo ponedeljak** za
+popravku pre migracije u utorak — bez pomeranja celog datuma.
+
+**Šta je dodato odlukom 20.08:** cela nedelja i po dodatnog prostora (N8'', 21.08–02.09) pre
+novog freeze-a 03.09 — trenutno bez zabeleženog razloga. Isti mehanizam ostaje: ako 04.09 gate
+padne, migracija ide na **sledeću nedelju**, ne gura se na silu (pravilo iz §3 ostaje).
 
 **Kapacitet-realnost:** ~40 min–1h po C3 stranici, 30–90 min po rebuild stranici.
 Sa jednom nedeljom manje, **seče se prvo:** Tier4 i svaki preostali nice-to-have
@@ -340,7 +370,12 @@ W4 4.11/4.12 (Meta/LinkedIn, blokirani na M13/M14) → posle live-a.
 
 ---
 
-## 3. GATE KRITERIJUMI — go/no-go za migraciju (pregled **PET 21.08**, bilo N8)
+## 3. GATE KRITERIJUMI — go/no-go za migraciju (pregled **PET 2026-09-04**, bilo 21.08, bilo N8)
+
+> 🆕 **2026-08-20:** migracija je pomerena **+14 dana na UTO 2026-09-08**, gate pregled seli se
+> istim korakom sa PET 21.08 na **PET 04.09** — obrazac (gate = dan pre vikend-rezerve) ostaje isti.
+> Status stavki ispod (reosveženo 11.08: samo LCP otvoren) i dalje važi kao poslednje poznato
+> stanje; ne treba ih ponovo proveravati samo zbog pomerenog datuma.
 
 > 🟢 **2026-08-17:** migracija je pomerena na **UTO 25.08**, ali **gate ostaje PET 21.08** —
 > namerno, da rezerva (vikend + PON 24.08) ostane rezerva, a ne da se rok razvuče.
@@ -372,6 +407,12 @@ W4 4.11/4.12 (Meta/LinkedIn, blokirani na M13/M14) → posle live-a.
 ---
 
 ## 4. ZAVISNOSTI — šta čeka Miroslava (sa fallback-om)
+
+> 🆕 **2026-08-20 — SVI ROKOVI POMERENI +14 DANA.** Migracija je sa UTO 25.08 pomerena na
+> **UTO 2026-09-08** (M odluka, razlog nezabeležen). Svako „pre 21.08" ispod sada znači
+> **pre PET 04.09**; content freeze rok „pre 20.08" sada znači **pre ČET 03.09**. Tabela
+> M odluka ispod (rokovi 16.08/21.08) je istorijski tačna za stari raspored — čitati je
+> sa +14 dana na svaki datum dok se ne prepiše.
 
 > 🔴 **2026-08-10 — SVI ROKOVI POMERENI NEDELJU RANIJE.** Svako „pre 31.08" u
 > ovom planu i u [[PROGRESS]] sada znači **pre PET 21.08** (gate pregled). Odluke
@@ -470,11 +511,11 @@ W4 4.11/4.12 (Meta/LinkedIn, blokirani na M13/M14) → posle live-a.
 - **Po sesiji:** jedan glavni zadatak iz jedne trake · backup pre destruktivnog · verifikacija (200, 1×H1, JSON-LD, linkovi) · unos u [[DNEVNIK-NAPRETKA]] + update [[PROGRESS]] + štiklirati ovde/u [[seo/plan-novih-stranica]]
 - **Nedeljno:** mini-izveštaj 7d vs 7d (format [[CLAUDE]] §11) + pregled tempa vs sekcija 2
 - **Mesečno:** puni snapshot ([[analiza/_TEMPLATE-snapshot]]) + AI test + KPI tabla update
-- **PET 21.08:** gate pregled (sekcija 3) → GO/NO-GO odluka sa Miroslavom (bilo N8)
+- **PET 2026-09-04:** gate pregled (sekcija 3) → GO/NO-GO odluka sa Miroslavom (bilo PET 21.08, bilo N8)
 
 ---
 
-## 8. W6/W7 — POSLE LIVE-A (2026-08-26+, bilo 08-25, pre toga 09-02)
+## 8. W6/W7 — POSLE LIVE-A (2026-09-09+, bilo 08-26, bilo 08-25, pre toga 09-02)
 
 Detaljan social/email tok: skill `/w6-social`. Ovde samo ono što se planira
 UNAPRED da se ne dočeka nespremno.

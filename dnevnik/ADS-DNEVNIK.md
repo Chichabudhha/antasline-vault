@@ -32,7 +32,7 @@ Nalog: `156-886-0314` (Gogin Nalog) · Strategija: **Maximize Clicks** (namerno,
 > Odluka **4.8 (Maximize Conversions) je odložena na ~01.09**, zatvorena u
 > [[odluke/_pregled-odluka]] 13.08. Uslov za ponovno otvaranje: `Klik na telefon (web)`
 > prebačen u *Secondary action* (#ceka-miroslav) **i** 20–30 lidova iz forme.
-> 🟡 Uz to: posle migracije 25.08 GA4 `generate_lead` pada na ~⅓ a hvala-proxy na ~½
+> 🟡 Uz to: posle migracije 08.09 (bilo 25.08, pomereno M odlukom 20.08) GA4 `generate_lead` pada na ~⅓ a hvala-proxy na ~½
 > (nestaje dupli GTM embed + tag id 18) — **to nije pad prodaje.**
 > *(Upisano 2026-08-18 — konflikt #6 iz [[migracija/2026-08-12-preflight-checklist-24-08]].)*
 
@@ -150,7 +150,7 @@ kampanja se ručno pali/gasi, ili pauza ne hvata sve (npr. deo asseta/ad grupa
 ostaje ENABLED — `ad_group_status` i `ad_status` su 11.08 oba bili **ENABLED**
 ispod PAUSED kampanje).
 
-- 🟢 **Ne blokira migraciju 25.08.** Final URL-ovi kampanje su čisti:
+- 🟢 **Ne blokira migraciju 08.09** (bilo 25.08). Final URL-ovi kampanje su čisti:
   `/spoljnje-podne-obloge/` + `bergo-xl` / `bergo-unique` / `podovi-za-bazene` /
   `bergo-elite` — svi **200 na buildu** (`analiza/2026-08-11-ads-url-audit.csv`).
   Problem `ekopodneploce.rs` / mrtvih `/home/…` putanja tiče se drugih kampanja.
@@ -214,7 +214,7 @@ konverzijama uvek proveriti `include_in_conversions_metric` /
 
 ⏸️ **„Podloge za terase i bazene" je PAUZIRANA** (zatečeno današnjim 4.10 auditom). Potrošnja je pala **−62%** *pre* pauze (6.992 → 2.643 RSD), klikovi 366 → 158, ali je kampanja trošila sve do 10.08. CPC joj je **16,73 RSD** — šestostruko jeftiniji od ECOTILE. **#ceka-miroslav: je li pauza namerna?** Ako nije, gubi se ~158 klikova nedeljno na najjeftinijem saobraćaju u nalogu.
 
-**Plaćene konverzije kumulativ (od 01.06): 26** (bilo 24 na 06.08) — prag 20–30 pređen. **Preporuka za 4.8 se NE menja: odložiti Maximize Conversions na ~01.09**, jer bi period učenja (~14 dana) pao tačno na dan migracije kad se menjaju URL-ovi oglasa.
+**Plaćene konverzije kumulativ (od 01.06): 26** (bilo 24 na 06.08) — prag 20–30 pređen. **Preporuka za 4.8 se NE menja: odložiti Maximize Conversions na ~15.09** (bilo ~01.09, pomereno uz go-live +14 dana 20.08), jer bi period učenja (~14 dana) pao tačno na dan migracije kad se menjaju URL-ovi oglasa.
 
 🔴 **Ograda na GA4 stranu izveštaja:** GA4 brojači konverzija su naduvani ~3× po sesiji (10 sesija na `/hvala-za-poruku/` → 39 `generate_lead`). **Ads-ova strana broji svoje (5) i nije naduvana isto** — ne izvoditi zaključke o Ads performansama iz GA4 brojača dok se uzrok ne nađe. v. [[dnevnik/2026-08-11-w5-nedeljni-izvestaj]].
 

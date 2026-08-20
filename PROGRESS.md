@@ -1,17 +1,19 @@
 # SEO Progress — Antasline lokalni build
 
-> 🟢 **GO-LIVE: UTO 2026-08-25** (M pomerio dan kasnije 2026-08-17, bilo PON 24.08;
-> pre toga 31.08 → 24.08 odlukom 2026-08-10).
-> 🔴 **Content freeze PONOVO OTVOREN 2026-08-17: 16.08 → ČET 20.08** (M odluka, ista sesija) —
-> da materijali koji su propustili prvi freeze još uđu. Gate pregled **PET 21.08 nepromenjen**;
-> rezerva je **vikend 22–23.08 + PON 24.08 (rezervni radni dan)**.
-> 🟢 **Dve od tri obaveze zatvorene 19.08, dan pre freeze-a:** pun regression sweep (0 kvarova,
-> nov baseline `analiza/2026-08-19-regression-pre-freeze-*`) i reverifikacija 301 mape (80 pravila,
-> 43 cilja 200). 🔴 **Posle 20.08 ostaje:** brz potvrdni sweep + **nov backup zamrznutog builda na
-> 2 lokacije**; regeneracija `.htaccess` drafta samo ako 20.08 promeni ijedan slug.
-> Svi raniji rokovi „pre 31.08" i dalje znače **pre 21.08** — rokovi M odluka se NISU pomerili.
+> 🆕 **GO-LIVE POMEREN 2026-08-20: UTO 25.08 → UTO 2026-09-08** (M odluka, razlog nezabeležen).
+> Freeze/gate/rezerva pomereni istim korakom **+14 dana** (isti obrazac kao dosad):
+> **content freeze ČET 2026-09-03** · **gate pregled PET 2026-09-04** · rezerva
+> **vikend 05–06.09 + PON 07.09 (rezervni radni dan)**.
+> Raniji pomeraji (istorija): 24.08 → 25.08 odlukom 17.08; pre toga 31.08 → 24.08 odlukom 10.08.
+> 🟢 **Stanje na dan pomeranja (20.08), i dalje važi kao poslednji verifikovan rad:** pun
+> regression sweep 19.08 (0 kvarova, baseline `analiza/2026-08-19-regression-pre-freeze-*`),
+> 301 mapa reverifikovana (80 pravila, 43 cilja 200) — oba su rađena kao „dan pre starog
+> freeze-a" 19.08; sa novim freeze-om 03.09 ovo više NIJE poslednji trenutak, ima prostora
+> za ponoviti bliže novom datumu. 2 content stavke ušle 20.08 (batch izmene + Codex uvoz)
+> pre nego što je odluka o pomeranju pala — ostaju važeće, ne treba ih posebno tretirati.
+> Svi raniji rokovi „pre 21.08"/„pre 31.08" sada znače **pre PET 04.09**.
 
-> **Plan projekta:** [[2026-07-06-MASTER-PLAN-V2]] (5 workstream-ova, migracija **2026-08-25**, gate kriterijumi) — stari [[2026-07-02-MASTER-PLAN-DO-LIVE]] je superseded.
+> **Plan projekta:** [[2026-07-06-MASTER-PLAN-V2]] (5 workstream-ova, migracija **2026-09-08**, gate kriterijumi) — stari [[2026-07-02-MASTER-PLAN-DO-LIVE]] je superseded.
 
 ## Urađeno
 
@@ -21,6 +23,8 @@
 
 **2026-08-20**
 
+- ✅ `[claude-code]` [PLAN] Go-live pomeren +14 dana: UTO 25.08 → **UTO 08.09** (M, razlog nezabeležen); freeze/gate/rezerva pomereni istim korakom — [[odluke/_pregled-odluka]]
+- ✅ `[claude-code]` [C3] Batch izmene (6 oblasti, ~20 stavki) + 5 brend logotipa sa zvaničnih sajtova — [[dnevnik/2026-08-20-batch-izmene-6-oblasti]]
 - ✅ `[claude-code]` [C] Codex srl uvoz: 8 proizvoda, Onda objavljena sa cenom — [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
 
 **2026-08-19**
@@ -58,26 +62,32 @@
 > i to je 12.08 stvarno dovelo do pogrešnog izbora zadatka. **Aktuelno stanje je
 > isključivo ovaj blok; sve ispod „Istorijske stavke" je arhiva, ne red čekanja.**
 
-**Sadržajni prozor 17–20.08 (freeze ponovo otvoren M odlukom 17.08) — šta može da uđe:**
+**Sadržajni prozor 17–20.08 (freeze ponovo otvoren M odlukom 17.08) — zatvoren, istorijski:**
+> 🆕 **20.08 (M odluka, razlog nezabeležen): freeze ponovo pomeren, sa 20.08 na ČET 03.09.**
+> Novi sadržajni prozor je **21.08–03.09** (v. master plan §2, N8''). Sve ispod je tačan
+> zapis šta se desilo u prozoru 17–20.08 — **stavke koje su tad ostale otvorene sada imaju
+> produžen rok do 03.09**, ne moraju se rešavati hitno.
 - ✅ **17.08 izvršeno 4 od 7:** trava-u-boji poreklo (Edel Grass, bez izmene na buildu) ·
   **F2.8 mapiranje veštačke trave** · **proizvodi bez fotke → draft** (6, ne 14 — spisak bio
   zastareo) · **brisanje menija 67**. → [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
-- 🟡 **Preostale 3 stavke čekaju MATERIJAL OD MIROSLAVA, ne vreme.** Ako ne stigne do 20.08,
+- 🟡 **Preostale 3 stavke čekaju MATERIJAL OD MIROSLAVA, ne vreme.** Novi rok **03.09** (bio 20.08),
   fallback koji je već aktivan ostaje trajno: **4 reference na `/o-nama/`** (fotke/logotipi) ·
   **P3 metadesc** (2699/4318/1094) · **definicija „starog formata" za 5119**.
-- ✅ **Regression sweep IZVRŠEN 19.08 (dan pre freeze-a):** 235 stranica / 1.174 slike / 1.799 linkova —
+- ✅ **Regression sweep IZVRŠEN 19.08 (dan pre starog freeze-a):** 235 stranica / 1.174 slike / 1.799 linkova —
   **0 kvarova**; 30 URL promena i 18 meta izmena vs 13.08 — sve vezane za dokumentovane odluke, nula
   neplaniranih. 301 mapa reverifikovana: 80 pravila, 43 cilja 200, 0 kolizija. Nov baseline za §B6:
   `analiza/2026-08-19-regression-pre-freeze-*`. → [[dnevnik/2026-08-19-regression-sweep-pre-freeze]]
-- 🔴 Posle freeze-a 20.08 ostaje: **brz potvrdni sweep** + **nov backup zamrznutog builda na 2 lokacije**
-  (jedina gate stavka koja se ne može zatvoriti pre freeze-a).
+- 🟡 **Brz potvrdni sweep + nov backup zamrznutog builda na 2 lokacije** — bila je jedina gate
+  stavka vezana za stari freeze (20.08); sa prozorom produženim do 03.09 nije više hitna, ali
+  ostaje otvorena i treba je uraditi **pre novog freeze-a 03.09** (pokriti i 2 content stavke
+  ušle 20.08 — batch izmene + Codex uvoz — pošto backup od 17.08 ionako više nije aktuelan).
 
 **Vault higijena — van sadržajnog prozora, ne blokira gate** (nalazi 18.08, [[dnevnik/2026-08-18-token-audit-rotacija-ledgera]]):
 - ✅ ~~`PROGRESS` „Blokeri" = 27 KB = 70% ovog fajla, 45 stavki~~ — **SKRAĆENO 2026-08-18** na ~7,5 KB / 28 stavki; ceo fajl 41,2 → 22,1 KB (**−46%**, ≈−6k tokena po sesiji). Pun tekst pre skraćivanja doslovno u [[dnevnik/2026-08-arhiva-progress]]
 - 🟡 `CLAUDE.md` (38,5 KB ≈ 12k tokena, čita se svaki start) → izmestiti §4.1/§7.1/§7.3/§10/§14/§15 u `reference/`
 - 🟡 `reference/naucene-lekcije.md` (230 KB) staje u 2000 linija → svako čitanje povlači ceo fajl (~75k tokena); iseći na 4 tematska fajla
 - 🟡 `migracija/woodmart-sabloni.md` (79 KB) je „OBAVEZNO prvo" za svaki W1 → kratak checklist + duboka referenca
-- ⚪ Posle 25.08: obrisati mapu numeracije iz `CLAUDE.md` §10
+- ⚪ Posle 08.09: obrisati mapu numeracije iz `CLAUDE.md` §10
 
 **Zatvoreno pre prvog freeze-a (16.08):**
 - Ništa nije obavezno otvoreno. W1 (red A 33/33, Polish 1–4, S1–S8, Court builder,
@@ -99,16 +109,17 @@
 - 🔵 Opciono, ako se ukaže sesija: `heading-order` + `target-size` na product karticama
   (WoodMart core layout, veći zahvat — **preporuka: posle live-a**, ne 4 dana pred gate).
 - 🟢 **(F) 4 „dimenzije" stranice vs post 2298 — M ODLUKA 14.08: ne diramo pre live-a.**
-  Post-live zadatak (~01.09), rizik svesno prihvaćen. Pun opis: [[dnevnik/2026-08-arhiva-progress]]
-  · analiza [[seo/2026-08-13-kanibalizacija-konsolidacija-plan]] §3.1 #posle-live
+  Post-live zadatak (~15.09, bilo ~01.09 pre pomeranja go-live-a 20.08), rizik svesno prihvaćen.
+  Pun opis: [[dnevnik/2026-08-arhiva-progress]] · analiza
+  [[seo/2026-08-13-kanibalizacija-konsolidacija-plan]] §3.1 #posle-live
 - 🟡🆕 **Ads — pre reaktivacije pauziranih kampanja (M):** 3 oglasa + 2 asseta vode na **tuđi
   domen `ekopodneploce.rs`** (kršenje Google smernica), **11 URL-ova** na mrtve `/home/…`
-  putanje, 4 na `http://`. Jedina ENABLED kampanja (ECOTILE) je čista → **ne blokira 25.08**,
+  putanje, 4 na `http://`. Jedina ENABLED kampanja (ECOTILE) je čista → **ne blokira 08.09**,
   blokira reaktivaciju i 4.4. §2 iste analize
 - ✅ ~~Sitno: meni stavka **17424 nema naslov**~~ — **LAŽNA UZBUNA, zatvoreno 2026-08-18.** Prazan `post_title` ima **9** stavki, sve `post_type` — WP pada na naslov povezane stranice; render 17424 = „Podovi za garaže“, svi URL-ovi 200. Build nije diran.
   (Drugi deo ove stavke — `ergonomske-podloge-2` na čist slug — zatvoren 13.08.)
 
-**N7' (17–20.08 sadržaj + migraciona priprema, 21.08 gate):**
+**N8'' (21.08–02.09 sadržaj + migraciona priprema, 04.09 gate — bilo N7'/17–20.08/21.08 pre pomeranja 20.08):**
 - W3 **3.10** — pre-migration checklist §A do kraja → [[migracija/2026-08-10-pre-migration-checklist]]
 - ✅ **Dry-run `build-staging-package.sh` — IZVRŠEN 13.08.** Exclude pravila od 10.08 **rade**
   (preflight rizici **#1 i #4** zatvoreni: ni mail-logger, ni `mail-log.txt`, ni ijedan od **32**
@@ -125,17 +136,18 @@
   ne zahtev hostinga) · (2) ako ipak FTP — **ne sklapati tar pored delova**, nego
   `cat part-* | tar -xzf -` uz brisanje delova u hodu · (3) backup skinuti i **obrisati sa servera pre**
   uploada. Disciplinovan tok: pik ~4,4 GB ✅. #claude-code
-- 🔴 **PET 21.08 — gate pregled.** Od 11 stavki otvorena je još samo **LCP**
+- 🔴 **PET 04.09 — gate pregled** (bilo PET 21.08). Od 11 stavki otvorena je još samo **LCP**
   (blokirano na produkciju, ide kao svestan rizik).
 
-**PON 24.08 — 🆕 rezervni radni dan (M odluka 17.08).** Ako gate 21.08 padne — popravka
+**PON 07.09 — 🆕 rezervni radni dan** (bilo PON 24.08). Ako gate 04.09 padne — popravka
 ide ovde, bez pomeranja celog datuma. Ako je čisto — B1 priprema: svež live backup,
 provera OAuth tokena, `build-staging-package.sh full`, rsync postavka.
 
-**UTO 25.08 — migracija (3.11):** koraci u checklisti §B. Uslov za pokretanje:
-Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam tu").
+**UTO 08.09 — migracija (3.11)** (bilo UTO 25.08, pomereno M odlukom 20.08): koraci u
+checklisti §B. Uslov za pokretanje: Miroslav ima ~6h slobodnih tog dana (M odluka 11.08,
+„migracija samo kad sam tu").
 
-**Posle live-a (26.08+):** 3.12 post-live monitoring · 5.7 verifikacija merenja ·
+**Posle live-a (09.09+):** 3.12 post-live monitoring · 5.7 verifikacija merenja ·
 4.10 final URL audit · zatim W6 (social), Meta/LinkedIn tagovi, Display remarketing.
 
 **Čeka Miroslava** — puna lista u sekciji Blokeri; pred gate su bitni:
@@ -149,16 +161,16 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 > Samo otvorene stavke, **jedan red po stavci** (skraćeno 2026-08-18 sa 27 KB na ~7 KB).
 > Pun tekst svake stavke pre skraćivanja + zatvoreni blokeri →
 > [[dnevnik/2026-08-arhiva-progress]] („Blokeri — pun tekst pre skraćivanja" i „Zatvoreni blokeri").
-> Detalji su u linkovanim dnevnicima — ovde stoji samo **šta čeka, koga čeka i da li blokira 25.08**.
+> Detalji su u linkovanim dnevnicima — ovde stoji samo **šta čeka, koga čeka i da li blokira 08.09**.
 
-**🔴 Pred gate 21.08 — kratke akcije u tuđem UI-ju (M, po 2–5 min):**
+**🔴 Pred gate 04.09 (bilo 21.08) — kratke akcije u tuđem UI-ju (M, po 2–5 min):**
 - `Klik na telefon (web)` → **Secondary action** u Ads UI. Broji se kao konverzija (17 od „26 plaćenih"), pa je pravih plaćenih lidova **9**, ne 26 — prag za 4.8 nije dostignut. Blokira svaku bidding odluku, ne migraciju. → [[analiza/2026-08-11-snapshot-jul]] §3.6
 - **Enhanced Conversions toggle**: Goals → Conversions → „Lead - forma (GTM)" → Settings → Enhanced conversions → metod **Google Tag Manager** + customer data terms. Bez toga GTM šalje, Ads ignoriše. → [[migracija/2026-08-09-enhanced-conversions-4.7]]
 - **Obrisati GTM tag id 18** (suvišan `page_view` na hvala pravilu) — duplira brojku, **postoji i na buildu pa preživljava migraciju**. Pre ili na dan migracije. → [[reference/naucene-lekcije]]
 - **GSC UI, 3 koraka:** obrisati zastareo `http://` sitemap unos (submit 2018) · pogledati 3+4 upozorenja · potvrditi email alerte (prvi signal ako 301 blok ne proradi). → [[migracija/2026-08-10-pre-migration-checklist]] §A
 - **ECOTILE dnevni budžet:** 1.300 RSD/dan gubi 50% prikaza na 2/12 dana → 1.800–2.000 RSD ili svesno prihvatiti gubitak. → [[dnevnik/ADS-DNEVNIK]]
 
-**🟡 Sadržaj — rok ČET 20.08 (posle toga freeze, ide posle live-a):**
+**🟡 Sadržaj — rok ČET 03.09 (bio 20.08, pomeren M odlukom 20.08; posle toga freeze, ide posle live-a):**
 - **4 reference na `/o-nama/`** bez fotke/loga (Beobasket · BG liga 3x3 · Hotel Prag · Restoran Sidro) — sada tekstualna linija „Takođe: …"; materijal → kartice (15 min). Uz to: je li `Teren 3x3 Soccer liga.jpg` baš „BG liga 3x3"? → [[dnevnik/2026-08-12-vizuali-reference-ikonice]]
 - **7 proizvoda sa generičkim dobavljačkim fotkama** (`16893` `16899`–`16902` `16906` `16919`) — ostaju `publish` ili i oni u draft? → [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
 - **P3 metadesc** za 2699/4318/1094 (uklj. ispravku `072`→`069 234 00 72`) — cPanel nema pristup lokalnoj bazi, preneti su samo naslovi. Ako ne stigne → posle migracije.
@@ -168,24 +180,26 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 - 🔴 **AI slike preko API-ja se PLAĆAJU** (`gemini-2.5-flash-image`, ~0,04 USD/sl.; 93 poziva od 04.08). Od 18.08: generisanje samo uz izričito M odobrenje; besplatna varijanta je Gemini chat.
 - 🆕 **Codex Onda cena (17957)** — potvrdi 16.906 RSD sa PDV (preračunato od datih 14.088+PDV) ili ispravi ručno. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
 - 🆕 **7 Codex draft proizvoda** (Quadrio/Polyshock/Interior/Sport Roll/Crossfit Floor/Maxionda/Wall Mat) — pregled i publish odluka. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
-- 🆕 **Onda objavljena baš na 20.08** (poslednji dan freeze prozora) — uključi u brz potvrdni sweep + nov backup posle freeze-a. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
+- 🆕 **Onda objavljena baš na 20.08** (istog dana je pao i M odluka da se freeze pomeri na 03.09,
+  pa ovo više nije „poslednji dan prozora") — uključi u brz potvrdni sweep + nov backup pre novog
+  freeze-a. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
 
-**🟡 Ads — ne blokira 25.08, blokira reaktivaciju pauziranih kampanja:**
+**🟡 Ads — ne blokira 08.09, blokira reaktivaciju pauziranih kampanja:**
 - 🔴🆕 **„Podloge za terase i bazene" troši uz `PAUSED` status** (18.08): 4.571 RSD / 250 klikova u dve nedelje, ad grupe i asseti ispod nje ENABLED, najjeftiniji CPC u nalogu (20,96 vs 94,41). Pali li se ručno i hvata li pauza ad grupe/assete? (Zamenjuje stavku od 11.08 „je li pauza namerna".) → [[dnevnik/2026-08-18-nedeljni-izvestaj-terase-status]]
-- **Final URL-ovi pauziranih kampanja:** 3 oglasa + 2 asseta na **tuđem domenu `ekopodneploce.rs`** (kršenje smernica; 301 mapa tu ne pomaže) · 11 na mrtve `/home/…` · 4 na `http://`. Jedina ENABLED (ECOTILE) je čista → za 25.08 nema posla. → [[migracija/2026-08-11-ads-final-url-audit]]
+- **Final URL-ovi pauziranih kampanja:** 3 oglasa + 2 asseta na **tuđem domenu `ekopodneploce.rs`** (kršenje smernica; 301 mapa tu ne pomaže) · 11 na mrtve `/home/…` · 4 na `http://`. Jedina ENABLED (ECOTILE) je čista → za 08.09 nema posla. → [[migracija/2026-08-11-ads-final-url-audit]]
 - **6 BROAD reči, ~10.300 RSD/90d, 0 konverzija** (`podovi za terase` · `industrijski podovi` · `podne obloge za terase` · `pvc podne ploče` · `podovi za hale` · `podovi za radionice cena`) — pauzirati; phrase parnjaci konvertuju. + 4 nove negativne (`deking`, `epoksidna smola` — 🔴 **ne** `epoksid` u celini zbog conquest-a, `jysk`, `kameni podovi`). → [[analiza/2026-08-11-snapshot-jul]] §3.3–3.4
-- **4.8 Maximize Conversions** — preporuka: **odložiti na ~01.09**; uključeno sada, učenje (~14 dana) završilo bi se tačno na dan migracije uz promenu URL-ova oglasa.
+- **4.8 Maximize Conversions** — preporuka: **odložiti na ~15.09** (bilo ~01.09, pomereno uz go-live 20.08); uključeno sada, učenje (~14 dana) završilo bi se tačno na dan migracije uz promenu URL-ova oglasa.
 - **Customer Match** — `CUSTOMER_NOT_ALLOWLISTED_FOR_THIS_FEATURE` i posle re-autorizacije; verovatno traži **Data Manager API migraciju**, ne samo Standard access. Odluka: ulažemo u migraciju ili čekamo. `leads.csv` (9 kontakata) čeka netaknut. → [[dnevnik/2026-08-11-customer-match-data-manager-api]]
 
 **🟡 Merenje / dokumentacija:**
 - **KPI tabla u master planu meri preglede, ne lidove** — „55/mes (jun)" je broj pregleda; stvarno jun 24 sesije, jul 16. Odluka: prepraviti red na sesije („≥25/mes, cilj 35+") ili svesno ostaviti uz napomenu. → [[analiza/2026-08-11-snapshot-jul]] §2.3b
 - 🔴 **Posle migracije `generate_lead` pada na ~⅓ a hvala-proxy na ~½ — to nije pad konverzija** (live Kallyas ima dva GTM embeda, build jedan; plus tag id 18). Zapisati pre prvog post-live izveštaja.
 - **GA4 totali uključuju `localhost`/`staging`** (prošla nedelja 1.068 vs 1.504 sa live-a) — filtrira se ručno; trajan `hostName` filter u `ga4_report.py` menja **sve** buduće izveštaje pa čeka odluku (filter u GA4 ili odvojen Measurement ID za build).
-- **Rank Math Redirections** — do 25.08 ne dirati; posle live-a uključiti `redirections` + `404-monitor`. 🔴 Tvrdo pravilo: `.htaccess` = zamrznut migracioni skup, Rank Math = sve posle 25.08, **isti URL nikad na oba mesta** (`.htaccess` se izvršava prvi i tiho pobeđuje). Upis u §B7 čeka „upiši u plan / ostavi". → [[dnevnik/2026-08-11-htaccess-301-reverifikacija]]
+- **Rank Math Redirections** — do 08.09 ne dirati; posle live-a uključiti `redirections` + `404-monitor`. 🔴 Tvrdo pravilo: `.htaccess` = zamrznut migracioni skup, Rank Math = sve posle 08.09, **isti URL nikad na oba mesta** (`.htaccess` se izvršava prvi i tiho pobeđuje). Upis u §B7 čeka „upiši u plan / ostavi". → [[dnevnik/2026-08-11-htaccess-301-reverifikacija]]
 - **Izmene builda 12–13.08 bez ledger unosa** — uzrok („−118 slika/str." = uklanjanje ikonica menija) razjašnjen, M ga je 13.08 potvrdio kao namernu odluku i ikonice se **ne vraćaju pre live-a**; 79 SVG priloga ostaje u medijateci nevezano.
 
 **🟡 Alati / infrastruktura:**
-- **FTP lozinka je i dalje u git istoriji** (izmeštena iz radnog stabla 13.08, ali commit-ovi od 06.08 je nose, a vault se sinhronizuje na hosting). Jedina prava sanacija = **promena lozinke u cPanel-u, preporučeno posle 25.08**. Prepisivanje istorije se **ne preporučuje** (3 površine + Obsidian auto-sync).
+- **FTP lozinka je i dalje u git istoriji** (izmeštena iz radnog stabla 13.08, ali commit-ovi od 06.08 je nose, a vault se sinhronizuje na hosting). Jedina prava sanacija = **promena lozinke u cPanel-u, preporučeno posle 08.09**. Prepisivanje istorije se **ne preporučuje** (3 površine + Obsidian auto-sync).
 - **GTM Preview test (5.6)** ne može dok je consent mu-plugin na stagingu namerno ugašen (`al-tracking-gtm-consent.php.off`, da klijentov pregled ne ulazi u GA4/Ads). `gallery_view`/`pdf_download` su DRAFT od 22.07 i čekaju test pre Submit-a. Kad zatreba: `mv …php.off …php`, test, vrati. → [[dnevnik/2026-08-13-staging-v4-puno-postavljanje]]
 - **Headless `agy` (`-p`)** — fale `read_file(*)` / `list_dir(*)` / `grep_search(*)` / `find_by_name(*)` u `~/.gemini/antigravity-cli/settings.json`; harness ne dozvoljava da ih Claude doda. Bez toga `agy` radi samo kroz TUI.
 - **Grok deny pravila (19) žive samo u `C:\Users\Miroslav\.grok\config.toml`** — Grok 1.0.3 ne učitava projektni `.grok/config.toml`, pa ne dolaze sa vault-om na drugu mašinu. Posle svakog `grok update`: `grok inspect | Select-String Permissions`. #claude-code
@@ -202,8 +216,8 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 **🔴 Live sajt — čeka odobrenje za `[cpanel-live]` fix:**
 - **Kontakt forma na `/kontakt/` tiho odbija validne unose** (naziv firme sa brojem/tačkom/dijakritikom, telefon sa razmacima — a broj je svuda na sajtu ispisan sa razmacima). Crvena ivica, 0 AJAX poziva, nema poruke. Nije nova regresija — verovatno dugogodišnji gubitak submit-ova. Fix = ublažiti regex + vidljiva poruka greške. → [[DNEVNIK-NAPRETKA]] 2026-08-04
 
-> **Rokovi:** svako „pre 31.08" u starijim beleškama znači **pre PET 21.08** (gate).
-> Sadržajne odluke → **ČET 20.08**. Puna tabela M odluka: [[2026-07-06-MASTER-PLAN-V2]] §4.
+> **Rokovi:** svako „pre 31.08"/„pre 21.08" u starijim beleškama znači **pre PET 04.09** (gate).
+> Sadržajne odluke → **ČET 03.09**. Puna tabela M odluka: [[2026-07-06-MASTER-PLAN-V2]] §4.
 
 ## Napomene
 

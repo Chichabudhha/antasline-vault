@@ -2,21 +2,28 @@
 tip: checklist
 naziv: Pre-migration checklist — dan migracije (W3 3.10)
 datum: 2026-08-10
-go-live: 2026-08-25
-status: aktivan — popunjava se do 21.08 (gate), rezervni dan PON 24.08, izvršava UTO 25.08
-azurirano: 2026-08-17 (go-live 24.08 → 25.08, M odluka)
+go-live: 2026-09-08
+status: aktivan — popunjava se do 04.09 (gate), rezervni dan PON 07.09, izvršava UTO 08.09
+azurirano: 2026-08-20 (go-live 25.08 → 08.09, +14 dana, M odluka, razlog nezabeležen)
 ---
 
-# ✅ Pre-migration checklist — UTO 2026-08-25
+# ✅ Pre-migration checklist — UTO 2026-09-08
 
 Deo zadatka W3 3.10 iz [[2026-07-06-MASTER-PLAN-V2]]. Druga polovina 3.10 je
 **full regression** (rezultati: [[dnevnik/2026-08-10-w3-310-full-regression]]).
 
-> **Redosled je namerno ovakav:** sve što se može uraditi RANIJE (do 21.08) je
+> 🆕 **2026-08-20 — svi datumi ispod pomereni +14 dana** (M odluka, razlog nezabeležen):
+> gate 21.08→**04.09**, freeze 20.08→**03.09**, rezervni dan 24.08→**07.09**, migracija
+> 25.08→**08.09**. Sadržaj i checkbox stanja ispod su i dalje tačni — čitaj svaki preostali
+> datumski pomen (20.08/21.08/24.08/25.08) sa **+14 dana**, dok se checklist ne prepiše u
+> posebnoj sesiji bliže novom gate-u.
+
+> **Redosled je namerno ovakav:** sve što se može uraditi RANIJE (do gate-a) je
 > odvojeno od onoga što se MORA na dan migracije. Na dan migracije se ne
 > improvizuje.
 
-> 🟢 **2026-08-17 — migracija pomerena PON 24.08 → UTO 25.08** (M odluka). Gate ostaje
+> 🟢 **2026-08-17 — migracija pomerena PON 24.08 → UTO 25.08** (M odluka; datumi ovog bloka
+> su istorijski, v. napomenu 20.08 iznad za važeći raspored). Gate ostaje
 > **PET 21.08**, pa je **PON 24.08 od sada rezervni radni dan**:
 > - ako gate padne u petak → popravka ide u ponedeljak, datum migracije se **ne** pomera
 > - ako je gate čist → ponedeljak se koristi za **pripremu**, tj. one B1 korake koji

@@ -11,19 +11,33 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
-## 2026-08-20 [claude-code] [C3] — Batch izmene (6 oblasti, ~20 stavki): kontakt padding, blog sidebar, home page, 4 stranice, mobilni katalog, planer terena ✅ (2 blokirane na logo asset-ima)
+## 2026-08-20 [claude-code] [PLAN] — Go-live pomeren +14 dana: UTO 25.08 → UTO 2026-09-08 (M odluka) ✅
 
-M poslao paket izmena preko 6 oblasti sajta, tražio plan pre izvršenja (plan sačuvan, odobren, sprovedeno u 4 faze). DB backup pre svake DB izmene: `antasline_local_2026-08-20_pre-batch-izmene.sql`.
+M odluka tokom otvaranja sesije, razlog nezabeležen (eksplicitno preskočeno kad je pitano).
+Freeze/gate/rezerva pomereni istim korakom, isti obrazac kao dosadašnji pomeraji (+14 dana na
+svaki datum — 08.09 pada tačno 2 nedelje posle 25.08, isti dan u nedelji, pa se ceo raspored
+prepisao 1:1): **content freeze ČET 03.09** (bilo 20.08) · **gate pregled PET 04.09** (bilo
+21.08) · **vikend rezerva 05–06.09** (bilo 22–23.08) · **rezervni radni dan PON 07.09** (bilo
+24.08) · **migracija UTO 08.09** (bilo 25.08).
 
-**Kod-only (Faza 1):** kontakt sekcija padding-top −40% (dva selektora); blog sidebar svedena na kategorije (search+recent-posts deaktivirani preko `wp widget`), "Search for posts" prevedeno preko `gettext_with_context_woodmart`; ukinut horizontalni red kategorija (`shop_categories` theme opcija) — sidebar meni je već postojao i radio; Bergo u "Košarkaške konstrukcije" proveren u bazi, **već nije tu** (ništa za ukloniti); mobile hero overlay pojačan (donji gradient stop .62→.80); header/footer poziv-ikonica zamenjena pravim handset SVG-om; footer sticky toolbar preređan (Katalog\|Email\|Poziv, `link_2`/`link_3` sadržaj i ikone), nova `katalog.svg`; planer terena — 3x3 `court_m` swap (bio [15,11], trebalo [11,15] zbog Cw=dubina/Ch=širina konvencije iz `lines()`) i responsive fix za veliki koš (`.al-cb__svg{width:100%;height:auto}` umesto fiksnog px).
+2 content stavke koje su ušle 20.08 pre ove odluke (batch izmene 6 oblasti + Codex srl uvoz,
+oba unosa ispod) ostaju važeće, nisu posebno tretirane. Regression sweep i 301 reverifikacija
+od 19.08 ostaju poslednji verifikovan rad — sa novim prozorom do 03.09 više nisu „dan pre
+freeze-a", ima prostora da se ponove bliže novom datumu.
 
-**Home page (16550):** hero naslov → "Profesionalna rešenja za svaki prostor"; najprodavaniji proizvodi zamenjeni sa 4 stvarna proizvoda (ESD 16542, Bergo Ultimate 16770, Ecotile E500/7 16538, Goalrilla DC72E1 16973 zadržan); Ergomat dodat u "Zastupamo brendove" (Artisport uklonjen, nije na traženoj listi).
+**Ažurirano:** `CLAUDE.md` §8/§13/§14/§16 · `PROGRESS.md` (header banner + Sledeće + Blokeri,
+~15 mesta) · `2026-07-06-MASTER-PLAN-V2.md` (frontmatter, header, §2 novi N8'' segment u
+ASCII rasporedu, §3 gate, §4 zavisnosti, §7, §8) · `.claude/skills/antasline-sesija/SKILL.md`
+(koraci 1.2/3b) · `odluke/_pregled-odluka.md` (nov unos). Istorijski dnevnik i arhive nisu
+dirani — append-only konvencija, stariji datumi ostaju kako su zapisani u trenutku pisanja.
 
-**4 stranice:** dimenzije-fudbalskog-terena (17027) — uklonjen dupli hero red + `_woodmart_title_off`, sad standardan post layout sa jednim H1; ESD "priča kupca" (6874) — naslov ispravljen, 3 lažna zelena "heading" span-a → prava `<h2>`, slika izvučena iz `<h2>`; podovi-za-radnje (16142) — hero slika zamenjena `rtile-ploce.webp` (jedina prava product-shot, ostale dve su generičke stock-fotke tuđe radnje pogrešno alt-tagovane kao "R-Tile"); kosarka-3x3-tereni (16584) — hero slika, naslov, benefit heading, tehnički tekst (16×11 rekreativno + link ka `dimenzije-kosarkaskog-terena`), galerija 3→9 fotografija iz sveže 2026/02 serije.
+→ [[odluke/_pregled-odluka]]
 
-**Mobilni katalog (Faza 4):** `/katalog/` sada prikazuje `[woodmart_categories]` grid (17 top-level kategorija) IZNAD flat liste proizvoda; CSS/`body_class` filter (`is_shop()` → `.al-katalog-mobile`) sakriva grid na desktopu i sakriva flat listu na mobilnom — kategorija-arhive (`.tax-product_cat`) nisu dirane.
+## 2026-08-20 [claude-code] [C3] — Batch izmene (6 oblasti, ~20 stavki) + 5 brend logotipa povučenih sa zvaničnih sajtova ✅
 
-🔴 **Blokirano — čeka asset od M:** Luštica Bay logo (sekcija "Veruju nam") i loga za Sportpartner/Objectflor/Condor Grass/Isotrack (sekcija "Zastupamo brendove") ne postoje ni u jednom uploads folderu — samo product-shot fotke, nedovoljno za brend-logo red.
+M poslao paket izmena preko 6 oblasti sajta (globalni stilovi, home page, 4 pojedinačne stranice, kategorije, mobilna verzija, planer terena), tražio plan pre izvršenja — sprovedeno u 4 faze posle odobrenja. Nedostajući brend logotipi (Sportpartner, Condor Grass, Objectflor, Isotrack, Luštica Bay) naknadno pronađeni preko `WebSearch`/`curl` na zvaničnim sajtovima i uvezeni — **svih ~20 stavki iz zahteva sada zatvoreno, nema otvorenih blokera.** DB backup pre DB izmena: `antasline_local_2026-08-20_pre-batch-izmene.sql`.
+
+→ [[dnevnik/2026-08-20-batch-izmene-6-oblasti]]
 
 ## 2026-08-20 [claude-code] [C] — Codex srl uvoz: 8 proizvoda (flooring + zaštitna padding linija), Onda objavljena sa cenom ✅
 

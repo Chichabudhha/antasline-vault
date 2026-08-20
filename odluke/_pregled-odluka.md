@@ -1,9 +1,39 @@
 ---
 tip: odluke
-azurirano: 2026-08-18
+azurirano: 2026-08-20
 ---
 
 # Pregled odluka (i zašto)
+
+## 🆕 2026-08-20 (M) — go-live pomeren +14 dana: UTO 25.08 → UTO 2026-09-08
+
+**Odluka M:** migracija se pomera sa UTO 25.08 na UTO 08.09. Razlog nije zabeležen (M
+eksplicitno preskočio obrazloženje kad je pitano).
+
+**Posledica — freeze/gate/rezerva pomereni istim korakom (+14 dana, isti obrazac kao dosad):**
+
+| Šta | Staro | Novo |
+|---|---|---|
+| Content freeze | ČET 20.08 | ČET 03.09 |
+| Gate pregled | PET 21.08 | PET 04.09 |
+| Vikend rezerva | 22–23.08 | 05–06.09 |
+| Rezervni radni dan | PON 24.08 | PON 07.09 |
+| Migracija | UTO 25.08 | UTO 08.09 |
+
+08.09 je tačno 2 nedelje posle 25.08 (isti dan u nedelji, UTO), pa se ceo obrazac prepisao
+1:1 pomeranjem svakog datuma za +14 dana — bez potrebe za novom kalkulacijom rasporeda.
+
+**Šta ostaje nepromenjeno:** 2 content stavke ušle 20.08 pre ove odluke (batch izmene 6
+oblasti + Codex srl uvoz proizvoda) ostaju važeće, nisu posebno tretirane. Regression sweep
+i 301 reverifikacija od 19.08 ostaju poslednji verifikovan rad, ali više nisu „dan pre
+freeze-a" — ima prostora da se ponove bliže novom datumu 03.09.
+
+**Ažurirano u:** `CLAUDE.md` §8/§13/§14/§16 · `PROGRESS.md` (header + Sledeće + Blokeri) ·
+`2026-07-06-MASTER-PLAN-V2.md` (§2 novi N8'' segment, §3 gate, §4 zavisnosti, §7, §8) ·
+`.claude/skills/antasline-sesija/SKILL.md` (koraci 1.2/3b). Istorijski dnevnik i arhive
+nisu dirani (append-only konvencija) — stariji datumi ostaju kako su zapisani.
+
+→ [[DNEVNIK-NAPRETKA]] 2026-08-20
 
 ## 🆕 2026-08-18 (M) — cenovne stranice se **konsoliduju u hubove**, ne objavljuju odvojeno
 
