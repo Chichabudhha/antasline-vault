@@ -21,7 +21,7 @@
 
 **2026-08-20**
 
-- ✅ `[claude-code]` W1 KATALOG — **8 proizvoda** od dobavljača **Codex srl** (IT), sportska zaštitna/podna linija (Quadrio, Polyshock, Interior, Sport Roll, Crossfit Floor, Onda, Maxionda, Wall Mat); Onda objavljena sa cenom 16.906 RSD sa PDV (17957), ostalo draft. Prvi prolaz je napravio 14 (6 Quadrio use-case varijanti kao posebni SKU-ovi) — M primetio duplikate, spojeno u Quadrio "Primena" sekciju. Backup `antasline_local_2026-08-20_pre-codex-import.sql` — [[DNEVNIK-NAPRETKA]]
+- ✅ `[claude-code]` [C] Codex srl uvoz: 8 proizvoda, Onda objavljena sa cenom — [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
 
 **2026-08-19**
 
@@ -166,6 +166,9 @@ Miroslav ima ~6h slobodnih tog dana (M odluka 11.08, „migracija samo kad sam t
 - 🟡 **`/podovi-za-radionice/` — najveća otvorena SEO prilika:** ~4.700 prikaza / ~275 klikova, poz. 3,6. 🔴 **Ispravka 19.08: URL POSTOJI** (blog post **5637**, hobi tekst o privatnoj garaži) — nije prazna rupa nego **nesklad namere**; nova stranica bi ga kanibalizovala. Preporuka: konverzija `post`→`page` uz isti ID i slug. 3 AI slike već obrađene i čekaju. **M odluka 19.08: post-live.** → [[dnevnik/2026-08-19-skladista-16687]]
 - 🟡 **Video — čeka M odluku o stranici i Flow kredite.** Predlog: kadar polaganja bakarne trake iz naših **pravih** fotki (HTEC/Quectel), ne iz AI slika. → [[dnevni-video]]
 - 🔴 **AI slike preko API-ja se PLAĆAJU** (`gemini-2.5-flash-image`, ~0,04 USD/sl.; 93 poziva od 04.08). Od 18.08: generisanje samo uz izričito M odobrenje; besplatna varijanta je Gemini chat.
+- 🆕 **Codex Onda cena (17957)** — potvrdi 16.906 RSD sa PDV (preračunato od datih 14.088+PDV) ili ispravi ručno. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
+- 🆕 **7 Codex draft proizvoda** (Quadrio/Polyshock/Interior/Sport Roll/Crossfit Floor/Maxionda/Wall Mat) — pregled i publish odluka. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
+- 🆕 **Onda objavljena baš na 20.08** (poslednji dan freeze prozora) — uključi u brz potvrdni sweep + nov backup posle freeze-a. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
 
 **🟡 Ads — ne blokira 25.08, blokira reaktivaciju pauziranih kampanja:**
 - 🔴🆕 **„Podloge za terase i bazene" troši uz `PAUSED` status** (18.08): 4.571 RSD / 250 klikova u dve nedelje, ad grupe i asseti ispod nje ENABLED, najjeftiniji CPC u nalogu (20,96 vs 94,41). Pali li se ručno i hvata li pauza ad grupe/assete? (Zamenjuje stavku od 11.08 „je li pauza namerna".) → [[dnevnik/2026-08-18-nedeljni-izvestaj-terase-status]]

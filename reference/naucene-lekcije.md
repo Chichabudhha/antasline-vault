@@ -1,9 +1,47 @@
 ---
 tip: reference
-azurirano: 2026-08-19
+azurirano: 2026-08-20
 ---
 
 # Naučene lekcije (tehnički gotchas)
+
+## Ne mapirati stranu fire-klasu na postojeći EN taksonomija termin bez potvrđene ekvivalencije (2026-08-20)
+
+Codex Wall Mat spec navodi "Fire Retardant Class 1" — italijanska građevinska
+klasifikacija ("Classe 1"), ne EN standard. Prvi pokušaj je ovo mapirao na
+postojeći `pa_vatrootpornost` termin `Bfl-S1` (EN 13501-1, klasifikacija
+SPECIFIČNO za podne pokrivače) — dvostruko pogrešno: Wall Mat nije pod nego
+zidna obloga, a italijanska "Classe 1" i EN "Bfl-s1" nisu potvrđeno
+ekvivalentne. Pravilo: kad izvor navodi klasifikaciju iz drugog nacionalnog/
+regulatornog sistema, ne gura se u postojeći EN taxonomy termin "jer zvuči
+slično" — ili se traži i potvrđuje prava ekvivalencija, ili ostaje kao
+slobodan tekst u spec tabeli bez dodele atributa.
+
+## Use-case landing stranice istog materijala treba spojiti dosledno na CELOJ liniji proizvoda, ne samo delimično (2026-08-20)
+
+Pri uvozu Codex kataloga, 11 "use-case" stranica za Onda/Maxionda (zaštita
+stubova, klupa, tribina...) ispravno je spojeno u "Primena" sekciju
+roditeljskog proizvoda umesto da postanu 11 novih SKU-ova za isti fizički
+materijal. Ista logika NIJE primenjena na Quadrio granu istog uvoza — 6
+use-case stranica (Terasa, Gazebo, Atletska staza, Štale, Košarkaški teren,
+Rampa) je prvo kreirano kao posebni draft proizvodi, iako je izvor
+(`"Material": "Quadrio"`) jasno govorio da je materijal isti. Miroslav je to
+uhvatio ("verovatno i tu ima duplikata") i tražio spajanje naknadno. Pravilo:
+kad se odluka o spajanju use-case varijanti primeni na jednu granu
+proizvoda u istom zadatku, provera "da li ista logika važi i za ostale
+grane" ide **pre** kreiranja, ne posle — dosledna primena u jednom prolazu
+štedi brisanje slika/proizvoda i drugi krug potvrde.
+
+## Proveri content freeze status pre publish-a, čak i za ad-hoc katalog rad (2026-08-20)
+
+Codex Onda proizvod je objavljen (status `publish`, ne draft) 20.08 — baš
+poslednji dan content freeze prozora (17.08 → ČET 20.08) — bez prethodne
+provere `PROGRESS.md` header-a. Materijalni rizik je bio nizak (nov proizvod
+van postojeće regression-sweep baseline stranice), ali procesno pravilo
+važi bez obzira na procenjeni rizik: pre bilo kog `post_status='publish'`
+upisa (ne draft) proveriti freeze prozor u `PROGRESS.md` header-u prvo,
+i ako se poklapa sa freeze danima — ili sačekati M potvrdu, ili jasno
+upisati u dnevnik da je publish namerno urađen unutar freeze prozora i zašto.
 
 ## Uslovni izuzetak u 301 mapi se proverava u bazi, ne u zapisu (2026-08-19)
 
