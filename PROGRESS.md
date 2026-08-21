@@ -23,6 +23,7 @@
 
 **2026-08-21**
 
+- ✅ `[claude-code]` [SEO] H (interni linkovi garaže/terase, redefinisano — v. dnevnik) + **radionice 5637 konvertovan post→page**, puna al-* landing (model po tipu radionice, cenovna tabela, 7-pitanja FAQ + FAQPage schema, 3 AI slike), M odluka 19.08 "post-live" eksplicitno prepisana na "uradi sad" — [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
 - ✅ `[claude-code]` [C] 7 Codex draft proizvoda → publish (Cena na upit + cross-link ka kategoriji fix); usput ispravljen lažan namena-tag nalaz u sopstvenoj analizi — [[dnevnik/2026-08-21-codex-drafts-publish]]
 - ✅ `[claude-code]` [C3] Dva od tri baga implementirana: katalog sidenav (17 kategorija, `<details>`, zaobilazi pokvaren WC widget) + uklonjen mobile-hide CSS + 3x3 planer `.al-cb__svg` width→max-width fix — mobile hero ostaje #ceka-miroslav — [[dnevnik/2026-08-21-tri-baga-implementacija]]
 
@@ -190,7 +191,7 @@ checklisti §B. Uslov za pokretanje: Miroslav ima ~6h slobodnih tog dana (M odlu
 - **7 proizvoda sa generičkim dobavljačkim fotkama** (`16893` `16899`–`16902` `16906` `16919`) — ostaju `publish` ili i oni u draft? → [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
 - **P3 metadesc** za 2699/4318/1094 (uklj. ispravku `072`→`069 234 00 72`) — cPanel nema pristup lokalnoj bazi, preneti su samo naslovi. Ako ne stigne → posle migracije.
 - **„Stari format" na 5119 i 15793** — nije reprodukovano (obe na aktuelnom `al-*` sistemu); legacy swatch na 15793 ✅ popravljen 17.08. Treba screenshot/opis šta konkretno štrči. → [[dnevnik/2026-08-12-vizuali-reference-ikonice]] §3
-- 🟡 **`/podovi-za-radionice/` — najveća otvorena SEO prilika:** ~4.700 prikaza / ~275 klikova, poz. 3,6. 🔴 **Ispravka 19.08: URL POSTOJI** (blog post **5637**, hobi tekst o privatnoj garaži) — nije prazna rupa nego **nesklad namere**; nova stranica bi ga kanibalizovala. Preporuka: konverzija `post`→`page` uz isti ID i slug. 3 AI slike već obrađene i čekaju. **M odluka 19.08: post-live.** → [[dnevnik/2026-08-19-skladista-16687]]
+- ✅ ~~`/podovi-za-radionice/` — najveća otvorena SEO prilika~~ — **ZATVORENO 21.08.** M je 19.08 odluku "post-live" prepisao na "uradi sad". 5637 konvertovan `post`→`page` uz isti ID/slug, puna landing (model po tipu radionice, cena, 3 AI slike, FAQPage schema). → [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
 - 🟡 **Video — čeka M odluku o stranici i Flow kredite.** Predlog: kadar polaganja bakarne trake iz naših **pravih** fotki (HTEC/Quectel), ne iz AI slika. → [[dnevni-video]]
 - 🔴 **AI slike preko API-ja se PLAĆAJU** (`gemini-2.5-flash-image`, ~0,04 USD/sl.; 93 poziva od 04.08). Od 18.08: generisanje samo uz izričito M odobrenje; besplatna varijanta je Gemini chat.
 
