@@ -11,6 +11,12 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
+## 2026-08-20 [claude-code] [C3] — Tri prijavljena baga dijagnostikovana (katalog/mobile hero/3x3 planer), izmene NISU primenjene ⏳
+
+M prijavio tri baga na lokalnom buildu: `/katalog/` prikazuje sve proizvode umesto kategorija i nema proizvoda na mobilnom (uzrok: WooCommerce shop-page mehanika + jutrošnji CSS koji ih razdvaja po viewport-u, plus odvojeno pokvaren WC "Kategorije" widget) · mobile hero zatamnjenje (kod već pojačan jutros, možda već rešeno, nisam mogao vizuelno potvrditi) · 3x3 planer terena prevelik + skroluje se (uzrok: `.al-cb__svg{width:100%}` sa jutrošnje sesije rasteže SVG bez obzira na prirodnu veličinu — `court_m` swap je ostao ispravan, ne dirati ga). Backup baze napravljen (`_pre-3bug-fixes.sql`); sesija prekinuta na usage-limit checkpoint pre primene ijedne izmene — plan i tačne CSS/sadržaj izmene čekaju sledeću sesiju.
+
+→ [[dnevnik/2026-08-20-tri-baga-dijagnoza-katalog-hero-court]]
+
 ## 2026-08-20 [claude-code] [ALATI] — Vault higijena: cepanje 3 velika fajla (CLAUDE.md/naucene-lekcije/woodmart-sabloni), 0 sadržaja izgubljeno ✅
 
 Poslednja preostala 3 nalaza iz 18.08 token audita (v. [[dnevnik/2026-08-18-token-audit-rotacija-ledgera]]) zatvorena u jednoj sesiji.
@@ -86,7 +92,6 @@ Sweep pušten **dan pre freeze-a namerno** (baseline 13.08 pao je prvom izmenom 
 
 → [[dnevnik/2026-08-19-regression-sweep-pre-freeze]]
 
-
 ## 2026-08-18 [claude-code] [W1/W2] — ESD klaster: zvanična dokumentacija, dva nova proizvoda, dopuna stranice ✅
 
 M je dao izvore i sva **4 `#ceka-miroslav` pitanja su zatvorena**: deklaracije (X-Joint ESD 1,46×10⁶ / 9,3×10⁵ Ω · E500/7 ESD 2,2×10⁴–3×10⁶ / 2,9×10⁴–5,7×10⁵ Ω, BS EN / IEC 61340-5-1:2016) · elektroprovodljivo **na upit, ne paušalno** (ATEX se ne sme tvrditi bez deklaracije za isporuku) · **merenje sa zapisnikom — da** · cena ESD **na upit**.
@@ -107,7 +112,6 @@ Backup `_pre-esd-rebuild.sql` (35,25 MB). Verifikovano: 4 URL-a 200 / 1×H1 · J
 
 → [[dnevnik/2026-08-18-esd-dokumentacija-i-proizvodi]]
 
-
 ## 2026-08-18 [claude-code] [W2/SEO] — Stavka F zatvorena: dimenzije klaster ↔ hub 2298 + title/meta `/industrijski-podovi/` ✅
 
 Poslednja otvorena stavka iz plana kanibalizacije. Post **2298** (`kako-napraviti-teren-za-basket…`) je najjači sadržaj na sajtu — **13.686 prikaza / 385 klikova / 90d**, poz. 1–2 za „dimenzije fudbalskog terena" (2.174), „dimenzije košarkaškog terena" (2.004) i „dimenzije košarkaške table" (719) — a četiri **nove** stranice na buildu (16585 · 16586 · 16688 · 17027) gađaju baš te upite i 25.08 bi izašle pred Google **bez ijednog uzajamnog linka** sa njim. Sve četiri sada linkuju ka hubu i međusobno (pasus ispred zatvarajuće CTA sekcije, vodi ka izvođenju — služi i korisniku), hub dobio linkove ka tenisu i fudbalu. Title 16586 i 17027 pomeren ka **izgradnji** („…i izgradnja"); 16585 (već ima „cena") i 16688 (2298 ne cilja tenis) namerno nedirnuti.
@@ -124,7 +128,6 @@ Backup `_pre-F-dimenzije.sql` (35,2 MB). Verifikovano HTTP-om: 5 URL-ova 200, **
 
 → [[dnevnik/2026-08-18-F-dimenzije-klaster]]
 
-
 ## 2026-08-18 [claude-code] [W2/W3] — Cenovne stranice konsolidovane u hubove + vraćeno 301 pravilo koje je odluka od 11.08 isključila ✅
 
 M primedba („zašto dodajemo kontent koji se sukobi sa postojećim?") pokrenula proveru koja je pokazala da **nijedna od 4 „cena" stranice ne postoji na live-u** (sve 404) — napravljene 10.07 samo na buildu, prvi put bi otišle uživo 25.08, dakle **0 GSC istorije**. U isto vreme hub `/industrijski-podovi/` već drži „industrijski podovi cena po m2" na **poz. 6,6 bez ijedne cene na stranici**. Time je preporuka od 13.08 („tabela ostaje na cenovnoj stranici, hub dobija link") oborena. Cene prešle u hubove (`/industrijski-podovi/` kao 4. kolona postojeće tabele debljina · garaže dobile sekciju po kvadraturi · `/spoljnje-podne-obloge/` sekciju po vrsti podloge · parking hub već imao sve), 5 stranica draftovano, segment „Cene" obrisan iz menija (77 → 70 stavki, nestala i prazna stavka 17424).
@@ -134,7 +137,6 @@ M primedba („zašto dodajemo kontent koji se sukobi sa postojećim?") pokrenul
 🔴 Gotcha: `wp-load.php` iz PHP CLI-ja **visi** (5+ min uz 4 s CPU) — izmene izvedene bez WP bootstrap-a, `mysql --raw` → Python → `UPDATE … UNHEX(...)` uz obavezno čitanje nazad i poređenje. Backup `_pre-konsolidacija-cena.sql` (36,95 MB). Verifikovano 8 URL-ova: 200 / 1×H1 / 0 nevalidnih JSON-LD / 0 mrtvih linkova; svih 5 draftovanih → 404, sitemap 61 URL.
 
 → [[dnevnik/2026-08-18-konsolidacija-cenovnih-stranica]]
-
 
 ## 2026-08-18 [claude-code] [ALATI] — `PROGRESS` „Blokeri" 27 KB → 7,5 KB, ceo fajl −46% ✅
 
@@ -343,70 +345,5 @@ oni beleže šta je bilo tačno tog dana; merodavni su plan i checklist. Ime faj
 `2026-08-12-preflight-checklist-24-08.md` ostaje nepromenjeno zbog link-stabilnosti, uz napomenu
 u naslovu.
 → [[dnevnik/2026-08-17-backup-mysql-crash-pomeranje-roka]]
-
----
-
-## 2026-08-14 [claude-code] W3 — Prefiks baze `wpGs_` → `wpgs_` zatvoren u korenu ✅
-
-M odobrio obe popravke iz Copilot nalaza. Rešeno u `wp-config.php` umesto po fajlovima —
-ali izmena **nije jednodelna**: WordPress od prefiksa izvodi i ključeve koji se čuvaju kao
-stringovi, pa je uz config preimenovano i **16 redova u bazi** (`wpGs_capabilities` ×4,
-`wpGs_user_roles`, `wpGs_user_level` ×4, +7 kozmetičkih). 🔴 **Zamka:** kolacija
-`utf8mb4_general_ci` je case-neosetljiva pa bi SQL provera dala lažno zeleno — ali WP meta
-keš je PHP niz, gde je case bitan, i promašaj bi ostavio **sve korisnike bez ijedne dozvole**
-(zaključan wp-admin). Verifikovano `wp user list` kroz pun WP stek: obe admin role netaknute,
-HTTP 200 na tri stranice, 0 pogodaka na `wpGs_` u temi i mu-pluginima. Backup 36 MB pre izmene.
-[[CLAUDE]] §2 ispravljen — tvrdio je da lokalni config nosi `wpGs_`.
-✅ **Rep zatvoren istog dana (M: „sweep svih promptova"):** 13 fajlova ispravljeno — F1/F2/F3
-promptovi, tri prompta koja gađaju Linux (uz dodatu obaveznu proveru prefiksa protiv dump-a),
-master skill sesije i `reference/identifikatori.md`; istorijski zapisi namerno ostavljeni.
-Usput uhvaćena **pokvarena provera** u staging promptu (`grep -v wpGs_` na Linux-u ne bi
-filtrirao `wpgs_` tabele) i osvežen `identifikatori.md`, gde su **3 od 5 tvrdnji** o lokalnom
-okruženju bile netačne (106 tabela → **78**, Porto+WPBakery → **WoodMart 8.5.4**, Yoast →
-**Rank Math**).
-→ [[dnevnik/2026-08-14-copilot-grok-delegati]]
-
----
-
-## 2026-08-14 [claude-code] ALATI — Copilot CLI i Grok CLI kao read-only delegati ✅
-
-Dva CLI alata instalirana 13.08 uvedena u posao uz tvrdu ogradu: nijedan ne menja fajlove
-ni ne čita kredencijale, provereno živim testovima (Copilot **pokušao pa blokiran** na
-`write` i `shell`; `git status` čist posle svih testova). Nov skill `/delegati` je router
-za četiri delegata — Copilot za kod, Grok za drugo mišljenje, `agy` za markdown, `ollama`
-za sirove izlaze. Prvi posao odmah našao **`wpGs_options` u dva sirova `mysqli` upita**
-(`job-plugin-cleanup-cron.php:12,33`), verifikovano nezavisnim grep-om — ista klasa greške
-koja je oborila probu migracije 21.07.
-🔴 **Gotcha:** projektni `.grok/config.toml` grok 1.0.3 **nađe ali ne primeni**
-(`0 loaded`) — zabrane morale u `~/.grok/config.toml`, dakle van gita. Uz to: grok sandbox
-na Windows-u ne postoji, Copilot podrazumevano izvozi sesije na GitHub, a delegat ume da
-vrati uredan izveštaj „pregledano 0 fajlova" bez ijedne greške.
-🔴 **Revizija premise na kraju sesije:** oba delegata su **Free** — Copilot ~50 zahteva
-mesečno (≈1,6 dnevno, testiranje potrošilo ~5), Grok bez naplate ali sa ~23k tokena po
-pozivu. „Rasterećenje Claude kvote" time otpada; delegati su specijalisti za par pitanja
-mesečno, Claude Code ostaje nosilac posla. Router prepisan po **oskudnosti**
-(`ollama` → `agy` → Grok → Copilot), a `ollama` time postaje najvredniji jer je jedini bez kvote.
-→ [[dnevnik/2026-08-14-copilot-grok-delegati]]
-
----
-
-## 2026-08-14 [claude-code] W1/BLOK C — Ergonomske podloge: nova Woo kategorija + 8 proizvoda ✅
-
-Izvršen spec od 13.08 (M odobrio obim, izvršenje bilo odloženo) — poslednji radni dan pre
-content freeze-a. `product_cat` **403** + proizvodi **17838–17845** (Diamond Allround, Soft
-Air Meter, SuperSoft Smooth/Office, La Ola, La Ola Hygienic, Nitrile Walk, Solido I), svi
-„cena na upit", svaki sa `al-table` specifikacijom, 2 FAQ pitanja i FAQPage schemom. Hub
-**16672**, koji do danas nije imao **nijedan** interni link osim `/kontakt/` i `tel:`,
-prevezan: 8 kartica → linkovi, nazivi u tabeli poređenja → linkovi, uzajamne veze ka
-`/industrijski-podovi/` i ESD stranici (7.329 → 9.600 B). Naslov kategorije namerno pomeren
-ka „asortiman i modeli" da ne kanibalizuje hub (poz. 3,8). Verifikacija 12 URL-ova
-200/1×H1/0 grešaka + 4 regresione stranice čiste.
-🔴 **Gotcha:** `wp_insert_post` bez prijavljenog korisnika primenjuje kses i **tiho briše
-`<script type="application/ld+json">`** — prvi prolaz je izgledao uspešno a schema nije
-postojala; fix `kses_remove_filters()`.
-🟢 **Tri pitanja za M zatvorena istog dana:** La Ola/La Ola Hygienic ostaju na generičkoj fotki
-(ergomat.com 403, `intl.ergomat.com` mrtav → dopuna slika iz spec-a nije bila izvodljiva) ·
-namene SuperSoft Smooth/Office ostaju kako su na hub stranici · kategorija se ne dodaje u meni.
-→ [[dnevnik/2026-08-14-ergonomske-podloge-proizvodi]]
 
 ---

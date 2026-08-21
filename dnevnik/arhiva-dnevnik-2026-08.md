@@ -4,6 +4,71 @@
 > **Ništa nije skraćeno ni prepisano** — unosi su preneti doslovno, sortirani
 > newest-on-top. Pun tekst svake sesije je i dalje u `dnevnik/YYYY-MM-DD-*.md`.
 
+## 2026-08-14 [claude-code] W3 — Prefiks baze `wpGs_` → `wpgs_` zatvoren u korenu ✅
+
+M odobrio obe popravke iz Copilot nalaza. Rešeno u `wp-config.php` umesto po fajlovima —
+ali izmena **nije jednodelna**: WordPress od prefiksa izvodi i ključeve koji se čuvaju kao
+stringovi, pa je uz config preimenovano i **16 redova u bazi** (`wpGs_capabilities` ×4,
+`wpGs_user_roles`, `wpGs_user_level` ×4, +7 kozmetičkih). 🔴 **Zamka:** kolacija
+`utf8mb4_general_ci` je case-neosetljiva pa bi SQL provera dala lažno zeleno — ali WP meta
+keš je PHP niz, gde je case bitan, i promašaj bi ostavio **sve korisnike bez ijedne dozvole**
+(zaključan wp-admin). Verifikovano `wp user list` kroz pun WP stek: obe admin role netaknute,
+HTTP 200 na tri stranice, 0 pogodaka na `wpGs_` u temi i mu-pluginima. Backup 36 MB pre izmene.
+[[CLAUDE]] §2 ispravljen — tvrdio je da lokalni config nosi `wpGs_`.
+✅ **Rep zatvoren istog dana (M: „sweep svih promptova"):** 13 fajlova ispravljeno — F1/F2/F3
+promptovi, tri prompta koja gađaju Linux (uz dodatu obaveznu proveru prefiksa protiv dump-a),
+master skill sesije i `reference/identifikatori.md`; istorijski zapisi namerno ostavljeni.
+Usput uhvaćena **pokvarena provera** u staging promptu (`grep -v wpGs_` na Linux-u ne bi
+filtrirao `wpgs_` tabele) i osvežen `identifikatori.md`, gde su **3 od 5 tvrdnji** o lokalnom
+okruženju bile netačne (106 tabela → **78**, Porto+WPBakery → **WoodMart 8.5.4**, Yoast →
+**Rank Math**).
+→ [[dnevnik/2026-08-14-copilot-grok-delegati]]
+
+---
+
+## 2026-08-14 [claude-code] ALATI — Copilot CLI i Grok CLI kao read-only delegati ✅
+
+Dva CLI alata instalirana 13.08 uvedena u posao uz tvrdu ogradu: nijedan ne menja fajlove
+ni ne čita kredencijale, provereno živim testovima (Copilot **pokušao pa blokiran** na
+`write` i `shell`; `git status` čist posle svih testova). Nov skill `/delegati` je router
+za četiri delegata — Copilot za kod, Grok za drugo mišljenje, `agy` za markdown, `ollama`
+za sirove izlaze. Prvi posao odmah našao **`wpGs_options` u dva sirova `mysqli` upita**
+(`job-plugin-cleanup-cron.php:12,33`), verifikovano nezavisnim grep-om — ista klasa greške
+koja je oborila probu migracije 21.07.
+🔴 **Gotcha:** projektni `.grok/config.toml` grok 1.0.3 **nađe ali ne primeni**
+(`0 loaded`) — zabrane morale u `~/.grok/config.toml`, dakle van gita. Uz to: grok sandbox
+na Windows-u ne postoji, Copilot podrazumevano izvozi sesije na GitHub, a delegat ume da
+vrati uredan izveštaj „pregledano 0 fajlova" bez ijedne greške.
+🔴 **Revizija premise na kraju sesije:** oba delegata su **Free** — Copilot ~50 zahteva
+mesečno (≈1,6 dnevno, testiranje potrošilo ~5), Grok bez naplate ali sa ~23k tokena po
+pozivu. „Rasterećenje Claude kvote" time otpada; delegati su specijalisti za par pitanja
+mesečno, Claude Code ostaje nosilac posla. Router prepisan po **oskudnosti**
+(`ollama` → `agy` → Grok → Copilot), a `ollama` time postaje najvredniji jer je jedini bez kvote.
+→ [[dnevnik/2026-08-14-copilot-grok-delegati]]
+
+---
+
+## 2026-08-14 [claude-code] W1/BLOK C — Ergonomske podloge: nova Woo kategorija + 8 proizvoda ✅
+
+Izvršen spec od 13.08 (M odobrio obim, izvršenje bilo odloženo) — poslednji radni dan pre
+content freeze-a. `product_cat` **403** + proizvodi **17838–17845** (Diamond Allround, Soft
+Air Meter, SuperSoft Smooth/Office, La Ola, La Ola Hygienic, Nitrile Walk, Solido I), svi
+„cena na upit", svaki sa `al-table` specifikacijom, 2 FAQ pitanja i FAQPage schemom. Hub
+**16672**, koji do danas nije imao **nijedan** interni link osim `/kontakt/` i `tel:`,
+prevezan: 8 kartica → linkovi, nazivi u tabeli poređenja → linkovi, uzajamne veze ka
+`/industrijski-podovi/` i ESD stranici (7.329 → 9.600 B). Naslov kategorije namerno pomeren
+ka „asortiman i modeli" da ne kanibalizuje hub (poz. 3,8). Verifikacija 12 URL-ova
+200/1×H1/0 grešaka + 4 regresione stranice čiste.
+🔴 **Gotcha:** `wp_insert_post` bez prijavljenog korisnika primenjuje kses i **tiho briše
+`<script type="application/ld+json">`** — prvi prolaz je izgledao uspešno a schema nije
+postojala; fix `kses_remove_filters()`.
+🟢 **Tri pitanja za M zatvorena istog dana:** La Ola/La Ola Hygienic ostaju na generičkoj fotki
+(ergomat.com 403, `intl.ergomat.com` mrtav → dopuna slika iz spec-a nije bila izvodljiva) ·
+namene SuperSoft Smooth/Office ostaju kako su na hub stranici · kategorija se ne dodaje u meni.
+→ [[dnevnik/2026-08-14-ergonomske-podloge-proizvodi]]
+
+---
+
 ## 2026-08-13 [cpanel-live] staging.antasline.com V4 puno postavljanje (ručni upload) ✅
 
 Docroot bio obrisan, fajlovi ubačeni ručno kroz File Manager — MD5 potvrđen (referentni

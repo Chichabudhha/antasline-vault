@@ -7,6 +7,21 @@ description: Tehnicki gotchas — vault/ledger workflow, delegat-agenti (ollama/
 
 > 4/4 tematskog rascepa `reference/naucene-lekcije.md` (2026-08-20). Ostala tri: [[reference/lekcije-wp-db-tehnika]] · [[reference/lekcije-seo-sadrzaj-migracija]] · [[reference/lekcije-ads-tracking]]. Indeks: [[reference/naucene-lekcije]].
 
+## Claude-in-Chrome `resize_window` ne menja stvarnu veličinu prozora u ovom okruženju (2026-08-20)
+
+Testirano više puta (dva odvojena taba, vrednosti 390×844, 400×850, 1024×768,
+1440×900) — alat vraća "Successfully resized" ali `window.innerWidth`/`innerHeight`
+posle poziva i dalje pokazuju punu rezoluciju ekrana (1920×1080-ish), bez obzira
+na traženu vrednost. CSS `zoom` na `documentElement` ni preko 400% ne menja
+`window.innerWidth` niti `matchMedia('(max-width:767px)').matches`. Prozor je
+verovatno zaključan na fiksnu rezoluciju od strane window managera ovog
+sandboxed okruženja. **Posledica:** mobilni breakpoint (`@media max-width:767px`)
+se ne može vizuelno potvrditi kroz Claude-in-Chrome u ovoj sesiji — dijagnoza
+mobilnih bagova mora ići kroz čitanje CSS-a/DOM-a (`getComputedStyle`, DOM
+introspekcija) umesto pravog screenshot-a na uskom viewport-u. Ako ovo ikad
+proradi (nova sesija/okruženje), probaj ponovo pre nego što pretpostaviš da
+i dalje ne radi.
+
 ## Proveri content freeze status pre publish-a, čak i za ad-hoc katalog rad (2026-08-20)
 
 Codex Onda proizvod je objavljen (status `publish`, ne draft) 20.08 — baš
