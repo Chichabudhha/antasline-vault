@@ -180,6 +180,7 @@ izvor: "[[PROGRESS]]"
 - ✅ **`/katalog/` kategorije/mobile prikaz + 3x3 planer skrol — ZATVORENO 21.08.** Sidenav (17 kategorija, `<details>`) zaobilazi pokvaren WC widget, mobile-hide CSS uklonjen, `.al-cb__svg` width→max-width fix. → [[dnevnik/2026-08-21-tri-baga-implementacija]]
 - ✅ **Mobile hero zatamnjenje "samo na nekim stranicama" — ZATVORENO 21.08.** Nije bio mobile-only bag: `.al-hero-photo::before` i `.al-plates::before` deljene isti pseudo-element na 53/54 hero stranica, `opacity`/`transform` procureli iz plates. Fix eksplicitno resetuje oba svojstva. → [[dnevnik/2026-08-21-tri-baga-implementacija]]
 - ✅ **Onda objavljena baš na 20.08 (poslednji dan starog content freeze prozora)** — pokrivena potvrdnim sweep-om isto veče; usput otkriven i fixovan mrtav link ka draft Maxiondi. → [[dnevnik/2026-08-20-potvrdni-sweep-i-backup-posle-freeze]]
+- ✅ **`/podovi-za-radionice/` — najveća otvorena SEO prilika — ZATVORENO 21.08.** M je 19.08 odluku "post-live" prepisao na "uradi sad". 5637 konvertovan `post`→`page` uz isti ID/slug, puna al-* landing (model po tipu radionice, cena, 3 AI slike, FAQPage schema), plus 4 dopune u istoj sesiji (meni, komentari, prevod, dizajn dugmadi). → [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
 
 ### ESD sadržaj — 4 potvrde pre objave (zatvoreno 2026-08-18, isti dan kad je i otvoreno)
 

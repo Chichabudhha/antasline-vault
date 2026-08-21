@@ -112,6 +112,26 @@ Zeleno dugme **nije zaostatak** — WoodMart core (`post-types-mod-comments.css`
 
 Umesto toga: skopiran fix u `antas-design.css`, `#comments .comment-form .submit` → `var(--al-red)` / hover `var(--al-red-dark)` (isti par boja kao `.al-btn`). ID prefiks `#comments` je obavezan — parent-ov `post-types-mod-comments.css` ima istu specifičnost (2 klase) i učitava se POSLE child theme CSS-a u `<head>` (redosled potvrđen preko `document.querySelectorAll('link[rel="stylesheet"]')`), pa bez ID-a cascade order pobeđuje parent i boja ostaje zelena uprkos "ispravnom" pravilu. Verifikovano u browseru: dugme narandžasto (`rgb(240,77,34)` = `#F04D22`), uklapa se sa ostatkom CTA dugmadi na stranici.
 
+**Dopuna 4 (M primedba, isti dan) — oba dugmeta na pun `.al-btn` izgled (font + kroj), ne samo boja:**
+
+M je primetio da "Predaj komentar" nosi pogrešan font i da "Pošaljite upit" (CF7 kontakt-forma, sekcija "Zatražite ponudu") ne prati stil sajta iako je već narandžasto. Provera: oba su koristila WoodMart/generički tretman — `.comment-form .submit` je Inter 13px/600 bez oblika, `.al-section .wpcf7 input[type="submit"]` je Inter 19px/700 sa `border-radius:4px` (zaobljen pravougaonik), umesto sajtovog prepoznatljivog kroja (`.al-btn`: Bebas Neue, kosi paralelogram `clip-path`, `letter-spacing: 0.06em`).
+
+🔴 **Bitan nalaz pre izmene:** CF7 dugme NIJE bilo slučajno drugačije — kod je nosio eksplicitan komentar od **2026-08-04** (WCAG Lighthouse nalaz): beli tekst na `--al-red` (#F04D22) daje kontrast **3,63:1**, ispod 4,5:1 praga za običan tekst. Rešenje od 04.08 je bilo bold+19px da uđe u WCAG 1.4.3 izuzetak za "veliki tekst" (14pt/18,66px **bold** → prag pada na 3:1). Da sam prosto prekopirao `.al-btn` preko toga bez provere, mogao sam tiho vratiti stari accessibility nalaz.
+
+Rešeno bez žrtvovanja ni jednog ni drugog: `.al-btn` već koristi `font-size: clamp(24px, 1.6vw, 26px)` — minimum 24px zadovoljava WCAG 1.4.3 "veliki tekst" prag na **drugi, jednostavniji način** (18pt/24px **REGULAR**, bold uopšte nije potreban iznad te veličine). 26px Bebas Neue na `--al-red` nosi isti izmereni kontrast 3,63:1, koji na 24px+ prolazi bez obzira na font-weight. Zaključak upisan direktno u CSS komentar na oba mesta: **font-size ovde ne sme ići ispod 24px** bez ponovne provere kontrasta.
+
+Izmenjeno u `antas-design.css`:
+- `.al-section .wpcf7 input[type="submit"]` — `border-radius:4px`/Inter/19px/700 → `border-radius:0`/Bebas Neue (`var(--al-display)`)/`clamp(24px,1.6vw,26px)`/400/`letter-spacing:0.06em`/isti `clip-path` paralelogram kao `.al-btn`.
+- `#comments .comment-form .submit` — isti pun set svojstava (font, kroj, razmak), ne samo boja kao u dopuni 3.
+
+Verifikovano u browseru na 2 stranice: `podovi-za-radionice` (oba dugmeta, `Bebas Neue`/`26px`/`clip-path` potvrđeno preko `getComputedStyle`) i `kako-napraviti-teren-za-basket...` (CF7 dugme isto ispravno; komentar-forma se na toj strani uopšte ne renderuje — sajt ima `close_comments_for_old_posts=1` / `close_comments_days_old=14`, post je iz 2018/2019, forma se automatski gasi posle 14 dana bez obzira na `comment_status=open` u bazi — **postojeće ponašanje sajta, ne regresija**; jedino mesto gde je "Predaj komentar" trenutno vidljivo/aktivno je sveža stranica 5637, pošto je jedina unutar 14-dnevnog prozora).
+
+## Otvorene akcije
+
+- [ ] **16615** `/podovi-za-detailing-radionice-i-servise/` — spojiti u 5637 ili suziti (odluka iz 19.08, nije dirana ovom sesijom). #claude-code
+
+Nema #ceka-miroslav stavki iz ove sesije — sve M primedbe iz same sesije (meni, komentari, prevod, padding, boja i font oba dugmeta) su zatvorene u istoj sesiji.
+
 ## Napomena — svesno van obima
 
 **16615** `/podovi-za-detailing-radionice-i-servise/` — otvorena stavka iz 19.08 ("spojiti u

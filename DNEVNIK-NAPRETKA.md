@@ -11,6 +11,16 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
+## 2026-08-21 [claude-code] [SEO] — H (interni linkovi) + radionice post→page konverzija ✅
+
+M eksplicitno prepisao 19.08 odluku "post-live" — najveća otvorena SEO prilika
+(~4.700 prikaza/275 klikova, poz. 3,6) sada ima namensku stranicu: 5637 konvertovan
+`post`→`page` uz isti ID/slug, puna al-* landing (model po tipu radionice, cena,
+3 AI slike, FAQPage schema) + H prepravljen na stvarno stanje baze (16875/16873 su
+u međuvremenu draftovane) + 4 M dopune u istoj sesiji: meni stavka, vraćeni stari
+komentari, sajt-vajd prevod "thoughts on", padding i boja/font oba submit dugmeta
+(sa WCAG proverom kontrasta). → [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
+
 ## 2026-08-21 [claude-code] [C] — 7 Codex draft proizvoda: minimalan fix + publish ✅
 
 Pregled protiv `/obogati-proizvod` standarda otkrio 2 stvarna nedostatka (nema

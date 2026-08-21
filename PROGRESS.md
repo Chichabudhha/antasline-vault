@@ -23,7 +23,7 @@
 
 **2026-08-21**
 
-- ✅ `[claude-code]` [SEO] H (interni linkovi garaže/terase, redefinisano — v. dnevnik) + **radionice 5637 konvertovan post→page**, puna al-* landing (model po tipu radionice, cenovna tabela, 7-pitanja FAQ + FAQPage schema, 3 AI slike), M odluka 19.08 "post-live" eksplicitno prepisana na "uradi sad"; dopuna: meni stavka (Industrija→Po delatnosti), stari komentari vraćeni (`comment_status=open`), sajt-vajd prevod "X thoughts on" → "X komentara na" (WoodMart `ngettext_with_context` filter) — [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
+- ✅ `[claude-code]` [SEO] H (interni linkovi, redefinisano) + radionice 5637 post→page konverzija, puna al-* landing; M odluka 19.08 "post-live" prepisana na "uradi sad" — [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
 - ✅ `[claude-code]` [C] 7 Codex draft proizvoda → publish (Cena na upit + cross-link ka kategoriji fix); usput ispravljen lažan namena-tag nalaz u sopstvenoj analizi — [[dnevnik/2026-08-21-codex-drafts-publish]]
 - ✅ `[claude-code]` [C3] Dva od tri baga implementirana: katalog sidenav (17 kategorija, `<details>`, zaobilazi pokvaren WC widget) + uklonjen mobile-hide CSS + 3x3 planer `.al-cb__svg` width→max-width fix — mobile hero ostaje #ceka-miroslav — [[dnevnik/2026-08-21-tri-baga-implementacija]]
 
@@ -98,6 +98,10 @@ planer `.al-cb__svg` fix, mobile hero zatamnjenje (pravi uzrok: `::before` koliz
 `.al-plates` na 53/54 hero stranica, ne mobile-specifično) — sve verifikovano u browseru
 bez regresije.
 → [[dnevnik/2026-08-21-tri-baga-implementacija]]
+
+**✅ Radionice (5637) zatvoreno 21.08** — v. Blokeri arhiva. Otvoreno ostaje samo:
+🟡 **16615** `/podovi-za-detailing-radionice-i-servise/` — spojiti u 5637 ili suziti,
+odluka iz 19.08, nije bila deo naloga za ovu sesiju. → [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
 
 **Vault higijena — van sadržajnog prozora, ne blokira gate** (nalazi 18.08, [[dnevnik/2026-08-18-token-audit-rotacija-ledgera]]):
 - ✅ ~~`PROGRESS` „Blokeri" = 27 KB = 70% ovog fajla, 45 stavki~~ — **SKRAĆENO 2026-08-18** na ~7,5 KB / 28 stavki; ceo fajl 41,2 → 22,1 KB (**−46%**, ≈−6k tokena po sesiji). Pun tekst pre skraćivanja doslovno u [[dnevnik/2026-08-arhiva-progress]]
@@ -191,7 +195,6 @@ checklisti §B. Uslov za pokretanje: Miroslav ima ~6h slobodnih tog dana (M odlu
 - **7 proizvoda sa generičkim dobavljačkim fotkama** (`16893` `16899`–`16902` `16906` `16919`) — ostaju `publish` ili i oni u draft? → [[dnevnik/2026-08-17-izvrsenje-odluka-draft-f28-meni67]]
 - **P3 metadesc** za 2699/4318/1094 (uklj. ispravku `072`→`069 234 00 72`) — cPanel nema pristup lokalnoj bazi, preneti su samo naslovi. Ako ne stigne → posle migracije.
 - **„Stari format" na 5119 i 15793** — nije reprodukovano (obe na aktuelnom `al-*` sistemu); legacy swatch na 15793 ✅ popravljen 17.08. Treba screenshot/opis šta konkretno štrči. → [[dnevnik/2026-08-12-vizuali-reference-ikonice]] §3
-- ✅ ~~`/podovi-za-radionice/` — najveća otvorena SEO prilika~~ — **ZATVORENO 21.08.** M je 19.08 odluku "post-live" prepisao na "uradi sad". 5637 konvertovan `post`→`page` uz isti ID/slug, puna landing (model po tipu radionice, cena, 3 AI slike, FAQPage schema). → [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
 - 🟡 **Video — čeka M odluku o stranici i Flow kredite.** Predlog: kadar polaganja bakarne trake iz naših **pravih** fotki (HTEC/Quectel), ne iz AI slika. → [[dnevni-video]]
 - 🔴 **AI slike preko API-ja se PLAĆAJU** (`gemini-2.5-flash-image`, ~0,04 USD/sl.; 93 poziva od 04.08). Od 18.08: generisanje samo uz izričito M odobrenje; besplatna varijanta je Gemini chat.
 

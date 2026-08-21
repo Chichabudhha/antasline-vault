@@ -16,7 +16,7 @@ azurirano: 2026-08-20
 
 | Fajl | Tema | Entries |
 |---|---|---|
-| [[reference/lekcije-wp-db-tehnika]] | WordPress core/DB/WP-CLI, WooCommerce, WoodMart/WPBakery theme dev, Windows/PowerShell/Bash tooling, backup/infra | 103 |
+| [[reference/lekcije-wp-db-tehnika]] | WordPress core/DB/WP-CLI, WooCommerce, WoodMart/WPBakery theme dev, Windows/PowerShell/Bash tooling, backup/infra | 108 |
 | [[reference/lekcije-seo-sadrzaj-migracija]] | SEO (Rank Math/Yoast), schema, redirect/301/.htaccess, GSC, content parity, migracija sadržaja | 55 |
 | [[reference/lekcije-ads-tracking]] | Google Ads API, GA4, GTM, konektor (Windsor/sopstveni), Customer Match, publike | 19 |
 | [[reference/lekcije-alati-vault-delegati]] | Vault/ledger workflow, delegat-agenti (ollama/agy/grok/copilot), browser automation, AI foto/video tooling, opšti proces | 46 |

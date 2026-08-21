@@ -241,8 +241,10 @@ Master lista: [[seo/plan-novih-stranica]] (20 stranica, 4 tijera). Pravila po st
 > dobrovoljna, pa „zakonska obaveza" ostaje zabranjena formulacija.
 > Kandidat (2) delimično: title/meta `/industrijski-podovi/` prepravljen, **cena namerno u
 > opisu a ne u naslovu** (M odluka: cena u title-u diskvalifikuje pre klika).
-> 🔴 Kandidat (1) `/podovi-za-radionice/` **i dalje otvoren** — 3 AI slike već čekaju na njega.
-> → [[dnevnik/2026-08-18-esd-dokumentacija-i-proizvodi]]
+> ✅ **Kandidat (1) `/podovi-za-radionice/` ZATVOREN 2026-08-21** — M prepisao 19.08 odluku
+> "post-live" na "uradi sad". 5637 konvertovan `post`→`page` uz isti ID/slug, puna al-* landing
+> (model po tipu radionice, cena, 3 AI slike koje su čekale, FAQPage schema).
+> → [[dnevnik/2026-08-18-esd-dokumentacija-i-proizvodi]] · [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
 
 ### W3 — SEO TEHNIČKA + MIGRACIJA (C1/C2 + CWV)
 > 🔄 **2026-07-07: C1/C2 pristup zamenjen parity strategijom** — build se pravi 1:1 prema live sajtu, redirect mapa se svodi na minimum. Izvor istine: [[migracija/PARITY-PLAN]], izvršenje kroz promptove [[migracija/promptovi/_README]] (F1–F7). Stare mape arhivirane u `migracija/arhiva/`.

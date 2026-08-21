@@ -7,6 +7,63 @@ description: Tehnicki gotchas — WordPress core/DB/WP-CLI, WooCommerce, WoodMar
 
 > 1/4 tematskog rascepa `reference/naucene-lekcije.md` (2026-08-20). Ostala tri: [[reference/lekcije-seo-sadrzaj-migracija]] · [[reference/lekcije-ads-tracking]] · [[reference/lekcije-alati-vault-delegati]]. Indeks: [[reference/naucene-lekcije]].
 
+## `mysql -e` sa direktnim UTF-8 string literalom kvari dijakritiku/em-dash i u POSTMETA, ne samo post_content (2026-08-21)
+
+Poznati gotcha (post_content, 18.08/19.08) se prvi put uhvatio i na
+**postmeta** poljima: `mysql -e "UPDATE ... SET meta_value='...'"` sa
+direktnim srpskim tekstom (č/ž/², em-dash) je tiho pokvario karaktere —
+Windows/Git-Bash prevodi string kroz cp1250 pre nego što stigne do MySQL
+klijenta. Verifikacija ispisom u bash konzolu **takođe mangluje** (konzola
+sama nije UTF-8), pa se round-trip provera mora pisati u fajl i čitati
+`Read` alatom, ne `echo`/`print` u terminal. Pravilo bez izuzetka: svako
+pisanje teksta sa dijakritikom u WP bazu — post_content ILI postmeta —
+ide isključivo kroz HEX/UNHEX. → [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
+
+## `mysql -e` sa hex stringom >~26 KB puca na "Argument list too long" (2026-08-21)
+
+Windows cmdline dužina ograničava `mysql -e "UPDATE ... UNHEX('...')"` kad je
+hex payload velik (52 KB hex za ~26 KB teksta je već pucalo). Fix: napisati
+SQL u privremeni `.sql` fajl (`printf` ili Write alat) i izvršiti
+`mysql db < fajl.sql` umesto `-e`. → [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
+
+## `post_title` curi kroz sajt-vajd widgete nezavisno od `_woodmart_title_off` (2026-08-21)
+
+`_woodmart_title_off=on` sprečava SAMO duplikat H1 u glavnom sadržaju
+(`.entry-content`). Ne sprečava `post_title` da procuri na druga mesta koja
+ga direktno čitaju — ovde: kontakt-forma widget na dnu svake stranice
+("Zatražite ponudu: {post_title}"). Isti rizik verovatno važi za
+breadcrumbs i `<title>` fallback ako Rank Math title nije eksplicitno
+postavljen. Curl provera markupa (H1 count) ovo NE hvata — samo vizuelni
+scroll kroz celu renderovanu stranicu u browseru otkriva problem. Pravilo:
+kod svakog `post`→`page` konverzije (ili bilo koje izmene koja menja H1),
+`post_title` se eksplicitno usklađuje sa novim H1-om, isti obrazac kao
+druge al-* stranice (`post_title` == tekst H1). → [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
+
+## Child theme CSS koji učitava PRE parent teme gubi cascade rat na istoj specifičnosti (2026-08-21)
+
+`antas-design.css` (child) i WoodMart-ov `post-types-mod-comments.css`
+(parent) oba imaju `.comment-form .submit` — ista specifičnost (2 klase).
+Child se u `<head>` učitava PRE parent-a (enqueue redosled), pa cascade
+order dodeljuje pobedu **parent-u**, ne child-u — suprotno uobičajenoj
+pretpostavci "child theme uvek pobeđuje". Fix nije `!important` nego
+veća specifičnost (dodat `#comments` ID prefiks u selektor). Proveri
+stvarni redosled preko `document.querySelectorAll('link[rel="stylesheet"]')`
+pre nego što posumnjaš na keš kad override "ne radi" a fajl je sigurno
+sačuvan i keš obrisan. → [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
+
+## WCAG 1.4.3 "veliki tekst" prag: 24px REGULAR prolazi isto kao 18,66px BOLD (2026-08-21)
+
+`.al-btn` (Bebas Neue, `clamp(24px, 1.6vw, 26px)`, font-weight 400) na
+`--al-red` (#F04D22) meri kontrast **3,63:1** — ispod 4,5:1 praga za običan
+tekst, ali WCAG 1.4.3 ima DVA nezavisna izuzetka za "veliki tekst": 18pt/24px
+**REGULAR** ili 14pt/18,66px **BOLD**, oba sa pragom 3:1. Prethodni fix
+(2026-08-04, CF7 dugme) je koristio bold+19px granu; ista boja na `.al-btn`
+prolazi kroz regular+24px+ granu bez potrebe za bold. Korisno kad se brend
+dugme (Bebas Neue je uvek regular-weight) mora naslagati preko boje koja ne
+prolazi pun 4,5:1 kontrast — dovoljno je držati font-size ≥24px, provereno
+matematički (formula: relative luminance → (L1+0.05)/(L2+0.05)), ne
+nagađanjem. → [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
+
 ## Taksonomija: proveravaj postojeće termine po `slug`, ne po `name` (2026-08-21)
 
 Upit `t.name LIKE 'namena-%'` na `wpgs_terms` je vratio "0 proizvoda ima
