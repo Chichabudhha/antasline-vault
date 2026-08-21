@@ -11,6 +11,54 @@
 > Pretraga cele istorije: `grep -rn "pojam" --include="*.md" .` — u kontekst
 > ulaze samo pogođene linije, ne ceo fajl.
 
+## 2026-08-21 [claude-code] [C] — 7 Codex draft proizvoda: minimalan fix + publish ✅
+
+Pregled protiv `/obogati-proizvod` standarda otkrio 2 stvarna nedostatka (nema
+eksplicitnog "Cena na upit" teksta, nema cross-link ka kategoriji) — M odobrio
+"minimalan fix pa publish" preko `AskUserQuestion`. Popravljeno za svih 7
+(Quadrio/Polyshock/Interior/Sport Roll/Crossfit Floor/Maxionda/Wall Mat):
+zadnji pasus prepisan da počinje `Cena: na upit`, dodat pasus-link ka
+`/kategorija-proizvoda/sportske-podloge/` ili `/zastita-i-bumperi/`,
+`post_status` → `publish`. Backup `_pre-codex-minimal-fix.sql` (37 MB).
+Verifikovano: 7×200, 1×H1 svuda, 1 JSON-LD blok bez dupliranja, oba cilja
+kategorije 200, regression spot-check čist.
+
+🔴 **Ispravka u istoj sesiji:** treći "nedostatak" iz prvobitne analize (0/8
+nema namena tag) bio je **lažan nalaz** — bag u proveri (`t.name LIKE
+'namena-%'` umesto `t.slug`, a `name` nosi lokalizovan prikazni tekst).
+Svih 7 + Onda su već imali namena tag iz 20.08 uvoza. Na osnovu lažnog
+nalaza sam ipak dodao par dodatnih (sadržajno tačnih, ne štetnih) tagova
+pre otkrivanja bag-a — `INSERT IGNORE` je no-op na postojećim parovima,
+ništa obrisano. Lekcija: WP taksonomije proveravati po `slug`, ne `name`.
+
+**Iste sesije, M potvrdio cenu Onda (17957):** 14.088 je bilo bez PDV, +20%
+(16.906 RSD) je ispravan obračun — nema izmene u bazi, poslednja otvorena
+stavka iz 20.08 uvoza zatvorena.
+
+→ [[dnevnik/2026-08-21-codex-drafts-publish]]
+
+## 2026-08-21 [claude-code] [C3] — Dva od tri baga implementirana: katalog sidenav + uklonjen mobile-hide, 3x3 planer CSS fix ✅
+
+Nastavak jučerašnje dijagnoze ([[dnevnik/2026-08-20-tri-baga-dijagnoza-katalog-hero-court]]) — plan primenjen bez izmena, isti backup (`_pre-3bug-fixes.sql`) i dalje važi jer baza nije dirana između sesija. **Katalog**: `antas-design.css` izgubio `display:none` na `.al-katalog-cats` i ceo mobile-hide `@media(max-width:767px)` blok — kategorije i proizvodi sad vidljivi na svim veličinama; `post_content` posta 16736 dobio novi `<nav class="al-katalog-sidenav">` (17 kategorija, `<details>`-baziran, bez JS) koji zaobilazi pokvaren `WC_Widget_Product_Categories`, upisan preko `UNHEX()` i provera bajt-za-bajt. **3x3 planer**: `al-court-builder.css` `.al-cb__svg{width:100%}` → `max-width:100%` — SVG sad prirodne veličine (196×196px, bez skrola), Košarka (najveći SVG na sajtu) i dalje ispravno skalirana dole, nema regresije. **Mobile hero zatamnjenje ostaje netaknuto** — čeka M screenshot sa uskog viewporta, `resize_window` alat i dalje ne radi u ovom okruženju. Verifikacija: `/katalog/` i `/planer-terena/` HTTP 200/1×H1 + brz regression spot-check (home, `/industrijski-podovi/`).
+
+→ [[dnevnik/2026-08-21-tri-baga-implementacija]]
+
+## 2026-08-21 [claude-code] [C3] — Treći bag zatvoren: mobile hero zatamnjenje — nije mobile-only, `::before` kolizija sa `.al-plates` ✅
+
+M prijavio "zatamnjenje na mobilnom je samo na nekim stranicama" — istraga pokazala da uzrok nije
+mobile-specifičan i nije trebalo `resize_window` da bi se video. `.al-hero-photo::before` (zatamnjenje)
+i `.al-plates::before` (dekorativne kose ploče) sede na **istom `vc_row` elementu** na **53 od 54**
+hero stranica (sve sem početne, koja nema `.al-plates`) — element ima samo jedan `::before`, kaskada
+ga sklapa po svojstvu, pa `transform: skewX(...)` i `opacity: 0.55` iz `.al-plates::before` procure
+u zatamnjenje jer ga `.al-hero-photo::before` nije eksplicitno postavljao. Potvrđeno `getComputedStyle`-om:
+početna (bez `.al-plates`) = `opacity:1/transform:none` (ispravno); ostale = `opacity:0.55` + koso
+(šuplji trouglovi u uglovima) — **na desktopu i mobilnom podjednako**. Fix: `opacity:1; transform:none;`
+dodato direktno u `.al-hero-photo::before` (`antas-design.css` ~367) — ista specifičnost, kasnije u
+fajlu, pobeđuje bez `!important`; mobilni media-query blok nedirnut (samo `background`). Verifikovano
+na 3 stranice + screenshot. **Time su zatvorene sve tri stavke iz 20.08 dijagnoze.**
+
+→ [[dnevnik/2026-08-21-tri-baga-implementacija]]
+
 ## 2026-08-20 [claude-code] [C3] — Tri prijavljena baga dijagnostikovana (katalog/mobile hero/3x3 planer), izmene NISU primenjene ⏳
 
 M prijavio tri baga na lokalnom buildu: `/katalog/` prikazuje sve proizvode umesto kategorija i nema proizvoda na mobilnom (uzrok: WooCommerce shop-page mehanika + jutrošnji CSS koji ih razdvaja po viewport-u, plus odvojeno pokvaren WC "Kategorije" widget) · mobile hero zatamnjenje (kod već pojačan jutros, možda već rešeno, nisam mogao vizuelno potvrditi) · 3x3 planer terena prevelik + skroluje se (uzrok: `.al-cb__svg{width:100%}` sa jutrošnje sesije rasteže SVG bez obzira na prirodnu veličinu — `court_m` swap je ostao ispravan, ne dirati ga). Backup baze napravljen (`_pre-3bug-fixes.sql`); sesija prekinuta na usage-limit checkpoint pre primene ijedne izmene — plan i tačne CSS/sadržaj izmene čekaju sledeću sesiju.

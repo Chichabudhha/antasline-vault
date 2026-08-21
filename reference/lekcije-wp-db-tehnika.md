@@ -7,6 +7,17 @@ description: Tehnicki gotchas — WordPress core/DB/WP-CLI, WooCommerce, WoodMar
 
 > 1/4 tematskog rascepa `reference/naucene-lekcije.md` (2026-08-20). Ostala tri: [[reference/lekcije-seo-sadrzaj-migracija]] · [[reference/lekcije-ads-tracking]] · [[reference/lekcije-alati-vault-delegati]]. Indeks: [[reference/naucene-lekcije]].
 
+## Taksonomija: proveravaj postojeće termine po `slug`, ne po `name` (2026-08-21)
+
+Upit `t.name LIKE 'namena-%'` na `wpgs_terms` je vratio "0 proizvoda ima
+namena tag" za 7 Codex draft proizvoda — netačno. `name` je lokalizovan
+prikazni tekst ("Igrališta", "Sportska dvorana"...) i ne nosi prefiks
+konvencije taksonomije; `slug` ga nosi (`namena-igraliste`). Ispravan upit
+(`t.slug LIKE 'namena-%'`) je pokazao da su termini već dodeljeni. Posledica:
+gubitak vremena i par nepotrebnih (ne štetnih) `INSERT IGNORE` upisa na
+osnovu lažnog nalaza. Pravilo: filter/provera taksonomije uvek na `slug`
+koloni, `name` samo za prikaz. → [[dnevnik/2026-08-21-codex-drafts-publish]]
+
 ## `wp media import` puca na SVG preko "SVG Support" plugina van pune HTTP sesije (2026-08-20)
 
 `wp-cli media import fajl.svg` na ovom buildu baca fatalnu grešku ("Call to a
@@ -819,3 +830,11 @@ aria_chk -o -f mysql\db.MAI mysql\columns_priv.MAI ...
 ## Mešani CRLF/LF fajlovi: normalizacija celog fajla ga naduva (token audit, 2026-08-18)
 - Skript za čišćenje razmaka je u prvom prolazu **povećao** `migracija/arhiva/2026-08-11-legacy-cpt-sadrzaj.md` za 2.354 B, jer taj fajl ima **1.144 CRLF i 2.354 LF** reda, a logika „ako fajl sadrži CRLF, vrati sve na CRLF“ je konvertovala i LF redove.
 - **Pravilo: čuvaj završetak reda po liniji** (`cr = seg.endswith('
+
+
+## Deljen `::before` između dve klase na istom elementu — svojstva se kaskadiraju po svojstvu, ne po pravilu (2026-08-21)
+- M je prijavio "zatamnjenje na mobilnom je samo na nekim stranicama" na foto-hero sekcijama. Uzrok nije bio mobile-specifičan i nije trebalo `resize_window` da bi se video: `.al-hero-photo::before` (navy overlay) i `.al-plates::before` (dekorativne kose ploče, brend motiv) su na **istom `vc_row` elementu** na 53 od 54 hero stranica (sve sem početne, koja jedina nema `.al-plates`).
+- Element ima samo jedan `::before`. Kad ga dve klase ciljaju odvojenim pravilima, browser ne bira "pobedničko pravilo" u celini — sklapa konačni pseudo-element **svojstvo po svojstvo**, po istoj cascade logici kao i za obično pravilo/pravilo. `.al-hero-photo::before` (kasnije u fajlu) je pobeđivao za `background`/`inset`/`width`/`height`, ali nikad nije eksplicitno postavljao `transform` ni `opacity` — pa su ta dva svojstva procurela iz `.al-plates::before` (`transform: skewX(...)`, `opacity: 0.55`), praveći upola bleđe i koso zatamnjenje (šuplji trouglovi u uglovima) na svakoj stranici koja nosi obe klase.
+- Potvrđeno `getComputedStyle(el, '::before')` u browseru — brz i pouzdan način da se proveri KOJA svojstva stvarno stižu do pseudo-elementa, bez nagađanja iz izvornog CSS-a (koje pravilo "izgleda" da pobeđuje nije isto što i šta se stvarno renderuje kad dve klase dele isti pseudo-selektor).
+- **Pravilo:** kad se dve dekorativne/overlay klase kombinuju na istom elementu i obe koriste `::before` (ili `::after`), svako pravilo mora **eksplicitno postaviti SVA vizuelno bitna svojstva** (`transform`, `opacity`, `filter`, `mix-blend-mode`...), ne samo ona koja ga razlikuju od default vrednosti — inače susedno pravilo tiho popuni prazninu. Alternativa: razdvojiti na `::before`/`::after` parove tako da se nikad ne preklapaju na istom elementu.
+- Fix (bez `!important`, ista specifičnost/kasnije u fajlu pobeđuje): [[dnevnik/2026-08-21-tri-baga-implementacija]]

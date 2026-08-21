@@ -21,9 +21,14 @@
 > [[dnevnik/2026-08-arhiva-progress]] · jun–jul: [[dnevnik/2026-07-arhiva-progress]]
 > · pune sesije: [[DNEVNIK-NAPRETKA]]
 
+**2026-08-21**
+
+- ✅ `[claude-code]` [C] 7 Codex draft proizvoda → publish (Cena na upit + cross-link ka kategoriji fix); usput ispravljen lažan namena-tag nalaz u sopstvenoj analizi — [[dnevnik/2026-08-21-codex-drafts-publish]]
+- ✅ `[claude-code]` [C3] Dva od tri baga implementirana: katalog sidenav (17 kategorija, `<details>`, zaobilazi pokvaren WC widget) + uklonjen mobile-hide CSS + 3x3 planer `.al-cb__svg` width→max-width fix — mobile hero ostaje #ceka-miroslav — [[dnevnik/2026-08-21-tri-baga-implementacija]]
+
 **2026-08-20**
 
-- ⏳ `[claude-code]` [C3] Tri prijavljena baga (katalog/mobile hero/3x3 planer) — puna dijagnoza + backup, izmene NISU primenjene (usage-limit checkpoint) — [[dnevnik/2026-08-20-tri-baga-dijagnoza-katalog-hero-court]]
+- ✅ `[claude-code]` [C3] Tri prijavljena baga dijagnostikovana (katalog/mobile hero/3x3 planer) — puna dijagnoza + backup, plan spreman (izvršeno 21.08) — [[dnevnik/2026-08-20-tri-baga-dijagnoza-katalog-hero-court]]
 - ✅ `[claude-code]` [ALATI] Vault higijena: `CLAUDE.md` (39,5→26,6 KB, −33%) + `naucene-lekcije.md` (251→1,7 KB indeks + 4 tematska fajla) + `woodmart-sabloni.md` (78,8→13,8 KB, −82%) — sva 3 preostala 18.08 nalaza zatvorena, 0 sadržaja izgubljeno
 - ✅ `[claude-code]` [W3 3.10] Potvrdni regression sweep (236 str., 0 regresija) + fix mrtvog linka Onda→draft Maxionda + backup na 2 lokacije (G:+C:) — noćni task 03:00 bio prekinut usred zip-a — [[dnevnik/2026-08-20-potvrdni-sweep-i-backup-posle-freeze]]
 - ✅ `[claude-code]` [PLAN] Go-live pomeren +14 dana: UTO 25.08 → **UTO 08.09** (M, razlog nezabeležen); freeze/gate/rezerva pomereni istim korakom — [[odluke/_pregled-odluka]]
@@ -87,12 +92,11 @@
   zip-a (mašina ugašena/uspavana), ručni run posle prikačivanja G: diska uspeo na obe lokacije.
   → [[dnevnik/2026-08-20-potvrdni-sweep-i-backup-posle-freeze]]
 
-**⏳ Nastavak sledeće sesije — tri baga dijagnostikovana, nedovršena implementacija:**
-`/katalog/` (kategorije umesto svih proizvoda + side-nav zamena za pokvaren WC widget) ·
-`al-court-builder.css` (`.al-cb__svg` width→max-width) — oba plana + tačni podaci (17
-kategorija, slug/count) su u dnevnik fajlu, spremni za direktnu primenu. Mobile hero
-zatamnjenje čeka M potvrdu (v. Blokeri) pre nego što se dira dalje.
-→ [[dnevnik/2026-08-20-tri-baga-dijagnoza-katalog-hero-court]]
+**✅ Tri baga — 3/3 zatvoreno 21.08.** `/katalog/` sidenav + uklonjen mobile-hide CSS, 3x3
+planer `.al-cb__svg` fix, mobile hero zatamnjenje (pravi uzrok: `::before` kolizija sa
+`.al-plates` na 53/54 hero stranica, ne mobile-specifično) — sve verifikovano u browseru
+bez regresije.
+→ [[dnevnik/2026-08-21-tri-baga-implementacija]]
 
 **Vault higijena — van sadržajnog prozora, ne blokira gate** (nalazi 18.08, [[dnevnik/2026-08-18-token-audit-rotacija-ledgera]]):
 - ✅ ~~`PROGRESS` „Blokeri" = 27 KB = 70% ovog fajla, 45 stavki~~ — **SKRAĆENO 2026-08-18** na ~7,5 KB / 28 stavki; ceo fajl 41,2 → 22,1 KB (**−46%**, ≈−6k tokena po sesiji). Pun tekst pre skraćivanja doslovno u [[dnevnik/2026-08-arhiva-progress]]
@@ -189,11 +193,6 @@ checklisti §B. Uslov za pokretanje: Miroslav ima ~6h slobodnih tog dana (M odlu
 - 🟡 **`/podovi-za-radionice/` — najveća otvorena SEO prilika:** ~4.700 prikaza / ~275 klikova, poz. 3,6. 🔴 **Ispravka 19.08: URL POSTOJI** (blog post **5637**, hobi tekst o privatnoj garaži) — nije prazna rupa nego **nesklad namere**; nova stranica bi ga kanibalizovala. Preporuka: konverzija `post`→`page` uz isti ID i slug. 3 AI slike već obrađene i čekaju. **M odluka 19.08: post-live.** → [[dnevnik/2026-08-19-skladista-16687]]
 - 🟡 **Video — čeka M odluku o stranici i Flow kredite.** Predlog: kadar polaganja bakarne trake iz naših **pravih** fotki (HTEC/Quectel), ne iz AI slika. → [[dnevni-video]]
 - 🔴 **AI slike preko API-ja se PLAĆAJU** (`gemini-2.5-flash-image`, ~0,04 USD/sl.; 93 poziva od 04.08). Od 18.08: generisanje samo uz izričito M odobrenje; besplatna varijanta je Gemini chat.
-- 🆕 **Codex Onda cena (17957)** — potvrdi 16.906 RSD sa PDV (preračunato od datih 14.088+PDV) ili ispravi ručno. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
-- 🆕 **7 Codex draft proizvoda** (Quadrio/Polyshock/Interior/Sport Roll/Crossfit Floor/Maxionda/Wall Mat) — pregled i publish odluka. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
-- 🆕 **Mobile hero zatamnjenje — potvrditi da li je jutrošnja `.62→.8` izmena dovoljna.** M je prijavio da mobilno nema zatamnjenje "kao na desktopu" POSLE te izmene; kod izgleda ispravan (mobilna vrednost tamnija od desktop peak-a) ali nije vizuelno potvrđeno (browser-alat ne ume da simulira uski viewport u ovoj sesiji). Treba screenshot sa stvarnog uskog ekrana ako je i dalje problem. → [[dnevnik/2026-08-20-tri-baga-dijagnoza-katalog-hero-court]]
-- ✅ ~~Onda objavljena baš na 20.08~~ — pokrivena potvrdnim sweep-om isto veče (v. iznad); usput
-  otkriven i fixovan mrtav link ka draft Maxiondi.
 
 **🟡 Ads — ne blokira 08.09, blokira reaktivaciju pauziranih kampanja:**
 - 🔴🆕 **„Podloge za terase i bazene" troši uz `PAUSED` status** (18.08): 4.571 RSD / 250 klikova u dve nedelje, ad grupe i asseti ispod nje ENABLED, najjeftiniji CPC u nalogu (20,96 vs 94,41). Pali li se ručno i hvata li pauza ad grupe/assete? (Zamenjuje stavku od 11.08 „je li pauza namerna".) → [[dnevnik/2026-08-18-nedeljni-izvestaj-terase-status]]

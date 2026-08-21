@@ -173,6 +173,14 @@ izvor: "[[PROGRESS]]"
 
 ## Zatvoreni blokeri
 
+### 2026-08-21 — Codex proizvodi + tri prijavljena baga ✅
+
+- ✅ **7 Codex draft proizvoda — pregled i publish odluka.** M odobrio preko `AskUserQuestion` "minimalan fix pa publish" (isti bar kao Onda). Popravljena 2 stvarna nedostatka (eksplicitna "Cena: na upit" + cross-link ka kategoriji), svih 7 sada `publish`. Usput ispravljena greška u sopstvenoj analizi: "0/8 nema namena tag" je bio lažan nalaz (bag u proveri — filter po `t.name` umesto `t.slug`); svi proizvodi su već imali namena tag iz 20.08 uvoza. → [[dnevnik/2026-08-21-codex-drafts-publish]]
+- ✅ **Codex Onda cena (17957) — potvrđeno 21.08 (M):** 14.088 je bez PDV, +20% (16.906 RSD sa PDV) je ispravan obračun. Nema izmene u bazi, cena je od 20.08 već tako upisana. → [[dnevnik/2026-08-20-codex-srl-uvoz-proizvoda]]
+- ✅ **`/katalog/` kategorije/mobile prikaz + 3x3 planer skrol — ZATVORENO 21.08.** Sidenav (17 kategorija, `<details>`) zaobilazi pokvaren WC widget, mobile-hide CSS uklonjen, `.al-cb__svg` width→max-width fix. → [[dnevnik/2026-08-21-tri-baga-implementacija]]
+- ✅ **Mobile hero zatamnjenje "samo na nekim stranicama" — ZATVORENO 21.08.** Nije bio mobile-only bag: `.al-hero-photo::before` i `.al-plates::before` deljene isti pseudo-element na 53/54 hero stranica, `opacity`/`transform` procureli iz plates. Fix eksplicitno resetuje oba svojstva. → [[dnevnik/2026-08-21-tri-baga-implementacija]]
+- ✅ **Onda objavljena baš na 20.08 (poslednji dan starog content freeze prozora)** — pokrivena potvrdnim sweep-om isto veče; usput otkriven i fixovan mrtav link ka draft Maxiondi. → [[dnevnik/2026-08-20-potvrdni-sweep-i-backup-posle-freeze]]
+
 ### ESD sadržaj — 4 potvrde pre objave (zatvoreno 2026-08-18, isti dan kad je i otvoreno)
 
 Tražilo se: deklaracija ESD serije (otpor + metod) · postoji li elektroprovodljiva verzija za ATEX · nudimo li merenje otpora sa zapisnikom · cenovni raspon.
