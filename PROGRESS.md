@@ -23,7 +23,7 @@
 
 **2026-08-21**
 
-- ✅ `[claude-code]` [SEO] H (interni linkovi garaže/terase, redefinisano — v. dnevnik) + **radionice 5637 konvertovan post→page**, puna al-* landing (model po tipu radionice, cenovna tabela, 7-pitanja FAQ + FAQPage schema, 3 AI slike), M odluka 19.08 "post-live" eksplicitno prepisana na "uradi sad" — [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
+- ✅ `[claude-code]` [SEO] H (interni linkovi garaže/terase, redefinisano — v. dnevnik) + **radionice 5637 konvertovan post→page**, puna al-* landing (model po tipu radionice, cenovna tabela, 7-pitanja FAQ + FAQPage schema, 3 AI slike), M odluka 19.08 "post-live" eksplicitno prepisana na "uradi sad"; dopuna: meni stavka (Industrija→Po delatnosti), stari komentari vraćeni (`comment_status=open`), sajt-vajd prevod "X thoughts on" → "X komentara na" (WoodMart `ngettext_with_context` filter) — [[dnevnik/2026-08-21-H-i-radionice-izvrseno]]
 - ✅ `[claude-code]` [C] 7 Codex draft proizvoda → publish (Cena na upit + cross-link ka kategoriji fix); usput ispravljen lažan namena-tag nalaz u sopstvenoj analizi — [[dnevnik/2026-08-21-codex-drafts-publish]]
 - ✅ `[claude-code]` [C3] Dva od tri baga implementirana: katalog sidenav (17 kategorija, `<details>`, zaobilazi pokvaren WC widget) + uklonjen mobile-hide CSS + 3x3 planer `.al-cb__svg` width→max-width fix — mobile hero ostaje #ceka-miroslav — [[dnevnik/2026-08-21-tri-baga-implementacija]]
 

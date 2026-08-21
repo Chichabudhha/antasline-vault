@@ -90,6 +90,28 @@ scroll kroz celu stranicu u browseru je otkrio problem.
   i upoređeno sa izvornim fajlom pre upisa)
 - Backup pre izmena: `antasline-backups/antasline_local_2026-08-21_pre-H-radionice.sql` (37,4 MB)
 
+## Dopuna iste sesije — meni, komentari, prevod (M primedba posle prve verzije)
+
+M je posle prve verzije primetio tri stvari koje konverzija `post`→`page` nije sama rešila:
+
+| # | Šta | Rešenje |
+|---|---|---|
+| 1 | Stranica nije bila u meniju | Nova `nav_menu_item` stavka (ID **17990**) ubačena u "Glavni meni 2026" (term_taxonomy_id 390), pod **Industrija → Po delatnosti**, odmah posle "Garaže i auto-servisi" (menu_order 27, sve stavke od 27 nadalje pomerene +1). Objekat cilja page 5637. |
+| 2 | Stari komentari sa posta (2, oba stvarna — pitanje kupca + odgovor firme) su nestali kad je `comment_status` postavljen na `closed` tokom konverzije | `comment_status` vraćen na **`open`** — komentari su i dalje u bazi (nikad obrisani), sad se opet prikazuju. WoodMart `page.php` prikazuje komentarsku sekciju na stranicama kad je theme opcija `page_comments=1` (potvrđeno u `xts-woodmart-options`) **i** (`comments_open()` ili postoji bar 1 komentar) — oba uslova sad ispunjena. |
+| 3 | Naslov komentarske sekcije bio je na engleskom ("2 thoughts on 'Naslov'") — WoodMart core string, `_nx()` sa kontekstom `comments title` | Nov filter `ngettext_with_context_woodmart` u `woodmart-child/functions.php` (odmah posle postojećeg `gettext_with_context_woodmart` bloka, isti obrazac kao ostali prevodi u fajlu) — "Jedan komentar na „X"" / "N komentara na „X"". Efekat je **sajt-vajd**, ne samo na ovoj stranici — svaki drugi post/page sa otvorenim komentarima dobija ispravan prevod istim filterom. |
+
+Verifikovano u browseru: meni stavka vidljiva na tačnom mestu u dropdown-u, oba stara komentara i forma "Ostavite odgovor" prikazani, naslov sekcije na srpskom ("2 KOMENTARA NA „PODOVI ZA RADIONICE...""). `php -l` čist na izmenjenom `functions.php`.
+
+**Dopuna 2 (M primedba, isti dan):** `#comments.comments-area` je imao `padding: 0` — naslov sekcije nalegao je direktno na red iznad (kontakt-forma widget), bez ijednog piksela razmaka. Dodato pravilo u `antas-design.css` (`.comments-area { padding: var(--al-gap) 0; }`) — ponovna upotreba postojećeg tokena za vertikalni ritam sekcija (`--al-gap`, isti kao `.al-section`), simetrično gore/dole. Pravilo je **globalno** (svaka stranica/post sa vidljivim komentarima), pa je regresija provizorno provereno na 2298 (`kako-napraviti-teren-za-basket...`, 40 komentara — najveći test slučaj na sajtu) — isti simetričan razmak, bez neželjenih efekata.
+
+**Dopuna 3 (M primedba, isti dan) — "Predaj komentar" dugme bilo zeleno + audit stranice:**
+
+Pregled cele stranice (console, network, 87 zahteva) — **nema zaostalog Porto/starog CSS-a ni JS-a, nema 404, nema grešaka u konzoli.** Sve učitano su ili WoodMart core delovi (`css/parts/*.css`, `al-asset-diet.php` učitava samo ono što stranica koristi), child theme fajlovi (`antas-design.css`, `al-video-facade.js`, `al-lightbox.js`), ili očekivani spoljni tracking (GTM/GA4/Ads/FB — deo BLOK A merenja, ne smeće).
+
+Zeleno dugme **nije zaostatak** — WoodMart core (`post-types-mod-comments.css`) stilizuje `.comment-form .submit` preko globalne teme-vajd Customizer promenljive `--btn-accented-bgcolor: #83b735` (WoodMart demo zelena, nikad usklađena sa brendom). Ta promenljiva se koristi na **desetinama WooCommerce elemenata** (cart, checkout, product loop dugmad, wishlist, my-account...) — namerno **nije dirana globalno** da se ne pipne nešto neprovereno na kupovnom toku, van obima ovog zadatka.
+
+Umesto toga: skopiran fix u `antas-design.css`, `#comments .comment-form .submit` → `var(--al-red)` / hover `var(--al-red-dark)` (isti par boja kao `.al-btn`). ID prefiks `#comments` je obavezan — parent-ov `post-types-mod-comments.css` ima istu specifičnost (2 klase) i učitava se POSLE child theme CSS-a u `<head>` (redosled potvrđen preko `document.querySelectorAll('link[rel="stylesheet"]')`), pa bez ID-a cascade order pobeđuje parent i boja ostaje zelena uprkos "ispravnom" pravilu. Verifikovano u browseru: dugme narandžasto (`rgb(240,77,34)` = `#F04D22`), uklapa se sa ostatkom CTA dugmadi na stranici.
+
 ## Napomena — svesno van obima
 
 **16615** `/podovi-za-detailing-radionice-i-servise/` — otvorena stavka iz 19.08 ("spojiti u
